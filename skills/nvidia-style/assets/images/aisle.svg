@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" preserveAspectRatio="xMidYMid slice">
+<defs>
+<radialGradient id="end" cx="50%" cy="46%" r="40%"><stop offset="0" stop-color="#e9f7d0" stop-opacity=".9"/><stop offset=".25" stop-color="#79bb00" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+<linearGradient id="l" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1e1e1e"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient>
+<linearGradient id="r" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#1e1e1e"/><stop offset="1" stop-color="#0a0a0a"/></linearGradient>
+<linearGradient id="floor" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#1a1a1a"/><stop offset="1" stop-color="#050505"/></linearGradient>
+<pattern id="leds" width="60" height="36" patternUnits="userSpaceOnUse"><circle cx="20" cy="18" r="3" fill="#8fd40f"/><circle cx="34" cy="18" r="2" fill="#3a3a3a"/></pattern>
+</defs>
+<rect width="1600" height="1000" fill="#000"/>
+<path d="M0 1000 760 470h80l760 530z" fill="url(#floor)"/>
+<path d="M0 0 760 380V470L0 1000z" fill="url(#l)"/>
+<path d="M1600 0 840 380V470l760 530z" fill="url(#r)"/>
+<g stroke="#000" stroke-width="6"><path d="M160 80V890M330 165V770M470 235V672M580 290V595M660 330V540M715 357V505"/><path d="M1440 80V890M1270 165V770M1130 235V672M1020 290V595M940 330V540M885 357V505"/></g>
+<path d="M60 300 700 420V450L60 640z" fill="url(#leds)" opacity=".8"/>
+<path d="M1540 300 900 420V450l640 190z" fill="url(#leds)" opacity=".8"/>
+<path d="M760 380h80v90h-80z" fill="#cfe9a8"/>
+<ellipse cx="800" cy="425" rx="520" ry="330" fill="url(#end)"/>
+<path d="M0 0 760 380M1600 0 840 380" stroke="#79bb00" stroke-opacity=".5" stroke-width="3"/>
+</svg>

@@ -1,0 +1,1478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Gloamreach: a cooperative fantasy board game</title>
+<meta name="description" content="Five heroes, one long night. Gloamreach is a cooperative fantasy board game for one to five players, with a twelve-chapter campaign, skirmishes and a solo mode.">
+<meta property="og:title" content="Gloamreach: hold back the long night">
+<meta property="og:description" content="A cooperative fantasy board game for one to five players.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/faustina-latin-wght-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/asap-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts: Faustina italic for every headline, Asap for the interface ---------- */
+@font-face { font-family: "Faustina"; src: url("fonts/faustina-latin-wght-italic.woff2") format("woff2"); font-weight: 300 800; font-style: italic; font-display: swap; }
+@font-face { font-family: "Asap"; src: url("fonts/asap-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: light-dark(light, dark); data-theme pins the scheme, otherwise the system decides ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(95.6% 0.005 85), oklch(15.5% 0.035 258));
+  --surface: light-dark(oklch(99.3% 0.002 85), oklch(19.5% 0.04 258));
+  --surface-2: light-dark(oklch(91.8% 0.007 85), oklch(23.5% 0.04 258));
+  --text: light-dark(oklch(21% 0.04 258), oklch(94.5% 0.014 85));
+  --text-muted: light-dark(oklch(44% 0.03 258), oklch(77% 0.025 250));
+  --border: light-dark(oklch(84% 0.012 85), oklch(33% 0.04 256));
+  --watermark: light-dark(oklch(92.6% 0.006 85), oklch(18.6% 0.04 258));
+  --gold: oklch(76% 0.09 83);
+  --gold-hi: oklch(84% 0.085 87);
+  --gold-ink: light-dark(oklch(49% 0.09 74), oklch(80% 0.09 84));
+  --on-gold: oklch(18% 0.04 258);
+  --arcane: oklch(77% 0.12 214);
+  --arcane-hi: oklch(85% 0.1 210);
+  --navy: oklch(17% 0.04 258);
+  --navy-2: oklch(23% 0.045 258);
+  --bar: oklch(13.5% 0.012 262);
+  --bar-2: oklch(24% 0.012 262);
+  --on-dark: oklch(95.5% 0.012 85);
+  --on-dark-muted: oklch(80% 0.02 250);
+  --danger: light-dark(oklch(51% 0.18 27), oklch(75% 0.14 25));
+  --ok: light-dark(oklch(48% 0.11 155), oklch(80% 0.13 155));
+  --hue: oklch(76% 0.09 83);
+  --scene-vale: url("images/scene-vale.svg");
+  --scene-coast: url("images/scene-coast.svg");
+  --scene-thorn: url("images/scene-thorn.svg");
+  --scene-gate: url("images/scene-gate.svg");
+  --scene-stones: url("images/scene-stones.svg");
+  --serif: "Faustina", Georgia, serif;
+  --sans: "Asap", "Segoe UI", system-ui, sans-serif;
+  --gutter: clamp(16px, 4vw, 48px);
+  --max: 1344px;
+  --sec: clamp(64px, 9vw, 120px);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --fast: 160ms;
+  --base: 320ms;
+  --slow: 700ms;
+  --shadow-card: 0 18px 40px -24px oklch(10% 0.03 258 / .55);
+}
+[data-theme="light"] { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 17px/1.6 var(--sans); overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+h1, h2, h3, p, ul, ol, figure, fieldset { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+fieldset { border: 0; padding: 0; min-width: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--arcane); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 60; padding: 12px 18px; background: var(--gold); color: var(--on-gold); }
+.skip:focus { top: 12px; }
+.wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+.narrow { max-width: 880px; }
+.sec { position: relative; padding-block: var(--sec); }
+.sec.tight { padding-top: 40px; }
+.ico { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.glyph { flex: none; fill: currentColor; }
+.js [data-view]:not(.is-active) { display: none; }
+html:not(.js) [data-js] { display: none !important; }
+
+/* ---------- Type: an upright kicker over one huge italic word ---------- */
+.duo { display: grid; gap: .15em; }
+.kicker { font: 500 clamp(16px, 1.5vw, 21px)/1.2 var(--sans); letter-spacing: .02em; text-transform: uppercase; }
+.big { font: italic 800 clamp(46px, 6.2vw, 86px)/.95 var(--serif); letter-spacing: -.012em; text-transform: uppercase; }
+.big.m { font-size: clamp(36px, 4.4vw, 60px); }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font: 700 12px/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-ink); }
+.lead { max-width: 34em; margin-top: 20px; font-size: clamp(17px, 1.4vw, 19px); color: var(--text-muted); }
+.center { text-align: center; }
+.center .lead { margin-inline: auto; }
+.btns { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+.center .btns { justify-content: center; }
+.muted { color: var(--text-muted); }
+
+/* ---------- Buttons: square gold, a detached frame on the hero, arcane blue for the second action ---------- */
+.btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; padding: 0 30px; border: 0; border-radius: 0; background: var(--gold); color: var(--on-gold); font: 500 15px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: background var(--fast), box-shadow var(--base), transform var(--fast); }
+.btn:hover { background: var(--gold-hi); box-shadow: 0 0 30px -6px var(--gold); }
+.btn:active { transform: translateY(1px); }
+.btn.framed::before { content: ""; position: absolute; inset: -6px; border: 1px solid oklch(92% 0.04 87); pointer-events: none; transition: inset var(--base) var(--ease); }
+.btn.framed:hover::before { inset: -9px; }
+.btn.arcane { background: var(--arcane); }
+.btn.arcane:hover { background: var(--arcane-hi); box-shadow: 0 0 30px -6px var(--arcane); }
+.btn.ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 1px var(--gold); }
+.btn.ghost:hover { background: color-mix(in oklch, var(--gold) 16%, transparent); }
+.btn.sm { min-height: 40px; padding: 0 18px; font-size: 13px; }
+.btn[disabled] { opacity: .65; cursor: progress; }
+.link { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: none; font: 700 13px/1.2 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--gold-ink); text-decoration: none; }
+.link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ---------- Header: a black command bar in both themes ---------- */
+.site-header { position: sticky; top: 0; z-index: 40; background: var(--bar); color: var(--on-dark); }
+.bar { display: flex; align-items: center; gap: clamp(14px, 2.4vw, 40px); height: 80px; padding-inline: clamp(16px, 2.5vw, 36px); }
+.brand { display: flex; align-items: center; gap: 10px; flex: none; text-decoration: none; }
+.brand svg { width: 34px; height: 34px; color: var(--gold); }
+.wordmark { font: italic 800 21px/1 var(--serif); letter-spacing: .02em; text-transform: uppercase; background: linear-gradient(180deg, #f6e3b4, #c9a85e 60%, #9c7a3e); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.nav { display: flex; gap: clamp(18px, 2.2vw, 36px); }
+.nav a { position: relative; display: block; padding-block: 31px; font: 600 14px/18px var(--sans); letter-spacing: .08em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+.nav a::after { content: ""; position: absolute; inset: auto 0 0; height: 3px; background: var(--gold); transform: scaleX(0); transition: transform var(--base) var(--ease); }
+.nav a:hover::after, .nav a[aria-current]::after { transform: scaleX(1); }
+.head-end { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.icon-btn { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 8px; background: var(--bar-2); color: var(--on-dark); }
+.icon-btn:hover { background: oklch(31% 0.015 262); }
+.site-header .btn { border-radius: 6px; }
+.menu-btn { display: none; }
+.menu { padding: 4px clamp(16px, 2.5vw, 36px) 20px; border-top: 1px solid var(--bar-2); }
+.menu a { display: block; padding: 15px 0; border-bottom: 1px solid var(--bar-2); font: 600 15px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; text-decoration: none; }
+.menu a[aria-current] { color: var(--gold); }
+@media (max-width: 1179px) { .nav { display: none; } .menu-btn { display: grid; } }
+@media (min-width: 1180px) { .menu { display: none !important; } }
+@media (max-width: 600px) { .bar { height: 64px; } .head-end .btn { display: none; } .wordmark { font-size: 18px; } }
+
+/* ---------- Scenes: always-dark painted bands ---------- */
+.scene { position: relative; isolation: isolate; overflow: hidden; background: var(--navy) var(--art, var(--scene-vale)) center / cover no-repeat; color: var(--on-dark); }
+.scene::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, oklch(12% 0.04 258 / .82), oklch(12% 0.04 258 / .2) 65%), linear-gradient(0deg, oklch(12% 0.04 258 / .85), transparent 40%); }
+.scene.flip::before { background: linear-gradient(270deg, oklch(12% 0.04 258 / .82), oklch(12% 0.04 258 / .2) 65%), linear-gradient(0deg, oklch(12% 0.04 258 / .85), transparent 40%); }
+.sc-vale { --art: var(--scene-vale); }
+.sc-coast { --art: var(--scene-coast); }
+.sc-thorn { --art: var(--scene-thorn); }
+.sc-gate { --art: var(--scene-gate); }
+.sc-stones { --art: var(--scene-stones); }
+.scene .lead { color: var(--on-dark-muted); }
+.scene .eyebrow { color: var(--gold); }
+.scene .btn.ghost { color: var(--on-dark); }
+.band { padding-block: clamp(56px, 8vw, 104px); }
+
+/* ---------- Stone: pale sections with a giant faint crest ---------- */
+.stone { isolation: isolate; overflow: hidden; }
+.crest { position: absolute; z-index: -1; top: 50%; left: 50%; width: var(--cw, min(1180px, 150vw)); height: var(--cw, min(1180px, 150vw)); transform: translate(-50%, -50%); color: var(--watermark); pointer-events: none; }
+.lattice { background-image: repeating-linear-gradient(45deg, var(--watermark) 0 1px, transparent 1px 24px), repeating-linear-gradient(-45deg, var(--watermark) 0 1px, transparent 1px 24px); }
+
+/* ---------- Home hero ---------- */
+.hero { display: grid; place-items: center; min-height: min(88vh, 860px); padding: 112px var(--gutter) 128px; text-align: center; }
+.hero::before { background: radial-gradient(ellipse at 50% 42%, oklch(12% 0.04 258 / .1), oklch(12% 0.04 258 / .72) 78%), linear-gradient(0deg, var(--navy), transparent 26%); }
+.hero h1 { display: grid; justify-items: center; }
+.hero .kick { margin-bottom: 18px; font: 600 13px/1.3 var(--sans); letter-spacing: .3em; text-transform: uppercase; color: var(--gold-hi); }
+.logotype { font: italic 800 clamp(58px, 11vw, 156px)/.86 var(--serif); letter-spacing: -.01em; text-transform: uppercase; background: linear-gradient(180deg, #fbefcf 10%, #dcbd78 42%, #a07a3a 64%, #ecd59c 92%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 6px 18px oklch(8% 0.03 258 / .85)); }
+.tagline { max-width: 30em; margin: 26px auto 46px; font: italic 700 clamp(17px, 1.9vw, 24px)/1.3 var(--serif); text-transform: uppercase; }
+.mist { position: absolute; inset: auto -25% 6% -25%; z-index: -1; height: 42%; background: radial-gradient(40% 50% at 30% 60%, oklch(88% 0.03 300 / .2), transparent 70%), radial-gradient(35% 45% at 72% 50%, oklch(88% 0.03 300 / .15), transparent 70%); animation: drift 24s ease-in-out infinite alternate; }
+.embers { position: absolute; inset: 30% 0 0; z-index: -1; background-image: radial-gradient(2px 2px at 12% 70%, #f2c46d, transparent), radial-gradient(2px 2px at 38% 92%, #f2c46d, transparent), radial-gradient(2px 2px at 66% 80%, #ffd99a, transparent), radial-gradient(2px 2px at 88% 94%, #f2c46d, transparent); animation: embers 9s linear infinite; }
+@keyframes drift { to { transform: translateX(9%); } }
+@keyframes embers { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-45%); opacity: 0; } }
+
+/* ---------- Rows of cards ---------- */
+.row-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.2vw, 32px); }
+.strip { padding-block: 56px var(--sec); }
+.track-rule { display: flex; align-items: center; gap: 12px; margin-top: 28px; }
+.rule { position: relative; flex: 1; height: 2px; background: var(--border); }
+.rule span { position: absolute; inset: 0 auto 0 0; width: var(--w, 20%); background: var(--gold); transform: translateX(calc(var(--i, 0) * 100%)); transition: transform var(--base) var(--ease); }
+.arrow { display: grid; place-items: center; width: 40px; height: 40px; border: 0; background: none; color: var(--gold-ink); }
+.arrow:disabled { color: var(--border); cursor: default; }
+.strip .track-rule { display: none; }
+@media (max-width: 899px) {
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .strip .cards { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(84%, 380px); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; position: relative; }
+  .strip .cards > li { scroll-snap-align: start; }
+  .strip .track-rule { display: flex; }
+}
+@media (max-width: 599px) { .cards { grid-template-columns: minmax(0, 1fr); } }
+
+/* News card: picture with a square corner badge, gold topic | date, bold title */
+.ncard a { display: block; height: 100%; text-decoration: none; }
+.nart { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--navy); }
+.nart img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--slow) var(--ease); }
+.ncard a:hover .nart img { transform: scale(1.05); }
+.corner { position: absolute; right: 0; bottom: 0; display: grid; place-items: center; width: 40px; height: 40px; background: oklch(12% 0.03 258 / .88); color: var(--on-dark); box-shadow: inset 0 0 0 1px oklch(100% 0 0 / .22); }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; font: 500 13px/1.2 var(--sans); color: var(--text-muted); }
+.meta b { padding-right: 10px; border-right: 1px solid var(--border); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-ink); }
+.ncard h3 { margin-top: 12px; font: 700 21px/1.25 var(--sans); }
+.ncard p { margin-top: 8px; font-size: 15px; color: var(--text-muted); }
+
+/* ---------- Split sections, the ring and the diamond ---------- */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 5vw, 80px); align-items: center; }
+@media (max-width: 899px) { .split { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 599px) { .cls { gap: 8px; font-size: 10px; letter-spacing: 0; } .cls svg { width: 36px; height: 36px; } .hero .kick { letter-spacing: .16em; } }
+.classes { display: flex; justify-content: center; gap: clamp(0px, 1vw, 16px); margin-top: 44px; }
+.cls { display: grid; justify-items: center; gap: 12px; width: clamp(62px, 18%, 96px); padding: 6px 0; border: 0; background: none; color: var(--text-muted); font: 600 12px/1.2 var(--sans); letter-spacing: .06em; text-transform: uppercase; }
+.cls svg { width: 46px; height: 46px; color: var(--gold); opacity: .42; transition: opacity var(--fast), transform var(--base) var(--ease); }
+.cls[aria-pressed="true"] { color: var(--text); }
+.cls[aria-pressed="true"] svg, .cls:hover svg { opacity: 1; transform: translateY(-3px); }
+.ring-stage, .diamond-stage { position: relative; width: min(100%, 520px); aspect-ratio: 1; margin-inline: auto; }
+.ring-stage::before { content: ""; position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in oklch, var(--hue) 34%, transparent), transparent); }
+.ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.ring circle { fill: none; stroke-width: .3; }
+.ring .base { stroke: var(--border); }
+.ring .arc { stroke: var(--gold); stroke-width: .6; stroke-dasharray: 32 68; transform: rotate(-168deg); transform-origin: 50% 50%; }
+.swap .arc { animation: sweep var(--slow) var(--ease); }
+@keyframes sweep { from { transform: rotate(-400deg); } }
+.figure { position: absolute; left: 50%; bottom: -5%; width: auto; height: 116%; max-width: none; transform: translateX(-50%); filter: drop-shadow(0 22px 26px oklch(10% 0.03 258 / .35)); }
+.swap .figure { animation: enter var(--slow) var(--ease); }
+@keyframes enter { from { opacity: 0; transform: translateX(-40%); } }
+.fig-cap { margin-top: 30px; text-align: center; }
+.fig-cap a { text-decoration: none; }
+.fig-cap b { display: block; font: italic 800 28px/1.1 var(--serif); text-transform: uppercase; }
+.fig-cap span { color: var(--text-muted); font-size: 15px; }
+.diamond-stage::before, .diamond-stage::after { content: ""; position: absolute; inset: 16%; border: 1px solid var(--gold); transform: rotate(45deg); }
+.diamond-stage::after { inset: 21%; opacity: .35; }
+.diamond-stage .figure { height: 112%; bottom: -2%; filter: drop-shadow(0 0 30px color-mix(in oklch, var(--hue) 45%, transparent)); }
+
+/* ---------- Ways to play ---------- */
+.deep { background: var(--navy); color: var(--on-dark); }
+.deep .lead { color: var(--on-dark-muted); }
+.modes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; max-width: 520px; margin: 44px auto 0; }
+.mode { display: grid; gap: 10px; padding: 0; border: 0; background: none; color: var(--on-dark-muted); font: 600 12px/1.25 var(--sans); letter-spacing: .06em; text-transform: uppercase; }
+.mode img { width: 100%; aspect-ratio: 1; object-fit: cover; opacity: .55; outline: 1px solid transparent; outline-offset: 3px; transition: opacity var(--fast), outline-color var(--fast); }
+.mode[aria-pressed="true"] { color: var(--on-dark); }
+.mode[aria-pressed="true"] img, .mode:hover img { opacity: 1; }
+.mode[aria-pressed="true"] img { outline-color: var(--gold); }
+.disc { position: relative; width: min(100%, 560px); aspect-ratio: 1; margin-inline: auto; padding: 4%; border: 1px solid var(--gold); border-radius: 50%; }
+.disc img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.swap .disc img { animation: fade var(--slow) var(--ease); }
+.mode-show figcaption { max-width: 560px; margin: 28px auto 0; text-align: center; }
+.mode-show b { display: block; font: italic 800 26px/1.1 var(--serif); text-transform: uppercase; }
+.mode-show span { display: block; margin-top: 8px; color: var(--on-dark-muted); }
+.finale { padding-block: clamp(120px, 16vw, 220px); }
+.finale::before { background: radial-gradient(ellipse 55% 50% at 50% 50%, oklch(12% 0.04 258 / .78), oklch(12% 0.04 258 / .45) 70%, oklch(12% 0.04 258 / .7)); }
+@keyframes fade { from { opacity: 0; } }
+
+/* ---------- Page banners ---------- */
+.banner { position: relative; isolation: isolate; overflow: hidden; padding: clamp(56px, 8vw, 104px) 0 clamp(44px, 5vw, 72px); background: var(--navy); color: var(--on-dark); box-shadow: inset 0 -1px 0 color-mix(in oklch, var(--gold) 40%, transparent); }
+.banner .crest { --cw: 720px; left: 82%; color: oklch(100% 0 0 / .035); }
+.banner .lead { color: var(--on-dark-muted); }
+.crumbs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; font: 600 13px/1.2 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--on-dark-muted); }
+.crumbs a { color: var(--gold); text-decoration: none; }
+
+/* ---------- Filters ---------- */
+.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-bottom: 28px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border: 1px solid var(--border); border-radius: 0; background: var(--surface); font: 600 13px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; }
+.chip svg { width: 18px; height: 18px; color: var(--gold-ink); }
+.chip:hover { border-color: var(--gold); }
+.chip[aria-pressed="true"] { border-color: var(--text); background: var(--text); color: var(--bg); }
+.chip[aria-pressed="true"] svg { color: var(--gold); }
+.tools { display: flex; flex-wrap: wrap; gap: 10px; margin-left: auto; }
+.search { position: relative; display: block; }
+.search .ico { position: absolute; left: 12px; top: 10px; color: var(--text-muted); }
+.search input, .tools select { height: 40px; min-height: 40px !important; width: min(240px, 100%); padding: 0 12px 0 40px !important; }
+.tools select { width: auto; padding-left: 12px !important; }
+.count { margin: -12px 0 24px; font-size: 14px; color: var(--text-muted); }
+@media (max-width: 599px) {
+  .filters .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+  .chip { flex: none; }
+  .tools { width: 100%; margin-left: 0; }
+  .tools .search { flex: 1; }
+  .tools .search input { width: 100%; }
+}
+.empty { padding: 48px 24px; border: 1px dashed var(--border); text-align: center; color: var(--text-muted); }
+
+/* ---------- Hero cards: art on a tinted night, a navy name bar ---------- */
+.roster { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 1023px) { .roster { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 719px) { .roster { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .hname { font-size: 17px; padding: 12px; } #pairs > li:nth-child(3) { display: none; } }
+.hcard a { display: flex; flex-direction: column; height: 100%; color: var(--on-dark); text-decoration: none; }
+.hart { position: relative; display: block; aspect-ratio: 3 / 4; overflow: hidden; background: radial-gradient(70% 55% at 55% 36%, color-mix(in oklch, var(--hue) 46%, transparent), transparent 72%), linear-gradient(180deg, var(--navy-2), oklch(12% 0.03 258)); }
+.hart::after { content: ""; position: absolute; inset: 0; transition: box-shadow var(--base); }
+.hcard a:hover .hart::after, .hcard a:focus-visible .hart::after { box-shadow: inset 0 0 0 1px var(--gold), inset 0 0 0 6px oklch(12% 0.03 258 / .55), inset 0 0 0 7px var(--gold); }
+.hart img { position: absolute; inset: 8% 0 0; width: 100%; height: 92%; object-fit: contain; object-position: 50% 100%; transition: transform var(--slow) var(--ease); transform-origin: 50% 100%; }
+.hcard a:hover .hart img { transform: scale(1.06); }
+.hname { display: block; flex: 1; padding: 14px 16px 15px; background: var(--navy); font: italic 800 20px/1.1 var(--serif); letter-spacing: .01em; text-transform: uppercase; }
+.hname small { display: block; margin-top: 5px; font: normal 500 13px/1.2 var(--sans); letter-spacing: .08em; color: var(--on-dark-muted); }
+
+/* ---------- Hero detail ---------- */
+.hd { padding-block: clamp(48px, 7vw, 96px); }
+.hd .big { font-size: clamp(50px, 7.2vw, 104px); }
+.hd-title { margin-top: 12px; font: italic 700 clamp(19px, 2vw, 25px)/1.2 var(--serif); text-transform: uppercase; color: var(--gold); }
+.diff { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 24px; font: 600 13px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
+.pips { display: flex; gap: 8px; }
+.pips i { width: 11px; height: 11px; border: 1px solid var(--gold); transform: rotate(45deg); }
+.pips i.on { background: var(--gold); }
+.abilities { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 36px; }
+.ab { display: grid; place-items: center; width: 76px; height: 76px; border: 1px solid var(--border); background: var(--surface); color: var(--gold-ink); transition: box-shadow var(--base), border-color var(--fast); }
+.ab svg { width: 34px; height: 34px; }
+.ab:hover { border-color: var(--gold); }
+.ab[aria-pressed="true"] { border-color: var(--gold); box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--gold), 0 0 34px -6px var(--gold); }
+.ab-items { display: grid; gap: 28px; max-width: 640px; margin: 36px auto 0; }
+.ab-item h3 { margin-top: 8px; font: italic 800 30px/1.1 var(--serif); text-transform: uppercase; }
+.ab-item p:last-child { margin-top: 10px; color: var(--text-muted); }
+.js .ab-item:not(.on) { display: none; }
+.js .ab-item.on { animation: fade var(--base) ease; }
+
+/* ---------- Article ---------- */
+.post-art { margin-top: -1px; aspect-ratio: 21 / 9; overflow: hidden; background: var(--navy); }
+.post-art img { width: 100%; height: 100%; object-fit: cover; }
+.prose { max-width: 700px; margin: clamp(36px, 5vw, 56px) auto 0; font-size: 18px; }
+.prose p + p { margin-top: 1.1em; }
+.prose h2 { margin: 1.5em 0 .5em; font: italic 800 30px/1.1 var(--serif); text-transform: uppercase; }
+.post-foot { display: flex; flex-wrap: wrap; gap: 14px; max-width: 700px; margin: 48px auto 0; padding-top: 32px; border-top: 1px solid var(--border); }
+.on-dark { color: var(--on-dark-muted); }
+
+/* ---------- Rules updates ---------- */
+.patch { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); padding-block: 44px; border-top: 1px solid var(--border); }
+.patch h2 { margin: 8px 0 6px; font: italic 800 42px/1 var(--serif); text-transform: uppercase; }
+.patch-side p:last-child { margin-top: 14px; color: var(--text-muted); font-size: 15px; }
+.change { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--border); }
+.change:first-child { padding-top: 0; }
+.gbox { display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--gold); color: var(--gold-ink); }
+.gbox svg { width: 26px; height: 26px; }
+.ch-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 4px; font-weight: 700; }
+.tag { padding: 4px 8px; border: 1px solid currentColor; font: 700 11px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; }
+.tag.new { color: var(--ok); }
+.tag.changed { color: var(--gold-ink); }
+.tag.clarified { color: var(--text-muted); }
+.change s { color: var(--text-muted); }
+@media (max-width: 799px) { .patch { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Editions ---------- */
+.editions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; align-items: stretch; }
+.ed { position: relative; display: flex; flex-direction: column; padding: 24px 24px 28px; border: 1px solid var(--border); background: var(--surface); }
+.ed.featured { border-color: var(--gold); box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px color-mix(in oklch, var(--gold) 55%, transparent); }
+.ed .flag { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); padding: 6px 12px; background: var(--gold); color: var(--on-gold); font: 700 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+.box { position: relative; display: grid; place-content: center; aspect-ratio: 4 / 3; overflow: hidden; background: radial-gradient(62% 42% at 50% 50%, oklch(10% 0.03 258 / .7), transparent), var(--art) center / cover no-repeat var(--navy); text-align: center; color: var(--on-dark); box-shadow: inset 0 0 0 1px oklch(100% 0 0 / .14), inset 0 -80px 60px -40px oklch(10% 0.03 258 / .8); }
+.box b { font: italic 800 clamp(26px, 2.6vw, 36px)/1 var(--serif); text-transform: uppercase; background: linear-gradient(180deg, #fbefcf, #c9a85e 60%, #9c7a3e); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.box span { margin-top: 6px; font: 600 11px/1 var(--sans); letter-spacing: .24em; text-transform: uppercase; color: var(--gold-hi); }
+.ed h2 { margin-top: 24px; font: italic 800 28px/1.1 var(--serif); text-transform: uppercase; }
+.price { margin-top: 8px; font: italic 800 44px/1 var(--serif); }
+.price small { font: normal 500 15px var(--sans); color: var(--text-muted); }
+.ed ul { flex: 1; margin: 20px 0 28px; }
+.ed li, .ticks li { position: relative; padding: 9px 0 9px 24px; border-bottom: 1px solid var(--border); font-size: 15px; }
+.ed li::before, .ticks li::before { content: ""; position: absolute; left: 2px; top: 17px; width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); }
+.ed .btn { width: 100%; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 56px; border-block: 1px solid var(--border); }
+.stats div { padding: 28px 16px; text-align: center; }
+.stats div + div { border-left: 1px solid var(--border); }
+.stats b { display: block; font: italic 800 44px/1 var(--serif); color: var(--gold-ink); }
+.stats span { font-size: 14px; color: var(--text-muted); }
+@media (max-width: 899px) { .editions { grid-template-columns: minmax(0, 1fr); max-width: 460px; margin-inline: auto; gap: 36px; } .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stats div:nth-child(3) { border-left: 0; } .stats div:nth-child(n+3) { border-top: 1px solid var(--border); } }
+
+/* ---------- Events ---------- */
+.events { display: grid; gap: 12px; }
+.ev { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; gap: 24px; align-items: center; padding: 20px 24px; border: 1px solid var(--border); border-left: 3px solid var(--gold); background: var(--surface); }
+.ev-date { text-align: center; }
+.ev-date b { display: block; font: italic 800 44px/1 var(--serif); }
+.ev-date span { font: 700 12px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--gold-ink); }
+.ev h3 { margin-top: 6px; font: 700 20px/1.25 var(--sans); }
+.ev ul { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 8px; font-size: 15px; color: var(--text-muted); }
+.ev li { display: inline-flex; align-items: center; gap: 6px; }
+.ev li .ico { width: 17px; height: 17px; color: var(--gold-ink); }
+@media (max-width: 699px) { .ev { grid-template-columns: 56px minmax(0, 1fr); gap: 16px; padding: 18px; } .ev-date b { font-size: 34px; } .ev .btn { grid-column: 1 / -1; } }
+
+/* ---------- Forms: errors float under the field, nothing moves ---------- */
+.form-card { padding: clamp(24px, 4vw, 44px); border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+.form-card h2 { font: italic 800 clamp(28px, 3vw, 38px)/1.05 var(--serif); text-transform: uppercase; }
+.form-card > p { margin-top: 8px; color: var(--text-muted); }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 20px; margin-top: 28px; }
+.full { grid-column: 1 / -1; }
+@media (max-width: 640px) { .fields { grid-template-columns: minmax(0, 1fr); } }
+.field { position: relative; display: grid; align-content: start; gap: 8px; padding-bottom: 28px; }
+.label { font: 700 13px/1.2 var(--sans); letter-spacing: .08em; text-transform: uppercase; }
+.opt { font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--text-muted); }
+.field input, .field select, .field textarea, .tools input, .tools select { width: 100%; min-height: 52px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 0; background: var(--bg); transition: border-color var(--fast), box-shadow var(--fast); }
+.field textarea { min-height: 140px; resize: vertical; }
+.field :is(input, select, textarea):focus, .tools :is(input, select):focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px color-mix(in oklch, var(--gold) 32%, transparent); }
+[aria-invalid="true"] { border-color: var(--danger) !important; }
+.error { position: absolute; left: 0; bottom: 5px; display: flex; align-items: center; gap: 6px; font-size: 13px; line-height: 1.2; color: var(--danger); }
+.error:empty { display: none; }
+.hint { position: absolute; right: 0; bottom: 5px; font-size: 13px; color: var(--text-muted); }
+.choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 640px) { .choices { grid-template-columns: minmax(0, 1fr); } }
+.choice { position: relative; display: block; }
+.choice input { position: absolute; opacity: 0; }
+.choice span { display: grid; gap: 2px; height: 100%; padding: 14px 16px; border: 1px solid var(--border); background: var(--bg); font-size: 14px; color: var(--text-muted); }
+.choice b { font-size: 16px; color: var(--text); }
+.choice input:checked + span { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+.choice input:focus-visible + span { outline: 2px solid var(--arcane); outline-offset: 2px; }
+.check { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; }
+.check input { flex: none; width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--gold); }
+.stepper { display: flex; }
+.stepper button { flex: none; width: 52px; height: 52px; border: 1px solid var(--border); background: var(--surface-2); }
+.field .stepper input { width: 72px; text-align: center; border-inline: 0; }
+.form-card .btn { width: 100%; }
+.success { padding: clamp(28px, 4vw, 48px); border: 1px solid var(--gold); background: var(--surface); color: var(--text); text-align: center; animation: rise var(--slow) var(--ease); }
+.seal { display: grid; place-items: center; width: 60px; height: 60px; margin: 6px auto 22px; border: 1px solid var(--gold); transform: rotate(45deg); }
+.seal svg { width: 28px; height: 28px; color: var(--gold-ink); transform: rotate(-45deg); }
+.success h3 { font: italic 800 30px/1.1 var(--serif); text-transform: uppercase; }
+.success p { margin: 12px auto 24px; max-width: 30em; color: var(--text-muted); }
+
+/* ---------- FAQ, about, legal ---------- */
+.faq-group + .faq-group { margin-top: 48px; }
+.faq-group h2 { margin-bottom: 8px; }
+.qa { border-bottom: 1px solid var(--border); }
+.qa summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; font: 700 18px/1.35 var(--sans); list-style: none; cursor: pointer; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after { content: ""; flex: none; width: 11px; height: 11px; border: 1px solid var(--gold); transform: rotate(45deg); transition: background var(--fast); }
+.qa[open] summary::after { background: var(--gold); }
+.qa p { max-width: 46em; padding-bottom: 22px; color: var(--text-muted); }
+.aside-card { padding: 28px; border: 1px solid var(--border); background: var(--surface); }
+.aside-card + .aside-card { margin-top: 16px; }
+.aside-card h3 { font: italic 800 24px/1.1 var(--serif); text-transform: uppercase; }
+.aside-card p { margin-top: 8px; color: var(--text-muted); font-size: 15px; }
+.cols { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+@media (max-width: 899px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+.values { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 48px; text-align: left; }
+.values li { padding-top: 24px; border-top: 1px solid var(--gold); }
+.values h3 { font: italic 800 24px/1.15 var(--serif); text-transform: uppercase; }
+.values p { margin-top: 10px; color: var(--text-muted); }
+@media (max-width: 799px) { .values { grid-template-columns: minmax(0, 1fr); } }
+.timeline { position: relative; display: grid; gap: 28px; padding-left: 40px; }
+.timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: var(--gold); }
+.timeline li { position: relative; }
+.timeline li::before { content: ""; position: absolute; left: -40px; top: 6px; width: 15px; height: 15px; border: 1px solid var(--gold); background: var(--bg); transform: rotate(45deg); }
+.timeline b { display: block; font: italic 800 24px/1.1 var(--serif); }
+.timeline p { margin-top: 4px; color: var(--text-muted); }
+.team li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.team span { color: var(--text-muted); }
+.legal-text h2 { margin: 40px 0 10px; font: italic 800 28px/1.1 var(--serif); text-transform: uppercase; }
+.legal-text p + p { margin-top: 1em; }
+.lost { display: grid; place-items: center; min-height: 72vh; text-align: center; }
+
+/* ---------- Footer ---------- */
+.site-footer { background: var(--bar); color: var(--on-dark); }
+.foot-bar { background: var(--bar-2); }
+.foot-bar ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 32px; padding: 26px var(--gutter); }
+.foot-bar a, .foot-links a { font: 700 13px/1.2 var(--sans); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; }
+.foot-bar a:hover, .foot-links a:hover { color: var(--gold); }
+.foot-base { display: grid; justify-items: center; gap: 24px; padding: 40px var(--gutter) 48px; text-align: center; }
+.socials { display: flex; gap: 12px; }
+.socials a { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--bar-2); }
+.socials a:hover { color: var(--gold); }
+.socials .ico { width: 18px; height: 18px; }
+.foot-base .brand svg { width: 40px; height: 40px; }
+.fine { max-width: 560px; font-size: 13px; color: var(--on-dark-muted); }
+.foot-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 28px; }
+.spec { display: flex; align-items: center; gap: 14px; padding: 10px 18px 10px 10px; border-radius: 6px; background: var(--bar-2); font: 600 13px/1.45 var(--sans); text-align: left; }
+.spec b { display: grid; place-items: center; width: 54px; height: 54px; background: var(--on-dark); color: var(--bar); font: italic 800 22px/1 var(--serif); }
+
+/* ---------- Entrances: keyframes on entry, visible without JavaScript, timed fallback in the script ---------- */
+.js .reveal:not(.is-in) { opacity: 0; }
+.reveal.is-in { animation: rise var(--slow) var(--ease) both; }
+.js [data-view].is-active { animation: fade var(--base) ease both; }
+@keyframes rise { from { opacity: 0; transform: translateY(26px); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal:not(.is-in) { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="1"/><path d="M4 10h16M9 3v4M15 3v4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/></symbol>
+  <symbol id="i-feed" viewBox="0 0 24 24"><path d="M5 5a14 14 0 0 1 14 14M5 11a8 8 0 0 1 8 8"/><circle cx="6" cy="18" r="1.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="c-vanguard" viewBox="0 0 48 48"><path fill-rule="evenodd" d="M24 4l16 6v14c0 10-7 17-16 20C15 41 8 34 8 24V10zm0 10l-7 8 7 10 7-10z"/></symbol>
+  <symbol id="c-blade" viewBox="0 0 48 48"><path d="M9 39L34 11l4-1-1 4L9 42zM39 39L14 11l-4-1 1 4 28 28zM8 32l8 8-3 3-8-8zM40 32l-8 8 3 3 8-8z"/></symbol>
+  <symbol id="c-arcanist" viewBox="0 0 48 48"><path d="M24 2l5 17 17 5-17 5-5 17-5-17-17-5 17-5z"/></symbol>
+  <symbol id="c-ranger" viewBox="0 0 48 48"><path d="M8 37L33 12l3 3-25 25zM44 4l-3 17-14-14zM5 33l10 10-9 1z"/></symbol>
+  <symbol id="c-warden" viewBox="0 0 48 48"><path fill-rule="evenodd" d="M18 10h12l-2-4h-8zM14 12h20l2 25H12zM20 17v15h8V17zM10 39h28v4H10z"/></symbol>
+  <symbol id="crest" viewBox="0 0 200 200"><path fill-rule="evenodd" d="M100 4l96 96-96 96L4 100zm0 16L20 100l80 80 80-80zm0 28l52 52-52 52-52-52zm0 22c13 18 17 32 0 58-17-26-13-40 0-58z"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="#/" aria-label="Gloamreach home"><svg class="glyph" aria-hidden="true"><use href="#crest"/></svg><span class="wordmark">Gloamreach</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/heroes">Heroes</a>
+      <a href="#/news">News</a>
+      <a href="#/rules">Rules updates</a>
+      <a href="#/events">Events</a>
+      <a href="#/editions">Editions</a>
+      <a href="#/support">Support</a>
+    </nav>
+    <div class="head-end">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark theme"><svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="btn arcane sm" href="#/join">Pre-order</a>
+      <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+  <nav class="menu" id="menu" aria-label="Menu" hidden>
+    <a href="#/heroes">Heroes</a>
+    <a href="#/news">News</a>
+    <a href="#/rules">Rules updates</a>
+    <a href="#/events">Events</a>
+    <a href="#/editions">Editions</a>
+    <a href="#/support">Support</a>
+    <a href="#/join">Pre-order list</a>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ======================= HOME ======================= -->
+<div data-view="home">
+  <section class="scene hero sc-vale" aria-labelledby="home-title">
+    <div class="mist" aria-hidden="true"></div>
+    <div class="embers" aria-hidden="true"></div>
+    <div class="reveal">
+      <h1 id="home-title"><span class="kick">A cooperative fantasy board game</span><span class="logotype">Gloamreach</span><span class="tagline">Five heroes, one table, and a night that will not end on its own</span></h1>
+      <a class="btn framed" href="#/editions">Pre-order the core box</a>
+    </div>
+  </section>
+
+  <section class="strip stone lattice" aria-labelledby="latest" data-js>
+    <div class="wrap">
+      <div class="row-head"><h2 id="latest" class="eyebrow">Latest news</h2><a class="link" href="#/news">All news <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+      <ul class="cards" id="home-news"></ul>
+      <div class="track-rule"><span class="rule" id="news-rule"><span></span></span><button class="arrow" type="button" data-strip="-1" aria-label="Previous story"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg></button><button class="arrow" type="button" data-strip="1" aria-label="Next story"><svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></button></div>
+    </div>
+  </section>
+
+  <section class="sec stone" id="choose" aria-labelledby="choose-title">
+    <svg class="crest glyph" aria-hidden="true"><use href="#crest"/></svg>
+    <div class="wrap split">
+      <div class="center reveal">
+        <h2 id="choose-title" class="duo"><span class="kicker">Choose your</span><span class="big">Hero</span></h2>
+        <p class="lead">Hold the gate, mend the wounded or strike from the dark. Every hero changes how your table plays the night.</p>
+        <div class="btns"><a class="btn" href="#/heroes">Meet all heroes</a><a class="btn arcane" href="#play">How to play</a></div>
+        <div class="classes" role="group" aria-label="Hero classes" data-js>
+          <button class="cls" type="button" data-cls="vanguard" aria-pressed="true"><svg class="glyph" aria-hidden="true"><use href="#c-vanguard"/></svg>Vanguards</button>
+          <button class="cls" type="button" data-cls="blade" aria-pressed="false"><svg class="glyph" aria-hidden="true"><use href="#c-blade"/></svg>Blades</button>
+          <button class="cls" type="button" data-cls="arcanist" aria-pressed="false"><svg class="glyph" aria-hidden="true"><use href="#c-arcanist"/></svg>Arcanists</button>
+          <button class="cls" type="button" data-cls="ranger" aria-pressed="false"><svg class="glyph" aria-hidden="true"><use href="#c-ranger"/></svg>Rangers</button>
+          <button class="cls" type="button" data-cls="warden" aria-pressed="false"><svg class="glyph" aria-hidden="true"><use href="#c-warden"/></svg>Wardens</button>
+        </div>
+        <div class="track-rule" data-js><span class="rule" id="cls-rule"><span></span></span><button class="arrow" type="button" data-cls-step="-1" aria-label="Previous class"><svg class="ico" aria-hidden="true"><use href="#i-left"/></svg></button><button class="arrow" type="button" data-cls-step="1" aria-label="Next class"><svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></button></div>
+      </div>
+      <figure class="reveal" id="pick" style="--hue:#8fb8ff">
+        <div class="ring-stage"><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle class="base" cx="50" cy="50" r="49.6"/><circle class="arc" cx="50" cy="50" r="49.6" pathLength="100"/></svg><img class="figure" id="pick-img" src="images/hero-corvin.svg" width="400" height="560" alt="Corvin Hale, a knight in plate armour raising a sword behind a tower shield"></div>
+        <figcaption class="fig-cap"><a id="pick-link" href="#/hero?h=corvin"><b id="pick-name">Corvin Hale</b></a><span id="pick-title">The Iron Oath</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="scene sc-coast flip band" aria-labelledby="coast-title">
+    <div class="wrap split">
+      <div class="diamond-stage reveal" style="--hue:#3fd9c8"><img class="figure" src="images/hero-sefa.svg" width="400" height="560" alt="Sefa Oduya, a robed tide caller with a crescent staff and a ribbon of water"></div>
+      <div class="reveal">
+        <h2 id="coast-title" class="duo"><span class="kicker">Sail for the</span><span class="big">Drowned Coast</span></h2>
+        <p class="lead">The first expansion adds a coastline board, a tide deck that floods the map as you play and a six-chapter campaign led by the tide caller.</p>
+        <div class="btns"><a class="btn" href="#/editions">See the editions</a><a class="btn ghost" href="#/post?p=coast">Read the studio notes</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec deep" id="play" aria-labelledby="play-title">
+    <div class="wrap split">
+      <div class="center reveal">
+        <h2 id="play-title" class="duo"><span class="kicker">Many ways to</span><span class="big">Play</span></h2>
+        <p class="lead">Play the story over a season of evenings, settle it in one sitting, or keep the vigil alone.</p>
+        <div class="btns"><a class="btn" href="#/rules">Rules updates</a></div>
+        <div class="modes" role="group" aria-label="Ways to play" data-js>
+          <button class="mode" type="button" data-mode="0" aria-pressed="true"><img src="images/board.svg" width="800" height="800" alt="">Campaign</button>
+          <button class="mode" type="button" data-mode="1" aria-pressed="false"><img src="images/scene-gate.svg" width="1600" height="900" alt="">Skirmish</button>
+          <button class="mode" type="button" data-mode="2" aria-pressed="false"><img src="images/scene-stones.svg" width="1600" height="900" alt="">Solo vigil</button>
+          <button class="mode" type="button" data-mode="3" aria-pressed="false"><img src="images/scene-coast.svg" width="1600" height="900" alt="">Tide trials</button>
+        </div>
+      </div>
+      <figure class="mode-show reveal" id="mode-show">
+        <div class="disc"><img id="mode-img" src="images/board.svg" width="800" height="800" alt="The board from above: three roads between two beacons, a river and dark woods"></div>
+        <figcaption><b id="mode-name">The long night</b><span id="mode-text">Twelve chapters for one to five players, 60 to 90 minutes each. Scars, allies and lost lanterns carry from one chapter to the next.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="scene sc-gate finale" aria-labelledby="finale-title">
+    <div class="wrap center reveal">
+      <h2 id="finale-title" class="duo"><span class="kicker">The gate is open</span><span class="big">Gather your table</span></h2>
+      <p class="lead">Join the pre-order list and we will write once when the boxes ship. No countdowns, no spam.</p>
+      <div class="btns"><a class="btn framed" href="#/join">Join the pre-order list</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= HEROES ======================= -->
+<div data-view="heroes">
+  <section class="banner">
+    <svg class="crest glyph" aria-hidden="true"><use href="#crest"/></svg>
+    <div class="wrap">
+      <h1 class="duo"><span class="kicker">Choose your</span><span class="big">Heroes</span></h1>
+      <p class="lead">Eight heroes ship in the core box. Each has a class, a difficulty and four abilities printed on their hero board.</p>
+    </div>
+  </section>
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="filters" data-js>
+        <div class="chips" data-chips="roster" role="group" aria-label="Filter by class">
+          <button class="chip" type="button" data-chip="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" data-chip="vanguard" aria-pressed="false"><svg class="glyph" aria-hidden="true"><use href="#c-vanguard"/></svg>Vanguard</button>
+          <button class="chip" type="button" data-chip="blade" aria-pressed="false"><svg class="glyph" aria-hidden="true"><use href="#c-blade"/></svg>Blade</button>
+          <button class="chip" type="button" data-chip="arcanist" aria-pressed="false"><svg class="glyph" aria-hidden="true"><use href="#c-arcanist"/></svg>Arcanist</button>
+          <button class="chip" type="button" data-chip="ranger" aria-pressed="false"><svg class="glyph" aria-hidden="true"><use href="#c-ranger"/></svg>Ranger</button>
+          <button class="chip" type="button" data-chip="warden" aria-pressed="false"><svg class="glyph" aria-hidden="true"><use href="#c-warden"/></svg>Warden</button>
+        </div>
+        <div class="tools">
+          <label class="search"><span class="sr-only">Search heroes</span><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><input id="roster-q" type="search" placeholder="Search heroes" autocomplete="off"></label>
+          <label><span class="sr-only">Sort heroes</span><select id="roster-sort"><option value="box">Box order</option><option value="az">Name A to Z</option><option value="diff">Easiest first</option></select></label>
+        </div>
+      </div>
+      <p class="count" id="roster-count" aria-live="polite" data-js>8 heroes</p>
+      <ul class="roster" id="roster">
+        <li class="hcard" data-id="maren" data-cls="warden" data-diff="1" style="--hue:#ffb347"><a href="#/hero?h=maren"><span class="hart"><img src="images/hero-maren.svg" width="400" height="560" alt="Maren Ashvale, a hooded keeper holding a lantern on a long staff"></span><span class="hname">Maren Ashvale<small>Warden</small></span></a></li>
+        <li class="hcard" data-id="corvin" data-cls="vanguard" data-diff="1" style="--hue:#8fb8ff"><a href="#/hero?h=corvin"><span class="hart"><img src="images/hero-corvin.svg" width="400" height="560" alt="Corvin Hale, a knight in plate armour raising a sword behind a tower shield"></span><span class="hname">Corvin Hale<small>Vanguard</small></span></a></li>
+        <li class="hcard" data-id="ysolde" data-cls="ranger" data-diff="2" style="--hue:#8ef08a"><a href="#/hero?h=ysolde"><span class="hart"><img src="images/hero-ysolde.svg" width="400" height="560" alt="Ysolde Fenn, an archer in a hooded cape drawing a longbow"></span><span class="hname">Ysolde Fenn<small>Ranger</small></span></a></li>
+        <li class="hcard" data-id="ilka" data-cls="arcanist" data-diff="3" style="--hue:#66e0ff"><a href="#/hero?h=ilka"><span class="hart"><img src="images/hero-ilka.svg" width="400" height="560" alt="Ilka Vey, a robed witch with a crystal crown and floating glass shards"></span><span class="hname">Ilka Vey<small>Arcanist</small></span></a></li>
+        <li class="hcard" data-id="sable" data-cls="blade" data-diff="3" style="--hue:#ff3b5c"><a href="#/hero?h=sable"><span class="hart"><img src="images/hero-sable.svg" width="400" height="560" alt="Sable Wren, a hooded fighter crouching low with two daggers"></span><span class="hname">Sable Wren<small>Blade</small></span></a></li>
+        <li class="hcard" data-id="brannoc" data-cls="vanguard" data-diff="2" style="--hue:#ff9f43"><a href="#/hero?h=brannoc"><span class="hart"><img src="images/hero-brannoc.svg" width="400" height="560" alt="Brannoc Stoutheart, a broad bearded smith with a great hammer on his shoulder"></span><span class="hname">Brannoc Stoutheart<small>Vanguard</small></span></a></li>
+        <li class="hcard" data-id="sefa" data-cls="arcanist" data-diff="2" style="--hue:#3fd9c8"><a href="#/hero?h=sefa"><span class="hart"><img src="images/hero-sefa.svg" width="400" height="560" alt="Sefa Oduya, a robed tide caller with a crescent staff and a ribbon of water"></span><span class="hname">Sefa Oduya<small>Arcanist</small></span></a></li>
+        <li class="hcard" data-id="halvard" data-cls="blade" data-diff="2" style="--hue:#ff7a29"><a href="#/hero?h=halvard"><span class="hart"><img src="images/hero-halvard.svg" width="400" height="560" alt="Halvard Rusk, a caped soldier lunging forward with a halberd"></span><span class="hname">Halvard Rusk<small>Blade</small></span></a></li>
+      </ul>
+      <div class="empty" data-empty="roster" hidden><p>No hero matches that search.</p><button class="link" type="button" data-clear="roster">Show every hero</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= HERO DETAIL ======================= -->
+<div data-view="hero">
+  <section class="scene sc-vale hd" id="hd" style="--hue:#ffb347">
+    <div class="wrap split">
+      <div>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="#/heroes">Heroes</a><span aria-hidden="true">/</span><span data-h="cls">Warden</span></nav>
+        <h1 class="big" data-h="name">Maren Ashvale</h1>
+        <p class="hd-title" data-h="title">The Lantern Keeper</p>
+        <div class="diff"><span>Difficulty</span><span class="pips" data-h="pips" aria-hidden="true"><i class="on"></i><i></i><i></i></span><span data-h="level" class="on-dark">Easy</span></div>
+        <p class="lead" data-h="lore">Maren kept the last lit lantern on the Reach road for eleven winters. Where her light falls, the night has to ask permission.</p>
+        <div class="btns"><a class="btn" href="#/editions">Pre-order</a><a class="btn ghost" href="#/heroes">All heroes</a></div>
+      </div>
+      <div class="diamond-stage"><img class="figure" id="hd-img" src="images/hero-maren.svg" width="400" height="560" alt="Maren Ashvale, a hooded keeper holding a lantern on a long staff"></div>
+    </div>
+  </section>
+  <section class="sec stone" aria-labelledby="ab-title">
+    <svg class="crest glyph" aria-hidden="true"><use href="#crest"/></svg>
+    <div class="wrap center">
+      <h2 id="ab-title" class="duo"><span class="kicker">On the hero board</span><span class="big m">Abilities</span></h2>
+      <div class="abilities" role="group" aria-label="Abilities" data-js>
+        <button class="ab" type="button" data-ab="0" aria-pressed="true" aria-label="Trait"><svg class="glyph" aria-hidden="true"><use href="#crest"/></svg></button>
+        <button class="ab" type="button" data-ab="1" aria-pressed="false" aria-label="Action"><svg class="glyph" aria-hidden="true"><use href="#c-blade"/></svg></button>
+        <button class="ab" type="button" data-ab="2" aria-pressed="false" aria-label="Reaction"><svg class="glyph" aria-hidden="true"><use href="#c-vanguard"/></svg></button>
+        <button class="ab" type="button" data-ab="3" aria-pressed="false" aria-label="Rally"><svg class="glyph" aria-hidden="true"><use href="#c-arcanist"/></svg></button>
+      </div>
+      <div class="ab-items" id="ab-items" aria-live="polite">
+        <div class="ab-item on"><p class="eyebrow">Trait</p><h3>Kindled path</h3><p>Allies who start their turn within three spaces of Maren move one extra space.</p></div>
+        <div class="ab-item"><p class="eyebrow">Action</p><h3>Raise the lantern</h3><p>Push every shade within two spaces back one space. They cannot enter her light this round.</p></div>
+        <div class="ab-item"><p class="eyebrow">Reaction</p><h3>Steady hands</h3><p>When an ally would lose their last wound, spend a lantern oil to prevent it.</p></div>
+        <div class="ab-item"><p class="eyebrow">Rally</p><h3>All the lamps at once</h3><p>Once per chapter, light every beacon on the board until the end of the next night phase.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec" aria-labelledby="pairs-title" data-js>
+    <div class="wrap">
+      <div class="row-head"><h2 id="pairs-title" class="eyebrow">More heroes</h2><a class="link" href="#/heroes">All heroes <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+      <ul class="roster" id="pairs"></ul>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= NEWS ======================= -->
+<div data-view="news">
+  <section class="banner">
+    <svg class="crest glyph" aria-hidden="true"><use href="#crest"/></svg>
+    <div class="wrap"><h1 class="big">News</h1><p class="lead">Rules updates, studio notes, event recaps and the best of what players make.</p></div>
+  </section>
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="filters" data-js>
+        <div class="chips" data-chips="news" role="group" aria-label="Filter by topic">
+          <button class="chip" type="button" data-chip="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" data-chip="rules" aria-pressed="false">Rules</button>
+          <button class="chip" type="button" data-chip="studio" aria-pressed="false">Studio</button>
+          <button class="chip" type="button" data-chip="events" aria-pressed="false">Events</button>
+          <button class="chip" type="button" data-chip="community" aria-pressed="false">Community</button>
+        </div>
+      </div>
+      <p class="count" id="news-count" aria-live="polite" data-js>6 stories</p>
+      <ul class="cards" id="news-list">
+        <li class="ncard" data-id="rules-13" data-topic="rules"><a href="#/post?p=rules-13"><span class="nart"><img src="images/scene-vale.svg" width="1600" height="900" alt="A keep on a crag under a full moon"><span class="corner"><svg class="ico" aria-hidden="true"><use href="#i-out"/></svg></span></span><span class="meta"><b>Rules</b><time datetime="2026-11-18">18 Nov 2026</time></span><h3>Rules 1.3 is live: lanterns burn longer</h3><p>Maren's light reaches further, Shatter costs more and three new omens join the night deck.</p></a></li>
+        <li class="ncard" data-id="coast" data-topic="studio"><a href="#/post?p=coast"><span class="nart"><img src="images/scene-coast.svg" width="1600" height="900" alt="A lighthouse on a storm coast at night"><span class="corner"><svg class="ico" aria-hidden="true"><use href="#i-out"/></svg></span></span><span class="meta"><b>Studio</b><time datetime="2026-11-11">11 Nov 2026</time></span><h3>Inside the box: painting the Drowned Coast</h3><p>How the expansion board went from a soggy sketch to the map that floods under your hands.</p></a></li>
+        <li class="ncard" data-id="winter" data-topic="events"><a href="#/post?p=winter"><span class="nart"><img src="images/scene-gate.svg" width="1600" height="900" alt="A fortress gate glowing from within"><span class="corner"><svg class="ico" aria-hidden="true"><use href="#i-out"/></svg></span></span><span class="meta"><b>Events</b><time datetime="2026-11-04">4 Nov 2026</time></span><h3>Winter campaign nights: twelve tables, one long night</h3><p>Every Saturday in December, play chapter one with strangers who will not be strangers by midnight.</p></a></li>
+        <li class="ncard" data-id="fail" data-topic="studio"><a href="#/post?p=fail"><span class="nart"><img src="images/scene-thorn.svg" width="1600" height="900" alt="Ruins in a pine forest with shafts of light"><span class="corner"><svg class="ico" aria-hidden="true"><use href="#i-out"/></svg></span></span><span class="meta"><b>Studio</b><time datetime="2026-10-28">28 Oct 2026</time></span><h3>Designer notes: why every hero can fail</h3><p>A cooperative game is only tense if losing is real. Here is how we tuned the night to almost win.</p></a></li>
+        <li class="ncard" data-id="maps" data-topic="community"><a href="#/post?p=maps"><span class="nart"><img src="images/board.svg" width="800" height="800" alt="The board from above with three roads and a river"><span class="corner"><svg class="ico" aria-hidden="true"><use href="#i-out"/></svg></span></span><span class="meta"><b>Community</b><time datetime="2026-10-20">20 Oct 2026</time></span><h3>Five fan-made skirmishes worth an evening</h3><p>Player-built maps that bend the rules in the best way, with print files from their makers.</p></a></li>
+        <li class="ncard" data-id="solo" data-topic="rules"><a href="#/post?p=solo"><span class="nart"><img src="images/scene-stones.svg" width="1600" height="900" alt="Standing stones on a hill under a green aurora"><span class="corner"><svg class="ico" aria-hidden="true"><use href="#i-out"/></svg></span></span><span class="meta"><b>Rules</b><time datetime="2026-10-09">9 Oct 2026</time></span><h3>Solo vigil, explained in five turns</h3><p>One player, two heroes and an omen deck that plays the dark against you. A walkthrough.</p></a></li>
+      </ul>
+      <div class="empty" data-empty="news" hidden><p>No stories on that topic yet.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= ARTICLE ======================= -->
+<div data-view="post">
+  <article>
+    <header class="banner">
+      <div class="wrap narrow">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="#/news">News</a><span aria-hidden="true">/</span><span data-p="topic">Rules</span></nav>
+        <h1 class="big m" data-p="title">Rules 1.3 is live: lanterns burn longer</h1>
+        <p class="meta on-dark"><time data-p="date" datetime="2026-11-18">18 Nov 2026</time><span aria-hidden="true">/</span><span data-p="by">Odette Marsh, lead designer</span></p>
+      </div>
+    </header>
+    <div class="wrap narrow">
+      <div class="post-art"><img id="post-img" src="images/scene-vale.svg" width="1600" height="900" alt="A keep on a crag under a full moon"></div>
+      <div class="prose" data-p="body">
+        <p>Rules 1.3 is the first update since the campaign book went to print. It is small on purpose: three changes, two clarifications and one new set of cards for five-player tables.</p>
+        <h2>What changed</h2>
+        <p>Maren's lantern now reaches three spaces. At two, tables kept leaving her behind, and a warden who cannot keep up is not much of a warden. Ilka's Shatter costs two focus, because one focus made her the answer to every question.</p>
+        <p>The full list, with the old and new wording side by side, is on the rules updates page. Printed cards come with the next reprint, and the files are free to print now.</p>
+      </div>
+      <div class="post-foot"><a class="btn" href="#/join">Get the next story by email</a><a class="btn ghost" href="#/news">Back to news</a></div>
+    </div>
+  </article>
+  <section class="sec" aria-labelledby="next-title" data-js>
+    <div class="wrap">
+      <div class="row-head"><h2 id="next-title" class="eyebrow">Read next</h2><a class="link" href="#/news">All news <svg class="ico" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+      <ul class="cards" id="read-next"></ul>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= RULES UPDATES ======================= -->
+<div data-view="rules">
+  <section class="banner">
+    <svg class="crest glyph" aria-hidden="true"><use href="#crest"/></svg>
+    <div class="wrap"><h1 class="duo"><span class="kicker">Rules</span><span class="big">Updates</span></h1><p class="lead">Every change to the printed rules, newest first. Updated cards come with each reprint, and the print files are free.</p></div>
+  </section>
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="filters" data-js>
+        <div class="chips" data-chips="rules" role="group" aria-label="Filter by kind of change">
+          <button class="chip" type="button" data-chip="all" aria-pressed="true">All changes</button>
+          <button class="chip" type="button" data-chip="new" aria-pressed="false">New</button>
+          <button class="chip" type="button" data-chip="changed" aria-pressed="false">Changed</button>
+          <button class="chip" type="button" data-chip="clarified" aria-pressed="false">Clarified</button>
+        </div>
+        <div class="tools"><label><span class="sr-only">Jump to a version</span><select id="rules-jump"><option value="v13">Rules 1.3</option><option value="v12">Rules 1.2</option><option value="v11">Rules 1.1</option></select></label></div>
+      </div>
+      <article class="patch" id="v13">
+        <div class="patch-side"><p class="eyebrow">Current</p><h2>Rules 1.3</h2><time datetime="2026-11-18" class="muted">18 November 2026</time><p>Longer light, a costlier Shatter and new omens for five players.</p></div>
+        <ul class="changes">
+          <li class="change" data-tag="changed"><span class="gbox"><svg class="glyph" aria-hidden="true"><use href="#c-warden"/></svg></span><div><p class="ch-head">Maren Ashvale <span class="tag changed">Changed</span></p><p>Kindled path reaches <s>two</s> three spaces.</p></div></li>
+          <li class="change" data-tag="changed"><span class="gbox"><svg class="glyph" aria-hidden="true"><use href="#c-arcanist"/></svg></span><div><p class="ch-head">Ilka Vey <span class="tag changed">Changed</span></p><p>Shatter costs <s>one</s> two focus.</p></div></li>
+          <li class="change" data-tag="clarified"><span class="gbox"><svg class="glyph" aria-hidden="true"><use href="#c-blade"/></svg></span><div><p class="ch-head">Sable Wren <span class="tag clarified">Clarified</span></p><p>Vanish ends when she attacks, not when she moves.</p></div></li>
+          <li class="change" data-tag="new"><span class="gbox"><svg class="glyph" aria-hidden="true"><use href="#crest"/></svg></span><div><p class="ch-head">Night deck <span class="tag new">New</span></p><p>Three omen cards for five-player tables: the Hollow Bell, the Second Moon and the Long Fog.</p></div></li>
+        </ul>
+      </article>
+      <article class="patch" id="v12">
+        <div class="patch-side"><p class="eyebrow">Previous</p><h2>Rules 1.2</h2><time datetime="2026-09-02" class="muted">2 September 2026</time><p>Sturdier vanguards and a fairer tide.</p></div>
+        <ul class="changes">
+          <li class="change" data-tag="changed"><span class="gbox"><svg class="glyph" aria-hidden="true"><use href="#c-vanguard"/></svg></span><div><p class="ch-head">Corvin Hale <span class="tag changed">Changed</span></p><p>Iron oath blocks <s>one</s> two wounds per night phase.</p></div></li>
+          <li class="change" data-tag="clarified"><span class="gbox"><svg class="glyph" aria-hidden="true"><use href="#c-vanguard"/></svg></span><div><p class="ch-head">Brannoc Stoutheart <span class="tag clarified">Clarified</span></p><p>Anvil strike can target a gate as well as a shade.</p></div></li>
+          <li class="change" data-tag="changed"><span class="gbox"><svg class="glyph" aria-hidden="true"><use href="#c-arcanist"/></svg></span><div><p class="ch-head">Sefa Oduya <span class="tag changed">Changed</span></p><p>Undertow moves shades <s>three</s> two spaces.</p></div></li>
+        </ul>
+      </article>
+      <article class="patch" id="v11">
+        <div class="patch-side"><p class="eyebrow">Launch errata</p><h2>Rules 1.1</h2><time datetime="2026-06-14" class="muted">14 June 2026</time><p>Fixes from the first printing.</p></div>
+        <ul class="changes">
+          <li class="change" data-tag="clarified"><span class="gbox"><svg class="glyph" aria-hidden="true"><use href="#crest"/></svg></span><div><p class="ch-head">Setup <span class="tag clarified">Clarified</span></p><p>With one or two players, remove the omens marked with a moon before shuffling.</p></div></li>
+          <li class="change" data-tag="new"><span class="gbox"><svg class="glyph" aria-hidden="true"><use href="#c-ranger"/></svg></span><div><p class="ch-head">Ysolde Fenn <span class="tag new">New</span></p><p>Her missing Rally card, Thorn volley, is part of the free print files.</p></div></li>
+        </ul>
+      </article>
+      <div class="empty" data-empty="rules" hidden><p>No changes of that kind yet.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= EDITIONS ======================= -->
+<div data-view="editions">
+  <section class="banner">
+    <svg class="crest glyph" aria-hidden="true"><use href="#crest"/></svg>
+    <div class="wrap"><h1 class="duo"><span class="kicker">Choose your</span><span class="big">Edition</span></h1><p class="lead">Pre-orders ship in March 2027. Prices include delivery to the UK and the EU; elsewhere, shipping is shown at checkout.</p></div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="editions">
+        <article class="ed">
+          <div class="box sc-vale"><b>Gloamreach</b><span>Core box</span></div>
+          <h2>Core box</h2>
+          <p class="price">$64 <small>one payment</small></p>
+          <ul><li>Eight heroes and their boards</li><li>The double-sided Reach board</li><li>120 night cards and 30 omens</li><li>Rulebook and twelve-chapter campaign</li></ul>
+          <a class="btn" href="#/join?edition=core">Pre-order the core box</a>
+        </article>
+        <article class="ed featured">
+          <span class="flag">Everything in one chest</span>
+          <div class="box sc-gate"><b>Gloamreach</b><span>Collector's chest</span></div>
+          <h2>Collector's chest</h2>
+          <p class="price">$159 <small>one payment</small></p>
+          <ul><li>The core box and the Drowned Coast</li><li>Painted resin heroes in place of standees</li><li>Metal lantern tokens and a linen map</li><li>A hardback book of the art</li></ul>
+          <a class="btn" href="#/join?edition=chest">Pre-order the chest</a>
+        </article>
+        <article class="ed">
+          <div class="box sc-coast"><b>Gloamreach</b><span>Coast bundle</span></div>
+          <h2>Coast bundle</h2>
+          <p class="price">$92 <small>one payment</small></p>
+          <ul><li>The core box</li><li>The Drowned Coast expansion</li><li>A tide deck of 60 cards</li><li>Six more campaign chapters</li></ul>
+          <a class="btn" href="#/join?edition=coast">Pre-order the bundle</a>
+        </article>
+      </div>
+      <div class="stats" aria-label="In the core box">
+        <div><b>8</b><span>heroes</span></div>
+        <div><b>150</b><span>cards</span></div>
+        <div><b>1&ndash;5</b><span>players</span></div>
+        <div><b>12</b><span>campaign chapters</span></div>
+      </div>
+      <p class="center muted" style="margin-top:28px">Questions about delivery or a missing piece? <a class="link" href="#/support?at=orders">Orders and shipping help</a></p>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= EVENTS ======================= -->
+<div data-view="events">
+  <section class="banner">
+    <svg class="crest glyph" aria-hidden="true"><use href="#crest"/></svg>
+    <div class="wrap"><h1 class="duo"><span class="kicker">Play with us</span><span class="big">Events</span></h1><p class="lead">Learn-to-play afternoons, campaign nights and tournaments. Bring nothing but yourself; we bring the boxes.</p></div>
+  </section>
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="filters" data-js>
+        <div class="chips" data-chips="events" role="group" aria-label="Filter by kind of event">
+          <button class="chip" type="button" data-chip="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" data-chip="learn" aria-pressed="false">Learn to play</button>
+          <button class="chip" type="button" data-chip="campaign" aria-pressed="false">Campaign night</button>
+          <button class="chip" type="button" data-chip="tournament" aria-pressed="false">Tournament</button>
+          <button class="chip" type="button" data-chip="fair" aria-pressed="false">Game fair</button>
+        </div>
+      </div>
+      <p class="count" id="event-count" aria-live="polite" data-js>5 dates</p>
+      <ul class="events" id="events">
+        <li class="ev" data-kind="learn"><p class="ev-date"><b>06</b><span>Dec</span></p><div><p class="eyebrow">Learn to play</p><h3>Gloamreach in an afternoon</h3><ul><li><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>The Copper Kettle, Bristol</li><li><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>14:00 to 17:00</li><li>Free, 20 seats</li></ul></div><a class="btn sm" href="#/events?at=seat" data-seat="kettle-dec">Save a seat</a></li>
+        <li class="ev" data-kind="campaign"><p class="ev-date"><b>13</b><span>Dec</span></p><div><p class="eyebrow">Campaign night</p><h3>Chapter one, every table</h3><ul><li><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>Lantern Hall, Leeds</li><li><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>18:30 to 22:30</li><li>$6, 40 seats</li></ul></div><a class="btn sm" href="#/events?at=seat" data-seat="lantern-dec">Save a seat</a></li>
+        <li class="ev" data-kind="tournament"><p class="ev-date"><b>20</b><span>Dec</span></p><div><p class="eyebrow">Tournament</p><h3>Skirmish cup: winter round</h3><ul><li><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>Northgate Library, Manchester</li><li><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>10:00 to 18:00</li><li>$10, teams of two</li></ul></div><a class="btn sm" href="#/events?at=seat" data-seat="cup-dec">Save a seat</a></li>
+        <li class="ev" data-kind="fair"><p class="ev-date"><b>10</b><span>Jan</span></p><div><p class="eyebrow">Game fair</p><h3>Demo tables at the Midwinter Games Fair</h3><ul><li><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>Hall B, Glasgow</li><li><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>All weekend</li><li>Fair ticket required</li></ul></div><a class="btn sm" href="#/events?at=seat" data-seat="fair-jan">Save a seat</a></li>
+        <li class="ev" data-kind="campaign"><p class="ev-date"><b>07</b><span>Feb</span></p><div><p class="eyebrow">Campaign night</p><h3>Chapter two: the river rises</h3><ul><li><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>Lantern Hall, Leeds</li><li><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>18:30 to 22:30</li><li>$6, 40 seats</li></ul></div><a class="btn sm" href="#/events?at=seat" data-seat="lantern-feb">Save a seat</a></li>
+      </ul>
+      <div class="empty" data-empty="events" hidden><p>No dates of that kind right now.</p></div>
+    </div>
+  </section>
+  <section class="sec stone" id="seat" aria-labelledby="seat-title">
+    <svg class="crest glyph" aria-hidden="true"><use href="#crest"/></svg>
+    <div class="wrap narrow">
+      <div class="form-card">
+        <form data-form="seat" novalidate>
+          <h2 id="seat-title">Save a seat</h2>
+          <p>We hold your seat until fifteen minutes after the start.</p>
+          <div class="fields">
+            <div class="field"><label class="label" for="s-name">Name</label><input id="s-name" name="name" autocomplete="name" required aria-describedby="s-name-e"><p class="error" id="s-name-e" aria-live="polite"></p></div>
+            <div class="field"><label class="label" for="s-email">Email</label><input id="s-email" name="email" type="email" autocomplete="email" required aria-describedby="s-email-e"><p class="error" id="s-email-e" aria-live="polite"></p></div>
+            <div class="field full"><label class="label" for="s-event">Event</label><select id="s-event" name="event" required aria-describedby="s-event-e"><option value="">Choose a date</option></select><p class="error" id="s-event-e" aria-live="polite"></p></div>
+            <div class="field"><label class="label" for="s-seats">Seats</label><div class="stepper"><button type="button" data-step="-1" aria-label="One seat fewer"><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg></button><input id="s-seats" name="seats" type="number" inputmode="numeric" min="1" max="5" value="1"><button type="button" data-step="1" aria-label="One seat more"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></button></div></div>
+            <div class="field"><span class="label">First time?</span><label class="check"><input type="checkbox" name="first">Yes, teach us the rules at the table</label></div>
+          </div>
+          <button class="btn" type="submit">Save my seat</button>
+        </form>
+        <div class="success" data-success="seat" hidden>
+          <div class="seal"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>
+          <h3>Your seat is saved</h3>
+          <p>Thank you, <span data-echo="name">friend</span>. The details are on their way to your inbox, with a map to the table.</p>
+          <button class="btn ghost" type="button" data-reset>Save another seat</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= JOIN ======================= -->
+<div data-view="join">
+  <section class="scene sc-gate band">
+    <div class="wrap split">
+      <div>
+        <h1 class="duo"><span class="kicker">Join the</span><span class="big">Vigil</span></h1>
+        <p class="lead">One email when pre-orders open, one when your box ships, and the rules updates in between. Nothing else.</p>
+        <ul class="ticks" style="margin-top:28px;max-width:30em"><li>Choose your edition now and change it later</li><li>No payment until pre-orders open</li><li>Leave the list with one click</li></ul>
+      </div>
+      <div class="form-card">
+        <form data-form="join" novalidate>
+          <h2>Pre-order list</h2>
+          <p>Takes thirty seconds.</p>
+          <div class="fields">
+            <div class="field"><label class="label" for="j-name">Name</label><input id="j-name" name="name" autocomplete="name" required aria-describedby="j-name-e"><p class="error" id="j-name-e" aria-live="polite"></p></div>
+            <div class="field"><label class="label" for="j-email">Email</label><input id="j-email" name="email" type="email" autocomplete="email" required aria-describedby="j-email-e"><p class="error" id="j-email-e" aria-live="polite"></p></div>
+            <fieldset class="field full" aria-describedby="j-ed-e"><legend class="label" style="margin-bottom:8px">Edition</legend>
+              <div class="choices">
+                <label class="choice"><input type="radio" name="edition" value="core" required aria-describedby="j-ed-e"><span><b>Core box</b>$64</span></label>
+                <label class="choice"><input type="radio" name="edition" value="coast" aria-describedby="j-ed-e"><span><b>Coast bundle</b>$92</span></label>
+                <label class="choice"><input type="radio" name="edition" value="chest" aria-describedby="j-ed-e"><span><b>Collector's chest</b>$159</span></label>
+              </div>
+              <p class="error" id="j-ed-e" aria-live="polite"></p>
+            </fieldset>
+            <div class="field full"><label class="label" for="j-country">Ship to</label><select id="j-country" name="country" required aria-describedby="j-country-e"><option value="">Choose a country</option><option>United Kingdom</option><option>Ireland</option><option>Germany</option><option>France</option><option>Netherlands</option><option>Somewhere else</option></select><p class="error" id="j-country-e" aria-live="polite"></p></div>
+            <div class="field full"><label class="check"><input type="checkbox" name="consent" required aria-describedby="j-consent-e"><span>I agree to receive these emails and have read the <a href="#/legal">privacy notice</a>.</span></label><p class="error" id="j-consent-e" aria-live="polite"></p></div>
+          </div>
+          <button class="btn" type="submit">Join the list</button>
+        </form>
+        <div class="success" data-success="join" hidden>
+          <div class="seal"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>
+          <h3>You are on the list</h3>
+          <p>Welcome to the vigil, <span data-echo="name">friend</span>. We will write when pre-orders open.</p>
+          <button class="btn ghost" type="button" data-reset>Add someone else</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= SUPPORT ======================= -->
+<div data-view="support">
+  <section class="banner">
+    <svg class="crest glyph" aria-hidden="true"><use href="#crest"/></svg>
+    <div class="wrap"><h1 class="duo"><span class="kicker">How can we</span><span class="big">Help</span></h1><p class="lead">Rules questions, orders and missing pieces. Most answers are below; the rest come from a person within two working days.</p></div>
+  </section>
+  <section class="sec tight">
+    <div class="wrap cols">
+      <div>
+        <div class="filters" data-js><label class="search" style="width:100%"><span class="sr-only">Search the questions</span><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><input id="faq-q" type="search" placeholder="Search the questions" autocomplete="off" style="width:100%"></label></div>
+        <div class="faq-group" id="rules-help"><h2 class="eyebrow">Rules</h2>
+          <details class="qa"><summary>Can we play with fewer than five heroes?</summary><p>Yes. Every chapter scales from one to five players. With one or two, each player controls two heroes.</p></details>
+          <details class="qa"><summary>What happens when a hero falls?</summary><p>They leave the board until the next dawn phase and take a scar card. Scars carry through the campaign, so a fallen hero changes the story.</p></details>
+        </div>
+        <div class="faq-group" id="orders"><h2 class="eyebrow">Orders and shipping</h2>
+          <details class="qa"><summary>When will my pre-order ship?</summary><p>Pre-orders ship in March 2027. We email you once with tracking when your box leaves the warehouse.</p></details>
+          <details class="qa"><summary>Can I change my edition?</summary><p>Yes, until we ask for payment. Write to us with the email you signed up with.</p></details>
+          <details class="qa"><summary>Do you ship outside Europe?</summary><p>Yes. Shipping outside the UK and the EU is shown at checkout, before you pay.</p></details>
+        </div>
+        <div class="faq-group" id="pieces"><h2 class="eyebrow">Missing or damaged pieces</h2>
+          <details class="qa"><summary>A piece is missing from my box</summary><p>Tell us which one with the form on this page. We send replacements free, wherever you are.</p></details>
+          <details class="qa"><summary>A card arrived bent or misprinted</summary><p>Send a photo with the form and we will replace it with the next post.</p></details>
+        </div>
+        <div class="empty" data-empty="faq" hidden><p>No question matches. Ask us with the form instead.</p></div>
+      </div>
+      <aside>
+        <div class="aside-card"><h3>Rules question?</h3><p>Ask the designers directly. We answer the good ones in the next rules update.</p></div>
+        <div class="aside-card"><h3>Press and stores</h3><p>Review copies, retail and events: write to <a class="link" href="#/support?at=contact">the studio</a> and pick the right topic.</p></div>
+      </aside>
+    </div>
+  </section>
+  <section class="sec stone" id="contact" aria-labelledby="contact-title">
+    <svg class="crest glyph" aria-hidden="true"><use href="#crest"/></svg>
+    <div class="wrap narrow">
+      <div class="form-card">
+        <form data-form="contact" novalidate>
+          <h2 id="contact-title">Write to us</h2>
+          <p>A person reads every message.</p>
+          <div class="fields">
+            <div class="field"><label class="label" for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-e"><p class="error" id="c-name-e" aria-live="polite"></p></div>
+            <div class="field"><label class="label" for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-e"><p class="error" id="c-email-e" aria-live="polite"></p></div>
+            <div class="field"><label class="label" for="c-topic">Topic</label><select id="c-topic" name="topic" required aria-describedby="c-topic-e"><option value="">Choose a topic</option><option value="rules">A rules question</option><option value="order">My order</option><option value="piece">A missing or damaged piece</option><option value="press">Press, stores and events</option></select><p class="error" id="c-topic-e" aria-live="polite"></p></div>
+            <div class="field"><label class="label" for="c-order">Order number <span class="opt">optional</span></label><input id="c-order" name="order" autocomplete="off"></div>
+            <div class="field full"><label class="label" for="c-msg">Message</label><textarea id="c-msg" name="message" required maxlength="1200" aria-describedby="c-msg-e"></textarea><p class="error" id="c-msg-e" aria-live="polite"></p><span class="hint" id="c-msg-count">0 / 1200</span></div>
+          </div>
+          <button class="btn" type="submit">Send message</button>
+        </form>
+        <div class="success" data-success="contact" hidden>
+          <div class="seal"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>
+          <h3>Message received</h3>
+          <p>Thank you, <span data-echo="name">friend</span>. We reply within two working days.</p>
+          <button class="btn ghost" type="button" data-reset>Write another</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= ABOUT ======================= -->
+<div data-view="about">
+  <section class="scene sc-thorn band">
+    <div class="wrap">
+      <h1 class="duo"><span class="kicker">The studio behind</span><span class="big">The long night</span></h1>
+      <p class="lead">Brasshollow Games is four people in a converted print shop in Bristol. Gloamreach is our first game, and it took five winters of playtests to get here.</p>
+    </div>
+  </section>
+  <section class="sec stone">
+    <svg class="crest glyph" aria-hidden="true"><use href="#crest"/></svg>
+    <div class="wrap cols">
+      <div>
+        <h2 class="big m">How it started</h2>
+        <ol class="timeline" style="margin-top:36px">
+          <li><b>2022</b><p>A kitchen-table prototype with coins for heroes and a hand-drawn map.</p></li>
+          <li><b>2024</b><p>Two hundred playtests at cafés, libraries and one very patient wedding.</p></li>
+          <li><b>2025</b><p>The art, the campaign book and the first print run.</p></li>
+          <li><b>2026</b><p>The Drowned Coast, and campaign nights in four cities.</p></li>
+        </ol>
+      </div>
+      <div class="aside-card">
+        <h3>The people</h3>
+        <ul class="team" style="margin-top:12px">
+          <li>Odette Marsh <span>Game design</span></li>
+          <li>Kit Arbuckle <span>Art</span></li>
+          <li>Ravi Lund <span>Development</span></li>
+          <li>Juno Blake <span>Events and community</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap">
+      <ul class="values">
+        <li><h3>Win together</h3><p>Nobody plays against anybody. The night is the only opponent at the table.</p></li>
+        <li><h3>Every hero can fail</h3><p>Losing is real, so winning means something. Most chapters are won by a single lantern.</p></li>
+        <li><h3>Made to play twice</h3><p>Scars, allies and omens change each campaign, so the second one tells a different story.</p></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= LEGAL ======================= -->
+<div data-view="legal">
+  <section class="banner"><div class="wrap narrow"><h1 class="big m">Privacy and terms</h1><p class="lead">Last updated 1 November 2026.</p></div></section>
+  <section class="sec tight">
+    <div class="wrap narrow legal-text">
+      <h2 id="privacy">Privacy</h2>
+      <p>We collect the name and email you give us in a form, and the details you choose to add. We use them to answer you, hold your seat or tell you about your pre-order, and for nothing else.</p>
+      <p>We never sell your details. You can ask us to see, correct or delete them at any time with the contact form.</p>
+      <h2 id="cookies">Cookies</h2>
+      <p>This site stores one preference in your browser: light or dark. It sets no tracking cookies.</p>
+      <h2 id="terms">Terms of pre-order</h2>
+      <p>Joining the list is free and commits you to nothing. When pre-orders open, prices and delivery dates are confirmed before you pay, and you can cancel for a full refund until your box ships.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= 404 ======================= -->
+<div data-view="404">
+  <section class="scene sc-stones lost">
+    <div class="wrap center">
+      <p class="eyebrow">Page not found</p>
+      <h1 class="duo" style="margin-top:16px"><span class="kicker">Lost in the</span><span class="big">Gloam</span></h1>
+      <p class="lead">This road is not on the map. The lanterns are lit back at the start.</p>
+      <div class="btns"><a class="btn" href="#/">Back to the start</a><a class="btn ghost" href="#/heroes">Meet the heroes</a></div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <nav class="foot-bar" aria-label="Footer">
+    <ul>
+      <li><a href="#/about">About the studio</a></li>
+      <li><a href="#/rules">Rules updates</a></li>
+      <li><a href="#/events">Events</a></li>
+      <li><a href="#/support">Support</a></li>
+      <li><a href="#/support?at=contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="foot-base">
+    <ul class="socials" aria-label="Follow along">
+      <li><a href="#/join" aria-label="Email updates"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg></a></li>
+      <li><a href="#/news" aria-label="News"><svg class="ico" aria-hidden="true"><use href="#i-feed"/></svg></a></li>
+      <li><a href="#/events" aria-label="Events calendar"><svg class="ico" aria-hidden="true"><use href="#i-cal"/></svg></a></li>
+    </ul>
+    <a class="brand" href="#/" aria-label="Gloamreach home"><svg class="glyph" aria-hidden="true"><use href="#crest"/></svg></a>
+    <p class="fine">&copy; 2026 Brasshollow Games Ltd. Gloamreach, its heroes and its art belong to Brasshollow Games.</p>
+    <div class="foot-links"><a href="#/legal?at=privacy">Privacy</a><a href="#/legal?at=terms">Terms</a><a href="#/legal?at=cookies">Cookies</a></div>
+    <p class="spec"><b>12+</b><span>One to five players<br>60 to 90 minutes a chapter</span></p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+  const smooth = () => (reduced.matches ? "auto" : "smooth");
+
+  /* ---------- Storage that survives a sandboxed frame ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks one ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function syncThemeButton() {
+    const dark = currentTheme() === "dark";
+    themeButton.setAttribute("aria-label", `Switch to ${dark ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", dark ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("gloamreach-theme");
+  if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+  syncThemeButton();
+  systemDark.addEventListener("change", syncThemeButton);
+  new MutationObserver(syncThemeButton).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    store.set("gloamreach-theme", next);
+  });
+
+  /* ---------- Heroes: name, class, art and hue live on the roster cards; the rest lives here ---------- */
+  const CLASSES = { vanguard: "Vanguard", blade: "Blade", arcanist: "Arcanist", ranger: "Ranger", warden: "Warden" };
+  const LEVELS = ["", "Easy", "Medium", "Hard"];
+  const SCENES = { vanguard: "gate", blade: "gate", arcanist: "coast", ranger: "thorn", warden: "vale" };
+  const KINDS = ["Trait", "Action", "Reaction", "Rally"];
+  const HEROES = {
+    maren: { title: "The Lantern Keeper",
+      lore: "Maren kept the last lit lantern on the Reach road for eleven winters. Where her light falls, the night has to ask permission.",
+      abilities: [["Kindled path", "Allies who start their turn within three spaces of Maren move one extra space."], ["Raise the lantern", "Push every shade within two spaces back one space. They cannot enter her light this round."], ["Steady hands", "When an ally would lose their last wound, spend a lantern oil to prevent it."], ["All the lamps at once", "Once per chapter, light every beacon on the board until the end of the next night phase."]] },
+    corvin: { title: "The Iron Oath",
+      lore: "Corvin swore to hold the north gate and never said for how long. He is still holding it.",
+      abilities: [["Iron oath", "Corvin blocks the first two wounds dealt to an adjacent ally each night phase."], ["Shield wall", "Move up to two spaces and take every shade's attention within one space."], ["Brace", "When a gate is struck, reduce the damage by two."], ["Last to leave", "Once per chapter, every ally on Corvin's road ignores wounds until dawn."]] },
+    ysolde: { title: "The Thorn Archer",
+      lore: "Raised in the thornwood, Ysolde can thread an arrow between branches she cannot see.",
+      abilities: [["Long sight", "Ysolde can target shades up to five spaces away if no ruin is in the way."], ["Pinning shot", "One shade cannot move during the next night phase."], ["Brambles", "When a shade enters a forest next to her, it takes a wound."], ["Thorn volley", "Once per chapter, wound every shade on one road."]] },
+    ilka: { title: "The Glass Witch",
+      lore: "Ilka keeps her spells in glass so they cannot get out. Mostly they do not.",
+      abilities: [["Focus", "Ilka gains one focus at the start of each turn, up to three."], ["Shatter", "Spend two focus to wound every shade in a straight line of four spaces."], ["Mirror", "When Ilka is wounded, the attacker takes one wound too."], ["Glass storm", "Once per chapter, freeze every shade on the board for one round."]] },
+    sable: { title: "The Quiet Blade",
+      lore: "Sable Wren never tells anyone where she will be, which is why she is always there.",
+      abilities: [["Vanish", "Sable cannot be targeted until she attacks."], ["Twin strike", "Wound one shade twice, or two adjacent shades once each."], ["Slip away", "When a shade moves next to her, move one space."], ["Night's end", "Once per chapter, defeat any shade that has one wound left."]] },
+    brannoc: { title: "The Mountain's Anvil",
+      lore: "Brannoc forged every gate on the Reach and takes it personally when one falls.",
+      abilities: [["Forge", "Repair one damage on a gate at the start of each of his turns."], ["Anvil strike", "Wound a shade or a gate twice and push it one space."], ["Unmoved", "Brannoc cannot be pushed, pulled or frozen."], ["Rebuild", "Once per chapter, return a fallen gate to the board at full strength."]] },
+    sefa: { title: "The Tide Caller",
+      lore: "Sefa learned to call the tide from a grandmother who could stop it. She is still learning that part.",
+      abilities: [["Rising water", "Rivers next to Sefa count as roads for her allies."], ["Undertow", "Move every shade within two spaces two spaces towards the river."], ["Ebb", "When an ally is wounded next to water, they heal one wound instead."], ["Flood tide", "Once per chapter, the river floods: shades in it lose their next turn."]] },
+    halvard: { title: "The Gate Breaker",
+      lore: "Halvard used to break gates for a living. Now he stands in front of them, which he finds harder.",
+      abilities: [["Reach", "Halvard can attack shades two spaces away along a road."], ["Sweep", "Wound every shade in a half circle in front of him."], ["Hold the line", "When a shade passes him on a road, it takes a wound."], ["Break the night", "Once per chapter, remove one omen card from play."]] },
+  };
+  const cards = new Map($$("#roster > li").map((li) => [li.dataset.id, li]));
+  cards.forEach((li, id) => { li.dataset.q = HEROES[id].title; }); /* search also finds "tide" or "lantern" */
+  const heroFacts = (id) => {
+    const li = cards.get(id) || cards.get("maren");
+    const img = $("img", li);
+    return { id: li.dataset.id, li, cls: li.dataset.cls, diff: Number(li.dataset.diff), hue: li.style.getPropertyValue("--hue"), src: img.getAttribute("src"), alt: img.alt, name: $(".hname", li).firstChild.textContent.trim(), ...HEROES[li.dataset.id] };
+  };
+  const cloneCard = (li) => { const c = li.cloneNode(true); c.hidden = false; return c; };
+
+  /* Home: class picker turns the ring to the first hero of that class */
+  const classButtons = $$("[data-cls]").filter((b) => b.tagName === "BUTTON");
+  const pick = $("#pick");
+  let classIndex = 0;
+  function showClass(i, animate = true) {
+    classIndex = (i + classButtons.length) % classButtons.length;
+    const button = classButtons[classIndex];
+    classButtons.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    $("#cls-rule").style.setProperty("--i", classIndex);
+    const hero = heroFacts([...cards.values()].find((li) => li.dataset.cls === button.dataset.cls).dataset.id);
+    pick.style.setProperty("--hue", hero.hue);
+    Object.assign($("#pick-img"), { src: hero.src, alt: hero.alt });
+    $("#pick-name").textContent = hero.name;
+    $("#pick-title").textContent = hero.title;
+    $("#pick-link").setAttribute("href", `#/hero?h=${hero.id}`);
+    if (animate) { pick.classList.remove("swap"); void pick.offsetWidth; pick.classList.add("swap"); }
+  }
+  classButtons.forEach((b, i) => b.addEventListener("click", () => showClass(i)));
+  $$("[data-cls-step]").forEach((b) => b.addEventListener("click", () => showClass(classIndex + Number(b.dataset.clsStep))));
+
+  /* Home: ways to play */
+  const MODES = [
+    ["The long night", "Twelve chapters for one to five players, 60 to 90 minutes each. Scars, allies and lost lanterns carry from one chapter to the next.", "The board from above: three roads between two beacons, a river and dark woods"],
+    ["Skirmish", "One evening, two to five players, about 45 minutes. Pick a map, deal the omens and hold the gate until dawn.", "A fortress gate glowing from within"],
+    ["Solo vigil", "One player, two heroes and an omen deck that plays the dark against you. Every turn takes a minute.", "Standing stones on a hill under a green aurora"],
+    ["Tide trials", "With the Drowned Coast: six short scenarios where the map floods a little more every round.", "A lighthouse on a storm coast at night"],
+  ];
+  const modeShow = $("#mode-show");
+  $$("[data-mode]").forEach((button, i, all) => button.addEventListener("click", () => {
+    all.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    const [name, text, alt] = MODES[i];
+    Object.assign($("#mode-img"), { src: $("img", button).getAttribute("src"), alt });
+    $("#mode-name").textContent = name;
+    $("#mode-text").textContent = text;
+    modeShow.classList.remove("swap"); void modeShow.offsetWidth; modeShow.classList.add("swap");
+  }));
+
+  /* Home: latest news are copies of the first three stories (one source of truth) */
+  const newsList = $("#news-list");
+  const strip = $("#home-news");
+  strip.replaceChildren(...$$(":scope > li", newsList).slice(0, 3).map(cloneCard));
+  const syncStrip = () => {
+    const max = strip.scrollWidth - strip.clientWidth;
+    const share = max > 0 ? strip.clientWidth / strip.scrollWidth : 1;
+    const rule = $("#news-rule");
+    rule.style.setProperty("--w", `${share * 100}%`);
+    rule.style.setProperty("--i", max > 0 ? (strip.scrollLeft / max) * (1 / share - 1) : 0);
+    $('[data-strip="-1"]').disabled = strip.scrollLeft < 4;
+    $('[data-strip="1"]').disabled = strip.scrollLeft >= max - 4;
+  };
+  $$("[data-strip]").forEach((b) => b.addEventListener("click", () => strip.scrollBy({ left: Number(b.dataset.strip) * strip.firstElementChild.offsetWidth, behavior: smooth() })));
+  strip.addEventListener("scroll", syncStrip, { passive: true });
+  window.addEventListener("resize", syncStrip);
+
+  /* ---------- Filters: chips, optional search and sort over a list ---------- */
+  function filterer({ list, attr, chips, search, sort, count, empty, noun, items = () => $$(":scope > li", list) }) {
+    let value = "all";
+    const run = (v = value) => {
+      value = v;
+      const q = search ? search.value.trim().toLowerCase() : "";
+      let shown = 0;
+      items().forEach((el) => {
+        const on = (v === "all" || el.dataset[attr] === v) && (!q || `${el.textContent} ${el.dataset.q || ""}`.toLowerCase().includes(q));
+        el.hidden = !on;
+        if (on) shown++;
+      });
+      if (sort) {
+        const by = { box: (a, b) => a.dataset.order - b.dataset.order, az: (a, b) => a.textContent.localeCompare(b.textContent), diff: (a, b) => a.dataset.diff - b.dataset.diff || a.dataset.order - b.dataset.order }[sort.value];
+        list.append(...items().sort(by));
+      }
+      $$("[data-chip]", chips).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.chip === v)));
+      if (count) count.textContent = `${shown} ${shown === 1 ? noun[0] : noun[1]}`;
+      empty.hidden = shown > 0;
+    };
+    $$("[data-chip]", chips).forEach((b) => b.addEventListener("click", () => run(b.dataset.chip)));
+    search?.addEventListener("input", () => run());
+    sort?.addEventListener("change", () => run());
+    return run;
+  }
+  $$("#roster > li").forEach((li, i) => { li.dataset.order = i; });
+  const roster = $("#roster");
+  const rosterQ = $("#roster-q");
+  const filterRoster = filterer({ list: roster, attr: "cls", chips: $('[data-chips="roster"]'), search: rosterQ, sort: $("#roster-sort"), count: $("#roster-count"), empty: $('[data-empty="roster"]'), noun: ["hero", "heroes"] });
+  $('[data-clear="roster"]').addEventListener("click", () => { rosterQ.value = ""; filterRoster("all"); });
+  const filterNews = filterer({ list: newsList, attr: "topic", chips: $('[data-chips="news"]'), count: $("#news-count"), empty: $('[data-empty="news"]'), noun: ["story", "stories"] });
+  const filterEvents = filterer({ list: $("#events"), attr: "kind", chips: $('[data-chips="events"]'), count: $("#event-count"), empty: $('[data-empty="events"]'), noun: ["date", "dates"] });
+  const filterRules = filterer({ attr: "tag", chips: $('[data-chips="rules"]'), empty: $('[data-empty="rules"]'), items: () => $$(".change") });
+  $('[data-chips="rules"]').addEventListener("click", () => $$(".patch").forEach((p) => { p.hidden = !$$(".change", p).some((c) => !c.hidden); }));
+  $("#rules-jump").addEventListener("change", (event) => document.getElementById(event.target.value)?.scrollIntoView({ behavior: smooth(), block: "start" }));
+
+  /* ---------- Hero detail ---------- */
+  const hd = $("#hd");
+  let abilityIndex = 0;
+  const abButtons = $$("[data-ab]");
+  function showAbility(i) {
+    abilityIndex = i;
+    abButtons.forEach((b, j) => b.setAttribute("aria-pressed", String(j === i)));
+    $$("#ab-items > .ab-item").forEach((el, j) => el.classList.toggle("on", j === i));
+  }
+  abButtons.forEach((b, i) => b.addEventListener("click", () => showAbility(i)));
+  function renderHero(id) {
+    const hero = heroFacts(id);
+    const set = (key, text) => { $(`[data-h="${key}"]`).textContent = text; };
+    set("name", hero.name);
+    set("cls", CLASSES[hero.cls]);
+    set("title", hero.title);
+    set("level", LEVELS[hero.diff]);
+    set("lore", hero.lore);
+    $$('[data-h="pips"] i').forEach((pip, i) => pip.classList.toggle("on", i < hero.diff));
+    hd.className = `scene hd sc-${SCENES[hero.cls]}`;
+    hd.style.setProperty("--hue", hero.hue);
+    Object.assign($("#hd-img"), { src: hero.src, alt: hero.alt });
+    $("#ab-items").replaceChildren(...hero.abilities.map(([name, text], i) => {
+      const item = document.createElement("div");
+      item.className = "ab-item";
+      item.append(Object.assign(document.createElement("p"), { className: "eyebrow", textContent: KINDS[i] }), Object.assign(document.createElement("h3"), { textContent: name }), Object.assign(document.createElement("p"), { textContent: text }));
+      return item;
+    }));
+    abButtons.forEach((b, i) => b.setAttribute("aria-label", `${KINDS[i]}: ${hero.abilities[i][0]}`));
+    showAbility(0);
+    const ids = [...cards.keys()];
+    const at = ids.indexOf(hero.id);
+    $("#pairs").replaceChildren(...[1, 2, 3].map((k) => cloneCard(cards.get(ids[(at + k) % ids.length]))));
+    return `${hero.name} · Gloamreach`;
+  }
+
+  /* ---------- Articles: picture, title, topic and date come from the news card ---------- */
+  const POSTS = {
+    "rules-13": { by: "Odette Marsh, lead designer", body: null },
+    coast: { by: "Kit Arbuckle, art", body: ["The Drowned Coast started as a pencil sketch on the back of a playtest sheet, with a coffee ring where the harbour should be. We kept the ring.", "## Painting water that moves", "The tide deck floods the map one row at a time, so every space had to read as dry land and as shallows. Each tile is painted twice, once at low tide and once at high, and printed on both sides.", "The lighthouse is the only light on the board that the night cannot put out. That rule came from the painting, not the other way round."] },
+    winter: { by: "Juno Blake, events", body: ["Every Saturday in December we take over a hall, set out twelve tables and play chapter one of the campaign together.", "You do not need to know the rules or bring anything. A host at every table teaches as you play, and most tables finish just before midnight.", "Seats are free at learn-to-play afternoons and a small fee at campaign nights, which covers the room. Save one on the events page."] },
+    fail: { by: "Odette Marsh, lead designer", body: ["A cooperative game is only tense if losing is real. In our first prototype the heroes won nine games in ten, and nobody talked about it afterwards.", "## Tuning the night", "We tuned the omen deck until tables won a little under half of the time, then gave every hero one ability that can turn a lost night around. Most chapters are now decided by a single lantern.", "The result is the game we wanted: you lose often enough that winning is a story you tell."] },
+    maps: { by: "Juno Blake, events", body: ["Players have been building their own skirmish maps since the first print run. These five are the ones our playtesters keep asking for.", "Each comes with a print file from its maker and a note on which heroes it suits. Credit for every map goes to the people who drew it; we only picked them."] },
+    solo: { by: "Ravi Lund, development", body: ["Solo vigil gives you two heroes and an omen deck that plays the dark against you. Each omen card tells the shades where to move and whom to strike.", "## Five turns", "Draw an omen, move the shades, take both heroes' turns, check the beacons, and pass the night. That is the whole loop, and each turn takes about a minute.", "The full walkthrough, with photos of each step, is in the rulebook from page 18."] },
+  };
+  const postView = $('[data-view="post"]');
+  const firstBody = $('[data-p="body"]').cloneNode(true).childNodes;
+  function renderPost(id) {
+    const card = $(`#news-list > li[data-id="${id}"]`) || $("#news-list > li");
+    const post = POSTS[card.dataset.id];
+    const set = (key, text) => { $(`[data-p="${key}"]`, postView).textContent = text; };
+    set("title", $("h3", card).textContent);
+    set("topic", $(".meta b", card).textContent);
+    const time = $("time", card);
+    set("date", time.textContent);
+    $('[data-p="date"]', postView).setAttribute("datetime", time.getAttribute("datetime"));
+    set("by", post.by);
+    const img = $("img", card);
+    Object.assign($("#post-img"), { src: img.getAttribute("src"), alt: img.alt });
+    const body = $('[data-p="body"]', postView);
+    if (post.body) body.replaceChildren(...post.body.map((text) => text.startsWith("## ") ? Object.assign(document.createElement("h2"), { textContent: text.slice(3) }) : Object.assign(document.createElement("p"), { textContent: text })));
+    else body.replaceChildren(...[...firstBody].map((n) => n.cloneNode(true)));
+    $("#read-next").replaceChildren(...$$("#news-list > li").filter((li) => li !== card).slice(0, 3).map(cloneCard));
+    return `${$("h3", card).textContent} · Gloamreach`;
+  }
+
+  /* ---------- Events: a card's button picks the date in the form; seats stepper ---------- */
+  const eventSelect = $("#s-event");
+  /* The form lists the same dates as the cards (one source of truth) */
+  eventSelect.append(...$$("#events > li").map((li) => new Option(`${$(".ev-date b", li).textContent} ${$(".ev-date span", li).textContent}: ${$("h3", li).textContent}, ${$("li", li).textContent.split(", ").pop()}`, $("[data-seat]", li).dataset.seat)));
+  $$("[data-seat]").forEach((link) => link.addEventListener("click", () => { eventSelect.value = link.dataset.seat; eventSelect.dispatchEvent(new Event("change")); }));
+  const seats = $("#s-seats");
+  $$("[data-step]").forEach((b) => b.addEventListener("click", () => { seats.value = Math.min(5, Math.max(1, (Number(seats.value) || 1) + Number(b.dataset.step))); }));
+
+  /* ---------- Support: search hides questions and empty groups ---------- */
+  const faqQ = $("#faq-q");
+  faqQ.addEventListener("input", () => {
+    const q = faqQ.value.trim().toLowerCase();
+    let shown = 0;
+    $$(".faq-group").forEach((group) => {
+      let inGroup = 0;
+      $$(".qa", group).forEach((qa) => {
+        const on = !q || qa.textContent.toLowerCase().includes(q);
+        qa.hidden = !on;
+        if (on) { inGroup++; if (q) qa.open = true; }
+      });
+      group.hidden = inGroup === 0;
+      shown += inGroup;
+    });
+    $('[data-empty="faq"]').hidden = shown > 0;
+  });
+  const msg = $("#c-msg");
+  msg.addEventListener("input", () => { $("#c-msg-count").textContent = `${msg.value.length} / ${msg.maxLength}`; });
+
+  /* ---------- Router: hash routes, state first so it works when the frame refuses URL changes ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "Gloamreach: a cooperative fantasy board game", heroes: "Heroes · Gloamreach", news: "News · Gloamreach", rules: "Rules updates · Gloamreach", editions: "Editions · Gloamreach", events: "Events · Gloamreach", join: "Pre-order list · Gloamreach", support: "Support · Gloamreach", about: "About the studio · Gloamreach", legal: "Privacy and terms · Gloamreach", "404": "Page not found · Gloamreach" };
+  const parents = { hero: "heroes", post: "news" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query), anchor: "" };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    current?.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    const p = route.params;
+    let title = titles[name];
+    if (name === "hero") title = renderHero(p.get("h"));
+    if (name === "post") title = renderPost(p.get("p"));
+    if (name === "heroes") filterRoster(CLASSES[p.get("class")] ? p.get("class") : "all");
+    if (name === "news") filterNews(p.get("topic") || "all");
+    if (name === "events") filterEvents(p.get("kind") || "all");
+    if (name === "rules") { filterRules("all"); $$(".patch").forEach((x) => { x.hidden = false; }); }
+    if (name === "join" && p.get("edition")) { const radio = $(`input[name="edition"][value="${p.get("edition")}"]`); if (radio) radio.checked = true; }
+    if (name === "home") requestAnimationFrame(syncStrip);
+    document.title = title;
+    const section = parents[name] || name;
+    $$(".nav a, .menu a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === section) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    const at = p.get("at") && document.getElementById(p.get("at"));
+    if (at) requestAnimationFrame(() => at.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); closeMenu(); go(href); return; }
+    const target = href.length > 1 && document.querySelector(href);
+    if (!target) return;
+    event.preventDefault();
+    closeMenu();
+    target.scrollIntoView({ behavior: smooth(), block: "start" });
+    if (target.id === "main") target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Menu: drops below the bar, in the flow ---------- */
+  const menuButton = $("#menu-btn");
+  const menu = $("#menu");
+  function setMenu(open) {
+    menu.hidden = !open;
+    menuButton.setAttribute("aria-expanded", String(open));
+    menuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    $("use", menuButton).setAttribute("href", open ? "#i-x" : "#i-menu");
+  }
+  function closeMenu() { if (!menu.hidden) setMenu(false); }
+  menuButton.addEventListener("click", () => setMenu(menu.hidden));
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !menu.hidden) { setMenu(false); menuButton.focus(); } });
+  matchMedia("(min-width: 1180px)").addEventListener("change", closeMenu);
+
+  /* ---------- Reveals: keyframes on entry, a timed fallback so nothing stays hidden ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) { $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in"))); }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address." };
+  const special = { radio: "Please choose one.", checkbox: "Please tick this box to continue.", "select-one": "Please choose one." };
+  function checkField(field) {
+    const error = document.getElementById((field.getAttribute("aria-describedby") || "").split(" ")[0]);
+    if (!error || !error.classList.contains("error")) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (problem === "valueMissing" && special[field.type]) || messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input:not([type=hidden]), select, textarea", form).filter((f) => f.getAttribute("aria-describedby"));
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value && field.type !== "radio" && field.type !== "checkbox") checkField(field); });
+      field.addEventListener("input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+      field.addEventListener("change", () => {
+        if (field.type === "radio") $$(`input[name="${field.name}"]`, form).forEach(checkField);
+        else if (field.type === "checkbox" || field.tagName === "SELECT") checkField(field);
+      });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before "submit" fires, so the button's click runs it too (Enter clicks it). */
+    const button = $("[type=submit]", form);
+    const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+    const send = () => {
+      if (button.disabled) return;
+      const results = fields.map(checkField);
+      if (!results.every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      setTimeout(() => {
+        $$("[data-echo]", success).forEach((el) => { el.textContent = form.elements[el.dataset.echo]?.value.trim() || el.textContent; });
+        form.hidden = true;
+        success.hidden = false;
+        button.disabled = false;
+        success.querySelector("h3").setAttribute("tabindex", "-1");
+        success.querySelector("h3").focus({ preventScroll: true });
+      }, 500);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+    $("[data-reset]", success).addEventListener("click", () => {
+      form.reset();
+      fields.forEach((f) => f.removeAttribute("aria-invalid"));
+      $$(".error", form).forEach((e) => { e.textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      fields[0].focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  showClass(0, false);
+  const start = parse(location.hash);
+  show(start, { scroll: false });
+  if (start.anchor) document.querySelector(start.anchor)?.scrollIntoView();
+  syncStrip();
+})();
+</script>
+</body>
+</html>

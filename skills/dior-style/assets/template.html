@@ -1,0 +1,1373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Veranne: couture, ready-to-wear and fragrance from the salon on Passage Ondine</title>
+<meta name="description" content="Maison Veranne makes couture, ready-to-wear and fragrance in its own ateliers. Watch the Autumn–Winter 2026 film, browse the collection and book an appointment in a salon.">
+<meta property="og:title" content="Veranne: the Autumn–Winter 2026 collection">
+<meta property="og:description" content="Couture, ready-to-wear and fragrance, cut and finished in the house ateliers.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/bodoni-moda-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/jost-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts: a high-contrast serif for the wordmark and titles, a geometric sans for everything else ---------- */
+@font-face { font-family: "Bodoni Moda"; src: url("fonts/bodoni-moda-latin-opsz-normal.woff2") format("woff2"); font-weight: 400 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Jost"; src: url("fonts/jost-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: white page, pearl stage (light, default) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);
+  --surface: oklch(96.2% 0.002 84);     /* pearl: the stage behind every product, the footer */
+  --surface-2: oklch(93.2% 0.003 84);   /* a step deeper: hover, pressed rows */
+  --text: oklch(17% 0 0);
+  --text-muted: oklch(47% 0.004 84);
+  --border: oklch(88.5% 0.003 84);
+  --accent: oklch(17% 0 0);             /* the black pill */
+  --accent-text: oklch(100% 0 0);
+  --error: oklch(50% 0.16 28);
+  --film: oklch(18% 0.004 84);          /* behind films while they load; films stay dark in both themes */
+  --serif: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --sans: "Jost", "Futura", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --fs-display: clamp(2.75rem, 1.5rem + 4.2vw, 5.5rem);
+  --fs-h1: clamp(2.25rem, 1.6rem + 2.4vw, 3.75rem);
+  --fs-h2: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
+  --fs-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.625rem);
+  --fs-cap: 0.6875rem;
+  --track: 0.24em;
+  --page: 1320px;
+  --gutter: clamp(16px, 4vw, 56px);
+  --sec: clamp(72px, 9vw, 144px);
+  --hh: 72px;
+  --pill: 999px;
+  --overlay: 0 24px 64px oklch(0% 0 0 / 0.18);
+  --fast: 180ms;
+  --base: 420ms;
+  --slow: 1400ms;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --chapter: 7s;                        /* how long each still of a film holds */
+}
+/* ---------- Tokens: night (dark), by the toggle, or by the system without JavaScript ---------- */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(14% 0 0);
+  --surface: oklch(19.5% 0.002 84);
+  --surface-2: oklch(23.5% 0.003 84);
+  --text: oklch(95.5% 0.003 84);
+  --text-muted: oklch(71% 0.004 84);
+  --border: oklch(30% 0.003 84);
+  --accent: oklch(95.5% 0.003 84);
+  --accent-text: oklch(14% 0 0);
+  --error: oklch(72% 0.13 28);
+  --overlay: 0 24px 64px oklch(0% 0 0 / 0.6);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: oklch(14% 0 0); --surface: oklch(19.5% 0.002 84); --surface-2: oklch(23.5% 0.003 84);
+    --text: oklch(95.5% 0.003 84); --text-muted: oklch(71% 0.004 84); --border: oklch(30% 0.003 84);
+    --accent: oklch(95.5% 0.003 84); --accent-text: oklch(14% 0 0); --error: oklch(72% 0.13 28);
+  }
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--hh) + 16px); }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.65 var(--sans); letter-spacing: 0.01em; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+p { margin: 0 0 1em; }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 50; padding: 12px 20px; background: var(--accent); color: var(--accent-text); }
+.skip:focus { top: 12px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wrap { width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.narrow { width: min(100% - 2 * var(--gutter), 640px); margin-inline: auto; }
+.center { text-align: center; }
+.sec { padding-block: var(--sec); }
+.pearl { background: var(--surface); }
+.muted { color: var(--text-muted); }
+.ico { width: 20px; height: 20px; flex: none; }
+
+/* Type: tracked capitals for every caption, the serif only for names and titles */
+.cap { display: block; margin: 0 0 18px; font: 500 var(--fs-cap)/1.5 var(--sans); letter-spacing: var(--track); text-transform: uppercase; }
+.display, .h1, .h2, .h3 { margin: 0; font-family: var(--serif); font-weight: 400; line-height: 1.1; letter-spacing: -0.005em; text-wrap: balance; }
+.display { font-size: var(--fs-display); line-height: 1.02; }
+.h1 { font-size: var(--fs-h1); }
+.h2 { font-size: var(--fs-h2); }
+.h3 { font-size: var(--fs-h3); line-height: 1.2; }
+.lede { max-width: 34em; margin: 20px auto 0; font-size: 1.0625rem; color: var(--text-muted); }
+.prose { font-size: 1.0625rem; color: var(--text-muted); }
+.prose p { margin-bottom: 1.2em; }
+.prose h2 { margin: 2.2em 0 0.6em; color: var(--text); }
+
+/* Actions: underlined capitals, one black pill per screen */
+.tlink { display: inline-block; padding-block: 8px; font: 500 var(--fs-cap)/1.2 var(--sans); letter-spacing: var(--track); text-transform: uppercase; background: linear-gradient(currentColor 0 0) 0 100% / 100% 1px no-repeat; transition: background-size var(--base) var(--ease); }
+.tlink:hover { background-size: 0 1px; background-position: 100% 100%; }
+.links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 36px; margin-top: 28px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 34px; border: 1px solid var(--accent); border-radius: var(--pill); background: var(--accent); color: var(--accent-text); font: 500 var(--fs-cap)/1 var(--sans); letter-spacing: var(--track); text-transform: uppercase; transition: background var(--fast), color var(--fast); }
+.btn:hover { background: transparent; color: var(--text); }
+.btn.line { background: transparent; color: var(--text); border-color: var(--text); }
+.btn.line:hover { background: var(--text); color: var(--bg); }
+.btn[disabled] { opacity: 0.55; cursor: progress; }
+
+/* ---------- Header: a centred serif wordmark between the menu and the appointment link ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; height: var(--hh); background: var(--bg); color: var(--text); border-bottom: 1px solid var(--border); transition: background var(--base) var(--ease), color var(--base) var(--ease), border-color var(--base) var(--ease); }
+.hd { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; height: 100%; padding-inline: var(--gutter); }
+.hd-start { display: flex; align-items: center; gap: 30px; min-width: 0; }
+.nav { display: flex; flex: 1; gap: 26px; min-width: 0; overflow: hidden; white-space: nowrap; }
+.nav a, .hd-link { font: 500 var(--fs-cap)/1 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; padding-block: 8px; background: linear-gradient(currentColor 0 0) 0 100% / 0 1px no-repeat; transition: background-size var(--base) var(--ease); }
+.nav a:hover, .nav a[aria-current="page"], .hd-link:hover { background-size: 100% 1px; }
+.compact .nav { display: none; }
+.brand { font: 500 1.75rem/1 var(--serif); letter-spacing: 0.22em; padding-left: 0.22em; text-transform: uppercase; white-space: nowrap; }
+.hd-end { display: flex; align-items: center; justify-content: flex-end; gap: 18px; }
+.icon-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; }
+.menu-btn { display: inline-flex; align-items: center; gap: 10px; height: 40px; font: 500 var(--fs-cap)/1 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; }
+.bag { position: relative; display: inline-flex; align-items: center; gap: 6px; height: 40px; font: 500 0.75rem/1 var(--sans); }
+.hd-appt .ico { display: none; }
+/* Over the home film the header is clear and white until the page moves */
+.js[data-view="home"] .site-header:not(.solid) { background: transparent; color: oklch(100% 0 0); border-color: transparent; }
+.js[data-view="home"] .hero { margin-top: calc(-1 * var(--hh)); }
+
+/* Menu: a drawer from the left */
+.drawer { position: fixed; inset: 0 auto 0 0; width: min(440px, 100%); max-width: 100%; height: 100%; max-height: 100%; margin: 0; padding: 0; border: 0; background: var(--bg); color: var(--text); box-shadow: var(--overlay); }
+.drawer::backdrop { background: oklch(0% 0 0 / 0.38); }
+.drawer[open] { animation: slide-in var(--base) var(--ease); }
+.drawer-in { display: flex; flex-direction: column; gap: 40px; min-height: 100%; padding: 16px var(--gutter) 40px; }
+.drawer-top { display: flex; align-items: center; justify-content: space-between; }
+.drawer-links { margin: 0; padding: 0; list-style: none; }
+.drawer-links a { display: block; padding: 6px 0; font: 400 2rem/1.25 var(--serif); }
+.drawer-links a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 8px; }
+.drawer-more { margin-top: auto; display: grid; gap: 14px; }
+@keyframes slide-in { from { opacity: 0; transform: translateX(-28px); } }
+
+/* ---------- The film: full-bleed stills that cross-fade and drift, with a round play control and chapter lines ---------- */
+.film { position: relative; overflow: hidden; isolation: isolate; background: var(--film); color: oklch(100% 0 0); }
+.film .frame { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--fx, 50%) 50%; opacity: 0; transition: opacity var(--slow) var(--ease); }
+.film .frame.on { opacity: 1; }
+.js .film .frame.on { animation: drift calc(var(--chapter) + var(--slow)) linear both paused; }
+.film.playing .frame.on { animation-play-state: running; }
+.film::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to top, oklch(0% 0 0 / 0.56), oklch(0% 0 0 / 0.2) 34%, transparent 56%); }
+.hero::after { background: linear-gradient(to top, oklch(0% 0 0 / 0.58), oklch(0% 0 0 / 0.22) 36%, transparent 58%), linear-gradient(to bottom, oklch(0% 0 0 / 0.32), transparent 24%); }
+.film-cap { position: absolute; inset: auto 0 0; z-index: 2; padding: 0 var(--gutter) clamp(72px, 8vw, 104px); text-align: center; }
+.film-cap .display, .film-cap .h1 { text-shadow: 0 1px 24px oklch(0% 0 0 / 0.25); }
+.film-ui { position: absolute; left: var(--gutter); bottom: clamp(20px, 2.4vw, 32px); z-index: 3; display: none; align-items: center; gap: 18px; }
+.js .film-ui { display: flex; }
+.play { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid oklch(100% 0 0 / 0.75); border-radius: 50%; color: oklch(100% 0 0); transition: background var(--fast); }
+.play:hover { background: oklch(100% 0 0 / 0.16); }
+.play .ico { width: 14px; height: 14px; }
+.segs { display: flex; gap: 6px; }
+.seg { display: grid; align-items: center; width: 30px; height: 28px; }
+.seg i { position: relative; display: block; height: 2px; overflow: hidden; background: oklch(100% 0 0 / 0.35); }
+.seg i::after { content: ""; position: absolute; inset: 0; background: oklch(100% 0 0); transform: scaleX(0); transform-origin: left; }
+.seg.done i::after { transform: scaleX(1); }
+.js .film .seg.on i::after { animation: fill var(--chapter) linear forwards paused; }
+.film.playing .seg.on i::after { animation-play-state: running; }
+.film-time { font: 500 var(--fs-cap)/1 var(--sans); letter-spacing: 0.2em; }
+@keyframes drift { from { transform: scale(1.001); } to { transform: scale(1.06); } }
+@keyframes fill { to { transform: scaleX(1); } }
+.hero { height: max(560px, min(100svh, 940px)); }
+.wide { aspect-ratio: 21 / 9; }
+.screen { aspect-ratio: 16 / 9; }
+.tall { aspect-ratio: 4 / 5; }
+/* The story under the film */
+.film-note { padding: 30px var(--gutter) 0; text-align: center; }
+.film-note .cap { margin-bottom: 12px; }
+.film-note p { max-width: 30em; margin: 12px auto 0; color: var(--text-muted); }
+.diptych { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.diptych > article { padding-bottom: 8px; }
+.chapter-cap { margin-top: 16px; text-align: center; color: var(--text-muted); }
+
+/* ---------- The stage: products alone on pearl tiles ---------- */
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; }
+.tile { position: relative; display: block; }
+.stage { position: relative; margin: 0; overflow: hidden; aspect-ratio: 4 / 5; background: var(--surface); }
+.stage img { width: 100%; height: 100%; object-fit: contain; transition: transform var(--slow) var(--ease); }
+.tile:hover .stage img { transform: scale(1.04); }
+.tag { position: absolute; top: 16px; left: 16px; z-index: 1; font: 500 0.625rem/1 var(--sans); letter-spacing: var(--track); text-transform: uppercase; }
+.tile-cap { padding: 18px 12px 34px; text-align: center; }
+.tile-cap .cap { margin: 0 0 6px; }
+.price { font-size: 0.875rem; color: var(--text-muted); }
+.film-tile { grid-column: span 2; grid-row: span 2; }
+.film-tile .film { height: 100%; min-height: 420px; }
+.rail-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 36px; }
+
+/* Filters: capitals on pills, a live count and an empty state */
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding-block: 20px; border-block: 1px solid var(--border); margin-bottom: 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; min-height: 36px; padding: 0 18px; border: 1px solid var(--border); border-radius: var(--pill); font: 500 var(--fs-cap)/1 var(--sans); letter-spacing: 0.18em; text-transform: uppercase; transition: border-color var(--fast), background var(--fast), color var(--fast); }
+.chip:hover { border-color: var(--text); }
+.chip[aria-pressed="true"], .chip:has(input:checked) { background: var(--text); border-color: var(--text); color: var(--bg); }
+.tools-end { display: flex; align-items: center; gap: 24px; }
+.select { height: 36px; padding: 0 28px 0 0; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; background: transparent; font: 500 var(--fs-cap)/1 var(--sans); letter-spacing: 0.18em; text-transform: uppercase; }
+.count { margin: 0; font-size: 0.875rem; color: var(--text-muted); }
+.empty { padding: 80px 0; text-align: center; }
+
+/* ---------- Page heads ---------- */
+.page-head { padding: clamp(56px, 8vw, 112px) 0 clamp(40px, 5vw, 64px); text-align: center; }
+.crumbs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px; padding: 0; list-style: none; font: 500 var(--fs-cap)/1.5 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+.crumbs li + li::before { content: "/"; margin-right: 10px; }
+
+/* ---------- Product page ---------- */
+.piece { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+.piece-media { background: var(--surface); }
+.piece-main { margin: 0; height: clamp(440px, calc(100svh - var(--hh) - 96px), 980px); }
+.piece-main img { width: 100%; height: 100%; object-fit: contain; }
+.piece-main img.swap { animation: fade var(--base) var(--ease); }
+.thumbs { display: flex; justify-content: center; gap: 8px; padding: 0 0 24px; }
+.thumb { width: 64px; aspect-ratio: 4 / 5; overflow: hidden; background: var(--surface-2); border: 1px solid transparent; }
+.thumb[aria-pressed="true"] { border-color: var(--text); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.piece-info { position: sticky; top: var(--hh); align-self: start; padding: clamp(32px, 5vw, 72px) clamp(20px, 5vw, 80px); }
+.piece-info .h1 { font-size: clamp(2rem, 1.5rem + 1.6vw, 3rem); }
+.piece-price { margin: 14px 0 28px; font-size: 1.0625rem; }
+.opt-label { display: flex; justify-content: space-between; margin-bottom: 12px; font: 500 var(--fs-cap)/1.5 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; }
+.sizes { position: relative; padding-bottom: 26px; }
+.sizes .chip { min-width: 52px; justify-content: center; padding: 0 12px; cursor: pointer; }
+.sizes .chip:has(input:focus-visible) { outline: 1px solid var(--text); outline-offset: 3px; }
+.actions { display: grid; gap: 10px; }
+.status-line { min-height: 1.6em; margin: 12px 0 0; font-size: 0.875rem; }
+.acc { border-bottom: 1px solid var(--border); }
+.acc:first-of-type { border-top: 1px solid var(--border); margin-top: 32px; }
+.acc summary { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; cursor: pointer; list-style: none; font: 500 var(--fs-cap)/1.4 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; }
+.acc summary::-webkit-details-marker { display: none; }
+.acc summary .ico { width: 14px; height: 14px; transition: transform var(--base) var(--ease); }
+.acc[open] summary .ico { transform: rotate(45deg); }
+.acc > div { padding: 0 0 20px; color: var(--text-muted); }
+.faq-group .acc summary { font: 400 1.0625rem/1.5 var(--sans); letter-spacing: 0.01em; text-transform: none; }
+
+/* ---------- Selection ---------- */
+.sel { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: clamp(32px, 5vw, 80px); align-items: start; }
+.rows { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--border); }
+.row { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+.row .stage { width: 96px; }
+.row .h3 { font-size: 1.25rem; }
+.row-end { display: grid; justify-items: end; align-content: space-between; gap: 12px; }
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--border); border-radius: var(--pill); }
+.stepper button { width: 36px; height: 36px; display: grid; place-items: center; }
+.stepper .ico { width: 12px; height: 12px; }
+.stepper output { min-width: 20px; text-align: center; font-size: 0.875rem; }
+.summary { padding: 32px; background: var(--surface); }
+.summary dl { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin: 0 0 24px; }
+.summary dd { margin: 0; text-align: right; }
+.plain { padding: 0; border: 0; background: none; font: inherit; text-decoration: underline; text-underline-offset: 4px; color: var(--text-muted); cursor: pointer; }
+
+/* ---------- Editorial blocks ---------- */
+.split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; background: var(--surface); }
+.split > figure { margin: 0; height: 100%; }
+.split > figure img { width: 100%; height: 100%; object-fit: cover; }
+.split-copy { padding: var(--sec) clamp(24px, 6vw, 96px); text-align: center; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); }
+.card { display: block; }
+.card figure { position: relative; margin: 0 0 20px; overflow: hidden; aspect-ratio: 3 / 2; background: var(--film); }
+.card figure img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--slow) var(--ease); }
+.card:hover figure img { transform: scale(1.04); }
+.card .cap { margin-bottom: 10px; color: var(--text-muted); }
+.badge-play { position: absolute; left: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 10px; color: oklch(100% 0 0); font: 500 var(--fs-cap)/1 var(--sans); letter-spacing: 0.2em; }
+.badge-play span { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid oklch(100% 0 0 / 0.75); border-radius: 50%; }
+.badge-play .ico { width: 12px; height: 12px; }
+.feature { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: center; margin-bottom: clamp(48px, 6vw, 88px); }
+.feature figure { aspect-ratio: 16 / 9; margin: 0; }
+.services { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; text-align: center; }
+.services .ico { width: 28px; height: 28px; margin: 0 auto 20px; }
+.services p:not(.cap) { color: var(--text-muted); font-size: 0.9375rem; }
+.quote { margin: 56px 0; font: 400 clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem)/1.3 var(--serif); text-align: center; text-wrap: balance; }
+.credits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 32px; margin: 40px 0 0; padding-top: 28px; border-top: 1px solid var(--border); }
+.credits dt { font: 500 var(--fs-cap)/1.5 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+.credits dd { margin: 0; }
+.timeline { margin: 0; padding: 0; list-style: none; }
+.timeline li { display: grid; grid-template-columns: 140px 1fr; gap: 24px; padding: 28px 0; border-top: 1px solid var(--border); }
+.timeline b { font: 400 2rem/1 var(--serif); }
+
+/* Shows: a hairline list with the day in the serif */
+.events { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--border); }
+.event { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: 32px; align-items: center; padding: 32px 0; border-bottom: 1px solid var(--border); }
+.event .day { font: 400 2.75rem/1 var(--serif); }
+.event .day small { display: block; margin-top: 8px; font: 500 var(--fs-cap)/1 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; }
+.event .h3 { margin-bottom: 6px; }
+.event-end { display: grid; justify-items: end; gap: 10px; }
+.state { font: 500 0.625rem/1 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--pill); }
+
+/* ---------- Forms: underlined fields, errors floating under the field ---------- */
+.form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 28px; }
+.full { grid-column: 1 / -1; }
+.field { position: relative; display: grid; gap: 4px; padding-bottom: 24px; }
+.field > label:not(.check), legend.opt-label { font: 500 var(--fs-cap)/1.5 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+.input { width: 100%; height: 48px; padding: 0; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; background: transparent; font-size: 1rem; transition: border-color var(--fast); }
+.input:hover, .input:focus { border-bottom-color: var(--text); }
+.input:focus { outline: none; }
+.input:focus-visible { outline: 1px solid var(--text); outline-offset: 4px; }
+textarea.input { height: 112px; padding-top: 12px; resize: vertical; }
+select.input { padding-right: 24px; }
+.err { position: absolute; left: 0; bottom: 2px; margin: 0; font-size: 0.75rem; line-height: 1.3; color: var(--error); }
+[aria-invalid="true"] { border-bottom-color: var(--error); }
+.services-pick { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.pick { display: grid; gap: 4px; padding: 18px 20px; border: 1px solid var(--border); cursor: pointer; transition: border-color var(--fast), background var(--fast); }
+.pick:hover { border-color: var(--text-muted); }
+.pick:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.pick:has(input:checked) { border-color: var(--text); background: var(--surface); }
+.pick:has(input:focus-visible) { outline: 1px solid var(--text); outline-offset: 3px; }
+.pick b { font-weight: 500; }
+.pick span { font-size: 0.875rem; color: var(--text-muted); }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: 0.875rem; color: var(--text-muted); }
+.check input { width: 16px; height: 16px; margin: 3px 0 0; flex: none; accent-color: var(--text); }
+.check a { text-decoration: underline; text-underline-offset: 3px; }
+.success { padding: clamp(32px, 5vw, 64px); background: var(--surface); text-align: center; }
+.success:focus { outline: none; }
+.salons { display: grid; gap: 0; }
+.salon { padding: 24px 0; border-top: 1px solid var(--border); }
+.salon .h3 { font-size: 1.375rem; margin-bottom: 8px; }
+.salon p { margin: 0; color: var(--text-muted); font-size: 0.9375rem; }
+.cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(40px, 6vw, 112px); align-items: start; }
+
+/* FAQ */
+.faq-tools { display: flex; justify-content: center; margin-bottom: 48px; }
+.faq-tools .field { width: min(100%, 420px); }
+.faq-group { margin-bottom: 48px; }
+.faq-group > .cap { margin-bottom: 8px; }
+.legal h2 { margin: 48px 0 16px; }
+.legal-nav { display: flex; justify-content: center; gap: 32px; margin-bottom: 40px; }
+.notfound { padding: clamp(96px, 14vw, 200px) 0; text-align: center; }
+
+/* ---------- Footer ---------- */
+.site-footer { background: var(--surface); }
+.letters { padding: clamp(64px, 8vw, 112px) 0 clamp(48px, 6vw, 80px); text-align: center; }
+.letters-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; width: min(100%, 520px); margin: 32px auto 0; text-align: left; }
+.letters-form .check { grid-column: 1 / -1; position: relative; padding-bottom: 22px; }
+.letters-form .btn { align-self: start; }
+.f-cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; padding-block: 56px; border-top: 1px solid var(--border); }
+.f-cols h2 { margin: 0 0 16px; font: 500 var(--fs-cap)/1.5 var(--sans); letter-spacing: var(--track); text-transform: uppercase; }
+.f-cols ul { margin: 0; padding: 0; list-style: none; }
+.f-cols a { display: inline-block; padding: 5px 0; color: var(--text-muted); font-size: 0.9375rem; }
+.f-cols a:hover { color: var(--text); }
+.f-base { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding-block: 28px; border-top: 1px solid var(--border); font-size: 0.8125rem; color: var(--text-muted); }
+.f-base .brand { font-size: 1.25rem; color: var(--text); }
+
+/* ---------- Views and reveals (everything shows without JavaScript) ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.js .reveal { opacity: 0; }
+.js .reveal.in { animation: rise 1100ms var(--ease) both; animation-delay: calc(var(--i, 0) * 120ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .hd-appt span { display: none; }
+  .hd-appt .ico { display: block; }
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .services { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 32px; }
+}
+@media (max-width: 860px) {
+  .piece, .sel, .cols, .split, .feature { grid-template-columns: 1fr; }
+  .piece-info { position: static; }
+  .piece-main { height: auto; aspect-ratio: 4 / 5; }
+  .split > figure { aspect-ratio: 4 / 5; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .f-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .event { grid-template-columns: 88px minmax(0, 1fr); }
+  .event-end { grid-column: 2; justify-items: start; }
+}
+@media (max-width: 720px) {
+  :root { --hh: 60px; }
+  .menu-btn span { display: none; }
+  .brand { font-size: 1.375rem; letter-spacing: 0.18em; padding-left: 0.18em; }
+  .hd { gap: 8px; }
+  .hd-end { gap: 4px; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .diptych { grid-template-columns: 1fr; gap: 48px; }
+  .wide, .screen.flex { aspect-ratio: 4 / 5; }
+  .film-cap { padding-bottom: 84px; }
+  .cards { grid-template-columns: 1fr; }
+  .form, .services-pick { grid-template-columns: 1fr; }
+  .rail-head { flex-direction: column; align-items: center; text-align: center; }
+  .timeline li { grid-template-columns: 1fr; gap: 8px; }
+  .credits { grid-template-columns: 1fr; }
+  .tile-cap { padding: 14px 8px 26px; }
+  .letters-form { grid-template-columns: 1fr; }
+  .row { grid-template-columns: 72px minmax(0, 1fr); }
+  .row .stage { width: 72px; }
+  .row-end { grid-column: 2; justify-items: start; grid-auto-flow: column; align-items: center; justify-content: space-between; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal { opacity: 1; }
+  .play { display: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.5A7.5 7.5 0 0 1 9.5 4.5a7.5 7.5 0 1 0 10 10Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></g></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 13H6L5 8Zm4 0V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><path d="M4 6h16v14H4zM4 10h16M8 3v5M16 3v5" fill="none" stroke="currentColor" stroke-width="1.2"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15L19.5 12Z" fill="currentColor"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 4h3.4v16H7zM13.6 4H17v16h-3.4z" fill="currentColor"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M3 12h18" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-needle" viewBox="0 0 24 24"><path d="M19 3 6 16l-1.5 4.5L9 19 22 6M17 5l2 2M4 9c3-3 6 1 9-2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><path d="M4 10h16v10H4zM3 7h18v3H3zM12 7v13M12 7C10 3 6 4 8 7m4 0c2-4 6-3 4 0" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="site-header" id="top">
+  <div class="hd">
+    <div class="hd-start">
+      <button class="menu-btn" id="menu-open" type="button" aria-controls="menu" aria-label="Open the menu"><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg><span aria-hidden="true">Menu</span></button>
+      <nav class="nav" aria-label="Main">
+        <a href="#/collection">Collection</a>
+        <a href="#/collection?cat=fragrance">Fragrance</a>
+        <a href="#/films">Films</a>
+        <a href="#/shows">Shows</a>
+      </nav>
+    </div>
+    <a class="brand" href="#/" aria-label="Veranne, home">Veranne</a>
+    <div class="hd-end">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to night colours"><svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="hd-link hd-appt" href="#/appointment" aria-label="Book an appointment"><svg class="ico" aria-hidden="true"><use href="#i-cal"/></svg><span>Book an appointment</span></a>
+      <a class="bag" href="#/selection" aria-label="Your selection"><svg class="ico" aria-hidden="true"><use href="#i-bag"/></svg><span data-bag-count>0</span></a>
+    </div>
+  </div>
+</header>
+
+<dialog class="drawer" id="menu" aria-label="Menu">
+  <div class="drawer-in">
+    <div class="drawer-top">
+      <button class="icon-btn" id="menu-close" type="button" aria-label="Close the menu"><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>
+      <a class="brand" href="#/">Veranne</a>
+      <span style="width:40px"></span>
+    </div>
+    <ul class="drawer-links">
+      <li><a href="#/collection">Collection</a></li>
+      <li><a href="#/collection?cat=fragrance">Fragrance</a></li>
+      <li><a href="#/films">Films</a></li>
+      <li><a href="#/shows">Shows</a></li>
+      <li><a href="#/maison">Maison</a></li>
+    </ul>
+    <div class="drawer-more">
+      <a class="tlink" href="#/appointment">Book an appointment</a>
+      <a class="tlink" href="#/selection">Your selection</a>
+      <a class="tlink" href="#/services">Client services</a>
+    </div>
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ======================= HOME ======================= -->
+<div data-view="home">
+  <section class="film hero" data-film aria-label="Film: The Quiet Season">
+    <img class="frame on" style="--fx:64%" src="images/film-gallery.webp" alt="An ivory gown on a dress stand in a long pale gallery, light falling from tall windows" width="1600" height="900">
+    <img class="frame" src="images/film-silk.webp" alt="" width="1600" height="900">
+    <img class="frame" src="images/film-garden.webp" alt="" width="1600" height="900">
+    <div class="film-cap">
+      <p class="cap">Autumn–Winter 2026</p>
+      <h1 class="display">The Quiet Season</h1>
+      <div class="links"><a class="tlink" href="#/collection">Discover the collection</a><a class="tlink" href="#/film">Watch the film</a></div>
+    </div>
+    <div class="film-ui">
+      <button class="play" type="button" aria-pressed="false" aria-label="Play the film"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></button>
+      <div class="segs"><button class="seg on" type="button" aria-label="Chapter 1"><i></i></button><button class="seg" type="button" aria-label="Chapter 2"><i></i></button><button class="seg" type="button" aria-label="Chapter 3"><i></i></button></div>
+    </div>
+  </section>
+
+  <section class="sec narrow center" id="story">
+    <p class="cap reveal">The collection</p>
+    <h2 class="h2 reveal">Wool cut close to the body, and silk that moves after you</h2>
+    <p class="lede reveal">Twenty-eight looks in chalk, dove grey and midnight, cut in the atelier above the salon and filmed in an empty gallery over one afternoon of winter light.</p>
+    <div class="links reveal"><a class="tlink" href="#/film">Watch the film</a><a class="tlink" href="#/collection">Shop the collection</a></div>
+  </section>
+
+  <section class="diptych" aria-label="Two films">
+    <article>
+      <div class="film tall" data-film aria-label="Film: Tailoring">
+        <img class="frame on" src="images/tailoring.webp" alt="A grey double-breasted jacket on a dress stand in a studio" width="1000" height="1250">
+        <img class="frame" src="images/atelier.webp" alt="" width="1000" height="1250">
+        <div class="film-ui"><button class="play" type="button" aria-pressed="false" aria-label="Play the film"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></button><div class="segs"><button class="seg on" type="button" aria-label="Chapter 1"><i></i></button><button class="seg" type="button" aria-label="Chapter 2"><i></i></button></div></div>
+      </div>
+      <div class="film-note reveal"><p class="cap">Tailoring</p><h3 class="h3">A jacket in dove grey barathea</h3><p>Four horn buttons, a soft shoulder and a lapel rolled by hand.</p><a class="tlink" href="#/piece?id=blazer">Discover</a></div>
+    </article>
+    <article>
+      <div class="film tall" data-film aria-label="Film: Evening">
+        <img class="frame on" src="images/evening.webp" alt="A long midnight gown caught by one light in a dark studio" width="1000" height="1250">
+        <img class="frame" src="images/film-night-silk.webp" alt="" width="1600" height="900">
+        <div class="film-ui"><button class="play" type="button" aria-pressed="false" aria-label="Play the film"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></button><div class="segs"><button class="seg on" type="button" aria-label="Chapter 1"><i></i></button><button class="seg" type="button" aria-label="Chapter 2"><i></i></button></div></div>
+      </div>
+      <div class="film-note reveal" style="--i:1"><p class="cap">Evening</p><h3 class="h3">Silk faille, made to order</h3><p>A long skirt on a fitted bodice, finished by one hand over eight weeks.</p><a class="tlink" href="#/piece?id=gown">Discover</a></div>
+    </article>
+  </section>
+
+  <section class="sec wrap" id="new-in">
+    <div class="rail-head"><div><p class="cap">New in</p><h2 class="h2">The first pieces of winter</h2></div><a class="tlink" href="#/collection">View the collection</a></div>
+    <div class="grid" data-clone="coat slip-dress knit bag"></div>
+  </section>
+
+  <section aria-label="Fragrance">
+    <div class="film wide" data-film aria-label="Film: Laurier">
+      <img class="frame on" src="images/fragrance.webp" alt="A heavy glass bottle of amber fragrance on travertine in late sun" width="1800" height="771">
+      <img class="frame" src="images/film-garden.webp" alt="" width="1600" height="900">
+      <div class="film-ui"><button class="play" type="button" aria-pressed="false" aria-label="Play the film"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></button><div class="segs"><button class="seg on" type="button" aria-label="Chapter 1"><i></i></button><button class="seg" type="button" aria-label="Chapter 2"><i></i></button></div></div>
+    </div>
+    <div class="film-note reveal"><p class="cap">Fragrance</p><h2 class="h2">Laurier</h2><p>Bay leaf, bitter orange and warm stone: the garden behind the atelier at the end of a summer day.</p><div class="links"><a class="tlink" href="#/piece?id=laurier">Discover the fragrance</a></div></div>
+  </section>
+
+  <section class="sec">
+    <div class="split">
+      <figure><img src="images/atelier.webp" alt="A muslin toile pinned on a dress stand, sketches on the wall behind" width="1000" height="1250"></figure>
+      <div class="split-copy reveal">
+        <p class="cap">Savoir-faire</p>
+        <h2 class="h2">Nine fittings for one coat</h2>
+        <p class="lede">Every couture piece starts as a muslin toile, pinned and recut on the stand until it sits without a pull. The coat in the film took nine fittings and one hundred and twenty hours.</p>
+        <div class="links"><a class="tlink" href="#/maison">Inside the ateliers</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec narrow center" id="next-show">
+    <p class="cap reveal">Next show</p>
+    <h2 class="h2 reveal">Spring–Summer 2027</h2>
+    <p class="lede reveal">Tuesday 26 January 2027, at the salon on Passage Ondine. The film follows the same evening.</p>
+    <div class="links reveal"><a class="tlink" href="#/appointment?service=show">Request an invitation</a><a class="tlink" href="#/shows">All shows</a></div>
+  </section>
+
+  <section class="sec pearl" aria-label="Services">
+    <div class="wrap services">
+      <div class="reveal"><svg class="ico" aria-hidden="true"><use href="#i-cal"/></svg><p class="cap">Appointments</p><p>A private hour in a salon, with the pieces you chose waiting.</p><a class="tlink" href="#/appointment">Book</a></div>
+      <div class="reveal" style="--i:1"><svg class="ico" aria-hidden="true"><use href="#i-needle"/></svg><p class="cap">Alterations</p><p>Hems, sleeves and waists adjusted by the atelier, without charge.</p><a class="tlink" href="#/services?at=care">How it works</a></div>
+      <div class="reveal" style="--i:2"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg><p class="cap">Gift wrapping</p><p>Every order leaves in a grey box tied with cotton ribbon.</p><a class="tlink" href="#/services?at=orders">Delivery</a></div>
+      <div class="reveal" style="--i:3"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg><p class="cap">Client care</p><p>A client adviser answers by email or telephone, six days a week.</p><a class="tlink" href="#/services">Contact</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= COLLECTION (products) ======================= -->
+<div data-view="collection">
+  <section class="page-head wrap">
+    <p class="cap">Autumn–Winter 2026</p>
+    <h1 class="h1">The collection</h1>
+    <p class="lede">Ready-to-wear, bags, shoes and fragrance from the winter collection. Couture is shown by appointment.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:var(--sec)">
+    <div class="toolbar">
+      <div class="chips" data-filter="cat" role="group" aria-label="Category">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-value="rtw" aria-pressed="false">Ready-to-wear</button>
+        <button class="chip" type="button" data-value="bags" aria-pressed="false">Bags</button>
+        <button class="chip" type="button" data-value="shoes" aria-pressed="false">Shoes</button>
+        <button class="chip" type="button" data-value="accessories" aria-pressed="false">Accessories</button>
+        <button class="chip" type="button" data-value="fragrance" aria-pressed="false">Fragrance</button>
+      </div>
+      <div class="tools-end">
+        <p class="count" data-count="collection" data-one="piece" data-many="pieces" aria-live="polite">12 pieces</p>
+        <label class="sr" for="sort">Sort by</label>
+        <select class="select" id="sort"><option value="featured">Featured</option><option value="low">Price, low to high</option><option value="high">Price, high to low</option></select>
+      </div>
+    </div>
+    <!-- One tile per product: the tile's data-* attributes fill the product page and the selection -->
+    <div class="grid" id="products">
+      <a class="tile" href="#/piece?id=coat" data-id="coat" data-cat="rtw" data-kind="Coats" data-price="4200" data-sizes="34 36 38 40 42 44" data-colour="Ivory" data-look="knit trousers pump bag" data-desc="Double-faced cashmere cut in one piece, wrapped and belted, with hand-finished edges and no lining."><figure class="stage"><span class="tag">New</span><img src="images/coat.webp" alt="A long ivory wrap coat with a tie belt" width="800" height="1000"></figure><div class="tile-cap"><p class="cap">Long wrap coat</p><span class="price">€4,200</span></div></a>
+      <a class="tile" href="#/piece?id=blazer" data-id="blazer" data-cat="rtw" data-kind="Jackets" data-price="2900" data-sizes="34 36 38 40 42 44" data-colour="Dove grey" data-look="trousers skirt bag pump" data-desc="Wool barathea with a soft shoulder, peaked lapels rolled by hand and four horn buttons."><figure class="stage"><img src="images/blazer.webp" alt="A dove grey double-breasted jacket" width="800" height="1000"></figure><div class="tile-cap"><p class="cap">Double-breasted jacket</p><span class="price">€2,900</span></div></a>
+      <a class="tile" href="#/piece?id=slip-dress" data-id="slip-dress" data-cat="rtw" data-kind="Dresses" data-price="3400" data-sizes="34 36 38 40 42" data-colour="Midnight" data-look="coat pump scarf iris" data-desc="Silk satin cut on the bias, so it falls close to the body and moves a moment after you."><figure class="stage"><span class="tag">New</span><img src="images/slip-dress.webp" alt="A midnight blue silk slip dress on thin straps" width="800" height="1000"></figure><div class="tile-cap"><p class="cap">Bias-cut slip dress</p><span class="price">€3,400</span></div></a>
+      <a class="tile" href="#/piece?id=gown" data-id="gown" data-cat="rtw" data-kind="Dresses" data-price="6800" data-sizes="34 36 38 40 42" data-colour="Black" data-look="bag pump iris scarf" data-desc="Silk faille with a fitted bodice and a long A-line skirt. Made to order in the atelier in eight weeks."><figure class="stage"><img src="images/gown.webp" alt="A long black evening dress with a fitted bodice and a wide skirt" width="800" height="1000"></figure><div class="tile-cap"><p class="cap">Column evening dress</p><span class="price">€6,800</span></div></a>
+      <div class="film-tile" data-cat="all">
+        <div class="film" data-film aria-label="Film: The Quiet Season">
+          <img class="frame on" style="--fx:64%" src="images/film-gallery.webp" alt="An ivory gown on a stand in a long gallery" width="1600" height="900">
+          <img class="frame" src="images/film-silk.webp" alt="" width="1600" height="900">
+          <div class="film-cap"><p class="cap">The film</p><h2 class="h2">The Quiet Season</h2><div class="links"><a class="tlink" href="#/film">Watch</a></div></div>
+          <div class="film-ui"><button class="play" type="button" aria-pressed="false" aria-label="Play the film"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></button><div class="segs"><button class="seg on" type="button" aria-label="Chapter 1"><i></i></button><button class="seg" type="button" aria-label="Chapter 2"><i></i></button></div></div>
+        </div>
+      </div>
+      <a class="tile" href="#/piece?id=knit" data-id="knit" data-cat="rtw" data-kind="Knitwear" data-price="1350" data-sizes="XS S M L" data-colour="Chalk" data-look="skirt trousers coat bag" data-desc="Twelve-gauge cashmere with ribbed cuffs and hem, knitted in one piece without side seams."><figure class="stage"><img src="images/knit.webp" alt="A chalk white cashmere crew-neck sweater" width="800" height="1000"></figure><div class="tile-cap"><p class="cap">Cashmere crew sweater</p><span class="price">€1,350</span></div></a>
+      <a class="tile" href="#/piece?id=skirt" data-id="skirt" data-cat="rtw" data-kind="Skirts" data-price="1650" data-sizes="34 36 38 40 42" data-colour="Pale grey" data-look="knit blazer pump bag" data-desc="Wool crepe with sunray pleats set by hand and a grosgrain waistband."><figure class="stage"><img src="images/skirt.webp" alt="A pale grey pleated midi skirt" width="800" height="1000"></figure><div class="tile-cap"><p class="cap">Pleated midi skirt</p><span class="price">€1,650</span></div></a>
+      <a class="tile" href="#/piece?id=trousers" data-id="trousers" data-cat="rtw" data-kind="Trousers" data-price="1450" data-sizes="34 36 38 40 42 44" data-colour="Charcoal" data-look="blazer knit pump bag" data-desc="Wool flannel cut wide and long, with two front pleats and a pressed crease."><figure class="stage"><img src="images/trousers.webp" alt="Wide charcoal wool trousers with front pleats" width="800" height="1000"></figure><div class="tile-cap"><p class="cap">Wide wool trousers</p><span class="price">€1,450</span></div></a>
+      <a class="tile" href="#/piece?id=bag" data-id="bag" data-cat="bags" data-kind="Bags" data-price="3100" data-sizes="" data-colour="Black calfskin" data-look="coat knit trousers pump" data-desc="Smooth calfskin on a saddle-stitched base, with one inner pocket and a brass clasp."><figure class="stage"><span class="tag">New</span><img src="images/bag.webp" alt="A black half-moon leather shoulder bag" width="800" height="1000"></figure><div class="tile-cap"><p class="cap">Half-moon shoulder bag</p><span class="price">€3,100</span></div></a>
+      <a class="tile" href="#/piece?id=pump" data-id="pump" data-cat="shoes" data-kind="Shoes" data-price="990" data-sizes="36 37 38 39 40 41" data-colour="Nude" data-look="slip-dress skirt bag scarf" data-desc="Kid leather on a 70 mm heel, with an adjustable slingback strap."><figure class="stage"><img src="images/pump.webp" alt="A nude leather slingback pump" width="800" height="1000"></figure><div class="tile-cap"><p class="cap">Slingback pump</p><span class="price">€990</span></div></a>
+      <a class="tile" href="#/piece?id=scarf" data-id="scarf" data-cat="accessories" data-kind="Accessories" data-price="480" data-sizes="" data-colour="Ivory and ink" data-look="coat knit bag laurier" data-desc="Silk twill, 90 cm square, with hand-rolled edges and a ring motif drawn in the atelier."><figure class="stage"><img src="images/scarf.webp" alt="An ivory silk square printed with ink blue rings" width="800" height="1000"></figure><div class="tile-cap"><p class="cap">Silk square, Orbit</p><span class="price">€480</span></div></a>
+      <a class="tile" href="#/piece?id=laurier" data-id="laurier" data-cat="fragrance" data-kind="Fragrance" data-price="240" data-sizes="50 ml|100 ml" data-colour="Eau de parfum" data-look="iris scarf knit bag" data-desc="Bay leaf, bitter orange and warm stone, composed for the garden behind the atelier at dusk."><figure class="stage"><img src="images/bottle-amber.webp" alt="A rectangular bottle of amber eau de parfum" width="800" height="1000"></figure><div class="tile-cap"><p class="cap">Laurier, eau de parfum</p><span class="price">€240</span></div></a>
+      <a class="tile" href="#/piece?id=iris" data-id="iris" data-cat="fragrance" data-kind="Fragrance" data-price="260" data-sizes="50 ml|100 ml" data-colour="Eau de parfum" data-look="laurier gown scarf bag" data-desc="Orris butter, violet leaf and a little smoke: an evening fragrance for the end of the season."><figure class="stage"><img src="images/bottle-night.webp" alt="A rectangular bottle of violet eau de parfum" width="800" height="1000"></figure><div class="tile-cap"><p class="cap">Nuit d'Iris, eau de parfum</p><span class="price">€260</span></div></a>
+    </div>
+    <div class="empty" data-empty="collection" hidden><p class="h3">Nothing in this category this season</p><p class="muted">New pieces arrive every month.</p><button class="tlink" type="button" data-reset="collection">Show everything</button></div>
+  </section>
+</div>
+
+<!-- ======================= PIECE (product) ======================= -->
+<div data-view="piece">
+  <section class="piece">
+    <div class="piece-media" data-gallery>
+      <figure class="piece-main"><img data-p="img" src="images/coat.webp" alt="A long ivory wrap coat with a tie belt" width="800" height="1000"></figure>
+      <div class="thumbs">
+        <button class="thumb" type="button" aria-pressed="true" data-alt="The piece"><img data-p="thumb" src="images/coat.webp" alt="" width="800" height="1000"></button>
+        <button class="thumb" type="button" aria-pressed="false" data-alt="The muslin toile on the stand in the atelier"><img src="images/atelier.webp" alt="" width="1000" height="1250"></button>
+        <button class="thumb" type="button" aria-pressed="false" data-alt="The cloth, close"><img src="images/film-silk.webp" alt="" width="1600" height="900"></button>
+      </div>
+    </div>
+    <div class="piece-info">
+      <ol class="crumbs" style="justify-content:flex-start"><li><a href="#/collection">Collection</a></li><li data-p="kind">Coats</li></ol>
+      <h1 class="h1" data-p="name">Long wrap coat</h1>
+      <p class="piece-price" data-p="price">€4,200</p>
+      <p class="muted" data-p="desc">Double-faced cashmere cut in one piece, wrapped and belted, with hand-finished edges and no lining.</p>
+      <p class="opt-label" style="margin-top:28px"><span>Colour</span><span class="muted" data-p="colour">Ivory</span></p>
+      <fieldset class="sizes" data-p="sizes" aria-describedby="err-size">
+        <legend class="opt-label" style="width:100%"><span>Size</span></legend>
+        <div class="chips" data-size-list>
+          <label class="chip"><input class="sr" type="radio" name="size" value="34">34</label><label class="chip"><input class="sr" type="radio" name="size" value="36">36</label><label class="chip"><input class="sr" type="radio" name="size" value="38">38</label><label class="chip"><input class="sr" type="radio" name="size" value="40">40</label><label class="chip"><input class="sr" type="radio" name="size" value="42">42</label><label class="chip"><input class="sr" type="radio" name="size" value="44">44</label>
+        </div>
+        <p class="err" id="err-size" aria-live="polite"></p>
+      </fieldset>
+      <div class="actions">
+        <button class="btn" type="button" id="add">Add to your selection</button>
+        <a class="btn line" href="#/appointment?service=fitting" id="fitting">Book a fitting</a>
+      </div>
+      <p class="status-line" id="added" role="status"></p>
+      <details class="acc" open><summary>Details<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Cut and finished in the house ateliers. Each piece is pressed and checked by hand before it leaves.</p></div></details>
+      <details class="acc"><summary>Care<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Specialist dry clean. Hang on a shaped hanger and let the cloth rest a day between wears.</p></div></details>
+      <details class="acc"><summary>Delivery and returns<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Complimentary delivery in two to four working days, in a grey box tied with ribbon. Returns within 30 days. <a class="tlink" href="#/services?at=orders">Read more</a></p></div></details>
+    </div>
+  </section>
+  <section class="sec wrap" aria-labelledby="look-title">
+    <div class="rail-head"><div><p class="cap">Complete the look</p><h2 class="h2" id="look-title">Worn with</h2></div><a class="tlink" href="#/collection">View the collection</a></div>
+    <div class="grid" data-look-grid></div>
+  </section>
+</div>
+
+<!-- ======================= SELECTION (cart) ======================= -->
+<div data-view="selection">
+  <section class="page-head wrap">
+    <p class="cap">Your selection</p>
+    <h1 class="h1">Pieces to try in the salon</h1>
+    <p class="lede">Keep pieces here, then send the list to a client adviser. They will hold your sizes and confirm the order with you.</p>
+  </section>
+  <section class="wrap sel" style="padding-bottom:var(--sec)">
+    <div>
+      <ul class="rows" id="rows"></ul>
+      <div class="empty" id="sel-empty"><p class="h3">Your selection is empty</p><p class="muted">Pieces you add from the collection appear here.</p><a class="tlink" href="#/collection">Discover the collection</a></div>
+    </div>
+    <aside class="summary" aria-label="Summary">
+      <p class="cap">Summary</p>
+      <dl><dt>Pieces</dt><dd data-sum="count">0</dd><dt>Subtotal</dt><dd data-sum="total">€0</dd><dt>Delivery</dt><dd>Complimentary</dd></dl>
+      <div class="actions"><a class="btn" href="#/appointment?service=viewing&amp;from=selection">Send to a client adviser</a><a class="btn line" href="#/collection">Continue browsing</a></div>
+      <p class="muted" style="margin:20px 0 0;font-size:.875rem">Prices include VAT. Payment is taken when the order is confirmed.</p>
+    </aside>
+  </section>
+  <template id="row-tpl"><li class="row"><a class="stage" data-r="link" href="#/piece"><img data-r="img" src="images/coat.webp" alt="" width="800" height="1000"></a><div><p class="cap" data-r="kind" style="margin-bottom:8px">Coats</p><p class="h3" data-r="name" style="margin-bottom:6px">Long wrap coat</p><p class="muted" data-r="size" style="margin:0">Size 38</p></div><div class="row-end"><span data-r="price">€4,200</span><div class="stepper"><button type="button" data-step="-1" aria-label="One fewer"><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg></button><output data-r="qty">1</output><button type="button" data-step="1" aria-label="One more"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></button></div><button class="plain" type="button" data-remove>Remove</button></div></li></template>
+</div>
+
+<!-- ======================= FILMS (blog) ======================= -->
+<div data-view="films">
+  <section class="page-head wrap">
+    <p class="cap">Films</p>
+    <h1 class="h1">Stories from the house</h1>
+    <p class="lede">Collections, fittings, fragrance and shows, filmed in the salon and the ateliers.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:var(--sec)">
+    <a class="feature card" href="#/film" data-kind="collection">
+      <figure><img src="images/film-gallery.webp" alt="" width="1600" height="900"><span class="badge-play"><span><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>2:40</span></figure>
+      <div><p class="cap">Collection · 12 September 2026</p><h2 class="h2">The Quiet Season</h2><p class="lede" style="margin-left:0">The Autumn–Winter 2026 collection, filmed in an empty gallery over one afternoon of winter light.</p><span class="tlink">Watch the film</span></div>
+    </a>
+    <div class="toolbar">
+      <div class="chips" data-filter="kind" role="group" aria-label="Kind of film">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-value="collection" aria-pressed="false">Collections</button>
+        <button class="chip" type="button" data-value="savoir-faire" aria-pressed="false">Savoir-faire</button>
+        <button class="chip" type="button" data-value="fragrance" aria-pressed="false">Fragrance</button>
+        <button class="chip" type="button" data-value="shows" aria-pressed="false">Shows</button>
+      </div>
+      <p class="count" data-count="films" data-one="film" data-many="films" aria-live="polite">6 films</p>
+    </div>
+    <div class="cards" style="margin-top:40px">
+      <a class="card" href="#/film" data-kind="savoir-faire"><figure><img src="images/atelier.webp" alt="" width="1000" height="1250"><span class="badge-play"><span><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>4:12</span></figure><p class="cap">Savoir-faire · 2 October 2026</p><h3 class="h3">Nine fittings for one coat</h3></a>
+      <a class="card" href="#/film" data-kind="fragrance"><figure><img src="images/fragrance.webp" alt="" width="1800" height="771"><span class="badge-play"><span><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>1:30</span></figure><p class="cap">Fragrance · 24 September 2026</p><h3 class="h3">Laurier, at dusk</h3></a>
+      <a class="card" href="#/film" data-kind="shows"><figure><img src="images/runway.webp" alt="" width="1600" height="900"><span class="badge-play"><span><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>12:05</span></figure><p class="cap">Shows · 8 July 2026</p><h3 class="h3">The Autumn–Winter 2026 show</h3></a>
+      <a class="card" href="#/film" data-kind="savoir-faire"><figure><img src="images/film-silk.webp" alt="" width="1600" height="900"><span class="badge-play"><span><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>3:18</span></figure><p class="cap">Savoir-faire · 19 June 2026</p><h3 class="h3">Pleats, set by hand</h3></a>
+      <a class="card" href="#/film" data-kind="fragrance"><figure><img src="images/film-night-silk.webp" alt="" width="1600" height="900"><span class="badge-play"><span><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>1:05</span></figure><p class="cap">Fragrance · 30 May 2026</p><h3 class="h3">Nuit d'Iris</h3></a>
+      <a class="card" href="#/film" data-kind="collection"><figure><img src="images/tailoring.webp" alt="" width="1000" height="1250"><span class="badge-play"><span><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>2:02</span></figure><p class="cap">Collection · 14 May 2026</p><h3 class="h3">Tailoring, in grey</h3></a>
+    </div>
+    <div class="empty" data-empty="films" hidden><p class="h3">No films of this kind yet</p><button class="tlink" type="button" data-reset="films">Show all films</button></div>
+  </section>
+</div>
+
+<!-- ======================= FILM (post) ======================= -->
+<div data-view="film">
+  <section class="film screen flex" data-film data-caps="film-chapter" aria-label="Film: The Quiet Season">
+    <img class="frame on" style="--fx:64%" src="images/film-gallery.webp" alt="An ivory gown on a dress stand in a long pale gallery" width="1600" height="900" data-cap="I. The gallery">
+    <img class="frame" src="images/film-silk.webp" alt="" width="1600" height="900" data-cap="II. The cloth">
+    <img class="frame" src="images/film-garden.webp" alt="" width="1600" height="900" data-cap="III. The garden">
+    <div class="film-ui"><button class="play" type="button" aria-pressed="false" aria-label="Play the film"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></button><div class="segs"><button class="seg on" type="button" aria-label="Chapter 1"><i></i></button><button class="seg" type="button" aria-label="Chapter 2"><i></i></button><button class="seg" type="button" aria-label="Chapter 3"><i></i></button></div></div>
+  </section>
+  <p class="cap chapter-cap" id="film-chapter" aria-live="polite">I. The gallery</p>
+  <article class="sec narrow" style="padding-top:clamp(40px,6vw,80px)">
+    <header class="center" style="margin-bottom:48px">
+      <p class="cap">Collection · 12 September 2026</p>
+      <h1 class="h1">The Quiet Season</h1>
+      <p class="lede">A film in three chapters for the Autumn–Winter 2026 collection. Two minutes and forty seconds, no dialogue.</p>
+    </header>
+    <div class="prose">
+      <h2 class="h3">I. The gallery</h2>
+      <p>We filmed in a long gallery with its shutters open and nothing on the walls. The collection hung on stands in the order it was cut, and the light moved across the floor the way it does in January: low, white and slow.</p>
+      <p>The first look is the wrap coat in double-faced cashmere. It has no lining and no hidden seams, so the camera stays on its edge, where the two faces of the cloth are turned in and stitched by hand.</p>
+      <p class="quote">A garment should be quiet enough that you hear the person wearing it.</p>
+      <h2 class="h3">II. The cloth</h2>
+      <p>Between the looks the film rests on the cloth itself: silk satin cut on the bias, wool crepe pleated by hand, faille that holds its shape without a frame. These are the materials of the season, chosen for how they move rather than how they shine.</p>
+      <h2 class="h3">III. The garden</h2>
+      <p>The last chapter leaves the building. The garden behind the atelier is clipped once a year, in the week the film is made, and the fragrance of the season was composed there at dusk.</p>
+      <dl class="credits"><div><dt>Direction</dt><dd>Ana Lune</dd></div><div><dt>Photography</dt><dd>Teo Varga</dd></div><div><dt>Music</dt><dd>Sami Odell</dd></div><div><dt>Collection</dt><dd>The Veranne ateliers</dd></div></dl>
+    </div>
+  </article>
+  <section class="wrap" style="padding-bottom:var(--sec)" aria-labelledby="in-film">
+    <div class="rail-head"><div><p class="cap">In the film</p><h2 class="h2" id="in-film">The pieces</h2></div><a class="tlink" href="#/films">More films</a></div>
+    <div class="grid" data-clone="coat slip-dress gown knit"></div>
+  </section>
+</div>
+
+<!-- ======================= SHOWS (events) ======================= -->
+<div data-view="shows">
+  <section class="page-head wrap">
+    <p class="cap">Shows and salons</p>
+    <h1 class="h1">Where to see the collection</h1>
+    <p class="lede">Shows are by invitation. Trunk shows and evenings in the salons are open to clients by appointment.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:var(--sec)">
+    <div class="toolbar">
+      <div class="chips" data-filter="city" role="group" aria-label="City">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">All cities</button>
+        <button class="chip" type="button" data-value="paris" aria-pressed="false">Paris</button>
+        <button class="chip" type="button" data-value="tokyo" aria-pressed="false">Tokyo</button>
+        <button class="chip" type="button" data-value="singapore" aria-pressed="false">Singapore</button>
+      </div>
+      <p class="count" data-count="shows" data-one="date" data-many="dates" aria-live="polite">4 dates</p>
+    </div>
+    <ul class="events" style="margin-top:40px">
+      <li class="event" data-city="paris"><p class="day" style="margin:0">26<small>Jan 2027</small></p><div><p class="cap" style="margin-bottom:8px">Show · Paris salon</p><h2 class="h3">Spring–Summer 2027</h2><p class="muted" style="margin:0">Thirty-two looks, shown once at seven in the evening, then filmed.</p></div><div class="event-end"><span class="state">By invitation</span><a class="tlink" href="#/appointment?service=show&amp;salon=paris">Request an invitation</a></div></li>
+      <li class="event" data-city="tokyo"><p class="day" style="margin:0">5–7<small>Feb 2027</small></p><div><p class="cap" style="margin-bottom:8px">Trunk show · Tokyo salon</p><h2 class="h3">The winter collection in Tokyo</h2><p class="muted" style="margin:0">Every look of the season in the salon for three days, with fittings on request.</p></div><div class="event-end"><span class="state">Open to clients</span><a class="tlink" href="#/appointment?service=viewing&amp;salon=tokyo">Book a viewing</a></div></li>
+      <li class="event" data-city="singapore"><p class="day" style="margin:0">19<small>Feb 2027</small></p><div><p class="cap" style="margin-bottom:8px">Evening · Singapore salon</p><h2 class="h3">An evening of fragrance</h2><p class="muted" style="margin:0">The perfumer presents Laurier and Nuit d'Iris, with the raw materials on the table.</p></div><div class="event-end"><span class="state">Waiting list</span><a class="tlink" href="#/appointment?service=fragrance&amp;salon=singapore">Join the list</a></div></li>
+      <li class="event" data-city="paris"><p class="day" style="margin:0">4–6<small>Mar 2027</small></p><div><p class="cap" style="margin-bottom:8px">Atelier days · Paris salon</p><h2 class="h3">Bridal and made-to-measure</h2><p class="muted" style="margin:0">Three days with the head of the couture atelier for first fittings and toiles.</p></div><div class="event-end"><span class="state">By appointment</span><a class="tlink" href="#/appointment?service=bespoke&amp;salon=paris">Book a first fitting</a></div></li>
+    </ul>
+    <div class="empty" data-empty="shows" hidden><p class="h3">No dates in this city yet</p><button class="tlink" type="button" data-reset="shows">Show all cities</button></div>
+  </section>
+  <section aria-label="The last show">
+    <div class="film wide" data-film aria-label="Film: The Autumn–Winter 2026 show">
+      <img class="frame on" src="images/runway.webp" alt="A long white runway between rows of chairs under ceiling lights" width="1600" height="900">
+      <img class="frame" style="--fx:64%" src="images/film-gallery.webp" alt="" width="1600" height="900">
+      <div class="film-ui"><button class="play" type="button" aria-pressed="false" aria-label="Play the film"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></button><div class="segs"><button class="seg on" type="button" aria-label="Chapter 1"><i></i></button><button class="seg" type="button" aria-label="Chapter 2"><i></i></button></div></div>
+    </div>
+    <div class="film-note" style="padding-bottom:var(--sec)"><p class="cap">The last show</p><h2 class="h2">Autumn–Winter 2026</h2><p>Twenty-eight looks on one white runway, July 2026.</p><div class="links"><a class="tlink" href="#/film">Watch the show</a></div></div>
+  </section>
+</div>
+
+<!-- ======================= MAISON (about) ======================= -->
+<div data-view="maison">
+  <section class="page-head wrap">
+    <p class="cap">The house</p>
+    <h1 class="h1">Maison Veranne</h1>
+    <p class="lede">A couture house of forty people: tailors, seamstresses, a pleater, a perfumer and the clients they know by name.</p>
+  </section>
+  <figure style="margin:0"><img src="images/salon.webp" alt="The pale stone front of the salon, with an arched door between two lit windows" width="1350" height="900" style="width:100%;max-height:720px;object-fit:cover"></figure>
+  <section class="sec narrow">
+    <div class="prose">
+      <p>Odile Veranne opened a two-room atelier above a bookbinder in 2004, with one stand, two seamstresses and a list of eleven clients. The house still works the way it did then: every piece is cut for a person before it is cut for a rail.</p>
+      <p>Ready-to-wear arrived in 2012, made in the same ateliers and finished by the same hands. The first fragrance followed in 2016, composed in the garden behind the salon.</p>
+    </div>
+    <ol class="timeline" style="margin-top:48px">
+      <li><b>2004</b><div><h2 class="h3">The first atelier</h2><p class="muted" style="margin:0">Two rooms, one stand and eleven clients.</p></div></li>
+      <li><b>2012</b><div><h2 class="h3">Ready-to-wear</h2><p class="muted" style="margin:0">A first collection of nineteen pieces, cut in the couture atelier.</p></div></li>
+      <li><b>2016</b><div><h2 class="h3">Laurier</h2><p class="muted" style="margin:0">The first fragrance, and the salon on Passage Ondine.</p></div></li>
+      <li><b>2023</b><div><h2 class="h3">Tokyo and Singapore</h2><p class="muted" style="margin:0">Two salons, each with a fitting room and an atelier tailor.</p></div></li>
+    </ol>
+  </section>
+  <section class="wrap" style="padding-bottom:var(--sec)" aria-labelledby="ateliers">
+    <div class="center" style="margin-bottom:40px"><p class="cap">Savoir-faire</p><h2 class="h2" id="ateliers">Three ateliers</h2></div>
+    <div class="cards">
+      <a class="card" href="#/film"><figure style="aspect-ratio:4/5"><img src="images/atelier.webp" alt="" width="1000" height="1250"></figure><p class="cap">Couture</p><h3 class="h3">Toiles, fittings and hand finishing</h3></a>
+      <a class="card" href="#/piece?id=blazer"><figure style="aspect-ratio:4/5"><img src="images/tailoring.webp" alt="" width="1000" height="1250"></figure><p class="cap">Tailoring</p><h3 class="h3">Jackets and coats, cut in one piece</h3></a>
+      <a class="card" href="#/collection?cat=fragrance"><figure style="aspect-ratio:4/5"><img src="images/fragrance.webp" alt="" width="1800" height="771"></figure><p class="cap">Fragrance</p><h3 class="h3">Two scents, composed in the garden</h3></a>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= APPOINTMENT (contact) ======================= -->
+<div data-view="appointment">
+  <section class="page-head wrap">
+    <p class="cap">Appointments</p>
+    <h1 class="h1">Book an appointment</h1>
+    <p class="lede">An hour in a salon with a client adviser. Tell us what you would like to see and we will have it ready.</p>
+  </section>
+  <section class="wrap cols" style="padding-bottom:var(--sec)">
+    <div>
+      <form class="form" data-form="appointment" novalidate>
+        <fieldset class="field full" data-group="service" aria-describedby="err-service">
+          <legend class="opt-label">What is it for?</legend>
+          <div class="services-pick">
+            <label class="pick"><input class="sr" type="radio" name="service" value="viewing" required><b>Private viewing</b><span>The collection, or the pieces in your selection.</span></label>
+            <label class="pick"><input class="sr" type="radio" name="service" value="fitting"><b>Fitting and alterations</b><span>With an atelier tailor, for a piece you own or want.</span></label>
+            <label class="pick"><input class="sr" type="radio" name="service" value="fragrance"><b>Fragrance consultation</b><span>Both scents, on skin, with the raw materials.</span></label>
+            <label class="pick"><input class="sr" type="radio" name="service" value="bespoke"><b>Bridal and made-to-measure</b><span>A first conversation and sketches.</span></label>
+            <label class="pick"><input class="sr" type="radio" name="service" value="show"><b>A show or a salon evening</b><span>Ask to be invited to the next date.</span></label>
+          </div>
+          <p class="err" id="err-service" aria-live="polite"></p>
+        </fieldset>
+        <div class="field"><label for="a-salon">Salon</label><select class="input" id="a-salon" name="salon" required aria-describedby="err-salon"><option value="">Choose a salon</option><option value="paris">Paris, Passage Ondine</option><option value="tokyo">Tokyo, Aoyama</option><option value="singapore">Singapore, Orchard</option></select><p class="err" id="err-salon" aria-live="polite"></p></div>
+        <div class="field"><label for="a-date">Preferred date</label><input class="input" id="a-date" name="date" type="date" required aria-describedby="err-date" data-range-underflow="Please choose a date from tomorrow."><p class="err" id="err-date" aria-live="polite"></p></div>
+        <fieldset class="field full" data-group="time" aria-describedby="err-time">
+          <legend class="opt-label">Preferred time</legend>
+          <div class="chips"><label class="chip"><input class="sr" type="radio" name="time" value="11:00" required>11:00</label><label class="chip"><input class="sr" type="radio" name="time" value="13:00">13:00</label><label class="chip"><input class="sr" type="radio" name="time" value="15:00">15:00</label><label class="chip"><input class="sr" type="radio" name="time" value="17:00">17:00</label></div>
+          <p class="err" id="err-time" aria-live="polite"></p>
+        </fieldset>
+        <div class="field"><label for="a-name">Name</label><input class="input" id="a-name" name="name" autocomplete="name" required aria-describedby="err-name"><p class="err" id="err-name" aria-live="polite"></p></div>
+        <div class="field"><label for="a-email">Email</label><input class="input" id="a-email" name="email" type="email" autocomplete="email" required aria-describedby="err-email"><p class="err" id="err-email" aria-live="polite"></p></div>
+        <div class="field"><label for="a-phone">Telephone (optional)</label><input class="input" id="a-phone" name="phone" type="tel" autocomplete="tel"></div>
+        <div class="field full"><label for="a-notes">Anything we should prepare (optional)</label><textarea class="input" id="a-notes" name="notes"></textarea></div>
+        <div class="field full"><label class="check"><input type="checkbox" name="consent" required aria-describedby="err-consent">I agree that Veranne may use these details to arrange my appointment, as described in the <a href="#/legal">privacy notice</a>.</label><p class="err" id="err-consent" aria-live="polite"></p></div>
+        <div class="full"><button class="btn" type="submit">Request the appointment</button></div>
+      </form>
+      <div class="success" data-success="appointment" tabindex="-1" hidden>
+        <p class="cap">Thank you</p>
+        <h2 class="h2">Your request has reached the salon</h2>
+        <p class="lede">A client adviser will confirm your <span data-echo="service"></span> at <span data-echo="salon"></span> on <span data-echo="date"></span> at <span data-echo="time"></span> by email to <span data-echo="email"></span>.</p>
+        <div class="links"><button class="tlink" type="button" data-again>Book another</button><a class="tlink" href="#/collection">Back to the collection</a></div>
+      </div>
+    </div>
+    <aside class="salons" aria-labelledby="salons-title">
+      <p class="cap" id="salons-title">The salons</p>
+      <div class="salon"><h2 class="h3">Paris</h2><p>7 Passage Ondine</p><p>Tuesday to Saturday, 10:00 to 19:00</p></div>
+      <div class="salon"><h2 class="h3">Tokyo</h2><p>Aoyama, second floor</p><p>Every day, 11:00 to 20:00</p></div>
+      <div class="salon"><h2 class="h3">Singapore</h2><p>Orchard, ground floor</p><p>Every day, 11:00 to 21:00</p></div>
+      <div class="salon"><h2 class="h3">Client care</h2><p><a class="tlink" href="mailto:care@veranne.example">care@veranne.example</a></p><p>+1 555 0172, Monday to Saturday</p></div>
+    </aside>
+  </section>
+</div>
+
+<!-- ======================= CLIENT SERVICES (faq) ======================= -->
+<div data-view="services">
+  <section class="page-head wrap">
+    <p class="cap">Client services</p>
+    <h1 class="h1">How we can help</h1>
+    <p class="lede">Orders, alterations, care and appointments. Anything else, write to a client adviser.</p>
+  </section>
+  <section class="narrow" style="padding-bottom:var(--sec)">
+    <div class="faq-tools"><div class="field"><label for="faq-q">Search the answers</label><input class="input" id="faq-q" type="search" autocomplete="off"></div></div>
+    <p class="count center" data-count="faq" data-one="answer" data-many="answers" aria-live="polite" style="margin-bottom:32px">9 answers</p>
+    <div class="faq-group" id="orders"><p class="cap">Orders and delivery</p>
+      <details class="acc"><summary>How long does delivery take?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Two to four working days, complimentary, in a grey box tied with cotton ribbon. Made-to-order pieces take six to eight weeks.</p></div></details>
+      <details class="acc"><summary>Can I have an order gift wrapped?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Every order is wrapped. Add a card message when you send your selection to a client adviser.</p></div></details>
+      <details class="acc"><summary>Which countries do you deliver to?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Placeholder: list the countries and the carrier you use.</p></div></details>
+    </div>
+    <div class="faq-group" id="returns"><p class="cap">Returns and exchanges</p>
+      <details class="acc"><summary>How do I return a piece?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Within 30 days, unworn and with its tags. A client adviser arranges the collection; refunds go back to the original payment.</p></div></details>
+      <details class="acc"><summary>Can made-to-order pieces be returned?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>No. They are cut for you, so we fit them until they are right instead.</p></div></details>
+    </div>
+    <div class="faq-group" id="care"><p class="cap">Alterations and care</p>
+      <details class="acc"><summary>Are alterations included?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Hems, sleeves and waists are adjusted by the atelier without charge for any ready-to-wear piece bought from us.</p></div></details>
+      <details class="acc"><summary>How should I care for cashmere?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Hand wash cold or dry clean, dry flat, and fold rather than hang.</p></div></details>
+    </div>
+    <div class="faq-group" id="appointments"><p class="cap">Appointments and salons</p>
+      <details class="acc"><summary>Do I need an appointment to visit a salon?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>No, the salons are open to everyone. An appointment means a private room and your sizes ready.</p></div></details>
+      <details class="acc"><summary>How do I get an invitation to a show?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Ask a client adviser or <a class="tlink" href="#/appointment?service=show">request an invitation</a>. Seats are limited and confirmed two weeks before.</p></div></details>
+    </div>
+    <div class="empty" data-empty="faq" hidden><p class="h3">No answer matches</p><p class="muted">Write to <a class="tlink" href="mailto:care@veranne.example">care@veranne.example</a> and a client adviser will reply.</p></div>
+  </section>
+</div>
+
+<!-- ======================= LEGAL ======================= -->
+<div data-view="legal">
+  <section class="page-head wrap"><p class="cap">Legal</p><h1 class="h1">Privacy and terms</h1></section>
+  <section class="narrow legal prose" style="padding-bottom:var(--sec)">
+    <nav class="legal-nav" aria-label="On this page"><a class="tlink" href="#privacy">Privacy notice</a><a class="tlink" href="#terms">Terms of sale</a></nav>
+    <p>Placeholder text. Replace both sections with your own notice and terms, reviewed for the countries you sell to.</p>
+    <h2 class="h2" id="privacy">Privacy notice</h2>
+    <p>We use the details you give us to arrange appointments, deliver orders and, if you ask, send our letters. We do not sell them. You can ask to see, correct or delete them at any time by writing to care@veranne.example.</p>
+    <h2 class="h2" id="terms">Terms of sale</h2>
+    <p>Orders are confirmed by a client adviser. Prices include VAT where it applies. Ready-to-wear may be returned within 30 days; made-to-order pieces are final and are fitted until they are right.</p>
+  </section>
+</div>
+
+<!-- ======================= 404 ======================= -->
+<div data-view="404">
+  <section class="wrap notfound">
+    <p class="cap">Error 404</p>
+    <h1 class="h1">This page is not in the collection</h1>
+    <p class="lede">It may have moved, or the address may be mistyped.</p>
+    <div class="links"><a class="tlink" href="#/">Home</a><a class="tlink" href="#/collection">The collection</a></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <section class="wrap letters" aria-labelledby="letters-title">
+    <p class="cap">Letters</p>
+    <h2 class="h2" id="letters-title">News from the house, four times a year</h2>
+    <form class="letters-form" data-form="letters" novalidate>
+      <div class="field"><label class="sr" for="l-email">Email</label><input class="input" id="l-email" name="email" type="email" placeholder="Your email" autocomplete="email" required aria-describedby="err-l-email"><p class="err" id="err-l-email" aria-live="polite"></p></div>
+      <button class="btn" type="submit">Subscribe</button>
+      <label class="check"><input type="checkbox" name="consent" required aria-describedby="err-l-consent">Send me the letters. I can unsubscribe at any time.<span class="err" id="err-l-consent" aria-live="polite"></span></label>
+    </form>
+    <div class="success" data-success="letters" tabindex="-1" hidden style="background:none;padding:24px 0 0">
+      <p class="h3">Thank you. The next letter goes to <span data-echo="email"></span>.</p>
+      <div class="links"><button class="tlink" type="button" data-again>Use another address</button></div>
+    </div>
+  </section>
+  <div class="wrap f-cols">
+    <nav aria-labelledby="f1"><h2 id="f1">The house</h2><ul><li><a href="#/maison">Maison</a></li><li><a href="#/films">Films</a></li><li><a href="#/shows">Shows</a></li></ul></nav>
+    <nav aria-labelledby="f2"><h2 id="f2">Collection</h2><ul><li><a href="#/collection?cat=rtw">Ready-to-wear</a></li><li><a href="#/collection?cat=bags">Bags</a></li><li><a href="#/collection?cat=fragrance">Fragrance</a></li></ul></nav>
+    <nav aria-labelledby="f3"><h2 id="f3">Client services</h2><ul><li><a href="#/appointment">Book an appointment</a></li><li><a href="#/services?at=orders">Delivery and returns</a></li><li><a href="#/services">Questions</a></li></ul></nav>
+    <nav aria-labelledby="f4"><h2 id="f4">Legal</h2><ul><li><a href="#/legal?at=privacy">Privacy notice</a></li><li><a href="#/legal?at=terms">Terms of sale</a></li></ul></nav>
+  </div>
+  <div class="wrap f-base"><a class="brand" href="#/">Veranne</a><span>© 2026 Maison Veranne. Placeholder company details.</span></div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  /* Fail open: if anything throws before the first view is shown, drop the js class so every view stays readable */
+  let started = false;
+  addEventListener("error", () => { if (!started) root.classList.remove("js"); });
+  const one = (sel, el = document) => el.querySelector(sel); /* one element, or null */
+  const all = (sel, el = document) => [...el.querySelectorAll(sel)]; /* always an array */
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const money = (n) => `€${Number(n).toLocaleString("en-GB")}`;
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks one ---------- */
+  const themeButton = one("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to day colours" : "Switch to night colours");
+    one("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const savedTheme = store.get("veranne-theme");
+  applyTheme(savedTheme === "light" || savedTheme === "dark" ? savedTheme : systemDark.matches ? "dark" : "light");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("veranne-theme", next);
+  });
+  systemDark.addEventListener("change", (event) => { if (!store.get("veranne-theme")) applyTheme(event.matches ? "dark" : "light"); });
+
+  /* ---------- Products: the collection tiles are the catalogue ---------- */
+  const tiles = all("#products .tile");
+  const tileById = new Map(tiles.map((tile) => [tile.dataset.id, tile]));
+  const productOf = (id) => {
+    const tile = tileById.get(id);
+    if (!tile) return null;
+    const img = one("img", tile);
+    return { id, tile, name: one(".cap", tile).textContent, price: Number(tile.dataset.price), kind: tile.dataset.kind, img: img.currentSrc || img.src, alt: img.alt };
+  };
+  /* Copies of tiles for "New in", "Worn with" and "In the film" (the copies link to the same product page) */
+  function cloneTiles(grid, ids) {
+    grid.replaceChildren(...ids.map((id) => tileById.get(id)).filter(Boolean).map((tile) => {
+      const copy = tile.cloneNode(true);
+      copy.removeAttribute("data-cat");
+      return copy;
+    }));
+  }
+  all("[data-clone]").forEach((grid) => cloneTiles(grid, grid.dataset.clone.split(" ")));
+
+  /* ---------- Films: stills that cross-fade and drift; the play control and the chapter lines drive them ---------- */
+  const films = all("[data-film]").map((film) => {
+    const frames = all(".frame", film);
+    const segs = all(".seg", film);
+    const button = one(".play", film);
+    const caption = film.dataset.caps && document.getElementById(film.dataset.caps);
+    let index = 0;
+    let userPaused = false;
+    function show(next) {
+      /* The outgoing still keeps its drift while it fades, instead of jumping back to its first size */
+      const out = frames[index];
+      out.style.transform = getComputedStyle(out).transform;
+      out.classList.remove("on");
+      setTimeout(() => { if (!out.classList.contains("on")) out.style.transform = ""; }, 1500);
+      index = (next + frames.length) % frames.length;
+      frames[index].classList.add("on");
+      segs.forEach((seg, i) => { seg.classList.toggle("on", i === index); seg.classList.toggle("done", i < index); });
+      if (caption) caption.textContent = frames[index].dataset.cap || "";
+    }
+    function play(on) {
+      film.classList.toggle("playing", on);
+      if (!button) return;
+      button.setAttribute("aria-pressed", String(on));
+      button.setAttribute("aria-label", on ? "Pause the film" : "Play the film");
+      one("use", button).setAttribute("href", on ? "#i-pause" : "#i-play");
+    }
+    film.addEventListener("animationend", (event) => { if (event.animationName === "fill") show(index + 1); });
+    segs.forEach((seg, i) => seg.addEventListener("click", () => show(i)));
+    button?.addEventListener("click", () => { const on = !film.classList.contains("playing"); userPaused = !on; play(on); });
+    return { film, play, wants: () => !userPaused && !reduced.matches, reset: () => { userPaused = false; show(0); play(false); } };
+  });
+  /* Films play only while on screen, never with reduced motion, and stay paused once the visitor pauses them */
+  const filmWatch = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      const item = films.find((f) => f.film === entry.target);
+      if (item) item.play(entry.isIntersecting && item.wants());
+    }
+  }, { threshold: 0.45 }) : null;
+  films.forEach((item) => filmWatch?.observe(item.film));
+
+  /* ---------- Header: clear over the home film until the page moves; the menu whenever the links do not fit ---------- */
+  const header = one(".site-header");
+  const nav = one(".nav", header);
+  const menu = one("#menu");
+  one("#menu-open").addEventListener("click", () => menu.showModal());
+  one("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+  function fitNav() {
+    header.classList.remove("compact");
+    if (nav.scrollWidth > nav.clientWidth + 1) header.classList.add("compact");
+  }
+  addEventListener("resize", fitNav);
+  document.fonts.ready.then(fitNav);
+  const onScroll = () => header.classList.toggle("solid", scrollY > 24);
+  addEventListener("scroll", onScroll, { passive: true });
+
+  /* ---------- Reveals: a slow rise as things come into view (visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  const observeReveals = (scope) => all(".reveal:not(.in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("in")));
+  setTimeout(() => all(".reveal").forEach((el) => el.classList.add("in")), 2500);
+
+  /* ---------- Filters with a live count and an empty state ---------- */
+  const filters = {
+    collection: { bar: "cat", items: () => all("#products > [data-cat]"), attr: "cat" },
+    films: { bar: "kind", items: () => all("[data-view='films'] .cards .card"), attr: "kind" },
+    shows: { bar: "city", items: () => all(".events .event"), attr: "city" },
+  };
+  function applyFilter(key, value) {
+    const spec = filters[key];
+    const chips = all(`[data-filter="${spec.bar}"] [data-value]`);
+    const chosen = chips.some((chip) => chip.dataset.value === value) ? value : "all";
+    chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.value === chosen)));
+    let shown = 0;
+    spec.items().forEach((item) => {
+      const own = item.dataset[spec.attr];
+      const match = chosen === "all" || own === chosen;
+      item.hidden = !match;
+      if (match && own !== "all") shown += 1;
+    });
+    const count = one(`[data-count="${key}"]`);
+    count.textContent = `${shown} ${shown === 1 ? count.dataset.one : count.dataset.many}`;
+    one(`[data-empty="${key}"]`).hidden = shown > 0;
+  }
+  for (const [key, spec] of Object.entries(filters)) {
+    all(`[data-filter="${spec.bar}"] [data-value]`).forEach((chip) => chip.addEventListener("click", () => applyFilter(key, chip.dataset.value)));
+    one(`[data-reset="${key}"]`).addEventListener("click", () => applyFilter(key, "all"));
+  }
+  /* Sorting keeps the film tile in fifth place */
+  const grid = one("#products");
+  const filmTile = one(".film-tile", grid);
+  const featured = [...tiles];
+  one("#sort").addEventListener("change", (event) => {
+    const order = event.target.value;
+    const sorted = order === "featured" ? featured : [...tiles].sort((a, b) => (order === "low" ? 1 : -1) * (a.dataset.price - b.dataset.price));
+    grid.replaceChildren(...sorted.slice(0, 4), filmTile, ...sorted.slice(4));
+  });
+
+  /* ---------- FAQ search ---------- */
+  const faqInput = one("#faq-q");
+  function searchFaq() {
+    const q = faqInput.value.trim().toLowerCase();
+    let shown = 0;
+    all(".faq-group").forEach((group) => {
+      let inGroup = 0;
+      all("details", group).forEach((item) => {
+        const match = !q || item.textContent.toLowerCase().includes(q);
+        item.hidden = !match;
+        if (match) inGroup += 1;
+      });
+      group.hidden = inGroup === 0;
+      shown += inGroup;
+    });
+    const count = one('[data-count="faq"]');
+    count.textContent = `${shown} ${shown === 1 ? count.dataset.one : count.dataset.many}`;
+    one('[data-empty="faq"]').hidden = shown > 0;
+  }
+  faqInput.addEventListener("input", searchFaq);
+
+  /* ---------- Product page: filled from the tile ---------- */
+  const piece = one("[data-view='piece']");
+  const field = (name) => one(`[data-p="${name}"]`, piece);
+  let currentPiece = "coat";
+  function sizeChips(sizes) {
+    const list = sizes ? sizes.split(sizes.includes("|") ? "|" : " ") : [];
+    one("[data-size-list]", piece).replaceChildren(...list.map((size) => {
+      const label = document.createElement("label");
+      label.className = "chip";
+      label.innerHTML = '<input class="sr" type="radio" name="size">';
+      label.firstChild.value = size;
+      label.append(size);
+      return label;
+    }));
+    field("sizes").hidden = list.length === 0;
+  }
+  function fillPiece(id) {
+    const product = productOf(id) || productOf("coat");
+    const tile = product.tile;
+    currentPiece = product.id;
+    field("name").textContent = product.name;
+    field("price").textContent = money(product.price);
+    field("kind").textContent = product.kind;
+    field("desc").textContent = tile.dataset.desc;
+    field("colour").textContent = tile.dataset.colour;
+    for (const img of [field("img"), field("thumb")]) { img.src = product.img; }
+    field("img").alt = product.alt;
+    all(".thumb", piece).forEach((thumb, i) => thumb.setAttribute("aria-pressed", String(i === 0)));
+    sizeChips(tile.dataset.sizes);
+    one("#err-size").textContent = "";
+    one("#added").textContent = "";
+    /* The second action follows the category: a fitting for clothes, a consultation for fragrance, a viewing for the rest */
+    const [service, label] = tile.dataset.cat === "rtw" ? ["fitting", "Book a fitting"] : tile.dataset.cat === "fragrance" ? ["fragrance", "Book a consultation"] : ["viewing", "See it in a salon"];
+    const second = one("#fitting");
+    second.textContent = label;
+    second.setAttribute("href", `#/appointment?service=${service}&piece=${product.id}`);
+    cloneTiles(one("[data-look-grid]", piece), tile.dataset.look.split(" "));
+    titles.piece = `${product.name} · Veranne`;
+  }
+  /* Gallery: the thumbnail's own picture becomes the large one (so inlining keeps it working) */
+  all(".thumb", piece).forEach((thumb) => thumb.addEventListener("click", () => {
+    all(".thumb", piece).forEach((t) => t.setAttribute("aria-pressed", String(t === thumb)));
+    const main = field("img");
+    const img = one("img", thumb);
+    main.classList.remove("swap");
+    main.src = img.currentSrc || img.src;
+    main.alt = thumb.dataset.alt;
+    void main.offsetWidth;
+    main.classList.add("swap");
+  }));
+
+  /* ---------- Selection: kept in the store, counted in the header ---------- */
+  const readSelection = () => { try { return JSON.parse(store.get("veranne-selection") || "[]").filter((line) => tileById.has(line.id)); } catch { return []; } };
+  let selection = readSelection();
+  const saveSelection = () => { store.set("veranne-selection", JSON.stringify(selection)); renderSelection(); };
+  function renderSelection() {
+    const pieces = selection.reduce((sum, line) => sum + line.qty, 0);
+    one("[data-bag-count]").textContent = String(pieces);
+    one(".bag").setAttribute("aria-label", `Your selection, ${pieces} ${pieces === 1 ? "piece" : "pieces"}`);
+    const rows = one("#rows");
+    rows.replaceChildren(...selection.map((line, i) => {
+      const product = productOf(line.id);
+      const row = one("#row-tpl").content.firstElementChild.cloneNode(true);
+      const part = (name) => one(`[data-r="${name}"]`, row);
+      part("link").href = `#/piece?id=${line.id}`;
+      part("img").src = product.img;
+      part("kind").textContent = product.kind;
+      part("name").textContent = product.name;
+      part("size").textContent = line.size ? `Size ${line.size}` : "One size";
+      part("price").textContent = money(product.price * line.qty);
+      part("qty").textContent = String(line.qty);
+      all("[data-step]", row).forEach((button) => button.addEventListener("click", () => {
+        line.qty = Math.max(1, Math.min(5, line.qty + Number(button.dataset.step)));
+        saveSelection();
+      }));
+      one("[data-remove]", row).addEventListener("click", () => { selection.splice(i, 1); saveSelection(); });
+      return row;
+    }));
+    one("#sel-empty").hidden = selection.length > 0;
+    one('[data-sum="count"]').textContent = String(pieces);
+    one('[data-sum="total"]').textContent = money(selection.reduce((sum, line) => sum + productOf(line.id).price * line.qty, 0));
+  }
+  one("#add").addEventListener("click", () => {
+    const sizes = field("sizes");
+    const chosen = one("input[name='size']:checked", piece);
+    const error = one("#err-size");
+    if (!sizes.hidden && !chosen) {
+      error.textContent = "Please choose a size.";
+      one("input[name='size']", piece)?.focus();
+      return;
+    }
+    error.textContent = "";
+    const size = chosen ? chosen.value : "";
+    const line = selection.find((item) => item.id === currentPiece && item.size === size);
+    if (line) line.qty = Math.min(5, line.qty + 1); else selection.push({ id: currentPiece, size, qty: 1 });
+    saveSelection();
+    one("#added").innerHTML = 'Added to your selection. <a class="tlink" href="#/selection">View your selection</a>';
+  });
+  piece.addEventListener("change", (event) => { if (event.target.name === "size") one("#err-size").textContent = ""; });
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled instead of the submit event: a sandbox without allow-forms never fires submit,
+     while the click still arrives, including the one Enter triggers. ---------- */
+  const iso = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  one("#a-date").min = iso(new Date(Date.now() + 864e5));
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", rangeUnderflow: "Please choose a later date." };
+  const groupMessages = { service: "Please choose what the appointment is for.", time: "Please choose a time." };
+  function checkField(el) {
+    const error = document.getElementById(el.getAttribute("aria-describedby"));
+    let problem = "";
+    if (el.tagName === "FIELDSET") {
+      problem = one("input:checked", el) ? "" : groupMessages[el.dataset.group] || messages.valueMissing;
+    } else {
+      const key = Object.keys(messages).find((k) => el.validity[k]);
+      if (key) problem = el.dataset[key] || (el.type === "checkbox" ? "Please tick this box to continue." : messages[key]);
+    }
+    if (error) error.textContent = problem;
+    el.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  function readable(form, name) {
+    const el = form.elements[name];
+    if (!el) return "";
+    if (el instanceof RadioNodeList) {
+      const chosen = [...el].find((input) => input.checked);
+      return chosen ? (chosen.closest(".pick")?.querySelector("b")?.textContent.toLowerCase() || chosen.value) : "";
+    }
+    if (el.tagName === "SELECT") return el.selectedOptions[0]?.textContent ?? "";
+    if (el.type === "date" && el.value) {
+      const [y, m, d] = el.value.split("-").map(Number);
+      return new Date(y, m - 1, d).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
+    }
+    return el.value;
+  }
+  all("form[data-form]").forEach((form) => {
+    const checks = all("[aria-describedby]", form).filter((el) => el.matches("input, select, textarea, fieldset"));
+    checks.forEach((el) => el.addEventListener(el.tagName === "FIELDSET" || el.tagName === "SELECT" || el.type === "checkbox" ? "change" : "blur", () => checkField(el)));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = one("[type=submit]", form);
+    const label = button.textContent;
+    const success = one(`[data-success="${form.dataset.form}"]`);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = checks.map(checkField).every(Boolean);
+      if (!valid) {
+        const first = checks.find((el) => el.getAttribute("aria-invalid") === "true");
+        (first.tagName === "FIELDSET" ? one("input", first) : first).focus();
+        return;
+      }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        all("[data-echo]", success).forEach((el) => { el.textContent = readable(form, el.dataset.echo); });
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+        button.disabled = false;
+        button.textContent = label;
+      }, 700);
+    });
+    one("[data-again]", success)?.addEventListener("click", () => {
+      form.reset();
+      checks.forEach((el) => { el.removeAttribute("aria-invalid"); const error = document.getElementById(el.getAttribute("aria-describedby")); if (error) error.textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      one("input, select", form).focus();
+    });
+  });
+  /* Links can preselect the appointment: ?service=fitting&salon=tokyo&piece=coat, or from=selection */
+  function prefillAppointment(params) {
+    const form = one("[data-form='appointment']");
+    const service = params.get("service");
+    const radio = service && one(`input[name="service"][value="${CSS.escape(service)}"]`, form);
+    if (radio) radio.checked = true;
+    const salon = params.get("salon");
+    if (salon && one(`#a-salon option[value="${CSS.escape(salon)}"]`)) one("#a-salon").value = salon;
+    const notes = one("#a-notes");
+    const product = productOf(params.get("piece"));
+    if (product) notes.value = `I would like to see the ${product.name.toLowerCase()}.`;
+    if (params.get("from") === "selection" && selection.length) {
+      notes.value = `Please prepare my selection: ${selection.map((line) => `${productOf(line.id).name}${line.size ? ` (${line.size})` : ""}${line.qty > 1 ? ` x${line.qty}` : ""}`).join(", ")}.`;
+    }
+  }
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map(all("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Veranne: couture, ready-to-wear and fragrance from the salon on Passage Ondine",
+    collection: "The collection · Veranne",
+    piece: "Long wrap coat · Veranne",
+    selection: "Your selection · Veranne",
+    films: "Films · Veranne",
+    film: "The Quiet Season · Veranne",
+    shows: "Shows and salons · Veranne",
+    maison: "The house · Veranne",
+    appointment: "Book an appointment · Veranne",
+    services: "Client services · Veranne",
+    legal: "Privacy and terms · Veranne",
+    "404": "Page not found · Veranne",
+  };
+  /* Which header link stays underlined for each child view */
+  const section = { piece: "collection", film: "films" };
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    const p = route.params;
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    root.dataset.view = name;
+    const active = section[name] || name;
+    /* Collection and Fragrance share a view: the category decides which link is current */
+    const activeCat = name === "collection" ? p.get("cat") || "all" : name === "piece" && tileById.get(p.get("id"))?.dataset.cat === "fragrance" ? "fragrance" : "all";
+    all(".nav a, .drawer-links a").forEach((a) => {
+      const target = parse(a.getAttribute("href"));
+      const on = target.view === active && (target.params.get("cat") || "all") === activeCat;
+      if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (name === "collection") applyFilter("collection", p.get("cat") || "all");
+    if (name === "films") applyFilter("films", p.get("kind") || "all");
+    if (name === "shows") applyFilter("shows", p.get("city") || "all");
+    if (name === "piece") fillPiece(p.get("id"));
+    if (name === "appointment") prefillAppointment(p);
+    document.title = titles[name] || titles.home;
+    /* Films in other views rewind; the ones on screen start again by themselves */
+    films.forEach((item) => { if (!current.contains(item.film)) item.reset(); });
+    const at = p.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) scrollTo({ top: 0, behavior: "instant" });
+    onScroll();
+    fitNav();
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = (current && current.querySelector(href)) || document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" }); }
+    }
+  });
+  addEventListener("hashchange", () => show(parse(location.hash)));
+
+  /* ---------- Start ---------- */
+  renderSelection();
+  searchFaq();
+  show(parse(location.hash), { scroll: false });
+  started = true;
+})();
+</script>
+</body>
+</html>

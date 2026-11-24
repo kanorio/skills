@@ -1,0 +1,1372 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Ferrotype: documentaries and workshops about how things are made</title>
+<meta name="description" content="Ferrotype streams documentaries, filmed workshops and festival talks from independent makers. One membership, every title, cancel when you like.">
+<meta property="og:title" content="Ferrotype: watch how it's made, then make it yourself">
+<meta property="og:description" content="Documentaries, workshops and festival talks from independent makers, in one membership.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/dm-sans-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "DM Sans"; src: url("fonts/dm-sans-latin-wght.woff2") format("woff2"); font-weight: 100 1000; font-display: swap; }
+@font-face { font-family: "League Gothic"; src: url("fonts/league-gothic-latin-wdth.woff2") format("woff2"); font-weight: 400; font-stretch: 75% 100%; font-display: swap; }
+
+/* ---------- Tokens: dark is the default, regardless of the system setting ---------- */
+:root {
+  color-scheme: dark;
+  --bg: oklch(14.5% 0.006 25);          /* the page: warm near-black */
+  --surface: oklch(19.5% 0.007 25);     /* the detail panel, desks, plan cards */
+  --surface-2: oklch(25% 0.008 25);     /* FAQ bars, the current episode, ghost buttons */
+  --surface-3: oklch(31% 0.008 25);     /* hover on surface-2 */
+  --text: oklch(98% 0.003 25);
+  --text-muted: oklch(74% 0.008 25);
+  --border: oklch(34% 0.008 25);
+  --border-strong: oklch(58% 0.008 25); /* field outlines, chips */
+  --accent: oklch(55% 0.21 22);         /* the one red: joining, signing in, progress, the rim */
+  --accent-hover: oklch(49% 0.2 22);
+  --accent-text: oklch(100% 0 0);
+  --white: oklch(100% 0 0);         /* text and outlines that sit on artwork in both themes */
+  --accent-ink: oklch(70% 0.17 22);     /* red used as text */
+  --rim-mid: oklch(72% 0.16 8);         /* the bright middle of the glowing arc */
+  --glow: oklch(36% 0.13 12 / 0.9);     /* the haze under the arc */
+  --feat-a: oklch(27% 0.06 15);         /* feature cards: oxblood to ink */
+  --feat-b: oklch(19% 0.035 280);
+  --invert: oklch(100% 0 0);            /* the Play button */
+  --invert-text: oklch(14.5% 0.006 25);
+  --glass: oklch(52% 0.006 25 / 0.6);   /* "More info" over artwork */
+  --glass-text: oklch(100% 0 0);
+  --veil: oklch(10% 0.006 25 / 0.62);   /* over the poster wall */
+  --veil-core: oklch(10% 0.006 25 / 0.5);
+  --head-fade: oklch(8% 0.006 25 / 0.8);
+  --fade: oklch(10% 0.006 25 / 0.86);   /* billboard and page-art side fade */
+  --field-bg: oklch(12% 0.006 25 / 0.7);
+  --card-glass: oklch(8% 0.006 25 / 0.8);
+  --danger: oklch(72% 0.16 28);
+  --ok: oklch(76% 0.15 150);
+  --shadow-card: 0 10px 30px oklch(0% 0 0 / 0.55);
+  --shadow-overlay: 0 24px 72px oklch(0% 0 0 / 0.7);
+  --font: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "League Gothic", "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+  --r-control: 4px;
+  --r-card: 6px;
+  --r-media: 4px;
+  --r-panel: 8px;
+  --r-block: 16px;
+  --dur-fast: 150ms;
+  --dur-base: 260ms;
+  --dur-slow: 480ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --fast: var(--dur-fast) var(--ease);
+  --base: var(--dur-base) var(--ease);
+  --slow: var(--dur-slow) var(--ease);
+  --header-h: 68px;
+  --gutter: clamp(16px, 4vw, 60px);
+  --page: 1180px;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(97.5% 0.004 40);
+  --surface: oklch(100% 0 0);
+  --surface-2: oklch(93.5% 0.005 40);
+  --surface-3: oklch(89% 0.006 40);
+  --text: oklch(19% 0.01 25);
+  --text-muted: oklch(45% 0.012 25);
+  --border: oklch(87% 0.006 40);
+  --border-strong: oklch(60% 0.01 25);
+  --accent-hover: oklch(48% 0.2 22);
+  --accent-ink: oklch(50% 0.2 22);
+  --rim-mid: oklch(64% 0.2 8);
+  --glow: oklch(88% 0.06 15 / 0.95);
+  --feat-a: oklch(94% 0.035 20);
+  --feat-b: oklch(95% 0.02 290);
+  --invert: oklch(19% 0.01 25);
+  --invert-text: oklch(100% 0 0);
+  --glass: oklch(100% 0 0 / 0.75);
+  --glass-text: oklch(19% 0.01 25);
+  --veil: oklch(97.5% 0.004 40 / 0.8);
+  --veil-core: oklch(97.5% 0.004 40 / 0.55);
+  --head-fade: oklch(97.5% 0.004 40 / 0.92);
+  --fade: oklch(97.5% 0.004 40 / 0.92);
+  --field-bg: oklch(100% 0 0 / 0.85);
+  --card-glass: oklch(100% 0 0 / 0.9);
+  --danger: oklch(50% 0.2 25);
+  --ok: oklch(50% 0.14 150);
+  --shadow-card: 0 10px 30px oklch(30% 0.02 25 / 0.18);
+  --shadow-overlay: 0 24px 72px oklch(30% 0.02 25 / 0.28);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 12px); }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.5 var(--font); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+h1, h2, h3, p, ol, ul, dl, dd, figure { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+h1, h2, h3 { line-height: 1.12; text-wrap: balance; }
+p { text-wrap: pretty; }
+:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: 8px; top: -60px; z-index: 70; padding: 10px 16px; border-radius: var(--r-control); background: var(--invert); color: var(--invert-text); font-weight: 700; }
+.skip:focus { top: 8px; }
+.icon { width: 24px; height: 24px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.icon.sm { width: 18px; height: 18px; }
+.icon.fill { fill: currentColor; stroke: none; }
+.muted { color: var(--text-muted); }
+.wrap { width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.narrow { width: min(100% - 2 * var(--gutter), 520px); margin-inline: auto; }
+html:not(.js) .needs-js { display: none !important; }
+
+/* ---------- Type ---------- */
+.display { font-size: clamp(2.25rem, 1.05rem + 4vw, 4.25rem); font-weight: 900; line-height: 1.04; letter-spacing: -0.025em; }
+.h1 { font-size: clamp(2rem, 1.3rem + 2.4vw, 3.25rem); font-weight: 800; letter-spacing: -0.02em; }
+.h2 { font-size: clamp(1.25rem, 1.05rem + 0.7vw, 1.75rem); font-weight: 700; letter-spacing: -0.01em; }
+.h3 { font-size: 1.125rem; font-weight: 700; }
+.tt { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; letter-spacing: 0.02em; line-height: 0.92; }
+.kind { display: inline-flex; align-items: center; gap: 8px; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
+.kind svg { width: 18px; height: 18px; }
+.lead { font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); color: var(--text-muted); max-width: 60ch; }
+.fine { font-size: 0.8125rem; color: var(--text-muted); }
+.ink { color: var(--accent-ink); font-weight: 700; }
+.u { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding: 0 22px; border: 0; border-radius: var(--r-control); background: var(--accent); color: var(--accent-text); font-size: 1rem; font-weight: 600; white-space: nowrap; transition: background-color var(--fast), opacity var(--fast); }
+.btn:hover { background: var(--accent-hover); }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+.btn.big { min-height: 56px; padding: 0 26px; font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); }
+.btn.small { min-height: 34px; padding: 0 14px; font-size: 0.9375rem; }
+.btn.wide { width: 100%; }
+.btn.play { background: var(--invert); color: var(--invert-text); }
+.btn.glass { background: var(--glass); color: var(--glass-text); }
+.btn.play:hover, .btn.glass:hover { opacity: 0.8; }
+.btn.ghost { background: var(--surface-2); color: var(--text); }
+.btn.ghost:hover { background: var(--surface-3); }
+.round { display: inline-grid; place-items: center; flex: none; width: 40px; height: 40px; padding: 0; border: 2px solid oklch(100% 0 0 / 0.55); border-radius: 50%; background: oklch(14% 0.006 25 / 0.6); color: var(--white); transition: border-color var(--fast), background-color var(--fast); }
+.round:hover { border-color: var(--white); }
+.round.fill { border-color: transparent; background: var(--white); color: oklch(14% 0.006 25); }
+.round.fill:hover { background: oklch(88% 0 0); }
+.round .icon { width: 20px; height: 20px; }
+.round.on-surface { border-color: var(--border-strong); background: var(--surface); color: var(--text); }
+.round.on-surface:hover { border-color: var(--text); }
+[data-list] .on, [data-list][aria-pressed="true"] .off { display: none; }
+[data-list][aria-pressed="true"] .on { display: block; }
+.icon-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--text); }
+.icon-btn:hover { background: oklch(50% 0.006 25 / 0.25); }
+.chip { min-height: 34px; padding: 0 14px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: transparent; font-size: 0.9375rem; font-weight: 600; color: var(--text-muted); }
+.chip:hover { color: var(--text); border-color: var(--text); }
+.chip[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: var(--bg); }
+.pick { position: relative; display: inline-flex; }
+.pick select { appearance: none; min-height: 34px; padding: 0 34px 0 12px; border: 1px solid var(--text); border-radius: 2px; background: var(--bg); font-size: 0.9375rem; font-weight: 600; }
+.pick .icon { position: absolute; right: 8px; top: 50%; translate: 0 -50%; width: 18px; height: 18px; pointer-events: none; }
+
+/* ---------- Header ---------- */
+.site-header { position: fixed; inset: 0 0 auto; z-index: 40; height: var(--header-h); display: flex; align-items: center; gap: clamp(12px, 2vw, 32px); padding-inline: var(--gutter); background: linear-gradient(to bottom, var(--head-fade) 10%, transparent); transition: background-color var(--base); }
+html:not(.js) .site-header { position: absolute; }
+.site-header.solid { background-color: var(--bg); }
+.brand { display: inline-flex; align-items: center; gap: 10px; flex: none; font-size: 1.375rem; font-weight: 800; letter-spacing: -0.03em; }
+.brand svg { width: 30px; height: 30px; }
+.nav { display: flex; gap: clamp(14px, 1.5vw, 22px); font-size: 0.9375rem; }
+.nav a { color: var(--text-muted); white-space: nowrap; transition: color var(--fast); }
+.nav a:hover { color: var(--text); }
+.nav a[aria-current="page"], .menu a[aria-current="page"] { color: var(--text); font-weight: 700; }
+.head-end { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+.search { display: flex; align-items: center; height: 38px; border: 1px solid transparent; transition: border-color var(--base), background-color var(--base); }
+.search input { width: 0; padding: 0; border: 0; background: transparent; outline: none; font-size: 0.9375rem; transition: width var(--base); }
+.search.open { border-color: var(--text); background: var(--field-bg); }
+.search.open input { width: clamp(140px, 16vw, 220px); padding-right: 10px; }
+.head-end .btn { margin-left: 8px; }
+.menu-btn { display: none; align-items: center; gap: 4px; height: 40px; padding: 0 6px; border: 0; background: none; font-size: 0.9375rem; font-weight: 700; }
+.menu { position: absolute; top: calc(var(--header-h) - 4px); left: var(--gutter); min-width: 240px; padding: 8px 0; border-top: 2px solid var(--text); border-radius: 0 0 var(--r-panel) var(--r-panel); background: var(--surface); box-shadow: var(--shadow-overlay); animation: pop var(--base); }
+.menu a { display: block; padding: 10px 20px; color: var(--text-muted); }
+.menu a:hover { color: var(--text); background: var(--surface-2); }
+.menu hr { margin: 8px 0; border: 0; border-top: 1px solid var(--border); }
+@media (max-width: 1099px) { .nav { display: none; } .menu-btn { display: inline-flex; } }
+@media (max-width: 559px) { .brand span { display: none; } .search { display: none; } .site-header { gap: 8px; } }
+
+/* ---------- Fields and forms ---------- */
+.field { position: relative; margin-bottom: 26px; text-align: left; }
+.field input, .field select, .field textarea { width: 100%; min-height: 56px; padding: 24px 16px 8px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--field-bg); font-size: 1rem; }
+.field textarea { min-height: 140px; padding-top: 30px; resize: vertical; }
+.field select { appearance: none; padding-right: 40px; }
+.field > .icon { position: absolute; right: 14px; top: 18px; pointer-events: none; }
+.field label { position: absolute; left: 17px; top: 17px; color: var(--text-muted); pointer-events: none; transform-origin: left top; transition: transform var(--fast); }
+.field input:focus + label, .field input:not(:placeholder-shown) + label, .field textarea + label, .field select + label { transform: translateY(-10px) scale(0.75); }
+.field :is(input, select, textarea):hover { border-color: var(--text-muted); }
+.field :is(input, select, textarea):focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+.field [aria-invalid="true"] { border-color: var(--danger); }
+.err { position: absolute; left: 0; top: calc(100% + 4px); display: flex; align-items: center; gap: 6px; font-size: 0.8125rem; line-height: 1.3; color: var(--danger); }
+.err:empty { display: none; }
+.err::before { content: "!"; display: grid; place-items: center; width: 15px; height: 15px; flex: none; border: 1.5px solid currentColor; border-radius: 50%; font-size: 0.625rem; font-weight: 800; }
+.reveal { position: absolute; right: 10px; top: 10px; min-height: 36px; padding: 0 10px; border: 0; background: none; color: var(--text-muted); font-size: 0.875rem; font-weight: 700; }
+.check { position: relative; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 22px; font-size: 0.9375rem; }
+.check input { width: 18px; height: 18px; margin: 2px 0 0; flex: none; accent-color: var(--accent); }
+.check .err { left: 28px; }
+.choices { display: grid; gap: 8px; margin: 0 0 26px; padding: 0; border: 0; }
+.choices legend { margin-bottom: 8px; font-weight: 700; }
+.choice { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--border-strong); border-radius: var(--r-control); cursor: pointer; }
+.choice input { accent-color: var(--accent); width: 18px; height: 18px; margin: 0; }
+.choice span { flex: 1; font-weight: 600; }
+.choice small { color: var(--text-muted); font-size: 0.875rem; }
+.choice:has(:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.success { display: grid; justify-items: center; gap: 14px; padding: 24px 0; text-align: center; animation: pop var(--slow); }
+.tick { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--ok); color: var(--bg); }
+.tick .icon { width: 30px; height: 30px; stroke-width: 3; }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+
+/* ---------- Landing: poster wall, headline, email start, the glowing arc ---------- */
+.hero { position: relative; isolation: isolate; overflow: hidden; min-height: clamp(600px, 94vh, 880px); display: grid; place-items: center; padding: calc(var(--header-h) + 40px) var(--gutter) 150px; text-align: center; }
+.wall { position: absolute; z-index: -2; inset: -28% -30%; display: grid; grid-template-columns: repeat(6, 1fr); align-content: center; gap: clamp(8px, 1vw, 14px); transform: perspective(1500px) rotateX(14deg) rotateY(-16deg) rotateZ(-9deg); animation: drift 80s linear infinite alternate; }
+@media (max-width: 1099px) { .wall { grid-template-columns: repeat(5, 1fr); } }
+@media (max-width: 639px) { .wall { grid-template-columns: repeat(3, 1fr); inset: -12% -40%; } }
+.wall img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--r-card); }
+.hero::before, .auth::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse 60% 55% at 50% 52%, var(--veil-core), transparent), linear-gradient(to bottom, var(--head-fade) 0%, var(--veil) 30%, var(--veil) 70%, var(--bg) 100%); }
+.hero-in { display: grid; justify-items: center; gap: 18px; max-width: 820px; }
+.hero .display { max-width: 15ch; }
+.sub { font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); font-weight: 600; }
+.start { width: min(100%, 640px); }
+.start p { margin-bottom: 18px; font-size: clamp(1rem, 0.95rem + 0.3vw, 1.25rem); }
+.start-row { display: flex; justify-content: center; gap: 8px; }
+.start .field { flex: 1; max-width: 400px; margin: 0; }
+@media (max-width: 639px) { .start-row { flex-direction: column; align-items: center; } .start .field { width: 100%; max-width: none; margin-bottom: 22px; } }
+.arc { position: relative; z-index: 1; height: 130px; margin-top: -84px; overflow: hidden; pointer-events: none; }
+.arc::before { content: ""; position: absolute; left: -40%; right: -40%; top: 18px; height: 360px; border-top: 4px solid transparent; border-radius: 50%; background: radial-gradient(42% 92px at 50% 0, var(--glow), transparent) padding-box, linear-gradient(var(--bg), var(--bg)) padding-box, linear-gradient(90deg, transparent 6%, var(--accent) 30%, var(--rim-mid) 50%, var(--accent) 70%, transparent 94%) border-box; }
+
+/* ---------- Sections, rails and posters ---------- */
+.sec { padding-block: clamp(24px, 4vw, 44px); }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+.slider { position: relative; }
+.rail { position: relative; display: flex; gap: clamp(4px, 1.2vw, 16px); padding-block: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.rail::-webkit-scrollbar, .track::-webkit-scrollbar { display: none; }
+.poster { position: relative; flex: none; list-style: none; width: clamp(134px, 9vw + 70px, 206px); padding-left: clamp(30px, 3vw, 46px); scroll-snap-align: start; }
+.rank { position: absolute; left: 0; bottom: -0.05em; z-index: 0; font: 400 clamp(6.5rem, 4.5rem + 5vw, 10.5rem) / 0.8 var(--font-display); letter-spacing: -0.04em; color: var(--bg); -webkit-text-stroke: 2px var(--text-muted); paint-order: stroke fill; pointer-events: none; }
+.art { position: relative; z-index: 1; display: block; overflow: hidden; border-radius: var(--r-card); background: var(--surface-2); isolation: isolate; }
+.art img { width: 100%; height: 100%; aspect-ratio: 16 / 9; object-fit: cover; transition: transform var(--slow); }
+.poster .art img { aspect-ratio: 2 / 3; }
+.art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, oklch(8% 0.006 25 / 0.85), transparent 58%); pointer-events: none; }
+.art .tt { position: absolute; left: 10px; right: 10px; bottom: 8px; z-index: 1; color: var(--white); font-size: clamp(1.25rem, 1rem + 0.6vw, 1.75rem); text-shadow: 0 1px 10px oklch(0% 0 0 / 0.6); transition: transform var(--base); }
+.poster .art { box-shadow: var(--shadow-card); }
+.poster a:hover img { transform: scale(1.05); }
+.rail-btn { position: absolute; top: 14px; bottom: 14px; z-index: 4; display: grid; place-items: center; width: clamp(30px, var(--gutter), 52px); padding: 0; border: 0; background: oklch(10% 0.006 25 / 0.6); color: var(--white); opacity: 0; transition: opacity var(--base), background-color var(--fast); }
+.rail-btn.prev { left: 0; border-radius: 0 var(--r-card) var(--r-card) 0; }
+.rail-btn.next { right: 0; border-radius: var(--r-card) 0 0 var(--r-card); }
+.slider:hover .rail-btn, .rail-btn:focus-visible { opacity: 1; }
+.rail-btn:hover { background: oklch(10% 0.006 25 / 0.82); }
+.rail-btn .icon { width: 30px; height: 30px; transition: transform var(--fast); }
+.rail-btn:hover .icon { transform: scale(1.2); }
+@media (hover: none) { .rail-btn { display: none; } }
+
+/* ---------- Feature cards and FAQ ---------- */
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 16px; }
+.feature { position: relative; min-height: 270px; padding: 26px 22px 96px; border-radius: var(--r-block); background: linear-gradient(150deg, var(--feat-a), var(--feat-b)); }
+@media (max-width: 639px) { .feature { min-height: 0; padding-bottom: 92px; } }
+.feature h3 { margin-bottom: 12px; font-size: clamp(1.25rem, 1.1rem + 0.4vw, 1.5rem); }
+.feature p { color: var(--text-muted); }
+.feature .badge-ico { position: absolute; right: 20px; bottom: 20px; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, var(--rim-mid), var(--accent) 60%, var(--accent-hover)); color: var(--white); box-shadow: 0 0 34px oklch(55% 0.21 22 / 0.45); }
+.faq details { margin-bottom: 8px; background: var(--surface-2); }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: clamp(18px, 2vw, 24px); font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem); cursor: pointer; list-style: none; transition: background-color var(--fast); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { background: var(--surface-3); }
+.faq summary .icon { width: 34px; height: 34px; stroke-width: 1.5; transition: transform var(--base); }
+.faq details[open] summary .icon { transform: rotate(45deg); }
+.faq .ans { padding: clamp(18px, 2vw, 24px); border-top: 1px solid var(--bg); font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.375rem); animation: open var(--base); }
+.faq.compact summary { font-size: 1.0625rem; padding: 16px 18px; }
+.faq.compact summary .icon { width: 24px; height: 24px; }
+.faq.compact .ans { font-size: 1rem; padding: 16px 18px; color: var(--text-muted); }
+.cta-again { padding-block: clamp(32px, 5vw, 56px) 8px; text-align: center; }
+.cta-again .start { margin-inline: auto; }
+
+/* ---------- Browse: billboard, rows, tiles ---------- */
+.billboard { position: relative; isolation: isolate; overflow: hidden; height: clamp(560px, 56.25vw, 92vh); }
+.billboard > img, .art-top > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.billboard::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(77deg, var(--fade) 0%, transparent 64%), linear-gradient(to top, var(--bg) 0%, transparent 30%), linear-gradient(to bottom, var(--head-fade), transparent 22%); }
+.bb-info { position: absolute; left: var(--gutter); bottom: clamp(110px, 19vw, 290px); display: grid; justify-items: start; gap: 16px; width: min(100% - 2 * var(--gutter), 600px); }
+.bb-title { font-size: clamp(3.75rem, 2rem + 6vw, 8.5rem); }
+.bb-blurb { font-size: clamp(1rem, 0.92rem + 0.35vw, 1.3rem); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.bb-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 639px) { .bb-rate { display: none; } .billboard::before { background: linear-gradient(to top, var(--bg) 0%, var(--fade) 55%, transparent 90%), linear-gradient(to bottom, var(--head-fade), transparent 22%); } }
+.bb-rate { position: absolute; right: 0; bottom: clamp(110px, 19vw, 290px); padding: 6px 60px 6px 12px; border-left: 3px solid var(--text); background: oklch(50% 0.006 25 / 0.35); font-size: 1.0625rem; }
+.rows { position: relative; z-index: 2; margin-top: clamp(-150px, -9vw, -40px); padding-bottom: 32px; }
+.row { margin-bottom: clamp(14px, 2.4vw, 36px); }
+.row-head { padding-inline: var(--gutter); font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.4rem); font-weight: 700; }
+.row-head a { display: inline-flex; align-items: baseline; gap: 10px; }
+.explore { display: inline-flex; align-items: center; font-size: 0.875rem; color: var(--accent-ink); opacity: 0; transform: translateX(-14px); transition: opacity var(--base), transform var(--base); }
+.explore .icon { width: 16px; height: 16px; }
+.row-head a:hover .explore, .row-head a:focus-visible .explore { opacity: 1; transform: none; }
+.track { --per: 6; position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - (var(--per) - 1) * 8px) / var(--per)); gap: 8px; margin-block: -10px; padding: 22px var(--gutter); overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: none; }
+.track .poster { width: auto; padding-left: 44%; }
+.track .poster .rank { font-size: clamp(6rem, 3rem + 9vw, 12rem); }
+.track .poster .art { box-shadow: none; }
+@media (max-width: 1399px) { .track { --per: 5; } }
+@media (max-width: 1099px) { .track { --per: 4; } }
+@media (max-width: 799px) { .track { --per: 3; } }
+@media (max-width: 499px) { .track { --per: 2.3; } }
+.card { position: relative; scroll-snap-align: start; transition: transform var(--base); }
+.card .art { aspect-ratio: 16 / 9; }
+.cover { position: absolute; inset: 0; z-index: 1; }
+.info { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; align-items: center; gap: 6px; padding: 8px; opacity: 0; transform: translateY(8px); transition: opacity var(--base), transform var(--base); }
+.info .round { width: 32px; height: 32px; }
+.info .round .icon { width: 16px; height: 16px; }
+.info .round:last-child { margin-left: auto; }
+.card:hover .info, .card:focus-within .info { opacity: 1; transform: none; }
+.card:hover .tt, .card:focus-within .tt { transform: translateY(-42px); }
+.card:hover .art img { transform: scale(1.04); }
+.track .card:hover, .track .card:focus-within { transform: scale(1.08); z-index: 3; }
+.track .card:first-child { transform-origin: left center; }
+.track .card:hover .art { box-shadow: var(--shadow-overlay); }
+.track .card-meta { display: none; }
+.prog { position: absolute; left: 10px; right: 10px; bottom: 7px; z-index: 2; height: 3px; background: oklch(100% 0 0 / 0.35); }
+.prog i { display: block; width: var(--p); height: 100%; background: var(--accent); }
+.prog ~ .cover .tt { bottom: 16px; }
+html:not(.js) [data-view="browse"] .rows { display: none; }
+
+/* ---------- Page tops, catalog grid ---------- */
+.page-top { padding-top: calc(var(--header-h) + clamp(24px, 4vw, 44px)); }
+.lib-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-bottom: 20px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 22px; }
+.find { position: relative; flex: 1 1 220px; max-width: 360px; }
+.find input { width: 100%; min-height: 40px; padding: 0 12px 0 40px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--field-bg); }
+.find .icon { position: absolute; left: 10px; top: 50%; translate: 0 -50%; width: 20px; height: 20px; color: var(--text-muted); }
+.count { margin-left: auto; color: var(--text-muted); font-size: 0.9375rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 236px), 1fr)); gap: 26px 12px; padding-bottom: 56px; }
+@media (max-width: 559px) { .grid { grid-template-columns: repeat(2, 1fr); } .grid .info { display: none; } }
+.card-meta { margin-top: 8px; font-size: 0.875rem; color: var(--text-muted); }
+.card-meta b { color: var(--text); font-weight: 600; }
+.empty { display: grid; justify-items: start; gap: 12px; padding: 40px 0 72px; }
+
+/* ---------- Title detail (a page, and the preview dialog) ---------- */
+.title-page { position: relative; isolation: isolate; overflow: hidden; padding: calc(var(--header-h) + 20px) clamp(0px, 3vw, 40px) 64px; }
+.title-page::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to bottom, transparent 70%, var(--bg)); }
+.title-bg { position: absolute; inset: -40px; z-index: -2; width: calc(100% + 80px); max-width: none; height: calc(100% + 80px); object-fit: cover; filter: blur(28px) saturate(1.2); opacity: 0.45; }
+.detail { position: relative; max-width: 980px; margin-inline: auto; overflow: hidden; border-radius: var(--r-panel); background: var(--surface); box-shadow: var(--shadow-overlay); }
+.d-hero { position: relative; aspect-ratio: 16 / 9; max-height: 540px; width: 100%; }
+.d-hero img { width: 100%; height: 100%; object-fit: cover; }
+.d-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, var(--surface) 2%, transparent 58%); }
+.d-head .kind { color: var(--text); }
+.d-head { position: absolute; left: clamp(16px, 4vw, 48px); right: clamp(16px, 4vw, 48px); bottom: clamp(8px, 3vw, 32px); z-index: 1; display: grid; justify-items: start; gap: 14px; }
+.d-title { font-size: clamp(2.75rem, 1.6rem + 4vw, 5.25rem); }
+.d-actions { display: flex; align-items: center; gap: 10px; }
+.d-body { display: grid; gap: clamp(28px, 3vw, 40px); padding: 8px clamp(16px, 4vw, 48px) clamp(24px, 4vw, 48px); }
+.d-top { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 28px; }
+@media (max-width: 719px) { .d-top { grid-template-columns: 1fr; } }
+.d-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 12px; color: var(--text-muted); }
+.badge { padding: 0 6px; border: 1px solid var(--border-strong); border-radius: 3px; font-size: 0.8125rem; line-height: 1.6; }
+.d-blurb { font-size: 1.0625rem; }
+.credits { display: grid; gap: 8px; font-size: 0.9375rem; }
+.credits dt { display: inline; color: var(--text-muted); }
+.credits dt::after { content: ": "; }
+.credits dd { display: inline; }
+.eps-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+.ep { display: grid; grid-template-columns: 36px 150px minmax(0, 1fr); align-items: center; gap: 16px; padding: 16px; border-bottom: 1px solid var(--border); border-radius: var(--r-panel); transition: background-color var(--fast); }
+li:first-child > .ep, .ep:hover { background: var(--surface-2); }
+.num { font-size: 1.5rem; color: var(--text-muted); text-align: center; }
+.thumb { position: relative; display: block; overflow: hidden; aspect-ratio: 16 / 9; border-radius: var(--r-media); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.7); transform-origin: var(--o, 50% 50%); }
+.thumb::before, .thumb::after { content: ""; position: absolute; z-index: 1; inset: 0; margin: auto; opacity: 0; transition: opacity var(--fast); }
+.thumb::before { width: 40px; height: 40px; border-radius: 50%; background: var(--white); }
+.thumb::after { width: 13px; height: 15px; translate: 2px 0; background: oklch(14% 0.006 25); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.ep:hover .thumb::before, .ep:hover .thumb::after, .ep:focus-visible .thumb::before, .ep:focus-visible .thumb::after { opacity: 1; }
+.ep-top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 4px; font-weight: 700; }
+.ep-top span + span { font-weight: 400; color: var(--text-muted); white-space: nowrap; }
+.ep-desc { display: block; color: var(--text-muted); font-size: 0.9375rem; }
+@media (max-width: 559px) { .ep { grid-template-columns: 112px minmax(0, 1fr); padding: 12px 8px; } .num { display: none; } .ep-desc { display: none; } }
+.more-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 18px 12px; }
+@media (max-width: 559px) { .more-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .more-grid .info { display: none; } }
+.modal { width: min(100% - 24px, 980px); max-width: none; max-height: calc(100dvh - 48px); margin: 24px auto; padding: 0; overflow-y: auto; overscroll-behavior: contain; border: 0; border-radius: var(--r-panel); background: transparent; color: var(--text); }
+.modal::backdrop { background: oklch(0% 0 0 / 0.72); }
+.modal[open] { animation: pop var(--base); }
+.modal .detail { box-shadow: none; }
+.d-close { position: absolute; right: 14px; top: 14px; z-index: 5; }
+.page-link { justify-self: start; }
+.modal .page-link { display: inline-flex; }
+.title-page .page-link { display: none; }
+
+/* ---------- Watch ---------- */
+.watch { padding: var(--header-h) 0 48px; }
+.stage { position: relative; overflow: hidden; aspect-ratio: 16 / 9; max-height: calc(100vh - var(--header-h) - 150px); margin-inline: auto; background: oklch(5% 0 0); }
+.stage img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: opacity var(--slow); }
+.stage.playing img { opacity: 1; }
+.big-play { position: absolute; inset: 0; margin: auto; width: 88px; height: 88px; border: 0; border-radius: 50%; background: oklch(10% 0 0 / 0.55); color: var(--white); display: grid; place-items: center; transition: opacity var(--base), transform var(--fast); }
+.big-play:hover { transform: scale(1.06); }
+.big-play .icon { width: 40px; height: 40px; }
+.stage.playing .big-play { opacity: 0; }
+.stage.playing:hover .big-play { opacity: 1; }
+.controls { display: grid; gap: 10px; padding: 16px var(--gutter) 0; }
+.scrub { display: flex; align-items: center; gap: 12px; font-size: 0.875rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.scrub input { flex: 1; accent-color: var(--accent); }
+.ctrl-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.now { flex: 1; min-width: 200px; font-weight: 700; }
+.now span { display: block; font-weight: 400; color: var(--text-muted); }
+
+/* ---------- Plans, join, sign in ---------- */
+.plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; margin: 28px 0 20px; }
+.plan { position: relative; display: block; padding: 8px; border: 1px solid var(--border); border-radius: var(--r-block); background: var(--surface); cursor: pointer; transition: border-color var(--fast), box-shadow var(--fast); }
+.plan input { position: absolute; opacity: 0; }
+.plan:has(:checked) { border-color: var(--text); box-shadow: 0 0 0 1px var(--text), var(--shadow-card); }
+.plan:has(:focus-visible) { outline: 2px solid var(--text); outline-offset: 3px; }
+.plan-top { position: relative; display: grid; align-content: end; min-height: 112px; padding: 16px; border-radius: calc(var(--r-block) - 6px); background: linear-gradient(135deg, var(--pa), var(--pb)); color: var(--white); }
+.plan-top b { font-size: 1.25rem; }
+.plan-top .tickmark { position: absolute; right: 14px; top: 14px; display: none; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--white); color: var(--accent); }
+.plan:has(:checked) .tickmark { display: grid; }
+.plan dl { padding: 4px 12px 8px; }
+@media (max-width: 639px) { .plan:not(:has(:checked)) dl { display: none; } .plan-top { min-height: 88px; } }
+.plan dl div { padding: 12px 0; border-bottom: 1px solid var(--border); }
+.plan dl div:last-child { border: 0; }
+.plan dt { font-size: 0.8125rem; color: var(--text-muted); }
+.plan dd { font-weight: 600; }
+.plan-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 64px; }
+.join { padding: calc(var(--header-h) + clamp(24px, 5vw, 56px)) 0 72px; }
+.join .h1 { margin: 6px 0 10px; }
+.join .lead { margin-bottom: 28px; }
+.auth { position: relative; isolation: isolate; overflow: hidden; display: grid; place-items: start center; min-height: 100vh; padding: calc(var(--header-h) + 24px) var(--gutter) 72px; }
+.auth-bg { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+.auth-card { width: min(100%, 450px); padding: clamp(24px, 5vw, 56px); border-radius: var(--r-panel); background: var(--card-glass); }
+.auth-card .h1 { margin-bottom: 26px; font-size: 2rem; }
+.split { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-top: 14px; font-size: 0.9375rem; color: var(--text-muted); }
+.split .check { margin: 0; }
+.auth-card > p { margin-top: 24px; color: var(--text-muted); }
+.auth-card:has([data-success]:not([hidden])) > p { display: none; }
+
+/* ---------- Help, about, legal, 404 ---------- */
+.help-group { margin-bottom: 28px; }
+.help-group h2 { margin-bottom: 12px; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(24px, 4vw, 56px); align-items: start; }
+.desks { display: grid; gap: 10px; }
+.desk { padding: 18px 20px; border-radius: var(--r-panel); background: var(--surface); }
+.desk b { display: block; }
+.desk a:not(.btn) { color: var(--accent-ink); font-weight: 600; }
+.art-top { position: relative; isolation: isolate; overflow: hidden; display: grid; align-items: end; min-height: clamp(440px, 62vh, 640px); padding: calc(var(--header-h) + 40px) max(var(--gutter), (100% - var(--page)) / 2) clamp(32px, 5vw, 64px); }
+.art-top::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(77deg, var(--fade) 22%, transparent 80%), linear-gradient(to top, var(--bg), transparent 45%), linear-gradient(to bottom, var(--head-fade), transparent 25%); }
+.art-top .inner { display: grid; gap: 14px; max-width: 720px; }
+.prose { max-width: 66ch; color: var(--text-muted); font-size: 1.0625rem; }
+.prose p + p { margin-top: 1em; }
+.prose h2 { margin: 1.6em 0 0.5em; color: var(--text); }
+.prose strong { color: var(--text); }
+.pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 16px; }
+.pillar { padding: 24px; border-top: 3px solid var(--accent); background: var(--surface); }
+.pillar .n { display: block; margin-bottom: 10px; font: 400 3.5rem/1 var(--font-display); color: var(--accent-ink); }
+.pillar p { margin-top: 8px; color: var(--text-muted); }
+.lost .inner { justify-items: start; }
+
+/* ---------- Footer, toast, motion ---------- */
+.site-footer { padding: clamp(48px, 6vw, 72px) 0 56px; color: var(--text-muted); font-size: 0.875rem; }
+.site-footer .foot-q { display: inline-block; margin-bottom: 26px; font-size: 1rem; }
+.foot-links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 24px; }
+@media (max-width: 799px) { .foot-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.foot-links a:hover, .foot-q:hover { color: var(--text); }
+.foot-base { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 36px; }
+.foot-base svg { width: 22px; height: 22px; }
+.toast { position: fixed; left: 50%; bottom: 24px; z-index: 80; transform: translateX(-50%); pointer-events: none; }
+.toast:not(:empty) { padding: 12px 18px; border-radius: var(--r-control); background: var(--invert); color: var(--invert-text); font-weight: 600; box-shadow: var(--shadow-overlay); animation: rise var(--base); }
+.js [data-view]:not(.is-active) { display: none; }
+.js [data-view].is-active { animation: fade var(--slow) backwards; }
+@keyframes fade { from { opacity: 0; } }
+@keyframes pop { from { opacity: 0; transform: translateY(14px) scale(0.98); } }
+@keyframes open { from { opacity: 0; transform: translateY(-6px); } }
+@keyframes rise { from { opacity: 0; transform: translate(-50%, 12px); } }
+@keyframes drift { to { translate: -4% 3%; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="var(--accent)"/><circle cx="32" cy="32" r="18" fill="oklch(98% 0.01 40)"/><circle cx="39" cy="26" r="10" fill="var(--accent)"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2.5 12h2M19.5 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.4-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4.5" height="16" rx="1"/><rect x="13.5" y="4" width="4.5" height="16" rx="1"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.01"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/><text x="12.6" y="15.3" font-size="7.5" font-weight="800" text-anchor="middle" fill="currentColor" stroke="none">10</text></symbol>
+  <symbol id="i-fwd" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v4h-4"/><text x="11.4" y="15.3" font-size="7.5" font-weight="800" text-anchor="middle" fill="currentColor" stroke="none">10</text></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M5 5v14l10-7zM19 5v14"/></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24"><rect x="2.5" y="4" width="15" height="10" rx="1.5"/><path d="M7 18h6M10 14v4"/><rect x="17.5" y="10" width="4" height="9" rx="1"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-sheet" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h7M9 16h5"/></symbol>
+  <symbol id="i-all" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4.5-2.5z"/></symbol>
+</svg>
+
+<header class="site-header">
+  <a class="brand" href="#/" aria-label="Ferrotype home"><svg aria-hidden="true"><use href="#mark"/></svg><span>Ferrotype</span></a>
+  <button class="menu-btn needs-js" type="button" id="menu-btn" aria-expanded="false" aria-controls="menu">Browse<svg class="icon sm" aria-hidden="true"><use href="#i-down"/></svg></button>
+  <nav class="nav" aria-label="Main"><a href="#/browse">Browse</a><a href="#/library?kind=series">Series</a><a href="#/library?kind=workshop">Workshops</a><a href="#/library?kind=talk">Talks</a><a href="#/library?kind=film">Films</a><a href="#/plans">Plans</a></nav>
+  <div class="menu" id="menu" hidden><nav aria-label="All pages"><a href="#/">Home</a><a href="#/browse">Browse</a><a href="#/library?kind=series">Series</a><a href="#/library?kind=workshop">Workshops</a><a href="#/library?kind=talk">Talks</a><a href="#/library?kind=film">Films</a><a href="#/library?kind=list">My list</a><hr><a href="#/plans">Plans</a><a href="#/help">Help</a><a href="#/about">About</a></nav></div>
+  <div class="head-end">
+    <div class="search needs-js" role="search"><button class="icon-btn" type="button" id="search-btn" aria-label="Search titles" aria-controls="q" aria-expanded="false"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button><label class="sr-only" for="q">Search titles</label><input id="q" type="search" placeholder="Titles, makers, topics" autocomplete="off" enterkeyhint="search" tabindex="-1"></div>
+    <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to light colors"><svg class="icon" aria-hidden="true"><use href="#i-sun"/></svg></button>
+    <a class="btn small" href="#/signin" id="signin-btn">Sign in</a>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ============ HOME (landing) ============ -->
+<div data-view="home" data-overlay>
+  <section class="hero" aria-labelledby="h-home">
+    <div class="wall" aria-hidden="true">
+      <img src="images/saltworks.svg" width="320" height="180" alt=""><img src="images/inkwork.svg" width="320" height="180" alt=""><img src="images/night-ferry.svg" width="320" height="180" alt=""><img src="images/kiln-hours.svg" width="320" height="180" alt=""><img src="images/paper-weather.svg" width="320" height="180" alt=""><img src="images/listening-hill.svg" width="320" height="180" alt="">
+      <img src="images/long-table.svg" width="320" height="180" alt=""><img src="images/field-day-talks.svg" width="320" height="180" alt=""><img src="images/loomhouse.svg" width="320" height="180" alt=""><img src="images/northbound-sleeper.svg" width="320" height="180" alt=""><img src="images/tidewright.svg" width="320" height="180" alt=""><img src="images/low-tide-choir.svg" width="320" height="180" alt="">
+      <img src="images/blueprint-sessions.svg" width="320" height="180" alt=""><img src="images/kiln-hours.svg" width="320" height="180" alt=""><img src="images/saltworks.svg" width="320" height="180" alt=""><img src="images/paper-weather.svg" width="320" height="180" alt=""><img src="images/inkwork.svg" width="320" height="180" alt=""><img src="images/long-table.svg" width="320" height="180" alt="">
+      <img src="images/northbound-sleeper.svg" width="320" height="180" alt=""><img src="images/low-tide-choir.svg" width="320" height="180" alt=""><img src="images/listening-hill.svg" width="320" height="180" alt=""><img src="images/blueprint-sessions.svg" width="320" height="180" alt=""><img src="images/night-ferry.svg" width="320" height="180" alt=""><img src="images/loomhouse.svg" width="320" height="180" alt="">
+      <img src="images/field-day-talks.svg" width="320" height="180" alt=""><img src="images/tidewright.svg" width="320" height="180" alt=""><img src="images/saltworks.svg" width="320" height="180" alt=""><img src="images/inkwork.svg" width="320" height="180" alt=""><img src="images/kiln-hours.svg" width="320" height="180" alt=""><img src="images/night-ferry.svg" width="320" height="180" alt="">
+    </div>
+    <div class="hero-in">
+      <h1 class="display" id="h-home">Watch how it's made. Then make it yourself.</h1>
+      <p class="sub">Documentaries, workshops and festival talks from independent makers. From $X.XX a month.</p>
+      <form class="start" data-form="start" novalidate>
+        <p>Enter your email to start a membership, or to pick up where you left off.</p>
+        <div class="start-row">
+          <div class="field"><input id="s-email" name="email" type="email" required autocomplete="email" placeholder=" " aria-describedby="s-email-err"><label for="s-email">Email address</label><span class="err" id="s-email-err" aria-live="polite"></span></div>
+          <button class="btn big" type="submit">Start watching<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <div class="arc" aria-hidden="true"></div>
+
+  <section class="wrap sec" aria-labelledby="h-top">
+    <div class="sec-head"><h2 class="h2" id="h-top">Most watched this week</h2></div>
+    <div class="slider">
+      <button class="rail-btn prev needs-js" type="button" aria-label="Scroll back"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button>
+      <ol class="rail track-top" id="top10">
+        <li class="poster"><span class="rank" aria-hidden="true">1</span><a class="art" href="#/title?id=saltworks"><img src="images/saltworks.svg" width="320" height="180" alt=""><span class="tt">Saltworks</span></a></li>
+        <li class="poster"><span class="rank" aria-hidden="true">2</span><a class="art" href="#/title?id=kiln-hours"><img src="images/kiln-hours.svg" width="320" height="180" alt=""><span class="tt">Kiln Hours</span></a></li>
+        <li class="poster"><span class="rank" aria-hidden="true">3</span><a class="art" href="#/title?id=northbound-sleeper"><img src="images/northbound-sleeper.svg" width="320" height="180" alt=""><span class="tt">Northbound Sleeper</span></a></li>
+        <li class="poster"><span class="rank" aria-hidden="true">4</span><a class="art" href="#/title?id=night-ferry"><img src="images/night-ferry.svg" width="320" height="180" alt=""><span class="tt">Night Ferry</span></a></li>
+        <li class="poster"><span class="rank" aria-hidden="true">5</span><a class="art" href="#/title?id=inkwork"><img src="images/inkwork.svg" width="320" height="180" alt=""><span class="tt">Inkwork</span></a></li>
+        <li class="poster"><span class="rank" aria-hidden="true">6</span><a class="art" href="#/title?id=listening-hill"><img src="images/listening-hill.svg" width="320" height="180" alt=""><span class="tt">The Listening Hill</span></a></li>
+        <li class="poster"><span class="rank" aria-hidden="true">7</span><a class="art" href="#/title?id=long-table"><img src="images/long-table.svg" width="320" height="180" alt=""><span class="tt">The Long Table</span></a></li>
+        <li class="poster"><span class="rank" aria-hidden="true">8</span><a class="art" href="#/title?id=low-tide-choir"><img src="images/low-tide-choir.svg" width="320" height="180" alt=""><span class="tt">Low Tide Choir</span></a></li>
+        <li class="poster"><span class="rank" aria-hidden="true">9</span><a class="art" href="#/title?id=loomhouse"><img src="images/loomhouse.svg" width="320" height="180" alt=""><span class="tt">Loomhouse</span></a></li>
+        <li class="poster"><span class="rank" aria-hidden="true">10</span><a class="art" href="#/title?id=tidewright"><img src="images/tidewright.svg" width="320" height="180" alt=""><span class="tt">Tidewright</span></a></li>
+      </ol>
+      <button class="rail-btn next needs-js" type="button" aria-label="Scroll forward"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+    </div>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="h-why">
+    <div class="sec-head"><h2 class="h2" id="h-why">What a membership gets you</h2></div>
+    <div class="features">
+      <article class="feature"><h3>Every title, nothing extra</h3><p>Series, films, workshops and talks are all included. Nothing is rented or sold on top.</p><span class="badge-ico" aria-hidden="true"><svg class="icon"><use href="#i-all"/></svg></span></article>
+      <article class="feature"><h3>Any screen you have</h3><p>Your TV, laptop, tablet or phone. Start on one and finish on another.</p><span class="badge-ico" aria-hidden="true"><svg class="icon"><use href="#i-tv"/></svg></span></article>
+      <article class="feature"><h3>Save it for the train</h3><p>Download episodes and lessons to your phone and watch them offline.</p><span class="badge-ico" aria-hidden="true"><svg class="icon"><use href="#i-save"/></svg></span></article>
+      <article class="feature"><h3>Follow along at home</h3><p>Workshops come with a materials list and printable project sheets for every lesson.</p><span class="badge-ico" aria-hidden="true"><svg class="icon"><use href="#i-sheet"/></svg></span></article>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="faq" aria-labelledby="h-faq">
+    <div class="sec-head"><h2 class="h2" id="h-faq">Questions, answered</h2></div>
+    <div class="faq">
+      <details><summary>What is Ferrotype?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><div class="ans"><p>A streaming membership for documentaries and filmed workshops about craft, food, design and the natural world. Every title is made with independent filmmakers and makers, and new ones arrive every month.</p></div></details>
+      <details><summary>How much does it cost?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><div class="ans"><p>One monthly price, with three plans from $X.XX to $X.XX a month. Every plan includes the whole catalog; they differ in how many screens can watch at once and in picture quality.</p></div></details>
+      <details><summary>Where can I watch?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><div class="ans"><p>In any modern browser, and on phones, tablets and TVs through the apps. Sign in with the same account everywhere and your place is saved.</p></div></details>
+      <details><summary>How do I cancel?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><div class="ans"><p>From your account page, in two clicks. You keep watching until the end of the month you paid for, and there is no cancellation fee.</p></div></details>
+      <details><summary>What are the workshops like?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><div class="ans"><p>Each workshop is a short series of lessons filmed in the maker's own studio, with a materials list, project sheets and a monthly live question session.</p></div></details>
+      <details><summary>Can my household watch too?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><div class="ans"><p>Yes. The Household and Studio plans let several people watch at once, each with their own profile, list and progress.</p></div></details>
+    </div>
+    <div class="cta-again">
+      <form class="start" data-form="start" novalidate>
+        <p>Ready when you are. Enter your email to start your membership.</p>
+        <div class="start-row">
+          <div class="field"><input id="s2-email" name="email" type="email" required autocomplete="email" placeholder=" " aria-describedby="s2-email-err"><label for="s2-email">Email address</label><span class="err" id="s2-email-err" aria-live="polite"></span></div>
+          <button class="btn big" type="submit">Start watching<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- ============ BROWSE (the member home) ============ -->
+<div data-view="browse" data-overlay>
+  <section class="billboard" aria-labelledby="h-browse">
+    <img src="images/saltworks.svg" width="320" height="180" alt="">
+    <div class="bb-info">
+      <span class="kind"><svg aria-hidden="true"><use href="#mark"/></svg>Series</span>
+      <h1 class="tt bb-title" id="h-browse">Saltworks</h1>
+      <p class="ink">Season 2 out now</p>
+      <p class="bb-blurb">On a windy coast, the last family of salt makers shares a shed with the smith who keeps their pans from rusting. Two seasons of fire, brine and stubborn weather.</p>
+      <div class="bb-actions"><a class="btn big play" href="#/watch?id=saltworks&amp;s=2&amp;e=1"><svg class="icon fill" aria-hidden="true"><use href="#i-play"/></svg>Play</a><a class="btn big glass" href="#/title?id=saltworks"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>More info</a></div>
+    </div>
+    <span class="bb-rate">12+</span>
+  </section>
+  <div class="rows" id="rows"></div>
+  <noscript><p class="wrap sec">Every title is listed in the catalog below.</p></noscript>
+</div>
+
+<!-- ============ CATALOG (filters) ============ -->
+<div data-view="library">
+  <section class="wrap page-top" aria-labelledby="h-lib">
+    <div class="lib-bar">
+      <h1 class="h1" id="h-lib">Catalog</h1>
+      <span class="pick"><label class="sr-only" for="lib-topic">Topic</label><select id="lib-topic"><option value="">All topics</option><option value="craft">Craft</option><option value="design">Design</option><option value="food">Food</option><option value="nature">Nature</option><option value="cities">Cities</option><option value="music">Music</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span>
+    </div>
+    <div class="tools needs-js">
+      <div class="chips" role="group" aria-label="Show"><button class="chip" type="button" data-kind-filter="all" aria-pressed="true">All</button><button class="chip" type="button" data-kind-filter="series" aria-pressed="false">Series</button><button class="chip" type="button" data-kind-filter="workshop" aria-pressed="false">Workshops</button><button class="chip" type="button" data-kind-filter="talk" aria-pressed="false">Talks</button><button class="chip" type="button" data-kind-filter="film" aria-pressed="false">Films</button><button class="chip" type="button" data-kind-filter="list" aria-pressed="false">My list</button></div>
+      <div class="find"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><label class="sr-only" for="lib-q">Search the catalog</label><input id="lib-q" type="search" placeholder="Search titles and makers" autocomplete="off"></div>
+      <span class="pick"><label class="sr-only" for="lib-sort">Sort</label><select id="lib-sort"><option value="new">Newest first</option><option value="az">A to Z</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span>
+      <span class="count" data-lib-count aria-live="polite"></span>
+    </div>
+    <div class="grid" data-lib>
+      <article class="card" data-id="saltworks" data-kind="series" data-topics="craft food nature" data-year="2026" data-by="Ada Ferreira"><div class="art"><a class="cover" href="#/title?id=saltworks"><img src="images/saltworks.svg" width="320" height="180" alt=""><span class="tt">Saltworks</span></a></div><p class="card-meta"><b>Series</b> · 2 seasons · 2026</p></article>
+      <article class="card" data-id="kiln-hours" data-kind="workshop" data-topics="craft design" data-year="2026" data-by="Joon Hale"><div class="art"><a class="cover" href="#/title?id=kiln-hours"><img src="images/kiln-hours.svg" width="320" height="180" alt=""><span class="tt">Kiln Hours</span></a></div><p class="card-meta"><b>Workshop</b> · 8 lessons · 2026</p></article>
+      <article class="card" data-id="northbound-sleeper" data-kind="series" data-topics="cities nature" data-year="2026" data-by="Sam Kellow"><div class="art"><a class="cover" href="#/title?id=northbound-sleeper"><img src="images/northbound-sleeper.svg" width="320" height="180" alt=""><span class="tt">Northbound Sleeper</span></a></div><p class="card-meta"><b>Series</b> · 4 episodes · 2026</p></article>
+      <article class="card" data-id="listening-hill" data-kind="series" data-topics="nature" data-year="2026" data-by="Ruth Okafor"><div class="art"><a class="cover" href="#/title?id=listening-hill"><img src="images/listening-hill.svg" width="320" height="180" alt=""><span class="tt">The Listening Hill</span></a></div><p class="card-meta"><b>Series</b> · 5 episodes · 2026</p></article>
+      <article class="card" data-id="inkwork" data-kind="workshop" data-topics="design craft" data-year="2026" data-by="Mika Arden"><div class="art"><a class="cover" href="#/title?id=inkwork"><img src="images/inkwork.svg" width="320" height="180" alt=""><span class="tt">Inkwork</span></a></div><p class="card-meta"><b>Workshop</b> · 6 lessons · 2026</p></article>
+      <article class="card" data-id="blueprint-sessions" data-kind="talk" data-topics="design cities" data-year="2026" data-by="Recorded at Blueprint Weekend"><div class="art"><a class="cover" href="#/title?id=blueprint-sessions"><img src="images/blueprint-sessions.svg" width="320" height="180" alt=""><span class="tt">Blueprint Sessions</span></a></div><p class="card-meta"><b>Talks</b> · 6 talks · 2026</p></article>
+      <article class="card" data-id="night-ferry" data-kind="film" data-topics="cities" data-year="2025" data-by="Teo Marsh"><div class="art"><a class="cover" href="#/title?id=night-ferry"><img src="images/night-ferry.svg" width="320" height="180" alt=""><span class="tt">Night Ferry</span></a></div><p class="card-meta"><b>Film</b> · 1h 34m · 2025</p></article>
+      <article class="card" data-id="long-table" data-kind="series" data-topics="food craft" data-year="2025" data-by="Lena Varga"><div class="art"><a class="cover" href="#/title?id=long-table"><img src="images/long-table.svg" width="320" height="180" alt=""><span class="tt">The Long Table</span></a></div><p class="card-meta"><b>Series</b> · 6 episodes · 2025</p></article>
+      <article class="card" data-id="loomhouse" data-kind="workshop" data-topics="craft design" data-year="2025" data-by="Priya Nair"><div class="art"><a class="cover" href="#/title?id=loomhouse"><img src="images/loomhouse.svg" width="320" height="180" alt=""><span class="tt">Loomhouse</span></a></div><p class="card-meta"><b>Workshop</b> · 6 lessons · 2025</p></article>
+      <article class="card" data-id="low-tide-choir" data-kind="film" data-topics="music nature" data-year="2025" data-by="Ines Duarte"><div class="art"><a class="cover" href="#/title?id=low-tide-choir"><img src="images/low-tide-choir.svg" width="320" height="180" alt=""><span class="tt">Low Tide Choir</span></a></div><p class="card-meta"><b>Film</b> · 1h 12m · 2025</p></article>
+      <article class="card" data-id="field-day-talks" data-kind="talk" data-topics="craft food music" data-year="2025" data-by="Recorded at Field Day"><div class="art"><a class="cover" href="#/title?id=field-day-talks"><img src="images/field-day-talks.svg" width="320" height="180" alt=""><span class="tt">Field Day Talks</span></a></div><p class="card-meta"><b>Talks</b> · 5 talks · 2025</p></article>
+      <article class="card" data-id="tidewright" data-kind="film" data-topics="craft nature" data-year="2024" data-by="Owen Pryce"><div class="art"><a class="cover" href="#/title?id=tidewright"><img src="images/tidewright.svg" width="320" height="180" alt=""><span class="tt">Tidewright</span></a></div><p class="card-meta"><b>Film</b> · 1h 48m · 2024</p></article>
+      <article class="card" data-id="paper-weather" data-kind="film" data-topics="nature design" data-year="2024" data-by="Hana Berg"><div class="art"><a class="cover" href="#/title?id=paper-weather"><img src="images/paper-weather.svg" width="320" height="180" alt=""><span class="tt">Paper Weather</span></a></div><p class="card-meta"><b>Short film</b> · 24m · 2024</p></article>
+    </div>
+    <div class="empty" data-empty hidden><h2 class="h3">Nothing here matches yet</h2><p class="muted">Try another topic or word, or start again with every title.</p><button class="btn ghost" type="button" data-clear>Clear filters</button></div>
+  </section>
+</div>
+
+<!-- ============ TITLE (the detail page; the preview dialog borrows the same block) ============ -->
+<div data-view="title" data-overlay>
+  <section class="title-page" id="title-slot" aria-labelledby="d-title">
+    <img class="title-bg" src="images/saltworks.svg" width="320" height="180" alt="" data-d-art>
+    <article class="detail" id="detail" data-id="saltworks">
+      <div class="d-hero">
+        <img src="images/saltworks.svg" width="320" height="180" alt="" data-d-art>
+        <div class="d-head">
+          <span class="kind"><svg aria-hidden="true"><use href="#mark"/></svg><span data-d-kind>Series</span></span>
+          <h1 class="tt d-title" id="d-title" data-d-name>Saltworks</h1>
+          <div class="d-actions"><a class="btn big play" href="#/watch?id=saltworks" data-d-play><svg class="icon fill" aria-hidden="true"><use href="#i-play"/></svg>Play</a><button class="round on-surface needs-js" type="button" data-list="saltworks" aria-pressed="false"><svg class="icon off" aria-hidden="true"><use href="#i-plus"/></svg><svg class="icon on" aria-hidden="true"><use href="#i-check"/></svg></button></div>
+        </div>
+      </div>
+      <div class="d-body">
+        <div class="d-top">
+          <div>
+            <p class="d-meta"><span class="ink" data-d-new>New</span><span data-d-year>2026</span><span data-d-count>2 seasons</span><span class="badge" data-d-rating>12+</span><span class="badge">HD</span></p>
+            <p class="d-blurb" data-d-blurb>On a windy coast, the last family of salt makers shares a shed with the smith who keeps their pans from rusting. Two seasons of fire, brine and stubborn weather, filmed over three winters.</p>
+          </div>
+          <dl class="credits"><div><dt>Made by</dt><dd data-d-by>Ada Ferreira</dd></div><div><dt>Topics</dt><dd data-d-topics>Craft, Food, Nature</dd></div><div><dt>Format</dt><dd data-d-format>Documentary series</dd></div></dl>
+        </div>
+        <section data-d-eps aria-labelledby="h-eps">
+          <div class="eps-head"><h2 class="h2" id="h-eps">Episodes</h2><span class="pick needs-js" data-d-season-box><label class="sr-only" for="d-season">Season</label><select id="d-season"><option value="1">Season 1</option><option value="2">Season 2</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span></div>
+          <ol data-d-list>
+            <li><a class="ep" href="#/watch?id=saltworks&amp;s=1&amp;e=1"><span class="num">1</span><span class="thumb" style="--o:30% 55%"><img src="images/saltworks.svg" width="320" height="180" alt="" data-d-art></span><span><span class="ep-top"><span>The Pans</span><span>48m</span></span><span class="ep-desc">Spring tides fill the clay pans for the first time this year, and Ada learns why the family never rushes the first harvest.</span></span></a></li>
+            <li><a class="ep" href="#/watch?id=saltworks&amp;s=1&amp;e=2"><span class="num">2</span><span class="thumb" style="--o:70% 40%"><img src="images/saltworks.svg" width="320" height="180" alt="" data-d-art></span><span><span class="ep-top"><span>Brine</span><span>44m</span></span><span class="ep-desc">A dry week, a cracked pan and an argument about whether the old methods are worth the work.</span></span></a></li>
+            <li><a class="ep" href="#/watch?id=saltworks&amp;s=1&amp;e=3"><span class="num">3</span><span class="thumb" style="--o:55% 30%"><img src="images/saltworks.svg" width="320" height="180" alt="" data-d-art></span><span><span class="ep-top"><span>Iron Season</span><span>51m</span></span><span class="ep-desc">Next door, the smith rebuilds the rakes and the pans that the salt eats every winter.</span></span></a></li>
+            <li><a class="ep" href="#/watch?id=saltworks&amp;s=1&amp;e=4"><span class="num">4</span><span class="thumb" style="--o:15% 70%"><img src="images/saltworks.svg" width="320" height="180" alt="" data-d-art></span><span><span class="ep-top"><span>Smoke Room</span><span>46m</span></span><span class="ep-desc">Smoking salt over driftwood for the restaurants in town, and losing a whole batch to the wind.</span></span></a></li>
+            <li><a class="ep" href="#/watch?id=saltworks&amp;s=1&amp;e=5"><span class="num">5</span><span class="thumb" style="--o:85% 60%"><img src="images/saltworks.svg" width="320" height="180" alt="" data-d-art></span><span><span class="ep-top"><span>The Hearth Keepers</span><span>49m</span></span><span class="ep-desc">Three generations at one fire: who keeps it going, and who wants to leave.</span></span></a></li>
+            <li><a class="ep" href="#/watch?id=saltworks&amp;s=1&amp;e=6"><span class="num">6</span><span class="thumb" style="--o:50% 50%"><img src="images/saltworks.svg" width="320" height="180" alt="" data-d-art></span><span><span class="ep-top"><span>Ember</span><span>55m</span></span><span class="ep-desc">The last harvest before the storms, and a decision about who takes over the pans.</span></span></a></li>
+          </ol>
+        </section>
+        <section class="needs-js" aria-labelledby="h-more"><h2 class="h2" id="h-more" style="margin-bottom:14px">More like this</h2><div class="more-grid" data-d-more></div></section>
+        <a class="btn ghost small page-link needs-js" href="#/title?id=saltworks" data-page>Open the title page</a>
+      </div>
+    </article>
+  </section>
+</div>
+
+<!-- ============ WATCH (the player) ============ -->
+<div data-view="watch">
+  <section class="watch" aria-labelledby="h-watch">
+    <h1 class="sr-only" id="h-watch">Now playing</h1>
+    <div class="stage" id="stage"><img src="images/saltworks.svg" width="320" height="180" alt="" id="w-art"><button class="big-play needs-js" type="button" id="w-big" aria-label="Play"><svg class="icon fill" aria-hidden="true"><use href="#i-play"/></svg></button></div>
+    <div class="controls">
+      <div class="scrub"><span id="w-now">0:00</span><input id="w-range" type="range" min="0" max="2880" value="0" step="1" aria-label="Position"><span id="w-total">48:00</span></div>
+      <div class="ctrl-row">
+        <button class="icon-btn needs-js" type="button" id="w-toggle" aria-label="Play"><svg class="icon fill" aria-hidden="true"><use href="#i-play"/></svg></button>
+        <button class="icon-btn needs-js" type="button" data-w-seek="-10" aria-label="Back 10 seconds"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg></button>
+        <button class="icon-btn needs-js" type="button" data-w-seek="10" aria-label="Forward 10 seconds"><svg class="icon" aria-hidden="true"><use href="#i-fwd"/></svg></button>
+        <p class="now"><span id="w-title">Saltworks</span><span id="w-sub">Season 1, episode 1: The Pans</span></p>
+        <a class="btn small ghost" href="#/watch?id=saltworks&amp;s=1&amp;e=2" id="w-next"><svg class="icon sm" aria-hidden="true"><use href="#i-next"/></svg>Next episode</a>
+        <a class="btn small ghost" href="#/title?id=saltworks" id="w-back" data-page>All episodes</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PLANS ============ -->
+<div data-view="plans">
+  <section class="wrap page-top" aria-labelledby="h-plans">
+    <span class="kind"><svg aria-hidden="true"><use href="#mark"/></svg>Membership</span>
+    <h1 class="h1" id="h-plans" style="margin:10px 0">Pick a plan. Change it any month.</h1>
+    <p class="lead">Every plan has the whole catalog. Plans differ in how many screens can watch at once and in picture quality.</p>
+    <fieldset class="plans" style="border:0;padding:0">
+      <legend class="sr-only">Plan</legend>
+      <label class="plan" style="--pa:oklch(30% 0.02 25);--pb:oklch(40% 0.11 20)"><input type="radio" name="plan-pick" value="solo"><span class="plan-top"><b>Solo</b><span>720p</span><span class="tickmark" aria-hidden="true"><svg class="icon sm"><use href="#i-check"/></svg></span></span><dl><div><dt>Monthly price</dt><dd>$X.XX</dd></div><div><dt>Resolution</dt><dd>720p (HD)</dd></div><div><dt>Screens at once</dt><dd>1</dd></div><div><dt>Download devices</dt><dd>1</dd></div><div><dt>Live sessions with makers</dt><dd>Not included</dd></div></dl></label>
+      <label class="plan" style="--pa:oklch(36% 0.12 15);--pb:oklch(52% 0.2 22)"><input type="radio" name="plan-pick" value="household" checked><span class="plan-top"><b>Household</b><span>1080p</span><span class="tickmark" aria-hidden="true"><svg class="icon sm"><use href="#i-check"/></svg></span></span><dl><div><dt>Monthly price</dt><dd>$X.XX</dd></div><div><dt>Resolution</dt><dd>1080p (Full HD)</dd></div><div><dt>Screens at once</dt><dd>2</dd></div><div><dt>Download devices</dt><dd>2</dd></div><div><dt>Live sessions with makers</dt><dd>Not included</dd></div></dl></label>
+      <label class="plan" style="--pa:oklch(48% 0.2 22);--pb:oklch(62% 0.17 45)"><input type="radio" name="plan-pick" value="studio"><span class="plan-top"><b>Studio</b><span>4K + HDR</span><span class="tickmark" aria-hidden="true"><svg class="icon sm"><use href="#i-check"/></svg></span></span><dl><div><dt>Monthly price</dt><dd>$X.XX</dd></div><div><dt>Resolution</dt><dd>4K (Ultra HD) and HDR</dd></div><div><dt>Screens at once</dt><dd>4</dd></div><div><dt>Download devices</dt><dd>6</dd></div><div><dt>Live sessions with makers</dt><dd>Monthly</dd></div></dl></label>
+    </fieldset>
+    <div class="plan-cta"><p class="fine" style="max-width:62ch">HD, Full HD and Ultra HD depend on your internet service and device. Change or cancel your plan at any time from your account. Questions? <a class="u" href="#/help?at=billing">See membership help</a>.</p><a class="btn big" href="#/join?plan=household" id="plan-next">Next<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+  </section>
+</div>
+
+<!-- ============ JOIN (sign up) ============ -->
+<div data-view="join">
+  <section class="narrow join" aria-labelledby="h-join">
+    <span class="kind"><svg aria-hidden="true"><use href="#mark"/></svg>Create your account</span>
+    <h1 class="h1" id="h-join">Set up your membership</h1>
+    <p class="lead">A few details and you're in. You can change your plan or cancel at any time.</p>
+    <form data-form="join" novalidate>
+      <div class="field"><input id="j-email" name="email" type="email" required autocomplete="email" placeholder=" " aria-describedby="j-email-err"><label for="j-email">Email address</label><span class="err" id="j-email-err" aria-live="polite"></span></div>
+      <div class="field"><input id="j-pass" name="password" type="password" required minlength="8" autocomplete="new-password" placeholder=" " aria-describedby="j-pass-err"><label for="j-pass">Password (8 characters or more)</label><button class="reveal needs-js" type="button" data-reveal="j-pass" aria-pressed="false">Show</button><span class="err" id="j-pass-err" aria-live="polite"></span></div>
+      <fieldset class="choices" data-group-required aria-describedby="j-plan-err" style="position:relative">
+        <legend>Plan <a class="u fine" href="#/plans">Compare plans</a></legend>
+        <label class="choice"><input type="radio" name="plan" value="solo"><span>Solo</span><small>$X.XX a month</small></label>
+        <label class="choice"><input type="radio" name="plan" value="household" checked><span>Household</span><small>$X.XX a month</small></label>
+        <label class="choice"><input type="radio" name="plan" value="studio"><span>Studio</span><small>$X.XX a month</small></label>
+        <span class="err" id="j-plan-err" aria-live="polite"></span>
+      </fieldset>
+      <label class="check"><input type="checkbox" name="news"><span>Email me when new titles and workshops arrive.</span></label>
+      <label class="check"><input type="checkbox" name="terms" required aria-describedby="j-terms-err"><span>I agree to the <a class="u" href="#/privacy?at=terms">Terms of use</a> and the <a class="u" href="#/privacy">Privacy notice</a>.</span><span class="err" id="j-terms-err" aria-live="polite"></span></label>
+      <button class="btn big wide" type="submit" data-busy="Setting up…">Start membership</button>
+    </form>
+    <div class="success" data-success="join" hidden tabindex="-1"><span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><h2 class="h2">Your membership is ready</h2><p class="muted">Welcome in. Your first month starts today, and your plan can change whenever you like.</p><div class="actions"><a class="btn" href="#/browse">Start watching</a><a class="btn ghost" href="#/help?at=account">Account help</a></div></div>
+  </section>
+</div>
+
+<!-- ============ SIGN IN ============ -->
+<div data-view="signin" data-overlay>
+  <section class="auth" aria-labelledby="h-signin">
+    <div class="auth-bg" aria-hidden="true"></div>
+    <div class="auth-card">
+      <h1 class="h1" id="h-signin">Sign in</h1>
+      <form data-form="signin" novalidate>
+        <div class="field"><input id="i-email" name="email" type="email" required autocomplete="email" placeholder=" " aria-describedby="i-email-err"><label for="i-email">Email address</label><span class="err" id="i-email-err" aria-live="polite"></span></div>
+        <div class="field"><input id="i-pass" name="password" type="password" required autocomplete="current-password" placeholder=" " aria-describedby="i-pass-err"><label for="i-pass">Password</label><button class="reveal needs-js" type="button" data-reveal="i-pass" aria-pressed="false">Show</button><span class="err" id="i-pass-err" aria-live="polite"></span></div>
+        <button class="btn big wide" type="submit" data-busy="Signing in…">Sign in</button>
+        <div class="split"><label class="check"><input type="checkbox" name="remember" checked><span>Remember me</span></label><a class="u" href="#/help?at=account">Forgot your password?</a></div>
+      </form>
+      <div class="success" data-success="signin" hidden tabindex="-1"><span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><h2 class="h2">You're signed in</h2><p class="muted">Your list and your place in every title are waiting.</p><a class="btn" href="#/browse">Start watching</a></div>
+      <p>New to Ferrotype? <a class="u" href="#/plans" style="color:var(--text)">Start a membership</a>.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ HELP (FAQ and contact) ============ -->
+<div data-view="help">
+  <section class="wrap page-top" aria-labelledby="h-help">
+    <h1 class="h1" id="h-help" style="margin-bottom:28px">How can we help?</h1>
+    <div class="two">
+      <div id="help-list">
+        <div class="help-group" id="billing"><h2 class="h3">Membership and billing</h2><div class="faq compact">
+          <details><summary>How do I change my plan?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><div class="ans">Open your account, choose Plan, and pick another one. A bigger plan starts at once; a smaller one starts with your next month.</div></details>
+          <details><summary>Can I pause instead of cancelling?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><div class="ans">Yes, for up to three months. Your list, profiles and progress wait for you.</div></details>
+        </div></div>
+        <div class="help-group" id="watching"><h2 class="h3">Watching</h2><div class="faq compact">
+          <details><summary>Which devices can I use?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><div class="ans">Any recent browser, plus the apps for phones, tablets and TVs. Sign in with the same email everywhere.</div></details>
+          <details><summary>Can I download titles?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><div class="ans">On phones and tablets, yes. Each plan has a number of devices that can keep downloads at the same time.</div></details>
+        </div></div>
+        <div class="help-group" id="account"><h2 class="h3">Your account</h2><div class="faq compact">
+          <details><summary>I forgot my password<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><div class="ans">On the sign-in page, choose Forgot your password and we'll email a link to set a new one. The link works for one hour.</div></details>
+          <details><summary>How do profiles work?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><div class="ans">Each person in your household can have a profile with their own list and progress. A plan can hold up to five profiles.</div></details>
+        </div></div>
+      </div>
+      <div id="contact">
+        <h2 class="h2" style="margin-bottom:6px">Write to us</h2>
+        <p class="muted" style="margin-bottom:22px">A person reads every message and replies within two working days.</p>
+        <form data-form="contact" novalidate>
+          <div class="field"><input id="c-name" name="name" type="text" required autocomplete="name" placeholder=" " aria-describedby="c-name-err"><label for="c-name">Your name</label><span class="err" id="c-name-err" aria-live="polite"></span></div>
+          <div class="field"><input id="c-email" name="email" type="email" required autocomplete="email" placeholder=" " aria-describedby="c-email-err"><label for="c-email">Email address</label><span class="err" id="c-email-err" aria-live="polite"></span></div>
+          <div class="field"><select id="c-topic" name="topic" required aria-describedby="c-topic-err"><option value="">Choose a topic</option><option value="billing">Membership and billing</option><option value="watching">Watching</option><option value="workshops">Workshops</option><option value="pitch">Pitch a film or workshop</option><option value="press">Press</option></select><label for="c-topic">Topic</label><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg><span class="err" id="c-topic-err" aria-live="polite"></span></div>
+          <div class="field"><textarea id="c-msg" name="message" required minlength="20" placeholder=" " aria-describedby="c-msg-err"></textarea><label for="c-msg">Message</label><span class="err" id="c-msg-err" aria-live="polite"></span></div>
+          <button class="btn big wide" type="submit" data-busy="Sending…">Send message</button>
+        </form>
+        <div class="success" data-success="contact" hidden tabindex="-1"><span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><h3 class="h2">Thanks, your message is in</h3><p class="muted">We'll reply to the address you gave within two working days.</p></div>
+        <div class="desks" style="margin-top:28px"><p class="desk"><b>Help with your membership</b><a href="#/help?at=contact">help@ferrotype.example</a></p><p class="desk"><b>Pitch a film or a workshop</b><a href="#/help?topic=pitch&amp;at=contact">films@ferrotype.example</a></p><p class="desk"><b>Press</b><a href="#/help?topic=press&amp;at=contact">press@ferrotype.example</a></p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<div data-view="about" data-overlay>
+  <section class="art-top" aria-labelledby="h-about">
+    <img src="images/long-table.svg" width="320" height="180" alt="A long workshop table under three hanging lamps">
+    <div class="inner"><span class="kind"><svg aria-hidden="true"><use href="#mark"/></svg>About Ferrotype</span><h1 class="h1" id="h-about">We make films about people who make things</h1><p class="lead">A small team of editors, filmmakers and makers, funded by members and nobody else.</p></div>
+  </section>
+  <section class="wrap sec two">
+    <div class="prose"><p>Ferrotype began as a Friday screening club in a boat shed: a projector, a bedsheet and a few dozen people who wanted to see how a violin, a loaf or a bridge gets made.</p><p>Today it is a membership of series, films, workshops and festival talks, still chosen one title at a time by the same few editors.</p></div>
+    <div class="prose"><p><strong>Workshops</strong> are filmed in the maker's own studio, kitchen or yard, with the mess left in. Every lesson has a materials list and a project sheet.</p><p><strong>Talks</strong> come from the festivals and weekends we sponsor, recorded in full so members who couldn't travel can still be in the room.</p></div>
+  </section>
+  <section class="wrap sec" aria-labelledby="h-pillars">
+    <h2 class="h2" id="h-pillars" style="margin-bottom:16px">What we promise</h2>
+    <div class="pillars"><div class="pillar"><span class="n" aria-hidden="true">01</span><h3 class="h3">Makers are paid first</h3><p>Every title is commissioned or licensed directly from the people in it and the people who filmed it.</p></div><div class="pillar"><span class="n" aria-hidden="true">02</span><h3 class="h3">Filmed where the work happens</h3><p>No studio sets. Real workshops, real kitchens, real weather.</p></div><div class="pillar"><span class="n" aria-hidden="true">03</span><h3 class="h3">Chosen by people</h3><p>Editors pick every title and every row on the home page. You can always see the whole catalog.</p></div></div>
+  </section>
+  <section class="wrap sec" aria-labelledby="h-pitch"><div class="desk" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:28px"><div><h2 class="h3" id="h-pitch">Making something we should see?</h2><p class="muted">We read every pitch for films, series and workshops.</p></div><a class="btn" href="#/help?topic=pitch&amp;at=contact">Pitch a film</a></div></section>
+</div>
+
+<!-- ============ PRIVACY AND TERMS ============ -->
+<div data-view="privacy">
+  <section class="wrap page-top sec" aria-labelledby="h-privacy">
+    <h1 class="h1" id="h-privacy" style="margin-bottom:10px">Privacy and terms</h1>
+    <p class="lead">Last updated March 1, 2027. Plain words, short sections.</p>
+    <div class="prose" style="margin-top:12px">
+      <h2 class="h3">What we collect</h2><p>Your email, your plan and payment status, the profiles you create, and what you watch and for how long, so we can save your place and keep your list.</p>
+      <h2 class="h3">How we use it</h2><p>To run your membership, recommend nothing you didn't ask for, and pay makers by how much their work is watched. We never sell your information.</p>
+      <h2 class="h3" id="cookies">Cookies</h2><p>One cookie keeps you signed in and one remembers your settings. We use no advertising cookies and no tracking from other companies.</p>
+      <h2 class="h3">Your choices</h2><p>You can download or delete your data from your account at any time, or write to <a class="u" href="#/help?at=contact">help@ferrotype.example</a>.</p>
+      <h2 class="h3" id="terms">Terms of use</h2><p>A membership is for you and the people you live with. Titles are for personal viewing; please don't copy or share them publicly. You can cancel whenever you like, and you keep access until the end of the month you paid for.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ 404 ============ -->
+<div data-view="404" data-overlay>
+  <section class="art-top lost" aria-labelledby="h-404">
+    <img src="images/northbound-sleeper.svg" width="320" height="180" alt="">
+    <div class="inner"><span class="fine">Error 404</span><h1 class="h1" id="h-404">This page isn't in the catalog</h1><p class="lead">The link may be old, or the title may have left Ferrotype.</p><div class="bb-actions"><a class="btn" href="#/">Back to home</a><a class="btn glass" href="#/browse">Browse titles</a></div></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <a class="foot-q u" href="#/help?at=contact">Questions? Write to us.</a>
+    <nav class="foot-links" aria-label="Footer"><a class="u" href="#/help">Help center</a><a class="u" href="#/plans">Plans</a><a class="u" href="#/signin">Account</a><a class="u" href="#/about">About</a><a class="u" href="#/browse">Browse</a><a class="u" href="#/library?kind=series">Series</a><a class="u" href="#/library?kind=workshop">Workshops</a><a class="u" href="#/library?kind=talk">Talks</a><a class="u" href="#/library?kind=film">Films</a><a class="u" href="#/help?at=watching">Ways to watch</a><a class="u" href="#/help?topic=pitch&amp;at=contact">Pitch a film</a><a class="u" href="#/help?topic=press&amp;at=contact">Press</a><a class="u" href="#/privacy">Privacy</a><a class="u" href="#/privacy?at=terms">Terms of use</a><a class="u" href="#/privacy?at=cookies">Cookie preferences</a><a class="u" href="#/help?at=contact">Contact us</a></nav>
+    <div class="foot-base"><svg aria-hidden="true"><use href="#mark"/></svg><span>© 2027 Ferrotype Media Ltd.</span></div>
+  </div>
+</footer>
+
+<dialog class="modal" id="preview" aria-labelledby="d-title"><button class="round d-close" type="button" id="preview-close" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></dialog>
+<template id="info-tpl"><div class="info"><a class="round fill" href="#/watch" aria-label="Play"><svg class="icon fill" aria-hidden="true"><use href="#i-play"/></svg></a><button class="round" type="button" data-list="" aria-pressed="false"><svg class="icon off" aria-hidden="true"><use href="#i-plus"/></svg><svg class="icon on" aria-hidden="true"><use href="#i-check"/></svg></button><a class="round" href="#/title" aria-label="More info"><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></a></div></template>
+<template id="row-tpl"><section class="row"><h2 class="row-head"><a href="#/library"><span data-row-name></span><span class="explore">Explore all<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></span></a></h2><div class="slider"><button class="rail-btn prev" type="button" aria-label="Scroll back"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button><div class="track"></div><button class="rail-btn next" type="button" aria-label="Scroll forward"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button></div></section></template>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (selector, scope = document) => scope.querySelector(selector);
+  const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+  const readJSON = (key, fallback) => { try { return JSON.parse(store.get(key)) ?? fallback; } catch { return fallback; } };
+
+  /* ---------- Toast ---------- */
+  const toastEl = $("#toast");
+  let toastTimer;
+  function toast(text) {
+    clearTimeout(toastTimer);
+    toastEl.textContent = "";
+    requestAnimationFrame(() => { toastEl.textContent = text; });
+    toastTimer = setTimeout(() => { toastEl.textContent = ""; }, 2600);
+  }
+
+  /* ---------- Theme: dark by default regardless of the system setting; light behind the toggle ---------- */
+  const themeButton = $("#theme-toggle");
+  function syncTheme() {
+    const dark = root.dataset.theme !== "light";
+    themeButton.setAttribute("aria-label", dark ? "Switch to light colors" : "Switch to dark colors");
+    $("use", themeButton).setAttribute("href", dark ? "#i-sun" : "#i-moon");
+  }
+  new MutationObserver(syncTheme).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  root.dataset.theme = store.get("ferrotype-theme") === "light" ? "light" : "dark";
+  syncTheme();
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "light" ? "dark" : "light";
+    root.dataset.theme = next;
+    store.set("ferrotype-theme", next);
+  });
+
+  /* ---------- Catalog data. The cards in the catalog grid hold each title's name, artwork, kind, topics and year
+     (every tile, row and dialog copies them, so the single-file build keeps its embedded images). TITLES adds what
+     the detail needs: episodes as [title, minutes, description?] per season, or a runtime in minutes for films. ---------- */
+  const TITLES = {
+    saltworks: { rating: "12+", format: "Documentary series", isNew: true, blurb: "On a windy coast, the last family of salt makers shares a shed with the smith who keeps their pans from rusting. Two seasons of fire, brine and stubborn weather, filmed over three winters.", seasons: [
+      [["The Pans", 48, "Spring tides fill the clay pans for the first time this year, and Ada learns why the family never rushes the first harvest."], ["Brine", 44, "A dry week, a cracked pan and an argument about whether the old methods are worth the work."], ["Iron Season", 51, "Next door, the smith rebuilds the rakes and the pans that the salt eats every winter."], ["Smoke Room", 46, "Smoking salt over driftwood for the restaurants in town, and losing a whole batch to the wind."], ["The Hearth Keepers", 49, "Three generations at one fire: who keeps it going, and who wants to leave."], ["Ember", 55, "The last harvest before the storms, and a decision about who takes over the pans."]],
+      [["New Ground", 47], ["Two Furnaces", 45], ["Weather", 50], ["Embers, Again", 58]],
+    ] },
+    "kiln-hours": { rating: "Beginner", format: "Workshop with project sheets", isNew: true, blurb: "Eight lessons from a working pottery, from wedging your first lump of clay to opening the kiln on a shelf of finished pots. Made for people who have never touched a wheel.", seasons: [
+      [["Clay, water, patience", 18], ["Centering", 22], ["Pulling walls", 26], ["Trimming", 19], ["Handles and lips", 21], ["Glazes, plainly", 28], ["Loading the kiln", 17], ["The first firing", 32]],
+    ] },
+    "northbound-sleeper": { rating: "12+", format: "Documentary series", isNew: true, blurb: "Four nights on the last sleeper train to the far north, with the crew who keep it running through snow that stops everything else.", seasons: [[["Departure Board", 44], ["Sleeper Car", 47], ["Snow Line", 49], ["Terminus", 53]]] },
+    "listening-hill": { rating: "All ages", format: "Documentary series", blurb: "A radio dish on a hill, the five people who keep it listening, and the night it hears something nobody can explain.", seasons: [[["The Dish", 42], ["Listening", 45], ["Static", 39], ["Night Shift", 44], ["First Light", 51]]] },
+    inkwork: { rating: "All levels", format: "Workshop with project sheets", blurb: "Carve, ink and print your own blocks in six lessons, ending with a small edition you can sign, frame or post to friends.", seasons: [[["Carving the block", 24], ["Ink and rollers", 20], ["Registration", 23], ["Two colors", 27], ["Editions", 19], ["Your first print run", 30]]] },
+    "blueprint-sessions": { rating: "All ages", format: "Festival talks", blurb: "Six talks from Blueprint Weekend about design that lasts: chairs, signs, maps and the people who argue about them.", seasons: [[["Designing for repair", 32], ["Small type, big signs", 28], ["Maps nobody asked for", 35], ["The honest chair", 26], ["Paper prototypes at scale", 30], ["Closing panel", 54]]] },
+    "night-ferry": { rating: "All ages", format: "Documentary film", runtime: 94, blurb: "One crossing, from the last bus to the first light, aboard the ferry that carries a city's night workers home." },
+    "long-table": { rating: "All ages", format: "Documentary series", blurb: "Six cooks, six regions, one table each: the dishes people make when everyone is coming.", seasons: [[["Bread", 38], ["Salt Fish", 41], ["The Orchard", 36], ["Fire Pit", 43], ["Market Day", 40], ["The Long Table", 52]]] },
+    loomhouse: { rating: "Beginner", format: "Workshop with project sheets", blurb: "Warp a simple frame loom and weave a striped cloth in six lessons, using yarn you can buy anywhere.", seasons: [[["The frame loom", 20], ["Warping", 26], ["Plain weave", 22], ["Stripes and color", 24], ["Finishing edges", 18], ["Off the loom", 21]]] },
+    "low-tide-choir": { rating: "All ages", format: "Documentary film", runtime: 72, blurb: "A village choir that rehearses on the mudflats at low tide, and the season they try to sing a piece written for the sea." },
+    "field-day-talks": { rating: "All ages", format: "Festival talks", blurb: "Five talks recorded under canvas at Field Day, a weekend of food, music and handmade things.", seasons: [[["Why we still make bread by hand", 29], ["A fiddle from one tree", 34], ["Cheese and patience", 27], ["Tents, ropes and weather", 31], ["Open mic for makers", 46]]] },
+    tidewright: { rating: "All ages", format: "Documentary film", runtime: 108, blurb: "Two boatbuilders, one wooden hull and a launch date set by the tide tables, not by them." },
+    "paper-weather": { rating: "All ages", format: "Animated short film", runtime: 24, blurb: "A paper boat, a folded sky and a storm made by hand, one frame at a time." },
+  };
+  const KIND = { series: "Series", workshop: "Workshop", talk: "Talks", film: "Film" };
+  const UNIT = { series: "episode", workshop: "lesson", talk: "talk" };
+  const libGrid = $("[data-lib]");
+  const cards = $$(".card", libGrid);
+  const cardOf = (id) => cards.find((card) => card.dataset.id === id) ?? cards[0];
+  const nameOf = (id) => $(".tt", cardOf(id)).textContent;
+  const artOf = (id) => $("img", cardOf(id)).getAttribute("src");
+  const topicsOf = (id) => cardOf(id).dataset.topics.split(" ");
+  const cap = (word) => word[0].toUpperCase() + word.slice(1);
+  const minutes = (m) => (m >= 60 ? `${Math.floor(m / 60)}h ${m % 60}m` : `${m}m`);
+  const clock = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+  const copyCard = (id) => { const node = cardOf(id).cloneNode(true); node.hidden = false; return node; };
+  cards.forEach((card) => {
+    const id = card.dataset.id;
+    const info = $("#info-tpl").content.firstElementChild.cloneNode(true);
+    const [play, , more] = info.children;
+    play.href = `#/watch?id=${id}`;
+    play.setAttribute("aria-label", `Play ${nameOf(id)}`);
+    $("[data-list]", info).dataset.list = id;
+    more.href = `#/title?id=${id}`;
+    more.setAttribute("aria-label", `More about ${nameOf(id)}`);
+    $(".art", card).append(info);
+  });
+
+  /* ---------- My list and progress (kept in the store wrapper; a real account replaces both) ---------- */
+  const LIST_KEY = "ferrotype-list";
+  const PROGRESS_KEY = "ferrotype-progress";
+  const myList = new Set(readJSON(LIST_KEY, ["inkwork", "night-ferry"]));
+  const progress = readJSON(PROGRESS_KEY, { saltworks: [1, 3, 0.62], "kiln-hours": [1, 4, 0.3], "northbound-sleeper": [1, 2, 0.8] });
+  function syncList() {
+    $$("[data-list]").forEach((button) => {
+      const on = myList.has(button.dataset.list);
+      button.setAttribute("aria-pressed", String(on));
+      button.setAttribute("aria-label", on ? `Remove ${nameOf(button.dataset.list)} from My list` : `Add ${nameOf(button.dataset.list)} to My list`);
+    });
+  }
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-list]");
+    if (!button) return;
+    const id = button.dataset.list;
+    const on = !myList.has(id);
+    if (on) myList.add(id); else myList.delete(id);
+    store.set(LIST_KEY, JSON.stringify([...myList]));
+    syncList();
+    fillListRow();
+    if (current?.dataset.view === "library") library.render();
+    toast(on ? "Added to My list" : "Removed from My list");
+  });
+
+  /* ---------- Rails: arrow buttons appear only when there is more to scroll ---------- */
+  function wireSlider(slider) {
+    const track = $(".rail, .track", slider);
+    const [prev, next] = $$(".rail-btn", slider);
+    const update = () => {
+      prev.hidden = track.scrollLeft < 4;
+      next.hidden = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    };
+    const step = (dir) => track.scrollBy({ left: dir * track.clientWidth * 0.9, behavior: reduced.matches ? "auto" : "smooth" });
+    prev.addEventListener("click", () => step(-1));
+    next.addEventListener("click", () => step(1));
+    track.addEventListener("scroll", update, { passive: true });
+    new ResizeObserver(update).observe(track);
+    update();
+  }
+  $$(".slider").forEach(wireSlider);
+
+  /* ---------- Browse rows: copies of the catalog cards ---------- */
+  const rowsEl = $("#rows");
+  const ids = cards.map((card) => card.dataset.id);
+  const ROWS = [
+    { name: "Continue watching", href: "#/library", list: () => Object.keys(progress), progress: true },
+    { name: "Most watched this week", href: "#/library", top: true },
+    { name: "Made by hand", href: "#/library?topic=craft", list: () => ids.filter((id) => topicsOf(id).includes("craft")) },
+    { name: "Learn a craft", href: "#/library?kind=workshop", list: () => ids.filter((id) => ["workshop", "talk"].includes(cardOf(id).dataset.kind)) },
+    { name: "Outdoors and after dark", href: "#/library?topic=nature", list: () => ids.filter((id) => topicsOf(id).includes("nature")) },
+    { name: "My list", href: "#/library?kind=list", list: () => [...myList], mine: true },
+  ];
+  function rowNodes(row) {
+    if (row.top) return $$("#top10 > li").map((li) => li.cloneNode(true));
+    return row.list().filter((id) => TITLES[id]).map((id) => {
+      const node = copyCard(id);
+      if (row.progress) {
+        const [s, e, done] = progress[id];
+        const bar = document.createElement("span");
+        bar.className = "prog";
+        bar.innerHTML = `<i style="--p:${Math.round(done * 100)}%"></i>`;
+        $(".art", node).prepend(bar);
+        $(".round.fill", node).href = `#/watch?id=${id}&s=${s}&e=${e}`;
+        $(".round.fill", node).setAttribute("aria-label", `Resume ${nameOf(id)}`);
+      }
+      return node;
+    });
+  }
+  function buildRows() {
+    rowsEl.replaceChildren(...ROWS.map((row) => {
+      const section = $("#row-tpl").content.firstElementChild.cloneNode(true);
+      $("[data-row-name]", section).textContent = row.name;
+      $(".row-head a", section).href = row.href;
+      section.setAttribute("aria-label", row.name);
+      if (row.mine) section.id = "row-list";
+      $(".track", section).append(...rowNodes(row));
+      section.hidden = !$(".track", section).children.length;
+      wireSlider($(".slider", section));
+      return section;
+    }));
+    syncList();
+  }
+  function fillListRow() {
+    const row = $("#row-list");
+    if (!row) return;
+    $(".track", row).replaceChildren(...rowNodes(ROWS.find((r) => r.mine)));
+    row.hidden = myList.size === 0;
+    syncList();
+  }
+
+  /* ---------- Catalog: kind chips, topic, search, sort, all from the URL (#/library?kind=workshop&topic=food&q=salt) ---------- */
+  const library = (() => {
+    const q = $("#lib-q");
+    const topic = $("#lib-topic");
+    const sort = $("#lib-sort");
+    const heading = { all: "Catalog", series: "Series", workshop: "Workshops", talk: "Talks", film: "Films", list: "My list" };
+    let kind = "all";
+    function render() {
+      const term = q.value.trim().toLowerCase();
+      let shown = 0;
+      cards.forEach((card) => {
+        const match = (kind === "all" || (kind === "list" ? myList.has(card.dataset.id) : card.dataset.kind === kind))
+          && (!topic.value || card.dataset.topics.split(" ").includes(topic.value))
+          && (!term || `${card.textContent} ${card.dataset.by}`.toLowerCase().includes(term));
+        card.hidden = !match;
+        if (match) shown += 1;
+      });
+      $$("[data-kind-filter]").forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.kindFilter === kind)));
+      $("#h-lib").textContent = heading[kind];
+      $("[data-lib-count]").textContent = `${shown} ${shown === 1 ? "title" : "titles"}`;
+      $("[data-empty]").hidden = shown > 0;
+      if (current?.dataset.view === "library") document.title = `${heading[kind]} · Ferrotype`;
+    }
+    function order() {
+      const az = sort.value === "az";
+      cards.slice().sort((a, b) => (az ? nameOf(a.dataset.id).localeCompare(nameOf(b.dataset.id)) : b.dataset.year - a.dataset.year)).forEach((card) => libGrid.append(card));
+    }
+    $$("[data-kind-filter]").forEach((chip) => chip.addEventListener("click", () => { kind = chip.dataset.kindFilter; render(); }));
+    topic.addEventListener("change", render);
+    q.addEventListener("input", () => { headerSearch.value = q.value; render(); });
+    sort.addEventListener("change", order);
+    $("[data-clear]").addEventListener("click", () => { kind = "all"; topic.value = ""; q.value = headerSearch.value = ""; render(); });
+    return {
+      render,
+      apply(params) {
+        kind = heading[params.get("kind")] ? params.get("kind") : "all";
+        topic.value = $(`option[value="${CSS.escape(params.get("topic") || "")}"]`, topic) ? params.get("topic") || "" : "";
+        q.value = headerSearch.value = params.get("q") ?? "";
+        if (params.get("sort") === "az") sort.value = "az";
+        order();
+        render();
+      },
+      search(text) { q.value = text; render(); },
+    };
+  })();
+
+  /* ---------- Header: solid once the page scrolls or on pages without a picture on top; search; the Browse menu ---------- */
+  const header = $(".site-header");
+  const syncHeader = () => header.classList.toggle("solid", scrollY > 24 || !current?.hasAttribute("data-overlay"));
+  addEventListener("scroll", syncHeader, { passive: true });
+  const searchBox = $(".search");
+  const searchButton = $("#search-btn");
+  const headerSearch = $("#q");
+  function setSearch(open) {
+    searchBox.classList.toggle("open", open);
+    searchButton.setAttribute("aria-expanded", String(open));
+    headerSearch.tabIndex = open ? 0 : -1;
+    if (open) headerSearch.focus();
+  }
+  searchButton.addEventListener("click", () => setSearch(!searchBox.classList.contains("open")));
+  headerSearch.addEventListener("input", () => {
+    if (current?.dataset.view === "library") library.search(headerSearch.value);
+    else go(`#/library?q=${encodeURIComponent(headerSearch.value)}`);
+  });
+  headerSearch.addEventListener("blur", () => { if (!headerSearch.value) setSearch(false); });
+  const menu = $("#menu");
+  const menuButton = $("#menu-btn");
+  const setMenu = (open) => { menu.hidden = !open; menuButton.setAttribute("aria-expanded", String(open)); };
+  menuButton.addEventListener("click", () => setMenu(menu.hidden));
+  document.addEventListener("click", (event) => { if (!menu.hidden && !event.target.closest("#menu, #menu-btn")) setMenu(false); });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    if (!menu.hidden) { setMenu(false); menuButton.focus(); }
+    if (searchBox.classList.contains("open")) { headerSearch.value = ""; setSearch(false); searchButton.focus(); }
+  });
+
+  /* ---------- Title detail: one block, shown on #/title and lent to the preview dialog ---------- */
+  const detail = $("#detail");
+  const titleSlot = $("#title-slot");
+  const dialog = $("#preview");
+  const epList = $("[data-d-list]", detail);
+  const epProto = $(".ep", epList).parentElement.cloneNode(true);
+  const seasonSelect = $("#d-season");
+  const SPOTS = ["30% 55%", "70% 40%", "55% 30%", "15% 70%", "85% 60%", "50% 50%", "25% 35%", "75% 65%"];
+  function countOf(id) {
+    const t = TITLES[id];
+    if (t.runtime) return minutes(t.runtime);
+    if (t.seasons.length > 1) return `${t.seasons.length} seasons`;
+    const n = t.seasons[0].length;
+    return `${n} ${UNIT[cardOf(id).dataset.kind]}s`;
+  }
+  function renderEpisodes(id, season) {
+    const t = TITLES[id];
+    const kind = cardOf(id).dataset.kind;
+    epList.replaceChildren(...t.seasons[season - 1].map(([name, mins, about], i) => {
+      const li = epProto.cloneNode(true);
+      const link = $(".ep", li);
+      link.href = `#/watch?id=${id}&s=${season}&e=${i + 1}`;
+      $(".num", li).textContent = i + 1;
+      $(".thumb", li).style.setProperty("--o", SPOTS[(i + season) % SPOTS.length]);
+      $("img", li).setAttribute("src", artOf(id));
+      const [title, length] = $$(".ep-top > span", li);
+      title.textContent = kind === "series" ? name : `${cap(UNIT[kind])} ${i + 1}: ${name}`;
+      length.textContent = `${mins}m`;
+      $(".ep-desc", li).textContent = about ?? "";
+      $(".ep-desc", li).hidden = !about;
+      return li;
+    }));
+  }
+  function renderDetail(id) {
+    if (!TITLES[id]) id = "saltworks";
+    const t = TITLES[id];
+    const card = cardOf(id);
+    detail.dataset.id = id;
+    $$("[data-d-art]").forEach((img) => img.setAttribute("src", artOf(id)));
+    $("[data-d-kind]", detail).textContent = KIND[card.dataset.kind];
+    $("[data-d-name]", detail).textContent = nameOf(id);
+    $("[data-d-new]", detail).hidden = !t.isNew;
+    $("[data-d-year]", detail).textContent = card.dataset.year;
+    $("[data-d-count]", detail).textContent = countOf(id);
+    $("[data-d-rating]", detail).textContent = t.rating;
+    $("[data-d-blurb]", detail).textContent = t.blurb;
+    $("[data-d-by]", detail).textContent = card.dataset.by;
+    $("[data-d-topics]", detail).textContent = topicsOf(id).map(cap).join(", ");
+    $("[data-d-format]", detail).textContent = t.format;
+    const resume = progress[id];
+    $("[data-d-play]", detail).href = resume ? `#/watch?id=${id}&s=${resume[0]}&e=${resume[1]}` : `#/watch?id=${id}`;
+    $("[data-d-play]", detail).lastChild.textContent = resume ? "Resume" : "Play";
+    $(".d-actions [data-list]", detail).dataset.list = id;
+    $("[data-page]", detail).href = `#/title?id=${id}`;
+    const eps = $("[data-d-eps]", detail);
+    eps.hidden = !t.seasons;
+    if (t.seasons) {
+      $("#h-eps").textContent = card.dataset.kind === "series" ? "Episodes" : card.dataset.kind === "workshop" ? "Lessons" : "Talks";
+      seasonSelect.replaceChildren(...t.seasons.map((eps, i) => new Option(`Season ${i + 1} (${eps.length} episodes)`, i + 1)));
+      $("[data-d-season-box]", detail).hidden = t.seasons.length < 2;
+      renderEpisodes(id, 1);
+    }
+    const topics = topicsOf(id);
+    const similar = ids.filter((other) => other !== id && topicsOf(other).some((x) => topics.includes(x))).slice(0, 6);
+    $("[data-d-more]", detail).replaceChildren(...similar.map(copyCard));
+    syncList();
+    return id;
+  }
+  seasonSelect.addEventListener("change", () => renderEpisodes(detail.dataset.id, Number(seasonSelect.value)));
+  function openPreview(id) {
+    if (!dialog.open && current?.dataset.view === "title") { go(`#/title?id=${id}`); return; }
+    renderDetail(id);
+    if (!dialog.open) { dialog.append(detail); dialog.showModal(); }
+    dialog.scrollTop = 0;
+  }
+  dialog.addEventListener("close", () => {
+    titleSlot.append(detail);
+    if (current?.dataset.view === "title") renderDetail(parse(location.hash).params.get("id"));
+  });
+  dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+  $("#preview-close").addEventListener("click", () => dialog.close());
+
+  /* ---------- Watch: a simulated clock. With real video, drive the same controls from a <video> element ---------- */
+  const watch = { id: "saltworks", s: 1, e: 1, pos: 0, dur: 2880, timer: null };
+  const stage = $("#stage");
+  const range = $("#w-range");
+  function paintWatch() {
+    range.value = watch.pos;
+    $("#w-now").textContent = clock(watch.pos);
+    const playing = Boolean(watch.timer);
+    stage.classList.toggle("playing", playing);
+    [$("#w-big"), $("#w-toggle")].forEach((button) => {
+      button.setAttribute("aria-label", playing ? "Pause" : "Play");
+      $("use", button).setAttribute("href", playing ? "#i-pause" : "#i-play");
+    });
+  }
+  function saveProgress() {
+    progress[watch.id] = [watch.s, watch.e, Math.min(0.99, watch.pos / watch.dur)];
+    store.set(PROGRESS_KEY, JSON.stringify(progress));
+  }
+  function setPlaying(on) {
+    clearInterval(watch.timer);
+    watch.timer = null;
+    if (on) watch.timer = setInterval(() => { watch.pos = Math.min(watch.dur, watch.pos + 1); if (watch.pos >= watch.dur) setPlaying(false); paintWatch(); }, 1000);
+    else if (watch.pos > 0) saveProgress();
+    paintWatch();
+  }
+  function loadWatch(params) {
+    setPlaying(false);
+    const id = TITLES[params.get("id")] ? params.get("id") : "saltworks";
+    const t = TITLES[id];
+    const seasons = t.seasons ?? [[[nameOf(id), t.runtime]]];
+    const s = Math.min(Math.max(1, Number(params.get("s")) || 1), seasons.length);
+    const e = Math.min(Math.max(1, Number(params.get("e")) || 1), seasons[s - 1].length);
+    const [name, mins] = seasons[s - 1][e - 1];
+    const saved = progress[id];
+    Object.assign(watch, { id, s, e, dur: mins * 60, pos: saved && saved[0] === s && saved[1] === e ? Math.round(saved[2] * mins * 60) : 0 });
+    $("#w-art").setAttribute("src", artOf(id));
+    $("#w-title").textContent = nameOf(id);
+    const kind = cardOf(id).dataset.kind;
+    $("#w-sub").textContent = t.seasons ? `${kind === "series" ? `Season ${s}, episode ${e}` : `${cap(UNIT[kind])} ${e}`}: ${name}` : t.format;
+    range.max = watch.dur;
+    $("#w-total").textContent = clock(watch.dur);
+    const nextEp = e < seasons[s - 1].length ? [s, e + 1] : s < seasons.length ? [s + 1, 1] : null;
+    $("#w-next").hidden = !nextEp;
+    if (nextEp) $("#w-next").href = `#/watch?id=${id}&s=${nextEp[0]}&e=${nextEp[1]}`;
+    $("#w-back").href = `#/title?id=${id}`;
+    $("#w-back").textContent = t.seasons ? `All ${kind === "series" ? "episodes" : `${UNIT[kind]}s`}` : "About this film";
+    paintWatch();
+  }
+  [$("#w-big"), $("#w-toggle")].forEach((button) => button.addEventListener("click", () => setPlaying(!watch.timer)));
+  $$("[data-w-seek]").forEach((button) => button.addEventListener("click", () => { watch.pos = Math.min(watch.dur, Math.max(0, watch.pos + Number(button.dataset.wSeek))); paintWatch(); }));
+  range.addEventListener("input", () => { watch.pos = Number(range.value); paintWatch(); });
+
+  /* ---------- Plans and join: the chosen plan travels in the URL (#/join?plan=studio&email=…) ---------- */
+  const planNext = $("#plan-next");
+  const syncPlan = () => { planNext.href = `#/join?plan=${$("input[name='plan-pick']:checked").value}`; };
+  $$("input[name='plan-pick']").forEach((radio) => radio.addEventListener("change", syncPlan));
+  function pickRadio(name, value) {
+    const radio = value && $(`input[name="${name}"][value="${CSS.escape(value)}"]`);
+    if (radio) radio.checked = true;
+  }
+  $$("[data-reveal]").forEach((button) => button.addEventListener("click", () => {
+    const input = document.getElementById(button.dataset.reveal);
+    const show = input.type === "password";
+    input.type = show ? "text" : "password";
+    button.textContent = show ? "Hide" : "Show";
+    button.setAttribute("aria-pressed", String(show));
+  }));
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const parentOf = { title: "browse", watch: "browse", join: "plans" };
+  const homeTitle = document.title;
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    const params = route.params;
+    if (current && current !== views.get(name)) { current.classList.remove("is-active"); if (current.dataset.view === "watch") setPlaying(false); }
+    current = views.get(name);
+    current.classList.add("is-active");
+    setMenu(false);
+    document.title = name === "home" ? homeTitle : `${$("h1", current).textContent} · Ferrotype`;
+    if (name === "browse") buildRows();
+    if (name === "library") library.apply(params);
+    if (name === "title") document.title = `${nameOf(renderDetail(params.get("id")))} · Ferrotype`;
+    if (name === "watch") { loadWatch(params); document.title = `${nameOf(watch.id)} · Ferrotype`; }
+    if (name === "plans") { pickRadio("plan-pick", params.get("plan")); syncPlan(); }
+    if (name === "join") { pickRadio("plan", params.get("plan")); if (params.get("email")) $("#j-email").value = params.get("email"); }
+    if (name === "help" && params.get("topic")) $("#c-topic").value = $(`#c-topic option[value="${CSS.escape(params.get("topic"))}"]`) ? params.get("topic") : "";
+    const section = parentOf[name] || name;
+    $$(".nav a, .menu a").forEach((a) => {
+      const link = parse(a.getAttribute("href"));
+      const match = link.view === section && [...link.params].every(([k, v]) => params.get(k) === v) && (section !== "library" || link.params.get("kind") === (params.get("kind") || null));
+      if (match) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const at = params.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    syncHeader();
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/title") && !("page" in link.dataset)) { event.preventDefault(); openPreview(parse(href).params.get("id")); return; }
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (dialog.open) dialog.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = document.querySelector(href);
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+      if (target.tabIndex === -1) target.focus({ preventScroll: true });
+    }
+  });
+  window.addEventListener("popstate", () => { if (dialog.open) dialog.close(); show(parse(location.hash)); });
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Enter a valid email address.", tooShort: "Please write a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    let problem = "";
+    if (field.matches("fieldset")) problem = $("input:checked", field) ? "" : "Choose one to continue.";
+    else {
+      const key = Object.keys(messages).find((k) => field.validity[k]);
+      if (key) problem = field.type === "checkbox" ? "Please tick this box to continue." : field.tagName === "SELECT" ? "Please choose one." : field.type === "password" && key === "tooShort" ? "Use at least 8 characters." : messages[key];
+    }
+    error.textContent = problem;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input[aria-describedby], textarea[aria-describedby], select[aria-describedby], fieldset[data-group-required]", form);
+    fields.forEach((field) => field.addEventListener(field.matches("fieldset, [type=checkbox], select") ? "change" : "blur", () => { if (field.value || field.matches("fieldset, [type=checkbox]") || field.getAttribute("aria-invalid")) checkField(field); }));
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    const label = button.innerHTML;
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (!fields.map(checkField).every(Boolean)) {
+        const first = fields.find((f) => f.getAttribute("aria-invalid") === "true");
+        (first?.matches("fieldset") ? $("input", first) : first)?.focus();
+        return;
+      }
+      if (form.dataset.form === "start") { go(`#/join?email=${encodeURIComponent($("input", form).value.trim())}`); return; }
+      button.disabled = true;
+      button.textContent = button.dataset.busy || "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        button.disabled = false;
+        button.innerHTML = label;
+        const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+        if (success) { success.hidden = false; success.focus({ preventScroll: true }); }
+      }, 700);
+    });
+  });
+
+  /* ---------- Start ---------- */
+  $(".auth-bg").append($(".wall").cloneNode(true));
+  syncList();
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1520 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Nightjar Picture House: two screens and a bar on Harbour Row</title>
+<meta name="description" content="An independent picture house with two screens and a bar on Harbour Row: new films, restored classics, late shows and Saturday pictures for kids.">
+<meta property="og:title" content="Meet me at the Nightjar">
+<meta property="og:description" content="Two screens, one bar and a film for every kind of night.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/urbanist-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "Urbanist"; src: url("fonts/urbanist-latin-wght.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Kaushan Script"; src: url("fonts/kaushan-script-latin-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+
+/* ---------- Tokens: night (deep purple) is the default and ignores the system setting; dusk sits behind the toggle ---------- */
+:root {
+  color-scheme: dark;
+  --bg: oklch(17% 0.085 302);            /* the canvas */
+  --bg-2: oklch(13.5% 0.07 302);         /* footer */
+  --surface: oklch(23% 0.1 302);         /* cards, plans, deck cards */
+  --surface-2: oklch(29% 0.11 302);      /* time pills, toggles */
+  --text: oklch(98% 0.008 302);
+  --text-muted: oklch(83% 0.04 302);
+  --border: oklch(36% 0.1 302);
+  --border-strong: oklch(64% 0.07 302);  /* field and chip outlines */
+  --accent: oklch(52% 0.25 300);         /* the one filled button colour */
+  --accent-hover: oklch(46% 0.24 300);
+  --accent-text: oklch(100% 0 0);
+  --accent-ink: oklch(80% 0.13 312);     /* script lines, eyebrows and ticks on the canvas */
+  --neon: oklch(73% 0.2 352);            /* the sign outline, the "now" line, quotes */
+  --gold: oklch(86% 0.14 82);            /* marquee bulbs, kickers on screens */
+  --tv: oklch(12.5% 0.06 300);           /* screens stay dark in both themes */
+  --tv-2: oklch(21% 0.1 300);
+  --tv-line: oklch(33% 0.1 300);
+  --frame: oklch(21.5% 0.11 302);        /* the panel around a screen */
+  --glow: oklch(56% 0.23 300 / 0.5);
+  --field-bg: oklch(13.5% 0.07 302);
+  --hover: oklch(100% 0 0 / 0.08);
+  --danger: oklch(75% 0.16 20);
+  --ok: oklch(82% 0.14 160);
+  --shadow-card: 0 12px 32px oklch(5% 0.05 300 / 0.45);
+  --shadow-overlay: 0 30px 90px oklch(5% 0.05 300 / 0.7);
+  /* the illustrated city */
+  --sky-1: oklch(13% 0.07 300); --sky-2: oklch(30% 0.16 298); --sky-3: oklch(52% 0.2 340);
+  --stars: 1; --moon: oklch(96% 0.04 85);
+  --far: oklch(27% 0.14 296); --mid: oklch(19% 0.1 300); --cinema: oklch(23% 0.13 298); --street: oklch(11% 0.05 300);
+  --win-0: oklch(28% 0.12 298); --win-1: oklch(85% 0.14 80); --win-2: oklch(76% 0.15 350); --win-3: oklch(86% 0.1 215);
+  --band-1: oklch(35% 0.17 300); --band-2: oklch(58% 0.21 345); --band-3: oklch(80% 0.13 60);
+  --font: "Urbanist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --script: "Kaushan Script", "Brush Script MT", cursive;
+  --r-control: 6px; --r-card: 14px; --r-media: 10px; --r-pill: 999px; --r-panel: 28px;
+  --dur-fast: 140ms; --dur-base: 240ms; --dur-slow: 600ms; --ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+  --header-h: 68px; --gutter: clamp(16px, 4vw, 48px); --page: 1160px;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(97.5% 0.012 302);
+  --bg-2: oklch(93.5% 0.025 302);
+  --surface: oklch(100% 0 0);
+  --surface-2: oklch(94.5% 0.025 302);
+  --text: oklch(23% 0.1 302);
+  --text-muted: oklch(44% 0.07 302);
+  --border: oklch(88% 0.03 302);
+  --border-strong: oklch(58% 0.07 302);
+  --accent: oklch(46% 0.24 300);
+  --accent-hover: oklch(40% 0.22 300);
+  --accent-ink: oklch(45% 0.22 300);
+  --neon: oklch(58% 0.22 352);
+  --frame: oklch(91% 0.05 302);
+  --glow: oklch(68% 0.2 300 / 0.4);
+  --field-bg: oklch(100% 0 0);
+  --hover: oklch(46% 0.24 300 / 0.08);
+  --danger: oklch(52% 0.2 25);
+  --ok: oklch(48% 0.13 160);
+  --shadow-card: 0 12px 30px oklch(40% 0.12 300 / 0.14);
+  --shadow-overlay: 0 30px 80px oklch(30% 0.12 300 / 0.3);
+  --sky-1: oklch(42% 0.18 295); --sky-2: oklch(64% 0.17 320); --sky-3: oklch(84% 0.1 55);
+  --stars: 0.35; --moon: oklch(99% 0.02 85);
+  --far: oklch(52% 0.16 300); --mid: oklch(36% 0.15 298); --cinema: oklch(41% 0.17 298); --street: oklch(26% 0.12 300);
+  --win-0: oklch(44% 0.15 298);
+  --band-1: oklch(78% 0.1 300); --band-2: oklch(80% 0.12 340); --band-3: oklch(88% 0.09 65);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-padding-top: calc(var(--header-h) + 16px); -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 500 1.0625rem/1.6 var(--font); overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+h1, h2, h3 { margin: 0; font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; }
+h1 { font-size: clamp(2.25rem, 1.5rem + 2.6vw, 3.75rem); }
+h2 { font-size: clamp(1.75rem, 1.25rem + 1.6vw, 2.625rem); }
+h3, .h3 { font-size: 1.25rem; letter-spacing: -0.01em; }
+p { margin: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+.ic { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: 16px; top: -60px; z-index: 100; background: var(--accent); color: var(--accent-text); padding: 10px 16px; border-radius: var(--r-control); }
+.skip:focus { top: 12px; }
+.wrap { width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.sec { padding-block: clamp(48px, 7vw, 96px); }
+.sec-head { max-width: 760px; margin: 0 auto clamp(24px, 4vw, 40px); text-align: center; display: grid; gap: 12px; justify-items: center; }
+.sub { color: var(--text-muted); font-size: clamp(1rem, 0.95rem + 0.3vw, 1.1875rem); }
+.eyebrow { font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent-ink); }
+.script { font-family: var(--script); font-weight: 400; letter-spacing: 0; }
+.kick { font-family: var(--script); font-size: clamp(1.375rem, 1rem + 1.2vw, 2rem); line-height: 1; color: var(--accent-ink); transform: rotate(-4deg); }
+.muted { color: var(--text-muted); }
+
+/* ---------- Buttons and chips ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 22px; border-radius: var(--r-control); border: 1.5px solid transparent; background: none; font-weight: 700; font-size: 1rem; text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.btn:active { transform: translateY(1px); }
+.btn .ic { width: 18px; height: 18px; }
+.btn-fill { background: var(--accent); color: var(--accent-text); }
+.btn-fill:hover { background: var(--accent-hover); }
+.btn-line { border-color: currentColor; }
+.btn-line:hover { background: var(--hover); }
+.btn-white { background: oklch(100% 0 0); color: oklch(22% 0.12 300); }
+.btn-white:hover { background: oklch(92% 0.03 300); }
+.btn-sm { min-height: 38px; padding: 0 16px; font-size: 0.9375rem; }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.actions.center { justify-content: center; }
+.icon-btn { display: inline-grid; place-items: center; width: 42px; height: 42px; border-radius: var(--r-control); border: 0; background: none; color: inherit; }
+.icon-btn:hover { background: var(--hover); }
+.chip { border: 1.5px solid var(--border-strong); border-radius: var(--r-pill); background: none; padding: 7px 16px; font-weight: 700; font-size: 0.9375rem; }
+.chip:hover { background: var(--hover); }
+.chip[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: var(--bg); }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 40; background: var(--bg); border-bottom: 1px solid var(--border); }
+.bar { display: flex; align-items: center; gap: 20px; min-height: var(--header-h); }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 900; font-size: 1.5rem; letter-spacing: -0.035em; }
+.brand svg { width: 34px; height: 34px; flex: none; }
+.nav { display: flex; flex-wrap: wrap; gap: 2px; margin-left: auto; }
+.nav a, .menu a { border-radius: var(--r-control); text-decoration: none; font-weight: 700; }
+.nav a { padding: 8px 12px; }
+.nav a:hover, .menu a:hover { background: var(--hover); }
+.nav a[aria-current], .menu a[aria-current] { box-shadow: inset 0 -3px 0 var(--accent-ink); }
+.tools { display: flex; align-items: center; gap: 4px; }
+#menu-btn { display: none; }
+.menu { display: grid; gap: 2px; padding: 8px var(--gutter) 20px; border-top: 1px solid var(--border); }
+.menu a { padding: 12px; font-size: 1.125rem; }
+@media (max-width: 1099px) { .js .nav { display: none; } .js #menu-btn { display: inline-grid; } .tools { margin-left: auto; } }
+@media (min-width: 1100px) { .menu { display: none !important; } }
+@media (max-width: 440px) { .bar { gap: 8px; } .tools { gap: 0; } .icon-btn { width: 38px; } .brand { gap: 8px; font-size: 1.25rem; } .brand svg { width: 28px; height: 28px; } .tools .btn-sm { padding: 0 12px; } .search-link { display: none; } }
+
+/* ---------- The night-city hero: one drawing, recoloured by the theme ---------- */
+.hero { position: relative; overflow: hidden; background: var(--sky-1); }
+.scene { width: 100%; height: clamp(400px, 41.7vw, 640px); }
+.lockup { position: absolute; inset: clamp(22px, 3.4vw, 52px) 0 auto; margin: 0; display: grid; justify-items: center; text-align: center; color: oklch(100% 0 0); line-height: 1; text-shadow: 0 2px 18px oklch(20% 0.15 300 / 0.6); pointer-events: none; }
+.lockup .script { font-size: clamp(1.75rem, 1rem + 2.8vw, 3.5rem); transform: rotate(-4deg); margin-bottom: -0.1em; }
+.lockup .word { font-size: clamp(3.25rem, 1.6rem + 6.4vw, 7rem); font-weight: 900; letter-spacing: -0.045em; line-height: 0.92; }
+.lockup .tag { margin-top: 0.7em; padding-left: 0.3em; font-size: clamp(0.75rem, 0.62rem + 0.45vw, 1.0625rem); font-weight: 800; letter-spacing: 0.3em; text-transform: uppercase; }
+.scene .s1 { stop-color: var(--sky-1); } .scene .s2 { stop-color: var(--sky-2); } .scene .s3 { stop-color: var(--sky-3); }
+.scene .stars { opacity: var(--stars); } .scene .moon { fill: var(--moon); }
+.scene .far { fill: var(--far); } .scene .mid { fill: var(--mid); } .scene .cinema { fill: var(--cinema); } .scene .street, .scene .tree { fill: var(--street); }
+.scene .w0 { fill: var(--win-0); } .scene .w1 { fill: var(--win-1); } .scene .w2 { fill: var(--win-2); } .scene .w3 { fill: var(--win-3); animation: blink 7s steps(1) infinite; }
+.scene .deco { fill: none; stroke: var(--neon); stroke-width: 3; opacity: 0.45; }
+.scene .sign { fill: var(--cinema); stroke: var(--neon); stroke-width: 5; }
+.scene .blade { fill: var(--win-3); font: 900 21px var(--font); }
+.scene .bulbs { fill: var(--mid); stroke: var(--gold); stroke-width: 6; stroke-dasharray: 0 14; stroke-linecap: round; animation: chase 1.4s linear infinite; }
+.scene .board { fill: oklch(97% 0.02 80); }
+.scene .board-text { fill: oklch(25% 0.13 300); font: 800 18px var(--font); letter-spacing: 2px; }
+.scene .canopy { fill: var(--neon); }
+.scene .post { stroke: var(--street); stroke-width: 7; }
+.scene .globe { fill: oklch(96% 0.04 340); }
+.scene .beam { transform-box: view-box; animation: sway 10s var(--ease) infinite alternate; }
+.scene .beam-a { transform-origin: 640px 560px; }
+.scene .beam-b { transform-origin: 800px 560px; animation-delay: -5s; }
+@keyframes sway { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
+@keyframes chase { to { stroke-dashoffset: -14; } }
+@keyframes blink { 50% { fill: var(--win-0); } }
+
+.intro { padding-block: clamp(36px, 5vw, 64px) 0; display: grid; gap: 16px; justify-items: center; text-align: center; }
+.intro h2 { max-width: 20ch; font-size: clamp(2rem, 1.3rem + 2.4vw, 3.25rem); }
+.intro .sub { max-width: 62ch; }
+
+/* ---------- Screen frames: a TV-style interface inside a glowing panel ---------- */
+.frame { border-radius: var(--r-panel); padding: clamp(14px, 4vw, 56px); background: radial-gradient(70% 60% at 50% 0%, var(--glow), transparent 70%), var(--frame); }
+.tv, .guide, .picker, .screen { background: var(--tv); color: oklch(100% 0 0); box-shadow: 0 0 0 8px oklch(8% 0.04 300), 0 34px 90px oklch(8% 0.1 300 / 0.55); }
+.tv { display: grid; grid-template-columns: 64px minmax(0, 1fr) minmax(0, 0.62fr); grid-template-rows: auto 1fr; border-radius: 22px; overflow: hidden; }
+.tv-top { grid-column: 1 / -1; position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; padding: 20px 28px 28px; background: linear-gradient(oklch(30% 0.16 298), oklch(50% 0.21 335) 55%, oklch(70% 0.16 45)); }
+.tv-sky { position: absolute; inset: auto 0 0; width: 100%; height: 52%; fill: oklch(13% 0.07 300); }
+.tv-top > :not(.tv-sky) { position: relative; }
+.tv-brand { font-weight: 900; font-size: 1.375rem; letter-spacing: -0.03em; }
+.tv-brand span { font-weight: 500; letter-spacing: 0; }
+.tv-clock { font-weight: 600; font-variant-numeric: tabular-nums; }
+.tv-rail { display: grid; align-content: start; justify-items: center; gap: 20px; padding: 24px 0; color: oklch(78% 0.06 300); }
+.tv-body { display: grid; align-content: start; gap: 12px; padding: 18px 18px 24px 4px; }
+.tv-label { font-size: 0.875rem; font-weight: 600; color: oklch(86% 0.04 300); }
+.tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.tile { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: var(--r-media); overflow: hidden; background: var(--tv-2); color: oklch(100% 0 0); text-decoration: none; transition: transform var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease); }
+.tile img { width: 100%; height: 100%; object-fit: cover; }
+.tile span { position: absolute; inset: auto 0 0; padding: 22px 10px 8px; font-weight: 800; font-size: 0.9375rem; line-height: 1.15; background: linear-gradient(transparent, oklch(10% 0.05 300 / 0.88)); }
+.tile.is-focus, .tile:focus-visible { outline: 0; z-index: 1; transform: scale(1.04); box-shadow: 0 0 0 3px var(--tv), 0 0 0 6px oklch(100% 0 0); }
+.tv-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.tv-chips a { padding: 8px 14px; border-radius: var(--r-control); background: var(--tv-2); font-weight: 700; font-size: 0.875rem; text-decoration: none; }
+.tv-chips a:hover { background: var(--tv-line); }
+.tv-feature { position: relative; display: grid; align-content: end; min-height: 320px; margin: 18px 18px 24px 0; border-radius: var(--r-media); overflow: hidden; background: var(--tv-2); }
+.tv-feature img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tv-feature::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 25%, oklch(10% 0.06 300 / 0.94)); }
+.tv-feature > div { position: relative; z-index: 1; display: grid; justify-items: start; gap: 6px; padding: 20px; }
+.tv-kicker { font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+.tv-feature h3 { font-size: 1.625rem; }
+.tv-meta { font-size: 0.875rem; color: oklch(86% 0.04 300); margin-bottom: 8px; }
+@media (max-width: 900px) {
+  .tv { grid-template-columns: minmax(0, 1fr); }
+  .tv-rail { display: none; }
+  .tv-top { padding: 16px 18px 24px; }
+  .tv-body { padding: 16px; }
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tv-feature { min-height: 260px; margin: 0 16px 16px; }
+}
+
+/* ---------- Horizon band, the deck and the tile wall ---------- */
+.band { position: relative; height: clamp(160px, 18vw, 260px); background: linear-gradient(var(--bg), var(--band-1) 30%, var(--band-2) 58%, var(--band-3) 75%, var(--band-1) 75.3%, var(--bg)); }
+.band svg { position: absolute; left: 0; bottom: 25%; width: 100%; height: 30%; fill: var(--far); }
+.band .flip { bottom: auto; top: 75%; height: 18%; transform: scaleY(-1); opacity: 0.35; }
+.deck { display: grid; gap: 24px; }
+.js .deck { gap: 0; padding-top: 66px; }
+.deck-card { border-radius: 22px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-card); }
+.js .deck-card { grid-area: 1 / 1; transform-origin: 50% 0; transform: translateY(calc(var(--d, 0) * -22px)) scale(calc(1 - var(--d, 0) * 0.05)); z-index: calc(10 - var(--d, 0)); transition: transform var(--dur-slow) var(--ease), filter var(--dur-slow) var(--ease); }
+.js .deck-card:not([data-d="0"]) { filter: brightness(0.62); }
+.js .deck-card[data-d="0"] { animation: deal var(--dur-slow) var(--ease); }
+@keyframes deal { from { transform: translateY(18px); } }
+.strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.strip img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; }
+.deck-foot { display: flex; align-items: center; gap: 20px; padding: 20px 24px; }
+.deck-foot p { color: var(--text-muted); font-size: 0.9375rem; margin-top: 4px; }
+.deck-foot .btn { margin-left: auto; }
+.badge { flex: none; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 14px; background: var(--c); color: oklch(100% 0 0); }
+.deck-nav { display: none; align-items: center; justify-content: center; gap: 12px; margin-top: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.js .deck-nav { display: flex; }
+.deck-nav button { border: 1.5px solid var(--border-strong); border-radius: 50%; background: none; width: 44px; height: 44px; display: grid; place-items: center; }
+.deck-nav button:hover { background: var(--hover); }
+@media (max-width: 700px) {
+  .strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .strip img:nth-child(n + 4) { display: none; }
+  .deck-foot { flex-wrap: wrap; padding: 18px; }
+  .deck-foot > div { flex: 1 1 200px; }
+  .deck-foot .btn { margin-left: 0; width: 100%; }
+}
+.wall { display: none; position: relative; height: clamp(240px, 30vw, 400px); border-radius: var(--r-panel); overflow: hidden; background: var(--frame); margin-block: 8px 28px; }
+.js .wall { display: block; }
+.wall-in { position: absolute; left: 50%; top: 50%; width: 150%; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(10px, 1.4vw, 18px); transform: translate(-50%, -50%) rotate(-12deg); animation: drift 40s linear infinite alternate; }
+.wall-in span { aspect-ratio: 16 / 10; display: grid; place-items: center; padding: 10px; border-radius: clamp(12px, 1.6vw, 20px); background: var(--c); color: var(--ct, oklch(100% 0 0)); text-align: center; font-weight: 800; font-size: clamp(0.75rem, 0.5rem + 0.9vw, 1.375rem); line-height: 1.1; }
+@keyframes drift { to { transform: translate(-46%, -50%) rotate(-12deg); } }
+
+/* ---------- Cards, FAQ, closing line, footer ---------- */
+.cards3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.card { display: grid; align-content: start; justify-items: start; gap: 14px; padding: 28px; border-radius: var(--r-card); background: var(--surface); }
+.card p { color: var(--text-muted); }
+.card-ic { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--accent); color: var(--accent-text); }
+.card .btn { margin-top: 6px; }
+@media (max-width: 860px) { .cards3 { grid-template-columns: 1fr; } }
+.faq { max-width: 880px; margin-inline: auto; }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 8px; font-weight: 800; font-size: 1.0625rem; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ""; flex: none; width: 10px; height: 10px; margin: -4px 6px 0 0; border: solid currentColor; border-width: 0 2px 2px 0; transform: rotate(45deg); transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary::after { transform: translateY(5px) rotate(225deg); }
+.faq details p { padding: 0 8px 20px; max-width: 70ch; color: var(--text-muted); }
+.faq h2 { font-size: 1.25rem; margin: 32px 8px 4px; }
+.closing { padding-block: clamp(24px, 4vw, 48px) clamp(48px, 7vw, 96px); text-align: center; background: linear-gradient(var(--bg), var(--frame)); }
+.closing h2 { display: grid; justify-items: center; }
+.closing .script { font-size: clamp(1.5rem, 1rem + 2vw, 2.75rem); color: var(--accent-ink); transform: rotate(-4deg); }
+.closing .word { font-size: clamp(2.75rem, 1.6rem + 4.5vw, 5.5rem); font-weight: 900; letter-spacing: -0.04em; }
+.foot { background: var(--bg-2); border-top: 1px solid var(--border); }
+.foot-news { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 40px; padding-block: 32px 12px; border-bottom: 1px solid var(--border); }
+.foot-news .form { flex: 1 1 360px; max-width: 520px; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 0 10px; }
+.foot-news .success { flex: 1 1 360px; max-width: 520px; margin-bottom: 20px; }
+.foot-cols { display: grid; grid-template-columns: 1.4fr repeat(3, minmax(0, 1fr)); gap: 32px; padding-block: 40px; }
+.foot h2 { font-size: 0.8125rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+.foot h3 { font-size: 1.25rem; }
+.foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.foot a { text-decoration: none; }
+.foot a:hover { text-decoration: underline; }
+.foot-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 20px 32px; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--text-muted); }
+@media (max-width: 860px) { .foot-cols { grid-template-columns: 1fr 1fr; } .foot-cols > :first-child { grid-column: 1 / -1; } }
+
+/* ---------- Page heads, programme, guide ---------- */
+.page-head { padding-block: clamp(40px, 6vw, 80px) clamp(24px, 4vw, 40px); display: grid; gap: 14px; justify-items: center; text-align: center; }
+.page-head > p:last-child { max-width: 62ch; color: var(--text-muted); font-size: clamp(1rem, 0.95rem + 0.3vw, 1.1875rem); }
+.guide-wrap { display: none; }
+.js .guide-wrap { display: block; }
+.guide { border-radius: 22px; overflow: hidden; }
+.days { display: flex; flex-wrap: wrap; gap: 6px; }
+.day { display: grid; justify-items: center; min-width: 58px; padding: 7px 10px; border: 0; border-radius: var(--r-control); background: oklch(100% 0 0 / 0.14); color: oklch(100% 0 0); font-weight: 800; font-size: 0.875rem; line-height: 1.2; }
+.day small { font-weight: 500; font-size: 0.75rem; opacity: 0.85; }
+.day:hover { background: oklch(100% 0 0 / 0.24); }
+.day[aria-selected="true"] { background: oklch(100% 0 0); color: oklch(22% 0.12 300); }
+.gscroll { position: relative; overflow-x: auto; scrollbar-width: thin; }
+.ggrid { position: relative; display: grid; grid-template-columns: 124px minmax(0, 1fr); min-width: 980px; }
+.ruler { position: relative; height: 34px; border-bottom: 1px solid var(--tv-line); }
+.ruler span { position: absolute; top: 9px; transform: translateX(-50%); font-size: 0.75rem; font-weight: 700; color: oklch(80% 0.05 300); }
+.glabel { display: grid; align-content: center; padding: 0 16px; border-bottom: 1px solid var(--tv-line); background: oklch(16% 0.07 300); font-weight: 800; font-size: 0.9375rem; line-height: 1.2; }
+.glabel small { font-weight: 500; color: oklch(78% 0.05 300); }
+.track { position: relative; height: 84px; border-bottom: 1px solid var(--tv-line); background: linear-gradient(to right, var(--tv-line) 1px, transparent 1px) 0 0 / calc(100% / 13.5) 100%; }
+.blk { position: absolute; top: 8px; bottom: 8px; display: grid; align-content: start; gap: 2px; padding: 8px 10px; border-radius: 8px; border-left: 4px solid var(--c, oklch(66% 0.2 300)); background: var(--tv-2); color: oklch(100% 0 0); text-decoration: none; overflow: hidden; }
+.blk b { font-size: 0.875rem; line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.blk small { font-size: 0.75rem; opacity: 0.8; font-variant-numeric: tabular-nums; }
+.blk:hover { background: var(--tv-line); }
+.blk:focus-visible { outline: 3px solid oklch(100% 0 0); outline-offset: 2px; }
+.blk.past { opacity: 0.6; }
+.now { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--neon); pointer-events: none; z-index: 2; }
+.now::before { content: ""; position: absolute; top: 28px; left: -5px; width: 12px; height: 12px; border-radius: 50%; background: var(--neon); }
+.filters { display: none; flex-wrap: wrap; align-items: center; gap: 10px; margin: clamp(32px, 5vw, 56px) 0 12px; }
+.js .filters { display: flex; }
+.search { position: relative; margin-left: auto; flex: 0 1 300px; }
+.search input { width: 100%; height: 44px; padding: 0 16px 0 42px; border: 1.5px solid var(--border-strong); border-radius: var(--r-pill); background: var(--field-bg); }
+.search .ic { position: absolute; left: 14px; top: 11px; width: 20px; height: 20px; color: var(--text-muted); }
+@media (max-width: 700px) { .search { flex: 1 1 100%; margin-left: 0; } }
+.count { margin-bottom: 20px; font-size: 0.9375rem; color: var(--text-muted); }
+.films { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 20px; }
+.film { display: grid; align-content: start; gap: 8px; }
+.film-art { display: block; aspect-ratio: 2 / 3; margin-bottom: 4px; border-radius: var(--r-media); overflow: hidden; background: var(--surface-2); transition: transform var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease); }
+.film-art:hover, .film-art:focus-visible { outline: 0; transform: translateY(-4px); box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px var(--text); }
+.film-art img { width: 100%; height: 100%; object-fit: cover; }
+.film h2 { font-size: 1.25rem; }
+.film h2 a { text-decoration: none; }
+.film-meta { font-size: 0.875rem; color: var(--text-muted); }
+.times { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.875rem; }
+.time { padding: 4px 10px; border-radius: var(--r-control); background: var(--surface-2); font-weight: 700; text-decoration: none; font-variant-numeric: tabular-nums; }
+a.time:hover { background: var(--accent); color: var(--accent-text); }
+@media (max-width: 900px) { .films { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .films { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; } }
+.empty { padding: 40px 0; text-align: center; display: grid; gap: 12px; justify-items: center; }
+
+/* ---------- Film page, booking, trailer ---------- */
+.fhero { position: relative; overflow: hidden; isolation: isolate; }
+.fhero-bg { position: absolute; z-index: -2; inset: -60px; width: calc(100% + 120px); max-width: none; height: calc(100% + 120px); object-fit: cover; filter: blur(40px) saturate(1.3); opacity: 0.55; }
+:root[data-theme="light"] .fhero-bg { opacity: 0.3; }
+.fhero::after { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(transparent 40%, var(--bg)); }
+.fhero-in { display: grid; grid-template-columns: minmax(0, 280px) minmax(0, 1fr); align-items: end; gap: clamp(24px, 4vw, 56px); padding-block: clamp(32px, 6vw, 80px); }
+.fhero-in > div { display: grid; justify-items: start; gap: 14px; }
+.poster { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: var(--r-card); box-shadow: var(--shadow-overlay); }
+.facts { display: flex; flex-wrap: wrap; gap: 4px 14px; font-weight: 700; color: var(--text-muted); }
+.blurb { max-width: 60ch; font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); }
+.credits { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0; }
+.credits dt { font-weight: 700; color: var(--text-muted); }
+.credits dd { margin: 0; }
+@media (max-width: 760px) { .fhero-in { grid-template-columns: 1fr; } .poster { width: min(200px, 55%); } }
+.book { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; margin-top: 24px; }
+.picker { display: grid; gap: 16px; padding: 22px; border-radius: 22px; }
+.picker h3 { font-size: 0.875rem; font-weight: 700; color: oklch(86% 0.04 300); }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt { padding: 10px 14px; border: 0; border-radius: var(--r-control); background: var(--tv-2); color: oklch(100% 0 0); font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; transition: box-shadow var(--dur-fast) var(--ease); }
+.opt:hover:not(:disabled) { background: var(--tv-line); }
+.opt[aria-pressed="true"] { background: var(--tv-line); box-shadow: 0 0 0 3px var(--tv), 0 0 0 6px oklch(100% 0 0); }
+.opt:disabled { opacity: 0.38; cursor: not-allowed; }
+.picked { font-size: 0.9375rem; color: oklch(86% 0.04 300); }
+.tickets { border-top: 1px solid var(--border); margin-bottom: 8px; }
+.tk { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.tk small { display: block; color: var(--text-muted); font-size: 0.875rem; }
+.step { display: flex; align-items: center; gap: 6px; }
+.step button { display: grid; place-items: center; width: 36px; height: 36px; border: 1.5px solid var(--border-strong); border-radius: 50%; background: none; }
+.step button:hover { background: var(--hover); }
+.step output { min-width: 2ch; text-align: center; font-weight: 800; font-variant-numeric: tabular-nums; }
+.total { display: flex; justify-content: space-between; padding: 8px 0 18px; font-weight: 800; font-size: 1.25rem; }
+.inline-err { min-height: 1.4em; margin-top: -4px; font-size: 0.8125rem; font-weight: 600; color: var(--danger); }
+@media (max-width: 860px) { .book { grid-template-columns: 1fr; } }
+dialog { width: min(960px, 92vw); max-width: none; padding: 0; border: 0; background: none; color: oklch(100% 0 0); overflow: visible; }
+dialog::backdrop { background: oklch(8% 0.05 300 / 0.82); }
+.screen { position: relative; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; }
+.screen img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+.play { position: absolute; inset: 0; margin: auto; display: grid; place-items: center; width: 84px; height: 84px; border: 0; border-radius: 50%; background: oklch(100% 0 0); color: oklch(22% 0.12 300); }
+.play .ic { width: 34px; height: 34px; }
+.scrub { position: absolute; inset: auto 18px 16px; display: flex; align-items: center; gap: 12px; font-size: 0.875rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.scrub i { position: relative; flex: 1; height: 4px; border-radius: 2px; background: oklch(100% 0 0 / 0.3); }
+.scrub i::after { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--p, 0%); border-radius: 2px; background: var(--neon); }
+.dclose { position: absolute; top: -52px; right: -6px; color: oklch(100% 0 0); }
+
+/* ---------- Plans, forms, member card ---------- */
+.bill { display: inline-flex; gap: 4px; padding: 4px; border-radius: var(--r-pill); background: var(--surface-2); }
+.bill button { padding: 8px 18px; border: 0; border-radius: var(--r-pill); background: none; font-weight: 700; }
+.bill button[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); }
+.plans { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.plan { display: grid; align-content: start; gap: 16px; padding: 28px; border: 1.5px solid var(--border); border-radius: var(--r-card); background: var(--surface); }
+.plan.pick { border-color: var(--accent-ink); background: linear-gradient(160deg, color-mix(in oklch, var(--accent) 26%, var(--surface)), var(--surface) 62%); }
+.price b { font-size: 2.75rem; font-weight: 900; letter-spacing: -0.03em; }
+.price small { font-weight: 600; color: var(--text-muted); }
+.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.ticks li { display: flex; gap: 12px; }
+.ticks li::before { content: ""; flex: none; width: 6px; height: 12px; margin: 4px 4px 0 6px; border: solid var(--accent-ink); border-width: 0 2.5px 2.5px 0; transform: rotate(45deg); }
+.plan .h3 { font-size: 1.5rem; }
+.plan .btn { margin-top: auto; }
+.perks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.perks li { display: grid; gap: 8px; padding: 22px; border-radius: var(--r-card); background: var(--surface); }
+.perks p { color: var(--text-muted); font-size: 0.9375rem; }
+@media (max-width: 900px) { .plans, .perks { grid-template-columns: 1fr; } }
+.split { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+.panel { padding: clamp(20px, 3vw, 36px); border-radius: var(--r-card); background: var(--surface); }
+.form { display: grid; gap: 4px; }
+.field { position: relative; display: grid; gap: 6px; padding-bottom: 22px; }
+.field > label, .label { font-weight: 700; font-size: 0.9375rem; }
+.field input:not([type="checkbox"]):not([type="radio"]), .field select, .field textarea { width: 100%; min-height: 48px; padding: 10px 14px; border: 1.5px solid var(--border-strong); border-radius: 8px; background: var(--field-bg); }
+.field textarea { min-height: 130px; resize: vertical; }
+.field :focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 1px; }
+.field [aria-invalid="true"] { border-color: var(--danger); }
+.err { position: absolute; left: 0; bottom: 2px; font-size: 0.8125rem; font-weight: 600; line-height: 1.2; color: var(--danger); }
+.row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
+@media (max-width: 600px) { .row2 { grid-template-columns: 1fr; } }
+.field > .check { display: flex; align-items: flex-start; gap: 10px; font-weight: 500; font-size: 0.9375rem; }
+.check input { flex: none; width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--accent); }
+.pass { position: relative; }
+.pass button { position: absolute; right: 6px; top: 6px; height: 36px; padding: 0 12px; border: 0; border-radius: var(--r-control); background: var(--surface-2); font-weight: 700; font-size: 0.875rem; }
+fieldset.field { margin: 0; border: 0; padding: 0 0 22px; min-width: 0; }
+fieldset legend { padding: 0; margin-bottom: 6px; }
+.radios { display: grid; gap: 8px; }
+.radio { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1.5px solid var(--border-strong); border-radius: 10px; cursor: pointer; }
+.radio:has(:checked) { border-color: var(--accent-ink); background: var(--hover); }
+.radio input { width: 18px; height: 18px; margin: 0; accent-color: var(--accent); }
+.radio span { flex: 1; font-weight: 700; }
+.radio small { color: var(--text-muted); font-weight: 600; }
+.success { display: grid; gap: 10px; justify-items: start; padding: 28px; border: 1.5px solid var(--ok); border-radius: var(--r-card); background: var(--surface); }
+.success > .ic { width: 40px; height: 40px; color: var(--ok); }
+.mcard { position: relative; display: grid; align-content: space-between; aspect-ratio: 1.6; padding: clamp(18px, 3vw, 26px); border-radius: 20px; overflow: hidden; color: oklch(100% 0 0); background: linear-gradient(150deg, oklch(30% 0.17 298), oklch(48% 0.22 330) 62%, oklch(72% 0.16 45)); box-shadow: var(--shadow-overlay); }
+.mcard .sky { position: absolute; inset: auto 0 0; width: 100%; height: 34%; fill: oklch(15% 0.08 300); }
+.mcard > :not(.sky) { position: relative; }
+.mcard .script { font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); line-height: 1; }
+.mcard b { display: block; font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); font-weight: 900; letter-spacing: -0.02em; }
+.mcard small { font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; font-size: 0.75rem; }
+.stack { display: grid; gap: 18px; align-content: start; }
+
+/* ---------- Journal, article, visit, legal ---------- */
+.posts { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 20px; }
+.post { display: grid; align-content: start; gap: 10px; }
+.post .art { display: block; aspect-ratio: 16 / 9; border-radius: var(--r-media); overflow: hidden; }
+.post .art img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease); }
+.post .art:hover img { transform: scale(1.04); }
+.post h2 { font-size: 1.375rem; }
+.post h2 a { text-decoration: none; }
+.post h2 a:hover { text-decoration: underline; }
+.post p { color: var(--text-muted); }
+.post.big { grid-column: 1 / -1; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: center; gap: 16px 36px; }
+.post.big > :not(.art) { grid-column: 2; }
+.post.big .art { grid-row: 1 / span 4; }
+.post.big h2 { font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem); }
+.meta { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); }
+@media (max-width: 860px) { .posts { grid-template-columns: 1fr 1fr; } .post.big { grid-template-columns: 1fr; } .post.big > :not(.art) { grid-column: auto; } .post.big .art { grid-row: auto; } }
+@media (max-width: 600px) { .posts { grid-template-columns: 1fr; } }
+.article { max-width: 740px; margin-inline: auto; display: grid; gap: 18px; padding-block: clamp(32px, 5vw, 64px); }
+.article .art { aspect-ratio: 16 / 9; border-radius: var(--r-card); overflow: hidden; margin-block: 8px; }
+.article .art img { width: 100%; height: 100%; object-fit: cover; }
+.prose { display: grid; gap: 18px; font-size: 1.125rem; line-height: 1.7; }
+.prose blockquote { margin: 8px 0; padding: 6px 0 6px 24px; border-left: 4px solid var(--neon); font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem); font-weight: 800; line-height: 1.3; }
+.back { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; text-decoration: none; color: var(--accent-ink); }
+.status { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: var(--r-pill); background: var(--surface-2); font-weight: 700; font-size: 0.9375rem; }
+.status::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--ok); }
+.status.closed::before { background: var(--danger); }
+.hours { display: grid; grid-template-columns: auto 1fr; gap: 8px 24px; margin: 0; }
+.hours dt { font-weight: 700; }
+.hours dd { margin: 0; font-variant-numeric: tabular-nums; }
+.screens { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.screens li { display: grid; gap: 4px; padding: 22px; border-radius: var(--r-card); background: var(--surface); }
+.screens b { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
+@media (max-width: 760px) { .screens { grid-template-columns: 1fr; } }
+.legal { max-width: 760px; margin-inline: auto; display: grid; gap: 14px; padding-bottom: clamp(48px, 7vw, 96px); }
+.legal h2 { font-size: 1.375rem; margin-top: 18px; }
+.legal p, .legal li { color: var(--text-muted); }
+
+/* ---------- Views and motion ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.js [data-view].is-active { animation: fade var(--dur-slow) var(--ease) backwards; }
+@keyframes fade { from { opacity: 0; transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#5b1fb0"/><path d="M21 6.5A10 10 0 1 0 26.6 22A8 8 0 1 1 21 6.5Z" fill="#ffd36b"/><path d="M10 7l1.3 3 3 1.3-3 1.3-1.3 3-1.3-3-3-1.3 3-1.3Z" fill="#fff"/></symbol>
+  <symbol id="skyline" viewBox="0 0 1440 200"><path d="M0 200V87h26V146h40V119h61V50h14l4-14l4 14h14V200H163V118h62V100h8v-14h8v-16h32v16h8v14h8V200H289V144h65V105h44V159h60V80h12l8-62l8 62h12V200H498V96h70V121h32V106h70V115h57V88h70V104a35 30 0 0 1 70 0V200H867V136h66V139h33V139h47V60h21v-40h4v40h21V200H1059V90h61V141h29V121h53V148h46V159h70V135h44V86h58V150h20V200Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4Z"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4Z"/><path d="M14 8v8" stroke-dasharray="2 2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 4 2.4 5 5.4.6-4 3.7 1.1 5.3L12 16l-4.9 2.6 1.1-5.3-4-3.7 5.4-.6Z"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 4v16M16 4v16M4 9h4M4 15h4M16 9h4M16 15h4"/></symbol>
+  <symbol id="i-glass" viewBox="0 0 24 24"><path d="M5 5h14l-7 8ZM12 13v6M8 20h8"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke-width="3"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 5a3 3 0 0 1 0 6M21 20a6 6 0 0 0-4-5.6"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="bar wrap">
+    <a class="brand" href="#/" aria-label="Nightjar, home"><svg aria-hidden="true"><use href="#mark"/></svg>Nightjar</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/programme">What's on</a>
+      <a href="#/membership">Membership</a>
+      <a href="#/journal">Journal</a>
+      <a href="#/visit">Visit</a>
+      <a href="#/hire">Private hire</a>
+    </nav>
+    <div class="tools">
+      <a class="icon-btn search-link" href="#/programme?focus=search" aria-label="Search the programme"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg></a>
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to light colors"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+      <a class="btn btn-fill btn-sm" href="#/join">Join</a>
+      <button class="icon-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+  <nav class="menu" id="menu" aria-label="Menu" hidden>
+    <a href="#/programme">What's on</a>
+    <a href="#/membership">Membership</a>
+    <a href="#/journal">Journal</a>
+    <a href="#/visit">Visit</a>
+    <a href="#/hire">Private hire</a>
+    <a href="#/faq">Help and FAQ</a>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ===================== HOME ===================== -->
+<section data-view="home" aria-labelledby="h-home">
+  <div class="hero">
+    <svg class="scene" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="s1"/><stop offset=".55" class="s2"/><stop offset=".82" class="s3"/></linearGradient>
+        <linearGradient id="g-beam" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffe7a8" stop-opacity=".75"/><stop offset="1" stop-color="#ffe7a8" stop-opacity="0"/></linearGradient>
+        <radialGradient id="g-halo"><stop offset="0" stop-color="#fff1d0" stop-opacity=".55"/><stop offset="1" stop-color="#fff1d0" stop-opacity="0"/></radialGradient>
+        <radialGradient id="g-pool"><stop offset="0" stop-color="#ff5fb0" stop-opacity=".6"/><stop offset="1" stop-color="#ff5fb0" stop-opacity="0"/></radialGradient>
+        <linearGradient id="g-door" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd36b"/><stop offset="1" stop-color="#ff6f91"/></linearGradient>
+        <pattern id="p-stars" width="180" height="120" patternUnits="userSpaceOnUse"><g fill="#fff"><circle cx="12" cy="18" r="1.4"/><circle cx="70" cy="60" r="1"/><circle cx="130" cy="14" r="1.6"/><circle cx="160" cy="88" r="1"/><circle cx="40" cy="100" r="1.2"/></g></pattern>
+        <pattern id="p-win" width="132" height="70" patternUnits="userSpaceOnUse"><g class="w0"><rect x="12" y="14" width="11" height="15" rx="2"/><rect x="56" y="14" width="11" height="15" rx="2"/><rect x="100" y="48" width="11" height="15" rx="2"/><rect x="34" y="48" width="11" height="15" rx="2"/></g><rect x="34" y="14" width="11" height="15" rx="2" class="w1"/><rect x="100" y="14" width="11" height="15" rx="2" class="w2"/><rect x="12" y="48" width="11" height="15" rx="2" class="w3"/><rect x="78" y="48" width="11" height="15" rx="2" class="w1"/></pattern>
+        <path id="mid-l" d="M0 560V414h52v-26h14v26h16V418h83V410h95V459h85V432h97V465h70v-26h14v26h16V412h28V560Z"/>
+        <path id="mid-r" d="M870 560V412h48v-26h14v26h16V459h32l21-24 21 24h33V391h174V438h40v-26h14v26h16V435h26l17-24 17 24h25V460h56V560Z"/>
+      </defs>
+      <rect width="1440" height="600" fill="url(#g-sky)"/>
+      <rect width="1440" height="380" fill="url(#p-stars)" class="stars"/>
+      <circle cx="1160" cy="120" r="120" fill="url(#g-halo)"/>
+      <circle cx="1160" cy="120" r="32" class="moon"/>
+      <use href="#skyline" y="290" width="1440" height="200" class="far"/>
+      <path class="beam beam-a" d="M636 560L1010 0H1120Z" fill="url(#g-beam)"/>
+      <path class="beam beam-b" d="M804 560L430 0H320Z" fill="url(#g-beam)"/>
+      <use href="#mid-l" class="mid"/><use href="#mid-l" fill="url(#p-win)"/>
+      <use href="#mid-r" class="mid"/><use href="#mid-r" fill="url(#p-win)"/>
+      <path class="cinema" d="M566 560V420h36v-24h40v-20h156v20h40v24h36V560Z"/>
+      <path class="deco" d="M602 420v140M838 420v140M642 396v60M798 396v60"/>
+      <rect class="sign" x="692" y="270" width="56" height="190" rx="28"/>
+      <text class="blade" x="720" y="304" text-anchor="middle"><tspan x="720">P</tspan><tspan x="720" dy="20">I</tspan><tspan x="720" dy="20">C</tspan><tspan x="720" dy="20">T</tspan><tspan x="720" dy="20">U</tspan><tspan x="720" dy="20">R</tspan><tspan x="720" dy="20">E</tspan><tspan x="720" dy="20">S</tspan></text>
+      <rect class="bulbs" x="584" y="456" width="272" height="56" rx="9"/>
+      <rect class="board" x="597" y="466" width="246" height="36" rx="4"/>
+      <text class="board-text" x="720" y="491" text-anchor="middle">LATE SHOW TONIGHT</text>
+      <path class="canopy" d="M560 512h320l-14 12H574Z"/>
+      <rect x="656" y="528" width="128" height="32" rx="3" fill="url(#g-door)"/>
+      <ellipse cx="720" cy="566" rx="360" ry="46" fill="url(#g-pool)"/>
+      <rect class="street" y="560" width="1440" height="40"/>
+      <circle cx="150" cy="430" r="72" fill="url(#g-halo)"/>
+      <circle cx="1290" cy="430" r="72" fill="url(#g-halo)"/>
+      <path class="post" d="M150 560V436M1290 560V436"/>
+      <g class="globe"><circle cx="128" cy="440" r="14"/><circle cx="150" cy="424" r="14"/><circle cx="172" cy="440" r="14"/><circle cx="1268" cy="440" r="14"/><circle cx="1290" cy="424" r="14"/><circle cx="1312" cy="440" r="14"/></g>
+      <path class="tree" d="M1366 560c-6-34 4-50 0-66c-36-6-52-44-26-70c-4-36 36-54 62-36c26-26 80-8 76 26c34 18 26 70-8 76c-10 18-28 26-46 22c-6 18-4 34 0 48ZM44 560c4-28-2-40 0-52c-30-4-44-36-22-58c-2-30 30-44 52-30c22-20 66-6 62 22c28 14 22 58-6 62c-8 16-24 22-38 18c-4 14-2 26 2 38Z"/>
+    </svg>
+    <h1 class="lockup" id="h-home"><span class="script">Meet me at the</span> <span class="word">Nightjar</span> <span class="tag">Picture house · Harbour Row</span></h1>
+  </div>
+
+  <div class="intro wrap">
+    <h2>Two screens, one bar and a film for every kind of night</h2>
+    <p class="sub">New releases, restored classics and late shows in a 1930s picture house by the water. Book a seat in a minute, or just turn up: the bar is open to everyone.</p>
+    <div class="actions center"><a class="btn btn-fill" href="#/programme">See what's on</a><a class="btn btn-line" href="#/membership">Become a member</a></div>
+  </div>
+
+  <section class="sec wrap" aria-labelledby="h-tonight">
+    <div class="sec-head">
+      <h2 id="h-tonight">Tonight, at a glance</h2>
+      <p class="sub">Every film on both screens with its next start time. Hover, tap or use the arrow keys to look around, then book from the film's page.</p>
+    </div>
+    <div class="frame">
+      <div class="tv" data-tv>
+        <div class="tv-top">
+          <svg class="tv-sky" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true"><use href="#skyline"/></svg>
+          <p class="tv-brand">Nightjar <span>· Tonight</span></p>
+          <p class="tv-clock" data-clock>19:30</p>
+        </div>
+        <div class="tv-rail" aria-hidden="true">
+          <svg class="ic"><use href="#i-home"/></svg><svg class="ic"><use href="#i-ticket"/></svg><svg class="ic"><use href="#i-cal"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-glass"/></svg>
+        </div>
+        <div class="tv-body">
+          <p class="tv-label" id="tv-label">Showing on both screens</p>
+          <ul class="tiles" aria-labelledby="tv-label">
+            <li><a class="tile is-focus" href="#/film?id=harbourglass" data-id="harbourglass"><img src="images/harbourglass.svg" alt="" width="400" height="600"><span>Harbourglass</span></a></li>
+            <li><a class="tile" href="#/film?id=last-tram-home" data-id="last-tram-home" tabindex="-1"><img src="images/last-tram-home.svg" alt="" width="400" height="600"><span>The Last Tram Home</span></a></li>
+            <li><a class="tile" href="#/film?id=greenhouse-weather" data-id="greenhouse-weather" tabindex="-1"><img src="images/greenhouse-weather.svg" alt="" width="400" height="600"><span>Greenhouse Weather</span></a></li>
+            <li><a class="tile" href="#/film?id=ninth-floor-ballroom" data-id="ninth-floor-ballroom" tabindex="-1"><img src="images/ninth-floor-ballroom.svg" alt="" width="400" height="600"><span>Ninth Floor Ballroom</span></a></li>
+            <li><a class="tile" href="#/film?id=moon-in-a-teacup" data-id="moon-in-a-teacup" tabindex="-1"><img src="images/moon-in-a-teacup.svg" alt="" width="400" height="600"><span>Moon in a Teacup</span></a></li>
+            <li><a class="tile" href="#/film?id=moth-season" data-id="moth-season" tabindex="-1"><img src="images/moth-season.svg" alt="" width="400" height="600"><span>Moth Season</span></a></li>
+          </ul>
+          <p class="tv-label">Quick picks</p>
+          <div class="tv-chips"><a href="#/programme?tag=late">Late shows</a><a href="#/programme?tag=family">Family</a><a href="#/programme?tag=docs">Documentaries</a><a href="#/programme?tag=classic">Classics</a></div>
+        </div>
+        <div class="tv-feature" data-feature aria-live="polite">
+          <img src="images/harbourglass.svg" alt="" width="400" height="600">
+          <div>
+            <p class="tv-kicker" data-f-next>Daily at 13:00 and 18:00</p>
+            <h3 data-f-name>Harbourglass</h3>
+            <p class="tv-meta" data-f-meta>Drama · 1h 52m · 12A · Screen 1</p>
+            <a class="btn btn-white btn-sm" href="#/film?id=harbourglass" data-f-link>Book seats</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-seasons">
+    <div class="band" aria-hidden="true">
+      <svg viewBox="0 0 1440 200" preserveAspectRatio="none"><use href="#skyline"/></svg>
+      <svg class="flip" viewBox="0 0 1440 200" preserveAspectRatio="none"><use href="#skyline"/></svg>
+    </div>
+    <div class="wrap sec-head">
+      <h2 id="h-seasons">Seasons worth staying up for</h2>
+      <p class="sub">Every month we build a few short seasons around a mood, a maker or a time of day. Pick one and work through it with us.</p>
+    </div>
+    <div class="wrap">
+      <div class="deck" data-deck>
+        <article class="deck-card" style="--c: oklch(62% 0.22 352)">
+          <div class="strip" data-strip="moth-season last-tram-home greenhouse-weather ninth-floor-ballroom harbourglass"></div>
+          <div class="deck-foot"><span class="badge"><svg class="ic"><use href="#i-moon"/></svg></span><div><h3>Midnight Matinees</h3><p>Cult favourites and gentle horror at 22:40 every Friday and Saturday. Bring the friend who screams.</p></div><a class="btn btn-line" href="#/programme?tag=late">See the films</a></div>
+        </article>
+        <article class="deck-card" style="--c: oklch(58% 0.12 200)">
+          <div class="strip" data-strip="sixteen-bridges salt-and-static harbourglass greenhouse-weather moon-in-a-teacup"></div>
+          <div class="deck-foot"><span class="badge"><svg class="ic"><use href="#i-film"/></svg></span><div><h3>Harbour Docs</h3><p>New documentaries with the people who made them, and a Q&amp;A in the bar after most Saturday shows.</p></div><a class="btn btn-line" href="#/programme?tag=docs">See the films</a></div>
+        </article>
+        <article class="deck-card" style="--c: oklch(70% 0.15 70)">
+          <div class="strip" data-strip="moon-in-a-teacup ninth-floor-ballroom sixteen-bridges salt-and-static last-tram-home"></div>
+          <div class="deck-foot"><span class="badge"><svg class="ic"><use href="#i-star"/></svg></span><div><h3>Saturday Morning Pictures</h3><p>Films for small people at 11:00 on weekends. Every ticket is $5, grown-ups too, and the lights stay a little up.</p></div><a class="btn btn-line" href="#/programme?tag=family">See the films</a></div>
+        </article>
+        <article class="deck-card" style="--c: oklch(50% 0.22 300)">
+          <div class="strip" data-strip="ninth-floor-ballroom moth-season salt-and-static harbourglass sixteen-bridges"></div>
+          <div class="deck-foot"><span class="badge"><svg class="ic"><use href="#i-clock"/></svg></span><div><h3>Restored and Remembered</h3><p>Classics on new restorations, introduced by our programmers, in the big room with the balcony open.</p></div><a class="btn btn-line" href="#/programme?tag=classic">See the films</a></div>
+        </article>
+      </div>
+      <div class="deck-nav"><button type="button" data-deck-prev aria-label="Previous season"><svg class="ic"><use href="#i-prev"/></svg></button><span data-deck-count aria-live="polite">1 of 4</span><button type="button" data-deck-next aria-label="Next season"><svg class="ic"><use href="#i-next"/></svg></button></div>
+    </div>
+  </section>
+
+  <section class="sec wrap" aria-labelledby="h-simple">
+    <div class="sec-head">
+      <h2 id="h-simple">Membership, made simple</h2>
+      <p class="sub">Cheaper tickets on both screens, members' previews and a drink on us on your birthday. Pause or cancel any time from your account.</p>
+    </div>
+    <div class="wall" data-wall aria-hidden="true"></div>
+    <div class="actions center"><a class="btn btn-line" href="#/membership">See membership</a></div>
+  </section>
+
+  <section class="wrap" aria-labelledby="h-ready">
+    <div class="sec-head"><h2 id="h-ready">Ready for a night out?</h2></div>
+    <div class="cards3">
+      <div class="card"><span class="card-ic"><svg class="ic"><use href="#i-ticket"/></svg></span><h3>Book a seat</h3><p>Pick a film, a time and how many of you are coming. Tickets arrive by email and live on your phone.</p><a class="btn btn-line" href="#/programme">See what's on</a></div>
+      <div class="card"><span class="card-ic"><svg class="ic"><use href="#i-star"/></svg></span><h3>Join the regulars</h3><p>From $5 a month for students and under-26s. Members pay $7 a ticket, every film, every day.</p><a class="btn btn-line" href="#/membership">Compare plans</a></div>
+      <div class="card"><span class="card-ic"><svg class="ic"><use href="#i-users"/></svg></span><h3>Hire a screen</h3><p>Birthdays, film clubs, team nights and proposals. The small screen and the bar are yours from 10:00.</p><a class="btn btn-line" href="#/hire">Plan an event</a></div>
+    </div>
+  </section>
+
+  <section class="sec wrap" aria-labelledby="h-qs">
+    <div class="sec-head"><h2 id="h-qs">Questions?</h2></div>
+    <div class="faq" data-faq-home></div>
+    <div class="actions center" style="margin-top:28px"><a class="btn btn-line" href="#/faq">All questions</a></div>
+  </section>
+
+  <section class="closing" aria-label="Sign-off">
+    <h2><span class="script">See you at the</span> <span class="word">Nightjar.</span></h2>
+  </section>
+</section>
+
+<!-- ===================== WHAT'S ON ===================== -->
+<section data-view="programme" aria-labelledby="h-prog">
+  <header class="page-head wrap">
+    <p class="kick">Pick a night</p>
+    <h1 id="h-prog">What's on</h1>
+    <p>Seven days on two screens and in the bar. Choose a day in the guide, or browse every film below.</p>
+  </header>
+  <div class="wrap">
+    <div class="frame guide-wrap">
+      <div class="guide">
+        <div class="tv-top">
+          <svg class="tv-sky" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true"><use href="#skyline"/></svg>
+          <p class="tv-brand">Nightjar <span>· Guide</span></p>
+          <div class="days" role="tablist" aria-label="Day" data-days></div>
+        </div>
+        <div class="gscroll" role="tabpanel" aria-label="Schedule for the chosen day"><div class="ggrid" data-guide></div></div>
+      </div>
+    </div>
+    <div class="filters" role="group" aria-label="Filter films">
+      <button class="chip" type="button" data-tag="all" aria-pressed="true">All films</button>
+      <button class="chip" type="button" data-tag="new" aria-pressed="false">New</button>
+      <button class="chip" type="button" data-tag="late" aria-pressed="false">Late shows</button>
+      <button class="chip" type="button" data-tag="family" aria-pressed="false">Family</button>
+      <button class="chip" type="button" data-tag="docs" aria-pressed="false">Documentaries</button>
+      <button class="chip" type="button" data-tag="classic" aria-pressed="false">Classics</button>
+      <label class="search"><span class="sr-only">Search films</span><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="prog-q" type="search" placeholder="Search films or directors" autocomplete="off"></label>
+    </div>
+    <p class="count" data-count aria-live="polite">8 films</p>
+    <ul class="films" data-films>
+      <li class="film" data-id="harbourglass" data-tags="new" data-by="Ilse Varrow"><a class="film-art" href="#/film?id=harbourglass" tabindex="-1" aria-hidden="true"><img src="images/harbourglass.svg" alt="" width="400" height="600"></a><h2><a href="#/film?id=harbourglass">Harbourglass</a></h2><p class="film-meta">Drama · 1h 52m · 12A</p><p class="times"><span class="time">13:00</span><span class="time">18:00</span></p></li>
+      <li class="film" data-id="last-tram-home" data-tags="new late" data-by="Kofi Lyle"><a class="film-art" href="#/film?id=last-tram-home" tabindex="-1" aria-hidden="true"><img src="images/last-tram-home.svg" alt="" width="400" height="600"></a><h2><a href="#/film?id=last-tram-home">The Last Tram Home</a></h2><p class="film-meta">Thriller · 1h 44m · 15</p><p class="times"><span class="time">15:30</span><span class="time">20:30</span></p></li>
+      <li class="film" data-id="greenhouse-weather" data-tags="new" data-by="Noor Halvorsen"><a class="film-art" href="#/film?id=greenhouse-weather" tabindex="-1" aria-hidden="true"><img src="images/greenhouse-weather.svg" alt="" width="400" height="600"></a><h2><a href="#/film?id=greenhouse-weather">Greenhouse Weather</a></h2><p class="film-meta">Mystery · 1h 41m · 12A</p><p class="times"><span class="time">18:15</span></p></li>
+      <li class="film" data-id="ninth-floor-ballroom" data-tags="classic" data-by="Lorna Vey"><a class="film-art" href="#/film?id=ninth-floor-ballroom" tabindex="-1" aria-hidden="true"><img src="images/ninth-floor-ballroom.svg" alt="" width="400" height="600"></a><h2><a href="#/film?id=ninth-floor-ballroom">Ninth Floor Ballroom</a></h2><p class="film-meta">Musical · 1h 58m · U · 1958</p><p class="times"><span class="time">20:45</span></p></li>
+      <li class="film" data-id="moon-in-a-teacup" data-tags="new family" data-by="Pia Sandoval"><a class="film-art" href="#/film?id=moon-in-a-teacup" tabindex="-1" aria-hidden="true"><img src="images/moon-in-a-teacup.svg" alt="" width="400" height="600"></a><h2><a href="#/film?id=moon-in-a-teacup">Moon in a Teacup</a></h2><p class="film-meta">Animation · 1h 24m · U</p><p class="times"><span class="time">11:00</span><span class="time">13:30</span></p></li>
+      <li class="film" data-id="moth-season" data-tags="late classic" data-by="Rena Okafor"><a class="film-art" href="#/film?id=moth-season" tabindex="-1" aria-hidden="true"><img src="images/moth-season.svg" alt="" width="400" height="600"></a><h2><a href="#/film?id=moth-season">Moth Season</a></h2><p class="film-meta">Horror · 1h 36m · 15 · 1987</p><p class="times"><span class="time">Fri, Sat 22:40</span></p></li>
+      <li class="film" data-id="sixteen-bridges" data-tags="new docs" data-by="Tamsin Achebe"><a class="film-art" href="#/film?id=sixteen-bridges" tabindex="-1" aria-hidden="true"><img src="images/sixteen-bridges.svg" alt="" width="400" height="600"></a><h2><a href="#/film?id=sixteen-bridges">Sixteen Bridges</a></h2><p class="film-meta">Documentary · 1h 35m · PG</p><p class="times"><span class="time">Tue, Thu, Sat 15:45</span></p></li>
+      <li class="film" data-id="salt-and-static" data-tags="docs" data-by="Marek Oduya"><a class="film-art" href="#/film?id=salt-and-static" tabindex="-1" aria-hidden="true"><img src="images/salt-and-static.svg" alt="" width="400" height="600"></a><h2><a href="#/film?id=salt-and-static">Salt &amp; Static</a></h2><p class="film-meta">Documentary · 1h 28m · PG</p><p class="times"><span class="time">Mon, Wed, Fri, Sun 15:45</span></p></li>
+    </ul>
+    <div class="empty" data-empty hidden><p>No films match that. Try another word or show everything.</p><button class="btn btn-line" type="button" data-clear>Show all films</button></div>
+  </div>
+  <div class="sec"></div>
+</section>
+
+<!-- ===================== FILM ===================== -->
+<section data-view="film" aria-labelledby="f-name">
+  <div class="fhero">
+    <img class="fhero-bg" data-f-art src="images/harbourglass.svg" alt="" width="400" height="600">
+    <div class="wrap fhero-in">
+      <img class="poster" data-f-art src="images/harbourglass.svg" alt="" width="400" height="600">
+      <div>
+        <p class="eyebrow" data-fd-kicker>Drama · New this week</p>
+        <h1 id="f-name" data-fd-name>Harbourglass</h1>
+        <p class="facts" data-fd-facts>2026 · 1h 52m · 12A · English · Screen 1</p>
+        <p class="blurb" data-fd-blurb>A lighthouse keeper's daughter comes home to switch the old light off for good, and finds the town has other plans. A quiet, funny film about leaving, shot on the coast over one long winter.</p>
+        <dl class="credits"><dt>Director</dt><dd data-fd-dir>Ilse Varrow</dd><dt>With</dt><dd data-fd-cast>June Aldaine, Tomas Brekke, Ada Merrow</dd></dl>
+        <div class="actions"><a class="btn btn-fill" href="#book"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg>Book seats</a><button class="btn btn-line" type="button" data-trailer><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>Watch the trailer</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap sec" id="book">
+    <h2>Book seats</h2>
+    <div class="book">
+      <div class="picker" data-picker>
+        <h3 id="pick-day">Day</h3>
+        <div class="opts" role="group" aria-labelledby="pick-day" data-b-days><span class="picked">Daily at 13:00 and 18:00. Turn on JavaScript to choose a time, or call the box office.</span></div>
+        <h3 id="pick-time">Time</h3>
+        <div class="opts" role="group" aria-labelledby="pick-time" data-b-times></div>
+        <p class="picked" data-b-picked aria-live="polite">Choose a day and a time.</p>
+      </div>
+      <div class="panel">
+        <form class="form" data-form="booking" novalidate>
+          <div class="tickets" role="group" aria-label="Tickets">
+            <div class="tk" data-price="14"><div>Adult<small>$14</small></div></div>
+            <div class="tk" data-price="11"><div>Concession<small>$11 · students, over-65s, under-16s</small></div></div>
+            <div class="tk" data-price="7"><div>Member<small>$7 · show your card at the door</small></div></div>
+          </div>
+          <p class="total"><span>Total</span><span data-b-total>$0</span></p>
+          <p class="inline-err" id="b-err" aria-live="polite"></p>
+          <div class="field"><label for="b-email">Email for your tickets</label><input id="b-email" type="email" required autocomplete="email" aria-describedby="b-email-err"><span class="err" id="b-email-err"></span></div>
+          <button class="btn btn-fill" type="submit" data-busy="Holding seats…">Reserve seats</button>
+        </form>
+        <div class="success" data-success="booking" tabindex="-1" hidden><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><h3>Seats held</h3><p data-b-done>Your tickets are on their way.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <h2 style="margin-bottom:24px">More this week</h2>
+    <ul class="films" data-f-more></ul>
+  </div>
+  <div class="sec"></div>
+  <dialog id="trailer" aria-label="Trailer">
+    <button class="icon-btn dclose" type="button" data-close aria-label="Close trailer"><svg class="ic"><use href="#i-close"/></svg></button>
+    <div class="screen"><img data-t-art src="images/harbourglass.svg" alt="" width="400" height="600"><button class="play" type="button" data-t-play aria-label="Play trailer"><svg class="ic"><use href="#i-play"/></svg></button><div class="scrub"><span data-t-now>0:00</span><i data-t-bar></i><span>2:10</span></div></div>
+  </dialog>
+</section>
+
+<!-- ===================== MEMBERSHIP ===================== -->
+<section data-view="membership" aria-labelledby="h-mem">
+  <header class="page-head wrap">
+    <p class="kick">Join the regulars</p>
+    <h1 id="h-mem">Membership</h1>
+    <p>Three ways to be a regular. Every plan works on both screens, and you can pause or cancel from your account.</p>
+    <div class="bill" role="group" aria-label="Billing"><button type="button" data-bill="month" aria-pressed="true">Monthly</button><button type="button" data-bill="year" aria-pressed="false">Yearly, two months free</button></div>
+  </header>
+  <div class="wrap">
+    <div class="wall" data-wall aria-hidden="true"></div>
+    <ul class="plans">
+      <li class="plan"><h2 class="h3">Night Owl</h2><p class="muted">For students and anyone under 26.</p><p class="price" data-month="5" data-year="50"><b>$5</b><small> a month</small></p><ul class="ticks"><li>$5 tickets for every film</li><li>Free entry to Midnight Matinees</li><li>Members' previews</li></ul><a class="btn btn-line" href="#/join?plan=owl" data-plan-link="owl">Choose Night Owl</a></li>
+      <li class="plan pick"><p class="eyebrow">Our pick for most people</p><h2 class="h3">Regular</h2><p class="muted">For one or two films a month.</p><p class="price" data-month="8" data-year="80"><b>$8</b><small> a month</small></p><ul class="ticks"><li>$7 tickets for every film</li><li>One free film each month</li><li>Two-for-one Tuesdays</li><li>Members' previews</li></ul><a class="btn btn-fill" href="#/join?plan=regular" data-plan-link="regular">Choose Regular</a></li>
+      <li class="plan"><h2 class="h3">Projectionist</h2><p class="muted">For couples, families and film clubs.</p><p class="price" data-month="16" data-year="160"><b>$16</b><small> a month</small></p><ul class="ticks"><li>$7 tickets for you and a guest</li><li>Two free films each month</li><li>Priority booking for events</li><li>Your name on a seat plate</li></ul><a class="btn btn-line" href="#/join?plan=projectionist" data-plan-link="projectionist">Choose Projectionist</a></li>
+    </ul>
+  </div>
+  <section class="sec wrap" aria-labelledby="h-perks">
+    <div class="sec-head"><h2 id="h-perks">Every member gets</h2></div>
+    <ul class="perks">
+      <li><h3>Members' previews</h3><p>See new films before they open, usually on a Thursday evening, with a drink in the bar first.</p></li>
+      <li><h3>Cheaper tickets</h3><p>Member prices on every film, every day, on both screens. No blackout dates.</p></li>
+      <li><h3>A birthday drink</h3><p>A drink on us in your birthday month, and 10% off at the bar all year.</p></li>
+      <li><h3>Book first</h3><p>Booking for seasons and events opens to members two days early.</p></li>
+      <li><h3>Sunday film club</h3><p>A free monthly club with a short talk, a film and an argument afterwards.</p></li>
+      <li><h3>Pause any time</h3><p>Pause for up to three months a year, or cancel from your account.</p></li>
+    </ul>
+  </section>
+</section>
+
+<!-- ===================== JOIN ===================== -->
+<section data-view="join" aria-labelledby="h-join">
+  <header class="page-head wrap">
+    <p class="kick">Pull up a seat</p>
+    <h1 id="h-join">Become a member</h1>
+    <p>Two minutes, then your card is in your inbox. Show it at the box office or the bar.</p>
+  </header>
+  <div class="wrap split" style="padding-bottom:clamp(48px,7vw,96px)">
+    <div class="panel">
+      <form class="form" data-form="signup" novalidate>
+        <div class="field"><label for="j-name">Full name</label><input id="j-name" required autocomplete="name" aria-describedby="j-name-err"><span class="err" id="j-name-err"></span></div>
+        <div class="field"><label for="j-email">Email</label><input id="j-email" type="email" required autocomplete="email" aria-describedby="j-email-err"><span class="err" id="j-email-err"></span></div>
+        <fieldset class="field" data-group-required aria-describedby="j-plan-err"><legend class="label">Plan</legend>
+          <div class="radios">
+            <label class="radio"><input type="radio" name="plan" value="owl"><span>Night Owl</span><small data-j-price="owl">$5 a month</small></label>
+            <label class="radio"><input type="radio" name="plan" value="regular"><span>Regular</span><small data-j-price="regular">$8 a month</small></label>
+            <label class="radio"><input type="radio" name="plan" value="projectionist"><span>Projectionist</span><small data-j-price="projectionist">$16 a month</small></label>
+          </div><span class="err" id="j-plan-err"></span></fieldset>
+        <div class="field"><label for="j-bill">Billing</label><select id="j-bill"><option value="month">Monthly</option><option value="year">Yearly, two months free</option></select></div>
+        <div class="field"><label for="j-pass">Create a password</label><div class="pass"><input id="j-pass" type="password" required minlength="8" autocomplete="new-password" aria-describedby="j-pass-err"><button type="button" data-reveal="j-pass" aria-pressed="false">Show</button></div><span class="err" id="j-pass-err"></span></div>
+        <div class="field"><label class="check"><input id="j-news" type="checkbox" checked>Send me the week ahead every Monday</label></div>
+        <div class="field"><label class="check"><input id="j-terms" type="checkbox" required aria-describedby="j-terms-err">I agree to the membership terms and the privacy notice</label><span class="err" id="j-terms-err"></span></div>
+        <button class="btn btn-fill" type="submit" data-busy="Creating your card…">Join now</button>
+      </form>
+      <div class="success" data-success="signup" tabindex="-1" hidden><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><h2 class="h3">You're in</h2><p data-j-done>Your membership card is on its way to your inbox.</p><a class="btn btn-line" href="#/programme">See what's on</a></div>
+    </div>
+    <div class="stack">
+      <div class="mcard" aria-hidden="true">
+        <svg class="sky" viewBox="0 0 1440 200" preserveAspectRatio="none"><use href="#skyline"/></svg>
+        <div><span class="script">Member of the</span><b>Nightjar</b></div>
+        <div><b data-card-name>Your name here</b><small data-card-plan>Regular · since 2026</small></div>
+      </div>
+      <p class="muted">Members pay member prices from the first booking. You can switch plans, pause for up to three months a year or cancel from your account.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== JOURNAL ===================== -->
+<section data-view="journal" aria-labelledby="h-journal">
+  <header class="page-head wrap">
+    <p class="kick">From the booth</p>
+    <h1 id="h-journal">Journal</h1>
+    <p>Programme notes, interviews and stories from the building.</p>
+  </header>
+  <div class="wrap" style="padding-bottom:clamp(48px,7vw,96px)">
+    <div class="filters" role="group" aria-label="Filter stories" style="margin-top:0">
+      <button class="chip" type="button" data-cat="all" aria-pressed="true">Everything</button>
+      <button class="chip" type="button" data-cat="notes" aria-pressed="false">Programme notes</button>
+      <button class="chip" type="button" data-cat="interviews" aria-pressed="false">Interviews</button>
+      <button class="chip" type="button" data-cat="building" aria-pressed="false">The building</button>
+    </div>
+    <ul class="posts" data-posts>
+      <li class="post big" data-post="late-show" data-cat="notes"><a class="art" href="#/note?id=late-show" tabindex="-1" aria-hidden="true"><img src="images/moth-season.svg" alt="" width="400" height="600"></a><p class="eyebrow">Programme notes</p><h2><a href="#/note?id=late-show">Why we still run a late show on Fridays</a></h2><p>Two hundred strangers, one film and the moment everybody jumps at once. Notes on our oldest habit.</p><p class="meta">Mara Quell · 14 November 2026 · 6 min read</p></li>
+      <li class="post" data-post="restoring-ballroom" data-cat="notes"><a class="art" href="#/note?id=restoring-ballroom" tabindex="-1" aria-hidden="true"><img src="images/ninth-floor-ballroom.svg" alt="" width="400" height="600"></a><p class="eyebrow">Programme notes</p><h2><a href="#/note?id=restoring-ballroom">A 1958 musical, frame by frame</a></h2><p>What a restoration changes, and what it leaves alone on purpose.</p><p class="meta">Mara Quell · 7 November 2026 · 5 min read</p></li>
+      <li class="post" data-post="bridges-qa" data-cat="interviews"><a class="art" href="#/note?id=bridges-qa" tabindex="-1" aria-hidden="true"><img src="images/sixteen-bridges.svg" alt="" width="400" height="600"></a><p class="eyebrow">Interviews</p><h2><a href="#/note?id=bridges-qa">Five questions for the maker of Sixteen Bridges</a></h2><p>Walking every bridge in the city with a camera and a thermos.</p><p class="meta">Jonah Pell · 30 October 2026 · 4 min read</p></li>
+      <li class="post" data-post="the-booth" data-cat="building"><a class="art" href="#/note?id=the-booth" tabindex="-1" aria-hidden="true"><img src="images/last-tram-home.svg" alt="" width="400" height="600"></a><p class="eyebrow">The building</p><h2><a href="#/note?id=the-booth">The projection booth, explained</a></h2><p>Two projectors, one very old rewind bench and a kettle.</p><p class="meta">Jonah Pell · 21 October 2026 · 3 min read</p></li>
+      <li class="post" data-post="saturday-pictures" data-cat="building"><a class="art" href="#/note?id=saturday-pictures" tabindex="-1" aria-hidden="true"><img src="images/moon-in-a-teacup.svg" alt="" width="400" height="600"></a><p class="eyebrow">The building</p><h2><a href="#/note?id=saturday-pictures">How Saturday mornings started</a></h2><p>A rainy weekend, a room full of parents and a film about a teacup.</p><p class="meta">Mara Quell · 12 October 2026 · 4 min read</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== ARTICLE ===================== -->
+<section data-view="note" aria-labelledby="n-title">
+  <article class="article wrap">
+    <a class="back" href="#/journal"><svg class="ic" aria-hidden="true"><use href="#i-prev"/></svg>Journal</a>
+    <p class="eyebrow" data-n-cat>Programme notes</p>
+    <h1 id="n-title" data-n-title>Why we still run a late show on Fridays</h1>
+    <p class="meta" data-n-meta>Mara Quell · 14 November 2026 · 6 min read</p>
+    <div class="art"><img data-n-art src="images/moth-season.svg" alt="" width="400" height="600"></div>
+    <div class="prose" data-n-body>
+      <p>Every Friday at 22:40 the big room fills with people who have already had dinner, already had a drink and are ready to be frightened a little. The late show is our oldest habit, and the one we get asked about most.</p>
+      <p>It started as a way to use the room after the last regular screening. It stayed because the audience is different at that hour: louder, kinder and more willing to laugh at the parts that were meant to be serious.</p>
+      <blockquote>A late show is not a film you watch alone. It is a film you watch with two hundred strangers who are all about to jump at the same moment.</blockquote>
+      <p>We pick the films months ahead, mostly cult favourites and restorations, with one new film each season. If there is a title you want to see on the big screen near midnight, tell us at the bar.</p>
+      <p>Midnight Matinees runs every Friday and Saturday. Members on the Night Owl plan get in free.</p>
+    </div>
+    <div class="actions"><a class="btn btn-line" href="#/programme?tag=late">See the late shows</a></div>
+  </article>
+</section>
+
+<!-- ===================== VISIT ===================== -->
+<section data-view="visit" aria-labelledby="h-visit">
+  <header class="page-head wrap">
+    <p class="kick">Find us</p>
+    <h1 id="h-visit">Visit</h1>
+    <p>14 Harbour Row, Port Ellery, two minutes' walk from the tram. The bar is open to everyone, with or without a ticket.</p>
+    <p class="status" data-status>Open today 12:00 to 23:30</p>
+  </header>
+  <div class="wrap split">
+    <div class="stack">
+      <h2>Opening hours</h2>
+      <dl class="hours"><dt>Monday to Thursday</dt><dd>12:00 to 23:30</dd><dt>Friday and Saturday</dt><dd>10:30 to 01:00</dd><dt>Sunday</dt><dd>10:30 to 23:00</dd></dl>
+      <h2 style="margin-top:20px">Getting here</h2>
+      <p class="muted">Tram 4 stops across the road. Bike racks are by the side door; the harbour car park is five minutes away.</p>
+    </div>
+    <div class="stack">
+      <h2>The building</h2>
+      <p class="muted">Opened in 1936 as one 600-seat room; now two screens, a bar in the old foyer and a balcony that still creaks.</p>
+      <ul class="screens"><li><b>212</b>Screen 1, with the balcony</li><li><b>64</b>Screen 2, sofas at the back</li><li><b>60</b>The bar, open to all</li></ul>
+    </div>
+  </div>
+  <div class="wrap split sec">
+    <div class="stack" id="bar">
+      <h2>The bar</h2>
+      <p class="muted">Coffee and cake in the day, cocktails and local beer at night, and popcorn popped in the foyer every hour. Take your drink into any screening.</p>
+    </div>
+    <div class="stack" id="access">
+      <h2>Access</h2>
+      <ul class="ticks"><li>Step-free from the street to both screens, the bar and the toilets</li><li>Wheelchair spaces in Screen 1 and Screen 2</li><li>Hearing loop in Screen 1 and at the box office</li><li>Subtitled screenings every Wednesday; relaxed screenings on the first Sunday of the month</li><li>Free tickets for a companion or carer</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRIVATE HIRE ===================== -->
+<section data-view="hire" aria-labelledby="h-hire">
+  <header class="page-head wrap">
+    <p class="kick">Make it yours</p>
+    <h1 id="h-hire">Private hire</h1>
+    <p>Hire Screen 2 and the bar for a birthday, a team night or a film club. Tell us what you have in mind and we'll reply within two working days.</p>
+  </header>
+  <div class="wrap split" style="padding-bottom:clamp(48px,7vw,96px)">
+    <div class="stack">
+      <h2>What we host</h2>
+      <ul class="ticks"><li>Birthday screenings, with your film and your name on the marquee</li><li>Team nights and film clubs, up to 64 in the room</li><li>Drinks in the bar before or after</li></ul>
+      <h2 style="margin-top:20px">Other questions</h2>
+      <p class="muted">Tickets and bookings: boxoffice@nightjar.example<br>Press and programming: press@nightjar.example<br>Or ask at the box office, open whenever the bar is.</p>
+    </div>
+    <div class="panel">
+      <form class="form" data-form="contact" novalidate>
+        <div class="row2">
+          <div class="field"><label for="c-name">Your name</label><input id="c-name" required autocomplete="name" aria-describedby="c-name-err"><span class="err" id="c-name-err"></span></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" type="email" required autocomplete="email" aria-describedby="c-email-err"><span class="err" id="c-email-err"></span></div>
+        </div>
+        <div class="field"><label for="c-topic">What is it about?</label><select id="c-topic" required aria-describedby="c-topic-err"><option value="">Choose one</option><option value="hire">Hiring a screen</option><option value="tickets">Tickets and bookings</option><option value="press">Press and programming</option><option value="other">Something else</option></select><span class="err" id="c-topic-err"></span></div>
+        <div class="row2">
+          <div class="field"><label for="c-date">Preferred date</label><input id="c-date" type="date"></div>
+          <div class="field"><label for="c-guests">Guests</label><input id="c-guests" type="number" min="2" max="64" inputmode="numeric" aria-describedby="c-guests-err"><span class="err" id="c-guests-err"></span></div>
+        </div>
+        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" required minlength="20" aria-describedby="c-msg-err"></textarea><span class="err" id="c-msg-err"></span></div>
+        <button class="btn btn-fill" type="submit"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>Send enquiry</button>
+      </form>
+      <div class="success" data-success="contact" tabindex="-1" hidden><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><h2 class="h3">Thanks, we have it</h2><p>We'll reply within two working days. If your date is close, call the box office.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section data-view="faq" aria-labelledby="h-faq">
+  <header class="page-head wrap">
+    <p class="kick">Good question</p>
+    <h1 id="h-faq">Help and FAQ</h1>
+    <p>Tickets, membership and getting around the building. Can't find it? Ask at the bar or write to the box office.</p>
+    <label class="search" style="margin:8px 0 0;flex:none;width:min(100%,420px)"><span class="sr-only">Search questions</span><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input id="faq-q" type="search" placeholder="Search questions" autocomplete="off"></label>
+  </header>
+  <div class="wrap faq" data-faq style="padding-bottom:clamp(48px,7vw,96px)">
+    <h2>Tickets and booking</h2>
+    <details><summary>How do I book?</summary><p>Pick a film in What's on, choose a time and how many tickets you need. Your tickets arrive by email; show them on your phone at the door.</p></details>
+    <details><summary>Can I change or refund a ticket?</summary><p>Swap to another showing up to two hours before the film starts, at the box office or by replying to your booking email. Cancelled shows are refunded in full.</p></details>
+    <details><summary>Do you show films with subtitles?</summary><p>Every Wednesday screening has English subtitles, and films in other languages are subtitled at every show.</p></details>
+    <h2>Membership</h2>
+    <details><summary>Is membership worth it if I come once a month?</summary><p>The Regular plan includes one free film a month and $7 tickets after that, so it usually pays for itself by the second film.</p></details>
+    <details><summary>Can I pause my membership?</summary><p>Pause for up to three months a year from your account. Your perks wait for you.</p></details>
+    <details><summary>Can I bring a guest?</summary><p>Projectionist members can bring a guest at member prices, including to members' previews.</p></details>
+    <h2>The building</h2>
+    <details><summary>Is the building step-free?</summary><p>Yes. Both screens, the bar and the toilets are step-free from the street, and a companion or carer comes in free.</p></details>
+    <p class="muted" data-faq-empty hidden style="padding:24px 8px">No questions match that. Try another word, or write to boxoffice@nightjar.example.</p>
+  </div>
+</section>
+
+<!-- ===================== LEGAL ===================== -->
+<section data-view="legal" aria-labelledby="h-legal">
+  <header class="page-head wrap"><p class="kick">The small print</p><h1 id="h-legal">Privacy and terms</h1><p>Last updated 1 November 2026.</p></header>
+  <div class="wrap legal">
+    <h2>Your details</h2>
+    <p>When you book, join or sign up for the weekly email we keep your name, email address and what you booked, to send tickets, run your membership and answer you. We never see your card number and never sell your details. Ask for a copy, a correction or deletion at privacy@nightjar.example.</p>
+    <h2>Tickets</h2>
+    <p>Age ratings apply and we may ask for ID. Tickets can be exchanged up to two hours before a show. If we change the programme we will tell you and refund you.</p>
+  </div>
+</section>
+
+<!-- ===================== 404 ===================== -->
+<section data-view="404" aria-labelledby="h-404">
+  <header class="page-head wrap" style="padding-bottom:clamp(64px,9vw,120px)">
+    <p class="kick">Oh no,</p>
+    <h1 id="h-404">This reel is missing</h1>
+    <p>The page you wanted isn't on the programme. It may have moved, or the link may be wrong.</p>
+    <div class="actions center"><a class="btn btn-fill" href="#/">Back to the start</a><a class="btn btn-line" href="#/programme">See what's on</a></div>
+  </header>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-news">
+    <div><h3>The week ahead, every Monday</h3><p class="muted">Every film, event and members' preview in one email. Nothing else.</p></div>
+    <form class="form" data-form="newsletter" novalidate>
+      <div class="field"><label class="sr-only" for="n-email">Email</label><input id="n-email" type="email" required placeholder="you@example.com" autocomplete="email" aria-describedby="n-email-err"><span class="err" id="n-email-err"></span></div>
+      <button class="btn btn-fill" type="submit">Sign up</button>
+    </form>
+    <div class="success" data-success="newsletter" tabindex="-1" hidden><p><b>You're on the list.</b> The next one arrives on Monday morning.</p></div>
+  </div>
+  <div class="wrap foot-cols">
+    <div class="stack"><a class="brand" href="#/"><svg aria-hidden="true"><use href="#mark"/></svg>Nightjar</a><p class="muted">An independent picture house with two screens and a bar. 14 Harbour Row, Port Ellery.</p></div>
+    <div><h2>Programme</h2><ul><li><a href="#/programme">What's on</a></li><li><a href="#/programme?tag=late">Late shows</a></li><li><a href="#/programme?tag=family">Family</a></li><li><a href="#/journal">Journal</a></li></ul></div>
+    <div><h2>Visit</h2><ul><li><a href="#/visit">Getting here</a></li><li><a href="#/visit?at=bar">The bar</a></li><li><a href="#/visit?at=access">Access</a></li><li><a href="#/hire">Private hire</a></li></ul></div>
+    <div><h2>Help</h2><ul><li><a href="#/faq">Help and FAQ</a></li><li><a href="#/membership">Membership</a></li><li><a href="#/hire?topic=tickets">Contact us</a></li><li><a href="#/legal">Privacy and terms</a></li></ul></div>
+  </div>
+  <div class="wrap foot-base"><p>© 2026 Nightjar Picture House Ltd.</p><p>Films and times may change. Age ratings apply.</p></div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (selector, scope = document) => scope.querySelector(selector);
+  const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const esc = (text) => text.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: night by default regardless of the system setting; dusk behind the toggle ---------- */
+  const themeButton = $("#theme-toggle");
+  function syncTheme() {
+    const dark = root.dataset.theme !== "light";
+    themeButton.setAttribute("aria-label", dark ? "Switch to light colors" : "Switch to dark colors");
+    $("use", themeButton).setAttribute("href", dark ? "#i-sun" : "#i-moon");
+  }
+  new MutationObserver(syncTheme).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  root.dataset.theme = store.get("nightjar-theme") === "light" ? "light" : "dark";
+  syncTheme();
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "light" ? "dark" : "light";
+    root.dataset.theme = next;
+    store.set("nightjar-theme", next);
+  });
+
+  /* ---------- Time ---------- */
+  const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const toMin = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+  const clock = (m) => `${String(Math.floor(m / 60) % 24).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+  const runtime = (m) => `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, "0")}m`;
+  const nowMin = () => { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); };
+  const dateAt = (offset) => { const d = new Date(); d.setDate(d.getDate() + offset); return d; };
+  const weekdayAt = (offset) => (dateAt(offset).getDay() + 6) % 7;
+  const dayName = (offset) => (offset === 0 ? "Today" : offset === 1 ? "Tomorrow" : DAYS[weekdayAt(offset)]);
+  const dayWord = (offset) => (offset < 2 ? dayName(offset).toLowerCase() : DAYS[weekdayAt(offset)]);
+
+  /* ---------- Films. Name, artwork and tags live on the programme cards (the single source the other views copy, so a
+     single-file build keeps its embedded images); FILMS adds the details and the weekly schedule.
+     screen: 1 or 2. times: start times. days: weekdays it plays, 0 = Monday. ---------- */
+  const FILMS = {
+    harbourglass: { genre: "Drama", year: 2026, mins: 112, rating: "12A", lang: "English", dir: "Ilse Varrow", cast: "June Aldaine, Tomas Brekke, Ada Merrow", screen: 1, times: ["13:00", "18:00"], days: "0123456", blurb: "A lighthouse keeper's daughter comes home to switch the old light off for good, and finds the town has other plans. A quiet, funny film about leaving, shot on the coast over one long winter." },
+    "last-tram-home": { genre: "Thriller", year: 2025, mins: 104, rating: "15", lang: "English", dir: "Kofi Lyle", cast: "Saoirse Tamm, Rui Okada", screen: 1, times: ["15:30", "20:30"], days: "0123456", blurb: "A night tram driver notices the same passenger on every last run, and the city starts to look different after midnight." },
+    "greenhouse-weather": { genre: "Mystery", year: 2026, mins: 101, rating: "12A", lang: "English and Norwegian, subtitled", dir: "Noor Halvorsen", cast: "Liv Arneson, Callum Reyes", screen: 2, times: ["18:15"], days: "0123456", blurb: "In a botanical garden closed for the winter, a gardener finds a plant that should not be flowering, and a visitor who knows why." },
+    "ninth-floor-ballroom": { genre: "Musical", year: 1958, mins: 118, rating: "U", lang: "English", dir: "Lorna Vey", cast: "Dot Lambert, Carlo Fenn", screen: 2, times: ["20:45"], days: "0123456", blurb: "A hotel ballroom, one New Year's Eve and a band that refuses to stop. Restored from the original negative, with the colour put back." },
+    "moon-in-a-teacup": { genre: "Animation", year: 2026, mins: 84, rating: "U", lang: "English", dir: "Pia Sandoval", cast: "Voices of Ellis Hart and Juno Abara", screen: 2, times: ["11:00", "13:30"], days: "0123456", blurb: "A girl who cannot sleep catches the moon in her grandmother's teacup and has one night to put it back." },
+    "moth-season": { genre: "Horror", year: 1987, mins: 96, rating: "15", lang: "English", dir: "Rena Okafor", cast: "Hal Brody, Imke Sorel", screen: 1, times: ["22:40"], days: "45", blurb: "A seaside town, a hot August and a porch light nobody can switch off. A gentle cult favourite, scarier with a crowd." },
+    "sixteen-bridges": { genre: "Documentary", year: 2026, mins: 95, rating: "PG", lang: "English", dir: "Tamsin Achebe", cast: "The people who cross them", screen: 2, times: ["15:45"], days: "135", blurb: "One year, one city and every bridge in it, walked at dawn with a camera and the people who cross them each day." },
+    "salt-and-static": { genre: "Documentary", year: 2025, mins: 88, rating: "PG", lang: "English", dir: "Marek Oduya", cast: "The volunteers of a coastal radio station", screen: 2, times: ["15:45"], days: "0246", blurb: "The last volunteer radio station on the salt flats, broadcasting to fishing boats and night owls through one stormy season." },
+  };
+  /* Events in the bar: [weekday (0 = Monday), start, minutes, name, route without "#/"] */
+  const EVENTS = [
+    [0, "19:00", 120, "Short film open mic", "visit?at=bar"],
+    [1, "19:30", 120, "Film quiz", "visit?at=bar"],
+    [2, "18:30", 60, "Subtitled night drinks", "visit?at=access"],
+    [3, "18:00", 90, "Members' preview drinks", "membership"],
+    [4, "21:00", 180, "Records in the bar", "visit?at=bar"],
+    [5, "17:30", 60, "Q&A: Sixteen Bridges", "film?id=sixteen-bridges"],
+    [6, "12:00", 120, "Sunday film club", "journal"],
+  ];
+  const cards = $$("[data-films] > .film");
+  const ids = cards.map((card) => card.dataset.id);
+  const cardOf = (id) => cards.find((card) => card.dataset.id === id) ?? cards[0];
+  const nameOf = (id) => $("h2", cardOf(id)).textContent;
+  const artOf = (id) => $("img", cardOf(id)).getAttribute("src");
+  const showsOn = (id, offset) => (FILMS[id].days.includes(String(weekdayAt(offset))) ? FILMS[id].times : []);
+  function nextShow(id) {
+    for (let offset = 0; offset < 7; offset += 1) {
+      const time = showsOn(id, offset).find((t) => offset > 0 || toMin(t) > nowMin());
+      if (time) return `${dayName(offset)} ${time}`;
+    }
+    return "Not this week";
+  }
+  const metaOf = (id) => `${FILMS[id].genre} · ${runtime(FILMS[id].mins)} · ${FILMS[id].rating} · Screen ${FILMS[id].screen}`;
+
+  /* ---------- Tonight: the TV home screen. One tile holds the focus ring; hover, focus or arrow keys move it ---------- */
+  const tv = $("[data-tv]");
+  const tiles = $$(".tile", tv);
+  const feature = $("[data-feature]", tv);
+  function focusTile(tile) {
+    tiles.forEach((t) => { t.classList.toggle("is-focus", t === tile); t.tabIndex = t === tile ? 0 : -1; });
+    const id = tile.dataset.id;
+    $("img", feature).setAttribute("src", artOf(id));
+    $("[data-f-next]", feature).textContent = `Next: ${nextShow(id)}`;
+    $("[data-f-name]", feature).textContent = nameOf(id);
+    $("[data-f-meta]", feature).textContent = metaOf(id);
+    $("[data-f-link]", feature).href = `#/film?id=${id}`;
+  }
+  tiles.forEach((tile, i) => {
+    tile.addEventListener("mouseenter", () => focusTile(tile));
+    tile.addEventListener("focus", () => focusTile(tile));
+    tile.addEventListener("keydown", (event) => {
+      const cols = getComputedStyle(tile.closest(".tiles")).gridTemplateColumns.split(" ").length;
+      const step = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: cols, ArrowUp: -cols }[event.key];
+      const next = step && tiles[i + step];
+      if (!next) return;
+      event.preventDefault();
+      next.focus();
+    });
+  });
+  function tick() {
+    $("[data-clock]").textContent = clock(nowMin());
+    paintStatus();
+  }
+
+  /* ---------- Seasons deck: the front card is live, the ones behind peek above it ---------- */
+  const deckCards = $$(".deck-card");
+  let deckAt = 0;
+  function paintDeck() {
+    deckCards.forEach((card, i) => {
+      const depth = (i - deckAt + deckCards.length) % deckCards.length;
+      card.dataset.d = depth;
+      card.style.setProperty("--d", Math.min(depth, 3));
+      card.inert = depth > 0;
+    });
+    $("[data-deck-count]").textContent = `${deckAt + 1} of ${deckCards.length}`;
+  }
+  $$("[data-strip]").forEach((strip) => strip.replaceChildren(...strip.dataset.strip.split(" ").map((id) => Object.assign(new Image(400, 600), { src: artOf(id), alt: "" }))));
+  $("[data-deck-prev]").addEventListener("click", () => { deckAt = (deckAt + deckCards.length - 1) % deckCards.length; paintDeck(); });
+  $("[data-deck-next]").addEventListener("click", () => { deckAt = (deckAt + 1) % deckCards.length; paintDeck(); });
+
+  /* ---------- The tilted tile wall (decoration; the real perks are listed on the membership page) ---------- */
+  const WALL = ["Members' previews", "Two-for-one Tuesdays", "$7 tickets", "Free late shows", "A birthday drink", "10% at the bar", "Book first", "Sunday film club", "Guest passes", "Your name on a seat"];
+  const WALL_COLORS = [["oklch(42% 0.2 300)"], ["oklch(64% 0.22 352)"], ["oklch(86% 0.14 82)", "oklch(25% 0.12 300)"], ["oklch(58% 0.12 200)"], ["oklch(70% 0.17 35)"], ["oklch(84% 0.08 300)", "oklch(25% 0.12 300)"]];
+  $$("[data-wall]").forEach((wall) => {
+    const inner = document.createElement("div");
+    inner.className = "wall-in";
+    for (let i = 0; i < 36; i += 1) {
+      const tile = document.createElement("span");
+      const [bg, ink] = WALL_COLORS[(i + Math.floor(i / 6) * 2) % WALL_COLORS.length];
+      tile.textContent = WALL[(i * 7) % WALL.length];
+      tile.style.setProperty("--c", bg);
+      if (ink) tile.style.setProperty("--ct", ink);
+      inner.append(tile);
+    }
+    wall.append(inner);
+  });
+
+  /* ---------- The guide: seven day tabs over a timeline of both screens and the bar (11:00 to 00:30) ---------- */
+  const START = 11 * 60;
+  const SPAN = 13.5 * 60;
+  const guide = $("[data-guide]");
+  const daysEl = $("[data-days]");
+  let guideDay = 0;
+  const at = (start, length) => `left:${((start - START) / SPAN) * 100}%;width:${(length / SPAN) * 100}%`;
+  function renderGuide() {
+    const past = guideDay === 0 ? nowMin() : -1;
+    const rows = [["Screen 1", "212 seats", []], ["Screen 2", "64 seats", []], ["The bar", "Free entry", []]];
+    ids.forEach((id) => showsOn(id, guideDay).forEach((time) => {
+      const start = toMin(time);
+      rows[FILMS[id].screen - 1][2].push(`<a class="blk${start + FILMS[id].mins < past ? " past" : ""}" href="#/film?id=${id}&day=${guideDay}&time=${time}" style="${at(start, FILMS[id].mins)}"><b>${esc(nameOf(id))}</b><small>${time} to ${clock(start + FILMS[id].mins)}</small></a>`);
+    }));
+    EVENTS.filter(([day]) => day === weekdayAt(guideDay)).forEach(([, time, length, name, href]) => {
+      const start = toMin(time);
+      rows[2][2].push(`<a class="blk${start + length < past ? " past" : ""}" href="#/${href}" style="${at(start, length)};--c:var(--gold)"><b>${esc(name)}</b><small>${time} to ${clock(start + length)}</small></a>`);
+    });
+    const hours = Array.from({ length: 13 }, (_, i) => 12 + i);
+    const now = nowMin();
+    const nowLine = guideDay === 0 && now > START && now < START + SPAN ? `<i class="now" style="left:calc(124px + (100% - 124px) * ${(now - START) / SPAN})"></i>` : "";
+    guide.innerHTML = `<div class="glabel"></div><div class="ruler">${hours.map((h) => `<span style="left:${((h * 60 - START) / SPAN) * 100}%">${clock(h * 60)}</span>`).join("")}</div>`
+      + rows.map(([name, note, blocks]) => `<div class="glabel">${name}<small>${note}</small></div><div class="track">${blocks.join("")}</div>`).join("") + nowLine;
+    $$(".day", daysEl).forEach((button, i) => button.setAttribute("aria-selected", String(i === guideDay)));
+    programme.times();
+  }
+  daysEl.innerHTML = Array.from({ length: 7 }, (_, i) => `<button class="day" type="button" role="tab" aria-selected="false">${dayName(i)}<small>${dateAt(i).getDate()}</small></button>`).join("");
+  $$(".day", daysEl).forEach((button, i) => button.addEventListener("click", () => { guideDay = i; renderGuide(); }));
+
+  /* ---------- Programme list: tag chips and search, from the URL (#/programme?tag=late&q=moth) ---------- */
+  const programme = (() => {
+    const q = $("#prog-q");
+    let tag = "all";
+    function render() {
+      const term = q.value.trim().toLowerCase();
+      let shown = 0;
+      cards.forEach((card) => {
+        const match = (tag === "all" || card.dataset.tags.split(" ").includes(tag)) && (!term || `${card.textContent} ${card.dataset.by}`.toLowerCase().includes(term));
+        card.hidden = !match;
+        if (match) shown += 1;
+      });
+      $$("[data-tag]").forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.tag === tag)));
+      $("[data-count]").textContent = `${shown} ${shown === 1 ? "film" : "films"} · times for ${dayWord(guideDay)}`;
+      $("[data-empty]").hidden = shown > 0;
+    }
+    function times() {
+      cards.forEach((card) => {
+        const id = card.dataset.id;
+        const list = showsOn(id, guideDay);
+        $(".times", card).innerHTML = list.length
+          ? list.map((t) => `<a class="time" href="#/film?id=${id}&day=${guideDay}&time=${t}" aria-label="${esc(nameOf(id))} at ${t}">${t}</a>`).join("")
+          : `<span class="muted">Not showing ${guideDay < 2 ? dayWord(guideDay) : `on ${dayWord(guideDay)}`}</span>`;
+      });
+      render();
+    }
+    $$("[data-tag]").forEach((chip) => chip.addEventListener("click", () => { tag = chip.dataset.tag; render(); }));
+    q.addEventListener("input", render);
+    $("[data-clear]").addEventListener("click", () => { tag = "all"; q.value = ""; render(); });
+    return {
+      times,
+      apply(params) {
+        tag = $(`[data-tag="${CSS.escape(params.get("tag") || "all")}"]`) ? params.get("tag") || "all" : "all";
+        q.value = params.get("q") ?? q.value;
+        render();
+        if (params.get("focus") === "search") q.focus();
+      },
+    };
+  })();
+
+  /* ---------- Film page: details, the booking picker (day, time, tickets) and the trailer dialog ---------- */
+  const filmView = $("[data-view='film']");
+  const booking = { id: "harbourglass", day: null, time: null };
+  const ticketRows = $$(".tk", filmView);
+  ticketRows.forEach((row) => {
+    const kind = $("div", row).firstChild.textContent.trim().toLowerCase();
+    row.insertAdjacentHTML("beforeend", `<div class="step"><button type="button" data-step="-1" aria-label="One less ${kind} ticket"><svg class="ic"><use href="#i-minus"/></svg></button><output>0</output><button type="button" data-step="1" aria-label="One more ${kind} ticket"><svg class="ic"><use href="#i-plus"/></svg></button></div>`);
+  });
+  function renderFilm(params) {
+    const id = FILMS[params.get("id")] ? params.get("id") : "harbourglass";
+    const f = FILMS[id];
+    $$("[data-f-art]", filmView).forEach((img) => img.setAttribute("src", artOf(id)));
+    $("[data-fd-kicker]").textContent = `${f.genre}${cardOf(id).dataset.tags.includes("new") ? " · New this week" : f.year < 2000 ? " · Restored" : ""}`;
+    $("[data-fd-name]").textContent = nameOf(id);
+    $("[data-fd-facts]").textContent = `${f.year} · ${runtime(f.mins)} · ${f.rating} · ${f.lang} · Screen ${f.screen}`;
+    $("[data-fd-blurb]").textContent = f.blurb;
+    $("[data-fd-dir]").textContent = f.dir;
+    $("[data-fd-cast]").textContent = f.cast;
+    $("[data-t-art]").setAttribute("src", artOf(id));
+    $("[data-f-more]").replaceChildren(...ids.filter((other) => other !== id).slice(0, 4).map((other) => { const node = cardOf(other).cloneNode(true); node.hidden = false; return node; }));
+    if (booking.id !== id) { ticketRows.forEach((row) => { $("output", row).value = "0"; }); resetForm($("[data-form='booking']")); }
+    booking.id = id;
+    const day = params.has("day") ? Number(params.get("day")) : NaN;
+    booking.day = Number.isInteger(day) && day >= 0 && day < 7 && showsOn(id, day).length ? day : null;
+    booking.time = booking.day !== null && showsOn(id, booking.day).includes(params.get("time")) ? params.get("time") : null;
+    if (booking.day === null) booking.day = [0, 1, 2, 3, 4, 5, 6].find((o) => showsOn(id, o).some((t) => o > 0 || toMin(t) > nowMin())) ?? null;
+    renderPicker();
+    return id;
+  }
+  function renderPicker() {
+    const { id } = booking;
+    $("[data-b-days]").innerHTML = Array.from({ length: 7 }, (_, o) => `<button class="opt" type="button" data-o="${o}" aria-pressed="${o === booking.day}"${showsOn(id, o).length ? "" : " disabled"}>${dayName(o)}</button>`).join("");
+    const list = booking.day === null ? [] : showsOn(id, booking.day);
+    $("[data-b-times]").innerHTML = list.map((t) => `<button class="opt" type="button" data-t="${t}" aria-pressed="${t === booking.time}"${booking.day === 0 && toMin(t) <= nowMin() ? " disabled" : ""}>${t}</button>`).join("") || '<span class="picked">No times on this day.</span>';
+    $("[data-b-picked]").textContent = booking.time ? `${nameOf(id)} · ${dayName(booking.day)} ${booking.time} · Screen ${FILMS[id].screen}` : "Choose a day and a time.";
+    $$("[data-o]").forEach((b) => b.addEventListener("click", () => { booking.day = Number(b.dataset.o); booking.time = null; renderPicker(); }));
+    $$("[data-t]").forEach((b) => b.addEventListener("click", () => { booking.time = b.dataset.t; $("#b-err").textContent = ""; renderPicker(); }));
+  }
+  const total = () => ticketRows.reduce((sum, row) => sum + Number($("output", row).value) * Number(row.dataset.price), 0);
+  ticketRows.forEach((row) => $$("[data-step]", row).forEach((button) => button.addEventListener("click", () => {
+    const out = $("output", row);
+    out.value = String(Math.min(10, Math.max(0, Number(out.value) + Number(button.dataset.step))));
+    $("[data-b-total]").textContent = `$${total()}`;
+    $("#b-err").textContent = "";
+  })));
+  function checkBooking() {
+    const problem = !booking.time ? "Choose a day and a time first." : total() === 0 ? "Add at least one ticket." : "";
+    $("#b-err").textContent = problem;
+    return !problem;
+  }
+  const dialog = $("#trailer");
+  const trailer = { pos: 0, timer: null };
+  function setTrailer(playing) {
+    clearInterval(trailer.timer);
+    trailer.timer = playing ? setInterval(() => { trailer.pos = Math.min(130, trailer.pos + 1); if (trailer.pos >= 130) setTrailer(false); paintTrailer(); }, 1000) : null;
+    paintTrailer();
+  }
+  function paintTrailer() {
+    $("[data-t-now]").textContent = `${Math.floor(trailer.pos / 60)}:${String(trailer.pos % 60).padStart(2, "0")}`;
+    $("[data-t-bar]").style.setProperty("--p", `${(trailer.pos / 130) * 100}%`);
+    const button = $("[data-t-play]");
+    button.setAttribute("aria-label", trailer.timer ? "Pause trailer" : "Play trailer");
+    $("use", button).setAttribute("href", trailer.timer ? "#i-pause" : "#i-play");
+  }
+  $("[data-trailer]").addEventListener("click", () => { trailer.pos = 0; setTrailer(false); dialog.showModal(); });
+  $("[data-t-play]").addEventListener("click", () => setTrailer(!trailer.timer));
+  $("[data-close]", dialog).addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+  dialog.addEventListener("close", () => setTrailer(false));
+
+  /* ---------- Membership: monthly or yearly prices; the choice travels to the join form (#/join?plan=regular&bill=year) ---------- */
+  let bill = "month";
+  function paintBill() {
+    $$("[data-bill]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.bill === bill)));
+    $$("[data-month]").forEach((price) => { $("b", price).textContent = `$${price.dataset[bill]}`; $("small", price).textContent = bill === "year" ? " a year" : " a month"; });
+    $$("[data-plan-link]").forEach((link) => { link.href = `#/join?plan=${link.dataset.planLink}&bill=${bill}`; });
+    $$("[data-j-price]").forEach((label) => { const price = $(`[data-plan-link="${label.dataset.jPrice}"]`).closest(".plan").querySelector(".price").dataset[bill]; label.textContent = `$${price} a ${bill}`; });
+    $("#j-bill").value = bill;
+  }
+  $$("[data-bill]").forEach((button) => button.addEventListener("click", () => { bill = button.dataset.bill; paintBill(); }));
+  $("#j-bill").addEventListener("change", (event) => { bill = event.target.value; paintBill(); });
+  const PLAN_NAMES = { owl: "Night Owl", regular: "Regular", projectionist: "Projectionist" };
+  function paintCard() {
+    const name = $("#j-name").value.trim();
+    const plan = $("input[name='plan']:checked")?.value ?? "regular";
+    $("[data-card-name]").textContent = name || "Your name here";
+    $("[data-card-plan]").textContent = `${PLAN_NAMES[plan]} · since ${new Date().getFullYear()}`;
+  }
+  $("#j-name").addEventListener("input", paintCard);
+  $$("input[name='plan']").forEach((radio) => radio.addEventListener("change", paintCard));
+  $$("[data-reveal]").forEach((button) => button.addEventListener("click", () => {
+    const input = document.getElementById(button.dataset.reveal);
+    const show = input.type === "password";
+    input.type = show ? "text" : "password";
+    button.textContent = show ? "Hide" : "Show";
+    button.setAttribute("aria-pressed", String(show));
+  }));
+
+  /* ---------- Journal filter and articles ---------- */
+  const posts = $$("[data-post]");
+  $$("[data-cat]").forEach((chip) => chip.addEventListener("click", () => {
+    $$("button[data-cat]").forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
+    posts.forEach((post) => { post.hidden = chip.dataset.cat !== "all" && post.dataset.cat !== chip.dataset.cat; });
+  }));
+  /* Bodies of the other articles; the first one is written out in the page */
+  const POSTS = {
+    "restoring-ballroom": ["The negative arrived in eleven cans, two of them rusted shut. The restorers spent a year cleaning and scanning it, then put the colour back where the years had washed it out.", "What they left alone matters as much: the grain, a wobble in the second reel and a joke that no longer lands."],
+    "bridges-qa": ["Tamsin walked every bridge in the city at dawn for a year, with a camera and a thermos. Sixteen of them made the film.", "We asked about the bridge she nearly left out and why the film has no music. She will be in the bar after the Saturday show."],
+    "the-booth": ["Up a narrow stair behind the balcony there are two projectors: a digital one for every day and a 35mm machine for restorations and the late show.", "Every film is checked before its first screening, sound included. The kettle is the most important thing in the room."],
+    "saturday-pictures": ["It started on a wet weekend when a dozen parents asked to bring their children in early. We put on a film about a teacup, left the lights a little up and sold out the next week.", "Saturday Morning Pictures now runs every weekend at 11:00, and nobody minds a bit of noise."],
+  };
+  const noteBody = $("[data-n-body]").innerHTML;
+  function renderNote(params) {
+    const post = posts.find((p) => p.dataset.post === params.get("id")) ?? posts[0];
+    const id = post.dataset.post;
+    $("[data-n-cat]").textContent = $(".eyebrow", post).textContent;
+    $("[data-n-title]").textContent = $("h2", post).textContent;
+    $("[data-n-meta]").textContent = $(".meta", post).textContent;
+    $("[data-n-art]").setAttribute("src", $("img", post).getAttribute("src"));
+    if (POSTS[id]) $("[data-n-body]").replaceChildren(...POSTS[id].map((text) => { const p = document.createElement("p"); p.textContent = text; return p; }));
+    else $("[data-n-body]").innerHTML = noteBody;
+    return $("h2", post).textContent;
+  }
+
+  /* ---------- Visit: open now? (opening and closing minutes per weekday, 0 = Monday; past midnight counts on) ---------- */
+  const HOURS = [[720, 1410], [720, 1410], [720, 1410], [720, 1410], [630, 1500], [630, 1500], [630, 1380]];
+  function paintStatus() {
+    const today = weekdayAt(0);
+    const yesterday = (today + 6) % 7;
+    const now = nowMin();
+    const [open, close] = HOURS[today];
+    const late = HOURS[yesterday][1] > 1440 && now < HOURS[yesterday][1] - 1440;
+    const isOpen = late || (now >= open && now < close);
+    const status = $("[data-status]");
+    status.classList.toggle("closed", !isOpen);
+    status.textContent = isOpen ? `Open now, until ${clock(late ? HOURS[yesterday][1] : close)}` : now < open ? `Closed now, opens at ${clock(open)}` : `Closed now, opens tomorrow at ${clock(HOURS[(today + 1) % 7][0])}`;
+  }
+
+  /* ---------- FAQ: search, and the first questions repeated on the home page ---------- */
+  const faqItems = $$("[data-faq] details");
+  $("[data-faq-home]").append(...faqItems.slice(0, 4).map((item) => { const copy = item.cloneNode(true); copy.open = false; return copy; }));
+  $("#faq-q").addEventListener("input", (event) => {
+    const term = event.target.value.trim().toLowerCase();
+    let shown = 0;
+    faqItems.forEach((item) => { const match = !term || item.textContent.toLowerCase().includes(term); item.hidden = !match; if (match) shown += 1; });
+    $$("[data-faq] h2").forEach((heading) => { let next = heading.nextElementSibling; let any = false; while (next && next.tagName === "DETAILS") { if (!next.hidden) any = true; next = next.nextElementSibling; } heading.hidden = !any; });
+    $("[data-faq-empty]").hidden = shown > 0;
+  });
+
+  /* ---------- Menu ---------- */
+  const menu = $("#menu");
+  const menuButton = $("#menu-btn");
+  const setMenu = (open) => {
+    menu.hidden = !open;
+    menuButton.setAttribute("aria-expanded", String(open));
+    $("use", menuButton).setAttribute("href", open ? "#i-close" : "#i-menu");
+  };
+  menuButton.addEventListener("click", () => setMenu(menu.hidden));
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !menu.hidden) { setMenu(false); menuButton.focus(); } });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const parentOf = { film: "programme", note: "journal", join: "membership" };
+  const homeTitle = document.title;
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    const { params } = route;
+    if (current && current !== views.get(name)) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    setMenu(false);
+    if (dialog.open) dialog.close();
+    let title = name === "home" ? "" : $("h1", current).textContent;
+    if (name === "programme") { renderGuide(); programme.apply(params); }
+    if (name === "film") title = nameOf(renderFilm(params));
+    if (name === "note") title = renderNote(params);
+    if (name === "join") {
+      const plan = params.get("plan");
+      $$("input[name='plan']").forEach((radio) => { radio.checked = radio.value === plan; });
+      if (params.get("bill") === "year" || params.get("bill") === "month") { bill = params.get("bill"); paintBill(); }
+      paintCard();
+    }
+    if (name === "hire" && params.get("topic")) $("#c-topic").value = $(`#c-topic option[value="${CSS.escape(params.get("topic"))}"]`) ? params.get("topic") : "";
+    document.title = title ? `${title} · Nightjar` : homeTitle;
+    const section = parentOf[name] || name;
+    $$(".nav a, .menu a").forEach((a) => { if (parse(a.getAttribute("href")).view === section) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    const target = params.get("at") && current.querySelector(`#${CSS.escape(params.get("at"))}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); go(href); return; }
+    const target = href.length > 1 && document.querySelector(href);
+    if (!target) return;
+    event.preventDefault();
+    target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    if (target.tabIndex === -1) target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Enter a valid email address.", tooShort: "Please write a little more.", rangeUnderflow: "That's too few.", rangeOverflow: "That's more than the room holds." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    let problem = "";
+    if (field.matches("fieldset")) problem = $("input:checked", field) ? "" : "Choose one to continue.";
+    else {
+      const key = Object.keys(messages).find((k) => field.validity[k]);
+      if (key) problem = field.type === "checkbox" ? "Please tick this box to continue." : field.tagName === "SELECT" ? "Please choose one." : field.type === "password" && key === "tooShort" ? "Use at least 8 characters." : messages[key];
+    }
+    error.textContent = problem;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  function resetForm(form) {
+    form.hidden = false;
+    form.reset();
+    $$("[aria-invalid]", form).forEach((field) => field.removeAttribute("aria-invalid"));
+    $$(".err", form).forEach((error) => { error.textContent = ""; });
+    const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+    if (success) success.hidden = true;
+    $("[data-b-total]").textContent = "$0";
+    $("#b-err").textContent = "";
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input[aria-describedby], textarea[aria-describedby], select[aria-describedby], fieldset[data-group-required]", form);
+    fields.forEach((field) => field.addEventListener(field.matches("fieldset, [type=checkbox], select") ? "change" : "blur", () => { if (field.value || field.matches("fieldset, [type=checkbox]") || field.getAttribute("aria-invalid")) checkField(field); }));
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    const label = button.innerHTML;
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const extra = form.dataset.form === "booking" ? checkBooking() : true;
+      if (!fields.map(checkField).every(Boolean) || !extra) {
+        const first = fields.find((f) => f.getAttribute("aria-invalid") === "true");
+        (first?.matches("fieldset") ? $("input", first) : first)?.focus();
+        return;
+      }
+      button.disabled = true;
+      button.textContent = button.dataset.busy || "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        button.disabled = false;
+        button.innerHTML = label;
+        const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+        if (form.dataset.form === "booking") {
+          const counts = ticketRows.map((row) => [Number($("output", row).value), $("div", row).firstChild.textContent.trim()]).filter(([n]) => n).map(([n, kind]) => `${n} × ${kind}`).join(", ");
+          $("[data-b-done]").textContent = `${counts} for ${nameOf(booking.id)}, ${dayName(booking.day)} at ${booking.time}, Screen ${FILMS[booking.id].screen}. Your tickets are on their way to ${$("#b-email").value.trim()}.`;
+        }
+        if (form.dataset.form === "signup") $("[data-j-done]").textContent = `Welcome, ${$("#j-name").value.trim().split(" ")[0]}. Your ${PLAN_NAMES[$("input[name='plan']:checked").value]} card is on its way to ${$("#j-email").value.trim()}.`;
+        if (success) { success.hidden = false; success.focus({ preventScroll: true }); }
+      }, 700);
+    });
+  });
+
+  /* ---------- Start ---------- */
+  paintDeck();
+  paintBill();
+  focusTile(tiles[0]);
+  tick();
+  setInterval(tick, 30000);
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" preserveAspectRatio="xMidYMid slice">
+<defs>
+<radialGradient id="bg" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#252525"/><stop offset=".55" stop-color="#090909"/><stop offset="1" stop-color="#000"/></radialGradient>
+<linearGradient id="deck" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e2e2e"/><stop offset="1" stop-color="#161616"/></linearGradient>
+<linearGradient id="scr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1a04"/><stop offset="1" stop-color="#020402"/></linearGradient>
+<pattern id="keys" width="34" height="30" patternUnits="userSpaceOnUse" patternTransform="matrix(1 .08 -.62 .5 0 0)"><rect x="3" y="3" width="28" height="24" rx="3" fill="#0f0f0f"/></pattern>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+<filter id="glow" x="-.3" y="-.3" width="1.6" height="1.6"><feGaussianBlur stdDeviation="14"/></filter>
+<clipPath id="c"><path d="M560 230 1140 268 1120 620 545 586z"/></clipPath>
+</defs>
+<rect width="1600" height="1000" fill="url(#bg)"/>
+<ellipse cx="820" cy="790" rx="560" ry="60" fill="url(#shadow)"/>
+<path d="M545 586 1120 620 1300 760 640 735z" fill="url(#deck)"/>
+<path d="M600 610 1100 640 1230 735 690 715z" fill="url(#keys)"/>
+<path d="M830 742 970 747 958 772 822 768z" fill="#121212" opacity=".9"/>
+<path d="M540 215 1150 255 1128 632 528 596z" fill="#1b1b1b"/>
+<path d="M560 230 1140 268 1120 620 545 586z" fill="url(#scr)"/>
+<g clip-path="url(#c)" fill="none" stroke="#79bb00" stroke-width="2" opacity=".85">
+<path d="M520 520q120-90 240-30t240-40 240 10M520 480q120-90 240-30t240-40 240 10M520 440q120-90 240-30t240-40 240 10M520 400q120-90 240-30t240-40 240 10M520 360q120-90 240-30t240-40 240 10"/>
+<path d="M600 300 640 620M700 290 730 630M800 280 820 640M900 280 910 640M1000 290 1000 640M1100 300 1090 640" stroke-opacity=".5"/>
+</g>
+<path d="M700 420q120-90 240-30" stroke="#9be01a" stroke-width="18" fill="none" opacity=".35" filter="url(#glow)" clip-path="url(#c)"/>
+<path d="M540 215 1150 255" stroke="#cfcfcf" stroke-opacity=".5" stroke-width="2.5"/>
+<path d="M640 735 1300 760" stroke="#bdbdbd" stroke-opacity=".45" stroke-width="2.5"/>
+</svg>

@@ -1,0 +1,1543 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Maplefold: apps and devices for everyday work</title>
+<meta name="description" content="Maplefold makes six apps in one plan and the laptops, tablets and meeting gear that run them, for households and small teams.">
+<meta property="og:title" content="Maplefold: apps and devices for everyday work">
+<meta property="og:description" content="Six apps in one plan, plus the devices that run them.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/open-sans-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font ---------- */
+@font-face { font-family: "Open Sans"; src: url("fonts/open-sans-latin-wght.woff2") format("woff2"); font-weight: 300 800; font-display: swap; }
+
+/* ---------- Tokens: light by default, following the system; each color is light-dark(light, dark) ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(100% 0 0), oklch(17% 0.014 265));
+  --band: light-dark(oklch(97.5% 0.01 245), oklch(20% 0.022 258));
+  --grey: light-dark(oklch(96.2% 0.003 260), oklch(14.5% 0.012 265));
+  --surface: light-dark(oklch(100% 0 0), oklch(22.5% 0.018 265));
+  --surface-2: light-dark(oklch(96.4% 0.005 260), oklch(27% 0.02 265));
+  --text: light-dark(oklch(21% 0.03 262), oklch(96.5% 0.005 260));
+  --text-body: light-dark(oklch(31% 0.02 262), oklch(88% 0.01 260));
+  --text-muted: light-dark(oklch(46% 0.018 262), oklch(76% 0.014 262));
+  --border: light-dark(oklch(90.5% 0.007 262), oklch(32% 0.02 265));
+  --border-strong: light-dark(oklch(74% 0.012 262), oklch(48% 0.02 265));
+  --accent: light-dark(oklch(50% 0.155 252), oklch(75% 0.12 245));
+  --accent-hover: light-dark(oklch(43% 0.145 254), oklch(82% 0.095 245));
+  --accent-text: light-dark(oklch(100% 0 0), oklch(18% 0.035 262));
+  --link: light-dark(oklch(47% 0.155 252), oklch(79% 0.105 245));
+  --navy: light-dark(oklch(31% 0.085 258), oklch(85% 0.065 245));
+  --navy-text: light-dark(oklch(100% 0 0), oklch(18% 0.035 262));
+  --chip: light-dark(oklch(95.3% 0.024 245), oklch(27% 0.045 252));
+  --badge: light-dark(oklch(45% 0.17 318), oklch(74% 0.13 318));
+  --badge-text: light-dark(oklch(100% 0 0), oklch(18% 0.04 318));
+  --notice: light-dark(oklch(45% 0.17 318), oklch(36% 0.13 318));
+  --focus: light-dark(oklch(50% 0.155 252), oklch(78% 0.11 245));
+  --success: light-dark(oklch(50% 0.13 150), oklch(78% 0.14 150));
+  --danger: light-dark(oklch(52% 0.19 27), oklch(74% 0.15 25));
+  --wash: light-dark(oklch(98.6% 0.007 75), oklch(17% 0.014 265));
+  --w1: light-dark(oklch(92% 0.045 300), oklch(29% 0.07 295));
+  --w2: light-dark(oklch(94% 0.04 55), oklch(25% 0.045 20));
+  --w3: light-dark(oklch(93.5% 0.035 225), oklch(27% 0.055 235));
+  --g1: oklch(58% 0.17 255);
+  --g2: oklch(60% 0.17 300);
+  --g3: oklch(72% 0.12 195);
+  --scrim: oklch(17% 0.02 265);
+  --shadow-card: 0 1px 3px light-dark(oklch(25% 0.03 260 / 0.07), oklch(0% 0 0 / 0.3)), 0 10px 28px -12px light-dark(oklch(25% 0.03 260 / 0.16), oklch(0% 0 0 / 0.55));
+  --shadow-overlay: 0 2px 6px light-dark(oklch(25% 0.03 260 / 0.08), oklch(0% 0 0 / 0.35)), 0 24px 56px -16px light-dark(oklch(25% 0.03 260 / 0.24), oklch(0% 0 0 / 0.7));
+
+  --font: "Open Sans", ui-sans-serif, system-ui, sans-serif;
+  --fs-display: clamp(2.5rem, 1.3rem + 3.6vw, 4rem);
+  --fs-h1: clamp(2.125rem, 1.45rem + 2.1vw, 3.25rem);
+  --fs-h2: clamp(1.75rem, 1.35rem + 1.3vw, 2.5rem);
+  --fs-h3: 1.25rem;
+  --fs-body: 1rem;
+  --fs-small: 0.8125rem;
+
+  --r-control: 4px;
+  --r-panel: 12px;
+  --r-media: 16px;
+  --r-card: 24px;
+  --r-pill: 999px;
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --dur-slow: 560ms;
+  --ease: cubic-bezier(0.33, 0, 0.1, 1);
+
+  --page: 1296px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --sec: clamp(56px, 7vw, 96px);
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* Product art tints (backgrounds behind drawn devices) and device colors */
+.t-sage { --tint: linear-gradient(160deg, light-dark(oklch(93% 0.035 150), oklch(34% 0.035 160)), light-dark(oklch(84% 0.05 165), oklch(25% 0.03 180))); }
+.t-sky { --tint: linear-gradient(160deg, light-dark(oklch(94% 0.03 235), oklch(33% 0.05 245)), light-dark(oklch(85% 0.055 245), oklch(24% 0.04 255))); }
+.t-sand { --tint: linear-gradient(160deg, light-dark(oklch(95% 0.03 75), oklch(34% 0.035 65)), light-dark(oklch(87% 0.045 60), oklch(25% 0.03 50))); }
+.t-lilac { --tint: linear-gradient(160deg, light-dark(oklch(93.5% 0.035 300), oklch(32% 0.06 300)), light-dark(oklch(85% 0.06 290), oklch(24% 0.05 285))); }
+.t-mint { --tint: linear-gradient(160deg, light-dark(oklch(94.5% 0.03 190), oklch(33% 0.04 195)), light-dark(oklch(87% 0.05 200), oklch(24% 0.035 205))); }
+.t-rose { --tint: linear-gradient(160deg, light-dark(oklch(95% 0.028 20), oklch(33% 0.045 15)), light-dark(oklch(88% 0.045 15), oklch(25% 0.035 10))); }
+[data-c="sage"] { --dev: oklch(82% 0.035 150); --dev-2: oklch(38% 0.03 155); --kb: oklch(60% 0.05 150); }
+[data-c="graphite"] { --dev: oklch(44% 0.01 260); --dev-2: oklch(22% 0.01 260); --kb: oklch(32% 0.012 260); }
+[data-c="sand"] { --dev: oklch(88% 0.03 80); --dev-2: oklch(46% 0.03 70); --kb: oklch(72% 0.05 70); }
+[data-c="silver"] { --dev: oklch(90% 0.005 260); --dev-2: oklch(33% 0.012 260); --kb: oklch(76% 0.01 260); }
+.a-body { fill: var(--dev, oklch(90% 0.005 260)); }
+.a-edge { fill: var(--dev-2, oklch(33% 0.012 260)); }
+.a-kb { fill: var(--kb, oklch(76% 0.01 260)); }
+.a-cable { stroke: var(--dev-2, oklch(33% 0.012 260)); }
+.a-sh { fill: oklch(20% 0.03 260 / 0.14); }
+.a-lens { fill: oklch(16% 0.02 260); }
+.a-kbg { opacity: var(--kb-o, 1); }
+.a-peng { opacity: var(--pen-o, 0); }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3, h4 { margin: 0; font-weight: 600; line-height: 1.15; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+button, input, select, textarea { font: inherit; color: inherit; }
+::selection { background: color-mix(in oklch, var(--accent) 24%, transparent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.skip { position: absolute; left: 12px; top: -48px; padding: 8px 12px; background: var(--accent); color: var(--accent-text); border-radius: var(--r-control); z-index: 100; }
+.skip:focus { top: 12px; }
+.wrap { position: relative; width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.narrow { width: min(100% - 2 * var(--gutter), 800px); margin-inline: auto; }
+.center { text-align: center; }
+.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.icon-sm { width: 16px; height: 16px; }
+.muted { color: var(--text-muted); }
+.small { font-size: var(--fs-small); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.section { padding-block: var(--sec); }
+.band { background: var(--band); }
+.wash { background: radial-gradient(55% 60% at 6% 0%, var(--w1), transparent 72%), radial-gradient(45% 55% at 96% 8%, var(--w2), transparent 72%), radial-gradient(75% 50% at 50% 100%, var(--w3), transparent 76%), var(--wash); }
+
+/* ---------- Type ---------- */
+.display { font-size: var(--fs-display); letter-spacing: -0.028em; line-height: 1.08; }
+.h1 { font-size: var(--fs-h1); letter-spacing: -0.024em; line-height: 1.12; }
+.h2 { font-size: var(--fs-h2); letter-spacing: -0.02em; line-height: 1.16; }
+.h3 { font-size: var(--fs-h3); letter-spacing: -0.01em; line-height: 1.3; }
+.h4 { font-size: 1.0625rem; line-height: 1.35; }
+.lead { font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); color: var(--text-body); line-height: 1.5; max-width: 40em; }
+.center .lead { margin-inline: auto; }
+.more { display: inline-flex; align-items: center; gap: 4px; color: var(--link); font-weight: 600; text-decoration: none; }
+.more:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* Text links end in a drawn chevron */
+.more::after { content: ""; width: 7px; height: 7px; margin-left: 3px; border: solid currentColor; border-width: 2px 2px 0 0; transform: rotate(45deg); transition: transform var(--dur-base) var(--ease); }
+.more:hover::after { transform: translateX(3px) rotate(45deg); }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 18px; border-radius: var(--r-control); border: 1.5px solid transparent; font-size: 0.9375rem; font-weight: 600; line-height: 1; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.btn-lg { min-height: 48px; padding: 0 26px; font-size: 1rem; }
+.btn-sm { min-height: 34px; padding: 0 12px; font-size: 0.875rem; }
+.btn-block { width: 100%; }
+.btn-primary { background: var(--accent); color: var(--accent-text); }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-outline { background: transparent; color: var(--navy); border-color: var(--navy); }
+.btn-outline:hover { background: var(--chip); }
+.btn-light { background: oklch(100% 0 0); color: oklch(21% 0.03 262); }
+.btn-light:hover { background: oklch(93% 0.01 250); }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; }
+.center .btn-row { justify-content: center; }
+.link-btn { padding: 0; border: 0; background: none; color: var(--link); font-size: 0.875rem; font-weight: 600; cursor: pointer; }
+.link-btn:hover { text-decoration: underline; text-underline-offset: 3px; }
+.badge { display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 2px; background: var(--badge); color: var(--badge-text); font-size: 0.8125rem; font-weight: 700; white-space: nowrap; }
+
+/* ---------- Segmented switch and chips (signature) ---------- */
+.seg { display: inline-flex; gap: 4px; padding: 5px; border-radius: var(--r-pill); background: var(--surface); box-shadow: var(--shadow-card); max-width: 100%; }
+.seg button { min-height: 44px; padding: 0 24px; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--navy); font-size: 0.9375rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background-color var(--dur-base) var(--ease), color var(--dur-base) var(--ease); }
+.seg button:hover { background: var(--chip); }
+.seg [aria-pressed="true"], .seg [aria-selected="true"], .seg [aria-pressed="true"]:hover, .seg [aria-selected="true"]:hover { background: var(--navy); color: var(--navy-text); }
+.seg-sm button { min-height: 36px; padding: 0 16px; font-size: 0.875rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.center .chips, .chips.center { justify-content: center; }
+.chip { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 14px; border-radius: var(--r-pill); border: 1px solid var(--navy); background: var(--chip); color: var(--navy); font-size: 0.9375rem; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease); }
+.chip:hover { background: color-mix(in oklch, var(--chip), var(--navy) 12%); }
+.chip[aria-pressed="true"] { background: var(--navy); color: var(--navy-text); }
+.chip .n { opacity: 0.75; font-size: 0.8125rem; }
+
+/* ---------- Ask box (signature): large field with a gradient edge ---------- */
+.ask { position: relative; display: flex; align-items: center; width: 100%; max-width: 990px; margin-inline: auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-control); box-shadow: var(--shadow-card); overflow: hidden; text-align: left; }
+.ask::after { content: ""; position: absolute; inset: auto 0 0; height: 4px; background: linear-gradient(90deg, var(--g1), var(--g2) 55%, var(--g3)); }
+.ask:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ask input { flex: 1; min-width: 0; height: 60px; padding: 0 20px 4px; border: 0; background: transparent; font-size: 1.0625rem; }
+.ask input::placeholder { color: var(--text-muted); }
+.ask input:focus { outline: none; }
+.ask button { display: grid; place-items: center; width: 56px; height: 56px; margin-bottom: 4px; border: 0; background: none; color: var(--accent); cursor: pointer; }
+.ask button:hover { color: var(--accent-hover); }
+.hint { margin: 32px 0 14px; color: var(--text-body); font-size: 0.9375rem; }
+
+/* ---------- Header ---------- */
+.site-header { position: relative; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--border); }
+.header-inner { display: flex; align-items: center; gap: 4px; min-height: 56px; }
+.brand { display: inline-flex; align-items: center; gap: 8px; margin-right: 18px; color: var(--text); font-size: 1.25rem; font-weight: 650; letter-spacing: -0.02em; text-decoration: none; white-space: nowrap; }
+.brand svg { width: 26px; height: 26px; }
+.nav { display: flex; gap: 2px; margin-right: auto; }
+.nav a { padding: 8px 10px; color: var(--text-body); font-size: 0.875rem; text-decoration: none; white-space: nowrap; border-radius: var(--r-control); }
+.nav a:hover, .nav a[aria-current="page"] { color: var(--text); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.tools { display: flex; align-items: center; gap: 2px; }
+.tool { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; min-width: 40px; justify-content: center; padding: 0 8px; border: 0; border-radius: var(--r-control); background: none; color: var(--text-body); font-size: 0.875rem; text-decoration: none; white-space: nowrap; cursor: pointer; }
+.tool:hover { background: var(--surface-2); color: var(--text); }
+.ico { position: relative; display: inline-grid; }
+.count { position: absolute; top: -7px; right: -9px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent); color: var(--accent-text); font-size: 0.6875rem; font-weight: 700; line-height: 18px; text-align: center; }
+.avatar { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid currentColor; }
+.menu-btn { display: none; }
+.notice { background: var(--notice); color: oklch(100% 0 0); }
+.notice-inner { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 12px; min-height: 42px; padding: 8px 44px; text-align: center; font-size: 0.9375rem; font-weight: 500; }
+.notice a { color: inherit; font-weight: 700; text-underline-offset: 4px; }
+.notice button { position: absolute; right: 0; top: 50%; translate: 0 -50%; display: grid; place-items: center; width: 40px; height: 40px; border: 0; background: none; color: inherit; cursor: pointer; }
+.sheet { border: 0; padding: 0; margin: 0 auto 0 0; width: min(340px, 100%); height: 100dvh; max-height: 100dvh; background: var(--bg); color: var(--text); overscroll-behavior: contain; }
+.sheet::backdrop { background: oklch(0% 0 0 / 0.4); }
+.sheet-inner { display: flex; flex-direction: column; padding: 10px 20px 32px; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.sheet a:not(.btn) { padding: 14px 2px; border-bottom: 1px solid var(--border); font-weight: 500; text-decoration: none; }
+.sheet .btn { margin-top: 20px; }
+@media (max-width: 1180px) { .tool-label { display: none; } }
+@media (max-width: 900px) {
+  .nav { display: none; }
+  .menu-btn { display: inline-flex; margin-left: -8px; }
+  .brand { margin-right: auto; }
+}
+@media (max-width: 420px) { .hide-xs { display: none; } .brand { font-size: 1.125rem; } }
+
+/* ---------- Home: hero, product rail, quick links ---------- */
+.hero { padding-top: clamp(40px, 6vw, 76px); }
+.hero .display { max-width: 15em; margin-inline: auto; margin-bottom: clamp(28px, 4vw, 44px); }
+.hero .chips { margin-top: 18px; }
+.rail-zone { padding-top: clamp(48px, 6vw, 80px); }
+.rail { --inset: max(var(--gutter), calc((100% - var(--page)) / 2)); position: relative; display: flex; align-items: flex-start; gap: 24px; overflow-x: auto; padding: 0 var(--inset) 16px; scroll-padding-inline: var(--inset); scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.rail::-webkit-scrollbar { display: none; }
+.pcard { position: relative; isolation: isolate; flex: 0 0 clamp(272px, 29.6vw, 420px); aspect-ratio: 3 / 4; overflow: hidden; border-radius: var(--r-card); background: var(--tint); color: oklch(100% 0 0); box-shadow: var(--shadow-card); scroll-snap-align: start; }
+.pcard-art { position: absolute; z-index: -1; inset: 2% 8% auto; width: 84%; height: auto; }
+.pcard::after { content: ""; position: absolute; z-index: -1; inset: 50% 0 0; background: linear-gradient(to bottom, transparent, oklch(17% 0.02 265 / 0.78) 38%, oklch(17% 0.02 265 / 0.94)); }
+.pcard-body { position: absolute; inset: auto 0 0; display: grid; justify-items: start; gap: 10px; padding: 24px 28px 28px; }
+.pcard-title { font-size: clamp(1.5rem, 1.2rem + 0.8vw, 1.875rem); letter-spacing: -0.02em; }
+.pcard p { margin: 0 0 6px; color: oklch(92% 0.01 260); font-size: 0.9375rem; max-width: 26em; }
+@media (min-width: 901px) { .rail .pcard:nth-child(odd) { margin-top: 32px; } }
+@media (max-width: 900px) { .pcard { flex-basis: min(80vw, 340px); } }
+.rail-nav { display: flex; gap: 10px; padding-top: 16px; }
+.round { display: inline-grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--navy); background: transparent; color: var(--navy); cursor: pointer; transition: background-color var(--dur-fast) var(--ease); }
+.round:hover { background: var(--chip); }
+.round[disabled] { opacity: 0.3; cursor: default; background: transparent; }
+.quick { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 44px; margin: 0; padding: clamp(40px, 5vw, 64px) 0 clamp(48px, 6vw, 80px); list-style: none; }
+.quick a { display: inline-flex; flex-direction: column; align-items: center; gap: 10px; color: var(--navy); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 7px; }
+.quick a:hover { text-decoration-thickness: 2.5px; }
+.quick .icon { display: none; width: 28px; height: 28px; }
+
+/* ---------- Cards and sections ---------- */
+/* Every white card shares one surface: white (or raised navy), a hairline and, for the larger ones, a soft shadow */
+.feature-card, .tile, .card, .plan, .summary, .form-card, .person, .channel, .qa, .table-wrap { background: var(--surface); border: 1px solid var(--border); }
+.feature-card, .tile, .card, .plan, .summary, .form-card { box-shadow: var(--shadow-card); }
+.section-head { max-width: 760px; margin: 0 auto clamp(32px, 4vw, 48px); text-align: center; }
+.section-head .lead { margin: 14px auto 0; }
+.feature-card { display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; border-radius: var(--r-card); }
+.fc-text { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 16px; padding: clamp(28px, 4.5vw, 64px); }
+.fc-text p { margin: 0; color: var(--text-body); max-width: 32em; }
+.fc-art { display: grid; place-items: center; min-height: 300px; padding: 24px; background: var(--tint); }
+.fc-art svg { width: min(100%, 440px); }
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.tile { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 28px; border-radius: var(--r-media); }
+.tile p { margin: 0 0 6px; color: var(--text-body); }
+.app-ico { width: 48px; height: 48px; margin-bottom: 6px; }
+.cards3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.card { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-card); }
+.card-art { display: grid; place-items: center; aspect-ratio: 16 / 9; padding: 12px; background: var(--tint); }
+.card-art svg { height: 100%; width: auto; }
+.card-body { display: flex; flex: 1; flex-direction: column; align-items: flex-start; gap: 10px; padding: 24px 24px 28px; }
+.card-body p { margin: 0 0 8px; color: var(--text-body); }
+.card-body .btn { margin-top: auto; }
+.split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(32px, 5vw, 72px); }
+.split .lead { margin-top: 16px; }
+.ticks { display: grid; gap: 10px; margin: 22px 0 28px; padding: 0; list-style: none; }
+.ticks li { display: flex; align-items: flex-start; gap: 10px; color: var(--text-body); }
+.ticks li::before, .yes::before { content: ""; flex: none; width: 12px; height: 7px; margin: 7px 2px 0; border: solid var(--accent); border-width: 0 0 2px 2px; transform: rotate(-45deg); }
+.panel-art { display: grid; place-items: center; aspect-ratio: 4 / 3; padding: 24px; overflow: hidden; background: var(--tint); border-radius: var(--r-card); }
+@media (max-width: 900px) {
+  .feature-card, .split { grid-template-columns: 1fr; }
+  .tiles, .cards3 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .tiles, .cards3 { grid-template-columns: 1fr; }
+  .quick { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 12px; }
+  .quick li { display: flex; justify-content: center; }
+  .quick a { text-align: center; }
+  .quick .icon { display: block; }
+  .fc-art { min-height: 220px; }
+}
+
+/* ---------- Page heads and breadcrumbs ---------- */
+.page-head { padding: clamp(36px, 5.5vw, 72px) 0 clamp(32px, 4vw, 56px); }
+.page-head .lead { margin-top: 14px; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; padding: 0; list-style: none; color: var(--text-muted); font-size: 0.875rem; }
+.crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--border-strong); }
+.crumbs a { color: var(--link); text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+/* ---------- Shop ---------- */
+.shop-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+.select-wrap { position: relative; display: inline-flex; align-items: center; gap: 10px; font-size: 0.875rem; }
+.select-wrap .icon { position: absolute; right: 10px; bottom: 12px; pointer-events: none; }
+.select { appearance: none; height: 44px; padding: 0 36px 0 12px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--surface); color: var(--text); font-size: 0.9375rem; width: 100%; }
+.select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.shop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 24px; }
+.shop-card { display: flex; flex-direction: column; gap: 6px; }
+.shop-art { position: relative; display: grid; place-items: center; aspect-ratio: 1; margin-bottom: 10px; overflow: hidden; border-radius: var(--r-media); background: var(--tint); }
+.shop-art svg { width: 90%; }
+.shop-art .badge { position: absolute; top: 14px; left: 14px; }
+.shop-card h2 a { text-decoration: none; }
+.shop-card h2 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.shop-card p { margin: 0; color: var(--text-body); font-size: 0.9375rem; }
+.price { color: var(--text); font-size: 1.0625rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.was { margin-right: 6px; color: var(--text-muted); font-weight: 400; text-decoration: line-through; }
+.shop-card .btn-row { margin-top: auto; padding-top: 12px; }
+.empty { display: grid; justify-items: center; gap: 12px; padding: 48px 16px; text-align: center; border: 1px dashed var(--border-strong); border-radius: var(--r-media); color: var(--text-body); }
+@media (max-width: 1100px) { .shop-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 760px) { .shop-grid { grid-template-columns: 1fr 1fr; gap: 28px 16px; } }
+@media (max-width: 340px) { .shop-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Product page ---------- */
+.pd { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: start; gap: clamp(32px, 4.5vw, 72px); }
+@media (min-width: 901px) { .pd-media { position: sticky; top: 24px; } }
+.gallery { display: grid; place-items: center; aspect-ratio: 5 / 4; padding: 6%; border-radius: var(--r-card); background: var(--tint); }
+.gallery svg { width: 100%; }
+[data-show="tablet"] { --kb-o: 0; }
+[data-show="pen"] { --kb-o: 0; --pen-o: 1; }
+.thumbs { display: flex; gap: 12px; margin-top: 14px; }
+.thumb { width: 88px; aspect-ratio: 1; padding: 6px; border: 2px solid transparent; border-radius: var(--r-panel); background: var(--tint); cursor: pointer; }
+.thumb[aria-pressed="true"] { border-color: var(--accent); }
+.buy .lead { margin-top: 12px; font-size: 1.0625rem; }
+.from { margin-top: 10px; font-size: 1.25rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.opt-group { margin: 26px 0 0; padding: 0; border: 0; min-width: 0; }
+.opt-group legend { margin-bottom: 12px; padding: 0; font-weight: 600; }
+.opt-group legend span { color: var(--text-muted); font-weight: 400; }
+.swatches { display: flex; gap: 14px; }
+.swatch { position: relative; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
+.swatch input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+.swatch span { width: 30px; height: 30px; border-radius: 50%; background: var(--dev); box-shadow: inset 0 0 0 1px oklch(0% 0 0 / 0.15); }
+.swatch:has(input:checked) { box-shadow: 0 0 0 2px var(--accent); }
+.swatch:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 3px; }
+.opts { display: grid; gap: 10px; }
+.opt { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--border-strong); border-radius: var(--r-panel); background: var(--surface); cursor: pointer; transition: border-color var(--dur-fast) var(--ease); }
+.opt input { width: 18px; height: 18px; margin: 0; accent-color: var(--accent); }
+.opt b { margin-left: auto; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.opt:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.total-row { display: flex; justify-content: space-between; align-items: baseline; margin: 24px 0 16px; padding-top: 18px; border-top: 1px solid var(--border); }
+.total-row strong { font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+.perks { display: grid; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; color: var(--text-body); font-size: 0.9375rem; }
+.perks li { display: flex; gap: 10px; align-items: center; }
+.tab-zone { padding-top: clamp(48px, 6vw, 80px); }
+.tab-zone .seg { margin-bottom: 32px; }
+.highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.highlights .tile .icon { width: 28px; height: 28px; color: var(--accent); }
+.specs { margin: 0; border-top: 1px solid var(--border); }
+.specs div { display: grid; grid-template-columns: 240px 1fr; gap: 8px 24px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+.specs dt { font-weight: 600; }
+.specs dd { margin: 0; color: var(--text-body); }
+@media (max-width: 900px) { .pd { grid-template-columns: 1fr; } .highlights { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .specs div { grid-template-columns: 1fr; } .thumb { width: 72px; } }
+
+/* ---------- FAQ and help articles ---------- */
+.qa-list { display: grid; gap: 12px; }
+.qa { border-radius: var(--r-panel); }
+.qa summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 22px; font-weight: 600; cursor: pointer; list-style: none; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary .icon { transition: transform var(--dur-base) var(--ease); }
+.qa[open] summary .icon { transform: rotate(180deg); }
+.qa-body { padding: 0 22px 20px; color: var(--text-body); }
+.qa-body p:last-child { margin: 0; }
+.qa .tag { display: block; margin-bottom: 2px; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; }
+
+/* ---------- Plans ---------- */
+.plan-controls { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 20px; margin-top: 28px; }
+.plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding-top: 14px; }
+.plan-grid.two { grid-template-columns: repeat(2, 1fr); max-width: 880px; margin-inline: auto; }
+.plan { position: relative; display: flex; flex-direction: column; padding: 34px 28px 28px; border-radius: var(--r-card); }
+.plan.featured { border: 2px solid var(--accent); }
+.plan > .badge { position: absolute; top: -13px; left: 26px; }
+.plan .amount { display: block; margin-top: 14px; font-size: 2.25rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.plan .per { color: var(--text-muted); font-size: 0.875rem; }
+.plan > p { margin: 10px 0 0; color: var(--text-body); }
+.apps-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 4px; }
+.apps-row svg { width: 28px; height: 28px; }
+.plan .ticks { margin: 16px 0 24px; font-size: 0.9375rem; }
+.plan .btn-row { margin-top: auto; flex-direction: column; align-items: stretch; }
+.plan .more { justify-content: center; }
+.table-wrap { position: relative; overflow-x: auto; border-radius: var(--r-media); }
+.compare { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 0.9375rem; }
+.compare th, .compare td { padding: 14px 18px; border-bottom: 1px solid var(--border); text-align: center; }
+.compare thead th { background: var(--surface-2); font-weight: 600; }
+.compare th[scope="row"], .compare thead th:first-child { text-align: left; font-weight: 500; }
+.compare tr:last-child > * { border-bottom: 0; }
+.yes::before { display: inline-block; margin: 0 0 3px; }
+.dash { color: var(--text-muted); }
+@media (max-width: 900px) { .plan-grid, .plan-grid.two { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; gap: 32px; } }
+
+/* ---------- Support ---------- */
+.topics { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.topic { display: flex; align-items: center; gap: 12px; min-height: 60px; padding: 10px 14px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--surface); color: var(--text); font-size: 0.9375rem; text-align: left; cursor: pointer; transition: border-color var(--dur-fast) var(--ease); }
+.topic:hover { border-color: var(--navy); }
+.topic[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.sq { display: grid; place-items: center; width: 36px; height: 36px; flex: none; border-radius: 9px; background: var(--chip); color: var(--navy); }
+.help-grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 40px; align-items: start; }
+.help-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+.feedback { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 28px; color: var(--text-body); }
+@media (max-width: 900px) { .help-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Cart ---------- */
+.cart { display: grid; grid-template-columns: minmax(0, 1fr) 400px; align-items: start; gap: clamp(28px, 4vw, 56px); }
+.lines { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--border); }
+.line { display: grid; grid-template-columns: 112px minmax(0, 1fr) auto; gap: 20px; padding: 22px 0; border-bottom: 1px solid var(--border); }
+.line-art { display: grid; place-items: center; aspect-ratio: 1; padding: 6px; border-radius: var(--r-panel); background: var(--tint); }
+.line p { margin: 4px 0 12px; }
+.line-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.line-price { font-variant-numeric: tabular-nums; }
+.qty { display: inline-flex; align-items: center; border: 1px solid var(--border-strong); border-radius: var(--r-control); }
+.qty button { display: grid; place-items: center; width: 36px; height: 36px; border: 0; background: none; cursor: pointer; }
+.qty button:hover { background: var(--surface-2); }
+.qty output { min-width: 26px; text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; }
+.summary { padding: clamp(22px, 3vw, 32px); border-radius: var(--r-card); }
+.sum-row { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; color: var(--text-body); font-variant-numeric: tabular-nums; }
+.sum-total { margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--border); color: var(--text); font-size: 1.125rem; font-weight: 700; }
+.checkout { margin-top: 18px; padding-top: 20px; border-top: 1px solid var(--border); }
+@media (max-width: 960px) { .cart { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .line { grid-template-columns: 76px minmax(0, 1fr); } .line-price { grid-column: 2; } }
+
+/* ---------- About ---------- */
+.people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.person { display: flex; align-items: center; gap: 16px; padding: 20px; border-radius: var(--r-media); }
+.initials { display: grid; place-items: center; flex: none; width: 56px; height: 56px; border-radius: 50%; background: var(--chip); color: var(--navy); font-weight: 700; }
+.person p { margin: 0; color: var(--text-muted); font-size: 0.9375rem; }
+@media (max-width: 900px) { .people { grid-template-columns: 1fr; } }
+
+/* ---------- Forms ---------- */
+.contact-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: start; gap: clamp(28px, 4vw, 64px); }
+.channels { display: grid; gap: 14px; }
+.channel { display: flex; gap: 14px; align-items: flex-start; padding: 20px; border-radius: var(--r-media); }
+.channel p { margin: 4px 0 0; color: var(--text-body); font-size: 0.9375rem; }
+.channel a { color: var(--link); font-weight: 600; }
+.form-card { padding: clamp(22px, 3.2vw, 40px); border-radius: var(--r-card); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 18px; }
+.field { display: grid; align-content: start; gap: 6px; }
+.field.full { grid-column: 1 / -1; }
+.label { font-size: 0.875rem; font-weight: 600; }
+.label span { color: var(--text-muted); font-weight: 400; }
+.input { width: 100%; height: 44px; padding: 0 12px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--surface); color: var(--text); font-size: 1rem; }
+textarea.input { height: auto; min-height: 132px; padding: 10px 12px; resize: vertical; }
+.input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.input[aria-invalid="true"] { border-color: var(--danger); }
+.input[aria-invalid="true"]:focus { box-shadow: 0 0 0 1px var(--danger); }
+/* Errors live in a reserved line under each field, so the submit button never moves */
+.error { min-height: 1.45em; color: var(--danger); font-size: 0.8125rem; line-height: 1.45; }
+.check { display: flex; align-items: flex-start; gap: 10px; margin: 6px 0 18px; color: var(--text-body); font-size: 0.9375rem; }
+.check input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--accent); }
+.success { display: flex; align-items: flex-start; gap: 14px; padding: 24px; border: 1px solid color-mix(in oklch, var(--success) 40%, var(--border)); border-radius: var(--r-media); background: color-mix(in oklch, var(--success) 9%, var(--surface)); }
+.success .icon { color: var(--success); width: 24px; height: 24px; }
+.success p { margin: 4px 0 0; color: var(--text-body); }
+.auth { display: grid; place-items: center; padding: clamp(40px, 7vw, 96px) 0; }
+.auth-card { width: min(100%, 460px); }
+.auth-card .brand { margin-bottom: 20px; }
+.auth-links { display: grid; gap: 8px; margin-top: 18px; font-size: 0.9375rem; }
+.auth-links a { color: var(--link); font-weight: 600; text-decoration: none; }
+@media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Legal and 404 ---------- */
+.prose { color: var(--text-body); }
+.prose h2 { margin: 36px 0 10px; color: var(--text); font-size: 1.375rem; }
+.notfound { padding: clamp(64px, 10vw, 128px) 0; }
+
+/* ---------- Footer ---------- */
+.site-footer { padding: 48px 0 28px; background: var(--grey); color: var(--text-muted); font-size: 0.8125rem; }
+.footer-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px; }
+.footer-grid h2 { margin-bottom: 14px; color: var(--text-body); font-size: 0.9375rem; }
+.footer-grid ul { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.footer-grid a, .footer-bottom a { color: var(--text-muted); text-decoration: none; }
+.footer-grid a:hover, .footer-bottom a:hover { color: var(--text); text-decoration: underline; }
+.footer-bottom { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 44px; }
+.region { position: relative; display: inline-flex; align-items: center; gap: 8px; }
+.region select { appearance: none; padding: 6px 4px; border: 0; background: none; color: var(--text-muted); font-size: 0.8125rem; cursor: pointer; }
+.footer-bottom nav { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-left: auto; }
+@media (max-width: 900px) { .footer-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-bottom nav { margin-left: 0; } }
+
+/* ---------- Views, toast and motion ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.toast { position: fixed; left: 50%; bottom: 24px; z-index: 60; translate: -50% 0; display: flex; align-items: center; gap: 14px; width: max-content; max-width: calc(100% - 32px); padding: 12px 14px 12px 18px; border-radius: var(--r-panel); background: var(--text); color: var(--bg); box-shadow: var(--shadow-overlay); font-size: 0.9375rem; }
+.toast a { color: inherit; font-weight: 700; white-space: nowrap; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+.toast:not([hidden]) { animation: rise var(--dur-base) var(--ease); }
+.js .enter { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 80ms); }
+.js .reveal:not(.is-in) { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+.pcard, .tile, .card, .shop-art { transition: transform var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease); }
+.pcard:hover, .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-overlay); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .pcard:hover, .card:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <button class="tool menu-btn" type="button" id="menu-open" aria-label="Open menu" aria-controls="menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    <a class="brand" href="#/" aria-label="Maplefold home"><svg aria-hidden="true"><use href="#mark"/></svg>Maplefold</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/products?cat=apps">Apps</a>
+      <a href="#/products?cat=devices">Devices</a>
+      <a href="#/plans">Plans</a>
+      <a href="#/plans?for=business">Business</a>
+      <a href="#/support">Support</a>
+    </nav>
+    <div class="tools">
+      <a class="tool hide-xs" href="#/support"><span class="tool-label">Search</span><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><span class="sr-only">Search help</span></a>
+      <a class="tool" href="#/cart" id="cart-link" aria-label="Cart"><span class="tool-label">Cart</span><span class="ico"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg><span class="count" data-cart-count hidden>0</span></span></a>
+      <button class="tool" type="button" id="theme-toggle" aria-label="Switch to dark theme"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="tool" href="#/signin"><span class="tool-label">Sign in</span><span class="avatar"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-user"/></svg></span><span class="sr-only">Sign in</span></a>
+    </div>
+  </div>
+</header>
+<div class="notice" id="notice">
+  <div class="wrap notice-inner"><span>Back to school: save up to $150 on Ridge 15 until September 30.</span><a href="#/products?cat=devices">Shop the offer</a><button type="button" id="notice-close" aria-label="Dismiss this offer"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+</div>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-inner">
+    <div class="sheet-top"><span class="brand"><svg aria-hidden="true"><use href="#mark"/></svg>Maplefold</span><button class="tool" type="button" id="menu-close" aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <a href="#/products?cat=apps">Apps</a><a href="#/products?cat=devices">Devices</a><a href="#/plans">Plans</a><a href="#/plans?for=business">Business</a><a href="#/support">Support</a><a href="#/about">About</a><a href="#/contact">Contact</a>
+    <a class="btn btn-primary btn-lg" href="#/signin">Sign in</a>
+  </div>
+</dialog>
+
+<main id="main" tabindex="-1">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="wash">
+    <div class="hero wrap center">
+      <h1 class="display enter">Hello. Let's get things done.</h1>
+      <div class="seg enter" style="--i:1" data-seg="aud" role="group" aria-label="Show products for">
+        <button type="button" data-value="home" aria-pressed="true">For home</button>
+        <button type="button" data-value="business" aria-pressed="false">For business</button>
+      </div>
+      <p class="hint enter" style="--i:2">Ask about plans, devices or your account</p>
+      <form class="ask enter" style="--i:3" data-ask role="search" novalidate>
+        <label class="sr-only" for="home-q">Ask a question</label>
+        <input id="home-q" name="q" type="search" placeholder="Ask a question" autocomplete="off">
+        <button type="submit" aria-label="Search help"><svg class="icon" aria-hidden="true"><use href="#i-send"/></svg></button>
+      </form>
+      <div class="chips enter" style="--i:4">
+        <button class="chip" type="button" data-aud="home" data-q="pick plan">Help me pick a plan</button>
+        <button class="chip" type="button" data-aud="home" data-q="compare leaf ridge">Compare Leaf and Ridge</button>
+        <button class="chip" type="button" data-aud="home" data-q="reset password">Reset my password</button>
+        <button class="chip" type="button" data-aud="business" data-q="add people team">Add people to my team</button>
+        <button class="chip" type="button" data-aud="business" data-q="move files">Move files from another suite</button>
+        <button class="chip" type="button" data-aud="business" data-q="meeting room">Set up a meeting room</button>
+      </div>
+    </div>
+    <div class="rail-zone">
+      <div class="rail" id="rail" role="region" aria-label="Featured" tabindex="0">
+        <article class="pcard t-sage" data-aud="home">
+          <svg class="pcard-art" data-c="sage" viewBox="0 0 400 300" aria-hidden="true"><use href="#art-leaf"/></svg>
+          <div class="pcard-body"><span class="badge">New</span><h2 class="pcard-title">Leaf 13</h2><p>A tablet when you want one, a laptop when you need one.</p><a class="btn btn-light" href="#/product">Shop now<span class="sr-only">: Leaf 13</span></a></div>
+        </article>
+        <article class="pcard t-sky" data-aud="home">
+          <svg class="pcard-art" data-c="silver" viewBox="0 0 400 300" aria-hidden="true"><use href="#art-ridge"/></svg>
+          <div class="pcard-body"><span class="badge">Save $150</span><h2 class="pcard-title">Ridge 15</h2><p>A 15-inch laptop with a quiet keyboard and an all-day battery.</p><a class="btn btn-light" href="#/products?cat=devices">Shop now<span class="sr-only">: Ridge 15</span></a></div>
+        </article>
+        <article class="pcard t-lilac" data-aud="home">
+          <svg class="pcard-art" viewBox="0 0 400 300" aria-hidden="true"><use href="#art-suite"/></svg>
+          <div class="pcard-body"><span class="badge">First month free</span><h2 class="pcard-title">Maplefold One</h2><p>Six apps, 1 TB of storage and Assist, in one plan.</p><a class="btn btn-light" href="#/plans">See plans<span class="sr-only">: Maplefold One</span></a></div>
+        </article>
+        <article class="pcard t-sand" data-aud="home">
+          <svg class="pcard-art" data-c="graphite" viewBox="0 0 400 300" aria-hidden="true"><use href="#art-keys"/></svg>
+          <div class="pcard-body"><h2 class="pcard-title">Travel Keys</h2><p>A slim keyboard that pairs with three devices at once.</p><a class="btn btn-light" href="#/products?cat=accessories">Shop now<span class="sr-only">: accessories</span></a></div>
+        </article>
+        <article class="pcard t-sky" data-aud="business">
+          <svg class="pcard-art" viewBox="0 0 400 300" aria-hidden="true"><use href="#art-suite"/></svg>
+          <div class="pcard-body"><span class="badge">For business</span><h2 class="pcard-title">Maplefold for teams</h2><p>Apps, storage and admin tools from $5 per person a month.</p><a class="btn btn-light" href="#/plans?for=business">See business plans</a></div>
+        </article>
+        <article class="pcard t-lilac" data-aud="business">
+          <svg class="pcard-art" data-c="graphite" viewBox="0 0 400 300" aria-hidden="true"><use href="#art-bar"/></svg>
+          <div class="pcard-body"><span class="badge">New</span><h2 class="pcard-title">Huddle Bar</h2><p>One bar turns any room into a meeting room.</p><a class="btn btn-light" href="#/products?cat=business">Shop now<span class="sr-only">: Huddle Bar</span></a></div>
+        </article>
+        <article class="pcard t-mint" data-aud="business">
+          <svg class="pcard-art" data-c="graphite" viewBox="0 0 400 300" aria-hidden="true"><use href="#art-ridge"/></svg>
+          <div class="pcard-body"><h2 class="pcard-title">Ridge 15 for Business</h2><p>Volume pricing, setup and support for your whole fleet.</p><a class="btn btn-light" href="#/contact?topic=sales">Talk to sales</a></div>
+        </article>
+      </div>
+      <div class="wrap rail-nav">
+        <button class="round" type="button" id="rail-prev" aria-label="Previous" aria-controls="rail"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button>
+        <button class="round" type="button" id="rail-next" aria-label="Next" aria-controls="rail"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+      </div>
+    </div>
+    <ul class="quick wrap">
+      <li><a href="#/products?cat=devices"><svg class="icon" aria-hidden="true"><use href="#i-laptop"/></svg>Shop devices</a></li>
+      <li><a href="#/plans"><svg class="icon" aria-hidden="true"><use href="#i-apps"/></svg>Shop Maplefold One</a></li>
+      <li><a href="#/products?cat=accessories"><svg class="icon" aria-hidden="true"><use href="#i-pen"/></svg>Accessories</a></li>
+      <li><a href="#/plans?for=business"><svg class="icon" aria-hidden="true"><use href="#i-case"/></svg>Shop for business</a></li>
+      <li><a href="#/support?topic=orders"><svg class="icon" aria-hidden="true"><use href="#i-box"/></svg>Track an order</a></li>
+      <li><a href="#/support"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg>Get support</a></li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="feature-card reveal">
+        <div class="fc-text">
+          <span class="badge">Limited-time offer</span>
+          <h2 class="h2">Your first month of Maplefold One is on us</h2>
+          <p>Write, Grid, Huddle, Locker, Planner and Assist, with 1 TB of storage for each person. Start any plan this month and pay nothing until next month.</p>
+          <div class="btn-row"><a class="btn btn-primary" href="#/plans">Get the offer</a><a class="more" href="#/plans?for=business">Plans for business</a></div>
+        </div>
+        <div class="fc-art t-lilac"><svg viewBox="0 0 400 300" role="img" aria-label="The six Maplefold app icons"><use href="#art-suite"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band" id="apps">
+    <div class="wrap">
+      <div class="section-head reveal"><h2 class="h2">Six apps that work as one</h2><p class="lead">Files, chats and tasks stay in sync, so you spend less time looking for things and more time finishing them.</p></div>
+      <div class="tiles" id="app-tiles"><p class="muted center">Write, Grid, Huddle, Locker, Planner and Assist.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal"><h2 class="h2">Get started in an afternoon</h2><p class="lead">Short guides from our support team for the first things most people set up.</p></div>
+      <div class="cards3">
+        <article class="card reveal"><div class="card-art t-sky"><svg viewBox="0 0 400 300" aria-hidden="true"><use href="#art-suite"/></svg></div><div class="card-body"><h3 class="h3">Move your files in one go</h3><p>Bring documents, sheets and folders over from another suite without renaming a thing.</p><a class="btn btn-primary" href="#/support?q=move+files">Read the guide</a></div></article>
+        <article class="card reveal"><div class="card-art t-lilac"><svg data-c="graphite" viewBox="0 0 400 300" aria-hidden="true"><use href="#art-bar"/></svg></div><div class="card-body"><h3 class="h3">Run a meeting from any room</h3><p>Mount Huddle Bar, sign in once and every calendar invite gets a join button.</p><a class="btn btn-primary" href="#/support?q=meeting+room">Read the guide</a></div></article>
+        <article class="card reveal"><div class="card-art t-sand"><svg data-c="sand" viewBox="0 0 400 300" aria-hidden="true"><use href="#art-leaf"/></svg></div><div class="card-body"><h3 class="h3">Keep the household on one list</h3><p>Share a Planner board for chores, trips and bills, and get a reminder before anything is due.</p><a class="btn btn-primary" href="#/support?q=planner+share">Read the guide</a></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap split">
+      <div class="reveal">
+        <h2 class="h2">Maplefold for business</h2>
+        <p class="lead">Everything a team needs to write, meet and share files, managed from one admin page.</p>
+        <ul class="ticks">
+          <li>Add or remove people in seconds</li>
+          <li>Choose who can share files outside the company</li>
+          <li>Reach a person on our support team at any hour</li>
+        </ul>
+        <div class="btn-row"><a class="btn btn-primary" href="#/plans?for=business">See business plans</a><a class="btn btn-outline" href="#/contact?topic=sales">Talk to sales</a></div>
+      </div>
+      <div class="panel-art t-mint reveal"><svg data-c="graphite" viewBox="0 0 400 300" role="img" aria-label="Huddle Bar mounted above a screen in a video call"><use href="#art-bar"/></svg></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== SHOP ===================== -->
+<div data-view="products">
+  <section class="page-head wash">
+    <div class="wrap">
+      <ol class="crumbs"><li><a href="#/">Home</a></li><li>Shop</li></ol>
+      <h1 class="h1">Shop Maplefold</h1>
+      <p class="lead">Devices, accessories and plans, with free delivery and 60-day returns.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:40px">
+    <div class="wrap">
+      <div class="shop-bar">
+        <div class="chips" role="group" aria-label="Category">
+          <button class="chip" type="button" data-cat-btn="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" data-cat-btn="devices" aria-pressed="false">Devices</button>
+          <button class="chip" type="button" data-cat-btn="accessories" aria-pressed="false">Accessories</button>
+          <button class="chip" type="button" data-cat-btn="apps" aria-pressed="false">Apps and plans</button>
+          <button class="chip" type="button" data-cat-btn="business" aria-pressed="false">Business</button>
+        </div>
+        <div class="select-wrap"><span class="muted" id="shop-count" aria-live="polite">8 products</span><label class="sr-only" for="sort">Sort by</label><select class="select" id="sort" style="width:auto"><option value="featured">Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option></select><svg class="icon icon-sm" aria-hidden="true"><use href="#i-down"/></svg></div>
+      </div>
+      <div class="shop-grid" id="shop-grid"><p class="muted">Leaf 13, Ridge 15, Huddle Bar, Inkline Pen, Travel Keys, Dock 5 and the Maplefold One plans.</p></div>
+      <div class="empty" id="shop-empty" hidden><strong>Nothing in this category yet.</strong><button class="btn btn-outline btn-sm" type="button" data-cat-btn="all">Show everything</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== PRODUCT ===================== -->
+<div data-view="product">
+  <section class="section" style="padding-top:32px">
+    <div class="wrap">
+      <ol class="crumbs"><li><a href="#/products">Shop</a></li><li><a href="#/products?cat=devices">Devices</a></li><li>Leaf 13</li></ol>
+      <div class="pd" id="pd">
+        <div class="pd-media" data-c="sage">
+          <div class="gallery t-sage" id="gallery" data-show="keyboard"><svg viewBox="0 0 400 300" role="img" aria-label="Leaf 13 with its keyboard cover"><use href="#art-leaf"/></svg></div>
+          <div class="thumbs" role="group" aria-label="Views">
+            <button class="thumb t-sage" type="button" data-thumb="keyboard" aria-pressed="true" aria-label="With keyboard"><svg viewBox="0 0 400 300" aria-hidden="true"><use href="#art-leaf"/></svg></button>
+            <button class="thumb t-sage" type="button" data-thumb="tablet" aria-pressed="false" aria-label="Tablet only"><svg viewBox="0 0 400 300" style="--kb-o:0" aria-hidden="true"><use href="#art-leaf"/></svg></button>
+            <button class="thumb t-sage" type="button" data-thumb="pen" aria-pressed="false" aria-label="With Inkline Pen"><svg viewBox="0 0 400 300" style="--kb-o:0;--pen-o:1" aria-hidden="true"><use href="#art-leaf"/></svg></button>
+          </div>
+        </div>
+        <div class="buy">
+          <span class="badge">New</span>
+          <h1 class="h1" style="margin-top:12px">Maplefold Leaf 13</h1>
+          <p class="lead">A 13-inch tablet with a keyboard that clicks on, so you can sketch on the sofa and finish the report at your desk.</p>
+          <p class="from">From <span id="pd-from">$899.99</span></p>
+          <fieldset class="opt-group"><legend>Color: <span id="pd-color">Sage</span></legend>
+            <div class="swatches">
+              <label class="swatch" data-c="sage"><input type="radio" name="color" value="sage" checked aria-label="Sage"><span></span></label>
+              <label class="swatch" data-c="graphite"><input type="radio" name="color" value="graphite" aria-label="Graphite"><span></span></label>
+              <label class="swatch" data-c="sand"><input type="radio" name="color" value="sand" aria-label="Sand"><span></span></label>
+            </div>
+          </fieldset>
+          <fieldset class="opt-group"><legend>Memory and storage</legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="config" value="8" data-price="899.99" data-label="8 GB memory, 256 GB storage">8 GB memory, 256 GB storage<b>$899.99</b></label>
+              <label class="opt"><input type="radio" name="config" value="16" data-price="1199.99" data-label="16 GB memory, 512 GB storage" checked>16 GB memory, 512 GB storage<b>$1,199.99</b></label>
+              <label class="opt"><input type="radio" name="config" value="32" data-price="1599.99" data-label="32 GB memory, 1 TB storage">32 GB memory, 1 TB storage<b>$1,599.99</b></label>
+            </div>
+          </fieldset>
+          <fieldset class="opt-group"><legend>Add accessories <span>(optional)</span></legend>
+            <div class="opts">
+              <label class="opt"><input type="checkbox" name="addon" value="cover" data-price="129.99">Leaf Type Cover<b>+$129.99</b></label>
+              <label class="opt"><input type="checkbox" name="addon" value="pen" data-price="99.99">Inkline Pen<b>+$99.99</b></label>
+            </div>
+          </fieldset>
+          <div class="total-row"><span>Total</span><strong id="pd-total">$1,199.99</strong></div>
+          <button class="btn btn-primary btn-lg btn-block" type="button" id="pd-add">Add to cart</button>
+          <ul class="perks">
+            <li><svg class="icon" aria-hidden="true"><use href="#i-truck"/></svg>Free delivery in 2 to 4 business days</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-return"/></svg>Free returns within 60 days</li>
+            <li><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>Two-year warranty, three months of Maplefold One Solo</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tab-zone" id="details">
+        <div class="seg seg-sm" role="tablist" aria-label="Product details" data-tabs>
+          <button type="button" role="tab" id="tab-over" aria-controls="panel-over" aria-selected="true">Overview</button>
+          <button type="button" role="tab" id="tab-specs" aria-controls="panel-specs" aria-selected="false" tabindex="-1">Tech specs</button>
+          <button type="button" role="tab" id="tab-plans" aria-controls="panel-plans" aria-selected="false" tabindex="-1">Plans</button>
+        </div>
+        <div role="tabpanel" id="panel-over" aria-labelledby="tab-over">
+          <h2 class="h2" style="margin-bottom:24px">Made to move between modes</h2>
+          <div class="highlights">
+            <div class="tile"><svg class="icon" aria-hidden="true"><use href="#i-battery"/></svg><h3 class="h3">Up to 16 hours of battery</h3><p>A full workday plus the commute home, and a 50 percent charge in about 40 minutes.</p></div>
+            <div class="tile"><svg class="icon" aria-hidden="true"><use href="#i-sun"/></svg><h3 class="h3">A screen that follows the light</h3><p>The 120 Hz display adjusts brightness and warmth to the room, from a dim train to a sunny desk.</p></div>
+            <div class="tile"><svg class="icon" aria-hidden="true"><use href="#i-keys"/></svg><h3 class="h3">A keyboard that clicks into place</h3><p>Magnets line up the Type Cover on the first try; fold it back and the keys turn off.</p></div>
+          </div>
+        </div>
+        <div role="tabpanel" id="panel-specs" aria-labelledby="tab-specs">
+          <h2 class="h2" style="margin-bottom:24px">Tech specs</h2>
+          <dl class="specs">
+            <div><dt>Display</dt><dd>13-inch touchscreen, 2880 by 1920 pixels, up to 120 Hz</dd></div>
+            <div><dt>Processor</dt><dd>8-core processor with on-device graphics</dd></div>
+            <div><dt>Memory and storage</dt><dd>8, 16 or 32 GB memory; 256 GB, 512 GB or 1 TB storage</dd></div>
+            <div><dt>Battery</dt><dd>Up to 16 hours of typical use</dd></div>
+            <div><dt>Cameras</dt><dd>1080p front camera, 10 MP rear camera</dd></div>
+            <div><dt>Ports and wireless</dt><dd>Two USB-C ports, magnetic charging port, Wi-Fi 7, Bluetooth 5.4</dd></div>
+            <div><dt>Weight</dt><dd>880 g tablet, 1.16 kg with Type Cover</dd></div>
+            <div><dt>In the box</dt><dd>Leaf 13, 65 W charger, quick start guide</dd></div>
+          </dl>
+        </div>
+        <div role="tabpanel" id="panel-plans" aria-labelledby="tab-plans">
+          <h2 class="h2" style="margin-bottom:12px">Pair it with a plan</h2>
+          <p class="lead" style="margin-bottom:24px">Leaf 13 comes with three months of Maplefold One Solo. Keep it, share it with the household or move to a team plan.</p>
+          <div class="btn-row"><a class="btn btn-primary" href="#/plans">Compare home plans</a><a class="btn btn-outline" href="#/plans?for=business">Compare business plans</a></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ===================== PLANS ===================== -->
+<div data-view="plans">
+  <section class="page-head wash center">
+    <div class="wrap">
+      <h1 class="h1">Find the plan that fits</h1>
+      <p class="lead">Every plan includes the six apps, Assist and 1 TB of storage per person. Cancel at any time.</p>
+      <div class="plan-controls">
+        <div class="seg" data-seg="aud" role="group" aria-label="Plans for">
+          <button type="button" data-value="home" aria-pressed="true">For home</button>
+          <button type="button" data-value="business" aria-pressed="false">For business</button>
+        </div>
+        <div class="seg seg-sm" data-seg="billing" role="group" aria-label="Billing">
+          <button type="button" data-value="yearly" aria-pressed="true">Pay yearly</button>
+          <button type="button" data-value="monthly" aria-pressed="false">Pay monthly</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section" style="padding-top:24px">
+    <div class="wrap">
+      <div class="plan-grid two" data-aud="home">
+        <article class="plan">
+          <h2 class="h3">Maplefold One Solo</h2>
+          <span class="amount" data-yearly="$79.99" data-monthly="$7.99">$79.99</span><span class="per" data-yearly="per year" data-monthly="per month">per year</span>
+          <p>For one person on up to five devices at once.</p>
+          <div class="apps-row" data-apps></div>
+          <ul class="ticks"><li>Write, Grid, Huddle, Locker, Planner</li><li>1 TB of storage</li><li>Assist with everyday limits</li></ul>
+          <div class="btn-row"><button class="btn btn-primary" type="button" data-add="solo" data-py="79.99" data-pm="7.99" data-opt="Paid yearly" data-price="79.99" data-plan-buy>Buy Solo</button><a class="more" href="#/signin">Try free for one month</a></div>
+        </article>
+        <article class="plan featured">
+          <span class="badge">Best value</span>
+          <h2 class="h3">Maplefold One Household</h2>
+          <span class="amount" data-yearly="$119.99" data-monthly="$11.99">$119.99</span><span class="per" data-yearly="per year" data-monthly="per month">per year</span>
+          <p>For up to six people, each with their own account.</p>
+          <div class="apps-row" data-apps></div>
+          <ul class="ticks"><li>Everything in Solo, for six people</li><li>1 TB of storage each, 6 TB in total</li><li>Shared Planner boards and a family calendar</li></ul>
+          <div class="btn-row"><button class="btn btn-primary" type="button" data-add="household" data-py="119.99" data-pm="11.99" data-opt="Paid yearly" data-price="119.99" data-plan-buy>Buy Household</button><a class="more" href="#/signin">Try free for one month</a></div>
+        </article>
+      </div>
+      <div class="plan-grid" data-aud="business">
+        <article class="plan">
+          <h2 class="h3">Team Essentials</h2>
+          <span class="amount" data-yearly="$5.00" data-monthly="$6.00">$5.00</span><span class="per" data-yearly="user/month, paid yearly" data-monthly="user/month, paid monthly">user/month, paid yearly</span>
+          <p>Web and mobile apps for teams that work in the browser.</p>
+          <div class="apps-row" data-apps="write grid huddle locker"></div>
+          <ul class="ticks"><li>Web and mobile apps</li><li>1 TB of storage per user</li><li>Huddle calls for up to 300 people</li></ul>
+          <div class="btn-row"><button class="btn btn-primary" type="button" data-add="essentials" data-py="5" data-pm="6" data-opt="Per user, paid yearly" data-price="5" data-plan-buy>Buy now</button><a class="more" href="#/contact?topic=sales">Talk to sales</a></div>
+        </article>
+        <article class="plan featured">
+          <span class="badge">Most popular</span>
+          <h2 class="h3">Team Standard</h2>
+          <span class="amount" data-yearly="$11.00" data-monthly="$13.20">$11.00</span><span class="per" data-yearly="user/month, paid yearly" data-monthly="user/month, paid monthly">user/month, paid yearly</span>
+          <p>Desktop apps, Planner and the admin tools most teams need.</p>
+          <div class="apps-row" data-apps="write grid huddle locker planner"></div>
+          <ul class="ticks"><li>Everything in Essentials</li><li>Desktop apps and Planner</li><li>Sharing rules and device management</li></ul>
+          <div class="btn-row"><button class="btn btn-primary" type="button" data-add="standard" data-py="11" data-pm="13.2" data-opt="Per user, paid yearly" data-price="11" data-plan-buy>Buy now</button><a class="more" href="#/contact?topic=sales">Talk to sales</a></div>
+        </article>
+        <article class="plan">
+          <h2 class="h3">Team Plus</h2>
+          <span class="amount" data-yearly="$20.00" data-monthly="$24.00">$20.00</span><span class="per" data-yearly="user/month, paid yearly" data-monthly="user/month, paid monthly">user/month, paid yearly</span>
+          <p>Assist for every person, advanced security and an audit log.</p>
+          <div class="apps-row" data-apps></div>
+          <ul class="ticks"><li>Everything in Standard</li><li>Assist with team limits</li><li>Audit log and data retention rules</li></ul>
+          <div class="btn-row"><button class="btn btn-primary" type="button" data-add="plus" data-py="20" data-pm="24" data-opt="Per user, paid yearly" data-price="20" data-plan-buy>Buy now</button><a class="more" href="#/contact?topic=sales">Talk to sales</a></div>
+        </article>
+      </div>
+
+      <div data-aud="business">
+      <h2 class="h2 center" id="compare" style="margin:clamp(56px,7vw,96px) 0 28px">Compare business plans</h2>
+      <div class="table-wrap">
+        <table class="compare">
+          <caption class="sr-only">Business plans compared</caption>
+          <thead><tr><th scope="col">Feature</th><th scope="col">Essentials</th><th scope="col">Standard</th><th scope="col">Plus</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Web and mobile apps</th><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Desktop apps</th><td class="dash">Not included</td><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Storage per user</th><td>1 TB</td><td>1 TB</td><td>2 TB</td></tr>
+            <tr><th scope="row">Planner</th><td class="dash">Not included</td><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Assist</th><td class="dash">Not included</td><td>Add-on</td><td>Team limits</td></tr>
+            <tr><th scope="row">Audit log</th><td class="dash">Not included</td><td class="dash">Not included</td><td class="yes"><span class="sr-only">Included</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+
+      <div class="narrow" style="margin-top:clamp(56px,7vw,96px)">
+        <h2 class="h2 center" style="margin-bottom:24px">Plan questions</h2>
+        <div class="qa-list">
+          <details class="qa"><summary>How does the free month work?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="qa-body"><p>Start any plan and the first month costs nothing. We remind you three days before the first payment, and you can cancel from your account page.</p></div></details>
+          <details class="qa"><summary>What happens to my files if I cancel?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="qa-body"><p>They stay readable for 90 days, and you can download everything at any time.</p></div></details>
+          <details class="qa"><summary>Do you offer education or nonprofit pricing?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="qa-body"><p>Yes. <a class="more" href="#/contact?topic=sales">Contact sales</a> with a few details about your organization.</p></div></details>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== SUPPORT ===================== -->
+<div data-view="support">
+  <section class="page-head wash center">
+    <div class="wrap">
+      <h1 class="h1">How can we help?</h1>
+      <p class="hint" style="margin-top:14px">Search help articles or pick a topic</p>
+      <form class="ask" data-ask="live" role="search" novalidate>
+        <label class="sr-only" for="help-q">Search help articles</label>
+        <input id="help-q" name="q" type="search" placeholder="Describe the problem" autocomplete="off">
+        <button type="submit" aria-label="Search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+      </form>
+      <div class="chips" style="margin-top:16px">
+        <button class="chip" type="button" data-q="reset password">Reset my password</button>
+        <button class="chip" type="button" data-q="cancel">Cancel a plan</button>
+        <button class="chip" type="button" data-q="return">Start a return</button>
+      </div>
+    </div>
+  </section>
+  <section class="section" style="padding-top:40px">
+    <div class="wrap help-grid">
+      <div>
+        <h2 class="h4" style="margin-bottom:14px">Topics</h2>
+        <div class="topics" role="group" aria-label="Topic">
+          <button class="topic" type="button" data-topic-btn="all" aria-pressed="true"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-apps"/></svg></span>All topics</button>
+          <button class="topic" type="button" data-topic-btn="account" aria-pressed="false"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-user"/></svg></span>Account and sign-in</button>
+          <button class="topic" type="button" data-topic-btn="billing" aria-pressed="false"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-card"/></svg></span>Plans and billing</button>
+          <button class="topic" type="button" data-topic-btn="apps" aria-pressed="false"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg></span>Apps and files</button>
+          <button class="topic" type="button" data-topic-btn="devices" aria-pressed="false"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-laptop"/></svg></span>Devices</button>
+          <button class="topic" type="button" data-topic-btn="orders" aria-pressed="false"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-box"/></svg></span>Orders and returns</button>
+          <button class="topic" type="button" data-topic-btn="business" aria-pressed="false"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-case"/></svg></span>Business admin</button>
+        </div>
+      </div>
+      <div>
+        <div class="help-head"><h2 class="h3">Help articles</h2><span class="muted small" id="help-count" aria-live="polite">9 articles</span></div>
+        <div class="qa-list" id="articles">
+          <details class="qa" data-topic="billing" data-k="pick choose plan solo household which"><summary><span><span class="tag">Plans and billing</span>Which plan is right for me?</span><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="qa-body"><p>Solo covers one person. Household covers up to six people, each with their own files. Teams that need an admin page should look at the business plans.</p><a class="more" href="#/plans">Compare plans</a></div></details>
+          <details class="qa" data-topic="devices" data-k="compare leaf ridge laptop tablet choose"><summary><span><span class="tag">Devices</span>Leaf 13 or Ridge 15: which should I get?</span><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="qa-body"><p>Leaf 13 is a tablet first, with a pen and a keyboard you can take off. Ridge 15 is a laptop with a bigger screen and a longer battery. If you draw or take handwritten notes, choose Leaf.</p></div></details>
+          <details class="qa" data-topic="account" data-k="reset password forgot sign in locked"><summary><span><span class="tag">Account and sign-in</span>Reset your password</span><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="qa-body"><p>On the sign-in page, choose Forgot password and enter your email. The link we send works for 30 minutes.</p></div></details>
+          <details class="qa" data-topic="billing" data-k="cancel change subscription refund renew"><summary><span><span class="tag">Plans and billing</span>Change or cancel a plan</span><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="qa-body"><p>Open Account, then Plans. Changes start at the next renewal; if you cancel within 30 days of a yearly renewal, we refund the full year.</p></div></details>
+          <details class="qa" data-topic="orders" data-k="track order delivery return refund shipping"><summary><span><span class="tag">Orders and returns</span>Track an order or start a return</span><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="qa-body"><p>Every order has a tracking link in its confirmation email. Returns are free for 60 days: print the label from your order page and drop the box at any carrier point.</p></div></details>
+          <details class="qa" data-topic="apps" data-k="move files import another suite migrate"><summary><span><span class="tag">Apps and files</span>Move your files from another suite</span><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="qa-body"><p>In Locker, choose Import and sign in to the service you are leaving. Folders, names and sharing settings come across as they are.</p></div></details>
+          <details class="qa" data-topic="apps" data-k="planner share board household list"><summary><span><span class="tag">Apps and files</span>Share a Planner board</span><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="qa-body"><p>Open the board, choose Share and add people by email. Everyone gets reminders for the cards assigned to them.</p></div></details>
+          <details class="qa" data-topic="devices business" data-k="huddle bar meeting room setup camera"><summary><span><span class="tag">Devices</span>Set up Huddle Bar in a meeting room</span><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="qa-body"><p>Mount the bar above or below the screen, connect one USB-C cable and sign in with the room account. Calendar invites for that room show a join button.</p></div></details>
+          <details class="qa" data-topic="business" data-k="add people team users seats admin"><summary><span><span class="tag">Business admin</span>Add people to your team</span><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div class="qa-body"><p>On the admin page, choose People, then Add. You pay for the new seat from the day it is added.</p></div></details>
+        </div>
+        <div class="empty" id="help-empty" hidden><strong>No articles match that yet.</strong><span>Try fewer words, or ask a person.</span><a class="btn btn-primary btn-sm" href="#/contact?topic=support">Contact support</a></div>
+        <div class="feedback"><span id="fb-q">Did you find what you needed?</span><button class="btn btn-outline btn-sm" type="button" data-helpful>Yes</button><button class="btn btn-outline btn-sm" type="button" data-helpful>No</button><span id="fb-thanks" hidden>Thanks for telling us.</span><a class="more" href="#/contact?topic=support" style="margin-left:auto">Still stuck? Contact support</a></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CART ===================== -->
+<div data-view="cart">
+  <section class="section" style="padding-top:clamp(36px,5vw,64px)">
+    <div class="wrap">
+      <h1 class="h1" style="margin-bottom:28px">Your cart</h1>
+      <div class="success" data-success="checkout" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Thanks, your order is in.</strong><p>Order MF-20417. A receipt is on its way to <span id="receipt-email">your inbox</span>.</p><div class="btn-row" style="margin-top:16px"><a class="btn btn-primary" href="#/products">Keep shopping</a></div></div></div>
+      <div class="empty" id="cart-empty" hidden><strong>Your cart is empty.</strong><span>Plans and devices you add show up here.</span><div class="btn-row"><a class="btn btn-primary" href="#/products">Shop devices</a><a class="btn btn-outline" href="#/plans">See plans</a></div></div>
+      <div class="cart" id="cart-full">
+        <ul class="lines" id="lines" aria-label="Items in your cart"></ul>
+        <div class="summary">
+          <h2 class="h3" style="margin-bottom:14px">Order summary</h2>
+          <div class="sum-row"><span>Subtotal (<span id="sum-count">2 items</span>)</span><span id="sum-sub">$1,299.98</span></div>
+          <div class="sum-row"><span>Delivery</span><span>Free</span></div>
+          <div class="sum-row"><span>Estimated tax</span><span>At checkout</span></div>
+          <div class="sum-row sum-total"><span>Total</span><span id="sum-total">$1,299.98</span></div>
+          <form class="checkout form-grid" data-form="checkout" novalidate>
+            <div class="field full"><label class="label" for="co-email">Email for the receipt</label><input class="input" id="co-email" name="email" type="email" autocomplete="email" required aria-describedby="co-email-error"><span class="error" id="co-email-error" aria-live="polite"></span></div>
+            <div class="field"><label class="label" for="co-name">Full name</label><input class="input" id="co-name" name="name" autocomplete="name" required aria-describedby="co-name-error"><span class="error" id="co-name-error" aria-live="polite"></span></div>
+            <div class="field"><label class="label" for="co-zip">Postal code</label><input class="input" id="co-zip" name="postal" autocomplete="postal-code" required minlength="3" aria-describedby="co-zip-error"><span class="error" id="co-zip-error" aria-live="polite"></span></div>
+            <div class="field full"><button class="btn btn-primary btn-lg btn-block" type="submit">Place order</button><p class="small muted" style="margin:10px 0 0">You will not be charged in this preview.</p></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<div data-view="about">
+  <section class="page-head wash center">
+    <div class="wrap">
+      <h1 class="h1">We make everyday work feel lighter</h1>
+      <p class="lead">Maplefold started in 2014 as one shared to-do list. Today we make six apps and the devices that run them, for households and teams in 40 countries.</p>
+    </div>
+  </section>
+  <section class="section band">
+    <div class="wrap">
+      <div class="section-head"><h2 class="h2">What we believe</h2></div>
+      <div class="cards3">
+        <div class="tile reveal"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg></span><h3 class="h3">Simple by default</h3><p>Every app opens to the thing you came to do. Settings wait until you need them.</p></div>
+        <div class="tile reveal"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg></span><h3 class="h3">Private by design</h3><p>Your files are yours. We do not sell data, and Assist only reads what you share with it.</p></div>
+        <div class="tile reveal"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-return"/></svg></span><h3 class="h3">Built to last</h3><p>Devices get six years of updates, and batteries and keyboards can be replaced.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="leaders">
+    <div class="wrap">
+      <div class="section-head"><h2 class="h2">Leadership</h2></div>
+      <div class="people">
+        <div class="person"><span class="initials" aria-hidden="true">IV</span><div><h3 class="h4">Ines Varga</h3><p>Co-founder and chief executive</p></div></div>
+        <div class="person"><span class="initials" aria-hidden="true">TR</span><div><h3 class="h4">Tobias Reyne</h3><p>Head of devices</p></div></div>
+        <div class="person"><span class="initials" aria-hidden="true">AO</span><div><h3 class="h4">Amara Osei</h3><p>Head of design</p></div></div>
+      </div>
+      <div class="center" style="margin-top:clamp(48px,6vw,72px)"><h2 class="h2" id="careers">Want to work with us?</h2><p class="lead" style="margin:14px auto 24px">We hire across design, engineering and support, in four offices and remotely.</p><div class="btn-row"><a class="btn btn-primary" href="#/contact?topic=careers">Get in touch</a></div></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div data-view="contact">
+  <section class="page-head wash">
+    <div class="wrap">
+      <h1 class="h1">Talk to us</h1>
+      <p class="lead">Questions about plans, devices or setting up a team? Send a note and a person replies within one business day.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:40px">
+    <div class="wrap contact-grid">
+      <div class="channels">
+        <div class="channel"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-case"/></svg></span><div><h2 class="h4">Sales</h2><p>Plans for teams of 10 or more, volume device pricing. <a href="#/plans?for=business">Business plans</a></p></div></div>
+        <div class="channel"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg></span><div><h2 class="h4">Support</h2><p>Most answers are already in the <a href="#/support">help center</a>.</p></div></div>
+        <div class="channel"><span class="sq"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></span><div><h2 class="h4">Press</h2><p>press@maplefold.example</p></div></div>
+        <p class="small muted" style="margin:8px 0 0">Maplefold, Inc., 400 Harbor Row, Alder Point</p>
+      </div>
+      <div class="form-card">
+        <form class="form-grid" data-form="contact" novalidate>
+          <div class="field"><label class="label" for="c-name">Full name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-error"><span class="error" id="c-name-error" aria-live="polite"></span></div>
+          <div class="field"><label class="label" for="c-email">Work email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-error"><span class="error" id="c-email-error" aria-live="polite"></span></div>
+          <div class="field"><label class="label" for="c-company">Company <span>(optional)</span></label><input class="input" id="c-company" name="company" autocomplete="organization"><span class="error"></span></div>
+          <div class="field"><label class="label" for="c-size">Team size</label><span class="select-wrap" style="display:block"><select class="select" id="c-size" name="size"><option>Just me</option><option>2 to 10</option><option>11 to 50</option><option>51 to 300</option><option>More than 300</option></select><svg class="icon icon-sm" aria-hidden="true"><use href="#i-down"/></svg></span><span class="error"></span></div>
+          <div class="field full"><label class="label" for="c-topic">Topic</label><span class="select-wrap" style="display:block"><select class="select" id="c-topic" name="topic" required aria-describedby="c-topic-error"><option value="">Choose a topic</option><option value="sales">Buying for a team</option><option value="support">Help with something I own</option><option value="partners">Partnerships</option><option value="careers">Careers</option></select><svg class="icon icon-sm" aria-hidden="true"><use href="#i-down"/></svg></span><span class="error" id="c-topic-error" aria-live="polite"></span></div>
+          <div class="field full"><label class="label" for="c-msg">Message</label><textarea class="input" id="c-msg" name="message" required minlength="20" aria-describedby="c-msg-error"></textarea><span class="error" id="c-msg-error" aria-live="polite"></span></div>
+          <label class="check field full"><input type="checkbox" name="news">Send me occasional product news</label>
+          <div class="field full"><button class="btn btn-primary btn-lg" type="submit">Send message</button></div>
+        </form>
+        <div class="success" data-success="contact" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Message sent.</strong><p>A person on our team will reply within one business day.</p></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== SIGN IN ===================== -->
+<div data-view="signin">
+  <section class="wash auth">
+    <div class="wrap" style="display:grid;place-items:center">
+      <div class="form-card auth-card">
+        <span class="brand"><svg aria-hidden="true"><use href="#mark"/></svg>Maplefold</span>
+        <h1 class="h2" style="margin-bottom:22px">Sign in</h1>
+        <form data-form="signin" novalidate>
+          <div class="field"><label class="label" for="s-email">Email</label><input class="input" id="s-email" name="email" type="email" autocomplete="email" required aria-describedby="s-email-error"><span class="error" id="s-email-error" aria-live="polite"></span></div>
+          <div class="field"><label class="label" for="s-pass">Password</label><input class="input" id="s-pass" name="password" type="password" autocomplete="current-password" required minlength="8" aria-describedby="s-pass-error"><span class="error" id="s-pass-error" aria-live="polite"></span></div>
+          <label class="check"><input type="checkbox" name="keep">Keep me signed in</label>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Sign in</button>
+        </form>
+        <div class="success" data-success="signin" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Welcome back.</strong><p>You are signed in on this device.</p></div></div>
+        <div class="auth-links"><a href="#/support?q=reset+password">Forgot your password?</a><a href="#/plans">New here? Start a free month</a></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="legal">
+  <section class="section">
+    <div class="narrow prose">
+      <h1 class="h1" style="color:var(--text)">Privacy and terms</h1>
+      <p class="lead" style="margin-top:14px">The short version of how we handle your data and what you agree to.</p>
+      <h2 id="privacy">Privacy</h2>
+      <p>We collect your account details, your payment details for purchases and the files you store with us. We use them to run the service and nothing else.</p>
+      <p>We never sell personal data. Assist reads a file only when you ask it to, and it does not train on your files.</p>
+      <h2 id="terms">Terms of use</h2>
+      <p>You keep ownership of everything you create. Plans renew until you cancel, and you can export your files at any time.</p>
+      <p>Write to legal@maplefold.example with any question.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="wash notfound center">
+    <div class="wrap"><p class="muted">Error 404</p><h1 class="h1" style="margin-top:8px">We can't find that page</h1><p class="lead" style="margin:16px auto 28px">The link may be old or mistyped. Try the home page or search help.</p><div class="btn-row"><a class="btn btn-primary" href="#/">Go home</a><a class="btn btn-outline" href="#/support">Search help</a></div></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><h2>Shop</h2><ul><li><a href="#/product">Leaf 13</a></li><li><a href="#/products?cat=devices">Ridge 15</a></li><li><a href="#/products?cat=accessories">Accessories</a></li><li><a href="#/plans">Maplefold One</a></li></ul></div>
+      <div><h2>Apps</h2><ul><li><a href="#apps">Write and Grid</a></li><li><a href="#apps">Huddle</a></li><li><a href="#apps">Locker</a></li><li><a href="#apps">Planner and Assist</a></li></ul></div>
+      <div><h2>Business</h2><ul><li><a href="#/plans?for=business">Business plans</a></li><li><a href="#/products?cat=business">Meeting rooms</a></li><li><a href="#/contact?topic=sales">Talk to sales</a></li></ul></div>
+      <div><h2>Support</h2><ul><li><a href="#/support">Help center</a></li><li><a href="#/support?topic=orders">Orders and returns</a></li><li><a href="#/cart">Your cart</a></li><li><a href="#/contact">Contact us</a></li></ul></div>
+      <div><h2>Company</h2><ul><li><a href="#/about">About Maplefold</a></li><li><a href="#careers">Careers</a></li><li><a href="#leaders">Leadership</a></li><li><a href="#privacy">Privacy</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <label class="region"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-globe"/></svg><span class="sr-only">Region</span><select><option>English (United States)</option><option>English (United Kingdom)</option><option>English (Singapore)</option></select></label>
+      <nav aria-label="Legal"><a href="#privacy">Privacy</a><a href="#terms">Terms of use</a><a href="#/contact">Contact</a><span>© 2026 Maplefold, Inc.</span></nav>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden><span id="toast-text">Added to your cart.</span><a href="#/cart">View cart</a></div>
+
+<!-- ===================== SVG SPRITE: icons, app icons and drawn products ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="scr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cbc3f7"/><stop offset=".55" stop-color="#a8d0f6"/><stop offset="1" stop-color="#ffd8c4"/></linearGradient>
+    <linearGradient id="gm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f7cf0"/><stop offset="1" stop-color="#17b2a5"/></linearGradient>
+    <linearGradient id="gw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4b8bf5"/><stop offset="1" stop-color="#2456d6"/></linearGradient>
+    <linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3cc28a"/><stop offset="1" stop-color="#178c5c"/></linearGradient>
+    <linearGradient id="gh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9b7df8"/><stop offset="1" stop-color="#5d3ed8"/></linearGradient>
+    <linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4cc0f2"/><stop offset="1" stop-color="#1b83cc"/></linearGradient>
+    <linearGradient id="gp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb36b"/><stop offset="1" stop-color="#ee6c3b"/></linearGradient>
+    <linearGradient id="ga" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff8fb1"/><stop offset=".5" stop-color="#9b5cf6"/><stop offset="1" stop-color="#3f8cf5"/></linearGradient>
+    <pattern id="keycaps" x="62" y="110" width="23" height="20" patternUnits="userSpaceOnUse"><rect x="1" y="1" width="20" height="17" rx="3.5" fill="#000" fill-opacity=".16"/></pattern>
+    <symbol id="mark" viewBox="0 0 24 24"><path d="M3.5 20.5V11A7.5 7.5 0 0 1 11 3.5h9.5V13a7.5 7.5 0 0 1-7.5 7.5z" fill="url(#gm)"/><path d="M7.2 16.8 15.8 8.2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <!-- App icons: a 48px rounded square in one gradient with a white glyph -->
+    <symbol id="app-write" viewBox="0 0 48 48"><rect width="48" height="48" rx="13" fill="url(#gw)"/><path d="M14 16h20M14 23h20M14 30h12" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></symbol>
+    <symbol id="app-grid" viewBox="0 0 48 48"><rect width="48" height="48" rx="13" fill="url(#gg)"/><g fill="none" stroke="#fff" stroke-width="2.6"><rect x="13" y="13" width="22" height="22" rx="4"/><path d="M13 21h22M13 28h22M21 13v22"/></g></symbol>
+    <symbol id="app-huddle" viewBox="0 0 48 48"><rect width="48" height="48" rx="13" fill="url(#gh)"/><rect x="11" y="16" width="18" height="16" rx="4" fill="#fff"/><path d="M31 21.5l7-4.5v14l-7-4.5z" fill="#fff"/></symbol>
+    <symbol id="app-locker" viewBox="0 0 48 48"><rect width="48" height="48" rx="13" fill="url(#gl)"/><g fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><rect x="12" y="15" width="24" height="19" rx="4"/><path d="M12 22h24M21 27.5h6"/></g></symbol>
+    <symbol id="app-planner" viewBox="0 0 48 48"><rect width="48" height="48" rx="13" fill="url(#gp)"/><path d="M13 18l3 3 5-6M13 31l3 3 5-6M26 18h9M26 31h9" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="app-assist" viewBox="0 0 48 48"><rect width="48" height="48" rx="13" fill="url(#ga)"/><path d="M24 11c1.4 6.6 5.4 10.6 12 12-6.6 1.4-10.6 5.4-12 12-1.4-6.6-5.4-10.6-12-12 6.6-1.4 10.6-5.4 12-12z" fill="#fff"/></symbol>
+    <!-- Drawn products (400 by 300). Color comes from data-c on an ancestor: --dev body, --dev-2 edges, --kb fabric -->
+    <symbol id="art-leaf" viewBox="0 0 400 300"><ellipse cx="200" cy="266" rx="150" ry="9" class="a-sh"/><g class="a-kbg"><path class="a-kb" d="M100 212h200l4 26H96z" opacity=".75"/><path class="a-kb" d="M96 238h208l26 24H70z"/><path d="M106 246h188M100 252h200M94 258h212" stroke="#000" stroke-opacity=".14" stroke-width="3" stroke-dasharray="9 3"/></g><rect class="a-body" x="84" y="44" width="232" height="168" rx="16"/><rect x="94" y="54" width="212" height="148" rx="8" fill="url(#scr)"/><path d="M94 160c40-34 82 6 122-18s56-40 90-26v78a8 8 0 0 1-8 8H102a8 8 0 0 1-8-8z" fill="#fff" fill-opacity=".38"/><g class="a-peng"><rect class="a-body" x="328" y="62" width="11" height="156" rx="5.5"/><path class="a-edge" d="M328 218h11l-5.5 18z"/><rect class="a-edge" x="328" y="92" width="11" height="22" rx="3"/></g></symbol>
+    <symbol id="art-ridge" viewBox="0 0 400 300"><ellipse cx="200" cy="262" rx="165" ry="9" class="a-sh"/><rect class="a-edge" x="100" y="34" width="200" height="150" rx="12"/><rect x="108" y="42" width="184" height="134" rx="5" fill="url(#scr)"/><path d="M108 140c36-30 74 4 110-14s46-34 74-22v67a5 5 0 0 1-5 5H113a5 5 0 0 1-5-5z" fill="#fff" fill-opacity=".38"/><path class="a-body" d="M66 186h268l30 50a8 8 0 0 1-7 12H43a8 8 0 0 1-7-12z"/><path d="M92 200h216M86 212h228M80 224h240" stroke="#000" stroke-opacity=".12" stroke-width="5" stroke-dasharray="12 3"/><rect x="168" y="232" width="64" height="11" rx="3" fill="#000" fill-opacity=".1"/><rect class="a-edge" x="66" y="182" width="268" height="6" rx="3"/></symbol>
+    <symbol id="person" viewBox="0 0 126 60"><circle cx="63" cy="26" r="11" fill="#fff" fill-opacity=".8"/><path d="M43 60a20 17 0 0 1 40 0z" fill="#fff" fill-opacity=".8"/></symbol>
+    <symbol id="art-bar" viewBox="0 0 400 300"><ellipse cx="200" cy="278" rx="110" ry="7" class="a-sh"/><rect class="a-edge" x="186" y="238" width="28" height="34"/><rect class="a-edge" x="140" y="268" width="120" height="8" rx="4"/><rect class="a-edge" x="52" y="80" width="296" height="164" rx="10"/><rect x="60" y="88" width="280" height="148" rx="5" fill="url(#scr)"/><g fill="#5d6b8a" fill-opacity=".22"><rect x="70" y="98" width="128" height="62" rx="6"/><rect x="202" y="98" width="128" height="62" rx="6"/><rect x="70" y="164" width="128" height="62" rx="6"/><rect x="202" y="164" width="128" height="62" rx="6"/></g><use href="#person" x="70" y="100" width="128" height="60"/><use href="#person" x="202" y="100" width="128" height="60"/><use href="#person" x="70" y="166" width="128" height="60"/><use href="#person" x="202" y="166" width="128" height="60"/><rect class="a-body" x="118" y="50" width="164" height="26" rx="13"/><circle class="a-lens" cx="200" cy="63" r="8"/><circle cx="200" cy="63" r="3" fill="#6aa8ff"/><circle class="a-edge" cx="142" cy="63" r="2.5"/><circle class="a-edge" cx="258" cy="63" r="2.5"/></symbol>
+    <symbol id="art-pen" viewBox="0 0 400 300"><ellipse cx="200" cy="246" rx="140" ry="8" class="a-sh"/><g transform="rotate(-28 200 150)"><rect class="a-body" x="60" y="138" width="250" height="24" rx="12"/><path class="a-edge" d="M308 140l40 10-40 10z"/><rect class="a-edge" x="120" y="133" width="46" height="7" rx="3.5"/><rect class="a-edge" x="60" y="138" width="30" height="24" rx="12" opacity=".5"/></g></symbol>
+    <symbol id="art-keys" viewBox="0 0 400 300"><ellipse cx="200" cy="232" rx="165" ry="9" class="a-sh"/><rect class="a-body" x="48" y="96" width="304" height="124" rx="14"/><rect x="62" y="110" width="276" height="80" fill="url(#keycaps)"/><rect x="146" y="194" width="108" height="16" rx="4" fill="#000" fill-opacity=".16"/></symbol>
+    <symbol id="art-dock" viewBox="0 0 400 300"><ellipse cx="190" cy="216" rx="122" ry="8" class="a-sh"/><path class="a-cable" d="M282 172c50 0 40 60 104 60" fill="none" stroke-width="8" stroke-linecap="round"/><rect class="a-body" x="88" y="118" width="200" height="90" rx="18"/><g class="a-edge"><rect x="114" y="160" width="26" height="10" rx="5"/><rect x="150" y="160" width="26" height="10" rx="5"/><rect x="188" y="157" width="34" height="16" rx="3"/><rect x="232" y="157" width="34" height="16" rx="3"/></g><circle cx="268" cy="137" r="3.5" fill="#3ecf8e"/></symbol>
+    <symbol id="art-suite" viewBox="0 0 400 300"><ellipse cx="200" cy="262" rx="140" ry="8" class="a-sh"/><use href="#app-write" x="84" y="66" width="76" height="76"/><use href="#app-grid" x="162" y="48" width="76" height="76"/><use href="#app-huddle" x="240" y="66" width="76" height="76"/><use href="#app-locker" x="84" y="150" width="76" height="76"/><use href="#app-planner" x="162" y="132" width="76" height="76"/><use href="#app-assist" x="240" y="150" width="76" height="76"/></symbol>
+    <!-- Line icons: 24px, 1.6 stroke, round caps -->
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="13.5" cy="10.5" r="6"/><path d="M9.2 14.8 4 20"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2.5l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.3a1.5 1.5 0 0 0 1.5-1.1L21 8H6.3"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1-3.8 4-5.8 7.5-5.8s6.5 2 7.5 5.8"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12 20 4l-4 16-4.5-6.5zM11.5 13.5 20 4"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="10" rx="1.5"/><path d="M2.5 18.5h19"/></symbol>
+    <symbol id="i-apps" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M16.5 3.5l4 4L9 19l-5 1 1-5z"/></symbol>
+    <symbol id="i-case" viewBox="0 0 24 24"><rect x="3.5" y="7" width="17" height="12.5" rx="2"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3.5 12.5h17"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.6v.6M12 17h.01"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 9.5h4l3 3.5v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></symbol>
+    <symbol id="i-return" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1.6 6.4M4 4.5V10h5.5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24"><rect x="3" y="7" width="16" height="10" rx="2"/><path d="M21 10.5v3M6.5 10v4M9.5 10v4M12.5 10v4"/></symbol>
+    <symbol id="i-keys" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M9 10h.01M12 10h.01M15 10h.01M18 10h.01M8 14h8"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3.5c.8 4.2 3.3 6.7 7.5 7.5-4.2.8-6.7 3.3-7.5 7.5-.8-4.2-3.3-6.7-7.5-7.5 4.2-.8 6.7-3.3 7.5-7.5z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const $ = (sel, scope = document) => scope.querySelector(sel);
+  const $$ = (sel, scope = document) => [...scope.querySelectorAll(sel)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks one ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const savedTheme = store.get("maplefold-theme");
+  applyTheme(savedTheme === "light" || savedTheme === "dark" ? savedTheme : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("maplefold-theme", next);
+  });
+
+  /* ---------- Offer notice ---------- */
+  const notice = $("#notice");
+  if (store.get("maplefold-notice") === "closed") notice.hidden = true;
+  $("#notice-close").addEventListener("click", () => { notice.hidden = true; store.set("maplefold-notice", "closed"); });
+
+  /* ---------- Catalog: everything that can sit in the cart. Entries with "cat" are also the shop grid, in this order ---------- */
+  const CATALOG = {
+    leaf: { name: "Maplefold Leaf 13", art: "leaf", tint: "sage", color: "sage", price: 899.99, cat: "devices", badge: "New", from: true, href: "product", desc: "13-inch 2-in-1 with a keyboard that clicks on." },
+    ridge: { name: "Maplefold Ridge 15", art: "ridge", tint: "sky", color: "silver", price: 1099.99, was: 1249.99, cat: "devices", badge: "Save $150", desc: "15-inch laptop with up to 20 hours of battery." },
+    bar: { name: "Huddle Bar", art: "bar", tint: "lilac", color: "graphite", price: 599.99, cat: "devices business", badge: "New", desc: "Camera, speakers and microphones for rooms of up to 12." },
+    pen: { name: "Inkline Pen", art: "pen", tint: "sand", color: "graphite", price: 99.99, cat: "accessories", desc: "Pressure-sensitive pen that charges on the side of Leaf 13." },
+    keys: { name: "Travel Keys", art: "keys", tint: "rose", color: "graphite", price: 119.99, cat: "accessories", desc: "Slim keyboard that pairs with three devices at once." },
+    dock: { name: "Dock 5", art: "dock", tint: "mint", color: "silver", price: 229.99, cat: "accessories business", desc: "One cable for two displays, power and a wired network." },
+    solo: { name: "Maplefold One Solo", art: "suite", tint: "sky", price: 79.99, unit: "/year", cat: "apps", href: "plans", desc: "Six apps and 1 TB of storage for one person." },
+    household: { name: "Maplefold One Household", art: "suite", tint: "lilac", price: 119.99, unit: "/year", cat: "apps", badge: "Best value", href: "plans", desc: "Up to six people, with 1 TB of storage each." },
+    cover: { name: "Leaf Type Cover", art: "keys", tint: "sage", color: "sage", price: 129.99 },
+    essentials: { name: "Team Essentials", art: "suite", tint: "mint", price: 5 },
+    standard: { name: "Team Standard", art: "suite", tint: "sky", price: 11 },
+    plus: { name: "Team Plus", art: "suite", tint: "lilac", price: 20 },
+  };
+  const money = (n) => "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+  /* ---------- Cart: lines live in the store; the sample cart keeps previews from looking empty ---------- */
+  const START_CART = [
+    { sku: "leaf", opt: "Sage, 16 GB memory, 512 GB storage", price: 1199.99, qty: 1, color: "sage" },
+    { sku: "pen", opt: "Graphite", price: 99.99, qty: 1 },
+  ];
+  let cart = null;
+  try { cart = JSON.parse(store.get("maplefold-cart")); } catch { cart = null; }
+  if (!Array.isArray(cart)) cart = START_CART.map((line) => ({ ...line }));
+  const art = (p, color = p.color) => `<svg${color ? ` data-c="${color}"` : ""} viewBox="0 0 400 300" aria-hidden="true"><use href="#art-${p.art}"/></svg>`;
+  const lineArt = (line) => `<div class="line-art t-${CATALOG[line.sku].tint}">${art(CATALOG[line.sku], line.color)}</div>`;
+  function renderCart(focus) {
+    const count = cart.reduce((n, line) => n + line.qty, 0);
+    $$("[data-cart-count]").forEach((el) => { el.textContent = count; el.hidden = count === 0; });
+    $("#cart-link").setAttribute("aria-label", `Cart, ${count} ${count === 1 ? "item" : "items"}`);
+    $("#lines").innerHTML = cart.map((line, i) => {
+      const p = CATALOG[line.sku];
+      return `<li class="line">${lineArt(line)}<div><h2 class="h4">${p.name}</h2><p class="small muted">${line.opt || "&nbsp;"}</p><div class="line-actions"><div class="qty" role="group" aria-label="Quantity of ${p.name}"><button type="button" data-step="-1" data-i="${i}" aria-label="One fewer"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-minus"/></svg></button><output aria-live="polite">${line.qty}</output><button type="button" data-step="1" data-i="${i}" aria-label="One more"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-plus"/></svg></button></div><button class="link-btn" type="button" data-remove="${i}">Remove</button></div></div><strong class="line-price">${money(line.price * line.qty)}</strong></li>`;
+    }).join("");
+    const subtotal = cart.reduce((sum, line) => sum + line.price * line.qty, 0);
+    $("#sum-count").textContent = `${count} ${count === 1 ? "item" : "items"}`;
+    $("#sum-sub").textContent = money(subtotal);
+    $("#sum-total").textContent = money(subtotal);
+    const done = !$('[data-success="checkout"]').hidden;
+    $("#cart-full").hidden = cart.length === 0;
+    $("#cart-empty").hidden = cart.length > 0 || done;
+    if (focus) $(focus)?.focus();
+  }
+  function saveCart(focus) { store.set("maplefold-cart", JSON.stringify(cart)); renderCart(focus); }
+  function addToCart(sku, opt = "", price = CATALOG[sku].price, color) {
+    const line = cart.find((l) => l.sku === sku && l.opt === opt);
+    if (line) line.qty = Math.min(9, line.qty + 1);
+    else cart.push({ sku, opt, price, qty: 1, color });
+    $('[data-success="checkout"]').hidden = true;
+    $('[data-form="checkout"]').hidden = false;
+    saveCart();
+  }
+  $("#lines").addEventListener("click", (event) => {
+    const step = event.target.closest("[data-step]");
+    const remove = event.target.closest("[data-remove]");
+    if (step) {
+      const i = Number(step.dataset.i);
+      cart[i].qty = Math.max(1, Math.min(9, cart[i].qty + Number(step.dataset.step)));
+      saveCart(`[data-i="${i}"][data-step="${step.dataset.step}"]`);
+    } else if (remove) {
+      cart.splice(Number(remove.dataset.remove), 1);
+      saveCart("#lines");
+    }
+  });
+
+  /* ---------- Toast after adding something ---------- */
+  const toast = $("#toast");
+  let toastTimer = 0;
+  function showToast(text) {
+    $("#toast-text").textContent = text;
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.hidden = true; }, 3600);
+  }
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-add]");
+    if (!button) return;
+    const sku = button.dataset.add;
+    addToCart(sku, button.dataset.opt || "", button.dataset.price ? Number(button.dataset.price) : undefined);
+    showToast(`${CATALOG[sku].name} is in your cart.`);
+  });
+
+  /* ---------- Audience switch (home or business) and billing switch ---------- */
+  let audience = "home";
+  let billing = "yearly";
+  function setAudience(value) {
+    audience = value === "business" ? "business" : "home";
+    $$('[data-seg="aud"] button').forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.value === audience)));
+    $$("[data-aud]").forEach((el) => { el.hidden = el.dataset.aud !== audience; });
+    rail.scrollLeft = 0;
+    updateRail();
+  }
+  function setBilling(value) {
+    billing = value === "monthly" ? "monthly" : "yearly";
+    $$('[data-seg="billing"] button').forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.value === billing)));
+    $$(`[data-${billing}]`).forEach((el) => { el.textContent = el.dataset[billing]; });
+    $$("[data-plan-buy]").forEach((b) => {
+      b.dataset.price = billing === "yearly" ? b.dataset.py : b.dataset.pm;
+      b.dataset.opt = b.dataset.opt.replace(/paid (yearly|monthly)/i, (m) => (m[0] === "P" ? "Paid " : "paid ") + billing);
+    });
+  }
+  const segs = { aud: setAudience, billing: setBilling };
+  $$("[data-seg] button").forEach((b) => b.addEventListener("click", () => segs[b.parentElement.dataset.seg](b.dataset.value)));
+  /* The six apps: tiles on home and icon rows in the plan cards (data-apps lists a subset) */
+  const APPS = {
+    write: "Documents that format themselves, with comments and full version history.",
+    grid: "Spreadsheets with ready-made templates and charts that update as you type.",
+    huddle: "Calls, chat and screen sharing for up to 300 people, on any device.",
+    locker: "1 TB of storage per person, with files you can open without a connection.",
+    planner: "Shared lists and boards with due dates, owners and gentle reminders.",
+    assist: "A writing and planning helper that works inside every app, with your files only.",
+  };
+  $("#app-tiles").innerHTML = Object.entries(APPS).map(([a, text]) => `<div class="tile reveal"><svg class="app-ico" aria-hidden="true"><use href="#app-${a}"/></svg><h3 class="h3">${cap(a)}</h3><p>${text}</p><a class="more" href="#/products?cat=apps">Learn more<span class="sr-only"> about ${cap(a)}</span></a></div>`).join("");
+  $$("[data-apps]").forEach((row) => {
+    const apps = row.dataset.apps ? row.dataset.apps.split(" ") : Object.keys(APPS);
+    row.innerHTML = apps.map((a) => `<svg role="img" aria-label="${cap(a)}"><use href="#app-${a}"/></svg>`).join("");
+  });
+
+  /* ---------- Product rail: arrows scroll one card ---------- */
+  const rail = $("#rail");
+  const prev = $("#rail-prev");
+  const next = $("#rail-next");
+  function updateRail() {
+    const max = rail.scrollWidth - rail.clientWidth - 2;
+    prev.disabled = rail.scrollLeft <= 2;
+    next.disabled = rail.scrollLeft >= max;
+  }
+  const railStep = () => ($(".pcard:not([hidden])", rail)?.offsetWidth || 300) + 24;
+  prev.addEventListener("click", () => rail.scrollBy({ left: -railStep(), behavior: reduced.matches ? "auto" : "smooth" }));
+  next.addEventListener("click", () => rail.scrollBy({ left: railStep(), behavior: reduced.matches ? "auto" : "smooth" }));
+  rail.addEventListener("scroll", updateRail, { passive: true });
+  window.addEventListener("resize", updateRail);
+
+  /* ---------- Shop: cards drawn from the catalog, category chips, sort, live count, empty state ---------- */
+  const grid = $("#shop-grid");
+  grid.innerHTML = Object.entries(CATALOG).filter(([, p]) => p.cat).map(([sku, p], i) => `<article class="shop-card" data-cat="${p.cat}" data-price="${p.price}" data-order="${i}"><div class="shop-art t-${p.tint}">${p.badge ? `<span class="badge">${p.badge}</span>` : ""}${art(p)}</div><h2 class="h4"><a href="#/${p.href || `products?cat=${p.cat.split(" ")[0]}`}">${p.name}</a></h2><p>${p.desc}</p><span class="price">${p.was ? `<span class="was">${money(p.was)}</span>` : ""}${p.from ? "From " : ""}${money(p.price)}${p.unit || ""}</span><div class="btn-row">${p.from ? `<a class="btn btn-primary btn-sm" href="#/${p.href}">Choose options</a>` : `<button class="btn btn-primary btn-sm" type="button" data-add="${sku}"${p.unit ? ' data-opt="Paid yearly"' : ""}>Add to cart</button>`}</div></article>`).join("");
+  const shopCards = $$(".shop-card", grid);
+  let category = "all";
+  function applyShop(cat = category) {
+    category = cat;
+    const sort = $("#sort").value;
+    let shown = 0;
+    shopCards.forEach((card) => {
+      const ok = cat === "all" || card.dataset.cat.split(" ").includes(cat);
+      card.hidden = !ok;
+      if (ok) shown++;
+    });
+    const key = (card) => Number(sort === "featured" ? card.dataset.order : card.dataset.price);
+    shopCards.slice().sort((a, b) => (sort === "high" ? key(b) - key(a) : key(a) - key(b))).forEach((card) => grid.append(card));
+    $$("[data-cat-btn]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.catBtn === cat)));
+    $("#shop-count").textContent = `${shown} ${shown === 1 ? "product" : "products"}`;
+    $("#shop-empty").hidden = shown > 0;
+  }
+  $$("[data-cat-btn]").forEach((b) => b.addEventListener("click", () => applyShop(b.dataset.catBtn)));
+  $("#sort").addEventListener("change", () => applyShop());
+
+  /* ---------- Product page: color, configuration, accessories, views ---------- */
+  const pd = $("#pd");
+  const checked = (name) => $(`input[name="${name}"]:checked`, pd);
+  function updateProduct() {
+    const color = checked("color").value;
+    const config = checked("config");
+    const addons = $$('input[name="addon"]:checked', pd);
+    $(".pd-media", pd).dataset.c = color;
+    $("#pd-color").textContent = cap(color);
+    $("#pd-total").textContent = money(Number(config.dataset.price) + addons.reduce((sum, a) => sum + Number(a.dataset.price), 0));
+  }
+  pd.addEventListener("change", updateProduct);
+  $$("[data-thumb]").forEach((thumb) => thumb.addEventListener("click", () => {
+    $$("[data-thumb]").forEach((t) => t.setAttribute("aria-pressed", String(t === thumb)));
+    $("#gallery").dataset.show = thumb.dataset.thumb;
+  }));
+  $("#pd-add").addEventListener("click", () => {
+    const color = checked("color").value;
+    const config = checked("config");
+    addToCart("leaf", `${cap(color)}, ${config.dataset.label}`, Number(config.dataset.price), color);
+    $$('input[name="addon"]:checked', pd).forEach((a) => addToCart(a.value, a.value === "cover" ? cap(color) : "Graphite", undefined, a.value === "cover" ? color : undefined));
+    showToast("Leaf 13 is in your cart.");
+  });
+
+  /* ---------- Tabs (product details) ---------- */
+  $$("[data-tabs]").forEach((list) => {
+    const tabs = $$("[role=tab]", list);
+    const select = (tab) => tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => select(tab));
+      tab.addEventListener("keydown", (event) => {
+        const move = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+        if (!move) return;
+        const target = tabs[(i + move + tabs.length) % tabs.length];
+        select(target);
+        target.focus();
+      });
+    });
+    select(tabs.find((t) => t.getAttribute("aria-selected") === "true") || tabs[0]);
+  });
+
+  /* ---------- Ask boxes and help search ---------- */
+  const helpQuery = $("#help-q");
+  let topic = "all";
+  const STOP = new Set(["a", "an", "the", "to", "my", "me", "i", "how", "do", "can", "for", "of", "and", "in", "on", "with", "help", "what", "is", "it", "or"]);
+  function filterHelp() {
+    const words = helpQuery.value.toLowerCase().split(/[^a-z0-9-]+/).filter((w) => w && !STOP.has(w));
+    let shown = 0;
+    $$("#articles .qa").forEach((article) => {
+      const text = `${article.textContent} ${article.dataset.k}`.toLowerCase();
+      const ok = (topic === "all" || article.dataset.topic.split(" ").includes(topic)) && words.every((w) => text.includes(w));
+      article.hidden = !ok;
+      if (ok) shown++;
+    });
+    $$("[data-topic-btn]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.topicBtn === topic)));
+    $("#help-count").textContent = `${shown} ${shown === 1 ? "article" : "articles"}`;
+    $("#help-empty").hidden = shown > 0;
+  }
+  helpQuery.addEventListener("input", filterHelp);
+  $$("[data-topic-btn]").forEach((b) => b.addEventListener("click", () => { topic = b.dataset.topicBtn; filterHelp(); }));
+  const askHelp = (q) => go(`#/support${q ? `?q=${encodeURIComponent(q)}` : ""}`);
+  $$("form[data-ask]").forEach((form) => {
+    const input = $("input", form);
+    const run = () => {
+      if (form.dataset.ask === "live") { filterHelp(); $("#articles").scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" }); }
+      else askHelp(input.value.trim());
+    };
+    /* Sandboxed frames block native submission, so the button's click runs it too (Enter clicks it) */
+    form.addEventListener("submit", (event) => { event.preventDefault(); run(); });
+    $("button", form).addEventListener("click", (event) => { event.preventDefault(); run(); });
+  });
+  $$("[data-q]").forEach((chip) => chip.addEventListener("click", () => {
+    if (current === views.get("support")) { helpQuery.value = chip.dataset.q; topic = "all"; filterHelp(); }
+    else askHelp(chip.dataset.q);
+  }));
+  $$("[data-helpful]").forEach((b) => b.addEventListener("click", () => {
+    $$("[data-helpful]").forEach((x) => { x.hidden = true; });
+    $("#fb-q").hidden = true;
+    $("#fb-thanks").hidden = false;
+  }));
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "Maplefold: apps and devices for everyday work", products: "Shop · Maplefold", product: "Leaf 13 · Maplefold", plans: "Plans and pricing · Maplefold", support: "Help center · Maplefold", cart: "Your cart · Maplefold", about: "About · Maplefold", contact: "Contact · Maplefold", signin: "Sign in · Maplefold", legal: "Privacy and terms · Maplefold", "404": "Page not found · Maplefold" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query), anchor: "" };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    const p = route.params;
+    $$(".nav a, .sheet a:not(.btn)").forEach((a) => {
+      const target = parse(a.getAttribute("href"));
+      const same = target.view === name && [...target.params].every(([k, v]) => p.get(k) === v) && (name !== "plans" || target.params.has("for") === p.has("for"));
+      if (same) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (name === "products") applyShop(p.get("cat") || "all");
+    if (name === "plans" && p.get("for")) setAudience(p.get("for"));
+    if (name === "support") { helpQuery.value = p.get("q") || ""; topic = p.get("topic") || "all"; filterHelp(); }
+    if (name === "contact" && p.get("topic")) { const select = $("#c-topic"); if ($(`option[value="${CSS.escape(p.get("topic"))}"]`, select)) select.value = p.get("topic"); }
+    if (name === "home") requestAnimationFrame(updateRail);
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      toast.hidden = true;
+      const [route, anchor] = href.split(/(?=#[a-z])/);
+      go(route);
+      if (anchor) document.getElementById(anchor.slice(1))?.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth" });
+      return;
+    }
+    const target = href.length > 1 && document.getElementById(href.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    if (menu.open) menu.close();
+    /* a section ID on another view (footer links to #privacy): open that view first, then scroll */
+    const view = target.closest("[data-view]");
+    if (view && view !== current) go(view.dataset.view === "home" ? "#/" : `#/${view.dataset.view}`);
+    target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    if (target.id === "main") target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Mobile menu ---------- */
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+
+  /* ---------- Reveal: keyframes on entry; content stays visible without JS; timed fallback ---------- */
+  const io = "IntersectionObserver" in window && !reduced.matches ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -6% 0px" }) : null;
+  function observeReveals(scope) {
+    $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in")));
+  }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please add a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    let text = problem ? messages[problem] : "";
+    if (problem === "valueMissing" && field.tagName === "SELECT") text = "Please choose one.";
+    if (problem === "tooShort") text = field.type === "password" ? `Use at least ${field.minLength} characters.` : `Please write at least ${field.minLength} characters.`;
+    error.textContent = text;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  const afterSuccess = {
+    checkout(form) { $("#receipt-email").textContent = form.email.value; cart = []; saveCart(); },
+  };
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input:not([type=checkbox]), textarea, select", form);
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value) checkField(field); });
+      field.addEventListener("input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+      field.addEventListener("change", () => { if (field.tagName === "SELECT") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before "submit" fires, so the button's click runs it too (Enter clicks it). */
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    const send = () => {
+      if (button.disabled) return;
+      if (!fields.map(checkField).every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        const success = $(`[data-success="${form.dataset.form}"]`);
+        form.hidden = true;
+        success.hidden = false;
+        afterSuccess[form.dataset.form]?.(form);
+        form.reset();
+        button.disabled = false;
+        button.textContent = label;
+        success.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "nearest" });
+      }, 700);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+  });
+
+  /* ---------- Start ---------- */
+  setAudience("home");
+  setBilling("yearly");
+  renderCart();
+  updateProduct();
+  const start = parse(location.hash);
+  show(start, { scroll: false });
+  if (start.anchor) document.getElementById(start.anchor.slice(1))?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

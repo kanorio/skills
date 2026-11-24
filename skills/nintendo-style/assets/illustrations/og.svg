@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<rect width="1200" height="630" fill="#fff"/><rect width="1200" height="14" fill="#d40c1a"/>
+<g transform="translate(96 120) scale(2)"><rect width="64" height="64" rx="15" fill="#d40c1a"/><g fill="none" stroke="#fff" stroke-linecap="round" stroke-width="5"><path d="M30 31L12 46"/><path d="M33 38L20 53" opacity=".75"/><path d="M25 27L9 34" opacity=".75"/></g><circle cx="39" cy="25" r="12" fill="#fff"/></g>
+<text x="96" y="370" font-family="Nunito, 'Arial Rounded MT Bold', Arial, sans-serif" font-size="88" font-weight="900" fill="#403c3b">Pocket Comet</text>
+<rect x="96" y="400" width="120" height="8" rx="4" fill="#d40c1a"/>
+<text x="96" y="480" font-family="Nunito, Arial, sans-serif" font-size="36" font-weight="700" fill="#6c6867">Cheerful games and toys, made by the sea</text>
+</svg>

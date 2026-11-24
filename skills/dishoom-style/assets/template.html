@@ -1,0 +1,1415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Lamplight Kopi House: harbour coffee houses, open from half past seven</title>
+<meta name="description" content="Six coffee houses on the old harbour of Port Ellery. Charcoal toast and soft eggs at breakfast, laksa at noon, satay after dark. Book a table or walk in.">
+<meta property="og:title" content="Lamplight Kopi House: harbour coffee houses, open from half past seven">
+<meta property="og:description" content="Six coffee houses on the old harbour of Port Ellery. Charcoal toast and soft eggs at breakfast, laksa at noon, satay after dark.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/brygada-1918-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/cabin-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts: a period serif for everything you read, a humanist sans for small tracked labels ---------- */
+@font-face { font-family: "Brygada 1918"; src: url("fonts/brygada-1918-latin-wght-normal.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Brygada 1918"; src: url("fonts/brygada-1918-latin-wght-italic.woff2") format("woff2"); font-weight: 400 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Cabin"; src: url("fonts/cabin-latin-wght-normal.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: day (light, default) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(94.8% 0.019 86);        /* cream paper */
+  --surface: oklch(97.6% 0.011 86);   /* fresh paper: forms, letters, feast cards */
+  --surface-2: oklch(91.2% 0.027 83); /* sand: sub-navigation, quiet bands */
+  --text: oklch(28.5% 0.013 60);      /* warm ink */
+  --text-muted: oklch(45% 0.022 65);
+  --rule: oklch(30% 0.013 60);        /* frames, double rules, outline buttons */
+  --border: oklch(80.5% 0.026 80);    /* hairlines between rows and columns */
+  --accent: oklch(40% 0.066 205);     /* tile teal: dish names, links that matter */
+  --accent-text: oklch(97.6% 0.011 86);
+  --chilli: oklch(50% 0.16 30);       /* diamond chains, tags, errors */
+  --saffron: oklch(73% 0.135 72);
+  --leaf: oklch(44% 0.085 150);
+  --ink: oklch(20.5% 0.012 60);       /* hero, cafes band and footer, in both themes */
+  --ink-text: oklch(93.5% 0.02 86);
+  --ink-muted: oklch(78% 0.022 80);
+  --focus: oklch(48% 0.12 205);
+  --serif: "Brygada 1918", "Iowan Old Style", Georgia, serif;
+  --sans: "Cabin", "Gill Sans", "Segoe UI", system-ui, sans-serif;
+  --fs-display: clamp(1.5rem, 1rem + 1.8vw, 2.625rem);
+  --fs-h1: clamp(2.375rem, 1.6rem + 2.4vw, 3.75rem);
+  --fs-h2: clamp(1.375rem, 1.1rem + 1vw, 2rem);
+  --fs-h3: 1.375rem;
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+  --track-caps: 0.16em;
+  --track-label: 0.2em;
+  --track-quote: 0.07em;
+  --page: 1320px;
+  --gutter: clamp(20px, 4vw, 56px);
+  --hh: 77px;
+  --dur-fast: 160ms;
+  --dur-base: 320ms;
+  --dur-slow: 760ms;
+  --ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --m-diamond: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 11 8%27%3E%3Cpath d=%27M5.5 1 9 4 5.5 7 2 4z%27/%3E%3C/svg%3E");
+  --m-chain: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 14 12%27%3E%3Cpath d=%27M7 1.5 12.5 6 7 10.5 1.5 6z%27 fill=%27none%27 stroke=%27%23000%27 stroke-width=%271.3%27/%3E%3C/svg%3E");
+}
+/* ---------- Tokens: evening (dark). The same list twice: chosen by the toggle, or by the system without JavaScript ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(19% 0.011 60); --surface: oklch(22.5% 0.012 60); --surface-2: oklch(24.5% 0.014 62);
+  --text: oklch(91.5% 0.02 86); --text-muted: oklch(75% 0.022 80); --rule: oklch(87% 0.02 86); --border: oklch(37% 0.016 70);
+  --accent: oklch(79% 0.075 200); --accent-text: oklch(19% 0.011 60); --chilli: oklch(69% 0.15 32); --saffron: oklch(80% 0.13 75);
+  --leaf: oklch(74% 0.1 150); --ink: oklch(14% 0.008 60); --focus: oklch(80% 0.11 200);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: oklch(19% 0.011 60); --surface: oklch(22.5% 0.012 60); --surface-2: oklch(24.5% 0.014 62);
+    --text: oklch(91.5% 0.02 86); --text-muted: oklch(75% 0.022 80); --rule: oklch(87% 0.02 86); --border: oklch(37% 0.016 70);
+    --accent: oklch(79% 0.075 200); --accent-text: oklch(19% 0.011 60); --chilli: oklch(69% 0.15 32); --saffron: oklch(80% 0.13 75);
+    --leaf: oklch(74% 0.1 150); --ink: oklch(14% 0.008 60); --focus: oklch(80% 0.11 200);
+  }
+}
+/* Ink bands re-map the tokens, so every component inside them just works */
+.ink { --bg: var(--ink); --surface: var(--ink); --text: var(--ink-text); --text-muted: var(--ink-muted); --rule: var(--ink-text); --border: oklch(40% 0.015 70); --focus: var(--saffron); background: var(--bg); color: var(--text); }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--hh) + 16px); }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs-body)/1.62 var(--serif); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+h1, h2, h3, h4 { margin: 0; font-weight: 400; line-height: 1.15; text-wrap: balance; }
+p { margin: 0 0 1em; text-wrap: pretty; }
+ul, ol { margin: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 60; padding: 12px 18px; background: var(--ink); color: var(--ink-text); }
+.skip:focus { top: 12px; }
+.wrap { max-width: var(--page); margin-inline: auto; padding-inline: var(--gutter); }
+.narrow { max-width: 780px; margin-inline: auto; }
+.sec { padding-block: clamp(56px, 8vw, 112px); }
+.sec.tight { padding-top: 0; }
+.center { text-align: center; }
+.muted { color: var(--text-muted); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.js [data-view]:not(.is-active) { display: none; }
+
+/* ---------- Type ---------- */
+.caps { font-size: var(--fs-h2); line-height: 1.22; letter-spacing: var(--track-caps); text-transform: uppercase; }
+.kicker { margin: 0 0 0.45em; font-size: 1.1875rem; font-style: italic; letter-spacing: 0.06em; color: var(--text-muted); }
+.eyebrow { margin: 0 0 0.8em; font: 700 0.8125rem/1.3 var(--sans); letter-spacing: var(--track-label); text-transform: uppercase; }
+.ruled::before { content: ""; display: block; width: 112px; height: 6px; margin-bottom: 18px; border-top: 2px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.center .ruled::before, .ruled.center::before { margin-inline: auto; }
+.h1 { font-size: var(--fs-h1); line-height: 1.06; letter-spacing: 0.01em; }
+.h2 { margin-bottom: 0.6em; font-size: clamp(1.625rem, 1.25rem + 1.1vw, 2.25rem); letter-spacing: 0.01em; }
+.lead { font-size: 1.1875rem; line-height: 1.6; }
+.prose p { text-align: justify; hyphens: auto; }
+.note { font-style: italic; }
+
+/* ---------- Ornaments: diamond rows, diamond chains, the asterisk flourish, pinstripes ---------- */
+.diamonds { width: 121px; height: 8px; margin: 0 auto 36px; background: var(--rule); -webkit-mask: var(--m-diamond) left / 11px 8px repeat-x; mask: var(--m-diamond) left / 11px 8px repeat-x; }
+.chain { position: relative; padding-block: 30px; text-align: center; }
+.chain::before, .chain::after { content: ""; position: absolute; left: 0; right: 0; height: 12px; background: var(--chilli); -webkit-mask: var(--m-chain) center / 14px 12px repeat-x; mask: var(--m-chain) center / 14px 12px repeat-x; }
+.chain::before { top: 0; }
+.chain::after { bottom: 0; }
+.flourish { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 22px auto 28px; color: var(--rule); }
+.flourish::before, .flourish::after { content: ""; width: min(110px, 30%); height: 1px; background: currentColor; }
+.flourish svg { width: 18px; height: 18px; }
+.pinstripe { height: 17px; background: repeating-linear-gradient(var(--rule) 0 1px, transparent 1px 4px); }
+
+/* ---------- Frames and captions: every picture sits in a double rule and is labelled by direction ---------- */
+.frame { margin: 0; padding: 4px; border: 3px solid var(--rule); background: var(--bg); }
+.frame .pic { position: relative; overflow: hidden; outline: 1px solid var(--rule); }
+.frame img { width: 100%; aspect-ratio: var(--r, 4 / 5); object-fit: cover; }
+.frame.dbl { padding: 6px; border: 5px double var(--rule); }
+figure { margin: 0; }
+.cap { margin-top: 10px; font-size: 0.8125rem; line-height: 1.45; }
+.cap b { margin-right: 0.3em; font: 700 0.75rem var(--sans); letter-spacing: 0.08em; text-transform: uppercase; }
+.side { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: end; }
+.side .cap { margin: 0; writing-mode: vertical-rl; transform: rotate(180deg); max-height: 24em; }
+
+/* ---------- Buttons and links: outlined with an inner rule, like a printed menu card ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 10px 24px; font: 700 0.875rem/1.2 var(--sans); letter-spacing: 0.06em; text-decoration: none; color: var(--text); background: transparent; border: 1.5px solid var(--rule); box-shadow: inset 0 0 0 3px var(--bg), inset 0 0 0 4px var(--rule); cursor: pointer; transition: background-color var(--dur-fast), color var(--dur-fast), box-shadow var(--dur-fast); }
+.btn:hover, .btn.solid { background: var(--text); color: var(--bg); box-shadow: inset 0 0 0 3px var(--text), inset 0 0 0 4px var(--bg); }
+.btn.solid:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-text); box-shadow: inset 0 0 0 3px var(--accent), inset 0 0 0 4px var(--accent-text); }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+.center .btn-row, .btn-row.center { justify-content: center; }
+.arrow { display: inline-flex; align-items: center; gap: 14px; min-height: 44px; font: 700 0.8125rem var(--sans); letter-spacing: var(--track-label); text-transform: uppercase; text-decoration: none; }
+.arrow svg { width: 86px; height: 12px; flex: none; transition: transform var(--dur-base) var(--ease); }
+.arrow:hover svg { transform: translateX(6px); }
+.tag { display: inline-block; padding: 6px 8px 5px; font: 700 0.6875rem/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; background: var(--chilli); color: var(--bg); }
+.tag.leaf { background: var(--leaf); }
+.tag.tile { background: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.chip { min-height: 44px; padding: 10px 14px; font: 700 0.75rem/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; background: none; border: 1px solid var(--rule); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--text); color: var(--bg); box-shadow: inset 0 0 0 2px var(--text), inset 0 0 0 3px var(--bg); }
+.count { margin-left: auto; font: 700 0.75rem var(--sans); letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+
+/* ---------- Header and menu sheet ---------- */
+.site-header { position: sticky; top: 0; z-index: 40; background: var(--bg); border-bottom: 1px solid var(--border); }
+.header-inner { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 20px; min-height: calc(var(--hh) - 1px); }
+.nav { display: flex; gap: clamp(16px, 2vw, 30px); min-width: 0; margin: -6px; padding: 6px; overflow: hidden; }
+.nav a { position: relative; padding: 14px 0; font: 700 0.8125rem/1 var(--sans); letter-spacing: var(--track-label); text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+.site-header.compact .nav { display: none; }
+.site-header.compact #menu-open { display: inline-grid; }
+.nav a::after { content: ""; position: absolute; left: 0; right: 0.2em; bottom: 6px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform var(--dur-base) var(--ease); }
+.nav a:hover::after, .nav a[aria-current="page"]::after { transform: scaleX(1); }
+.brand { justify-self: center; display: grid; justify-items: center; line-height: 1; text-decoration: none; }
+.brand-name { font: italic 600 1.875rem/1 var(--serif); }
+.brand-sub { display: flex; align-items: center; gap: 8px; margin-top: 6px; font: 700 0.5625rem/1 var(--sans); letter-spacing: 0.34em; text-transform: uppercase; }
+.brand-sub::before, .brand-sub::after { content: ""; width: 16px; height: 1px; background: currentColor; }
+.header-end { justify-self: end; display: flex; align-items: center; gap: 8px; }
+.header-end .btn { min-height: 44px; padding: 8px 18px; }
+.icon-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; color: inherit; background: none; border: 0; cursor: pointer; }
+.icon-btn svg { width: 22px; height: 22px; }
+#menu-open { display: none; }
+.short { display: none; }
+.sheet { width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; color: var(--text); background: var(--bg); border: 0; }
+.sheet[open] { animation: fade var(--dur-base) var(--ease); }
+.sheet::backdrop { background: oklch(15% 0.01 60 / 0.5); }
+.sheet-inner { display: flex; flex-direction: column; min-height: 100%; padding: 10px var(--gutter) 32px; }
+.sheet-top { display: flex; align-items: center; justify-content: space-between; min-height: 60px; }
+.sheet-links { display: grid; gap: 2px; margin: 24px 0; padding: 0; list-style: none; }
+.sheet-links a { display: block; padding: 6px 0; font-size: clamp(1.75rem, 6vw, 2.5rem); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; }
+.sheet .pinstripe { margin-top: auto; }
+
+/* ---------- Home: hero ---------- */
+.hero { padding-block: clamp(20px, 3.5vw, 48px) clamp(28px, 4vw, 48px); }
+.hero-frame { padding: 5px; border: 3px solid var(--rule); }
+.hero-pic { position: relative; display: grid; place-items: center; min-height: clamp(520px, 70svh, 700px); overflow: hidden; outline: 1px solid var(--rule); }
+.hero-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero-pic::after { content: ""; position: absolute; inset: 0; background: oklch(16% 0.012 60 / 0.72); }
+.hero-copy { position: relative; z-index: 1; max-width: 880px; padding: 48px 24px; text-align: center; }
+.hero-quote { font-size: var(--fs-display); line-height: 1.34; letter-spacing: var(--track-quote); }
+.hero .cap { color: var(--ink-muted); }
+
+/* ---------- Home: the staggered introduction ---------- */
+.lede { margin: 0 0 clamp(48px, 7vw, 96px); font-size: clamp(1.375rem, 0.95rem + 1.5vw, 2.125rem); line-height: 1.42; letter-spacing: 0.06em; color: var(--text-muted); }
+.lede span { display: block; text-wrap: wrap; }
+.lede span + span { padding-left: clamp(24px, 15%, 220px); }
+.stagger { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 40px 24px; align-items: start; }
+.st-a { grid-column: 2 / 7; grid-row: 1 / 3; }
+.st-b { grid-column: 8 / 12; grid-row: 1; padding-top: 4px; }
+.st-c { grid-column: 8 / 12; grid-row: 2; padding-left: 12%; }
+
+/* ---------- Home: day cards with plates ---------- */
+.cards3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 48px; }
+.dcard { position: relative; display: block; overflow: hidden; text-decoration: none; }
+.dcard img { width: 100%; aspect-ratio: 5 / 6; object-fit: cover; transition: transform 1.2s var(--ease); }
+.dcard:hover img { transform: scale(1.04); }
+.plate { position: absolute; left: 7%; right: 7%; bottom: 22px; padding: 14px 12px 12px; text-align: center; background: var(--bg); border: 1px solid var(--rule); box-shadow: inset 0 0 0 3px var(--bg), inset 0 0 0 4px var(--rule); }
+.plate .caps { display: block; font-size: 1.25rem; }
+.plate i { display: block; margin-top: 2px; font-size: 0.9375rem; }
+
+/* ---------- Splits, photo groups, the feature ---------- */
+.split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 24px; align-items: start; }
+.photos .big { grid-column: 1 / -1; }
+.photos .low { margin-top: 56px; }
+.feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.feature-copy { max-width: 480px; justify-self: center; text-align: center; }
+.feature-copy .prose { text-align: justify; }
+
+/* ---------- Cafes band ---------- */
+.band { position: relative; overflow: hidden; }
+.band-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
+.band::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, oklch(16% 0.012 60 / 0.85), oklch(16% 0.012 60 / 0.35) 55%, oklch(16% 0.012 60 / 0.8)); }
+.band-inner { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; gap: 40px; min-height: 600px; padding-block: 80px; }
+.band-line { max-width: 19ch; margin-bottom: 12px; font-size: clamp(1.375rem, 1rem + 1.2vw, 2rem); line-height: 1.38; letter-spacing: 0.08em; }
+.places { margin: 0; padding: 0; list-style: none; text-align: right; }
+.places a { font-size: clamp(1.75rem, 1.2rem + 1.7vw, 2.75rem); line-height: 1.3; text-decoration: none; }
+.places a:hover { text-decoration: underline; }
+.places .eyebrow { margin: 22px 0 4px; color: var(--text-muted); }
+
+/* ---------- Journal cards and the letter ---------- */
+.head-row { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 32px; }
+.posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px clamp(20px, 3vw, 40px); margin-top: 40px; }
+.post { position: relative; display: grid; align-content: start; gap: 12px; text-decoration: none; }
+.post .tag { position: absolute; top: 18px; left: -4px; z-index: 1; }
+.post h3 { font-size: var(--fs-h3); line-height: 1.28; }
+.post:hover h3 { text-decoration: underline; text-decoration-thickness: 1px; }
+.meta { font: 700 0.75rem/1.4 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+.letter { max-width: 880px; margin-inline: auto; padding: clamp(28px, 5vw, 56px); text-align: center; background: var(--surface); border: 5px double var(--rule); }
+.inline-form { display: flex; gap: 12px; max-width: 560px; margin: 24px auto 0; text-align: left; }
+.inline-form .field { flex: 1; }
+.inline-form .btn { align-self: start; }
+
+/* ---------- Page heads, tabs, the menu ---------- */
+.page-head { padding-block: clamp(40px, 6vw, 80px) clamp(32px, 4vw, 56px); }
+.head-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+.head-box { padding: 8px 0 8px clamp(20px, 4vw, 56px); border-left: 5px double var(--rule); }
+.tabbar { position: sticky; top: var(--hh); z-index: 20; background: var(--bg); border-block: 1px solid var(--border); }
+.tabbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+.tabs { display: flex; gap: clamp(18px, 3vw, 40px); overflow-x: auto; scrollbar-width: none; }
+.tab { padding: 18px 0 14px; font: 700 0.8125rem/1 var(--sans); letter-spacing: var(--track-label); text-transform: uppercase; white-space: nowrap; background: none; border: 0; border-bottom: 2px solid transparent; cursor: pointer; }
+.tab[aria-selected="true"] { border-color: currentColor; }
+.diet .chip { min-height: 40px; padding: 8px 12px; }
+.menu-panel { padding-block: 40px 24px; }
+.menu-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 40px; align-items: start; padding-bottom: 32px; margin-bottom: 40px; border-bottom: 1px solid var(--border); }
+.menu-intro .h2 { margin-bottom: 0.3em; }
+.menu-cols { columns: 2 340px; column-gap: clamp(40px, 6vw, 88px); column-rule: 1px solid var(--border); }
+.course { break-inside: avoid; margin-bottom: 36px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+.course > .note { margin: 0; }
+.dish { margin-top: 22px; break-inside: avoid; }
+.dish h4 { font: 700 0.9375rem/1.4 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+.dish p { margin: 6px 0 0; font-size: 1rem; line-height: 1.55; }
+.dish small { font: 700 0.6875rem var(--sans); letter-spacing: 0.08em; color: var(--text-muted); }
+.dish.chain { margin-top: 26px; padding-inline: 6%; }
+.dish.chain h4 { color: var(--text); }
+.empty { padding: 32px 0; font-style: italic; }
+
+/* ---------- Cafes ---------- */
+.cafes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(40px, 5vw, 64px) clamp(24px, 4vw, 56px); margin-top: 40px; }
+.cafe { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 24px; align-items: start; }
+.cafe h3 { margin: 4px 0 8px; font-size: 1.75rem; letter-spacing: 0.04em; }
+.cafe p { margin-bottom: 0.4em; }
+.cafe .btn-row { margin-top: 18px; gap: 10px; }
+.cafe .btn { min-height: 44px; padding: 8px 18px; }
+.cafe-title { font-size: clamp(2.75rem, 1.2rem + 6vw, 6.5rem); line-height: 1; letter-spacing: 0.14em; text-transform: uppercase; }
+.subnav { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; padding: 12px var(--gutter); background: var(--surface-2); border-block: 1px solid var(--border); }
+.subnav a { display: inline-flex; align-items: center; gap: 18px; min-height: 40px; font: 700 0.75rem var(--sans); letter-spacing: var(--track-label); text-transform: uppercase; text-decoration: none; }
+.subnav a + a::before { content: ""; width: 6px; height: 6px; background: currentColor; transform: rotate(45deg); }
+.newsprint { columns: 2 300px; column-gap: 56px; column-rule: 1px solid var(--rule); }
+.newsprint p { text-align: justify; hyphens: auto; }
+.dropcap::first-letter { float: left; padding: 6px 10px 0 0; font-size: 4.2em; line-height: 0.8; }
+.hours { display: grid; gap: 10px; margin: 0; }
+.hours div { display: flex; align-items: baseline; gap: 10px; }
+.hours dt { display: flex; flex: 1; gap: 10px; }
+.hours dt::after { content: ""; flex: 1; border-bottom: 1px dotted var(--text-muted); transform: translateY(-0.3em); }
+.hours dd { margin: 0; white-space: nowrap; }
+.visit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(28px, 4vw, 56px); align-items: start; }
+.map { border: 1px solid var(--rule); background: var(--surface); }
+.map .water { fill: var(--surface-2); }
+.map .road { stroke: var(--border); stroke-width: 10; fill: none; }
+.map .quay { stroke: var(--rule); stroke-width: 2; fill: none; }
+.map text { font: 700 11px var(--sans); letter-spacing: 0.12em; fill: var(--text-muted); }
+.map .pin { fill: var(--chilli); }
+
+/* ---------- Forms ---------- */
+.book-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.form-card { padding: clamp(24px, 4vw, 44px); background: var(--surface); border: 5px double var(--rule); }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; }
+.field { position: relative; display: grid; gap: 8px; align-content: start; min-width: 0; margin: 0; padding: 0 0 28px; border: 0; }
+.field.full { grid-column: 1 / -1; }
+.label { padding: 0; font: 700 0.75rem/1.3 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; }
+.label small { font-weight: 400; letter-spacing: 0.04em; text-transform: none; color: var(--text-muted); }
+.input { width: 100%; min-height: 50px; padding: 12px 14px; background: var(--bg); border: 1px solid var(--rule); border-radius: 0; }
+textarea.input { min-height: 120px; resize: vertical; }
+.select { position: relative; }
+.select select { appearance: none; padding-right: 40px; }
+.select::after { content: ""; position: absolute; right: 18px; top: 50%; width: 8px; height: 8px; border-right: 1.5px solid; border-bottom: 1.5px solid; transform: translateY(-70%) rotate(45deg); pointer-events: none; }
+.input[aria-invalid="true"] { border-color: var(--chilli); box-shadow: inset 0 0 0 1px var(--chilli); }
+.error { position: absolute; left: 0; bottom: 6px; font: 700 0.75rem/1.2 var(--sans); letter-spacing: 0.03em; color: var(--chilli); }
+.slots { display: flex; flex-wrap: wrap; gap: 8px; }
+.slot { position: relative; }
+.slot input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+.slot span { display: inline-flex; align-items: center; justify-content: center; min-width: 72px; min-height: 44px; padding: 0 10px; font: 700 0.8125rem var(--sans); letter-spacing: 0.06em; border: 1px solid var(--rule); background: var(--bg); }
+.slot input:checked + span { background: var(--text); color: var(--bg); box-shadow: inset 0 0 0 2px var(--text), inset 0 0 0 3px var(--bg); }
+.slot input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.slot input[aria-invalid="true"] + span { border-color: var(--chilli); }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: 1rem; }
+.check input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--text); flex: none; }
+.success { padding: clamp(28px, 5vw, 48px); text-align: center; background: var(--surface); border: 5px double var(--rule); }
+.success:focus { outline: none; }
+.facts { margin: 0; padding: 0; list-style: none; border-top: 2px solid var(--rule); }
+.facts li { padding: 16px 0; border-bottom: 1px solid var(--border); }
+.facts b { display: block; font: 700 0.75rem var(--sans); letter-spacing: 0.14em; text-transform: uppercase; }
+
+/* ---------- Gatherings ---------- */
+.feasts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.feast { display: flex; flex-direction: column; gap: 10px; padding: 36px 28px 30px; text-align: center; background: var(--surface); border: 1px solid var(--rule); box-shadow: inset 0 0 0 4px var(--surface), inset 0 0 0 5px var(--rule); }
+.feast.star { border-width: 2px; }
+.price { margin: 6px 0 -6px; font-size: 2.75rem; line-height: 1; letter-spacing: 0.04em; }
+.feast ul { margin: 8px 0 14px; padding: 0; list-style: none; text-align: left; }
+.feast li { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+.feast li::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: 0.62em; background: var(--chilli); transform: rotate(45deg); }
+.feast .btn { margin-top: auto; }
+.evenings { margin: 0; padding: 0; list-style: none; border-top: 2px solid var(--rule); }
+.evening { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; gap: 24px; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--border); }
+.date-plate { padding: 10px 6px 8px; text-align: center; border: 1px solid var(--rule); box-shadow: inset 0 0 0 3px var(--bg), inset 0 0 0 4px var(--rule); }
+.date-plate b { display: block; font: 400 2rem/1 var(--serif); }
+.date-plate span { font: 700 0.6875rem var(--sans); letter-spacing: 0.18em; text-transform: uppercase; }
+.evening h3 { font-size: var(--fs-h3); letter-spacing: 0.02em; }
+.sub { margin: 4px 0 0; }
+
+/* ---------- Journal, article, about, FAQ ---------- */
+.feature-post { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 5vw, 64px); align-items: center; margin-top: 40px; text-decoration: none; }
+.feature-post h2 { font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem); letter-spacing: 0.02em; }
+.feature-post:hover h2 { text-decoration: underline; text-decoration-thickness: 1px; }
+.article-head { max-width: 900px; margin-inline: auto; text-align: center; }
+.byline { margin-top: 18px; }
+.article { max-width: 720px; margin-inline: auto; }
+.article > p { text-align: justify; hyphens: auto; }
+.article h2 { margin: 52px 0 18px; font-size: 1.5rem; letter-spacing: var(--track-caps); text-transform: uppercase; text-align: center; }
+.article figure { margin: 40px 0; }
+.article > .pull { margin: 48px 0; font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem); font-style: italic; line-height: 1.45; letter-spacing: 0.05em; text-align: center; }
+.recipe { margin: 48px 0; padding: clamp(24px, 4vw, 40px); background: var(--surface); border: 5px double var(--rule); }
+.recipe-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 32px; }
+.recipe ul { padding-left: 1.1em; }
+.recipe ol { padding: 0; list-style: none; counter-reset: s; }
+.recipe ol li { position: relative; padding: 0 0 12px 40px; counter-increment: s; }
+.recipe ol li::before { content: counter(s); position: absolute; left: 0; top: -4px; font-size: 1.5rem; }
+.timeline { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 40px 0 0; padding: 0; list-style: none; border-top: 2px solid var(--rule); }
+.timeline li { padding: 24px 24px 8px 0; }
+.timeline li + li { padding-left: 24px; border-left: 1px solid var(--border); }
+.year { display: block; margin-bottom: 8px; font-size: 2.25rem; letter-spacing: 0.08em; }
+.keeps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; text-align: center; }
+.keeps .diamonds { margin-bottom: 20px; }
+.keeps h3 { margin-bottom: 10px; font-size: 1.25rem; letter-spacing: var(--track-caps); text-transform: uppercase; }
+.faq-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.faq-nav { position: sticky; top: calc(var(--hh) + 24px); display: grid; gap: 4px; }
+.faq-nav a { padding: 8px 0; text-decoration: none; }
+.faq-nav a:hover { text-decoration: underline; }
+.faq-group { margin-bottom: 56px; }
+details { border-bottom: 1px solid var(--border); }
+summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 44px; padding: 18px 0; font-size: 1.1875rem; letter-spacing: 0.02em; cursor: pointer; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary svg { flex: none; width: 16px; height: 16px; transition: transform var(--dur-base) var(--ease); }
+details[open] summary svg { transform: rotate(45deg); }
+details p { max-width: 64ch; padding-bottom: 8px; }
+.legal { max-width: 720px; }
+.legal h2 { margin: 36px 0 12px; font-size: 1.25rem; letter-spacing: var(--track-caps); text-transform: uppercase; }
+
+/* ---------- Footer, 404 ---------- */
+.footer-grid { display: grid; grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr)); gap: 40px; padding-block: 64px 48px; }
+.footer-grid .brand { justify-self: start; justify-items: start; }
+.footer-grid ul { display: grid; gap: 6px; padding: 0; list-style: none; }
+.footer-grid ul a { text-decoration: none; }
+.footer-grid ul a:hover { text-decoration: underline; }
+.footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding-block: 22px; font-size: var(--fs-small); color: var(--text-muted); border-top: 1px solid var(--border); }
+.footer-bottom nav { display: flex; gap: 20px; }
+.notfound { max-width: 720px; padding-block: clamp(72px, 10vw, 140px); text-align: center; }
+
+/* ---------- Motion: once, as things arrive; keyframes so they also play right after load ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes settle { from { transform: scale(1.07); } to { transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes draw { from { transform: scaleX(0); } to { transform: none; } }
+.js .reveal:not(.in) { opacity: 0; }
+.js .reveal.in { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 110ms); }
+.js .reveal.in .frame img, .js .frame.reveal.in img { animation: settle 1.8s var(--ease) both; }
+.js .diamonds.reveal.in { animation: draw 0.9s var(--ease) both; }
+.js .hero-copy > * { animation: rise 1s var(--ease) both; }
+.js .hero-copy > :nth-child(2) { animation-delay: 0.14s; }
+.js .hero-copy > :nth-child(3) { animation-delay: 0.3s; }
+.js .hero-pic img { animation: settle 2.8s var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal:not(.in) { opacity: 1; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1179px) {
+  .nav { display: none; }
+  #menu-open { display: inline-grid; }
+  .header-inner { grid-template-columns: auto minmax(0, 1fr) auto; }
+}
+@media (max-width: 960px) {
+  .split, .feature, .head-split, .book-grid, .feature-post, .band-inner, .recipe-grid, .menu-intro, .faq-layout { grid-template-columns: minmax(0, 1fr); }
+  .cards3, .feasts, .keeps { grid-template-columns: minmax(0, 1fr); max-width: 560px; margin-inline: auto; }
+  .posts, .cafes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cafe { grid-template-columns: minmax(0, 1fr); }
+  .visit { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .timeline li, .timeline li + li { padding: 20px 16px 8px 0; border-left: 0; border-bottom: 1px solid var(--border); }
+  .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-grid > :first-child { grid-column: 1 / -1; }
+  .stagger { display: block; }
+  .st-a { width: 88%; margin-left: auto; }
+  .st-b { margin: 40px 0; }
+  .st-c { width: 86%; padding: 0; }
+  .places { text-align: left; }
+  .band-inner { min-height: 0; }
+  .faq-nav { position: static; grid-auto-flow: column; justify-content: start; gap: 18px; overflow-x: auto; }
+  .feature-copy { max-width: 600px; }
+  .tabbar-inner { padding-block: 0 10px; }
+}
+@media (max-width: 640px) {
+  :root { --hh: 65px; }
+  .header-end .btn { padding: 6px 12px; font-size: 0.75rem; }
+  .long { display: none; }
+  .short { display: inline; }
+  .brand-name { font-size: 1.5rem; }
+  .brand-sub { letter-spacing: 0.26em; }
+  .posts, .cafes, .fields, .visit, .timeline, .footer-grid { grid-template-columns: minmax(0, 1fr); }
+  .photos { gap: 32px 14px; }
+  .photos .low { margin-top: 32px; }
+  .inline-form { flex-direction: column; }
+  .inline-form .btn { align-self: stretch; }
+  .evening { grid-template-columns: 72px minmax(0, 1fr); gap: 16px; }
+  .evening .btn { grid-column: 2; justify-self: start; }
+  .lede span + span { padding-left: 0; }
+  .hero-pic { min-height: 600px; }
+  .menu-cols { column-rule: 0; }
+  .dish.chain { padding-inline: 0; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></g></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 86 12"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h81M76 1.5 83 6l-7 4.5M2 1.5 6.5 6 2 10.5M7 1.5 11.5 6 7 10.5"/></g></symbol>
+  <symbol id="o-star" viewBox="0 0 18 18"><path d="M9 1.5v15M1.5 9h15M3.7 3.7l10.6 10.6M14.3 3.7 3.7 14.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="9" r="2.2" fill="currentColor"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <button class="icon-btn" id="menu-open" type="button" aria-label="Open the menu" aria-controls="menu"><svg aria-hidden="true"><use href="#i-menu"/></svg></button>
+    <nav class="nav" aria-label="Main">
+      <a href="#/menu">Menu</a>
+      <a href="#/cafes">Cafés</a>
+      <a href="#/gatherings">Gatherings</a>
+      <a href="#/journal">Journal</a>
+      <a href="#/about">Our story</a>
+    </nav>
+    <a class="brand" href="#/" aria-label="Lamplight Kopi House, home"><span class="brand-name">Lamplight</span><span class="brand-sub">Kopi House</span></a>
+    <div class="header-end">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to evening colours"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="btn" href="#/book"><span class="long">Book a table</span><span class="short">Book</span></a>
+    </div>
+  </div>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-inner">
+    <div class="sheet-top">
+      <a class="brand" href="#/"><span class="brand-name">Lamplight</span><span class="brand-sub">Kopi House</span></a>
+      <button class="icon-btn" id="menu-close" type="button" aria-label="Close the menu"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <ul class="sheet-links">
+      <li><a href="#/menu">Menu</a></li>
+      <li><a href="#/cafes">Cafés</a></li>
+      <li><a href="#/book">Book a table</a></li>
+      <li><a href="#/gatherings">Gatherings</a></li>
+      <li><a href="#/journal">Journal</a></li>
+      <li><a href="#/about">Our story</a></li>
+      <li><a href="#/contact">Say hello</a></li>
+    </ul>
+    <p class="note muted">Every café opens at half past seven. Breakfast is walk-in only.</p>
+    <div class="pinstripe" aria-hidden="true"></div>
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ======================= HOME ======================= -->
+<div data-view="home">
+  <section class="hero ink">
+    <div class="wrap">
+      <figure class="hero-frame">
+        <div class="hero-pic">
+          <img src="images/front-room.svg" alt="" width="1200" height="800" decoding="async">
+          <div class="hero-copy">
+            <p class="kicker">Come in, sit anywhere</p>
+            <h1 class="hero-quote">“Pull up a marble table. The kettle has been on since seven, and there is always room for one more.”</h1>
+            <div class="btn-row center"><a class="btn solid" href="#/book">Book a table</a><a class="btn" href="#/menu">See the menus</a></div>
+          </div>
+        </div>
+      </figure>
+      <p class="cap"><b>Above:</b> The front room at Quayside, just after the lamps come on.</p>
+    </div>
+  </section>
+  <div class="pinstripe" aria-hidden="true"></div>
+
+  <section class="sec wrap">
+    <p class="lede reveal"><span>Lamplight began with six marble tables and one charcoal stove on Customs Quay,</span><span>and every coffee house since keeps the stove lit, the door open and the tea pulled by hand.</span></p>
+    <div class="stagger">
+      <figure class="st-a reveal">
+        <div class="frame"><div class="pic"><img src="images/kitchen-stove.svg" alt="A charcoal stove with a white enamel kettle, tins of tea and coffee on a shelf above" width="800" height="1000" decoding="async"></div></div>
+        <figcaption class="cap"><b>Above:</b> The charcoal stove at Quayside, lit at half past six every morning.</figcaption>
+      </figure>
+      <div class="st-b prose reveal" style="--i:1">
+        <p>The old harbour coffee shops were where the whole port met: dock clerks and schoolteachers, night-shift nurses and families after temple, all at the same marble tables. Breakfast was toast and soft eggs, lunch was a bowl of something hot, and evenings ran late on satay smoke and gossip.</p>
+        <p>We keep a little of that in every Lamplight: food that does not hurry you, tea poured from a height, and a seat for whoever walks in.</p>
+        <a class="arrow" href="#/about">Read our story <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <figure class="st-c side reveal" style="--i:2">
+        <figcaption class="cap"><b>Right:</b> Kaya toast, soft eggs and a kopi.</figcaption>
+        <div class="frame"><div class="pic"><img src="images/kaya-toast.svg" alt="Kaya toast on a green-rimmed plate, two soft-boiled eggs and a cup of black coffee, seen from above" width="800" height="1000" decoding="async"></div></div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec tight wrap center">
+    <div class="diamonds reveal" aria-hidden="true"></div>
+    <p class="kicker">From the first kopi to the last glass of tea</p>
+    <h2 class="caps">A day at Lamplight</h2>
+    <div class="cards3">
+      <a class="dcard reveal" href="#/menu"><img src="images/laksa.svg" alt="" width="1000" height="1000" decoding="async"><span class="plate"><span class="caps">The menus</span><i>Kaya toast to claypot rice</i></span></a>
+      <a class="dcard reveal" style="--i:1" href="#/book"><img src="images/front-room.svg" alt="" width="1200" height="800" decoding="async"><span class="plate"><span class="caps">Book a table</span><i>Half of every room kept for walk-ins</i></span></a>
+      <a class="dcard reveal" style="--i:2" href="#/gatherings"><img src="images/feast.svg" alt="" width="1200" height="800" decoding="async"><span class="plate"><span class="caps">Gatherings</span><i>Long tables for nine or more</i></span></a>
+    </div>
+  </section>
+
+  <section class="sec tight wrap">
+    <div class="split">
+      <div class="prose reveal" style="padding-top:clamp(0px,6vw,80px)">
+        <p class="eyebrow ruled">Harbour comfort food</p>
+        <h2 class="h2">Something good at every hour</h2>
+        <p class="lead">Our kitchen cooks the food of the harbour coffee shops: the stalls, the shophouse kitchens and the carts that parked outside them.</p>
+        <p>Mornings begin with charcoal toast, kaya and two soft eggs with dark soy and white pepper. At noon the laksa pots come out, with chicken rice and wok-smoked noodles for the queue. Afternoons are for kuih and a second glass of tea, and the evening belongs to satay, sambal and claypots for the table.</p>
+        <div class="btn-row"><a class="btn" href="#/menu">See the menus</a><a class="btn" href="#/book">Book a table</a></div>
+      </div>
+      <div class="photos">
+        <figure class="big reveal"><div class="frame"><div class="pic"><img src="images/laksa.svg" alt="A bowl of laksa with prawns, tofu puffs, half an egg and sambal, seen from above" width="1000" height="1000" style="--r:4/3" decoding="async"></div></div><figcaption class="cap"><b>Above:</b> Quayside laksa, the recipe that opened the first shop.</figcaption></figure>
+        <figure class="reveal"><div class="frame"><div class="pic"><img src="images/teh-tarik.svg" alt="Milk tea poured from a steel mug into a tall glass" width="800" height="1000" decoding="async"></div></div><figcaption class="cap"><b>Above:</b> Teh tarik, pulled from a height.</figcaption></figure>
+        <figure class="low reveal" style="--i:1"><div class="frame"><div class="pic"><img src="images/satay.svg" alt="Skewers of satay on a banana leaf with peanut sauce and cucumber" width="1000" height="750" decoding="async"></div></div><figcaption class="cap"><b>Above:</b> Satay from the charcoal, after six.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="band ink" aria-labelledby="band-title">
+    <img class="band-bg" src="images/street-night.svg" alt="" width="1600" height="900" decoding="async">
+    <div class="wrap band-inner">
+      <div class="reveal">
+        <h2 class="band-line" id="band-title">Six coffee houses, each on a street with a story of its own</h2>
+        <a class="arrow" href="#/cafes">Explore the cafés <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <ul class="places reveal" style="--i:1">
+        <li><p class="eyebrow">Port Ellery</p></li>
+        <li><a href="#/cafe">Quayside</a></li>
+        <li><a href="#/cafes?city=port-ellery">Tannery Lane</a></li>
+        <li><a href="#/cafes?city=port-ellery">Old Post Office</a></li>
+        <li><p class="eyebrow">Westmere</p></li>
+        <li><a href="#/cafes?city=westmere">Kiln Street</a></li>
+        <li><a href="#/cafes?city=westmere">Northgate Arcade</a></li>
+        <li><p class="eyebrow">Ashby Bay</p></li>
+        <li><a href="#/cafes?city=ashby-bay">The Ferry Shed</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec wrap">
+    <div class="feature">
+      <figure class="reveal"><div class="frame dbl"><div class="pic"><img src="images/chendol.svg" alt="A glass bowl of chendol: shaved ice, green pandan jelly, red beans and palm sugar" width="1000" height="1000" style="--r:5/4" decoding="async"></div></div></figure>
+      <div class="feature-copy reveal" style="--i:1">
+        <p class="kicker">Cold sweets for hot afternoons</p>
+        <h2 class="caps">The chendol cart is back</h2>
+        <div class="flourish" aria-hidden="true"><svg><use href="#o-star"/></svg></div>
+        <div class="prose">
+          <p>Every hot season we wheel the old cart into the front room. <b>Chendol</b> is shaved ice over pandan jelly, red beans and cold coconut milk, finished with dark palm sugar at the table. For something richer, <b>Ice kacang</b> comes piled with sweetcorn, grass jelly and rose syrup. Both are made to share, and both melt quickly, so bring a friend.</p>
+          <p class="note">Served from two o’clock every day at every café, until the rains come.</p>
+        </div>
+        <div class="btn-row center"><a class="btn" href="#/menu?tab=sweets">See the sweets</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec tight wrap">
+    <div class="head-row">
+      <div><p class="eyebrow ruled">From the journal</p><h2 class="h2">Stories, recipes and notes from the quay</h2></div>
+      <a class="arrow" href="#/journal">All stories <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="posts">
+      <a class="post reveal" href="#/story"><span class="tag leaf">Recipe</span><div class="frame"><div class="pic"><img src="images/teh-tarik.svg" alt="" width="800" height="1000" style="--r:4/3" decoding="async"></div></div><span class="meta">12 November</span><h3>How to pull a proper glass of teh tarik</h3></a>
+      <a class="post reveal" style="--i:1" href="#/story"><span class="tag">Story</span><div class="frame"><div class="pic"><img src="images/kitchen-stove.svg" alt="" width="800" height="1000" style="--r:4/3" decoding="async"></div></div><span class="meta">28 October</span><h3>The stove that never goes out</h3></a>
+      <a class="post reveal" style="--i:2" href="#/story"><span class="tag tile">Neighbourhood</span><div class="frame"><div class="pic"><img src="images/shophouse.svg" alt="" width="800" height="1000" style="--r:4/3" decoding="async"></div></div><span class="meta">9 October</span><h3>Night market notes from Tannery Lane</h3></a>
+    </div>
+  </section>
+
+  <section class="sec tight wrap">
+    <div class="letter reveal">
+      <p class="kicker">Once a month, never more</p>
+      <h2 class="caps">The Lamplight letter</h2>
+      <p class="muted" style="margin-top:12px">New dishes, evenings at the cafés and one recipe to cook at home.</p>
+      <form class="inline-form" data-form="newsletter" novalidate>
+        <div class="field"><label class="sr" for="n-email">Email address</label><input class="input" id="n-email" name="email" type="email" autocomplete="email" placeholder="Your email address" required aria-describedby="n-email-err"><span class="error" id="n-email-err" aria-live="polite"></span></div>
+        <button class="btn solid" type="submit">Sign up</button>
+      </form>
+      <div class="success" data-success="newsletter" tabindex="-1" hidden style="border:0;padding:24px 0 0"><p class="caps" style="font-size:1.25rem">Thank you</p><p>The next letter goes out on the first Friday of the month.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= MENU ======================= -->
+<div data-view="menu">
+  <section class="page-head wrap">
+    <div class="head-split">
+      <div class="head-box">
+        <p class="kicker">Harbour comfort food</p>
+        <h1 class="h1">Our menus</h1>
+        <p class="lead" style="margin-top:18px">Breakfast from half past seven, the all-day menu from half past eleven, and tea whenever you like. Every café cooks the same menu, with a few specials of its own.</p>
+        <a class="arrow" href="#/faq?at=f-food">Allergies and dietary needs <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <figure><div class="frame"><div class="pic"><img src="images/feast.svg" alt="A table seen from above with rice, curries, greens, sambal and glasses of tea" width="1200" height="800" style="--r:3/2" decoding="async"></div></div></figure>
+    </div>
+  </section>
+  <div class="tabbar">
+    <div class="wrap tabbar-inner">
+      <div class="tabs" role="tablist" aria-label="Menus">
+        <button class="tab" type="button" role="tab" id="t-allday" data-tab="allday" aria-controls="p-allday" aria-selected="true">All day</button>
+        <button class="tab" type="button" role="tab" id="t-breakfast" data-tab="breakfast" aria-controls="p-breakfast" aria-selected="false">Breakfast</button>
+        <button class="tab" type="button" role="tab" id="t-drinks" data-tab="drinks" aria-controls="p-drinks" aria-selected="false">Drinks</button>
+        <button class="tab" type="button" role="tab" id="t-sweets" data-tab="sweets" aria-controls="p-sweets" aria-selected="false">Sweets</button>
+      </div>
+      <div class="chips diet" role="group" aria-label="Dietary filter">
+        <button class="chip" type="button" data-diet="v" aria-pressed="false">Vegetarian</button>
+        <button class="chip" type="button" data-diet="vg" aria-pressed="false">Vegan</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <section class="menu-panel" role="tabpanel" id="p-allday" aria-labelledby="t-allday">
+      <div class="menu-intro"><div><h2 class="h2">All day</h2><p class="note">Served from half past eleven until we close.</p></div><p class="note muted">Dishes come as they are ready and are made to share. V is vegetarian, VG is vegan.</p></div>
+      <div class="menu-cols">
+        <div class="course"><h3 class="eyebrow">Small plates</h3><p class="note">To start, or to keep the table busy while the kitchen catches up.</p>
+      <div class="dish" data-diet=""><h4>Chicken satay 12.50</h4><p>Six skewers marinated in turmeric and lemongrass, charred over coals, with peanut sauce, cucumber and rice cakes.</p></div>
+      <div class="dish" data-diet="v vg"><h4>Tofu satay 11.00 <small>V VG</small></h4><p>The same marinade on pressed tofu. Nobody misses the chicken.</p></div>
+      <div class="dish" data-diet="v vg"><h4>Kerabu salad 9.50 <small>V VG</small></h4><p>Wing beans, torch ginger, lime and toasted coconut. Crisp, sour and a little hot.</p></div>
+        </div>
+        <div class="course"><h3 class="eyebrow">Noodles and rice</h3><p class="note">The lunchtime queue, every day since the first shop.</p>
+      <div class="dish chain" data-diet=""><h4>Quayside laksa 16.50</h4><p>Our oldest recipe. Coconut curry broth with thick rice noodles, prawns, tofu puffs, half a soft egg and laksa leaf. Ask for the sambal on the side if you are careful with heat.</p></div>
+      <div class="dish" data-diet=""><h4>Hainanese chicken rice 15.00</h4><p>Poached chicken, rice cooked in its stock, ginger, chilli and dark soy.</p></div>
+      <div class="dish" data-diet=""><h4>Char kway teow 15.50</h4><p>Flat noodles smoked in a very hot wok with prawn, sweet sausage, egg and bean sprouts.</p></div>
+      <div class="dish" data-diet="v"><h4>Garden nasi lemak 13.50 <small>V</small></h4><p>Coconut rice, sambal, a fried egg, cucumber, peanuts and crisp tempeh.</p></div>
+        </div>
+        <div class="course"><h3 class="eyebrow">From the charcoal</h3><p class="note">After six, when the grill is at its hottest.</p>
+      <div class="dish" data-diet=""><h4>Beef rendang 19.50</h4><p>Cooked down for five hours until the coconut turns dark and the spices stick. Rice on the side.</p></div>
+      <div class="dish" data-diet=""><h4>Sambal fish 21.00</h4><p>A whole fish grilled on banana leaf under a thick layer of sambal. Lime to squeeze.</p></div>
+      <div class="dish" data-diet="v vg"><h4>Claypot mushrooms 14.00 <small>V VG</small></h4><p>Three kinds of mushroom with ginger, black bean and spring onion, still bubbling.</p></div>
+        </div>
+        <div class="course"><h3 class="eyebrow">Greens</h3>
+      <div class="dish" data-diet="v vg"><h4>Sambal kangkung 8.00 <small>V VG</small></h4><p>Water spinach tossed fast with chilli and garlic.</p></div>
+        </div>
+      </div>
+      <p class="empty" data-empty hidden>Nothing here matches that filter. Ask your server: the kitchen can change most dishes.</p>
+    </section>
+    <section class="menu-panel" role="tabpanel" id="p-breakfast" aria-labelledby="t-breakfast">
+      <div class="menu-intro"><div><h2 class="h2">Breakfast</h2><p class="note">Half past seven until half past eleven. Walk in, no bookings.</p></div><p class="note muted">Bottomless kopi or teh with any breakfast until nine.</p></div>
+      <div class="menu-cols">
+        <div class="course"><h3 class="eyebrow">Toast and eggs</h3>
+      <div class="dish chain" data-diet="v"><h4>Kaya butter toast 6.50 <small>V</small></h4><p>Charcoal-toasted bread, pandan coconut jam and a cold slab of salted butter, cut into fingers for dipping.</p></div>
+      <div class="dish" data-diet="v"><h4>Two soft eggs 4.50 <small>V</small></h4><p>Barely set, in a saucer, with dark soy and white pepper.</p></div>
+      <div class="dish" data-diet="v"><h4>Roti with dhal 9.00 <small>V</small></h4><p>Flaky, buttery bread from the griddle with a bowl of lentil curry.</p></div>
+        </div>
+        <div class="course"><h3 class="eyebrow">Bowls</h3>
+      <div class="dish" data-diet=""><h4>Chicken congee 9.50</h4><p>Slow rice porridge with ginger, shredded chicken, fried shallots and a crack of pepper.</p></div>
+      <div class="dish" data-diet="v vg"><h4>Morning noodles 8.50 <small>V VG</small></h4><p>Fried bee hoon with cabbage, chilli paste and a wedge of lime.</p></div>
+        </div>
+      </div>
+      <p class="empty" data-empty hidden>Nothing here matches that filter. Ask your server: the kitchen can change most dishes.</p>
+    </section>
+    <section class="menu-panel" role="tabpanel" id="p-drinks" aria-labelledby="t-drinks">
+      <div class="menu-intro"><div><h2 class="h2">Drinks</h2><p class="note">Tea and coffee are made the old way, all day.</p></div><p class="note muted">Ask for kosong if you take it without sugar.</p></div>
+      <div class="menu-cols">
+        <div class="course"><h3 class="eyebrow">Kopi and teh</h3>
+      <div class="dish chain" data-diet="v"><h4>Teh tarik 4.20 <small>V</small></h4><p>Strong black tea and condensed milk, pulled between two mugs until it foams.</p></div>
+      <div class="dish" data-diet="v"><h4>Kopi 3.80 <small>V</small></h4><p>Butter-roasted coffee through a cloth sock, with condensed milk.</p></div>
+      <div class="dish" data-diet="v vg"><h4>Teh halia 4.20 <small>V VG</small></h4><p>Black tea boiled with fresh ginger. Good for whatever ails you.</p></div>
+        </div>
+        <div class="course"><h3 class="eyebrow">Cold</h3>
+      <div class="dish" data-diet="v vg"><h4>Barley lime 4.50 <small>V VG</small></h4><p>Pearl barley water over ice with fresh lime.</p></div>
+      <div class="dish" data-diet="v"><h4>Bandung 4.80 <small>V</small></h4><p>Rose syrup and cold milk, pink and very sweet.</p></div>
+      <div class="dish" data-diet="v vg"><h4>Calamansi soda 5.00 <small>V VG</small></h4><p>Small sour limes, a little sugar, plenty of bubbles.</p></div>
+        </div>
+      </div>
+      <p class="empty" data-empty hidden>Nothing here matches that filter. Ask your server: the kitchen can change most dishes.</p>
+    </section>
+    <section class="menu-panel" role="tabpanel" id="p-sweets" aria-labelledby="t-sweets">
+      <div class="menu-intro"><div><h2 class="h2">Sweets</h2><p class="note">From two o’clock, while they last.</p></div><p class="note muted">Every sweet is made in our own kitchens.</p></div>
+      <div class="menu-cols">
+        <div class="course"><h3 class="eyebrow">Cold</h3>
+      <div class="dish chain" data-diet="v vg"><h4>Chendol 7.50 <small>V VG</small></h4><p>Shaved ice over pandan jelly, red beans and coconut milk, with dark palm sugar poured at the table.</p></div>
+      <div class="dish" data-diet="v"><h4>Ice kacang 8.00 <small>V</small></h4><p>A mountain of ice with sweetcorn, grass jelly, rose syrup and evaporated milk.</p></div>
+        </div>
+        <div class="course"><h3 class="eyebrow">Warm and baked</h3>
+      <div class="dish" data-diet="v vg"><h4>Black rice pudding 6.50 <small>V VG</small></h4><p>Sticky black rice cooked with palm sugar, finished with salted coconut cream.</p></div>
+      <div class="dish" data-diet="v"><h4>Kuih platter 8.00 <small>V</small></h4><p>Five little cakes from the morning bake: layered, steamed, rolled and coconut-dusted.</p></div>
+      <div class="dish" data-diet="v"><h4>Pandan chiffon 5.50 <small>V</small></h4><p>A tall, green, very light slice of cake. Perfect with a kopi.</p></div>
+        </div>
+      </div>
+      <p class="empty" data-empty hidden>Nothing here matches that filter. Ask your server: the kitchen can change most dishes.</p>
+    </section>
+    <div class="sec tight center"><div class="diamonds" aria-hidden="true"></div><p class="lead">Hungry already?</p><div class="btn-row center"><a class="btn solid" href="#/book">Book a table</a><a class="btn" href="#/cafes">Find a café</a></div></div>
+  </div>
+</div>
+
+<!-- ======================= CAFES ======================= -->
+<div data-view="cafes">
+  <section class="page-head wrap center">
+    <p class="kicker">Three towns, six front doors</p>
+    <h1 class="h1">Our cafés</h1>
+    <div class="flourish" aria-hidden="true"><svg><use href="#o-star"/></svg></div>
+    <p class="lead narrow">Every Lamplight opens at half past seven for breakfast and keeps half of its tables for walk-ins. Each one is built around a story from its street.</p>
+  </section>
+  <section class="sec tight wrap">
+    <div class="chips" role="group" aria-label="Filter by town" data-filter="city">
+      <button class="chip" type="button" data-value="all" aria-pressed="true">All towns</button>
+      <button class="chip" type="button" data-value="port-ellery" aria-pressed="false">Port Ellery</button>
+      <button class="chip" type="button" data-value="westmere" aria-pressed="false">Westmere</button>
+      <button class="chip" type="button" data-value="ashby-bay" aria-pressed="false">Ashby Bay</button>
+      <span class="count" data-count="city" data-one="coffee house" data-many="coffee houses" aria-live="polite">6 coffee houses</span>
+    </div>
+    <div class="cafes">
+      <article class="cafe reveal" data-city="port-ellery">
+        <div class="frame"><div class="pic"><img src="images/shophouse.svg" alt="A two-storey shophouse with green shutters, arches and red lanterns" width="800" height="1000" decoding="async"></div></div>
+        <div><span class="tag">The first Lamplight</span><h3>Quayside</h3><p class="note">14 Customs Quay, Port Ellery</p><p>Daily, 7.30 to 23.00. Courtyard seats under the old fig tree.</p><div class="btn-row"><a class="btn solid" href="#/book?cafe=quayside">Book</a><a class="btn" href="#/cafe">Visit page</a></div></div>
+      </article>
+      <article class="cafe reveal" style="--i:1" data-city="port-ellery">
+        <div class="frame"><div class="pic"><img src="images/front-room.svg" alt="A café front room with teal tiles, marble tables and bentwood chairs" width="1200" height="800" decoding="async"></div></div>
+        <div><span class="tag tile">Late on Fridays</span><h3>Tannery Lane</h3><p class="note">3 Tannery Lane, off Mercer Street</p><p>Daily, 8.00 to 23.00. A long bar facing the night market.</p><div class="btn-row"><a class="btn solid" href="#/book?cafe=tannery-lane">Book</a><a class="btn" href="#/cafe">Visit page</a></div></div>
+      </article>
+      <article class="cafe reveal" data-city="port-ellery">
+        <div class="frame"><div class="pic"><img src="images/street-night.svg" alt="A row of shophouses at night with lit arches and lanterns" width="1600" height="900" decoding="async"></div></div>
+        <div><span class="tag leaf">Private room</span><h3>Old Post Office</h3><p class="note">The Sorting Hall, 1 Post Office Square</p><p>Daily, 7.30 to 22.30. A room for twenty-four under the old clock.</p><div class="btn-row"><a class="btn solid" href="#/book?cafe=old-post-office">Book</a><a class="btn" href="#/cafe">Visit page</a></div></div>
+      </article>
+      <article class="cafe reveal" style="--i:1" data-city="westmere">
+        <div class="frame"><div class="pic"><img src="images/teh-tarik.svg" alt="Milk tea poured into a glass in front of green tiles" width="800" height="1000" decoding="async"></div></div>
+        <div><span class="tag tile">Breakfast till noon</span><h3>Kiln Street</h3><p class="note">40 Kiln Street, Westmere</p><p>Daily, 8.00 to 22.30. The brightest room we have.</p><div class="btn-row"><a class="btn solid" href="#/book?cafe=kiln-street">Book</a><a class="btn" href="#/cafe">Visit page</a></div></div>
+      </article>
+      <article class="cafe reveal" data-city="westmere">
+        <div class="frame"><div class="pic"><img src="images/feast.svg" alt="Sharing dishes laid out on a marble table" width="1200" height="800" decoding="async"></div></div>
+        <div><span class="tag">Takeaway counter</span><h3>Northgate Arcade</h3><p class="note">Unit 9, Northgate Arcade, Westmere</p><p>Daily, 9.00 to 22.00. Laksa to go from the window.</p><div class="btn-row"><a class="btn solid" href="#/book?cafe=northgate-arcade">Book</a><a class="btn" href="#/cafe">Visit page</a></div></div>
+      </article>
+      <article class="cafe reveal" style="--i:1" data-city="ashby-bay">
+        <div class="frame"><div class="pic"><img src="images/kaya-toast.svg" alt="Kaya toast and soft eggs on a marble table" width="800" height="1000" decoding="async"></div></div>
+        <div><span class="tag leaf">On the water</span><h3>The Ferry Shed</h3><p class="note">Slipway Road, Ashby Bay</p><p>Thursday to Sunday, 8.00 to 21.00. Tables on the jetty in fine weather.</p><div class="btn-row"><a class="btn solid" href="#/book?cafe=ferry-shed">Book</a><a class="btn" href="#/cafe">Visit page</a></div></div>
+      </article>
+    </div>
+    <p class="empty center" data-empty="city" hidden>No cafés in that town yet.</p>
+  </section>
+</div>
+
+<!-- ======================= ONE CAFE ======================= -->
+<div data-view="cafe">
+  <section class="wrap" style="padding-top:clamp(24px,4vw,48px)">
+    <figure><div class="frame"><div class="pic"><img src="images/shophouse.svg" alt="The Quayside shophouse with green shutters and lanterns in its arches" width="800" height="1000" style="--r:21/8;object-position:50% 70%" decoding="async"></div></div><figcaption class="cap"><b>Above:</b> Quayside from the water side of Customs Quay.</figcaption></figure>
+    <div class="center" style="padding-block:clamp(32px,5vw,64px) 28px">
+      <p class="eyebrow">Lamplight on Customs Quay</p>
+      <h1 class="cafe-title">Quayside</h1>
+      <p class="kicker" style="margin-top:14px">The first Lamplight, open since 2014</p>
+    </div>
+  </section>
+  <nav class="subnav" aria-label="On this page"><a href="#c-story">The story</a><a href="#c-food">Food and drink</a><a href="#c-visit">Visit us</a><a href="#c-book">Book</a></nav>
+  <section class="sec wrap" id="c-story">
+    <h2 class="caps center" style="margin-bottom:40px">The tale of this house</h2>
+    <div class="newsprint">
+      <p class="dropcap">Before the container port moved up the coast, Customs Quay was the busiest few hundred metres in Port Ellery. Lighters came and went all night, and the coffee shop on the corner served the men who unloaded them: kopi at four in the morning, rice at noon, beer and satay when the tide turned.</p>
+      <p>The shop closed when the work left. For twenty-five years its shutters stayed down, and the stove sat cold behind them. When we opened the doors again we found the marble tables still stacked against the wall, and the price list painted on the back of the kitchen door.</p>
+      <p>We kept both. The tables are back on the floor, the price list hangs over the counter, and the stove is lit at half past six every morning, the way it was. Most mornings someone comes in who remembers the old shop and tells us what we have got wrong.</p>
+    </div>
+  </section>
+  <section class="sec tight wrap" id="c-food">
+    <div class="center"><div class="diamonds" aria-hidden="true"></div><p class="kicker">The full menu, and three dishes we only cook here</p><h2 class="caps">Only at Quayside</h2></div>
+    <div class="menu-cols" style="margin-top:40px">
+      <div class="dish"><h4>Dockside fried rice 14.50</h4><p>Last night’s rice, a very hot wok, prawn, egg and a spoon of chilli from the jar on the counter.</p></div>
+      <div class="dish"><h4>Pepper crab bun 12.00</h4><p>Soft crab in black pepper butter, in a toasted milk bun. Messy on purpose.</p></div>
+      <div class="dish"><h4>Night-shift kopi 3.50</h4><p>A double-strength kopi with a slice of butter melted on top, served from four in the afternoon.</p></div>
+    </div>
+    <div class="btn-row center"><a class="btn" href="#/menu">See the full menu</a></div>
+  </section>
+  <section class="sec tight wrap" id="c-visit">
+    <p class="eyebrow ruled">Visit us</p>
+    <div class="visit">
+      <div><h3 class="h2" style="font-size:1.5rem">Opening hours</h3>
+        <dl class="hours"><div><dt>Monday to Thursday</dt><dd>7.30 to 23.00</dd></div><div><dt>Friday and Saturday</dt><dd>7.30 to 24.00</dd></div><div><dt>Sunday</dt><dd>8.00 to 22.00</dd></div><div><dt>Breakfast</dt><dd>until 11.30</dd></div></dl>
+      </div>
+      <div><h3 class="h2" style="font-size:1.5rem">Getting here</h3>
+        <p>14 Customs Quay, Port Ellery. Two minutes from the Harbour tram stop, five from the ferry terminal. There is step-free access through the courtyard gate and an accessible toilet on the ground floor.</p>
+        <p><a href="#/contact?topic=general">Call or write to Quayside</a></p>
+      </div>
+      <figure class="map">
+        <svg viewBox="0 0 320 240" role="img" aria-labelledby="map-t map-d"><title id="map-t">Map of Quayside</title><desc id="map-d">Quayside sits on the corner of Customs Quay and Mercer Street, between the tram stop and the ferry terminal.</desc>
+          <path class="water" d="M0 170h320v70H0z"/><path class="quay" d="M0 170h320"/>
+          <path class="road" d="M0 150h320M150 0v150M260 40v110M40 60h220"/>
+          <text x="12" y="210">THE HARBOUR</text><text x="164" y="24">MERCER ST</text><text x="12" y="140">CUSTOMS QUAY</text><text x="268" y="74">TRAM</text><text x="236" y="210">FERRY</text>
+          <path class="pin" d="M150 150c-12-16-18-26-18-34a18 18 0 0 1 36 0c0 8-6 18-18 34Z"/><circle cx="150" cy="116" r="6" fill="var(--surface)"/>
+        </svg>
+      </figure>
+    </div>
+  </section>
+  <section class="sec tight wrap" id="c-book">
+    <div class="letter">
+      <p class="kicker">Tables for one to eight</p>
+      <h2 class="caps">Book at Quayside</h2>
+      <p class="muted" style="margin-top:12px">Half of the room is always kept for walk-ins. For nine or more, ask about a gathering.</p>
+      <div class="btn-row center"><a class="btn solid" href="#/book?cafe=quayside">Book a table</a><a class="btn" href="#/gatherings">Gatherings</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= BOOK ======================= -->
+<div data-view="book">
+  <section class="page-head wrap">
+    <p class="kicker">Tables for one to eight</p>
+    <h1 class="h1">Book a table</h1>
+    <p class="lead" style="max-width:640px;margin-top:18px">We keep half of every room for walk-ins, so if your time has gone, come anyway and we will find you a stool.</p>
+  </section>
+  <section class="sec tight wrap">
+    <div class="book-grid">
+      <aside>
+        <ul class="facts">
+          <li><b>Nine or more</b>Long tables and set feasts are on <a href="#/gatherings">Gatherings</a>.</li>
+          <li><b>Breakfast</b>Walk in from half past seven. We do not book breakfast.</li>
+          <li><b>Running late</b>We hold a table for fifteen minutes. Reply to your confirmation and we will try to keep it.</li>
+        </ul>
+        <figure class="side" style="margin-top:40px"><figcaption class="cap"><b>Right:</b> Tea for the table.</figcaption><div class="frame"><div class="pic"><img src="images/teh-tarik.svg" alt="Two glasses of milk tea, one being poured from a height" width="800" height="1000" style="--r:1/1" decoding="async"></div></div></figure>
+      </aside>
+      <div>
+        <form class="form-card" data-form="booking" novalidate>
+          <div class="fields">
+            <div class="field"><label class="label" for="b-cafe">Café</label><div class="select"><select class="input" id="b-cafe" name="cafe" required aria-describedby="b-cafe-err" data-value-missing="Please choose a café.">
+              <option value="">Choose a café</option><option value="quayside">Quayside</option><option value="tannery-lane">Tannery Lane</option><option value="old-post-office">Old Post Office</option><option value="kiln-street">Kiln Street</option><option value="northgate-arcade">Northgate Arcade</option><option value="ferry-shed">The Ferry Shed</option></select></div><span class="error" id="b-cafe-err" aria-live="polite"></span></div>
+            <div class="field"><label class="label" for="b-guests">Guests</label><div class="select"><select class="input" id="b-guests" name="guests" required aria-describedby="b-guests-err">
+              <option value="1">1 guest</option><option value="2" selected>2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option><option value="5">5 guests</option><option value="6">6 guests</option><option value="7">7 guests</option><option value="8">8 guests</option></select></div><span class="error" id="b-guests-err" aria-live="polite"></span></div>
+            <div class="field full"><label class="label" for="b-date">Date</label><input class="input" id="b-date" name="date" type="date" required aria-describedby="b-date-err" data-value-missing="Please choose a date."><span class="error" id="b-date-err" aria-live="polite"></span></div>
+            <fieldset class="field full"><legend class="label" style="margin-bottom:8px">Time</legend>
+              <div class="slots">
+                <label class="slot"><input type="radio" name="time" value="12.00" required aria-describedby="b-time-err" data-value-missing="Please choose a time."><span>12.00</span></label>
+                <label class="slot"><input type="radio" name="time" value="12.30"><span>12.30</span></label>
+                <label class="slot"><input type="radio" name="time" value="13.00"><span>13.00</span></label>
+                <label class="slot"><input type="radio" name="time" value="13.30"><span>13.30</span></label>
+                <label class="slot"><input type="radio" name="time" value="18.00"><span>18.00</span></label>
+                <label class="slot"><input type="radio" name="time" value="18.30"><span>18.30</span></label>
+                <label class="slot"><input type="radio" name="time" value="19.00"><span>19.00</span></label>
+                <label class="slot"><input type="radio" name="time" value="19.30"><span>19.30</span></label>
+                <label class="slot"><input type="radio" name="time" value="20.00"><span>20.00</span></label>
+                <label class="slot"><input type="radio" name="time" value="20.30"><span>20.30</span></label>
+              </div><span class="error" id="b-time-err" aria-live="polite"></span></fieldset>
+            <div class="field"><label class="label" for="b-name">Name</label><input class="input" id="b-name" name="name" autocomplete="name" required aria-describedby="b-name-err"><span class="error" id="b-name-err" aria-live="polite"></span></div>
+            <div class="field"><label class="label" for="b-email">Email</label><input class="input" id="b-email" name="email" type="email" autocomplete="email" required aria-describedby="b-email-err"><span class="error" id="b-email-err" aria-live="polite"></span></div>
+            <div class="field full"><label class="label" for="b-notes">Anything we should know <small>(optional)</small></label><textarea class="input" id="b-notes" name="notes" rows="3" placeholder="Allergies, a high chair, a birthday"></textarea></div>
+            <div class="field full"><label class="check"><input type="checkbox" name="letter"> <span>Send me the Lamplight letter once a month.</span></label></div>
+          </div>
+          <button class="btn solid" type="submit">Request this table</button>
+        </form>
+        <div class="success" data-success="booking" tabindex="-1" hidden>
+          <div class="diamonds" aria-hidden="true"></div>
+          <h2 class="caps">Your table is pencilled in</h2>
+          <div class="flourish" aria-hidden="true"><svg><use href="#o-star"/></svg></div>
+          <p class="lead">A table for <span data-echo="guests"></span> at <span data-echo="cafe"></span>, <span data-echo="date"></span> at <span data-echo="time"></span>.</p>
+          <p class="muted">We will confirm by email to <span data-echo="email"></span> within the hour.</p>
+          <button class="btn" type="button" data-again="booking">Book another table</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= GATHERINGS ======================= -->
+<div data-view="gatherings">
+  <section class="page-head wrap">
+    <div class="head-split">
+      <div class="head-box">
+        <p class="kicker">Long tables, set feasts, evenings</p>
+        <h1 class="h1">Gatherings</h1>
+        <p class="lead" style="margin-top:18px">For nine guests or more we push the marble tables together and cook a feast for the whole table. Every café can host one; the Old Post Office has a room of its own.</p>
+      </div>
+      <figure><div class="frame"><div class="pic"><img src="images/feast.svg" alt="A long table of sharing dishes seen from above" width="1200" height="800" style="--r:3/2" decoding="async"></div></div><figcaption class="cap"><b>Above:</b> A Lantern Feast for twelve at Tannery Lane.</figcaption></figure>
+    </div>
+  </section>
+  <section class="sec tight wrap">
+    <div class="center" style="margin-bottom:40px"><div class="diamonds" aria-hidden="true"></div><h2 class="caps">Three feasts</h2><p class="muted" style="margin-top:10px">Priced per guest. Groups of nine to forty.</p></div>
+    <div class="feasts">
+      <div class="feast reveal"><p class="eyebrow">Mornings</p><h3 class="caps" style="font-size:1.375rem">The Kopi Table</h3><p class="price">24</p><p class="note">per guest</p><ul><li>Kaya toast and soft eggs</li><li>Congee and morning noodles</li><li>A kuih platter</li><li>Kopi and teh until noon</li></ul><a class="btn" href="#/gatherings?feast=kopi-table&amp;at=enquire">Ask about this feast</a></div>
+      <div class="feast star reveal" style="--i:1"><p class="eyebrow">Our most booked</p><h3 class="caps" style="font-size:1.375rem">The Lantern Feast</h3><p class="price">42</p><p class="note">per guest</p><ul><li>Satay and small plates to start</li><li>Laksa, rendang and sambal fish</li><li>Greens and rice for the table</li><li>Chendol to finish</li></ul><a class="btn solid" href="#/gatherings?feast=lantern-feast&amp;at=enquire">Ask about this feast</a></div>
+      <div class="feast reveal" style="--i:2"><p class="eyebrow">Evenings</p><h3 class="caps" style="font-size:1.375rem">The Long Night</h3><p class="price">58</p><p class="note">per guest</p><ul><li>A drink on arrival</li><li>The whole Lantern Feast</li><li>Claypots from the charcoal</li><li>Sweets and a last pot of tea</li></ul><a class="btn" href="#/gatherings?feast=long-night&amp;at=enquire">Ask about this feast</a></div>
+    </div>
+  </section>
+  <section class="sec tight wrap" id="evenings">
+    <p class="eyebrow ruled">Evenings at the cafés</p>
+    <h2 class="h2">Come for one night</h2>
+    <ul class="evenings">
+      <li class="evening reveal"><div class="date-plate"><b>12</b><span>Dec</span></div><div><h3>Tea-pulling class</h3><p class="muted sub">Quayside, 10.00. One hour, two mugs, a lot of practice. Twelve places.</p></div><a class="btn" href="#/book?cafe=quayside">Book a place</a></li>
+      <li class="evening reveal"><div class="date-plate"><b>15</b><span>Dec</span></div><div><h3>Supper club: the night-market menu</h3><p class="muted sub">Old Post Office, 19.00. Seven small courses from the carts of the old harbour.</p></div><a class="btn" href="#/book?cafe=old-post-office">Book a place</a></li>
+      <li class="evening reveal"><div class="date-plate"><b>19</b><span>Dec</span></div><div><h3>Lantern night on Tannery Lane</h3><p class="muted sub">Tannery Lane, from 17.00. Stalls in the street and satay until late. Walk in.</p></div><a class="btn" href="#/cafes?city=port-ellery">See the café</a></li>
+    </ul>
+  </section>
+  <section class="sec tight wrap" id="enquire">
+    <div class="book-grid">
+      <div><p class="eyebrow ruled">Plan a gathering</p><h2 class="h2">Tell us about your table</h2><p>Birthdays, leaving dos, a team lunch, a wedding morning. Write to us and the events team will reply within two working days with dates and a menu.</p><p class="muted">Or email <a href="#/contact?topic=events">events@lamplight.example</a>.</p></div>
+      <div>
+        <form class="form-card" data-form="enquiry" novalidate>
+          <div class="fields">
+            <div class="field"><label class="label" for="g-name">Name</label><input class="input" id="g-name" name="name" autocomplete="name" required aria-describedby="g-name-err"><span class="error" id="g-name-err" aria-live="polite"></span></div>
+            <div class="field"><label class="label" for="g-email">Email</label><input class="input" id="g-email" name="email" type="email" autocomplete="email" required aria-describedby="g-email-err"><span class="error" id="g-email-err" aria-live="polite"></span></div>
+            <div class="field"><label class="label" for="g-feast">Feast</label><div class="select"><select class="input" id="g-feast" name="feast"><option value="lantern-feast">The Lantern Feast</option><option value="kopi-table">The Kopi Table</option><option value="long-night">The Long Night</option><option value="unsure">Not sure yet</option></select></div></div>
+            <div class="field"><label class="label" for="g-guests">Guests</label><input class="input" id="g-guests" name="guests" type="number" inputmode="numeric" min="9" max="40" value="12" required aria-describedby="g-guests-err" data-range-underflow="Gatherings start at nine guests." data-range-overflow="For more than forty, write to us directly."><span class="error" id="g-guests-err" aria-live="polite"></span></div>
+            <div class="field full"><label class="label" for="g-message">Tell us more</label><textarea class="input" id="g-message" name="message" rows="4" required minlength="10" aria-describedby="g-message-err" placeholder="The date, the café you would like, and what you are celebrating"></textarea><span class="error" id="g-message-err" aria-live="polite"></span></div>
+          </div>
+          <button class="btn solid" type="submit">Send enquiry</button>
+        </form>
+        <div class="success" data-success="enquiry" tabindex="-1" hidden><h2 class="caps">Thank you</h2><div class="flourish" aria-hidden="true"><svg><use href="#o-star"/></svg></div><p>The events team will write back within two working days.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= JOURNAL ======================= -->
+<div data-view="journal">
+  <section class="page-head wrap center">
+    <p class="kicker">Stories, recipes and notes from the quay</p>
+    <h1 class="h1">The journal</h1>
+    <div class="flourish" aria-hidden="true"><svg><use href="#o-star"/></svg></div>
+    <div class="chips" style="justify-content:center" role="group" aria-label="Filter stories" data-filter="kind">
+      <button class="chip" type="button" data-value="all" aria-pressed="true">Everything</button>
+      <button class="chip" type="button" data-value="story" aria-pressed="false">Stories</button>
+      <button class="chip" type="button" data-value="recipe" aria-pressed="false">Recipes</button>
+      <button class="chip" type="button" data-value="neighbourhood" aria-pressed="false">Neighbourhood</button>
+    </div>
+  </section>
+  <section class="sec tight wrap">
+    <a class="feature-post" href="#/story" data-kind="recipe"><div class="frame dbl"><div class="pic"><img src="images/teh-tarik.svg" alt="Tea poured in a long stream from a steel mug into a glass" width="800" height="1000" style="--r:3/2;object-position:50% 40%" decoding="async"></div></div><div><span class="tag leaf">Recipe</span><h2 style="margin:14px 0 12px">How to pull a proper glass of teh tarik</h2><p>Two mugs, strong tea and a steady arm. Our head of tea on the one drink every café is judged by.</p><span class="meta">12 November · 6 minute read</span></div></a>
+    <div class="posts">
+      <a class="post reveal" href="#/story" data-kind="story"><span class="tag">Story</span><div class="frame"><div class="pic"><img src="images/kitchen-stove.svg" alt="" width="800" height="1000" style="--r:4/3" decoding="async"></div></div><span class="meta">28 October</span><h3>The stove that never goes out</h3></a>
+      <a class="post reveal" style="--i:1" href="#/story" data-kind="neighbourhood"><span class="tag tile">Neighbourhood</span><div class="frame"><div class="pic"><img src="images/shophouse.svg" alt="" width="800" height="1000" style="--r:4/3" decoding="async"></div></div><span class="meta">9 October</span><h3>Night market notes from Tannery Lane</h3></a>
+      <a class="post reveal" style="--i:2" href="#/story" data-kind="recipe"><span class="tag leaf">Recipe</span><div class="frame"><div class="pic"><img src="images/kaya-toast.svg" alt="" width="800" height="1000" style="--r:4/3" decoding="async"></div></div><span class="meta">21 September</span><h3>Kaya, slowly: a morning with the jam pot</h3></a>
+      <a class="post reveal" href="#/story" data-kind="story"><span class="tag">Story</span><div class="frame"><div class="pic"><img src="images/satay.svg" alt="" width="1000" height="750" style="--r:4/3" decoding="async"></div></div><span class="meta">2 September</span><h3>Why our satay waits a day</h3></a>
+      <a class="post reveal" style="--i:1" href="#/story" data-kind="neighbourhood"><span class="tag tile">Neighbourhood</span><div class="frame"><div class="pic"><img src="images/street-night.svg" alt="" width="1600" height="900" style="--r:4/3" decoding="async"></div></div><span class="meta">15 August</span><h3>A walk from the ferry to Kiln Street</h3></a>
+      <a class="post reveal" style="--i:2" href="#/story" data-kind="recipe"><span class="tag leaf">Recipe</span><div class="frame"><div class="pic"><img src="images/chendol.svg" alt="" width="1000" height="1000" style="--r:4/3" decoding="async"></div></div><span class="meta">30 July</span><h3>Chendol for a hot afternoon</h3></a>
+    </div>
+    <p class="empty center" data-empty="kind" hidden>Nothing here yet. Try another kind of story.</p>
+  </section>
+</div>
+
+<!-- ======================= STORY ======================= -->
+<div data-view="story">
+  <article class="sec wrap">
+    <header class="article-head">
+      <span class="tag leaf">Recipe</span>
+      <h1 class="h1" style="margin-top:20px">How to pull a proper glass of teh tarik</h1>
+      <p class="kicker" style="margin-top:16px">Two mugs, strong tea and a steady arm</p>
+      <p class="meta byline">By Wen Koh, head of tea · 12 November · 6 minute read</p>
+      <div class="flourish" aria-hidden="true"><svg><use href="#o-star"/></svg></div>
+    </header>
+    <div class="article">
+      <p class="dropcap">Every coffee house has one drink it is judged by. At Lamplight it is the teh tarik: black tea as strong as you can stand, condensed milk, and a long pour from one mug to the other until the top turns to foam. Done well it is smooth, sweet and a little smoky. Done badly it is just milky tea with an audience.</p>
+      <p>The pulling is not for show, or not only. Each pour cools the tea to drinking temperature, mixes the milk right through and beats air into it. Our tea makers pull each glass six or seven times. At home, four will do.</p>
+      <figure><div class="frame"><div class="pic"><img src="images/teh-tarik.svg" alt="Tea poured from a steel mug into a tall glass, with a second glass beside it" width="800" height="1000" style="--r:4/3" decoding="async"></div></div><figcaption class="cap"><b>Above:</b> The pour at Kiln Street. Start low, then lift as the stream steadies.</figcaption></figure>
+      <h2>The tea</h2>
+      <p>Use a strong, plain black tea, the kind sold as dust or broken leaf. Brew it in a pot or a cloth sock for longer than feels right: five minutes at least. Weak tea disappears under the milk, and the foam will not hold.</p>
+      <p class="pull">“If your arm is not tired, you have not pulled it enough.”</p>
+      <h2>The pull</h2>
+      <p>Hold the full mug low over the empty one and start to pour. As the stream finds its line, lift the full mug slowly to arm’s length and keep the bottom mug still. Bring the mugs together before the stream runs out. Swap hands and pour back. Practise over the sink with water first; everyone spills at the start.</p>
+      <div class="recipe">
+        <p class="eyebrow center">Teh tarik for two</p>
+        <div class="recipe-grid">
+          <div><h3 class="eyebrow" style="font-size:.75rem">You need</h3><ul><li>2 heaped tablespoons black tea</li><li>400 ml just-boiled water</li><li>4 tablespoons condensed milk</li><li>2 tablespoons evaporated milk</li><li>2 large mugs with handles</li></ul></div>
+          <div><h3 class="eyebrow" style="font-size:.75rem">Method</h3><ol><li>Brew the tea for five minutes, then strain it into a mug.</li><li>Stir in both milks until no streaks remain.</li><li>Pour from mug to mug four times, lifting as you go.</li><li>Finish with a high pour into two glasses and drink while the foam stands.</li></ol></div>
+        </div>
+      </div>
+      <div class="btn-row center"><a class="btn" href="#/journal">More from the journal</a><a class="btn solid" href="#/gatherings?at=evenings">Join a class</a></div>
+    </div>
+  </article>
+</div>
+
+<!-- ======================= ABOUT ======================= -->
+<div data-view="about">
+  <section class="page-head wrap center">
+    <p class="kicker">Since the first stove was lit</p>
+    <h1 class="h1">Our story</h1>
+    <div class="flourish" aria-hidden="true"><svg><use href="#o-star"/></svg></div>
+  </section>
+  <section class="sec tight wrap">
+    <p class="lede reveal"><span>A coffee shop on the quay, a family that would not let it go,</span><span>and six front doors that all open at half past seven.</span></p>
+    <div class="stagger">
+      <figure class="st-a reveal"><div class="frame"><div class="pic"><img src="images/front-room.svg" alt="The front room at Quayside with marble tables and teal tiles" width="1200" height="800" style="--r:4/5" decoding="async"></div></div><figcaption class="cap"><b>Above:</b> The front room at Quayside, with the original tables.</figcaption></figure>
+      <div class="st-b prose reveal" style="--i:1"><p>In 1952 Lim Ah Choo opened a six-table coffee shop on the corner of Customs Quay, with a charcoal stove, a cloth coffee sock and credit for anyone who worked the docks. It fed the harbour for thirty-five years.</p><p>His granddaughter May Lim grew up under those tables. When the building came up for rent in 2014 she took it, lit the old stove and cooked her grandfather’s laksa from a notebook in his handwriting. The queue started on the second day.</p></div>
+      <figure class="st-c side reveal" style="--i:2"><figcaption class="cap"><b>Right:</b> The notebook laksa.</figcaption><div class="frame"><div class="pic"><img src="images/laksa.svg" alt="A bowl of laksa seen from above" width="1000" height="1000" style="--r:4/5" decoding="async"></div></div></figure>
+    </div>
+  </section>
+  <section class="sec tight wrap">
+    <p class="eyebrow ruled">Seventy years in five lines</p>
+    <ol class="timeline">
+      <li class="reveal"><span class="year">1952</span>Six tables and a charcoal stove open on Customs Quay.</li>
+      <li class="reveal" style="--i:1"><span class="year">1987</span>The port moves north and the shutters come down.</li>
+      <li class="reveal" style="--i:2"><span class="year">2014</span>Quayside reopens with the same stove and the same tables.</li>
+      <li class="reveal" style="--i:3"><span class="year">2019</span>Tannery Lane and the Old Post Office join.</li>
+      <li class="reveal" style="--i:4"><span class="year">2024</span>Kiln Street, Northgate Arcade and the Ferry Shed.</li>
+    </ol>
+  </section>
+  <section class="sec wrap">
+    <div class="center" style="margin-bottom:48px"><h2 class="caps">Three things we keep</h2></div>
+    <div class="keeps">
+      <div class="reveal"><div class="diamonds" aria-hidden="true"></div><h3>The stove</h3><p>Every café cooks on charcoal and lights it before dawn. It is slower, and the toast is better.</p></div>
+      <div class="reveal" style="--i:1"><div class="diamonds" aria-hidden="true"></div><h3>The open door</h3><p>Half of every room is kept for walk-ins. Nobody should need a booking for breakfast.</p></div>
+      <div class="reveal" style="--i:2"><div class="diamonds" aria-hidden="true"></div><h3>The street</h3><p>Each café takes its story, its specials and its staff from the street it stands on.</p></div>
+    </div>
+    <div class="btn-row center" style="margin-top:56px"><a class="btn solid" href="#/cafes">Find your café</a><a class="btn" href="#/contact?topic=careers">Work with us</a></div>
+  </section>
+</div>
+
+<!-- ======================= FAQ ======================= -->
+<div data-view="faq">
+  <section class="page-head wrap">
+    <p class="kicker">Before you come</p>
+    <h1 class="h1">Questions</h1>
+  </section>
+  <section class="sec tight wrap">
+    <div class="faq-layout">
+      <nav class="faq-nav" aria-label="Topics"><a href="#f-tables">Tables and walk-ins</a><a href="#f-food">Food and allergies</a><a href="#f-access">Children and access</a><a href="#f-gifts">Gift cards and groups</a></nav>
+      <div>
+        <div class="faq-group" id="f-tables"><h2 class="eyebrow ruled">Tables and walk-ins</h2>
+      <details><summary>Do I need to book?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. Half of every room is kept for walk-ins, and breakfast is walk-in only. Booking helps for Friday and Saturday evenings.</p></details>
+      <details><summary>How do I change or cancel a booking?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Reply to your confirmation email, or call the café. There is no charge for cancelling.</p></details>
+        </div>
+        <div class="faq-group" id="f-food"><h2 class="eyebrow ruled">Food and allergies</h2>
+      <details><summary>Can you cook for allergies?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Tell your server before you order. Our kitchens use nuts, shellfish, gluten, egg and soy, so we cannot promise any dish is free of them, but we will tell you exactly what is in each one.</p></details>
+        </div>
+        <div class="faq-group" id="f-access"><h2 class="eyebrow ruled">Children and access</h2>
+      <details><summary>Are children welcome?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Always. We have high chairs, half portions of most dishes and a lot of paper napkins.</p></details>
+      <details><summary>Is there step-free access?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Each café page lists its entrances and toilets. Call ahead and we will keep a table near the door.</p></details>
+        </div>
+        <div class="faq-group" id="f-gifts"><h2 class="eyebrow ruled">Gift cards and groups</h2>
+      <details><summary>Do you sell gift cards?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes, at the counter of every café, in any amount. They work at all six.</p></details>
+      <details><summary>Can we book for a large group?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>For nine or more, see <a href="#/gatherings">Gatherings</a>: set feasts on long tables, or the private room at the Old Post Office.</p></details>
+        </div>
+        <p>Still wondering? <a href="#/contact">Write to us</a>.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= CONTACT ======================= -->
+<div data-view="contact">
+  <section class="page-head wrap">
+    <p class="kicker">We read everything</p>
+    <h1 class="h1">Say hello</h1>
+  </section>
+  <section class="sec tight wrap">
+    <div class="book-grid">
+      <aside>
+        <ul class="facts">
+          <li><b>General</b><a href="#/contact?topic=general">hello@lamplight.example</a></li>
+          <li><b>Gatherings and events</b><a href="#/contact?topic=events">events@lamplight.example</a></li>
+          <li><b>Press</b><a href="#/contact?topic=press">press@lamplight.example</a></li>
+          <li><b>Head office</b>Lamplight Kopi House Ltd., 2 Mercer Street, Port Ellery. +1 555 0172</li>
+        </ul>
+      </aside>
+      <div>
+        <form class="form-card" data-form="contact" novalidate>
+          <div class="fields">
+            <div class="field"><label class="label" for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-err"><span class="error" id="c-name-err" aria-live="polite"></span></div>
+            <div class="field"><label class="label" for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-err"><span class="error" id="c-email-err" aria-live="polite"></span></div>
+            <div class="field full"><label class="label" for="c-topic">About</label><div class="select"><select class="input" id="c-topic" name="topic"><option value="general">A visit or a booking</option><option value="events">Gatherings and events</option><option value="lost">Something left behind</option><option value="careers">Working at Lamplight</option><option value="press">Press</option></select></div></div>
+            <div class="field full"><label class="label" for="c-message">Message</label><textarea class="input" id="c-message" name="message" rows="5" required minlength="10" aria-describedby="c-message-err"></textarea><span class="error" id="c-message-err" aria-live="polite"></span></div>
+          </div>
+          <button class="btn solid" type="submit">Send message</button>
+        </form>
+        <div class="success" data-success="contact" tabindex="-1" hidden><h2 class="caps">Thank you</h2><div class="flourish" aria-hidden="true"><svg><use href="#o-star"/></svg></div><p>We reply to every message within two working days.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= LEGAL ======================= -->
+<div data-view="privacy">
+  <section class="sec wrap legal">
+    <p class="kicker">Updated 1 November</p>
+    <h1 class="h1">Privacy</h1>
+    <p class="lead" style="margin-top:20px">This explains what Lamplight Kopi House Ltd. collects when you book a table, send a message or sign up for the letter, and what we do with it.</p>
+    <h2>What we collect</h2><p>Your name, email address and the details of your booking or message. Nothing else is required, and we do not use advertising trackers.</p>
+    <h2>Why</h2><p>To hold your table, answer your message and, if you ask for it, send the monthly letter. We keep booking details for twelve months.</p>
+    <h2>Your choices</h2><p>Every letter has an unsubscribe link. To see, correct or delete what we hold about you, write to <a href="#/contact">hello@lamplight.example</a>.</p>
+  </section>
+</div>
+<div data-view="terms">
+  <section class="sec wrap legal">
+    <p class="kicker">Updated 1 November</p>
+    <h1 class="h1">Terms</h1>
+    <p class="lead" style="margin-top:20px">The small print for bookings, gatherings and gift cards at every Lamplight café.</p>
+    <h2>Bookings</h2><p>We hold tables for fifteen minutes after the booked time. There is no charge for cancelling a table for eight or fewer.</p>
+    <h2>Gatherings</h2><p>Set feasts are confirmed with a deposit of ten per guest, returned if you cancel seven days ahead.</p>
+    <h2>Gift cards</h2><p>Gift cards work at all six cafés for two years from purchase and cannot be exchanged for cash.</p>
+  </section>
+</div>
+
+<!-- ======================= 404 ======================= -->
+<div data-view="404">
+  <section class="wrap notfound">
+    <div class="diamonds" aria-hidden="true"></div>
+    <p class="kicker">This table is not set</p>
+    <h1 class="h1">We cannot find that page</h1>
+    <p class="lead" style="margin-top:18px">It may have moved, or the link may be old. The kettle is still on.</p>
+    <div class="btn-row center"><a class="btn solid" href="#/">Back to the front room</a><a class="btn" href="#/menu">See the menus</a></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer ink">
+  <div class="pinstripe" aria-hidden="true"></div>
+  <div class="wrap footer-grid">
+    <div><a class="brand" href="#/"><span class="brand-name">Lamplight</span><span class="brand-sub">Kopi House</span></a><p class="muted" style="margin-top:18px;max-width:30ch">Six coffee houses on the old harbour. Open from half past seven, every day.</p></div>
+    <div><h2 class="eyebrow">Eat</h2><ul><li><a href="#/menu">All day</a></li><li><a href="#/menu?tab=breakfast">Breakfast</a></li><li><a href="#/menu?tab=drinks">Drinks</a></li><li><a href="#/menu?tab=sweets">Sweets</a></li></ul></div>
+    <div><h2 class="eyebrow">Visit</h2><ul><li><a href="#/cafes">All cafés</a></li><li><a href="#/book">Book a table</a></li><li><a href="#/gatherings">Gatherings</a></li><li><a href="#/faq">Questions</a></li></ul></div>
+    <div><h2 class="eyebrow">Lamplight</h2><ul><li><a href="#/about">Our story</a></li><li><a href="#/journal">Journal</a></li><li><a href="#/contact">Say hello</a></li><li><a href="#/contact?topic=careers">Work with us</a></li></ul></div>
+  </div>
+  <div class="wrap footer-bottom"><p style="margin:0">© 2026 Lamplight Kopi House Ltd.</p><nav aria-label="Legal"><a href="#/privacy">Privacy</a><a href="#/terms">Terms</a></nav></div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: day (light) and evening (dark); the system setting is the default ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to day colours" : "Switch to evening colours");
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("lamplight-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("lamplight-theme", next);
+  });
+  systemDark.addEventListener("change", (event) => { if (!store.get("lamplight-theme")) applyTheme(event.matches ? "dark" : "light"); });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Lamplight Kopi House: harbour coffee houses, open from half past seven",
+    menu: "Menus · Lamplight Kopi House",
+    cafes: "Our cafés · Lamplight Kopi House",
+    cafe: "Quayside · Lamplight Kopi House",
+    book: "Book a table · Lamplight Kopi House",
+    gatherings: "Gatherings · Lamplight Kopi House",
+    journal: "Journal · Lamplight Kopi House",
+    story: "How to pull a proper glass of teh tarik · Lamplight Kopi House",
+    about: "Our story · Lamplight Kopi House",
+    faq: "Questions · Lamplight Kopi House",
+    contact: "Say hello · Lamplight Kopi House",
+    privacy: "Privacy · Lamplight Kopi House",
+    terms: "Terms · Lamplight Kopi House",
+    "404": "Page not found · Lamplight Kopi House",
+  };
+  /* Which header link stays underlined for each view */
+  const section = { cafe: "cafes", story: "journal" };
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function preselect(id, value) {
+    const select = document.getElementById(id);
+    if (value && select && select.querySelector(`option[value="${CSS.escape(value)}"]`)) select.value = value;
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    const active = section[name] || name;
+    $$(".nav a, .sheet-links a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === active) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "menu") selectTab(p.get("tab"));
+    if (name === "cafes") applyFilter("city", p.get("city") || "all");
+    if (name === "journal") applyFilter("kind", p.get("kind") || "all");
+    if (name === "book") preselect("b-cafe", p.get("cafe"));
+    if (name === "gatherings") preselect("g-feast", p.get("feast"));
+    if (name === "contact") preselect("c-topic", p.get("topic"));
+    const at = p.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = (current && current.querySelector(href)) || document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Menu sheet; the header falls back to it whenever the links do not fit on one line ---------- */
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  const header = $(".site-header");
+  const nav = $(".nav", header);
+  function fitNav() {
+    header.classList.remove("compact");
+    if (getComputedStyle(nav).display !== "none" && nav.scrollWidth > nav.clientWidth + 1) header.classList.add("compact");
+  }
+  window.addEventListener("resize", fitNav);
+  document.fonts.ready.then(fitNav);
+  fitNav();
+
+  /* ---------- Reveal (content stays visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    $$(".reveal:not(.in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("in")));
+  }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("in")), 2500);
+
+  /* ---------- Menu tabs (arrow keys move between them) and the dietary filter ---------- */
+  const tabs = $$("[role='tab']");
+  let diet = "all";
+  function selectTab(id, focus) {
+    const chosen = tabs.find((tab) => tab.dataset.tab === id) || tabs[0];
+    tabs.forEach((tab) => {
+      const on = tab === chosen;
+      tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+      document.getElementById(tab.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) chosen.focus();
+    applyDiet();
+  }
+  function applyDiet() {
+    $$("[role='tabpanel']").forEach((panel) => {
+      let shown = 0;
+      $$(".dish", panel).forEach((dish) => {
+        const match = diet === "all" || (dish.dataset.diet || "").split(" ").includes(diet);
+        dish.hidden = !match;
+        if (match) shown += 1;
+      });
+      $$(".course", panel).forEach((course) => { course.hidden = !$$(".dish", course).some((dish) => !dish.hidden); });
+      $("[data-empty]", panel).hidden = shown > 0;
+    });
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => selectTab(tab.dataset.tab));
+    tab.addEventListener("keydown", (event) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      selectTab(tabs[(i + step + tabs.length) % tabs.length].dataset.tab, true);
+    });
+  });
+  $$("[data-diet]").filter((el) => el.matches("button")).forEach((chip) => chip.addEventListener("click", () => {
+    diet = chip.getAttribute("aria-pressed") === "true" ? "all" : chip.dataset.diet;
+    $$("button[data-diet]").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.diet === diet)));
+    applyDiet();
+  }));
+  selectTab(null);
+
+  /* ---------- Chip filters: cafés by town, journal by kind ---------- */
+  function applyFilter(group, value) {
+    const bar = $(`[data-filter="${group}"]`);
+    const chips = $$("[data-value]", bar);
+    const active = chips.some((chip) => chip.dataset.value === value) ? value : "all";
+    chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.value === active)));
+    let shown = 0;
+    $$(`[data-${group}]:not([data-filter])`).forEach((item) => {
+      const match = active === "all" || item.dataset[group] === active;
+      item.hidden = !match;
+      if (match) shown += 1;
+    });
+    const count = $(`[data-count="${group}"]`);
+    if (count) count.textContent = `${shown} ${shown === 1 ? count.dataset.one : count.dataset.many}`;
+    $(`[data-empty="${group}"]`).hidden = shown > 0;
+  }
+  $$("[data-filter]").forEach((bar) => $$("[data-value]", bar).forEach((chip) => chip.addEventListener("click", () => applyFilter(bar.dataset.filter, chip.dataset.value))));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const dateField = $("#b-date");
+  const today = new Date();
+  dateField.min = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+  const messages = {
+    valueMissing: "Please fill this in.",
+    typeMismatch: "Please enter a valid email address.",
+    rangeUnderflow: "Please choose today or a later date.",
+    rangeOverflow: "That number is too high.",
+    tooShort: "Please write a little more.",
+  };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? field.dataset[problem] || messages[problem] : "";
+    const group = field.type === "radio" ? $$(`[name="${field.name}"]`, field.form) : [field];
+    group.forEach((el) => el.setAttribute("aria-invalid", String(Boolean(problem))));
+    return !problem;
+  }
+  function readable(form, name) {
+    const field = form.elements[name];
+    if (!field) return "";
+    if (field.tagName === "SELECT") return field.selectedOptions[0]?.textContent ?? "";
+    if (field.type === "date" && field.value) {
+      const [y, m, d] = field.value.split("-").map(Number);
+      return new Date(y, m - 1, d).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
+    }
+    return field.value;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("[aria-describedby]", form);
+    fields.forEach((field) => {
+      if (field.type === "radio") $$(`[name="${field.name}"]`, form).forEach((radio) => radio.addEventListener("change", () => checkField(field)));
+      else field.addEventListener(field.tagName === "SELECT" || field.type === "checkbox" ? "change" : "blur", () => checkField(field));
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        $$("[data-echo]", success).forEach((el) => { el.textContent = readable(form, el.dataset.echo); });
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+        button.disabled = false;
+        button.textContent = label;
+      }, 600);
+    });
+    $("[data-again]", success)?.addEventListener("click", () => {
+      form.reset();
+      success.hidden = true;
+      form.hidden = false;
+      $("input, select", form).focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

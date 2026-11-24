@@ -1,0 +1,1608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Aurvik: electric cars and home energy</title>
+<meta name="description" content="Electric sedans, SUVs and pickups, a home battery and solar panels. Design your car, book a demo drive or find a store near you.">
+<meta property="og:title" content="Aurvik: electric cars and home energy">
+<meta property="og:description" content="Electric cars, a home battery and solar panels. Design yours, book a demo drive or find a store.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/montserrat-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font ---------- */
+@font-face { font-family: "Montserrat"; src: url("fonts/montserrat-latin-wght.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+
+/* ---------- Tokens: light-dark(light, dark); the theme follows color-scheme ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(100% 0 0), oklch(18.5% 0.008 265));
+  --surface: light-dark(oklch(96.8% 0.001 265), oklch(22.5% 0.009 265));
+  --surface-2: light-dark(oklch(93.5% 0.002 265), oklch(27% 0.01 265));
+  --text: light-dark(oklch(21.5% 0.011 265), oklch(96.5% 0.002 265));
+  --text-2: light-dark(oklch(33% 0.008 265), oklch(87% 0.004 265));
+  --text-muted: light-dark(oklch(48% 0.007 265), oklch(72% 0.006 265));
+  --border: light-dark(oklch(89% 0.003 265), oklch(31% 0.009 265));
+  --border-strong: light-dark(oklch(74% 0.004 265), oklch(50% 0.008 265));
+  --accent: oklch(53.5% 0.19 264);
+  --accent-hover: oklch(48% 0.19 264);
+  --accent-text: oklch(100% 0 0);
+  --ink: light-dark(oklch(21.5% 0.011 265), oklch(96.5% 0.002 265));
+  --ink-text: light-dark(oklch(100% 0 0), oklch(18.5% 0.008 265));
+  --glass: oklch(97% 0.002 265 / 0.72);
+  --glass-hover: oklch(97% 0.002 265 / 0.9);
+  --glass-text: oklch(21.5% 0.011 265);
+  --on-dark: oklch(100% 0 0);
+  --on-light: oklch(21.5% 0.011 265);
+  --scrim: oklch(15% 0.01 265 / 0.42);
+  --focus: light-dark(oklch(53.5% 0.19 264), oklch(74% 0.13 264));
+  --error: light-dark(oklch(52% 0.19 27), oklch(74% 0.14 27));
+  --ok: light-dark(oklch(48% 0.11 155), oklch(78% 0.12 155));
+
+  --font: "Montserrat", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --fs-display: clamp(1.75rem, 1.2rem + 1.8vw, 2.5rem);
+  --fs-h1: clamp(1.625rem, 1.3rem + 1vw, 2.125rem);
+  --fs-h2: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
+  --fs-h3: 1.0625rem;
+  --fs-body: 0.9375rem;
+  --fs-small: 0.8125rem;
+
+  --r-control: 4px;
+  --r-card: 12px;
+  --r-media: 0;
+  --hh: 56px;
+  --page: 1280px;
+  --gutter: clamp(16px, 4vw, 48px);
+
+  --dur-fast: 160ms;
+  --dur-base: 330ms;
+  --dur-slow: 700ms;
+  --ease: cubic-bezier(0.45, 0, 0.1, 1);
+  --t: var(--dur-base) var(--ease);
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--hh) + 16px); }
+body { margin: 0; background: var(--bg); color: var(--text-2); font-family: var(--font); font-size: var(--fs-body); line-height: 1.55; font-weight: 400; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3 { margin: 0; color: var(--text); font-weight: 500; line-height: 1.2; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+button, input, select, textarea { font: inherit; color: inherit; }
+fieldset { border: 0; margin: 0; padding: 0; min-inline-size: 0; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 100; }
+.skip:focus { top: 8px; }
+.wrap { width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.prose { width: min(100% - 2 * var(--gutter), 720px); margin-inline: auto; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.muted { color: var(--text-muted); }
+.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.icon-sm { width: 16px; height: 16px; }
+.car { display: block; block-size: auto; aspect-ratio: 3 / 1; color: oklch(80% 0.004 250); overflow: visible; }
+.paint-polar { color: oklch(95% 0.003 250); }
+.paint-basalt { color: oklch(56% 0.008 250); }
+.paint-night { color: oklch(23% 0.006 260); }
+.paint-fjord { color: oklch(42% 0.11 252); }
+.paint-ember { color: oklch(50% 0.17 27); }
+.wheels-sport { --aero: 0; --sport: 1; }
+
+/* ---------- Type ---------- */
+.h1 { font-size: var(--fs-h1); }
+.h2 { font-size: var(--fs-h2); }
+.h3 { font-size: var(--fs-h3); }
+.lead { font-size: 1rem; color: var(--text-muted); max-width: 40em; }
+.label { font-size: var(--fs-small); font-weight: 500; color: var(--text-muted); }
+.sub-link { color: var(--text-muted); font-size: 0.875rem; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; text-decoration-color: color-mix(in oklch, currentColor 40%, transparent); transition: color var(--t), text-decoration-color var(--t); }
+.sub-link:hover { color: var(--text); text-decoration-color: currentColor; }
+
+/* ---------- Buttons: flat, 4px corners, one blue per screen ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-inline-size: 200px; min-block-size: 40px; padding: 4px 24px; border: 0; border-radius: var(--r-control); background: var(--accent); color: var(--accent-text); font-size: 0.875rem; font-weight: 500; line-height: 1.2; text-decoration: none; text-align: center; cursor: pointer; transition: background-color var(--t), color var(--t); }
+.btn:hover { background: var(--accent-hover); }
+.btn-2 { background: var(--surface-2); color: var(--text); }
+.btn-2:hover { background: var(--border); }
+.btn-glass { background: var(--glass); color: var(--glass-text); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.btn-glass:hover { background: var(--glass-hover); }
+.btn-sm { min-inline-size: 0; min-block-size: 32px; padding: 4px 16px; font-size: var(--fs-small); }
+.btn-block { inline-size: 100%; }
+.btn[disabled] { background: var(--surface-2); color: var(--text-muted); cursor: not-allowed; }
+.actions { display: flex; flex-wrap: wrap; gap: 16px 24px; justify-content: center; }
+.icon-btn { inline-size: 40px; block-size: 40px; display: inline-grid; place-items: center; border: 0; border-radius: var(--r-control); background: transparent; color: inherit; cursor: pointer; transition: background-color var(--t); }
+.icon-btn:hover { background: color-mix(in oklch, currentColor 10%, transparent); }
+.arrow-btn { inline-size: 40px; block-size: 40px; display: inline-grid; place-items: center; border: 0; border-radius: var(--r-control); background: var(--glass); color: var(--glass-text); cursor: pointer; transition: background-color var(--t); }
+.arrow-btn:hover { background: var(--glass-hover); }
+
+/* ---------- Header: clear over images, solid elsewhere ---------- */
+.site-header { position: sticky; top: 0; z-index: 40; block-size: var(--hh); background: var(--bg); color: var(--text); transition: background-color var(--t), color var(--t); }
+.site-header.is-clear { background: transparent; }
+.site-header.is-clear.on-dark { color: var(--on-dark); }
+.site-header.is-clear.on-light { color: var(--on-light); }
+.header-inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; block-size: 100%; padding-inline: var(--gutter); }
+.wordmark { justify-self: start; font-size: 0.9375rem; font-weight: 600; letter-spacing: 0.42em; margin-right: -0.42em; text-decoration: none; padding: 8px 0; }
+.nav { display: flex; gap: 2px; }
+.nav a, .nav button { display: inline-flex; align-items: center; min-block-size: 32px; padding: 4px 14px; border: 0; border-radius: var(--r-control); background: transparent; font-size: 0.875rem; font-weight: 500; text-decoration: none; cursor: pointer; transition: background-color var(--t); }
+.nav a:hover, .nav button:hover, .nav button[aria-expanded="true"], .nav a[aria-current="page"] { background: color-mix(in oklch, currentColor 10%, transparent); }
+.header-end { justify-self: end; display: flex; align-items: center; gap: 4px; }
+.header-end .drive-link { font-size: 0.875rem; font-weight: 500; text-decoration: none; padding: 6px 14px; border-radius: var(--r-control); }
+.header-end .drive-link:hover { background: color-mix(in oklch, currentColor 10%, transparent); }
+.menu-btn { display: none; }
+@media (max-width: 1080px) {
+  .nav, .header-end .drive-link { display: none; }
+  .menu-btn { display: inline-grid; }
+  .header-inner { grid-template-columns: 1fr auto; }
+}
+.mega { position: absolute; inset-inline: 0; top: var(--hh); z-index: 41; background: var(--bg); color: var(--text); padding: 32px var(--gutter) 48px; display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 48px; animation: drop var(--t) both; }
+.mega-cars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 32px; }
+.mega-car { text-align: center; }
+.mega-car .car { width: 100%; margin-bottom: 12px; }
+.mega-car h3 { font-size: var(--fs-h3); margin-bottom: 4px; }
+.mega-car p { display: flex; gap: 16px; justify-content: center; margin: 0; }
+.mega-links { display: grid; align-content: start; gap: 14px; padding-left: 32px; border-left: 1px solid var(--border); }
+.mega-links a { font-size: 0.875rem; font-weight: 500; text-decoration: none; color: var(--text-2); }
+.mega-links a:hover { color: var(--text); text-decoration: underline; text-underline-offset: 4px; }
+.scrim { position: fixed; inset: var(--hh) 0 0; z-index: 39; background: var(--scrim); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); animation: fade var(--t) both; }
+.sheet { border: 0; padding: 0; margin: 0 0 0 auto; inline-size: min(400px, 100%); block-size: 100dvh; max-block-size: 100dvh; background: var(--bg); color: var(--text); overscroll-behavior: contain; }
+.sheet[open] { animation: slide-in var(--t) both; }
+.sheet::backdrop { background: var(--scrim); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.sheet-inner { display: flex; flex-direction: column; gap: 4px; padding: 12px 24px 32px; min-block-size: 100%; }
+.sheet-top { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+.sheet nav { display: grid; gap: 2px; }
+.sheet nav a { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-radius: var(--r-control); font-weight: 500; text-decoration: none; }
+.sheet nav a:hover, .sheet nav a[aria-current="page"] { background: var(--surface); }
+
+/* ---------- Views ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+main { min-block-size: 70vh; }
+.js [data-view] > .bleed:first-child { margin-top: calc(-1 * var(--hh)); }
+.section { padding-block: clamp(64px, 9vw, 112px); }
+.band { background: var(--surface); }
+.page-head { padding-block: clamp(40px, 6vw, 72px) clamp(24px, 3vw, 40px); }
+.page-head .lead { margin-top: 12px; }
+.center { text-align: center; }
+.center .lead { margin-inline: auto; }
+
+/* ---------- Signature: the full-screen panel ---------- */
+.panel { position: relative; isolation: isolate; overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; justify-items: center; text-align: center; min-block-size: 100svh; padding: calc(var(--hh) + clamp(40px, 9vh, 88px)) var(--gutter) clamp(36px, 7vh, 64px); color: var(--on-dark); }
+.panel[data-tone="light"] { color: var(--on-light); }
+.panel h1, .panel h2 { color: inherit; font-size: var(--fs-display); }
+.panel-sub { margin: 8px 0 0; font-size: 0.9375rem; }
+.panel-sub a { text-underline-offset: 4px; }
+.panel .media, .cat .media, .tile .media { position: absolute; inset: 0; z-index: -2; inline-size: 100%; block-size: 100%; object-fit: cover; }
+.panel .car { position: absolute; z-index: -1; left: 50%; bottom: 15%; inline-size: min(64vw, 900px, 105vh); translate: -50% 0; }
+.panel-foot { align-self: end; display: grid; gap: 20px; justify-items: center; inline-size: 100%; }
+.js .is-active .panel-copy { animation: rise var(--dur-slow) var(--ease) both; }
+.js .is-active .panel-foot { animation: rise var(--dur-slow) var(--ease) 120ms both; }
+@media (max-width: 700px) {
+  .panel .car { inline-size: 92vw; bottom: 25%; }
+  .panel:has(.model-foot) .car { bottom: 33%; }
+  .model-foot .stats { flex-wrap: nowrap; gap: 20px; }
+  .model-foot .stat b { font-size: 1.125rem; }
+  .model-foot .stat span { font-size: 0.75rem; }
+  .panel .actions { flex-direction: column; inline-size: 100%; gap: 12px; }
+  .panel .actions .btn { inline-size: 100%; }
+}
+
+/* Hero carousel: a scroll-snap track, so it also works without the script */
+.hero { position: relative; }
+.slides { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.slides::-webkit-scrollbar { display: none; }
+.slides > .panel { scroll-snap-align: start; padding-bottom: clamp(64px, 10vh, 96px); }
+.hero-dots { position: absolute; left: 50%; bottom: clamp(20px, 3vh, 28px); translate: -50% 0; display: flex; gap: 4px; }
+.hero-dots button { inline-size: 24px; block-size: 24px; display: grid; place-items: center; border: 0; padding: 0; background: transparent; cursor: pointer; }
+.hero-dots button::before { content: ""; inline-size: 8px; block-size: 8px; border-radius: 50%; background: oklch(100% 0 0 / 0.45); transition: background-color var(--t); }
+.hero-dots button[aria-current="true"]::before { background: oklch(100% 0 0); }
+.hero-arrow { position: absolute; top: 50%; translate: 0 -50%; }
+.hero-arrow.prev { left: var(--gutter); }
+.hero-arrow.next { right: var(--gutter); }
+@media (max-width: 700px) { .hero-arrow { display: none; } }
+
+/* Category rail */
+.rail-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 40px var(--gutter) 16px; }
+.rail-head h2 { font-size: var(--fs-h3); }
+.rail-nav { display: flex; gap: 8px; }
+.rail-nav .arrow-btn { background: var(--surface); color: var(--text); }
+.rail-nav .arrow-btn:hover { background: var(--surface-2); }
+.rail { display: grid; grid-auto-flow: column; grid-auto-columns: min(46vw, 860px); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter) 40px; scroll-padding-inline: var(--gutter); scrollbar-width: none; }
+.rail::-webkit-scrollbar { display: none; }
+.cat { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 16 / 10; border-radius: var(--r-card); scroll-snap-align: start; color: var(--on-dark); }
+.cat .car { position: absolute; z-index: -1; left: 50%; bottom: 17%; inline-size: 74%; translate: -50% 0; }
+.cat-copy { position: absolute; top: 24px; left: 24px; text-align: left; }
+.cat-copy h3 { color: inherit; font-size: 1.25rem; }
+.cat-copy p { margin: 2px 0 0; font-size: var(--fs-small); }
+.cat .actions { position: absolute; left: 24px; bottom: 24px; justify-content: flex-start; gap: 8px; }
+.cat .btn { min-inline-size: 120px; }
+@media (max-width: 700px) { .rail { grid-auto-columns: 86vw; } .cat { aspect-ratio: 4 / 5; } .cat .car { inline-size: 96%; bottom: 30%; } .cat .actions { right: 16px; left: 16px; bottom: 16px; } .cat .btn { flex: 1; min-inline-size: 0; } }
+
+/* Next-step tiles */
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.tile { position: relative; isolation: isolate; overflow: hidden; display: grid; align-content: end; gap: 4px; min-block-size: 260px; padding: 24px; border-radius: var(--r-card); color: var(--on-dark); text-decoration: none; }
+.tile h3 { color: inherit; font-size: var(--fs-h3); }
+.tile p { margin: 0; font-size: var(--fs-small); }
+.tile .media { transition: scale var(--dur-slow) var(--ease); }
+.tile:hover .media { scale: 1.03; }
+@media (max-width: 800px) { .tiles { grid-template-columns: 1fr; } .tile { min-block-size: 200px; } }
+
+/* ---------- Product page ---------- */
+.stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 48px; }
+.stat { display: grid; gap: 2px; text-align: center; }
+.stat b { font-size: 1.5rem; font-weight: 500; line-height: 1.1; }
+.stat span { font-size: var(--fs-small); }
+.model-foot { display: flex; flex-wrap: wrap; align-items: end; justify-content: center; gap: 24px 64px; }
+.split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
+.split > img { inline-size: 100%; block-size: 100%; min-block-size: 420px; object-fit: cover; }
+.split-copy { padding: clamp(40px, 6vw, 96px); max-inline-size: 620px; }
+.split-copy h2 { font-size: var(--fs-h2); margin-bottom: 12px; }
+.split.flip > img { order: 2; }
+.split .stats { justify-content: flex-start; margin-top: 28px; }
+.split .stat { text-align: left; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } .split > img { min-block-size: 0; aspect-ratio: 4 / 3; } .split.flip > img { order: 0; } }
+.feature-bleed { position: relative; isolation: isolate; min-block-size: 88svh; display: grid; align-content: end; padding: 48px var(--gutter); color: var(--on-dark); overflow: hidden; }
+.feature-bleed .media { position: absolute; inset: 0; z-index: -1; inline-size: 100%; block-size: 100%; object-fit: cover; }
+.feature-bleed h2 { color: inherit; font-size: var(--fs-h2); margin-bottom: 8px; }
+.feature-bleed p { max-inline-size: 34em; margin: 0; }
+.specs { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
+.specs-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 40px; }
+.drawing { position: relative; padding: 0 0 36px 28px; }
+.drawing .car { inline-size: 100%; }
+.dim { position: absolute; font-size: 0.75rem; color: var(--text-muted); }
+.dim.len { left: 28px; right: 0; bottom: 0; border-top: 1px solid var(--border-strong); padding-top: 6px; text-align: center; }
+.dim.hgt { left: 0; top: 18%; bottom: 36px; border-right: 1px solid var(--border-strong); writing-mode: vertical-rl; rotate: 180deg; text-align: center; padding-left: 6px; }
+.spec-list { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 32px; margin: 0; }
+.spec-list dt { font-size: var(--fs-small); color: var(--text-muted); }
+.spec-list dd { margin: 2px 0 0; color: var(--text); font-size: var(--fs-h3); font-weight: 500; }
+@media (max-width: 860px) { .specs { grid-template-columns: 1fr; } }
+
+/* Segmented control */
+.seg { display: inline-flex; gap: 2px; max-inline-size: 100%; overflow-x: auto; scrollbar-width: none; padding: 4px; border-radius: var(--r-control); background: var(--surface); }
+.seg button, .seg a { flex: none; white-space: nowrap; min-block-size: 32px; padding: 4px 16px; border: 0; border-radius: 3px; background: transparent; color: var(--text-muted); font-size: var(--fs-small); font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; cursor: pointer; transition: background-color var(--t), color var(--t); }
+.seg button:hover, .seg a:hover { color: var(--text); }
+.seg [aria-pressed="true"], .seg [aria-current="page"] { background: var(--bg); color: var(--text); }
+
+/* ---------- Configurator ---------- */
+.col { background: var(--surface); }
+.design { display: grid; grid-template-columns: minmax(0, 1fr) 420px; }
+.stage { position: sticky; top: var(--hh); block-size: calc(100svh - var(--hh)); display: grid; place-items: center; background: var(--surface); overflow: hidden; }
+.stage .car { inline-size: min(84%, 980px); transition: color var(--t); }
+.stage-note { position: absolute; left: 0; right: 0; bottom: 24px; margin: 0; text-align: center; font-size: var(--fs-small); color: var(--text-muted); }
+.opts { padding: 40px 40px 72px; display: grid; gap: 40px; align-content: start; }
+.opts-head { text-align: center; }
+.opts-head .seg { margin-top: 16px; }
+.opts-head .h1 { margin-top: 20px; }
+.opt h2 { font-size: var(--fs-h3); text-align: center; margin-bottom: 16px; }
+.opt-pick { text-align: center; margin: 12px 0 0; font-size: 0.875rem; }
+.opt-pick b { color: var(--text); font-weight: 500; }
+.choices { display: grid; gap: 12px; }
+.choice { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 14px 16px; border-radius: var(--r-control); box-shadow: inset 0 0 0 1px var(--border); cursor: pointer; transition: box-shadow var(--t); }
+.choice:hover { box-shadow: inset 0 0 0 1px var(--border-strong); }
+.choice:has(input:checked) { box-shadow: inset 0 0 0 2px var(--ink); }
+.choice:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.choice input { position: absolute; opacity: 0; pointer-events: none; }
+.choice b { color: var(--text); font-weight: 500; }
+.choice small { grid-column: 1 / -1; color: var(--text-muted); font-size: var(--fs-small); }
+.swatches { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.swatch { position: relative; cursor: pointer; }
+.swatch input { position: absolute; opacity: 0; pointer-events: none; }
+.swatch span { display: block; inline-size: 44px; block-size: 44px; border-radius: 50%; background: currentColor; box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--text) 18%, transparent), 0 0 0 3px var(--bg), 0 0 0 4px transparent; transition: box-shadow var(--t); }
+.swatch input:checked + span { box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--text) 18%, transparent), 0 0 0 3px var(--bg), 0 0 0 5px var(--accent); }
+.swatch input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 6px; }
+.swatch svg { inline-size: 44px; block-size: 44px; border-radius: 50%; box-shadow: 0 0 0 1px color-mix(in oklch, var(--text) 18%, transparent); transition: box-shadow var(--t); }
+.swatch input:checked + svg { box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent); }
+.swatch input:focus-visible + svg { outline: 2px solid var(--focus); outline-offset: 6px; }
+.toggle { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: var(--r-control); box-shadow: inset 0 0 0 1px var(--border); cursor: pointer; }
+.toggle:has(input:checked) { box-shadow: inset 0 0 0 2px var(--ink); }
+.toggle input { margin: 3px 0 0; accent-color: var(--accent); inline-size: 16px; block-size: 16px; }
+.toggle span { flex: 1; }
+.toggle b { color: var(--text); font-weight: 500; display: block; }
+.toggle small { color: var(--text-muted); font-size: var(--fs-small); }
+.summary { display: grid; gap: 10px; margin: 0; padding: 20px 0 0; border-top: 1px solid var(--border); }
+.summary div { display: flex; justify-content: space-between; gap: 16px; font-size: 0.875rem; }
+.summary dd { margin: 0; color: var(--text); }
+.summary .total { padding-top: 10px; border-top: 1px solid var(--border); font-size: 1rem; }
+.summary .total dt, .summary .total dd { color: var(--text); font-weight: 500; }
+.price-line { margin: 6px 0 0; font-size: 0.875rem; color: var(--text-muted); }
+.finance { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.js .order:not(.is-open) { display: none; }
+.order { display: grid; gap: 20px; padding-top: 8px; }
+@media (max-width: 980px) {
+  .design { grid-template-columns: 1fr; }
+  .stage { position: relative; top: 0; block-size: max(220px, 56vw); }
+  .opts { padding: 32px var(--gutter) 64px; max-inline-size: 560px; inline-size: 100%; margin-inline: auto; }
+}
+
+/* ---------- Inventory ---------- */
+.toolbar { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.toolbar-group { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.toolbar .select { min-inline-size: 200px; }
+.count { margin: 0 0 16px; font-size: var(--fs-small); color: var(--text-muted); }
+.inv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.inv { display: grid; gap: 12px; padding: 24px; border-radius: var(--r-card); background: var(--surface); }
+.inv-top { display: flex; justify-content: space-between; gap: 12px; }
+.inv h3 { font-size: var(--fs-h3); margin-top: 8px; }
+.inv-top p { margin: 2px 0 0; font-size: var(--fs-small); color: var(--text-muted); }
+.inv-price { text-align: right; color: var(--text); font-size: var(--fs-h3); font-weight: 500; white-space: nowrap; }
+.inv-price small { display: block; color: var(--text-muted); font-size: 0.75rem; font-weight: 400; }
+.inv .car { inline-size: 100%; margin-block: 8px; }
+.inv .stats { justify-content: space-between; gap: 8px; }
+.inv .stat b { font-size: 1.0625rem; color: var(--text); }
+.inv .stat span { font-size: 0.75rem; color: var(--text-muted); }
+.inv .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.inv .btn { min-inline-size: 0; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: var(--r-control); background: var(--surface-2); color: var(--text-2); font-size: 0.75rem; font-weight: 500; }
+.empty { padding: 48px 16px; text-align: center; color: var(--text-muted); }
+
+/* ---------- Forms ---------- */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+.form-grid .full { grid-column: 1 / -1; }
+@media (max-width: 560px) { .form-grid, .finance { grid-template-columns: 1fr; } }
+.field { display: grid; gap: 6px; align-content: start; }
+.field > label, .field-label { font-size: var(--fs-small); font-weight: 500; color: var(--text-2); }
+.input, .select, .textarea { inline-size: 100%; min-block-size: 44px; padding: 10px 14px; border: 0; border-radius: var(--r-control); background: var(--surface); color: var(--text); font-size: var(--fs-body); box-shadow: inset 0 0 0 1px transparent; transition: box-shadow var(--t), background-color var(--t); }
+.input::placeholder, .textarea::placeholder { color: var(--text-muted); }
+.input:hover, .select:hover, .textarea:hover { box-shadow: inset 0 0 0 1px var(--border-strong); }
+.input:focus-visible, .select:focus-visible, .textarea:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--focus); }
+.textarea { min-block-size: 132px; resize: vertical; }
+.select { appearance: none; padding-right: 40px; background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23808389%27 stroke-width=%271.8%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M6 9l6 6 6-6%27/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 18px; }
+[aria-invalid="true"] { box-shadow: inset 0 0 0 2px var(--error) !important; }
+.error { display: block; min-block-size: 1.375rem; font-size: 0.75rem; line-height: 1.375rem; color: var(--error); }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: var(--fs-small); cursor: pointer; }
+.check input { margin: 2px 0 0; accent-color: var(--accent); inline-size: 16px; block-size: 16px; flex: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; border: 0; margin: 0; padding: 0; min-inline-size: 0; }
+.chips legend { padding: 0; margin-bottom: 8px; font-size: var(--fs-small); font-weight: 500; color: var(--text-2); }
+.chip { position: relative; cursor: pointer; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip span { display: inline-grid; place-items: center; min-block-size: 40px; min-inline-size: 64px; padding: 4px 14px; border-radius: var(--r-control); box-shadow: inset 0 0 0 1px var(--border); font-size: var(--fs-small); font-weight: 500; text-align: center; line-height: 1.25; transition: box-shadow var(--t), background-color var(--t); }
+.chip span small { display: block; font-weight: 400; color: var(--text-muted); }
+.chip:hover span { box-shadow: inset 0 0 0 1px var(--border-strong); }
+.chip input:checked + span { background: var(--ink); color: var(--ink-text); box-shadow: none; }
+.chip input:checked + span small { color: inherit; }
+.chip input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.success { display: grid; gap: 12px; justify-items: start; padding: 8px 0; animation: rise var(--dur-slow) var(--ease) both; }
+.success .tick { inline-size: 44px; block-size: 44px; display: grid; place-items: center; border-radius: 50%; background: var(--surface); color: var(--ok); }
+.success .tick .icon { stroke-width: 2; }
+.success h2 { font-size: var(--fs-h2); }
+.success p { margin: 0; }
+.success dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; margin: 8px 0 0; font-size: 0.875rem; }
+.success dt { color: var(--text-muted); }
+.success dd { margin: 0; color: var(--text); }
+
+/* ---------- Demo drive ---------- */
+.drive { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 560px); }
+.drive-media { position: sticky; top: var(--hh); block-size: calc(100svh - var(--hh)); overflow: hidden; isolation: isolate; }
+.drive-media .media { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; z-index: -2; }
+.drive-media .car { position: absolute; z-index: -1; left: 50%; bottom: 18%; inline-size: 82%; translate: -50% 0; }
+.drive-form { padding: 48px clamp(24px, 4vw, 64px) 80px; }
+.drive-form .h1 { margin-bottom: 8px; }
+.drive-form .lead { margin-bottom: 32px; }
+.car-picks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.car-pick { position: relative; cursor: pointer; }
+.car-pick input { position: absolute; opacity: 0; pointer-events: none; }
+.car-pick span { display: grid; justify-items: center; gap: 2px; padding: 10px 6px; border-radius: var(--r-control); box-shadow: inset 0 0 0 1px var(--border); font-size: var(--fs-small); font-weight: 500; transition: box-shadow var(--t); }
+.car-pick .car { inline-size: 100%; }
+.car-pick input:checked + span { box-shadow: inset 0 0 0 2px var(--ink); }
+.car-pick input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.drive-form form { display: grid; gap: 20px; }
+@media (max-width: 980px) { .drive { grid-template-columns: 1fr; } .drive-media { position: relative; top: 0; block-size: 56vw; min-block-size: 240px; } }
+@media (max-width: 560px) { .car-picks { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- Energy ---------- */
+.estimator { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+.range { inline-size: 100%; accent-color: var(--accent); margin: 12px 0 4px; }
+.range-scale { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); }
+.result { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0 16px; }
+.result div { display: grid; gap: 2px; }
+.result b { color: var(--text); font-size: 1.75rem; font-weight: 500; line-height: 1.1; }
+.result span { font-size: var(--fs-small); color: var(--text-muted); }
+.quote { padding: clamp(24px, 3vw, 40px); border-radius: var(--r-card); background: var(--surface); }
+.quote .input, .quote .select, .quote .textarea { background-color: var(--bg); }
+.quote-alt { background: var(--bg); }
+.quote-alt .input, .quote-alt .select, .quote-alt .textarea { background-color: var(--surface); }
+.quote h2 { font-size: var(--fs-h2); margin-bottom: 24px; }
+@media (max-width: 860px) { .estimator { grid-template-columns: 1fr; } }
+
+/* ---------- Locations ---------- */
+.find { display: grid; grid-template-columns: minmax(320px, 440px) minmax(0, 1fr); }
+.find-list { padding: 40px var(--gutter) 64px; }
+.find-list .h1 { margin-bottom: 20px; }
+.search { position: relative; margin-bottom: 16px; }
+.search .icon { position: absolute; left: 14px; top: 12px; color: var(--text-muted); pointer-events: none; }
+.search .input { padding-left: 44px; }
+.find-list .seg { margin-bottom: 20px; }
+.locs { list-style: none; margin: 0; padding: 0; }
+.loc { position: relative; display: grid; gap: 2px; padding: 16px 12px 16px 16px; margin-inline: -16px -12px; border-radius: var(--r-control); cursor: pointer; transition: background-color var(--t); }
+.loc + .loc::before { content: ""; position: absolute; top: 0; left: 16px; right: 12px; border-top: 1px solid var(--border); }
+.loc:hover, .loc.is-picked { background: var(--surface); }
+.loc:hover::before, .loc.is-picked::before, .loc:hover + .loc::before, .loc.is-picked + .loc::before { opacity: 0; }
+.loc h3 { font-size: 0.9375rem; }
+.loc p { margin: 0; font-size: var(--fs-small); color: var(--text-muted); }
+.loc .tag { justify-self: start; margin-bottom: 4px; }
+.loc-more { display: none; gap: 12px; margin-top: 10px; }
+.loc.is-picked .loc-more { display: flex; }
+.map-wrap { position: sticky; top: var(--hh); block-size: calc(100svh - var(--hh)); display: grid; place-items: center; background: var(--surface); overflow: hidden; }
+.map { position: relative; inline-size: min(100%, calc((100svh - var(--hh)) * 1.333)); aspect-ratio: 4 / 3; }
+.map img { inline-size: 100%; block-size: 100%; }
+.pin { position: absolute; inline-size: 32px; block-size: 32px; translate: -50% -100%; display: grid; place-items: center; border: 0; padding: 0; background: transparent; color: var(--ink); cursor: pointer; transition: scale var(--t); }
+.pin svg { inline-size: 32px; block-size: 32px; fill: currentColor; stroke: var(--bg); stroke-width: 1.5; }
+.pin[data-type="charger"] { color: oklch(45% 0.02 265); }
+.pin[aria-pressed="true"] { color: var(--accent); scale: 1.25; z-index: 2; }
+@media (max-width: 860px) { .find { grid-template-columns: 1fr; } .map-col { order: -1; } .map-wrap { position: relative; top: 0; block-size: auto; } .map { inline-size: 100%; } }
+
+/* ---------- Support ---------- */
+.help-tools { display: grid; gap: 16px; margin-bottom: 32px; }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; color: var(--text); font-weight: 500; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { transition: rotate var(--t); }
+.faq details[open] summary .icon { rotate: 180deg; }
+.faq details p { margin: 0 0 20px; max-inline-size: 44em; }
+.faq h2 { font-size: var(--fs-h3); margin: 40px 0 4px; }
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(32px, 5vw, 80px); }
+.contact-list { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 16px; }
+.contact-list li { display: flex; gap: 12px; }
+.contact-list b { display: block; color: var(--text); font-weight: 500; }
+@media (max-width: 860px) { .contact { grid-template-columns: 1fr; } }
+
+/* ---------- About, legal, 404, footer ---------- */
+.values { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+.values h3 { font-size: var(--fs-h3); margin-bottom: 8px; }
+.values p { margin: 0; }
+@media (max-width: 800px) { .values { grid-template-columns: 1fr; gap: 28px; } }
+.updates { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: flex-start; justify-content: center; max-inline-size: 560px; margin: 24px auto 0; text-align: left; }
+.updates .field { flex: 1 1 260px; }
+.updates .input { background: var(--bg); }
+.updates .btn { margin-top: 24px; }
+.legal h2 { font-size: var(--fs-h3); margin: 32px 0 8px; }
+.notfound { min-block-size: 70svh; display: grid; place-content: center; justify-items: center; gap: 16px; padding: 64px var(--gutter); text-align: center; }
+.notfound .car { inline-size: min(420px, 80vw); opacity: 0.9; }
+.site-footer { padding: 28px var(--gutter) 40px; text-align: center; font-size: 0.75rem; color: var(--text-muted); }
+.site-footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; }
+.site-footer a { text-decoration: none; }
+.site-footer a:hover { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Motion ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@keyframes slide-in { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+.js .reveal { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; transition-duration: 1ms !important; }
+  .js .reveal { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<a class="skip btn btn-sm" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="10" r="2.5" fill="var(--bg)" stroke="none"/></symbol>
+  <symbol id="wheel" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#121418"/><g style="opacity:var(--aero,1)"><circle cx="50" cy="50" r="33" fill="#b0b5bc"/><circle cx="50" cy="50" r="24" fill="none" stroke="#868c94" stroke-width="3"/><circle cx="50" cy="50" r="7" fill="#5f646c"/></g><g style="opacity:var(--sport,0)"><circle cx="50" cy="50" r="33" fill="#25292f"/><path d="M50 50V19M50 50l29.5-9.6M50 50l18.2 25.1M50 50L31.8 75.1M50 50L20.5 40.4" stroke="#c9cdd3" stroke-width="7" stroke-linecap="round"/><circle cx="50" cy="50" r="8" fill="#c9cdd3"/></g></symbol>
+  <symbol id="car-sedan" viewBox="0 0 600 200"><ellipse cx="300" cy="190" rx="272" ry="6" fill="#000" opacity=".3"/><path fill="currentColor" stroke="#000" stroke-opacity=".16" d="M28 150l-6-22q0-22 18-28l36-6c64-24 124-42 186-46h44c34 2 60 12 92 28l122 20c32 5 50 12 58 24l2 20q0 10-10 10h-54a46 46 0 0 0-92 0H176a46 46 0 0 0-92 0z"/><path fill="#0e1116" d="M104 98c46-20 101-36 158-40h42c28 2 52 12 74 24l-12 10-252 8z"/><path fill="currentColor" d="M244 56h9l2 44h-9z"/><path d="M70 104c130-12 310-10 490 10" fill="none" stroke="#fff" stroke-opacity=".24" stroke-width="2"/><path d="M254 100l3 46M372 92l4 54" stroke="#000" stroke-opacity=".16" stroke-width="2"/><path d="M176 140h248v10H176z" fill="#000" opacity=".2"/><path d="M540 106l34 12" stroke="#f4f6f8" stroke-width="4" stroke-linecap="round"/><path d="M25 114l22-7" stroke="#d6453d" stroke-width="5" stroke-linecap="round"/><path d="M84 150a46 46 0 0 1 92 0zM424 150a46 46 0 0 1 92 0z" fill="#0b0d10"/><use href="#wheel" x="432" y="114" width="76" height="76"/><use href="#wheel" x="92" y="114" width="76" height="76"/></symbol>
+  <symbol id="car-suv" viewBox="0 0 600 200"><ellipse cx="302" cy="192" rx="276" ry="6" fill="#000" opacity=".3"/><path fill="currentColor" stroke="#000" stroke-opacity=".16" d="M22 132l-4-66q0-22 22-26l56-10c44-4 84-6 134-6h126c34 2 60 14 88 34l94 14c26 4 40 14 44 30l2 20q0 10-10 10h-44a52 52 0 0 0-100 0H190a52 52 0 0 0-100 0z"/><path fill="#0e1116" d="M60 66l10-20c50-8 100-12 160-12h122c28 2 50 12 72 28l-14 10-344 2z"/><path fill="currentColor" d="M232 32h9l2 42h-9zM118 36h8l-1 38h-8z"/><path d="M50 92c140-8 340-8 520 4" fill="none" stroke="#fff" stroke-opacity=".24" stroke-width="2"/><path d="M240 74l2 56M400 70l3 60" stroke="#000" stroke-opacity=".16" stroke-width="2"/><path d="M190 120h240v12H190z" fill="#000" opacity=".2"/><path d="M548 80l30 10" stroke="#f4f6f8" stroke-width="4" stroke-linecap="round"/><path d="M21 72v22" stroke="#d6453d" stroke-width="5" stroke-linecap="round"/><path d="M90 132a50 50 0 0 1 100 0zM430 132a50 50 0 0 1 100 0z" fill="#0b0d10"/><use href="#wheel" x="436" y="104" width="88" height="88"/><use href="#wheel" x="96" y="104" width="88" height="88"/></symbol>
+  <symbol id="car-compact" viewBox="0 0 600 200"><g transform="translate(14 0)"><ellipse cx="286" cy="190" rx="250" ry="6" fill="#000" opacity=".3"/><path fill="currentColor" stroke="#000" stroke-opacity=".16" d="M40 152l-6-34q0-26 24-32l32-4c50-26 100-38 160-40h60c36 2 62 16 90 36l88 16c28 5 44 14 48 30l2 18q0 10-10 10h-34a44 44 0 0 0-88 0H194a44 44 0 0 0-88 0z"/><path fill="#0e1116" d="M104 88c42-22 90-34 146-36h58c30 2 52 12 76 28l-12 10-262 4z"/><path fill="currentColor" d="M244 50h9l2 44h-9z"/><path d="M76 102c120-10 300-8 444 8" fill="none" stroke="#fff" stroke-opacity=".24" stroke-width="2"/><path d="M254 94l2 52" stroke="#000" stroke-opacity=".16" stroke-width="2"/><path d="M194 142h212v10H194z" fill="#000" opacity=".2"/><path d="M504 102l30 12" stroke="#f4f6f8" stroke-width="4" stroke-linecap="round"/><path d="M37 116l22-6" stroke="#d6453d" stroke-width="5" stroke-linecap="round"/><path d="M106 152a44 44 0 0 1 88 0zM406 152a44 44 0 0 1 88 0z" fill="#0b0d10"/><use href="#wheel" x="414" y="116" width="72" height="72"/><use href="#wheel" x="114" y="116" width="72" height="72"/></g></symbol>
+  <symbol id="car-pickup" viewBox="0 0 600 200"><ellipse cx="302" cy="192" rx="282" ry="6" fill="#000" opacity=".3"/><path fill="currentColor" stroke="#000" stroke-opacity=".16" d="M18 124l-2-48q0-6 8-6h208c14-30 30-44 56-48h64c28 2 48 16 68 38l128 10c24 4 36 14 38 28l2 18q0 8-10 8h-39a54 54 0 0 0-98 0H179a54 54 0 0 0-98 0z"/><path fill="#0e1116" d="M248 64c12-24 24-32 44-34h56c24 2 40 14 56 30l-8 8z"/><path fill="currentColor" d="M322 28h8l1 40h-8z"/><path d="M24 78h202M232 70v48" stroke="#000" stroke-opacity=".2" stroke-width="2"/><path d="M60 92c160-4 340-6 524 2" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="2"/><path d="M179 112h262v12H179z" fill="#000" opacity=".2"/><path d="M556 78l28 8" stroke="#f4f6f8" stroke-width="4" stroke-linecap="round"/><path d="M18 80v20" stroke="#d6453d" stroke-width="5" stroke-linecap="round"/><path d="M81 124a49 49 0 0 1 98 0zM441 124a49 49 0 0 1 98 0z" fill="#0b0d10"/><use href="#wheel" x="444" y="100" width="92" height="92"/><use href="#wheel" x="84" y="100" width="92" height="92"/></symbol>
+  <symbol id="rim-aero" viewBox="0 0 100 100"><use href="#wheel" width="100" height="100"/></symbol>
+  <symbol id="rim-sport" viewBox="0 0 100 100"><use href="#wheel" width="100" height="100" style="--aero:0;--sport:1"/></symbol>
+</svg>
+
+<header class="site-header" id="top">
+  <div class="header-inner">
+    <a class="wordmark" href="#/" aria-label="Aurvik home">AURVIK</a>
+    <nav class="nav" aria-label="Main">
+      <button type="button" id="vehicles-btn" aria-expanded="false" aria-controls="mega">Vehicles</button>
+      <a href="#/energy">Energy</a>
+      <a href="#/inventory">Inventory</a>
+      <a href="#/locations">Locations</a>
+      <a href="#/support">Support</a>
+    </nav>
+    <div class="header-end">
+      <a class="drive-link" href="#/drive">Demo drive</a>
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark theme"><svg class="icon"><use href="#i-moon"/></svg></button>
+      <button class="icon-btn menu-btn" id="menu-open" type="button" aria-label="Open menu" aria-controls="menu"><svg class="icon"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+  <div class="mega" id="mega" hidden>
+    <div class="mega-cars">
+      <div class="mega-car"><svg class="car paint-basalt" aria-hidden="true"><use href="#car-sedan"/></svg><h3>Strata</h3><p><a class="sub-link" href="#/vehicle?m=strata">Learn</a><a class="sub-link" href="#/design?m=strata">Order</a></p></div>
+      <div class="mega-car"><svg class="car paint-polar" aria-hidden="true"><use href="#car-suv"/></svg><h3>Fjell</h3><p><a class="sub-link" href="#/vehicle?m=fjell">Learn</a><a class="sub-link" href="#/design?m=fjell">Order</a></p></div>
+      <div class="mega-car"><svg class="car paint-fjord" aria-hidden="true"><use href="#car-compact"/></svg><h3>Tern</h3><p><a class="sub-link" href="#/vehicle?m=tern">Learn</a><a class="sub-link" href="#/design?m=tern">Order</a></p></div>
+      <div class="mega-car"><svg class="car paint-night" aria-hidden="true"><use href="#car-pickup"/></svg><h3>Talus</h3><p><a class="sub-link" href="#/vehicle?m=talus">Learn</a><a class="sub-link" href="#/design?m=talus">Order</a></p></div>
+    </div>
+    <div class="mega-links">
+      <a href="#/inventory">Inventory</a>
+      <a href="#/drive">Demo drive</a>
+      <a href="#/locations">Find a store</a>
+      <a href="#/support?topic=ordering">How ordering works</a>
+      <a href="#/energy">Home energy</a>
+    </div>
+  </div>
+</header>
+<div class="scrim" id="scrim" hidden></div>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-inner">
+    <div class="sheet-top"><button class="icon-btn" id="menu-close" type="button" aria-label="Close menu"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <nav aria-label="Mobile">
+      <a href="#/vehicle?m=strata">Strata <svg class="icon icon-sm"><use href="#i-right"/></svg></a>
+      <a href="#/vehicle?m=fjell">Fjell <svg class="icon icon-sm"><use href="#i-right"/></svg></a>
+      <a href="#/vehicle?m=tern">Tern <svg class="icon icon-sm"><use href="#i-right"/></svg></a>
+      <a href="#/vehicle?m=talus">Talus <svg class="icon icon-sm"><use href="#i-right"/></svg></a>
+      <a href="#/energy">Energy <svg class="icon icon-sm"><use href="#i-right"/></svg></a>
+      <a href="#/inventory">Inventory <svg class="icon icon-sm"><use href="#i-right"/></svg></a>
+      <a href="#/drive">Demo drive <svg class="icon icon-sm"><use href="#i-right"/></svg></a>
+      <a href="#/locations">Locations <svg class="icon icon-sm"><use href="#i-right"/></svg></a>
+      <a href="#/support">Support <svg class="icon icon-sm"><use href="#i-right"/></svg></a>
+      <a href="#/about">About <svg class="icon icon-sm"><use href="#i-right"/></svg></a>
+    </nav>
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ================= HOME ================= -->
+<div data-view="home">
+  <section class="hero bleed" aria-roledescription="carousel" aria-label="Featured">
+    <div class="slides" data-slides tabindex="0">
+      <article class="panel" data-tone="dark" aria-roledescription="slide" aria-label="1 of 3">
+        <img class="media" data-scene="coast-dusk" src="images/coast-dusk.svg" alt="A grey sedan on a coast road at dusk, the sun low over the sea" width="1600" height="1000">
+        <svg class="car paint-basalt" aria-hidden="true"><use href="#car-sedan"/></svg>
+        <div class="panel-copy"><h1>Strata</h1><p class="panel-sub">610 km of range. From $46,900.</p></div>
+        <div></div>
+        <div class="panel-foot"><div class="actions"><a class="btn" href="#/design?m=strata">Order now</a><a class="btn btn-glass" href="#/vehicle?m=strata">Learn more</a></div></div>
+      </article>
+      <article class="panel" data-tone="dark" aria-roledescription="slide" aria-label="2 of 3">
+        <img class="media" data-scene="alpine-blue" src="images/alpine-blue.svg" alt="A white SUV below snowy peaks at the blue hour" width="1600" height="1000">
+        <svg class="car paint-polar" aria-hidden="true"><use href="#car-suv"/></svg>
+        <div class="panel-copy"><h2>Fjell</h2><p class="panel-sub">Seven seats. All-wheel drive as standard.</p></div>
+        <div></div>
+        <div class="panel-foot"><div class="actions"><a class="btn" href="#/design?m=fjell">Order now</a><a class="btn btn-glass" href="#/vehicle?m=fjell">Learn more</a></div></div>
+      </article>
+      <article class="panel" data-tone="dark" aria-roledescription="slide" aria-label="3 of 3">
+        <img class="media" data-scene="city-night" src="images/city-night.svg" alt="A blue compact car on a city street at night" width="1600" height="1000">
+        <svg class="car paint-fjord" aria-hidden="true"><use href="#car-compact"/></svg>
+        <div class="panel-copy"><h2>Tern</h2><p class="panel-sub">The city car that parks itself. From $33,400.</p></div>
+        <div></div>
+        <div class="panel-foot"><div class="actions"><a class="btn" href="#/design?m=tern">Order now</a><a class="btn btn-glass" href="#/drive?m=tern">Demo drive</a></div></div>
+      </article>
+    </div>
+    <button class="arrow-btn hero-arrow prev" type="button" data-slide="-1" aria-label="Previous slide"><svg class="icon"><use href="#i-left"/></svg></button>
+    <button class="arrow-btn hero-arrow next" type="button" data-slide="1" aria-label="Next slide"><svg class="icon"><use href="#i-right"/></svg></button>
+    <div class="hero-dots" data-dots></div>
+  </section>
+
+  <section aria-labelledby="lineup-title">
+    <div class="rail-head">
+      <h2 id="lineup-title">The lineup</h2>
+      <div class="rail-nav"><button class="arrow-btn" type="button" data-rail="-1" aria-label="Scroll the lineup left"><svg class="icon"><use href="#i-left"/></svg></button><button class="arrow-btn" type="button" data-rail="1" aria-label="Scroll the lineup right"><svg class="icon"><use href="#i-right"/></svg></button></div>
+    </div>
+    <div class="rail" data-rail-track>
+      <article class="cat">
+        <img class="media" src="images/studio-dark.svg" alt="" width="1600" height="1000">
+        <svg class="car paint-ember" role="img" aria-label="A red Strata sedan in a dark studio"><use href="#car-sedan"/></svg>
+        <div class="cat-copy"><h3>Sport sedan</h3><p>Strata</p></div>
+        <div class="actions"><a class="btn btn-sm" href="#/design?m=strata">Order</a><a class="btn btn-sm btn-glass" href="#/vehicle?m=strata">Learn</a></div>
+      </article>
+      <article class="cat">
+        <img class="media" src="images/studio-dark.svg" alt="" width="1600" height="1000">
+        <svg class="car paint-polar" role="img" aria-label="A white Fjell SUV in a dark studio"><use href="#car-suv"/></svg>
+        <div class="cat-copy"><h3>Midsize SUV</h3><p>Fjell</p></div>
+        <div class="actions"><a class="btn btn-sm" href="#/design?m=fjell">Order</a><a class="btn btn-sm btn-glass" href="#/vehicle?m=fjell">Learn</a></div>
+      </article>
+      <article class="cat">
+        <img class="media" src="images/studio-dark.svg" alt="" width="1600" height="1000">
+        <svg class="car paint-fjord" role="img" aria-label="A blue Tern compact in a dark studio"><use href="#car-compact"/></svg>
+        <div class="cat-copy"><h3>Compact</h3><p>Tern</p></div>
+        <div class="actions"><a class="btn btn-sm" href="#/design?m=tern">Order</a><a class="btn btn-sm btn-glass" href="#/vehicle?m=tern">Learn</a></div>
+      </article>
+      <article class="cat">
+        <img class="media" src="images/studio-dark.svg" alt="" width="1600" height="1000">
+        <svg class="car paint-basalt wheels-sport" role="img" aria-label="A grey Talus pickup in a dark studio"><use href="#car-pickup"/></svg>
+        <div class="cat-copy"><h3>Pickup</h3><p>Talus</p></div>
+        <div class="actions"><a class="btn btn-sm" href="#/design?m=talus">Order</a><a class="btn btn-sm btn-glass" href="#/vehicle?m=talus">Learn</a></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel" data-tone="light" aria-labelledby="talus-title">
+    <img class="media" data-scene="desert-day" src="images/desert-day.svg" alt="A black pickup on a desert road under a pale sky" width="1600" height="1000">
+    <svg class="car paint-night wheels-sport" aria-hidden="true"><use href="#car-pickup"/></svg>
+    <div class="panel-copy reveal"><h2 id="talus-title">Talus</h2><p class="panel-sub">Tows 4,500 kg. Adds 300 km in 20 minutes.</p></div>
+    <div></div>
+    <div class="panel-foot reveal"><div class="actions"><a class="btn" href="#/design?m=talus">Order now</a><a class="btn btn-glass" href="#/vehicle?m=talus">Learn more</a></div></div>
+  </section>
+
+  <section class="panel" data-tone="light" aria-labelledby="hearth-title">
+    <img class="media" src="images/home-day.svg" alt="A house with solar panels on the roof and a battery on the garage wall" width="1600" height="1000">
+    <div class="panel-copy reveal"><h2 id="hearth-title">Hearth home battery</h2><p class="panel-sub">Store the sun. Keep the lights on when the grid goes down.</p></div>
+    <div></div>
+    <div class="panel-foot reveal"><div class="actions"><a class="btn" href="#/energy?at=quote">Get a quote</a><a class="btn btn-glass" href="#/energy">Learn more</a></div></div>
+  </section>
+
+  <section class="panel" data-tone="dark" aria-labelledby="charge-title">
+    <img class="media" src="images/charging-night.svg" alt="A row of fast chargers under a lit canopy at night" width="1600" height="1000">
+    <div class="panel-copy reveal"><h2 id="charge-title">Charge on the road</h2><p class="panel-sub">Fast chargers on every major route, open around the clock.</p></div>
+    <div></div>
+    <div class="panel-foot reveal">
+      <div class="stats"><div class="stat"><b>1,200+</b><span>Fast chargers</span></div><div class="stat"><b>250 kW</b><span>Peak charging</span></div><div class="stat"><b>24/7</b><span>Open</span></div></div>
+      <div class="actions"><a class="btn" href="#/locations?type=charger">Find a charger</a><a class="btn btn-glass" href="#/support?topic=charging">Charging help</a></div>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="next-title">
+    <h2 id="next-title" class="h2 reveal" style="margin-bottom:24px">Take the next step</h2>
+    <div class="tiles">
+      <a class="tile reveal" href="#/drive"><img class="media" src="images/alpine-blue.svg" alt="" width="1600" height="1000"><h3>Book a demo drive</h3><p>Thirty minutes, with a specialist or on your own.</p></a>
+      <a class="tile reveal" href="#/locations"><img class="media" src="images/city-night.svg" alt="" width="1600" height="1000"><h3>Visit a store</h3><p>Sit in every model and talk through the options.</p></a>
+      <a class="tile reveal" href="#/inventory"><img class="media" src="images/coast-dusk.svg" alt="" width="1600" height="1000"><h3>Browse inventory</h3><p>Cars built and ready, delivered within two weeks.</p></a>
+    </div>
+  </section>
+</div>
+
+<!-- ================= VEHICLE (one page per model, filled from MODELS by ?m=) ================= -->
+<div data-view="vehicle">
+  <section class="panel bleed" data-tone="dark" data-model-tone aria-labelledby="v-title">
+    <img class="media" data-m-scene src="images/coast-dusk.svg" alt="A grey sedan on a coast road at dusk" width="1600" height="1000">
+    <svg class="car paint-basalt" data-m-car aria-hidden="true"><use href="#car-sedan"/></svg>
+    <div class="panel-copy"><h1 id="v-title" data-m="name">Strata</h1><p class="panel-sub" data-m="tag">Long-range sport sedan</p></div>
+    <div></div>
+    <div class="panel-foot model-foot">
+      <div class="stats">
+        <div class="stat"><b data-m="range">610 km</b><span>Range (WLTP est.)</span></div>
+        <div class="stat"><b data-m="accel">3.1 s</b><span>0–100 km/h</span></div>
+        <div class="stat"><b data-m="top">262 km/h</b><span>Top speed</span></div>
+      </div>
+      <div class="actions"><a class="btn" data-m-link="design" href="#/design?m=strata">Order now</a><a class="btn btn-glass" data-m-link="drive" href="#/drive?m=strata">Demo drive</a></div>
+    </div>
+  </section>
+
+  <section class="feature-bleed" aria-labelledby="v-cabin">
+    <img class="media" src="images/interior.svg" alt="The cabin from the driver's seat: a round wheel, one wide screen and the road through the glass" width="1600" height="1000">
+    <h2 id="v-cabin" class="reveal">One screen. Nothing else.</h2>
+    <p class="reveal">Every control lives on a 15-inch display or under your thumbs. The rest of the dash is open wood and glass, so the road is the view.</p>
+  </section>
+
+  <section class="split" aria-labelledby="v-range">
+    <img src="images/charging-night.svg" alt="Fast chargers under a canopy at night" width="1600" height="1000">
+    <div class="split-copy reveal">
+      <p class="label">Range and charging</p>
+      <h2 id="v-range">Go further between stops</h2>
+      <p>Plan a trip on the screen and the car picks the chargers, warms the battery on the way and tells you how long to stay. Most stops take less than a coffee.</p>
+      <div class="stats"><div class="stat"><b data-m="charge">250 kW</b><span>Peak charging</span></div><div class="stat"><b data-m="add">300 km</b><span>Added in 15 min</span></div></div>
+    </div>
+  </section>
+  <section class="split flip" aria-labelledby="v-safety">
+    <img src="images/safety.svg" alt="A car seen from above inside rings of sensor coverage" width="1600" height="1000">
+    <div class="split-copy reveal">
+      <p class="label">Safety</p>
+      <h2 id="v-safety">Eight cameras. Always watching.</h2>
+      <p>Cameras and radar see 250 metres around the car. Automatic emergency braking, lane keeping and blind-spot warnings come as standard, and get better with every update.</p>
+    </div>
+  </section>
+
+  <section class="wrap section" id="specs" aria-labelledby="v-specs">
+    <div class="specs-head">
+      <h2 id="v-specs" class="h2"><span data-m="name">Strata</span> specs</h2>
+      <div class="seg" role="group" aria-label="Trim" data-trim-tabs>
+        <button type="button" data-trim="0" aria-pressed="false">Long Range</button>
+        <button type="button" data-trim="1" aria-pressed="true">Performance</button>
+      </div>
+    </div>
+    <div class="specs">
+      <div class="drawing">
+        <svg class="car paint-basalt" data-m-car aria-hidden="true"><use href="#car-sedan"/></svg>
+        <span class="dim len" data-m="length">Length 4,720 mm</span>
+        <span class="dim hgt" data-m="height">Height 1,440 mm</span>
+      </div>
+      <dl class="spec-list">
+        <div><dt>Range (WLTP est.)</dt><dd data-s="range">560 km</dd></div>
+        <div><dt>0–100 km/h</dt><dd data-s="accel">3.1 s</dd></div>
+        <div><dt>Top speed</dt><dd data-s="top">262 km/h</dd></div>
+        <div><dt>Drive</dt><dd data-s="drive">Dual motor all-wheel drive</dd></div>
+        <div><dt>Seating</dt><dd data-m="seats">5 adults</dd></div>
+        <div><dt>Cargo</dt><dd data-m="cargo">650 L</dd></div>
+        <div><dt>Peak charging</dt><dd data-m="charge">250 kW</dd></div>
+        <div><dt>Price from</dt><dd data-s="price">$55,900</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="panel" data-tone="dark" aria-labelledby="v-cta">
+    <img class="media" src="images/studio-dark.svg" alt="" width="1600" height="1000">
+    <svg class="car paint-basalt" data-m-car aria-hidden="true"><use href="#car-sedan"/></svg>
+    <div class="panel-copy reveal"><h2 id="v-cta">Make it yours</h2><p class="panel-sub">Choose a colour, wheels and interior. Delivery in four to six weeks.</p></div>
+    <div></div>
+    <div class="panel-foot reveal"><div class="actions"><a class="btn" data-m-link="design" href="#/design?m=strata">Design yours</a><a class="btn btn-glass" href="#/inventory">See cars in stock</a></div></div>
+  </section>
+</div>
+
+<!-- ================= DESIGN (configurator) ================= -->
+<div data-view="design">
+  <div class="design">
+    <div class="col"><div class="stage" aria-live="polite">
+      <svg class="car paint-basalt" id="cfg-car" role="img" aria-label="Your car as configured"><use href="#car-sedan"/></svg>
+      <p class="stage-note" data-out="note">Basalt Grey with 19-inch Aero wheels</p>
+    </div></div>
+    <div class="opts">
+      <div class="opts-head">
+        <nav class="seg" aria-label="Model" data-cfg-models>
+          <a href="#/design?m=strata" aria-current="page">Strata</a><a href="#/design?m=fjell">Fjell</a><a href="#/design?m=tern">Tern</a><a href="#/design?m=talus">Talus</a>
+        </nav>
+        <h1 class="h1" data-out="model">Strata</h1>
+        <p class="price-line"><span data-out="total">$47,900</span><span data-finance> · est. <span data-out="monthly">$827/mo</span></span></p>
+        <p class="price-line">Estimated delivery: 4 to 6 weeks</p>
+      </div>
+
+      <fieldset class="opt choices" data-cfg="trim">
+        <legend class="sr-only">Trim</legend>
+        <h2>Trim</h2>
+        <label class="choice"><input type="radio" name="trim" value="0" checked><b data-t="name">Long Range</b><b data-t="price">$46,900</b><small data-t="spec">610 km · 4.4 s 0–100 · Dual motor</small></label>
+        <label class="choice"><input type="radio" name="trim" value="1"><b data-t="name">Performance</b><b data-t="price">$55,900</b><small data-t="spec">560 km · 3.1 s 0–100 · Dual motor</small></label>
+      </fieldset>
+
+      <fieldset class="opt">
+        <legend class="sr-only">Paint</legend>
+        <h2>Paint</h2>
+        <div class="swatches">
+          <label class="swatch paint-polar"><input type="radio" name="paint" value="polar" data-name="Polar White" data-price="0" aria-label="Polar White, included"><span></span></label>
+          <label class="swatch paint-basalt"><input type="radio" name="paint" value="basalt" data-name="Basalt Grey" data-price="1000" aria-label="Basalt Grey, $1,000" checked><span></span></label>
+          <label class="swatch paint-night"><input type="radio" name="paint" value="night" data-name="Night Black" data-price="1500" aria-label="Night Black, $1,500"><span></span></label>
+          <label class="swatch paint-fjord"><input type="radio" name="paint" value="fjord" data-name="Fjord Blue" data-price="1500" aria-label="Fjord Blue, $1,500"><span></span></label>
+          <label class="swatch paint-ember"><input type="radio" name="paint" value="ember" data-name="Ember Red" data-price="2000" aria-label="Ember Red, $2,000"><span></span></label>
+        </div>
+        <p class="opt-pick"><b data-out="paint">Basalt Grey</b> · <span data-out="paint-price">$1,000</span></p>
+      </fieldset>
+
+      <fieldset class="opt">
+        <legend class="sr-only">Wheels</legend>
+        <h2>Wheels</h2>
+        <div class="swatches">
+          <label class="swatch"><input type="radio" name="wheels" value="aero" data-name="19-inch Aero wheels" data-price="0" aria-label="19-inch Aero wheels, included" checked><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#rim-aero"/></svg></label>
+          <label class="swatch"><input type="radio" name="wheels" value="sport" data-name="21-inch Sport wheels" data-price="2500" aria-label="21-inch Sport wheels, $2,500"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#rim-sport"/></svg></label>
+        </div>
+        <p class="opt-pick"><b data-out="wheels">19-inch Aero wheels</b> · <span data-out="wheels-price">Included</span></p>
+      </fieldset>
+
+      <fieldset class="opt">
+        <legend class="sr-only">Interior</legend>
+        <h2>Interior</h2>
+        <div class="swatches">
+          <label class="swatch" style="color:oklch(24% 0.005 260)"><input type="radio" name="interior" value="black" data-name="All black" data-price="0" aria-label="All black, included" checked><span></span></label>
+          <label class="swatch" style="color:oklch(88% 0.012 80)"><input type="radio" name="interior" value="stone" data-name="Stone and black" data-price="1000" aria-label="Stone and black, $1,000"><span></span></label>
+          <label class="swatch" style="color:oklch(50% 0.09 50)"><input type="radio" name="interior" value="cognac" data-name="Cognac and black" data-price="1500" aria-label="Cognac and black, $1,500"><span></span></label>
+        </div>
+        <p class="opt-pick"><b data-out="interior">All black</b> · <span data-out="interior-price">Included</span></p>
+      </fieldset>
+
+      <fieldset class="opt choices">
+        <legend class="sr-only">Add-ons</legend>
+        <h2>Add-ons</h2>
+        <label class="toggle"><input type="checkbox" name="addon" value="assist" data-name="Highway assist" data-price="3000"><span><b>Highway assist</b><small>Keeps the lane and the distance on motorways, and changes lanes when you signal. You stay in charge.</small></span><b>$3,000</b></label>
+        <label class="toggle"><input type="checkbox" name="addon" value="tow" data-name="Tow hitch" data-price="1000"><span><b>Tow hitch</b><small>Rated for 1,600 kg on Strata, 2,500 kg on Fjell.</small></span><b>$1,000</b></label>
+      </fieldset>
+
+      <section class="opt" aria-labelledby="pay-title">
+        <h2 id="pay-title">Payment</h2>
+        <div style="text-align:center"><div class="seg" role="group" aria-label="Payment" data-pay>
+          <button type="button" data-mode="cash" aria-pressed="false">Cash</button><button type="button" data-mode="finance" aria-pressed="true">Finance</button>
+        </div></div>
+        <div class="finance" data-finance>
+          <div class="field"><label for="f-down">Down payment</label><input class="input" id="f-down" type="number" min="0" step="500" value="5000" inputmode="numeric"></div>
+          <div class="field"><label for="f-term">Term</label><select class="select" id="f-term"><option value="36">36 months</option><option value="48">48 months</option><option value="60" selected>60 months</option><option value="72">72 months</option></select></div>
+        </div>
+        <dl class="summary" style="margin-top:24px">
+          <div><dt data-out="trim-name">Strata Long Range</dt><dd data-out="trim-price">$46,900</dd></div>
+          <div><dt data-out="paint">Basalt Grey</dt><dd data-out="paint-price">$1,000</dd></div>
+          <div><dt data-out="wheels">19-inch Aero wheels</dt><dd data-out="wheels-price">Included</dd></div>
+          <div><dt data-out="interior">All black</dt><dd data-out="interior-price">Included</dd></div>
+          <div data-addon-row hidden><dt>Add-ons</dt><dd data-out="addons">$0</dd></div>
+          <div class="total"><dt>Total</dt><dd data-out="total">$47,900</dd></div>
+          <div data-finance><dt>Est. monthly at 5.9% APR</dt><dd data-out="monthly">$827/mo</dd></div>
+          <div><dt>Due today (order fee)</dt><dd>$250</dd></div>
+        </dl>
+        <p class="price-line">Sample prices before taxes and registration. Finance is an estimate, not an offer.</p>
+        <button class="btn btn-block" type="button" data-continue style="margin-top:16px">Continue to order</button>
+      </section>
+
+      <section class="order" id="order" aria-labelledby="order-title">
+        <h2 id="order-title" class="h2" tabindex="-1">Your details</h2>
+        <form class="form-grid" data-form="order" novalidate>
+          <div class="field"><label for="o-first">First name</label><input class="input" id="o-first" name="first" autocomplete="given-name" required aria-describedby="o-first-error"><span class="error" id="o-first-error"></span></div>
+          <div class="field"><label for="o-last">Last name</label><input class="input" id="o-last" name="last" autocomplete="family-name" required aria-describedby="o-last-error"><span class="error" id="o-last-error"></span></div>
+          <div class="field full"><label for="o-email">Email</label><input class="input" id="o-email" name="email" type="email" autocomplete="email" required aria-describedby="o-email-error"><span class="error" id="o-email-error"></span></div>
+          <div class="field"><label for="o-phone">Phone</label><input class="input" id="o-phone" name="phone" type="tel" autocomplete="tel" required minlength="7" aria-describedby="o-phone-error"><span class="error" id="o-phone-error"></span></div>
+          <div class="field"><label for="o-zip">Delivery postcode</label><input class="input" id="o-zip" name="postcode" autocomplete="postal-code" required aria-describedby="o-zip-error"><span class="error" id="o-zip-error"></span></div>
+          <div class="field full"><label class="check"><input type="checkbox" name="terms" required aria-describedby="o-terms-error" data-msg="Please accept the order terms."><span>I agree to the <a href="#/terms">order terms</a>. The $250 order fee is refundable until the car is built.</span></label><span class="error" id="o-terms-error"></span></div>
+          <div class="full"><button class="btn btn-block" type="submit">Place order</button></div>
+        </form>
+        <div class="success" data-success="order" role="status" hidden>
+          <span class="tick"><svg class="icon"><use href="#i-check"/></svg></span>
+          <h2>Order received</h2>
+          <p>We sent a confirmation to <b data-echo="email">your email</b>. An advisor will call within one working day to confirm delivery.</p>
+          <dl><dt>Car</dt><dd data-out="trim-name">Strata Long Range</dd><dt>Paint</dt><dd data-out="paint">Basalt Grey</dd><dt>Total</dt><dd data-out="total">$47,900</dd></dl>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- ================= INVENTORY ================= -->
+<div data-view="inventory">
+  <section class="wrap page-head">
+    <h1 class="h1">Inventory</h1>
+    <p class="lead">Built, inspected and ready. Reserve one today and drive it home within two weeks.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="toolbar">
+      <div class="toolbar-group">
+        <div class="seg" role="group" aria-label="Model" data-inv-model>
+          <button type="button" data-model="all" aria-pressed="true">All</button><button type="button" data-model="strata" aria-pressed="false">Strata</button><button type="button" data-model="fjell" aria-pressed="false">Fjell</button><button type="button" data-model="tern" aria-pressed="false">Tern</button><button type="button" data-model="talus" aria-pressed="false">Talus</button>
+        </div>
+        <div class="seg" role="group" aria-label="Condition" data-inv-cond>
+          <button type="button" data-cond="all" aria-pressed="true">Any</button><button type="button" data-cond="new" aria-pressed="false">New</button><button type="button" data-cond="demo" aria-pressed="false">Ex-demo</button>
+        </div>
+      </div>
+      <div class="field" style="gap:4px"><label for="inv-sort" class="sr-only">Sort</label><select class="select" id="inv-sort"><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option><option value="range">Range: longest first</option></select></div>
+    </div>
+    <p class="count" data-inv-count aria-live="polite">Showing 6 cars</p>
+    <div class="inv-grid" data-inv>
+      <article class="inv" data-model="tern" data-cond="new" data-price="33400" data-range="430">
+        <div class="inv-top"><div><span class="tag">New</span><h3>Tern Standard</h3><p>Polar White · 18-inch Aero</p></div><div class="inv-price">$33,400<small>est. $548/mo</small></div></div>
+        <svg class="car paint-polar" aria-hidden="true"><use href="#car-compact"/></svg>
+        <div class="stats"><div class="stat"><b>430 km</b><span>Range</span></div><div class="stat"><b>6.9 s</b><span>0–100</span></div><div class="stat"><b>160 km/h</b><span>Top speed</span></div></div>
+        <div class="actions"><a class="btn btn-sm btn-2" href="#/design?m=tern&amp;trim=0&amp;paint=polar">View details</a><a class="btn btn-sm" href="#/design?m=tern&amp;trim=0&amp;paint=polar&amp;at=order">Reserve</a></div>
+      </article>
+      <article class="inv" data-model="strata" data-cond="new" data-price="47900" data-range="610">
+        <div class="inv-top"><div><span class="tag">New</span><h3>Strata Long Range</h3><p>Basalt Grey · 19-inch Aero</p></div><div class="inv-price">$47,900<small>est. $827/mo</small></div></div>
+        <svg class="car paint-basalt" aria-hidden="true"><use href="#car-sedan"/></svg>
+        <div class="stats"><div class="stat"><b>610 km</b><span>Range</span></div><div class="stat"><b>4.4 s</b><span>0–100</span></div><div class="stat"><b>201 km/h</b><span>Top speed</span></div></div>
+        <div class="actions"><a class="btn btn-sm btn-2" href="#/design?m=strata&amp;trim=0&amp;paint=basalt">View details</a><a class="btn btn-sm" href="#/design?m=strata&amp;trim=0&amp;paint=basalt&amp;at=order">Reserve</a></div>
+      </article>
+      <article class="inv" data-model="strata" data-cond="new" data-price="60400" data-range="560">
+        <div class="inv-top"><div><span class="tag">New</span><h3>Strata Performance</h3><p>Ember Red · 21-inch Sport</p></div><div class="inv-price">$60,400<small>est. $1,068/mo</small></div></div>
+        <svg class="car paint-ember wheels-sport" aria-hidden="true"><use href="#car-sedan"/></svg>
+        <div class="stats"><div class="stat"><b>560 km</b><span>Range</span></div><div class="stat"><b>3.1 s</b><span>0–100</span></div><div class="stat"><b>262 km/h</b><span>Top speed</span></div></div>
+        <div class="actions"><a class="btn btn-sm btn-2" href="#/design?m=strata&amp;trim=1&amp;paint=ember&amp;wheels=sport">View details</a><a class="btn btn-sm" href="#/design?m=strata&amp;trim=1&amp;paint=ember&amp;wheels=sport&amp;at=order">Reserve</a></div>
+      </article>
+      <article class="inv" data-model="fjell" data-cond="demo" data-price="51200" data-range="560">
+        <div class="inv-top"><div><span class="tag">Ex-demo</span><h3>Fjell Long Range</h3><p>Polar White · 3,400 km</p></div><div class="inv-price">$51,200<small>est. $891/mo</small></div></div>
+        <svg class="car paint-polar" aria-hidden="true"><use href="#car-suv"/></svg>
+        <div class="stats"><div class="stat"><b>560 km</b><span>Range</span></div><div class="stat"><b>5.2 s</b><span>0–100</span></div><div class="stat"><b>200 km/h</b><span>Top speed</span></div></div>
+        <div class="actions"><a class="btn btn-sm btn-2" href="#/design?m=fjell&amp;trim=0&amp;paint=polar">View details</a><a class="btn btn-sm" href="#/design?m=fjell&amp;trim=0&amp;paint=polar&amp;at=order">Reserve</a></div>
+      </article>
+      <article class="inv" data-model="talus" data-cond="new" data-price="64900" data-range="540">
+        <div class="inv-top"><div><span class="tag">New</span><h3>Talus Dual Motor</h3><p>Basalt Grey · 20-inch Sport</p></div><div class="inv-price">$64,900<small>est. $1,155/mo</small></div></div>
+        <svg class="car paint-basalt wheels-sport" aria-hidden="true"><use href="#car-pickup"/></svg>
+        <div class="stats"><div class="stat"><b>540 km</b><span>Range</span></div><div class="stat"><b>4.8 s</b><span>0–100</span></div><div class="stat"><b>180 km/h</b><span>Top speed</span></div></div>
+        <div class="actions"><a class="btn btn-sm btn-2" href="#/design?m=talus&amp;trim=0&amp;paint=basalt&amp;wheels=sport">View details</a><a class="btn btn-sm" href="#/design?m=talus&amp;trim=0&amp;paint=basalt&amp;wheels=sport&amp;at=order">Reserve</a></div>
+      </article>
+      <article class="inv" data-model="talus" data-cond="demo" data-price="71500" data-range="500">
+        <div class="inv-top"><div><span class="tag">Ex-demo</span><h3>Talus Tri Motor</h3><p>Night Black · 2,100 km</p></div><div class="inv-price">$71,500<small>est. $1,283/mo</small></div></div>
+        <svg class="car paint-night wheels-sport" aria-hidden="true"><use href="#car-pickup"/></svg>
+        <div class="stats"><div class="stat"><b>500 km</b><span>Range</span></div><div class="stat"><b>3.6 s</b><span>0–100</span></div><div class="stat"><b>200 km/h</b><span>Top speed</span></div></div>
+        <div class="actions"><a class="btn btn-sm btn-2" href="#/design?m=talus&amp;trim=1&amp;paint=night&amp;wheels=sport">View details</a><a class="btn btn-sm" href="#/design?m=talus&amp;trim=1&amp;paint=night&amp;wheels=sport&amp;at=order">Reserve</a></div>
+      </article>
+    </div>
+    <div class="empty" data-inv-empty hidden><p>No cars match these filters right now.</p><button class="btn btn-2" type="button" data-inv-reset>Show all cars</button></div>
+  </section>
+</div>
+
+<!-- ================= DEMO DRIVE ================= -->
+<div data-view="drive">
+  <div class="drive">
+    <div class="col"><div class="drive-media">
+      <img class="media" data-d-scene src="images/alpine-blue.svg" alt="The chosen car on an open road" width="1600" height="1000">
+      <svg class="car paint-polar" data-d-car aria-hidden="true"><use href="#car-suv"/></svg>
+    </div></div>
+    <div class="drive-form">
+      <h1 class="h1">Book a demo drive</h1>
+      <p class="lead">Thirty minutes behind the wheel, with a specialist beside you or on your own. Free, and no obligation to buy.</p>
+      <form data-form="drive" novalidate>
+        <fieldset>
+          <legend class="field-label" style="margin-bottom:8px">Model</legend>
+          <div class="car-picks">
+            <label class="car-pick"><input type="radio" name="model" value="strata"><span><svg class="car paint-basalt" aria-hidden="true"><use href="#car-sedan"/></svg>Strata</span></label>
+            <label class="car-pick"><input type="radio" name="model" value="fjell" checked><span><svg class="car paint-polar" aria-hidden="true"><use href="#car-suv"/></svg>Fjell</span></label>
+            <label class="car-pick"><input type="radio" name="model" value="tern"><span><svg class="car paint-fjord" aria-hidden="true"><use href="#car-compact"/></svg>Tern</span></label>
+            <label class="car-pick"><input type="radio" name="model" value="talus"><span><svg class="car paint-night" aria-hidden="true"><use href="#car-pickup"/></svg>Talus</span></label>
+          </div>
+        </fieldset>
+        <div class="field"><label for="d-loc">Location</label><select class="select" id="d-loc" name="location" required aria-describedby="d-loc-error" data-msg="Please choose a store."><option value="">Choose a store</option><option value="harbourfront">Harbourfront store</option><option value="northgate">Northgate store</option><option value="eastfield">Eastfield service and store</option><option value="riverside">Riverside studio</option></select><span class="error" id="d-loc-error"></span></div>
+        <fieldset class="chips" data-days><legend>Day</legend>
+          <label class="chip"><input type="radio" name="day" value="d1" required aria-describedby="d-day-error" data-msg="Please choose a day."><span>Mon</span></label><label class="chip"><input type="radio" name="day" value="d2"><span>Tue</span></label><label class="chip"><input type="radio" name="day" value="d3"><span>Wed</span></label><label class="chip"><input type="radio" name="day" value="d4"><span>Thu</span></label><label class="chip"><input type="radio" name="day" value="d5"><span>Fri</span></label><label class="chip"><input type="radio" name="day" value="d6"><span>Sat</span></label>
+        </fieldset>
+        <span class="error" id="d-day-error" style="margin-top:-16px"></span>
+        <fieldset class="chips"><legend>Time</legend>
+          <label class="chip"><input type="radio" name="time" value="9:00" required aria-describedby="d-time-error" data-msg="Please choose a time."><span>9:00</span></label><label class="chip"><input type="radio" name="time" value="11:00"><span>11:00</span></label><label class="chip"><input type="radio" name="time" value="13:30"><span>13:30</span></label><label class="chip"><input type="radio" name="time" value="15:30"><span>15:30</span></label><label class="chip"><input type="radio" name="time" value="17:30"><span>17:30</span></label>
+        </fieldset>
+        <span class="error" id="d-time-error" style="margin-top:-16px"></span>
+        <div class="form-grid">
+          <div class="field"><label for="d-name">Full name</label><input class="input" id="d-name" name="name" autocomplete="name" required aria-describedby="d-name-error"><span class="error" id="d-name-error"></span></div>
+          <div class="field"><label for="d-phone">Phone</label><input class="input" id="d-phone" name="phone" type="tel" autocomplete="tel" required minlength="7" aria-describedby="d-phone-error"><span class="error" id="d-phone-error"></span></div>
+          <div class="field full"><label for="d-email">Email</label><input class="input" id="d-email" name="email" type="email" autocomplete="email" required aria-describedby="d-email-error"><span class="error" id="d-email-error"></span></div>
+          <div class="field full"><label class="check"><input type="checkbox" name="licence" required aria-describedby="d-licence-error" data-msg="A full driving licence is needed to drive."><span>I hold a full driving licence and will bring it.</span></label><span class="error" id="d-licence-error"></span></div>
+        </div>
+        <button class="btn btn-block" type="submit">Book demo drive</button>
+      </form>
+      <div class="success" data-success="drive" role="status" hidden>
+        <span class="tick"><svg class="icon"><use href="#i-check"/></svg></span>
+        <h2>You're booked</h2>
+        <p>A confirmation is on its way to <b data-echo="email">your email</b>. Bring your licence and allow forty minutes.</p>
+        <dl><dt>Model</dt><dd data-echo="model">Fjell</dd><dt>Store</dt><dd data-echo="location">Harbourfront store</dd><dt>When</dt><dd><span data-echo="day">Monday</span>, <span data-echo="time">9:00</span></dd></dl>
+        <a class="sub-link" href="#/locations">Find the store</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ENERGY ================= -->
+<div data-view="energy">
+  <section class="panel bleed" data-tone="light" aria-labelledby="e-title">
+    <img class="media" src="images/home-day.svg" alt="A house with solar panels on the roof and a battery on the garage wall" width="1600" height="1000">
+    <div class="panel-copy"><h1 id="e-title">Power your home</h1><p class="panel-sub">Solar panels and a home battery, designed and installed by one team.</p></div>
+    <div></div>
+    <div class="panel-foot"><div class="actions"><a class="btn" href="#quote">Get a quote</a><a class="btn btn-glass" href="#hearth">Explore Hearth</a></div></div>
+  </section>
+  <section class="split" id="hearth" aria-labelledby="e-hearth">
+    <img src="images/hearth.svg" alt="A slim battery on a garage wall beside a car charger" width="1600" height="1000">
+    <div class="split-copy reveal">
+      <p class="label">Hearth home battery</p>
+      <h2 id="e-hearth">Your own backup supply</h2>
+      <p>Hearth stores power from the sun or from cheap night rates and switches on in a fraction of a second when the grid fails. Stack up to four on one wall.</p>
+      <div class="stats"><div class="stat"><b>13.5 kWh</b><span>Storage</span></div><div class="stat"><b>11.5 kW</b><span>Peak output</span></div><div class="stat"><b>10 years</b><span>Warranty</span></div></div>
+    </div>
+  </section>
+  <section class="split flip" id="lattice" aria-labelledby="e-lattice">
+    <img src="images/solar.svg" alt="Rows of dark solar panels on a pitched roof against a clear sky" width="1600" height="1000">
+    <div class="split-copy reveal">
+      <p class="label">Lattice solar panels</p>
+      <h2 id="e-lattice">Low on the roof, high on output</h2>
+      <p>All-black panels sit flush on the rails with hidden mounts. Watch what they make, what you use and what you store, minute by minute, in the app.</p>
+      <div class="stats"><div class="stat"><b>430 W</b><span>Per panel</span></div><div class="stat"><b>25 years</b><span>Performance warranty</span></div></div>
+    </div>
+  </section>
+  <section class="wrap section" id="quote" aria-labelledby="e-est">
+    <div class="estimator">
+      <div class="reveal">
+        <p class="label">Estimate</p>
+        <h2 id="e-est" class="h2" style="margin:4px 0 12px">Size a system for your home</h2>
+        <p>Move the slider to your average monthly electricity bill. We size the panels and batteries from it; a site survey confirms the final design.</p>
+        <label class="field-label" for="e-bill">Average monthly bill: <b data-out="bill">$180</b></label>
+        <input class="range" id="e-bill" type="range" min="50" max="600" step="10" value="180">
+        <div class="range-scale"><span>$50</span><span>$600</span></div>
+        <div class="result" aria-live="polite">
+          <div><b data-out="kw">7.4 kW</b><span>Solar system</span></div>
+          <div><b data-out="panels">18</b><span>Lattice panels</span></div>
+          <div><b data-out="units">1</b><span>Hearth batteries</span></div>
+          <div><b data-out="kwh">9,600 kWh</b><span>Produced per year</span></div>
+        </div>
+        <p class="muted" style="font-size:var(--fs-small)">An estimate for planning only, based on 1,300 kWh per kW per year and $0.22 per kWh.</p>
+      </div>
+      <div class="quote">
+        <h2>Request a quote</h2>
+        <form class="form-grid" data-form="quote" novalidate>
+          <div class="field"><label for="q-name">Full name</label><input class="input" id="q-name" name="name" autocomplete="name" required aria-describedby="q-name-error"><span class="error" id="q-name-error"></span></div>
+          <div class="field"><label for="q-email">Email</label><input class="input" id="q-email" name="email" type="email" autocomplete="email" required aria-describedby="q-email-error"><span class="error" id="q-email-error"></span></div>
+          <div class="field full"><label for="q-address">Installation address</label><input class="input" id="q-address" name="address" autocomplete="street-address" required aria-describedby="q-address-error"><span class="error" id="q-address-error"></span></div>
+          <div class="field"><label for="q-home">Home type</label><select class="select" id="q-home" name="home"><option>Detached house</option><option>Townhouse</option><option>Farm or rural</option><option>Business</option></select><span class="error"></span></div>
+          <div class="field"><label for="q-bill">Monthly bill (USD)</label><input class="input" id="q-bill" name="bill" type="number" min="0" inputmode="numeric" value="180"><span class="error"></span></div>
+          <fieldset class="chips full" style="margin-bottom:20px"><legend>I'm interested in</legend>
+            <label class="chip"><input type="checkbox" name="interest" value="solar" checked><span>Solar panels</span></label><label class="chip"><input type="checkbox" name="interest" value="battery" checked><span>Hearth battery</span></label><label class="chip"><input type="checkbox" name="interest" value="charger"><span>Wall charger</span></label>
+          </fieldset>
+          <div class="full"><button class="btn btn-block" type="submit">Request a quote</button></div>
+        </form>
+        <div class="success" data-success="quote" role="status" hidden>
+          <span class="tick"><svg class="icon"><use href="#i-check"/></svg></span>
+          <h2>Request sent</h2>
+          <p>Thanks, <b data-echo="name">there</b>. An energy advisor will email a design for <span data-echo="address">your address</span> within three working days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= LOCATIONS ================= -->
+<div data-view="locations">
+  <div class="find">
+    <div class="find-list">
+      <h1 class="h1">Find us</h1>
+      <div class="search"><svg class="icon"><use href="#i-search"/></svg><label class="sr-only" for="loc-q">Search by name or area</label><input class="input" id="loc-q" type="search" placeholder="Search by name or area" autocomplete="off"></div>
+      <div class="seg" role="group" aria-label="Type" data-loc-type>
+        <button type="button" data-type="all" aria-pressed="true">All</button><button type="button" data-type="store" aria-pressed="false">Stores</button><button type="button" data-type="service" aria-pressed="false">Service</button><button type="button" data-type="charger" aria-pressed="false">Chargers</button>
+      </div>
+      <p class="count" data-loc-count aria-live="polite">7 locations</p>
+      <ul class="locs" data-locs>
+        <li class="loc" data-id="harbourfront" data-type="store" data-x="58" data-y="62" tabindex="0"><span class="tag">Store</span><h3>Harbourfront store</h3><p>12 Pier Road, Harbourfront</p><p>Open today 10:00–20:00</p><div class="loc-more"><a class="sub-link" href="#/drive?loc=harbourfront">Book a demo drive</a><a class="sub-link" href="#/support?at=contact">Call the store</a></div></li>
+        <li class="loc" data-id="northgate" data-type="store" data-x="44" data-y="24" tabindex="0"><span class="tag">Store</span><h3>Northgate store</h3><p>3 Market Square, Northgate</p><p>Open today 10:00–19:00</p><div class="loc-more"><a class="sub-link" href="#/drive?loc=northgate">Book a demo drive</a><a class="sub-link" href="#/support?at=contact">Call the store</a></div></li>
+        <li class="loc" data-id="eastfield" data-type="service" data-x="78" data-y="40" tabindex="0"><span class="tag">Service and store</span><h3>Eastfield service centre</h3><p>140 Foundry Lane, Eastfield</p><p>Open today 08:00–18:00</p><div class="loc-more"><a class="sub-link" href="#/drive?loc=eastfield">Book a demo drive</a><a class="sub-link" href="#/support?topic=ownership">Book a service</a></div></li>
+        <li class="loc" data-id="riverside" data-type="store" data-x="30" data-y="54" tabindex="0"><span class="tag">Studio</span><h3>Riverside studio</h3><p>8 Mill Yard, Riverside</p><p>Open today 11:00–19:00</p><div class="loc-more"><a class="sub-link" href="#/drive?loc=riverside">Book a demo drive</a><a class="sub-link" href="#/support?at=contact">Call the store</a></div></li>
+        <li class="loc" data-id="c-quay" data-type="charger" data-x="66" data-y="74" tabindex="0"><span class="tag">Charger</span><h3>North Quay chargers</h3><p>16 stalls · 250 kW</p><p>Open 24 hours</p><div class="loc-more"><a class="sub-link" href="#/support?topic=charging">How to charge</a></div></li>
+        <li class="loc" data-id="c-ridge" data-type="charger" data-x="88" data-y="18" tabindex="0"><span class="tag">Charger</span><h3>Ridge Road chargers</h3><p>12 stalls · 250 kW</p><p>Open 24 hours</p><div class="loc-more"><a class="sub-link" href="#/support?topic=charging">How to charge</a></div></li>
+        <li class="loc" data-id="c-mill" data-type="charger" data-x="24" data-y="80" tabindex="0"><span class="tag">Charger</span><h3>Millbrook chargers</h3><p>8 stalls · 150 kW</p><p>Open 24 hours</p><div class="loc-more"><a class="sub-link" href="#/support?topic=charging">How to charge</a></div></li>
+      </ul>
+      <div class="empty" data-loc-empty hidden><p>Nothing matches that search.</p><button class="btn btn-2" type="button" data-loc-reset>Show all locations</button></div>
+    </div>
+    <div class="col map-col"><div class="map-wrap">
+      <div class="map" data-map><img src="images/map.svg" alt="A map of the city with the stores, service centres and chargers marked" width="1200" height="900"></div>
+    </div></div>
+  </div>
+</div>
+
+<!-- ================= SUPPORT ================= -->
+<div data-view="support">
+  <section class="prose page-head">
+    <h1 class="h1">Support</h1>
+    <p class="lead">Answers about ordering, delivery, charging and home energy.</p>
+  </section>
+  <section class="prose" style="padding-bottom:72px">
+    <div class="help-tools">
+      <div class="search"><svg class="icon"><use href="#i-search"/></svg><label class="sr-only" for="help-q">Search support</label><input class="input" id="help-q" type="search" placeholder="Search support" autocomplete="off"></div>
+      <div class="seg" role="group" aria-label="Topic" data-topics>
+        <button type="button" data-topic="all" aria-pressed="true">All</button><button type="button" data-topic="ordering" aria-pressed="false">Ordering</button><button type="button" data-topic="charging" aria-pressed="false">Charging</button><button type="button" data-topic="ownership" aria-pressed="false">Ownership</button><button type="button" data-topic="energy" aria-pressed="false">Energy</button>
+      </div>
+    </div>
+    <div class="faq" data-faq>
+      <details data-topic="ordering"><summary>How does ordering work?<svg class="icon"><use href="#i-down"/></svg></summary><p>Design your car, pay the $250 order fee and an advisor calls within one working day. You pay the balance or sign the finance agreement before delivery.</p></details>
+      <details data-topic="ordering"><summary>Can I change my car after ordering?<svg class="icon"><use href="#i-down"/></svg></summary><p>Yes, until it is scheduled for production. Change the paint, wheels or interior from your account; the price updates and the order fee carries over.</p></details>
+      <details data-topic="ordering"><summary>When will my car arrive?<svg class="icon"><use href="#i-down"/></svg></summary><p>New orders usually arrive in four to six weeks, cars from inventory within two. Your delivery date appears in your account once the car is built.</p></details>
+      <details data-topic="charging"><summary>How long does charging take?<svg class="icon"><use href="#i-down"/></svg></summary><p>About 15 minutes at a fast charger to add 300 km. At home, a wall charger fills the battery overnight.</p></details>
+      <details data-topic="charging"><summary>Do I need a charger at home?<svg class="icon"><use href="#i-down"/></svg></summary><p>Most owners install one. A wall charger adds about 60 km of range per hour; a standard socket works for short daily trips.</p></details>
+      <details data-topic="ownership"><summary>How do I book a service?<svg class="icon"><use href="#i-down"/></svg></summary><p>Book from the app or call your nearest service centre. Many jobs are done at your home by a mobile technician.</p></details>
+      <details data-topic="ownership"><summary>What does the warranty cover?<svg class="icon"><use href="#i-down"/></svg></summary><p>Four years or 80,000 km on the car, and eight years or 160,000 km on the battery and motors, whichever comes first.</p></details>
+      <details data-topic="energy"><summary>Does Hearth work during a power cut?<svg class="icon"><use href="#i-down"/></svg></summary><p>Yes. It detects the outage and takes over in a fraction of a second, so the lights stay on and the fridge keeps running.</p></details>
+      <details data-topic="energy"><summary>How long does a solar installation take?<svg class="icon"><use href="#i-down"/></svg></summary><p>Installation is one or two days. Permits and the grid connection usually take four to eight weeks before that.</p></details>
+    </div>
+    <div class="empty" data-help-empty hidden><p>No answers match. Try another word or ask us below.</p></div>
+  </section>
+  <section class="band section" id="contact" aria-labelledby="c-title">
+    <div class="wrap contact">
+      <div>
+        <h2 id="c-title" class="h2">Still need help?</h2>
+        <p class="lead" style="margin-top:12px">Send a message and a specialist replies within one working day.</p>
+        <ul class="contact-list">
+          <li><svg class="icon"><use href="#i-phone"/></svg><div><b>Phone</b>+1 555 0142, every day 8:00–20:00</div></li>
+          <li><svg class="icon"><use href="#i-mail"/></svg><div><b>Email</b>help@aurvik.example</div></li>
+          <li><svg class="icon"><use href="#i-clock"/></svg><div><b>Roadside help</b>24 hours, from the app or the phone line</div></li>
+        </ul>
+      </div>
+      <div class="quote quote-alt">
+        <form class="form-grid" data-form="contact" novalidate>
+          <div class="field"><label for="c-name">Full name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-error"><span class="error" id="c-name-error"></span></div>
+          <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-error"><span class="error" id="c-email-error"></span></div>
+          <div class="field"><label for="c-topic">Topic</label><select class="select" id="c-topic" name="topic"><option value="ordering">Ordering</option><option value="charging">Charging</option><option value="ownership">Service and ownership</option><option value="energy">Home energy</option></select><span class="error"></span></div>
+          <div class="field"><label for="c-ref">Order number (optional)</label><input class="input" id="c-ref" name="ref"><span class="error"></span></div>
+          <div class="field full"><label for="c-msg">Message</label><textarea class="textarea" id="c-msg" name="message" required minlength="10" aria-describedby="c-msg-error"></textarea><span class="error" id="c-msg-error"></span></div>
+          <div class="full"><button class="btn" type="submit">Send message</button></div>
+        </form>
+        <div class="success" data-success="contact" role="status" hidden>
+          <span class="tick"><svg class="icon"><use href="#i-check"/></svg></span>
+          <h2>Message sent</h2>
+          <p>Thanks, <b data-echo="name">there</b>. We reply within one working day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<div data-view="about">
+  <section class="panel bleed" data-tone="dark" aria-labelledby="a-title">
+    <img class="media" src="images/alpine-blue.svg" alt="Snowy peaks over a still lake at the blue hour" width="1600" height="1000">
+    <div class="panel-copy"><h1 id="a-title">Quiet machines for loud places</h1><p class="panel-sub">We make electric cars and home energy for people who drive far and live off the beaten track.</p></div>
+  </section>
+  <section class="wrap section">
+    <div class="values">
+      <div class="reveal"><h2 class="h3">Fewer parts</h2><p>Every part we remove is one that cannot fail. Our cars have one screen, two pedals and no gearbox.</p></div>
+      <div class="reveal"><h2 class="h3">Built near you</h2><p>Cars are assembled in two plants close to the markets they serve, with batteries made next door.</p></div>
+      <div class="reveal"><h2 class="h3">Better with time</h2><p>Updates arrive over the air at night. The car you own next year is better than the one you bought.</p></div>
+    </div>
+  </section>
+  <section class="band section center" aria-labelledby="u-title">
+    <div class="wrap">
+      <h2 id="u-title" class="h2">Get updates</h2>
+      <p class="lead" style="margin-top:8px">New models, events near you and owner news. About once a month.</p>
+      <form class="updates" data-form="updates" novalidate>
+        <div class="field"><label for="u-email">Email</label><input class="input" id="u-email" name="email" type="email" autocomplete="email" required aria-describedby="u-email-error"><span class="error" id="u-email-error"></span></div>
+        <button class="btn" type="submit">Subscribe</button>
+      </form>
+      <div class="success" data-success="updates" role="status" hidden style="justify-items:center;margin-top:24px"><span class="tick"><svg class="icon"><use href="#i-check"/></svg></span><p>Subscribed. The next update reaches <b data-echo="email">your inbox</b> early next month.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= LEGAL ================= -->
+<div data-view="privacy">
+  <section class="prose page-head"><h1 class="h1">Privacy notice</h1><p class="lead">Sample text: replace it with your own notice.</p></section>
+  <section class="prose legal" style="padding-bottom:72px">
+    <h2>What we collect</h2><p>Your name and contact details when you order, book a drive or ask a question, and the configuration you choose.</p>
+    <h2>Car data</h2><p>Cars send diagnostic data to keep them safe and up to date. Location and camera data stay in the car unless you share them.</p>
+    <h2>Your choices</h2><p>Download or delete your data from your account, or write to privacy@aurvik.example.</p>
+  </section>
+</div>
+<div data-view="terms">
+  <section class="prose page-head"><h1 class="h1">Order terms</h1><p class="lead">Sample text: replace it with your own terms.</p></section>
+  <section class="prose legal" style="padding-bottom:72px">
+    <h2>Order fee</h2><p>The order fee holds your place in production and is refundable until the car is built.</p>
+    <h2>Prices</h2><p>Prices are confirmed when you sign the purchase agreement. Taxes, registration and delivery are added there.</p>
+    <h2>Delivery</h2><p>Inspect the car at handover. Report anything missing or damaged before you drive away.</p>
+  </section>
+</div>
+
+<!-- ================= 404 ================= -->
+<div data-view="404">
+  <section class="notfound">
+    <svg class="car paint-basalt" aria-hidden="true"><use href="#car-compact"/></svg>
+    <h1 class="h1">This road doesn't go anywhere</h1>
+    <p class="lead">The page may have moved. Head back home or find a car in stock.</p>
+    <div class="actions"><a class="btn" href="#/">Go home</a><a class="btn btn-2" href="#/inventory">Browse inventory</a></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <ul>
+    <li>Aurvik © 2026</li>
+    <li><a href="#/about">About</a></li>
+    <li><a href="#/locations">Locations</a></li>
+    <li><a href="#/support">Support</a></li>
+    <li><a href="#/about">Get updates</a></li>
+    <li><a href="#/privacy">Privacy</a></li>
+    <li><a href="#/terms">Order terms</a></li>
+  </ul>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (sel, scope = document) => scope.querySelector(sel);
+  const $$ = (sel, scope = document) => [...scope.querySelectorAll(sel)];
+  const money = (n) => `$${Math.round(n).toLocaleString("en-US")}`;
+  const fee = (n) => (n ? money(n) : "Included");
+  const motion = matchMedia("(prefers-reduced-motion: reduce)");
+  const behavior = () => (motion.matches ? "auto" : "smooth");
+  const out = (values) => { for (const [key, value] of Object.entries(values)) $$(`[data-out="${key}"]`).forEach((el) => { el.textContent = value; }); };
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("aurvik-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("aurvik-theme", next);
+  });
+
+  /* ---------- Data: one entry per model. Trims are [name, price, range km, 0-100 s, top km/h, drive] ---------- */
+  const MODELS = {
+    strata: { name: "Strata", tag: "Long-range sport sedan", shape: "sedan", scene: "coast-dusk", paint: "basalt", alt: "A grey sedan on a coast road at dusk", seats: "5 adults", cargo: "650 L", charge: "250 kW", add: "300 km", length: "4,720 mm", height: "1,440 mm",
+      trims: [["Long Range", 46900, 610, 4.4, 201, "Dual motor all-wheel drive"], ["Performance", 55900, 560, 3.1, 262, "Dual motor all-wheel drive"]] },
+    fjell: { name: "Fjell", tag: "Seven-seat midsize SUV", shape: "suv", scene: "alpine-blue", paint: "polar", alt: "A white SUV below snowy peaks at the blue hour", seats: "7 adults", cargo: "2,100 L", charge: "250 kW", add: "270 km", length: "4,980 mm", height: "1,690 mm",
+      trims: [["Long Range", 52900, 560, 5.2, 200, "Dual motor all-wheel drive"], ["Performance", 59900, 520, 3.9, 240, "Dual motor all-wheel drive"]] },
+    tern: { name: "Tern", tag: "Compact crossover for the city", shape: "compact", scene: "city-night", paint: "fjord", alt: "A blue compact car on a city street at night", seats: "5 adults", cargo: "420 L", charge: "170 kW", add: "220 km", length: "4,210 mm", height: "1,560 mm",
+      trims: [["Standard", 33400, 430, 6.9, 160, "Single motor rear-wheel drive"], ["Long Range", 37900, 480, 5.9, 180, "Single motor rear-wheel drive"]] },
+    talus: { name: "Talus", tag: "Electric pickup that tows 4,500 kg", shape: "pickup", scene: "desert-day", tone: "light", paint: "basalt", sport: true, alt: "A black pickup on a desert road under a pale sky", seats: "5 adults", cargo: "1,600 L bed", charge: "250 kW", add: "300 km", length: "5,690 mm", height: "1,880 mm",
+      trims: [["Dual Motor", 62400, 540, 4.8, 180, "Dual motor all-wheel drive"], ["Tri Motor", 74900, 500, 3.6, 200, "Tri motor all-wheel drive"]] },
+  };
+  /* Scenes are read from images already on the page, so this also works after scripts/inline.mjs embeds them */
+  const sceneSrc = (scene) => $(`img[data-scene="${scene}"]`)?.getAttribute("src");
+  function paintCar(svg, shape, paint, sport) {
+    svg.setAttribute("class", `car paint-${paint}${sport ? " wheels-sport" : ""}`);
+    $("use", svg).setAttribute("href", `#car-${shape}`);
+  }
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "Aurvik: electric cars and home energy", vehicle: "Strata · Aurvik", design: "Design your car · Aurvik", inventory: "Inventory · Aurvik", drive: "Demo drive · Aurvik", energy: "Home energy · Aurvik", locations: "Find us · Aurvik", support: "Support · Aurvik", about: "About · Aurvik", privacy: "Privacy · Aurvik", terms: "Order terms · Aurvik", "404": "Page not found · Aurvik" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    current?.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    setMega(false);
+    $$(".nav a, .sheet nav a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "vehicle") showVehicle(p.get("m"));
+    if (name === "design") applyConfig(p);
+    if (name === "inventory") { inv.model = MODELS[p.get("model")] ? p.get("model") : inv.model; renderInv(); }
+    if (name === "drive") openDrive(p);
+    if (name === "locations") { locType = ["store", "service", "charger"].includes(p.get("type")) ? p.get("type") : "all"; filterLocs(); }
+    if (name === "support") { helpTopic = p.get("topic") || "all"; filterHelp(); const s = $("#c-topic"); if ($(`option[value="${helpTopic}"]`, s)) s.value = helpTopic; }
+    document.title = titles[name] || titles.home;
+    const at = p.get("at") && current.querySelector(`#${CSS.escape(p.get("at"))}`);
+    if (at) setTimeout(() => at.scrollIntoView({ behavior: behavior(), block: "start" }), 40);
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+    requestAnimationFrame(updateHeader);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = $(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: behavior(), block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header: clear over images (taking their tone), solid everywhere else ---------- */
+  const header = $(".site-header");
+  const mega = $("#mega");
+  const scrim = $("#scrim");
+  const megaButton = $("#vehicles-btn");
+  let ticking = false;
+  function updateHeader() {
+    ticking = false;
+    const y = header.offsetHeight / 2;
+    const under = mega.hidden && current ? $$("[data-tone]", current).find((el) => { const r = el.getBoundingClientRect(); return r.top <= y && r.bottom > y; }) : null;
+    header.classList.toggle("is-clear", Boolean(under));
+    header.classList.toggle("on-dark", under?.dataset.tone === "dark");
+    header.classList.toggle("on-light", under?.dataset.tone === "light");
+  }
+  const queueHeader = () => { if (!ticking) { ticking = true; requestAnimationFrame(updateHeader); } };
+  window.addEventListener("scroll", queueHeader, { passive: true });
+  window.addEventListener("resize", queueHeader);
+  function setMega(open) {
+    mega.hidden = !open;
+    scrim.hidden = !open;
+    megaButton.setAttribute("aria-expanded", String(open));
+    updateHeader();
+  }
+  megaButton.addEventListener("click", () => setMega(mega.hidden));
+  scrim.addEventListener("click", () => setMega(false));
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !mega.hidden) { setMega(false); megaButton.focus(); } });
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+
+  /* ---------- Reveal (keyframes after the class lands; visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) { $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in"))); }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Hero carousel and lineup rail (scroll-snap tracks; the buttons only scroll them) ---------- */
+  const slides = $("[data-slides]");
+  const slideEls = $$(":scope > .panel", slides);
+  const dotBox = $("[data-dots]");
+  slideEls.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.setAttribute("aria-label", `Show slide ${i + 1}`);
+    dot.addEventListener("click", () => goSlide(i));
+    dotBox.append(dot);
+  });
+  const dots = $$("button", dotBox);
+  const slideIndex = () => Math.round(slides.scrollLeft / Math.max(1, slides.clientWidth));
+  const markDot = () => dots.forEach((d, k) => d.setAttribute("aria-current", String(k === slideIndex())));
+  function goSlide(i) { const n = slideEls.length; slides.scrollTo({ left: ((i + n) % n) * slides.clientWidth, behavior: behavior() }); }
+  slides.addEventListener("scroll", markDot, { passive: true });
+  $$("[data-slide]").forEach((b) => b.addEventListener("click", () => goSlide(slideIndex() + Number(b.dataset.slide))));
+  markDot();
+  const rail = $("[data-rail-track]");
+  $$("[data-rail]").forEach((b) => b.addEventListener("click", () => rail.scrollBy({ left: Number(b.dataset.rail) * rail.clientWidth * 0.6, behavior: behavior() })));
+
+  /* ---------- Vehicle page: filled from MODELS ---------- */
+  const vView = views.get("vehicle");
+  let vKey = "strata";
+  function showVehicle(id) {
+    vKey = MODELS[id] ? id : "strata";
+    const m = MODELS[vKey];
+    const col = (i) => m.trims.map((t) => t[i]);
+    const set = (key, value) => $$(`[data-m="${key}"]`, vView).forEach((el) => { el.textContent = value; });
+    set("name", m.name); set("tag", m.tag); set("seats", m.seats); set("cargo", m.cargo); set("charge", m.charge); set("add", m.add);
+    set("range", `${Math.max(...col(2))} km`); set("accel", `${Math.min(...col(3))} s`); set("top", `${Math.max(...col(4))} km/h`);
+    set("length", `Length ${m.length}`); set("height", `Height ${m.height}`);
+    $$("[data-m-car]", vView).forEach((svg) => paintCar(svg, m.shape, m.paint, m.sport));
+    const img = $("[data-m-scene]", vView);
+    img.src = sceneSrc(m.scene);
+    img.alt = m.alt;
+    $("[data-model-tone]", vView).dataset.tone = m.tone || "dark";
+    $$("[data-m-link]", vView).forEach((a) => a.setAttribute("href", `#/${a.dataset.mLink}?m=${vKey}`));
+    $$("[data-trim]", vView).forEach((b, i) => { b.textContent = m.trims[i][0]; });
+    showTrim(m.trims.length - 1);
+    titles.vehicle = `${m.name} · Aurvik`;
+  }
+  function showTrim(i) {
+    const t = MODELS[vKey].trims[i];
+    $$("[data-trim]", vView).forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.trim) === i)));
+    const set = (key, value) => { $(`[data-s="${key}"]`, vView).textContent = value; };
+    set("range", `${t[2]} km`); set("accel", `${t[3]} s`); set("top", `${t[4]} km/h`); set("drive", t[5]); set("price", money(t[1]));
+  }
+  $$("[data-trim]", vView).forEach((b) => b.addEventListener("click", () => showTrim(Number(b.dataset.trim))));
+
+  /* ---------- Configurator: one state object, every price and label redrawn from it ---------- */
+  const dView = views.get("design");
+  const cfg = { model: "strata", trim: 0, paint: "basalt", wheels: "aero", interior: "black", mode: "finance" };
+  const APR = 0.059;
+  const pick = (name, value) => $(`input[name="${name}"][value="${value}"]`, dView);
+  const priceOf = (input) => Number(input?.dataset.price || 0);
+  function renderConfig() {
+    const m = MODELS[cfg.model];
+    const t = m.trims[cfg.trim];
+    $$("input[name=trim]", dView).forEach((input, i) => {
+      const label = input.closest(".choice");
+      const tr = m.trims[i];
+      input.checked = i === cfg.trim;
+      $("[data-t=name]", label).textContent = tr[0];
+      $("[data-t=price]", label).textContent = money(tr[1]);
+      $("[data-t=spec]", label).textContent = `${tr[2]} km · ${tr[3]} s 0–100 · ${tr[5].split(" ").slice(0, 2).join(" ")}`;
+    });
+    const paint = pick("paint", cfg.paint), wheels = pick("wheels", cfg.wheels), interior = pick("interior", cfg.interior);
+    paint.checked = wheels.checked = interior.checked = true;
+    const addons = $$("input[name=addon]:checked", dView);
+    const addonTotal = addons.reduce((sum, input) => sum + priceOf(input), 0);
+    const total = t[1] + priceOf(paint) + priceOf(wheels) + priceOf(interior) + addonTotal;
+    const down = Math.min(total, Math.max(0, Number($("#f-down").value) || 0));
+    const months = Number($("#f-term").value);
+    const r = APR / 12;
+    const monthly = ((total - down) * r) / (1 - (1 + r) ** -months);
+    paintCar($("#cfg-car"), m.shape, cfg.paint, cfg.wheels === "sport");
+    $$("[data-cfg-models] a", dView).forEach((a) => { if (a.getAttribute("href").endsWith(`m=${cfg.model}`)) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    $("[data-addon-row]", dView).hidden = addons.length === 0;
+    $$("[data-finance]", dView).forEach((el) => { el.hidden = cfg.mode !== "finance"; });
+    $$("[data-mode]", dView).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === cfg.mode)));
+    out({
+      model: m.name, "trim-name": `${m.name} ${t[0]}`, "trim-price": money(t[1]),
+      paint: paint.dataset.name, "paint-price": fee(priceOf(paint)), wheels: wheels.dataset.name, "wheels-price": fee(priceOf(wheels)),
+      interior: interior.dataset.name, "interior-price": fee(priceOf(interior)), addons: money(addonTotal),
+      total: money(total), monthly: `${money(monthly)}/mo`, note: `${paint.dataset.name} with ${wheels.dataset.name}`,
+    });
+    titles.design = `Design your ${m.name} · Aurvik`;
+  }
+  function applyConfig(p) {
+    const model = MODELS[p.get("m")] ? p.get("m") : cfg.model;
+    if (model !== cfg.model) { cfg.model = model; cfg.trim = 0; cfg.paint = MODELS[model].paint; cfg.wheels = MODELS[model].sport ? "sport" : "aero"; }
+    if (p.has("trim")) cfg.trim = Math.min(1, Math.max(0, Number(p.get("trim")) || 0));
+    if (p.get("paint") && pick("paint", p.get("paint"))) cfg.paint = p.get("paint");
+    if (p.get("wheels") && pick("wheels", p.get("wheels"))) cfg.wheels = p.get("wheels");
+    renderConfig();
+    if (p.get("at") === "order") $(".order", dView).classList.add("is-open");
+  }
+  dView.addEventListener("change", (event) => {
+    const t = event.target;
+    if (t.name === "trim") cfg.trim = Number(t.value);
+    else if (["paint", "wheels", "interior"].includes(t.name)) cfg[t.name] = t.value;
+    else if (t.closest("form")) return;
+    renderConfig();
+  });
+  $("#f-down").addEventListener("input", renderConfig);
+  $$("[data-mode]", dView).forEach((b) => b.addEventListener("click", () => { cfg.mode = b.dataset.mode; renderConfig(); }));
+  $("[data-continue]", dView).addEventListener("click", () => {
+    $(".order", dView).classList.add("is-open");
+    const title = $("#order-title");
+    title.scrollIntoView({ behavior: behavior(), block: "start" });
+    title.focus({ preventScroll: true });
+  });
+
+  /* ---------- Inventory: filters and sort ---------- */
+  const inv = { model: "all", cond: "all" };
+  const invGrid = $("[data-inv]");
+  function renderInv() {
+    const cards = $$(".inv", invGrid);
+    const sort = $("#inv-sort").value;
+    const key = sort === "range" ? "range" : "price";
+    cards.sort((a, b) => (sort === "price-asc" ? a.dataset[key] - b.dataset[key] : b.dataset[key] - a.dataset[key])).forEach((card) => invGrid.append(card));
+    let shown = 0;
+    cards.forEach((card) => {
+      const match = (inv.model === "all" || card.dataset.model === inv.model) && (inv.cond === "all" || card.dataset.cond === inv.cond);
+      card.hidden = !match;
+      shown += match;
+    });
+    $$("[data-model]", $("[data-inv-model]")).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.model === inv.model)));
+    $$("[data-cond]", $("[data-inv-cond]")).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cond === inv.cond)));
+    $("[data-inv-count]").textContent = `Showing ${shown} car${shown === 1 ? "" : "s"}`;
+    $("[data-inv-empty]").hidden = shown > 0;
+  }
+  $$("[data-inv-model] button").forEach((b) => b.addEventListener("click", () => { inv.model = b.dataset.model; renderInv(); }));
+  $$("[data-inv-cond] button").forEach((b) => b.addEventListener("click", () => { inv.cond = b.dataset.cond; renderInv(); }));
+  $("#inv-sort").addEventListener("change", renderInv);
+  $("[data-inv-reset]").addEventListener("click", () => { inv.model = "all"; inv.cond = "all"; renderInv(); });
+
+  /* ---------- Demo drive: the picture follows the chosen model; day chips show the next six days ---------- */
+  const drive = views.get("drive");
+  function driveModel(id) {
+    const m = MODELS[id];
+    if (!m) return;
+    paintCar($("[data-d-car]", drive), m.shape, m.paint, m.sport);
+    const img = $("[data-d-scene]", drive);
+    img.src = sceneSrc(m.scene);
+    img.alt = m.alt;
+  }
+  function openDrive(p) {
+    const radio = $(`input[name="model"][value="${p.get("m")}"]`, drive);
+    if (radio) radio.checked = true;
+    if (p.get("loc") && $(`#d-loc option[value="${p.get("loc")}"]`)) $("#d-loc").value = p.get("loc");
+    driveModel($("input[name=model]:checked", drive)?.value);
+  }
+  drive.addEventListener("change", (event) => { if (event.target.name === "model") driveModel(event.target.value); });
+  $$("[data-days] .chip").forEach((chip, i) => {
+    const day = new Date();
+    day.setDate(day.getDate() + i + 1);
+    const span = $("span", chip);
+    span.textContent = day.toLocaleDateString("en-US", { weekday: "short" });
+    const small = document.createElement("small");
+    small.textContent = day.toLocaleDateString("en-US", { day: "numeric", month: "short" });
+    span.append(small);
+    $("input", chip).value = day.toLocaleDateString("en-US", { weekday: "long", day: "numeric", month: "long" });
+  });
+
+  /* ---------- Energy estimate ---------- */
+  const bill = $("#e-bill");
+  function estimate() {
+    const monthly = Number(bill.value);
+    const yearly = (monthly / 0.22) * 12;
+    const kw = yearly / 1300;
+    out({
+      bill: money(monthly), kw: `${kw.toFixed(1)} kW`, panels: String(Math.ceil((kw * 1000) / 430)),
+      units: String(Math.min(4, Math.max(1, Math.round((yearly / 365) * 0.5 / 13.5)))),
+      kwh: `${(Math.round(yearly / 100) * 100).toLocaleString("en-US")} kWh`,
+    });
+    $("#q-bill").value = monthly;
+  }
+  bill.addEventListener("input", estimate);
+  estimate();
+
+  /* ---------- Locations: list, search, type filter and map pins built from the list ---------- */
+  const locView = views.get("locations");
+  const locs = $$(".loc", locView);
+  const pins = new Map();
+  let locType = "all";
+  locs.forEach((li) => {
+    const pin = document.createElement("button");
+    pin.type = "button";
+    pin.className = "pin";
+    pin.dataset.type = li.dataset.type;
+    pin.style.left = `${li.dataset.x}%`;
+    pin.style.top = `${li.dataset.y}%`;
+    pin.setAttribute("aria-label", $("h3", li).textContent);
+    pin.setAttribute("aria-pressed", "false");
+    pin.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pin"/></svg>';
+    pin.addEventListener("click", () => pickLoc(li, true));
+    $("[data-map]").append(pin);
+    pins.set(li, pin);
+    li.addEventListener("click", (event) => { if (!event.target.closest("a")) pickLoc(li); });
+    li.addEventListener("keydown", (event) => { if ((event.key === "Enter" || event.key === " ") && event.target === li) { event.preventDefault(); pickLoc(li); } });
+  });
+  function pickLoc(li, scroll) {
+    locs.forEach((x) => { x.classList.toggle("is-picked", x === li); pins.get(x).setAttribute("aria-pressed", String(x === li)); });
+    if (scroll) li.scrollIntoView({ behavior: behavior(), block: "nearest" });
+  }
+  function filterLocs() {
+    const q = $("#loc-q").value.trim().toLowerCase();
+    let shown = 0;
+    locs.forEach((li) => {
+      const match = (locType === "all" || li.dataset.type === locType) && (!q || li.textContent.toLowerCase().includes(q));
+      li.hidden = !match;
+      pins.get(li).hidden = !match;
+      shown += match;
+    });
+    $$("[data-loc-type] button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.type === locType)));
+    $("[data-loc-count]").textContent = `${shown} location${shown === 1 ? "" : "s"}`;
+    $("[data-loc-empty]").hidden = shown > 0;
+  }
+  $("#loc-q").addEventListener("input", filterLocs);
+  $$("[data-loc-type] button").forEach((b) => b.addEventListener("click", () => { locType = b.dataset.type; filterLocs(); }));
+  $("[data-loc-reset]").addEventListener("click", () => { locType = "all"; $("#loc-q").value = ""; filterLocs(); });
+
+  /* ---------- Support: search and topics ---------- */
+  let helpTopic = "all";
+  function filterHelp() {
+    const q = $("#help-q").value.trim().toLowerCase();
+    let shown = 0;
+    $$("[data-faq] details").forEach((d) => {
+      const match = (helpTopic === "all" || d.dataset.topic === helpTopic) && (!q || d.textContent.toLowerCase().includes(q));
+      d.hidden = !match;
+      shown += match;
+    });
+    $$("[data-topics] button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.topic === helpTopic)));
+    $("[data-help-empty]").hidden = shown > 0;
+  }
+  $("#help-q").addEventListener("input", filterHelp);
+  $$("[data-topics] button").forEach((b) => b.addEventListener("click", () => { helpTopic = b.dataset.topic; filterHelp(); }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please add a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (problem === "valueMissing" && field.dataset.msg) || messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  const echo = (form, name) => {
+    const el = form.elements[name];
+    if (!el) return "";
+    if (el instanceof HTMLSelectElement) return el.value ? el.selectedOptions[0].text : "";
+    const value = (el.value || "").trim();
+    return name === "model" && MODELS[value] ? MODELS[value].name : value;
+  };
+  $$("form[data-form]").forEach((form) => {
+    const fields = () => [...form.elements].filter((el) => el.getAttribute("aria-describedby"));
+    fields().forEach((field) => field.addEventListener(/radio|checkbox|select/.test(field.type) ? "change" : "blur", () => checkField(field)));
+    form.addEventListener("change", (event) => { const first = form.elements[event.target.name]?.[0]; if (event.target.type === "radio" && first?.getAttribute("aria-describedby")) checkField(first); });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames (the live demo, AI tool previews) block native submission before the submit event fires,
+       so the submit button runs the handler; Enter in a field clicks that button (implicit submission). */
+    const send = () => {
+      const all = fields();
+      const valid = all.map(checkField).every(Boolean);
+      if (!valid) { all.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      const button = $("[type=submit]", form);
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        const box = form.parentElement;
+        $$("[data-echo]", box).forEach((el) => { const v = echo(form, el.dataset.echo); if (v) el.textContent = v; });
+        form.hidden = true;
+        const success = $(`[data-success="${form.dataset.form}"]`, box);
+        if (success) { success.hidden = false; success.setAttribute("tabindex", "-1"); success.focus(); }
+      }, 500);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    $("[type=submit]", form).addEventListener("click", (event) => { event.preventDefault(); send(); });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

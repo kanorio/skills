@@ -1,0 +1,1394 @@
+{
+  "name": "kanorio",
+  "owner": {
+    "name": "Kanorio",
+    "url": "https://kanorio.com"
+  },
+  "description": "Website styles for AI tools, and the Kanorio skill.",
+  "plugins": [
+    {
+      "name": "apple-style",
+      "source": "./skills/apple-style",
+      "displayName": "Apple style",
+      "description": "Full-bleed tiles alternate light grey, white and black, each giving one product its name, a short tagline, two blue pill buttons and a big studio picture.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/apple-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "airbnb-style",
+      "source": "./skills/airbnb-style",
+      "displayName": "Airbnb style",
+      "description": "A white page where rounded photographs do the talking, one warm coral saved for the next step, and a pill-shaped search bar that reads where, when, who.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/airbnb-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "spotify-style",
+      "source": "./skills/spotify-style",
+      "displayName": "Spotify style",
+      "description": "Near-black rounded panels inside a black frame, square cover art in sideways rails, one green for play and pill-shaped controls everywhere.",
+      "category": "website-style",
+      "tags": [
+        "dark",
+        "portfolio",
+        "blog",
+        "event"
+      ],
+      "homepage": "https://kanorio.com/skills/spotify-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "notion-style",
+      "source": "./skills/notion-style",
+      "displayName": "Notion style",
+      "description": "A warm white page, ink-black type and a few soft pastel blocks, calm and friendly like a well-kept notebook.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "course",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/notion-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "nike-style",
+      "source": "./skills/nike-style",
+      "displayName": "Nike style",
+      "description": "Full-bleed black and white photographs with huge condensed capitals on them, framed by quiet white pages, black pill buttons and products on soft gray tiles.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/nike-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "stripe-style",
+      "source": "./skills/stripe-style",
+      "displayName": "Stripe style",
+      "description": "A white canvas swept by one soft multicolour gradient, thin two-tone headlines and crisp interface cards floating on blue-tinted shadows.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "docs",
+        "saas"
+      ],
+      "homepage": "https://kanorio.com/skills/stripe-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "m-plus-style",
+      "source": "./skills/m-plus-style",
+      "displayName": "M+ style",
+      "description": "Three full-height stripes of saturated color, white type set straight on them, a giant hairline outline of the wordmark and outlined oval buttons.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "event",
+        "portfolio"
+      ],
+      "homepage": "https://kanorio.com/skills/m-plus-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "duolingo-style",
+      "source": "./skills/duolingo-style",
+      "displayName": "Duolingo style",
+      "description": "A white page, chunky lowercase headlines in leaf green, buttons that sink when pressed and big-eyed cartoon characters that take turns on either side.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "course",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/duolingo-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "metallica-style",
+      "source": "./skills/metallica-style",
+      "displayName": "Metallica style",
+      "description": "Black stage bands and grainy paper bands meeting at hard diagonals, heavy geometric capitals and giant outlined words, loud like a screen-printed tour poster.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "event",
+        "store",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/metallica-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "linear-style",
+      "source": "./skills/linear-style",
+      "displayName": "Linear style",
+      "description": "A near-black canvas lit by one soft violet glow, with gradient headlines, hairline edges and the product's own interface as the centerpiece.",
+      "category": "website-style",
+      "tags": [
+        "dark",
+        "saas"
+      ],
+      "homepage": "https://kanorio.com/skills/linear-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "oatly-style",
+      "source": "./skills/oatly-style",
+      "displayName": "Oatly style",
+      "description": "Grid paper inside a thin-lined window, bordered tiles with colored category stickers, and hand-cut condensed capitals annotated with marker doodles.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/oatly-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "youtube-style",
+      "source": "./skills/youtube-style",
+      "displayName": "YouTube style",
+      "description": "A white app frame with a left icon sidebar and a pill search on top, and shelves of rounded thumbnails with running times, titles and view counts filling the rest.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "portfolio",
+        "course",
+        "event"
+      ],
+      "homepage": "https://kanorio.com/skills/youtube-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "wired-style",
+      "source": "./skills/wired-style",
+      "displayName": "WIRED style",
+      "description": "Paper white and black ink, tall condensed headlines, small monospaced capitals and black tabs on heavy rules, so a crowded page still reads in perfect order.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/wired-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "dishoom-style",
+      "source": "./skills/dishoom-style",
+      "displayName": "Dishoom style",
+      "description": "Cream paper, pictures hung in double-rule frames with small captions, and headings spaced out wide and slow, like a sign painter lettering a café window.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/dishoom-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "nintendo-style",
+      "source": "./skills/nintendo-style",
+      "displayName": "Nintendo style",
+      "description": "A bright white page with one signal red: a red tab for the wordmark, titles on a short red rule, rounded cards under red tabs and a red dot on everything you can open.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "portfolio",
+        "blog",
+        "event"
+      ],
+      "homepage": "https://kanorio.com/skills/nintendo-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "coachella-style",
+      "source": "./skills/coachella-style",
+      "displayName": "Coachella style",
+      "description": "Cream paper, forest-green serif headlines and a poster of names under a dusk sky, with cut-paper plants and objects resting at the edges of the page.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/coachella-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "hobonichi-style",
+      "source": "./skills/hobonichi-style",
+      "displayName": "Hobonichi style",
+      "description": "A warm white page under a dated masthead, a pastel band that changes color with each story, and short hand-broken lines that read like a note from a friend.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "blog",
+        "store",
+        "event"
+      ],
+      "homepage": "https://kanorio.com/skills/hobonichi-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "tesla-style",
+      "source": "./skills/tesla-style",
+      "displayName": "Tesla style",
+      "description": "One product per screen, edge to edge, with a calm name above it, two flat buttons below and an interface so quiet it almost disappears.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store"
+      ],
+      "homepage": "https://kanorio.com/skills/tesla-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "instagram-style",
+      "source": "./skills/instagram-style",
+      "displayName": "Instagram style",
+      "description": "A white page held together by hairlines, with faces in warm gradient rings, tall story cards fanned out with stickers, and photographs packed into a tight grid.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "portfolio",
+        "store",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/instagram-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "google-style",
+      "source": "./skills/google-style",
+      "displayName": "Google style",
+      "description": "An almost empty white page holds a centered wordmark, one rounded search box and two quiet grey buttons, with small links tucked into the corners.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "docs",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/google-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "roblox-style",
+      "source": "./skills/roblox-style",
+      "displayName": "Roblox style",
+      "description": "A dark wall of tilted square art behind one compact card, then bright shelves of square tiles, a wide chunky display face and one electric blue that means go.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "portfolio",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/roblox-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "whatsapp-style",
+      "source": "./skills/whatsapp-style",
+      "displayName": "WhatsApp style",
+      "description": "A warm cream page where the conversation is the design: chat bubbles float over everyday photographs and big, calm headlines speak in plain sentences.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "agency",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/whatsapp-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "lady-gaga-style",
+      "source": "./skills/lady-gaga-style",
+      "displayName": "Lady Gaga style",
+      "description": "A black page lit like a stage, where each chapter is its own era, announced by one roughened serif word over grainy art, and the year unfolds as dated moments.",
+      "category": "website-style",
+      "tags": [
+        "dark",
+        "blog",
+        "portfolio",
+        "event",
+        "store"
+      ],
+      "homepage": "https://kanorio.com/skills/lady-gaga-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "netflix-style",
+      "source": "./skills/netflix-style",
+      "displayName": "Netflix style",
+      "description": "A warm near-black stage, a tilted wall of poster art behind one huge headline, a glowing red arc and rows of titles lettered in tall condensed capitals.",
+      "category": "website-style",
+      "tags": [
+        "dark",
+        "course"
+      ],
+      "homepage": "https://kanorio.com/skills/netflix-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "telegram-style",
+      "source": "./skills/telegram-style",
+      "displayName": "Telegram style",
+      "description": "Plain white pages, a round mark at the centre, blue words you can click and a grid of cheerful die-cut stickers, friendly and easy to trust.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "docs",
+        "saas",
+        "blog",
+        "product"
+      ],
+      "homepage": "https://kanorio.com/skills/telegram-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "bbc-style",
+      "source": "./skills/bbc-style",
+      "displayName": "BBC style",
+      "description": "A white page under a centred block wordmark, sturdy serif headlines over small time stamps in calm columns, and red kept for whatever is happening right now.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/bbc-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "nvidia-style",
+      "source": "./skills/nvidia-style",
+      "displayName": "NVIDIA style",
+      "description": "White pages and pale grey bands, bold headlines, one acid green on square buttons, rows of rounded cards sliding off the edge and products lit on black.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store",
+        "blog",
+        "event",
+        "product"
+      ],
+      "homepage": "https://kanorio.com/skills/nvidia-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "amazon-style",
+      "source": "./skills/amazon-style",
+      "displayName": "Amazon style",
+      "description": "A cool gray shelf of square white boxes under a deep blue-black bar with one wide search field, where colour bands and red discount tags do the selling.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store"
+      ],
+      "homepage": "https://kanorio.com/skills/amazon-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "snapchat-style",
+      "source": "./skills/snapchat-style",
+      "displayName": "Snapchat style",
+      "description": "A white page split in two: a calm sign-up column that stays put beside tall photo cards that scroll, each with one big white sentence and a dark pill.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "event",
+        "blog",
+        "course",
+        "store"
+      ],
+      "homepage": "https://kanorio.com/skills/snapchat-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "kendrick-lamar-style",
+      "source": "./skills/kendrick-lamar-style",
+      "displayName": "Kendrick Lamar style",
+      "description": "An empty white page with a few pixel folders left on it like things on a desk, small monospace words at the edges, and a black page behind every folder you open.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "portfolio",
+        "event",
+        "store",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/kendrick-lamar-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "microsoft-style",
+      "source": "./skills/microsoft-style",
+      "displayName": "Microsoft style",
+      "description": "A white header over a softly tinted hero, one centered greeting, a pill switch and a large ask box with chips, then big rounded product cards on pastel grounds.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store"
+      ],
+      "homepage": "https://kanorio.com/skills/microsoft-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "claude-style",
+      "source": "./skills/claude-style",
+      "displayName": "Claude style",
+      "description": "Warm paper and warm ink, editorial serif headlines, one terracotta accent, and the product shown in dark cards resting on soft, contour-lined clay tiles.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "blog",
+        "saas"
+      ],
+      "homepage": "https://kanorio.com/skills/claude-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "discord-style",
+      "source": "./skills/discord-style",
+      "displayName": "Discord style",
+      "description": "A deep blurple night sky full of sparkles, huge glass frames with soft corners around bright panels, and little 3D toys drifting past wide, heavy titles.",
+      "category": "website-style",
+      "tags": [
+        "dark",
+        "portfolio",
+        "event",
+        "blog",
+        "saas"
+      ],
+      "homepage": "https://kanorio.com/skills/discord-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "nick-style",
+      "source": "./skills/nick-style",
+      "displayName": "Nickelodeon style",
+      "description": "A full-bleed cartoon with a chunky white title, then hot orange bands of goo blobs carrying tight rows of white cards on a hard orange-red underline.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "portfolio",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/nick-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "pinterest-style",
+      "source": "./skills/pinterest-style",
+      "displayName": "Pinterest style",
+      "description": "A white page given over to a wall of pictures at their own shapes, every corner rounded, with one red button to keep what you love.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "portfolio"
+      ],
+      "homepage": "https://kanorio.com/skills/pinterest-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "ibm-style",
+      "source": "./skills/ibm-style",
+      "displayName": "IBM style",
+      "description": "White pages ruled by hairlines, one corporate blue, square corners, large light headlines and flat grey tiles with an arrow pinned in the corner.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "agency",
+        "portfolio",
+        "blog",
+        "event"
+      ],
+      "homepage": "https://kanorio.com/skills/ibm-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "ferrari-style",
+      "source": "./skills/ferrari-style",
+      "displayName": "Ferrari style",
+      "description": "A pure black page, wide extended capitals in white, one deep red for the main action, and low-light photographs as the only decoration.",
+      "category": "website-style",
+      "tags": [
+        "dark",
+        "store",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/ferrari-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "starbucks-style",
+      "source": "./skills/starbucks-style",
+      "displayName": "Starbucks style",
+      "description": "A white header with uppercase navigation, deep green bands and half-photo, half-colour blocks, with friendly copy centred beside each picture.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store"
+      ],
+      "homepage": "https://kanorio.com/skills/starbucks-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "sesame-street-style",
+      "source": "./skills/sesame-street-style",
+      "displayName": "Sesame Street style",
+      "description": "Saturated pill buttons, one colour per section, over full-bleed bright canvases with paper confetti, white-framed cards with round corner badges and chubby type.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "course",
+        "blog",
+        "event"
+      ],
+      "homepage": "https://kanorio.com/skills/sesame-street-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "steam-style",
+      "source": "./skills/steam-style",
+      "displayName": "Steam style",
+      "description": "A deep blue page lit from the top, where cover art fills every slot and a lime discount sits beside a struck-through price in a small dark box.",
+      "category": "website-style",
+      "tags": [
+        "dark",
+        "store",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/steam-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "revolut-style",
+      "source": "./skills/revolut-style",
+      "displayName": "Revolut style",
+      "description": "Whole-screen photographs carry huge white headlines and a glass phone frame, then the page cuts to black, white and grey bands that each hold one idea.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "saas",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/revolut-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "burning-man-style",
+      "source": "./skills/burning-man-style",
+      "displayName": "Burning Man style",
+      "description": "Night photographs of lit art, peach bands torn across black pages and chunky slab headlines, under a black header with a big search and a donate button.",
+      "category": "website-style",
+      "tags": [
+        "dark",
+        "event",
+        "portfolio",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/burning-man-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "uber-style",
+      "source": "./skills/uber-style",
+      "displayName": "Uber style",
+      "description": "Black and white bands take turns under a black bar of pill links, opening on a booking form of stacked grey fields joined by a thin route line.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "agency",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/uber-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "starlux-airlines-style",
+      "source": "./skills/starlux-airlines-style",
+      "displayName": "STARLUX Airlines style",
+      "description": "Deep night-teal pages, thin type set large, and night photographs that dissolve slowly into one another, with warm champagne kept for the one thing to press.",
+      "category": "website-style",
+      "tags": [
+        "dark",
+        "store",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/starlux-airlines-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "league-of-legends-style",
+      "source": "./skills/league-of-legends-style",
+      "displayName": "League of Legends style",
+      "description": "Painted night scenes that alternate with pale stone, cut-out heroes breaking out of thin gold rings and diamonds, and huge italic capitals under small upright kickers.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "blog",
+        "saas",
+        "event"
+      ],
+      "homepage": "https://kanorio.com/skills/league-of-legends-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "espn-style",
+      "source": "./skills/espn-style",
+      "displayName": "ESPN style",
+      "description": "A cool grey page under a strip of scores and a dark bar with a slanted red name block, white cards in columns, and every number set in a condensed face.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/espn-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "sap-style",
+      "source": "./skills/sap-style",
+      "displayName": "SAP style",
+      "description": "A violet-to-blue gradient band with a white product card floating over it, glossy four-point stars and rounded frames carrying small interface snippets.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "portfolio",
+        "blog",
+        "event",
+        "saas"
+      ],
+      "homepage": "https://kanorio.com/skills/sap-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "signal-style",
+      "source": "./skills/signal-style",
+      "displayName": "Signal style",
+      "description": "A white header with one blue button, a soft periwinkle band with a heavy headline and tilted phones, then pastel panels of outlined drawings dotted with halftone.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "blog",
+        "product"
+      ],
+      "homepage": "https://kanorio.com/skills/signal-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "mistral-ai-style",
+      "source": "./skills/mistral-ai-style",
+      "displayName": "Mistral AI style",
+      "description": "An off-white page ruled by hairline rails, tight grotesque headlines and pixel-art objects standing on stepped blocks of sun yellow, orange and ember red.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "docs",
+        "blog",
+        "saas"
+      ],
+      "homepage": "https://kanorio.com/skills/mistral-ai-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "chanel-style",
+      "source": "./skills/chanel-style",
+      "displayName": "Chanel style",
+      "description": "Full-screen photographs stacked one after another, each captioned with a small category line, a large uppercase name and one white button, in pure black and white.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/chanel-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "dior-style",
+      "source": "./skills/dior-style",
+      "displayName": "Dior style",
+      "description": "Full-bleed films that drift slowly behind a small round play control, a centred serif wordmark, and products standing alone on pale grey tiles.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store",
+        "blog",
+        "event"
+      ],
+      "homepage": "https://kanorio.com/skills/dior-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "figma-style",
+      "source": "./skills/figma-style",
+      "displayName": "Figma style",
+      "description": "A black-and-white frame in one plain typeface, broken by blocks of colour that each hold a picture, with headlines that state a point in black and explain it in grey.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "portfolio",
+        "saas",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/figma-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "miffy-style",
+      "source": "./skills/miffy-style",
+      "displayName": "Miffy style",
+      "description": "A deep blue wall of rounded squares in flat primary colours, each holding one simple drawing in a heavy black line, with lowercase rounded type and almost no words.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store",
+        "event"
+      ],
+      "homepage": "https://kanorio.com/skills/miffy-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "wise-style",
+      "source": "./skills/wise-style",
+      "displayName": "Wise style",
+      "description": "A full-bleed lime field, all-caps headlines heavy enough to read across a room, big rounded color cards holding real numbers, and forest-green pills.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "blog",
+        "agency"
+      ],
+      "homepage": "https://kanorio.com/skills/wise-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "hp-style",
+      "source": "./skills/hp-style",
+      "displayName": "HP style",
+      "description": "A white page broken by light gray bands, where rounded near-black banners each light up one product and catalog rows line up the offer, the specs and a blue button.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/hp-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "kahoot-style",
+      "source": "./skills/kahoot-style",
+      "displayName": "Kahoot! style",
+      "description": "A game-show palette on light grey, with a purple console of coloured mode buttons, gradient cards with folder tabs and one headline word lit in a sunset gradient.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "event",
+        "course",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/kahoot-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "mastercard-style",
+      "source": "./skills/mastercard-style",
+      "displayName": "Mastercard style",
+      "description": "Warm cream pages, giant plain headlines and candid photos cropped into circles, each with a thin orange orbit line and a round arrow button on its edge.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "event",
+        "blog",
+        "agency"
+      ],
+      "homepage": "https://kanorio.com/skills/mastercard-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "tony-s-chocolonely-style",
+      "source": "./skills/tony-s-chocolonely-style",
+      "displayName": "Tony's Chocolonely style",
+      "description": "Full-width bands of red, green, blue and yellow, each opened by uneven slab capitals stretched to fill the width, with paper cards and framed photos laid on top.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/tony-s-chocolonely-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "roku-style",
+      "source": "./skills/roku-style",
+      "displayName": "Roku style",
+      "description": "A deep purple night, a drawn neon city under a hand-lettered welcome, and the program on glowing screens where one tile at a time wears a white focus ring.",
+      "category": "website-style",
+      "tags": [
+        "dark",
+        "event",
+        "portfolio",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/roku-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "vercel-style",
+      "source": "./skills/vercel-style",
+      "displayName": "Vercel style",
+      "description": "White pages that go pure black in dark mode, big tight headlines, black buttons, monospace labels and hairline grids, with the product's interface as the only picture.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "docs",
+        "saas",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/vercel-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "supreme-style",
+      "source": "./skills/supreme-style",
+      "displayName": "Supreme style",
+      "description": "A plain white page, small lowercase typewriter text in one narrow centred column, a live clock under the name, and colour that comes only from the pictures.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store",
+        "portfolio",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/supreme-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "din-tai-fung-style",
+      "source": "./skills/din-tai-fung-style",
+      "displayName": "Din Tai Fung style",
+      "description": "Rice-paper white washed with ink mountains and a single watercolour lotus, with titles split by fine vertical rules over one line of small tracked serif.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/din-tai-fung-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "tradingview-style",
+      "source": "./skills/tradingview-style",
+      "displayName": "TradingView style",
+      "description": "An ink-black opening with one huge geometric headline, then white pages where every number has a unit, a direction and a sparkline beside it.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/tradingview-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "oura-style",
+      "source": "./skills/oura-style",
+      "displayName": "Oura style",
+      "description": "Warm oat paper, one condensed serif line centred in a rounded panel, and soft charcoal pills, so every page feels like a well-made object set down on linen.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store",
+        "blog",
+        "event"
+      ],
+      "homepage": "https://kanorio.com/skills/oura-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "pentagram-style",
+      "source": "./skills/pentagram-style",
+      "displayName": "Pentagram style",
+      "description": "A white canvas, one plain sans at regular weight and a wall of work in mixed sizes, where the pictures bring all the colour and the words stay small beneath them.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "portfolio",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/pentagram-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "aman-style",
+      "source": "./skills/aman-style",
+      "displayName": "Aman style",
+      "description": "Warm limewash pages, a fine light serif and calm photographs set into wide, uneven whitespace, where the quiet between things does most of the talking.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "event",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/aman-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "tiktok-style",
+      "source": "./skills/tiktok-style",
+      "displayName": "TikTok style",
+      "description": "One tall video at a time that snaps to the next, round buttons with counts down its right edge, and a dense wall of vertical tiles one tap away.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "portfolio",
+        "course",
+        "event"
+      ],
+      "homepage": "https://kanorio.com/skills/tiktok-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "alibaba-style",
+      "source": "./skills/alibaba-style",
+      "displayName": "Alibaba style",
+      "description": "A peach wash, big text tabs and one giant search box with an orange gradient rim, above flat trade cards that show the price range, the minimum order and the maker.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "store"
+      ],
+      "homepage": "https://kanorio.com/skills/alibaba-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "binance-style",
+      "source": "./skills/binance-style",
+      "displayName": "Binance style",
+      "description": "A near-black page that opens on one huge yellow number and two heavy white capital words, with rounded charcoal panels of live figures beside it.",
+      "category": "website-style",
+      "tags": [
+        "dark",
+        "blog"
+      ],
+      "homepage": "https://kanorio.com/skills/binance-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "wechat-style",
+      "source": "./skills/wechat-style",
+      "displayName": "WeChat style",
+      "description": "A flat green band with one wide arch at its foot opens every page, and below the curve white rounded cards rest on a pale grey floor.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "agency",
+        "event",
+        "blog",
+        "product"
+      ],
+      "homepage": "https://kanorio.com/skills/wechat-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    },
+    {
+      "name": "qq-style",
+      "source": "./skills/qq-style",
+      "displayName": "QQ style",
+      "description": "A full-screen aurora behind vertical fluted glass, one glowing white title with wide letter-spacing and a single frosted pill, calm as a window at night.",
+      "category": "website-style",
+      "tags": [
+        "light",
+        "saas",
+        "blog",
+        "event",
+        "product"
+      ],
+      "homepage": "https://kanorio.com/skills/qq-style",
+      "repository": "https://github.com/kanorio/skills",
+      "license": "MIT-0",
+      "author": {
+        "name": "Kanorio",
+        "url": "https://kanorio.com"
+      }
+    }
+  ]
+}

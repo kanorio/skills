@@ -1,0 +1,1388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Mistpine: dumplings folded by hand, tea poured slowly</title>
+<meta name="description" content="A dumpling and tea house with four quiet rooms in Kilnford, Eastmere and Harrow Bay. Eighteen folds, steamed to order, since 1979.">
+<meta property="og:title" content="Mistpine Dumpling House">
+<meta property="og:description" content="Dumplings folded by hand and steamed to order, since 1979.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/eb-garamond-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/alegreya-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts: a book serif for every title, gloss, button and price; a calligraphic humanist sans for reading ---------- */
+@font-face { font-family: "EB Garamond"; src: url("fonts/eb-garamond-latin-wght-normal.woff2") format("woff2"); font-weight: 400 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Alegreya Sans"; src: url("fonts/alegreya-sans-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Alegreya Sans"; src: url("fonts/alegreya-sans-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: rice paper (light, default) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(98.4% 0.004 95);          /* rice paper */
+  --surface: oklch(99.6% 0.002 95);     /* forms and cards */
+  --surface-2: oklch(95.8% 0.006 95);   /* mist */
+  --text: oklch(24% 0.012 255);         /* ink */
+  --text-muted: oklch(46% 0.012 255);   /* diluted ink */
+  --border: oklch(87% 0.007 90);        /* hairlines */
+  --rule: oklch(72% 0.025 80);          /* the fine rules between title words and cells */
+  --accent: oklch(52% 0.095 78);        /* old gold: buttons, prices, active states */
+  --accent-text: oklch(99% 0.003 95);
+  --seal: oklch(50% 0.17 30);           /* cinnabar: the seal, pins and "hot" only */
+  --error: oklch(49% 0.16 28);
+  --focus: oklch(52% 0.095 78);
+  --fan: oklch(95.6% 0.007 90);         /* the round fan behind every picture */
+  --wash: none;                          /* filter for ink-wash illustrations */
+  --lotus: none;
+  --pic: none;
+  --paper: url("illustrations/paper.svg");
+  --serif: "EB Garamond", Garamond, "Times New Roman", serif;
+  --sans: "Alegreya Sans", "Gill Sans", "Segoe UI", system-ui, sans-serif;
+  --fs-display: clamp(2.125rem, 1.45rem + 2.4vw, 3.5rem);
+  --fs-h1: clamp(2.125rem, 1.6rem + 1.9vw, 3.25rem);
+  --fs-h2: clamp(1.75rem, 1.4rem + 1.3vw, 2.5rem);
+  --fs-h3: 1.375rem;
+  --fs-body: 1.0625rem;
+  --fs-small: 0.9375rem;
+  --fs-gloss: 0.875rem;
+  --track: 0.3em;
+  --page: 1240px;
+  --gutter: clamp(20px, 4vw, 56px);
+  --gap: clamp(20px, 2.6vw, 36px);
+  --sec: clamp(80px, 10vw, 148px);
+  --hh: 80px;
+  --dur-fast: 300ms;
+  --dur-base: 900ms;
+  --dur-slow: 1800ms;
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+/* ---------- Tokens: ink night (dark). Deep ink, paper-coloured words, pale gold; washes turn to moonlit mist ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(19% 0.014 255); --surface: oklch(22% 0.015 255); --surface-2: oklch(16.5% 0.013 255);
+  --text: oklch(91% 0.016 88); --text-muted: oklch(73% 0.016 88); --border: oklch(32% 0.014 255); --rule: oklch(50% 0.03 85);
+  --accent: oklch(81% 0.085 85); --accent-text: oklch(19% 0.014 255); --seal: oklch(56% 0.16 30); --error: oklch(74% 0.12 32); --focus: oklch(81% 0.085 85);
+  --fan: radial-gradient(circle at 50% 42%, oklch(80% 0.02 85), oklch(69% 0.022 82));
+  --wash: invert(1) hue-rotate(180deg) brightness(0.78); --lotus: brightness(0.8) saturate(0.85); --pic: brightness(0.93); --paper: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: oklch(19% 0.014 255); --surface: oklch(22% 0.015 255); --surface-2: oklch(16.5% 0.013 255);
+    --text: oklch(91% 0.016 88); --text-muted: oklch(73% 0.016 88); --border: oklch(32% 0.014 255); --rule: oklch(50% 0.03 85);
+    --accent: oklch(81% 0.085 85); --accent-text: oklch(19% 0.014 255); --seal: oklch(56% 0.16 30); --error: oklch(74% 0.12 32); --focus: oklch(81% 0.085 85);
+    --fan: radial-gradient(circle at 50% 42%, oklch(80% 0.02 85), oklch(69% 0.022 82));
+    --wash: invert(1) hue-rotate(180deg) brightness(0.78); --lotus: brightness(0.8) saturate(0.85); --pic: brightness(0.93); --paper: none;
+  }
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--hh) + 24px); }
+body { margin: 0; background: var(--paper) var(--bg); color: var(--text); font: 400 var(--fs-body)/1.85 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-underline-offset: 0.3em; text-decoration-thickness: 1px; }
+h1, h2, h3 { margin: 0; font-family: var(--serif); font-weight: 400; line-height: 1.15; text-wrap: balance; }
+p { margin: 0 0 1em; text-wrap: pretty; }
+ul, ol, dl, dd, figure, fieldset { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+fieldset { padding: 0; border: 0; min-width: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 1px solid var(--focus); outline-offset: 4px; }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 95; padding: 12px 18px; background: var(--text); color: var(--bg); }
+.skip:focus { top: 12px; }
+.wrap { max-width: var(--page); margin-inline: auto; padding-inline: var(--gutter); }
+.narrow { max-width: 760px; margin-inline: auto; }
+.sec { position: relative; padding-block: var(--sec); }
+.sec.tight { padding-top: 0; }
+.clip-x { overflow-x: clip; }
+.center { text-align: center; }
+.muted { color: var(--text-muted); }
+.small { font-size: var(--fs-small); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.js [data-view]:not(.is-active) { display: none; }
+html:not(.js) .needs-js { display: none; }
+
+/* ---------- Titles: words split by fine vertical rules, one tracked serif line underneath ---------- */
+.title { margin-bottom: clamp(40px, 5vw, 72px); text-align: center; }
+.title.start { text-align: left; }
+.split { display: flex; flex-wrap: wrap; justify-content: center; row-gap: 0.25em; font-size: var(--fs-h2); line-height: 1.1; }
+h1.split { font-size: var(--fs-h1); }
+.split > span { padding: 0.06em 0.6em; }
+.split > span + span { border-left: 1px solid var(--rule); }
+.split > span.line-start { border-left: 0; }
+.start .split, .split.start { justify-content: flex-start; }
+.start .split > span:first-child, .split.start > span:first-child { padding-left: 0; }
+.gloss { margin: 1.1em 0 0; padding-left: var(--track); font: 400 var(--fs-gloss)/1.6 var(--serif); letter-spacing: var(--track); color: var(--text-muted); }
+.start .gloss, .gloss.start { padding-left: 0; }
+.h3 { font: 400 var(--fs-h3)/1.25 var(--serif); }
+.lead { font-size: 1.1875rem; line-height: 1.8; }
+.statement { margin: 0 auto 2em; max-width: 34em; font: 400 clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem)/1.75 var(--serif); }
+.price { font: 400 1.25rem/1 var(--serif); color: var(--accent); }
+
+/* ---------- The inscription: a vertical title in columns, read right to left, with a small gloss and the seal ---------- */
+.inscription { display: flex; flex-direction: row-reverse; align-items: flex-start; gap: clamp(14px, 1.6vw, 24px); }
+.vtitle { writing-mode: vertical-rl; font-size: var(--fs-display); line-height: 1.2; }
+.vtitle > span { display: block; white-space: nowrap; }
+.vtitle > span + span { margin-block-start: 0.45em; padding-block-start: 0.45em; border-block-start: 1px solid var(--rule); }
+.vgloss { writing-mode: vertical-rl; margin: 0.6em 0 0; font: 400 var(--fs-gloss)/1 var(--serif); letter-spacing: var(--track); color: var(--text-muted); white-space: nowrap; }
+.seal { flex: none; width: 40px; height: 40px; color: var(--seal); }
+.inscription .seal { align-self: flex-end; }
+
+/* ---------- Actions: gold outline buttons and tracked text links ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 2.1em 0 2.4em; border: 1px solid var(--accent); background: transparent; color: var(--accent); font: 500 0.8125rem/1 var(--serif); letter-spacing: 0.32em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: background-color var(--dur-base) var(--ease), color var(--dur-base) var(--ease); }
+.btn:hover { background: var(--accent); color: var(--accent-text); }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+.btn.sm { min-height: 44px; padding: 0 1.5em 0 1.75em; letter-spacing: 0.26em; }
+.link { display: inline-flex; align-items: center; gap: 0.8em; min-height: 44px; padding: 0; border: 0; background: none; color: var(--accent); font: 500 0.8125rem/1 var(--serif); letter-spacing: 0.24em; text-transform: uppercase; text-decoration: none; }
+.link::after { content: ""; width: 28px; height: 1px; background: currentColor; transition: width var(--dur-base) var(--ease); }
+.link:hover::after, a:hover > .link::after { width: 48px; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 28px; }
+.center .actions, .actions.center { justify-content: center; }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; background: none; color: var(--text); }
+.icon-btn svg { width: 22px; height: 22px; }
+
+/* ---------- Pictures sit in round fans, like paintings on silk fans; washes are never framed ---------- */
+.fan { display: grid; place-items: center; aspect-ratio: 1; border-radius: 50%; background: var(--fan); overflow: hidden; }
+.fan img { width: 84%; filter: var(--pic); }
+.fan.photo img { width: 100%; height: 100%; object-fit: cover; }
+.wash { filter: var(--wash); pointer-events: none; }
+.band { margin-block: clamp(-56px, -4vw, -24px) 0; }
+.band img { width: 100%; height: clamp(120px, 17.5vw, 280px); object-fit: cover; object-position: 50% 100%; }
+.band.far img { height: clamp(90px, 15vw, 240px); }
+.lotus { position: absolute; right: clamp(-90px, -4vw, -20px); bottom: -24px; width: clamp(200px, 27vw, 400px); filter: var(--lotus); pointer-events: none; }
+@media (max-width: 759px) { .lotus { position: relative; right: auto; bottom: auto; display: block; width: 150px; margin: 12px -12px calc(16px - var(--sec)) auto; } }
+.ornament { width: 44px; height: 30px; margin: 0 auto 28px; color: var(--accent); }
+
+/* ---------- Header: seal and wordmark, links split by hairlines, the reserve button ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; background: var(--bg); border-bottom: 1px solid transparent; transition: border-color var(--dur-base) var(--ease); }
+.site-header.scrolled { border-bottom-color: var(--border); }
+.header-inner { display: flex; align-items: center; gap: 20px; min-height: var(--hh); }
+.brand { display: inline-flex; align-items: center; gap: 14px; margin-right: auto; font: 500 1.0625rem/1 var(--serif); letter-spacing: 0.34em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+.brand .seal { width: 34px; height: 34px; }
+.nav { display: flex; min-width: 0; overflow: hidden; }
+.nav a { padding: 6px 1.15em; font: 400 1rem/1.2 var(--serif); letter-spacing: 0.12em; text-decoration: none; white-space: nowrap; transition: color var(--dur-fast); }
+.nav a + a { border-left: 1px solid var(--rule); }
+.nav a:hover, .nav a[aria-current="page"] { color: var(--accent); }
+.header-end { display: flex; align-items: center; gap: 6px; }
+#menu-open { display: none; }
+.site-header.compact .nav { display: none; }
+.site-header.compact #menu-open { display: inline-flex; }
+@media (max-width: 1099px) { .nav { display: none; } #menu-open { display: inline-flex; } }
+@media (max-width: 479px) { :root { --hh: 64px; } .brand { gap: 10px; letter-spacing: 0.26em; } .brand .seal { width: 28px; height: 28px; } .header-end .btn { display: none; } }
+
+/* ---------- Menu sheet ---------- */
+.sheet { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0; border: 0; background: var(--bg); color: var(--text); }
+.sheet[open] { display: flex; flex-direction: column; animation: fade var(--dur-base) var(--ease) both; }
+.sheet::backdrop { background: transparent; }
+.sheet-top { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: var(--hh); }
+.sheet-links { display: grid; justify-items: center; margin-block: 5vh 3vh; text-align: center; }
+.sheet-links a { padding: 8px 0; font: 400 clamp(1.75rem, 1.3rem + 2vw, 2.5rem)/1.2 var(--serif); letter-spacing: 0.06em; text-decoration: none; }
+.sheet-links a[aria-current="page"] { color: var(--accent); }
+.sheet .actions { justify-content: center; margin-top: 0; }
+.sheet .band { margin-top: auto; }
+
+/* ---------- Ink loader: a drop blooms, a brush circle closes, then the paper shows ---------- */
+.loader { display: none; }
+.js .loader { position: fixed; inset: 0; z-index: 90; display: grid; place-content: center; justify-items: center; gap: 20px; background: var(--bg); pointer-events: none; animation: loader-out 900ms var(--ease) 1500ms forwards; }
+.js .loader.done { display: none; }
+.loader svg { width: 96px; height: 96px; color: var(--text); }
+.loader .drop { fill: currentColor; transform-box: fill-box; transform-origin: center; animation: bloom 1.5s var(--ease) both; }
+.loader .enso { fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.2s var(--ease) 250ms forwards; }
+.loader p { margin: 0; padding-left: 0.5em; font: 400 0.8125rem/1 var(--serif); letter-spacing: 0.5em; text-transform: uppercase; color: var(--text-muted); animation: fade 1s var(--ease) 300ms both; }
+
+/* ---------- Home hero: a landscape rising from mist, the copy in the sky, the inscription over the valley ---------- */
+.hero { position: relative; display: grid; align-items: start; min-height: clamp(600px, calc(100svh - var(--hh)), 860px); overflow: clip; }
+.hero-art { position: absolute; inset: auto 0 0; height: 70%; }
+.hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; }
+.hero-grid { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); width: 100%; padding-top: clamp(40px, 6vw, 88px); }
+.hero-copy { grid-column: 1 / 6; padding-top: clamp(8px, 2.6vw, 36px); }
+.hero-copy .gloss { margin: 0 0 1.4em; padding-left: 0; }
+.hero .inscription { grid-column: 8 / 12; justify-self: center; }
+@media (max-width: 859px) {
+  .hero { display: flex; flex-direction: column; align-items: stretch; min-height: 0; }
+  .hero-art { order: 2; }
+  .hero-grid { grid-template-columns: minmax(0, 1fr); row-gap: 32px; padding-top: 36px; }
+  .hero-copy, .hero .inscription { grid-column: 1 / -1; }
+  .hero .inscription { order: -1; }
+  .hero-copy { padding-top: 0; text-align: center; }
+  .hero-copy .actions { justify-content: center; }
+  .hero-art { position: relative; height: 240px; margin-top: 8px; }
+  .hero-art img { object-position: 22% 100%; }
+}
+
+/* ---------- Signature dishes: a gentle arc of fans; the chosen dish opens below ---------- */
+.stage-tabs { display: none; justify-content: center; gap: clamp(8px, 2vw, 28px); }
+.js .stage-tabs { display: flex; }
+.dish-tab { position: relative; display: grid; justify-items: center; align-content: start; gap: 12px; width: 150px; padding: 6px 4px 12px; border: 0; background: none; color: var(--text-muted); font: 400 0.9375rem/1.35 var(--serif); transition: color var(--dur-fast); }
+.dish-tab .fan { width: 112px; transition: transform var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease); }
+.dish-tab:nth-child(1), .dish-tab:nth-child(5) { margin-top: 40px; }
+.dish-tab:nth-child(2), .dish-tab:nth-child(4) { margin-top: 14px; }
+.dish-tab:hover, .dish-tab[aria-selected="true"] { color: var(--text); }
+.dish-tab[aria-selected="true"] .fan { transform: translateY(-6px); box-shadow: 0 0 0 1px var(--accent), 0 0 0 6px var(--bg), 0 0 0 7px var(--rule); }
+.stage-panel { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: var(--gap); align-items: center; max-width: 980px; margin: clamp(40px, 5vw, 64px) auto 0; }
+.stage-panel .fan { max-width: 400px; width: 100%; justify-self: center; }
+.stage-panel .gloss { margin: 0 0 0.8em; padding-left: 0; }
+.stage-panel .h3 { font-size: var(--fs-h2); margin-bottom: 0.5em; }
+.js .stage-panel { animation: fade var(--dur-base) var(--ease) both; }
+@media (max-width: 759px) {
+  .stage-tabs { position: relative; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+  .dish-tab { flex: none; width: 112px; margin-top: 0 !important; }
+  .dish-tab .fan { width: 88px; }
+  .stage-panel { grid-template-columns: minmax(0, 1fr); text-align: center; }
+  .stage-panel .fan { max-width: 280px; }
+  .stage-panel .actions { justify-content: center; }
+}
+
+/* ---------- Cells: content split by the same fine rules as the titles (facts, steps, houses) ---------- */
+.cells { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); border-block: 1px solid var(--border); }
+.cells > * { min-width: 0; padding: 22px clamp(12px, 1.6vw, 24px); }
+.cells > * + * { border-left: 1px solid var(--rule); }
+.cells dt, .cells .num { font: 400 var(--fs-gloss)/1.4 var(--serif); letter-spacing: 0.2em; color: var(--text-muted); }
+.cells dd { font: 400 1.5rem/1.2 var(--serif); color: var(--accent); overflow-wrap: anywhere; }
+.cells .h3 { margin: 0.5em 0 0.4em; }
+.cells p { margin: 0; font-size: var(--fs-small); color: var(--text-muted); }
+@media (max-width: 759px) {
+  .cells { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cells > :nth-child(odd) { border-left: 0; }
+  .cells > :nth-child(n + 3) { border-top: 1px solid var(--border); }
+  .cells.list { grid-template-columns: minmax(0, 1fr); }
+  .cells.list > * { border-left: 0; }
+  .cells.list > * + * { border-top: 1px solid var(--border); }
+}
+
+/* ---------- Cards and lists ---------- */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: clamp(40px, 5vw, 64px) var(--gap); }
+.cards > li:not(.card) { display: grid; }
+.card { display: flex; flex-direction: column; align-items: center; text-align: center; color: inherit; text-decoration: none; }
+.card .fan { width: min(100%, 260px); margin-bottom: 22px; transition: transform var(--dur-base) var(--ease); }
+a.card:hover .fan { transform: translateY(-4px); }
+.card .gloss { margin: 0 0 0.5em; padding-left: var(--track); }
+.card p { margin: 0.5em 0 0; color: var(--text-muted); font-size: var(--fs-small); }
+.card .price { margin-top: auto; padding-top: 14px; }
+.card .btn { margin-top: 20px; }
+@media (max-width: 759px) { .card .fan { width: min(100%, 200px); } }
+.date { display: grid; justify-items: center; align-content: start; gap: 6px; min-width: 84px; font-family: var(--serif); }
+.date span { padding: 0 0 6px 0.3em; border-bottom: 1px solid var(--rule); font-size: 0.8125rem; letter-spacing: 0.3em; color: var(--text-muted); }
+.date b { font-weight: 400; font-size: 1.5rem; line-height: 1.1; color: var(--accent); white-space: nowrap; }
+.news-list { border-top: 1px solid var(--border); }
+.news-list > li { border-bottom: 1px solid var(--border); }
+.news-row { display: grid; grid-template-columns: auto 108px minmax(0, 1fr) auto; align-items: center; gap: var(--gap); padding: 26px 0; color: inherit; text-decoration: none; }
+.news-row .fan { width: 108px; }
+.news-row .h3 { display: block; margin-bottom: 0.3em; transition: color var(--dur-fast); }
+.news-row:hover .h3 { color: var(--accent); }
+.news-row .muted { display: block; font-size: var(--fs-small); }
+.kind { display: block; margin-bottom: 0.4em; font: 500 0.75rem/1.4 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
+@media (max-width: 699px) { .news-row { grid-template-columns: auto minmax(0, 1fr); } .news-row .fan, .news-row .link { display: none; } }
+
+/* ---------- Filters: hairline chips, the chosen one in gold ---------- */
+.filters { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 28px; margin-bottom: clamp(32px, 4vw, 56px); }
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.chip { min-height: 42px; padding: 0 1.1em; border: 1px solid var(--border); background: none; color: var(--text-muted); font: 400 0.9375rem/1 var(--serif); letter-spacing: 0.08em; transition: border-color var(--dur-fast), color var(--dur-fast); }
+.chip:hover { color: var(--text); }
+.chip[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.count { margin: 0; font: 400 var(--fs-gloss)/1 var(--serif); letter-spacing: 0.2em; color: var(--text-muted); }
+.empty { padding: 48px 0; text-align: center; color: var(--text-muted); }
+
+/* ---------- Menu ---------- */
+.course { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 8fr); gap: var(--gap); padding-block: clamp(36px, 4vw, 56px); border-top: 1px solid var(--border); }
+.course-side .fan { width: min(100%, 220px); margin-top: 24px; }
+.course-side .gloss { margin-top: 0.7em; padding-left: 0; }
+.course-h { font-size: var(--fs-h2); }
+.dishes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--gap); align-content: start; }
+.dish { padding: 14px 0 18px; border-bottom: 1px solid var(--border); }
+.dish-line { display: flex; align-items: baseline; gap: 12px; font: 400 1.25rem/1.3 var(--serif); }
+.dish-line a { text-decoration: none; }
+.dish-line a:hover { color: var(--accent); }
+.dish-line i { flex: 1; min-width: 20px; border-bottom: 1px dotted var(--rule); }
+.dish p { margin: 6px 0 0; font-size: var(--fs-small); line-height: 1.7; color: var(--text-muted); }
+.tag { display: inline-block; margin: 10px 8px 0 0; padding: 3px 9px 2px; border: 1px solid var(--rule); font: 500 0.6875rem/1.4 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
+.tag.hot { border-color: var(--seal); color: var(--seal); }
+@media (max-width: 859px) { .course { grid-template-columns: minmax(0, 1fr); } .course-side { display: flex; align-items: center; gap: 20px; } .course-side .fan { order: -1; width: 96px; margin: 0; } .dishes { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Dish page ---------- */
+.dish-hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
+.dish-hero .fan { width: min(100%, 480px); justify-self: center; }
+.crumb { font: 400 var(--fs-gloss)/1.5 var(--serif); letter-spacing: 0.14em; color: var(--text-muted); }
+.crumb a { text-decoration: none; }
+.crumb a:hover { color: var(--accent); }
+.dish-hero .cells { margin-top: 32px; }
+@media (max-width: 859px) { .dish-hero { grid-template-columns: minmax(0, 1fr); } .dish-hero .fan { width: min(100%, 320px); } }
+
+/* ---------- Houses ---------- */
+.house-row { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); text-align: center; border-block: 1px solid var(--border); margin-top: clamp(36px, 4vw, 56px); }
+.house-row > li { padding: 26px 18px; }
+.house-row > li + li { border-left: 1px solid var(--rule); }
+.house-row .h3 { display: block; }
+.house-row p { margin: 0.4em 0 0; font-size: var(--fs-small); color: var(--text-muted); }
+@media (max-width: 759px) { .house-row { grid-auto-flow: row; grid-template-columns: 1fr 1fr; } .house-row > li:nth-child(odd) { border-left: 0; } .house-row > li:nth-child(n + 3) { border-top: 1px solid var(--border); } }
+.map-box { position: relative; max-width: 960px; margin: 0 auto clamp(40px, 5vw, 64px); }
+.map-box > img { width: 100%; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent); mask-image: radial-gradient(closest-side, #000 72%, transparent); }
+.pin { position: absolute; left: var(--x); top: var(--y); display: grid; place-items: center; width: 34px; height: 34px; translate: -50% -50%; border-radius: 50%; background: var(--seal); color: oklch(98% 0.01 90); font: 500 0.9375rem/1 var(--serif); text-decoration: none; box-shadow: 0 0 0 5px var(--bg); transition: scale var(--dur-fast); }
+.pin:hover { scale: 1.12; }
+.place { position: absolute; left: var(--x); top: var(--y); translate: -50% 0; font: 400 0.75rem/1 var(--serif); letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
+.house-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
+.house { padding: clamp(24px, 3vw, 40px); border: 1px solid var(--border); background: var(--surface); }
+.house .gloss { margin: 0.5em 0 1.2em; padding-left: 0; }
+.house address { font-style: normal; }
+.house .num { font: 400 1.5rem/1 var(--serif); color: var(--seal); }
+.status { display: flex; align-items: center; gap: 8px; margin: 14px 0 0; font: 500 0.75rem/1.4 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
+.status:empty { display: none; }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.status.open { color: var(--accent); }
+.hours { display: grid; grid-template-columns: auto 1fr; gap: 4px 20px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); font-size: var(--fs-small); }
+.hours dt { color: var(--text-muted); }
+@media (max-width: 759px) { .house-cards { grid-template-columns: minmax(0, 1fr); } .pin { width: 28px; height: 28px; font-size: 0.8125rem; } .place { font-size: 0.625rem; letter-spacing: 0.2em; } }
+
+/* ---------- Page heads ---------- */
+.page-head { position: relative; padding-top: clamp(56px, 8vw, 112px); }
+.page-head .title { margin-bottom: 0; }
+.page-head + .sec { padding-top: clamp(24px, 3vw, 40px); }
+
+/* ---------- Story ---------- */
+.story-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.story-grid .inscription { justify-self: center; }
+.story-grid .gloss { margin: 0 0 1.2em; padding-left: 0; }
+.timeline > li { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: var(--gap); padding: 26px 0; border-top: 1px solid var(--border); }
+.timeline > li:last-child { border-bottom: 1px solid var(--border); }
+.year { font: 400 2rem/1 var(--serif); color: var(--accent); }
+.timeline .h3 { margin-bottom: 0.3em; }
+.timeline p { margin: 0; color: var(--text-muted); }
+.quote-block { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.quote-block .fan { width: min(100%, 380px); justify-self: center; }
+blockquote { margin: 0; padding: 28px 0; border-block: 1px solid var(--rule); font: 400 clamp(1.5rem, 1.2rem + 1.1vw, 2.125rem)/1.45 var(--serif); }
+blockquote footer { margin-top: 18px; font: 400 var(--fs-gloss)/1.4 var(--serif); letter-spacing: var(--track); color: var(--text-muted); }
+@media (max-width: 859px) { .story-grid, .quote-block { grid-template-columns: minmax(0, 1fr); } .timeline > li { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+
+/* ---------- Article ---------- */
+.article-head { max-width: 820px; margin-inline: auto; text-align: center; }
+.article-head .date { margin: 0 auto 28px; }
+.post-title { font-size: var(--fs-h1); }
+.dek { max-width: 36em; margin: 20px auto 0; font-size: 1.1875rem; color: var(--text-muted); }
+.article-fan { width: min(70%, 420px); margin: clamp(40px, 5vw, 64px) auto; }
+.prose { max-width: 680px; margin-inline: auto; font-size: 1.125rem; }
+.prose h2 { margin: 1.8em 0 0.6em; font-size: 1.75rem; }
+.prose blockquote { margin: 1.6em 0; font-size: 1.5rem; }
+.prose ul { margin: 0 0 1em; padding-left: 1.2em; list-style: "\2013\00a0\00a0"; }
+
+/* ---------- Forms: paper card, hairline boxes, errors float below without moving anything ---------- */
+.form-card { padding: clamp(24px, 4vw, 56px); background: var(--surface); border: 1px solid var(--border); }
+.split-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+.aside > div + div { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border); }
+.aside .h3 { margin-bottom: 0.4em; }
+.aside p { margin: 0; color: var(--text-muted); font-size: var(--fs-small); }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+.field { position: relative; display: grid; align-content: start; gap: 8px; padding-bottom: 30px; }
+.field.full { grid-column: 1 / -1; }
+.label { font: 500 0.8125rem/1.4 var(--sans); letter-spacing: 0.08em; color: var(--text-muted); }
+.label i { font-style: normal; opacity: 0.8; }
+.input { width: 100%; min-height: 50px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 0; background: var(--bg); font: 400 1.0625rem/1.4 var(--sans); transition: border-color var(--dur-fast); }
+.input:hover, .input:focus { border-color: var(--accent); }
+.input:focus-visible { outline: 0; box-shadow: inset 0 0 0 1px var(--accent); }
+textarea.input { min-height: 120px; resize: vertical; }
+select.input { appearance: none; padding-right: 40px; background: linear-gradient(45deg, transparent calc(50% - 0.6px), currentColor calc(50% - 0.6px) calc(50% + 0.6px), transparent calc(50% + 0.6px)) right 22px top 52% / 7px 7px no-repeat, linear-gradient(135deg, transparent calc(50% - 0.6px), currentColor calc(50% - 0.6px) calc(50% + 0.6px), transparent calc(50% + 0.6px)) right 15px top 52% / 7px 7px no-repeat, var(--bg); }
+select.input option { background: var(--surface); color: var(--text); }
+.input[aria-invalid="true"] { border-color: var(--error); }
+.error { position: absolute; left: 0; right: 0; bottom: 6px; margin: 0; font: 500 0.8125rem/1.3 var(--sans); color: var(--error); }
+.slots { display: grid; grid-template-columns: repeat(4, minmax(0, 96px)); gap: 8px; }
+.slot { position: relative; }
+.slot input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.slot span { display: flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid var(--border); background: var(--bg); font: 400 1rem/1 var(--serif); letter-spacing: 0.06em; transition: border-color var(--dur-fast), color var(--dur-fast); }
+.slot input:hover + span { border-color: var(--accent); }
+.slot input:checked + span { border-color: var(--accent); color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.slot input:focus-visible + span { outline: 1px solid var(--focus); outline-offset: 3px; }
+.slots-sep { grid-column: 1 / -1; height: 0; }
+.check { position: relative; display: flex; align-items: flex-start; gap: 12px; padding-bottom: 30px; font-size: var(--fs-small); cursor: pointer; }
+.check input { flex: none; width: 18px; height: 18px; margin: 5px 0 0; accent-color: var(--accent); }
+.form-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; }
+.form-foot p { margin: 0; }
+.success { text-align: center; padding: clamp(16px, 3vw, 40px) 0; }
+.success:focus { outline: 0; }
+.success .seal { margin: 0 auto 24px; }
+.success p { max-width: 34em; margin: 20px auto 0; color: var(--text-muted); }
+.inline-form { display: flex; align-items: flex-start; gap: 10px; }
+.inline-form .field { flex: 1; padding-bottom: 24px; }
+.inline-form .btn { flex: none; min-height: 50px; }
+@media (max-width: 859px) { .split-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 599px) { .fields { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- FAQ ---------- */
+.faq { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 8fr); gap: var(--gap); }
+.faq-nav { display: grid; align-content: start; justify-items: start; gap: 2px; position: sticky; top: calc(var(--hh) + 24px); }
+.faq-nav a { padding: 8px 0; font: 400 1.125rem/1.2 var(--serif); letter-spacing: 0.06em; text-decoration: none; }
+.faq-nav a:hover { color: var(--accent); }
+.faq-group + .faq-group { margin-top: clamp(40px, 5vw, 64px); }
+.faq-group > .h3 { margin-bottom: 16px; }
+details { border-top: 1px solid var(--border); }
+.faq-group details:last-child { border-bottom: 1px solid var(--border); }
+summary { display: flex; justify-content: space-between; align-items: center; gap: 24px; min-height: 64px; padding: 14px 0; font: 400 1.1875rem/1.35 var(--serif); list-style: none; cursor: pointer; }
+summary::-webkit-details-marker { display: none; }
+summary svg { flex: none; width: 14px; height: 14px; color: var(--accent); }
+summary svg .v { transition: transform var(--dur-base) var(--ease); transform-origin: center; }
+details[open] summary svg .v { transform: scaleY(0); }
+details p { max-width: 62ch; padding-bottom: 12px; color: var(--text-muted); }
+@media (max-width: 859px) { .faq { grid-template-columns: minmax(0, 1fr); } .faq-nav { position: static; display: flex; flex-wrap: wrap; gap: 0 24px; } }
+
+/* ---------- Footer ---------- */
+.site-footer { position: relative; padding-bottom: 28px; }
+.site-footer .band { margin: 0; }
+.site-footer .band img { transform: scaleX(-1); }
+.foot-grid { display: grid; grid-template-columns: minmax(0, 5fr) repeat(3, minmax(0, 2.4fr)); gap: 40px var(--gap); padding-top: clamp(24px, 3vw, 40px); }
+.foot-h { margin-bottom: 14px; font: 400 var(--fs-gloss)/1.4 var(--serif); letter-spacing: var(--track); color: var(--text-muted); }
+.site-footer li a, .site-footer address a { display: inline-block; padding: 5px 0; text-decoration: none; }
+.site-footer li a:hover, .site-footer address a:hover { color: var(--accent); }
+.site-footer address { font-style: normal; }
+.foot-brand > p { max-width: 30em; margin: 18px 0 24px; color: var(--text-muted); }
+.foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-top: clamp(40px, 5vw, 64px); padding-top: 20px; background: linear-gradient(var(--border), var(--border)) var(--gutter) 0 / calc(100% - 2 * var(--gutter)) 1px no-repeat; font: 400 var(--fs-gloss)/1.6 var(--serif); letter-spacing: 0.12em; color: var(--text-muted); }
+.foot-bottom p { margin: 0; }
+.foot-bottom nav { display: flex; gap: 24px; }
+.foot-bottom a { text-decoration: none; }
+.foot-bottom a:hover { color: var(--accent); }
+.notfound { padding-block: clamp(80px, 12vw, 160px) 0; text-align: center; }
+.legal { max-width: 720px; margin-inline: auto; }
+.legal h2 { margin: 1.6em 0 0.5em; font-size: 1.5rem; }
+@media (max-width: 859px) { .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .foot-brand { grid-column: 1 / -1; } }
+@media (max-width: 479px) { .inline-form { flex-direction: column; align-items: stretch; } }
+
+/* ---------- Motion: slow, quiet fades; ink settles into the paper. Keyframes, so they also play right after the js class lands ---------- */
+@keyframes fade { from { opacity: 0; } }
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+@keyframes bleed { from { opacity: 0; filter: blur(12px); } }
+@keyframes write { from { clip-path: inset(0 0 100% 0); } }
+@keyframes bloom { from { transform: scale(0.06); opacity: 0.9; } 55% { opacity: 0.85; } to { transform: scale(1); opacity: 0.1; } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes loader-out { to { opacity: 0; visibility: hidden; } }
+.hero-art img { animation: bleed 2.8s var(--ease) calc(var(--intro, 0s) + 0.1s) both; }
+.vtitle > span { animation: write 1.6s var(--ease) both; animation-delay: calc(var(--intro, 0s) + 0.5s + var(--i, 0) * 0.5s); }
+.vgloss, .inscription .seal { animation: fade var(--dur-slow) var(--ease) calc(var(--intro, 0s) + 1.6s) both; }
+.hero-copy > * { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--intro, 0s) + 0.9s + var(--i, 0) * 0.2s); }
+.js .reveal { opacity: 0; }
+.js .reveal.in { opacity: 1; animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 0.16s); }
+.js .band.reveal.in, .js .lotus.reveal.in { animation: fade 2.4s var(--ease) both; }
+.js .band.reveal.in img { animation: bleed 2.6s var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal { opacity: 1; }
+  .js .loader { display: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.5A7.5 7.5 0 0 1 9.5 4.5a7.5 7.5 0 1 0 10 10Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></g></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 14 14"><path d="M0 7h14" stroke="currentColor" stroke-width="1.2"/><path class="v" d="M7 0v14" stroke="currentColor" stroke-width="1.2"/></symbol>
+  <symbol id="i-steam" viewBox="0 0 44 30"><path d="M12 28c-5-6 5-9 0-15s4-9 2-12M22 28c-5-6 5-9 0-15s4-9 2-12M32 28c-5-6 5-9 0-15s4-9 2-12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <symbol id="i-seal" viewBox="0 0 64 64"><rect width="64" height="64" rx="6" fill="currentColor"/><path d="M32 12v34M20 24l12-9 12 9M16 35l16-10 16 10M12 52h16M36 52h16" fill="none" stroke="oklch(98% 0.01 90)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="loader" aria-hidden="true">
+  <svg viewBox="0 0 120 120"><filter id="ink-bleed" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency=".06" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="7"/><feGaussianBlur stdDeviation=".8"/></filter><g filter="url(#ink-bleed)"><circle class="drop" cx="60" cy="60" r="44"/><path class="enso" d="M70 17A44 44 0 1 1 33 25" pathLength="1"/></g></svg>
+  <p>Mistpine</p>
+</div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#/" aria-label="Mistpine, home"><svg class="seal" aria-hidden="true"><use href="#i-seal"/></svg><span>Mistpine</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/menu">Menu</a><a href="#/locations">Locations</a><a href="#/gifts">Gifts</a><a href="#/story">Our story</a><a href="#/news">News</a>
+    </nav>
+    <div class="header-end">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to ink night"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="btn sm" href="#/reserve">Reserve</a>
+      <button class="icon-btn" id="menu-open" type="button" aria-label="Open the menu" aria-controls="menu"><svg aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="wrap sheet-top">
+    <a class="brand" href="#/"><svg class="seal" aria-hidden="true"><use href="#i-seal"/></svg><span>Mistpine</span></a>
+    <button class="icon-btn" id="menu-close" type="button" aria-label="Close the menu"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+  </div>
+  <nav class="sheet-links" aria-label="All pages">
+    <a href="#/menu">Menu</a><a href="#/locations">Locations</a><a href="#/gifts">Gifts</a><a href="#/story">Our story</a><a href="#/news">News</a><a href="#/faq">Questions</a><a href="#/contact">Write to us</a>
+  </nav>
+  <div class="actions"><a class="btn" href="#/reserve">Reserve a table</a></div>
+  <div class="band far wash" aria-hidden="true"><img src="illustrations/far-peaks.svg" alt="" width="1600" height="240"></div>
+</dialog>
+
+<main id="main">
+
+<!-- ======================= HOME ======================= -->
+<div data-view="home">
+  <section class="hero">
+    <div class="hero-art wash" aria-hidden="true"><img src="illustrations/mountains.svg" alt="" width="1600" height="700" fetchpriority="high"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="gloss">Dumplings and tea, since 1979</p>
+        <p class="lead" style="--i:1">Every dumpling folded by hand with eighteen pleats and steamed the moment you order it. Four quiet houses between the river and the harbour.</p>
+        <div class="actions" style="--i:2"><a class="btn" href="#/reserve">Reserve a table</a><a class="link" href="#/menu">See the menu</a></div>
+      </div>
+      <div class="inscription">
+        <h1 class="vtitle"><span>Folded by hand,</span><span style="--i:1">steamed as you wait</span></h1>
+        <p class="vgloss">Kilnford &middot; 1979</p>
+        <svg class="seal" aria-hidden="true"><use href="#i-seal"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec clip-x">
+    <div class="wrap narrow center">
+      <div class="title reveal"><h2 class="split"><span>Eighteen</span><span>Folds</span></h2><p class="gloss">Our craft</p></div>
+      <svg class="ornament reveal" aria-hidden="true"><use href="#i-steam"/></svg>
+      <p class="statement reveal">Every dumpling in our houses is folded by hand, in a window you can watch from the street. Eighteen pleats, twenty-one grams of filling, a wrapper thin enough to read through. We have made them this way since the first counter on Ferry Lane.</p>
+      <a class="btn reveal" href="#/story">Our story</a>
+    </div>
+    <img class="lotus reveal" src="illustrations/lotus.svg" alt="" width="640" height="640">
+  </section>
+
+  <div class="band wash reveal" aria-hidden="true"><img src="illustrations/ridge.svg" alt="" width="1600" height="280"></div>
+
+  <section class="sec" id="signature">
+    <div class="wrap">
+      <div class="title reveal"><h2 class="split"><span>From</span><span>the</span><span>Steamer</span></h2><p class="gloss">What the house is known for</p></div>
+      <div class="stage-tabs" role="tablist" aria-label="Signature dishes">
+        <button class="dish-tab" type="button" role="tab" id="t-soup" aria-controls="p-soup" data-tab="soup"><span class="fan"><img src="images/dumplings.svg" alt="" width="400" height="400"></span>Pork soup dumplings</button>
+        <button class="dish-tab" type="button" role="tab" id="t-wonton" aria-controls="p-wonton" data-tab="wonton"><span class="fan"><img src="images/wontons.svg" alt="" width="400" height="400"></span>Wontons in chilli oil</button>
+        <button class="dish-tab" type="button" role="tab" id="t-noodle" aria-controls="p-noodle" data-tab="noodle"><span class="fan"><img src="images/noodles.svg" alt="" width="400" height="400"></span>Beef noodle soup</button>
+        <button class="dish-tab" type="button" role="tab" id="t-greens" aria-controls="p-greens" data-tab="greens"><span class="fan"><img src="images/greens.svg" alt="" width="400" height="400"></span>Garlic greens</button>
+        <button class="dish-tab" type="button" role="tab" id="t-sweet" aria-controls="p-sweet" data-tab="sweet"><span class="fan"><img src="images/sweet-soup.svg" alt="" width="400" height="400"></span>Rice balls in syrup</button>
+      </div>
+      <div class="stage-panel" role="tabpanel" id="p-soup" aria-labelledby="t-soup">
+        <figure class="fan"><img src="images/dumplings.svg" alt="Five soup dumplings on a celadon plate" width="400" height="400"></figure>
+        <div><p class="gloss">Dumplings &middot; ten to a basket</p><h3 class="h3">Pork soup dumplings</h3><p class="muted">A wrapper you can almost read through, eighteen folds, and a spoonful of hot broth inside each one. Lift gently, pierce, then sip.</p><p class="price">$14</p><div class="actions"><a class="link" href="#/dish">About this dish</a></div></div>
+      </div>
+      <div class="stage-panel" role="tabpanel" id="p-wonton" aria-labelledby="t-wonton">
+        <figure class="fan"><img src="images/wontons.svg" alt="Pork and shrimp wontons in red chilli oil, scattered with spring onion" width="400" height="400"></figure>
+        <div><p class="gloss">Dumplings &middot; eight to a bowl</p><h3 class="h3">Wontons in chilli oil</h3><p class="muted">Pork and shrimp wontons in our own chilli oil, black vinegar and a little sugar. Warm rather than fierce.</p><p class="price">$11</p><div class="actions"><a class="link" href="#/menu?course=dumplings">Dumplings</a></div></div>
+      </div>
+      <div class="stage-panel" role="tabpanel" id="p-noodle" aria-labelledby="t-noodle">
+        <figure class="fan"><img src="images/noodles.svg" alt="Noodles lifted with chopsticks from a bowl of beef broth" width="400" height="400"></figure>
+        <div><p class="gloss">Noodles and soups</p><h3 class="h3">Beef noodle soup</h3><p class="muted">Shin braised for six hours with star anise and dried tangerine peel, poured over noodles pulled that morning.</p><p class="price">$16</p><div class="actions"><a class="link" href="#/menu?course=noodles">Noodles and soups</a></div></div>
+      </div>
+      <div class="stage-panel" role="tabpanel" id="p-greens" aria-labelledby="t-greens">
+        <figure class="fan"><img src="images/greens.svg" alt="Bright greens fried with slices of garlic on a white plate" width="400" height="400"></figure>
+        <div><p class="gloss">Small plates &middot; vegetarian</p><h3 class="h3">Garlic greens</h3><p class="muted">Whichever green is best this week, fried hard and fast with garlic so it stays bright and still snaps.</p><p class="price">$9</p><div class="actions"><a class="link" href="#/menu?course=plates">Small plates</a></div></div>
+      </div>
+      <div class="stage-panel" role="tabpanel" id="p-sweet" aria-labelledby="t-sweet">
+        <figure class="fan"><img src="images/sweet-soup.svg" alt="White rice balls in pale syrup with osmanthus flowers and a porcelain spoon" width="400" height="400"></figure>
+        <div><p class="gloss">Sweets &middot; vegetarian</p><h3 class="h3">Rice balls in osmanthus syrup</h3><p class="muted">Soft rice balls filled with black sesame, in a warm syrup scented with osmanthus. The way to finish.</p><p class="price">$7</p><div class="actions"><a class="link" href="#/menu?course=sweets">Sweets</a></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="title reveal"><h2 class="split"><span>Latest</span><span>News</span></h2><p class="gloss">From the four houses</p></div>
+      <ul class="news-list" data-list="home-news"></ul>
+      <div class="actions center"><a class="btn" href="#/news">More news</a></div>
+    </div>
+  </section>
+
+  <div class="band far wash reveal" aria-hidden="true"><img src="illustrations/far-peaks.svg" alt="" width="1600" height="240"></div>
+
+  <section class="sec">
+    <div class="wrap center">
+      <div class="title reveal"><h2 class="split"><span>Four</span><span>Houses</span></h2><p class="gloss">Kilnford &middot; Eastmere &middot; Harrow Bay</p></div>
+      <p class="statement reveal">The first house is still the six stools and the window kitchen on Ferry Lane. The others came slowly, one town at a time, each with its own folding window.</p>
+      <ul class="house-row reveal">
+        <li><span class="h3">Ferry Lane</span><p>Kilnford &middot; the first house</p></li>
+        <li><span class="h3">Lantern Row</span><p>Kilnford &middot; a room for twelve</p></li>
+        <li><span class="h3">Eastmere Arcade</span><p>Eastmere &middot; open all day</p></li>
+        <li><span class="h3">Harbour Steps</span><p>Harrow Bay &middot; by the water</p></li>
+      </ul>
+      <div class="actions center"><a class="btn" href="#/locations">All locations</a><a class="link" href="#/reserve">Reserve a table</a></div>
+    </div>
+  </section>
+
+  <section class="sec tight needs-js">
+    <div class="wrap">
+      <div class="title reveal"><h2 class="split"><span>Gift</span><span>Boxes</span></h2><p class="gloss">To carry home from our kitchen</p></div>
+      <ul class="cards" data-list="home-gifts"></ul>
+      <div class="actions center"><a class="btn" href="#/gifts">All gifts</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= MENU ======================= -->
+<div data-view="menu">
+  <section class="page-head">
+    <div class="wrap title"><h1 class="split"><span>The</span><span>Menu</span></h1><p class="gloss">Folded, rolled and steamed to order</p></div>
+    <div class="band far wash" aria-hidden="true"><img src="illustrations/far-peaks.svg" alt="" width="1600" height="240"></div>
+  </section>
+  <section class="sec wrap">
+    <div class="filters">
+      <div class="chips" data-filter="course" role="group" aria-label="Course">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-value="dumplings" aria-pressed="false">Dumplings</button>
+        <button class="chip" type="button" data-value="noodles" aria-pressed="false">Noodles and soups</button>
+        <button class="chip" type="button" data-value="plates" aria-pressed="false">Small plates</button>
+        <button class="chip" type="button" data-value="sweets" aria-pressed="false">Sweets</button>
+        <button class="chip" type="button" data-value="tea" aria-pressed="false">Tea</button>
+      </div>
+      <button class="chip" type="button" id="veg-only" aria-pressed="false">Vegetarian only</button>
+      <p class="count" data-count="menu" data-one="dish" data-many="dishes" aria-live="polite"></p>
+    </div>
+    <section class="course" data-course="dumplings" aria-labelledby="c-dumplings">
+      <div class="course-side"><div><h2 class="course-h" id="c-dumplings">Dumplings</h2><p class="gloss">Folded at the window</p></div><figure class="fan"><img src="images/dumplings.svg" alt="" width="400" height="400"></figure></div>
+      <ul class="dishes">
+        <li class="dish"><div class="dish-line"><a href="#/dish">Pork soup dumplings</a><i></i><span class="price">$14</span></div><p>Ten to a basket, eighteen folds, hot broth inside.</p><span class="tag">Signature</span></li>
+        <li class="dish"><div class="dish-line"><span>Crab and pork soup dumplings</span><i></i><span class="price">$19</span></div><p>Winter only, with roe from the first crabs of the season.</p><span class="tag">Winter</span></li>
+        <li class="dish"><div class="dish-line"><span>Shrimp and pork dumplings</span><i></i><span class="price">$15</span></div><p>Eight to a basket, a whole shrimp folded into each.</p></li>
+        <li class="dish" data-veg><div class="dish-line"><span>Mushroom and greens dumplings</span><i></i><span class="price">$12</span></div><p>Shiitake, bok choy and glass noodles, eight to a basket.</p><span class="tag">Vegetarian</span></li>
+        <li class="dish"><div class="dish-line"><span>Wontons in chilli oil</span><i></i><span class="price">$11</span></div><p>Pork and shrimp, black vinegar, our own chilli oil.</p><span class="tag hot">Hot</span></li>
+      </ul>
+    </section>
+    <section class="course" data-course="noodles" aria-labelledby="c-noodles">
+      <div class="course-side"><div><h2 class="course-h" id="c-noodles">Noodles and soups</h2><p class="gloss">Pulled each morning</p></div><figure class="fan"><img src="images/noodles.svg" alt="" width="400" height="400"></figure></div>
+      <ul class="dishes">
+        <li class="dish"><div class="dish-line"><span>Beef noodle soup</span><i></i><span class="price">$16</span></div><p>Shin braised six hours, star anise, pickled greens.</p></li>
+        <li class="dish" data-veg><div class="dish-line"><span>Scallion oil noodles</span><i></i><span class="price">$10</span></div><p>Spring onions fried slowly until sweet, soy, nothing else.</p><span class="tag">Vegetarian</span></li>
+        <li class="dish" data-veg><div class="dish-line"><span>Hot and sour soup</span><i></i><span class="price">$8</span></div><p>Tofu, wood ear, white pepper and black vinegar.</p><span class="tag">Vegetarian</span><span class="tag hot">Hot</span></li>
+        <li class="dish"><div class="dish-line"><span>Slow chicken soup</span><i></i><span class="price">$10</span></div><p>A whole bird simmered overnight, a little ginger.</p></li>
+      </ul>
+    </section>
+    <section class="course" data-course="plates" aria-labelledby="c-plates">
+      <div class="course-side"><div><h2 class="course-h" id="c-plates">Small plates</h2><p class="gloss">To share while you wait</p></div><figure class="fan"><img src="images/greens.svg" alt="" width="400" height="400"></figure></div>
+      <ul class="dishes">
+        <li class="dish" data-veg><div class="dish-line"><span>Garlic greens</span><i></i><span class="price">$9</span></div><p>The best green of the week, fried hard and fast.</p><span class="tag">Vegetarian</span></li>
+        <li class="dish" data-veg><div class="dish-line"><span>Smashed cucumber</span><i></i><span class="price">$7</span></div><p>Garlic, black vinegar and a few drops of chilli oil.</p><span class="tag">Vegetarian</span></li>
+        <li class="dish"><div class="dish-line"><span>Sweet and sour ribs</span><i></i><span class="price">$12</span></div><p>Served cool, glossy with rock sugar and vinegar.</p></li>
+        <li class="dish"><div class="dish-line"><span>Egg fried rice with shrimp</span><i></i><span class="price">$14</span></div><p>Every grain coated in egg, then the shrimp.</p></li>
+      </ul>
+    </section>
+    <section class="course" data-course="sweets" aria-labelledby="c-sweets">
+      <div class="course-side"><div><h2 class="course-h" id="c-sweets">Sweets</h2><p class="gloss">To finish slowly</p></div><figure class="fan"><img src="images/sweet-soup.svg" alt="" width="400" height="400"></figure></div>
+      <ul class="dishes">
+        <li class="dish" data-veg><div class="dish-line"><span>Rice balls in osmanthus syrup</span><i></i><span class="price">$7</span></div><p>Black sesame inside, warm syrup around.</p><span class="tag">Vegetarian</span></li>
+        <li class="dish" data-veg><div class="dish-line"><span>Red bean buns</span><i></i><span class="price">$7</span></div><p>Three to a plate, the bean paste made in the house.</p><span class="tag">Vegetarian</span></li>
+        <li class="dish" data-veg><div class="dish-line"><span>Sweet taro dumplings</span><i></i><span class="price">$8</span></div><p>Purple taro folded like the soup dumplings, six pieces.</p><span class="tag">Vegetarian</span></li>
+      </ul>
+    </section>
+    <section class="course" data-course="tea" aria-labelledby="c-tea">
+      <div class="course-side"><div><h2 class="course-h" id="c-tea">Tea</h2><p class="gloss">By the pot, refilled freely</p></div><figure class="fan"><img src="images/tea.svg" alt="" width="400" height="400"></figure></div>
+      <ul class="dishes">
+        <li class="dish" data-veg><div class="dish-line"><span>Mountain oolong</span><i></i><span class="price">$6</span></div><p>Lightly roasted, from a single garden.</p></li>
+        <li class="dish" data-veg><div class="dish-line"><span>Jasmine green</span><i></i><span class="price">$5</span></div><p>Scented seven times with fresh blossom.</p></li>
+        <li class="dish" data-veg><div class="dish-line"><span>Chrysanthemum and goji</span><i></i><span class="price">$5</span></div><p>Caffeine free, gently sweet.</p></li>
+      </ul>
+    </section>
+    <p class="empty" data-empty="menu" hidden>No dishes match. <button class="link" type="button" data-reset="menu">Show the whole menu</button></p>
+  </section>
+</div>
+
+<!-- ======================= DISH ======================= -->
+<div data-view="dish">
+  <section class="sec wrap dish-hero">
+    <figure class="fan reveal"><img src="images/dumplings.svg" alt="Five pork soup dumplings on a celadon plate" width="400" height="400"></figure>
+    <div class="start">
+      <p class="crumb"><a href="#/menu">Menu</a> &nbsp;/&nbsp; <a href="#/menu?course=dumplings">Dumplings</a></p>
+      <h1 class="split"><span>Soup</span><span>Dumplings</span></h1>
+      <p class="gloss">Pork &middot; ten to a basket &middot; $14</p>
+      <p class="lead" style="margin-top:1.2em">The dumpling the first house was built on. A wrapper rolled thinner at the edge than the middle, pork seasoned with ginger and a jellied broth that melts as it steams.</p>
+      <dl class="cells"><div><dt>Folds</dt><dd>18</dd></div><div><dt>Filling</dt><dd>21 g</dd></div><div><dt>Wrapper</dt><dd>5 g</dd></div><div><dt>Steamed</dt><dd>5 min</dd></div></dl>
+      <div class="actions"><a class="btn" href="#/reserve">Reserve a table</a><a class="link" href="#/menu">Back to the menu</a></div>
+    </div>
+  </section>
+  <section class="sec tight wrap">
+    <div class="title reveal"><h2 class="split"><span>How</span><span>to</span><span>Eat</span></h2><p class="gloss">Slowly, and in this order</p></div>
+    <ol class="cells list reveal">
+      <li><span class="num">I</span><h3 class="h3">Lift</h3><p>Hold it by the knot at the top and set it in your spoon.</p></li>
+      <li><span class="num">II</span><h3 class="h3">Pierce</h3><p>Open a small hole in the side and let the broth run into the spoon.</p></li>
+      <li><span class="num">III</span><h3 class="h3">Sip</h3><p>Drink the broth first, while it is hot but no longer burning.</p></li>
+      <li><span class="num">IV</span><h3 class="h3">Finish</h3><p>A thread of ginger and a drop of vinegar, then the rest in one bite.</p></li>
+    </ol>
+  </section>
+  <section class="sec tight wrap">
+    <div class="title reveal"><h2 class="split"><span>Goes</span><span>Well</span><span>With</span></h2><p class="gloss">From the same table</p></div>
+    <ul class="cards">
+      <li><a class="card reveal" href="#/menu?course=plates"><span class="fan"><img src="images/greens.svg" alt="" width="400" height="400"></span><span class="h3">Garlic greens</span><p>Bright, crisp, a little sharp.</p><span class="price">$9</span></a></li>
+      <li><a class="card reveal" href="#/menu?course=noodles" style="--i:1"><span class="fan"><img src="images/noodles.svg" alt="" width="400" height="400"></span><span class="h3">Beef noodle soup</span><p>For a larger appetite.</p><span class="price">$16</span></a></li>
+      <li><a class="card reveal" href="#/menu?course=tea" style="--i:2"><span class="fan"><img src="images/tea.svg" alt="" width="400" height="400"></span><span class="h3">Mountain oolong</span><p>Roasted, to cut the richness.</p><span class="price">$6</span></a></li>
+    </ul>
+  </section>
+</div>
+
+<!-- ======================= LOCATIONS ======================= -->
+<div data-view="locations">
+  <section class="page-head">
+    <div class="wrap title"><h1 class="split"><span>Our</span><span>Houses</span></h1><p class="gloss">Four rooms in three towns</p></div>
+  </section>
+  <section class="sec wrap">
+    <div class="map-box reveal">
+      <img class="wash" src="illustrations/map.svg" alt="Ink map of the river from Kilnford down to the harbour at Harrow Bay, with the four houses marked" width="800" height="500">
+      <span class="place" style="--x:26%;--y:60%">Kilnford</span><span class="place" style="--x:71%;--y:20%">Eastmere</span><span class="place" style="--x:78%;--y:66%">Harrow Bay</span>
+      <a class="pin" href="#h-ferry" style="--x:22%;--y:47%">1<span class="sr"> Ferry Lane</span></a>
+      <a class="pin" href="#h-lantern" style="--x:31%;--y:50%">2<span class="sr"> Lantern Row</span></a>
+      <a class="pin" href="#h-arcade" style="--x:66%;--y:32%">3<span class="sr"> Eastmere Arcade</span></a>
+      <a class="pin" href="#h-harbour" style="--x:80%;--y:78%">4<span class="sr"> Harbour Steps</span></a>
+    </div>
+    <div class="filters">
+      <div class="chips" data-filter="town" role="group" aria-label="Town">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">All towns</button>
+        <button class="chip" type="button" data-value="kilnford" aria-pressed="false">Kilnford</button>
+        <button class="chip" type="button" data-value="eastmere" aria-pressed="false">Eastmere</button>
+        <button class="chip" type="button" data-value="harrow" aria-pressed="false">Harrow Bay</button>
+      </div>
+      <p class="count" data-count="town" data-one="house" data-many="houses" aria-live="polite"></p>
+    </div>
+    <ul class="house-cards">
+      <li class="house" id="h-ferry" data-town="kilnford" data-open="11:00" data-close="21:30">
+        <span class="num">1</span><h2 class="h3">Ferry Lane</h2><p class="gloss">Kilnford &middot; the first house</p>
+        <address>14 Ferry Lane, Kilnford</address>
+        <p class="status"></p>
+        <dl class="hours"><dt>Every day</dt><dd>11:00 to 21:30</dd><dt>Window kitchen</dt><dd>Folding from 10:00</dd></dl>
+        <div class="actions"><a class="btn sm" href="#/reserve?house=ferry">Reserve here</a><a class="link" href="tel:+15550136">Call</a></div>
+      </li>
+      <li class="house" id="h-lantern" data-town="kilnford" data-open="11:30" data-close="22:00">
+        <span class="num">2</span><h2 class="h3">Lantern Row</h2><p class="gloss">Kilnford &middot; a room for twelve</p>
+        <address>3 Lantern Row, Kilnford</address>
+        <p class="status"></p>
+        <dl class="hours"><dt>Every day</dt><dd>11:30 to 22:00</dd><dt>Private room</dt><dd>Up to twelve guests</dd></dl>
+        <div class="actions"><a class="btn sm" href="#/reserve?house=lantern">Reserve here</a><a class="link" href="#/contact?topic=rooms">Book the room</a></div>
+      </li>
+      <li class="house" id="h-arcade" data-town="eastmere" data-open="11:00" data-close="21:00">
+        <span class="num">3</span><h2 class="h3">Eastmere Arcade</h2><p class="gloss">Eastmere &middot; open all day</p>
+        <address>Level 2, Eastmere Arcade, Eastmere</address>
+        <p class="status"></p>
+        <dl class="hours"><dt>Every day</dt><dd>11:00 to 21:00</dd><dt>Takeaway</dt><dd>From the counter</dd></dl>
+        <div class="actions"><a class="btn sm" href="#/reserve?house=arcade">Reserve here</a><a class="link" href="tel:+15550136">Call</a></div>
+      </li>
+      <li class="house" id="h-harbour" data-town="harrow" data-open="11:30" data-close="21:00" data-closed-day="1">
+        <span class="num">4</span><h2 class="h3">Harbour Steps</h2><p class="gloss">Harrow Bay &middot; by the water</p>
+        <address>27 Harbour Steps, Harrow Bay</address>
+        <p class="status"></p>
+        <dl class="hours"><dt>Tuesday to Sunday</dt><dd>11:30 to 21:00</dd><dt>Monday</dt><dd>Closed</dd></dl>
+        <div class="actions"><a class="btn sm" href="#/reserve?house=harbour">Reserve here</a><a class="link" href="tel:+15550136">Call</a></div>
+      </li>
+    </ul>
+    <p class="empty" data-empty="town" hidden>No houses in this town yet.</p>
+  </section>
+</div>
+
+<!-- ======================= RESERVE ======================= -->
+<div data-view="reserve">
+  <section class="page-head">
+    <div class="wrap title"><h1 class="split"><span>Reserve</span><span>a</span><span>Table</span></h1><p class="gloss">We hold tables for fifteen minutes</p></div>
+    <div class="band far wash" aria-hidden="true"><img src="illustrations/far-peaks.svg" alt="" width="1600" height="240"></div>
+  </section>
+  <section class="sec wrap split-grid">
+    <div class="form-card">
+      <form data-form="reserve" novalidate>
+        <div class="fields">
+          <div class="field"><label class="label" for="r-house">House</label><select class="input" id="r-house" name="house" required aria-describedby="r-house-e"><option value="">Choose a house</option><option value="ferry">Ferry Lane, Kilnford</option><option value="lantern">Lantern Row, Kilnford</option><option value="arcade">Eastmere Arcade, Eastmere</option><option value="harbour">Harbour Steps, Harrow Bay</option></select><p class="error" id="r-house-e"></p></div>
+          <div class="field"><label class="label" for="r-size">Guests</label><select class="input" id="r-size" name="size" required aria-describedby="r-size-e"><option value="">How many?</option><option value="1">1 guest</option><option value="2">2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option><option value="5">5 guests</option><option value="6">6 guests</option><option value="7">7 guests</option><option value="8">8 guests</option></select><p class="error" id="r-size-e"></p></div>
+          <div class="field full"><label class="label" for="r-date">Date</label><input class="input" id="r-date" name="date" type="date" required aria-describedby="r-date-e" data-range-underflow="Please choose today or a later date." data-range-overflow="We take bookings up to sixty days ahead."><p class="error" id="r-date-e"></p></div>
+          <fieldset class="field full"><legend class="label">Time</legend>
+            <div class="slots">
+              <label class="slot"><input type="radio" name="time" value="11:30" required aria-describedby="r-time-e" data-value-missing="Please choose a time."><span>11:30</span></label><label class="slot"><input type="radio" name="time" value="12:15"><span>12:15</span></label><label class="slot"><input type="radio" name="time" value="13:00"><span>13:00</span></label><label class="slot"><input type="radio" name="time" value="13:45"><span>13:45</span></label><span class="slots-sep"></span><label class="slot"><input type="radio" name="time" value="17:30"><span>17:30</span></label><label class="slot"><input type="radio" name="time" value="18:15"><span>18:15</span></label><label class="slot"><input type="radio" name="time" value="19:00"><span>19:00</span></label><label class="slot"><input type="radio" name="time" value="19:45"><span>19:45</span></label>
+            </div>
+            <p class="error" id="r-time-e"></p>
+          </fieldset>
+          <div class="field"><label class="label" for="r-name">Name</label><input class="input" id="r-name" name="name" autocomplete="name" required aria-describedby="r-name-e"><p class="error" id="r-name-e"></p></div>
+          <div class="field"><label class="label" for="r-phone">Phone</label><input class="input" id="r-phone" name="phone" type="tel" autocomplete="tel" required aria-describedby="r-phone-e"><p class="error" id="r-phone-e"></p></div>
+          <div class="field full"><label class="label" for="r-email">Email</label><input class="input" id="r-email" name="email" type="email" autocomplete="email" required aria-describedby="r-email-e"><p class="error" id="r-email-e"></p></div>
+          <div class="field full"><label class="label" for="r-note">Anything we should know <i>(optional)</i></label><textarea class="input" id="r-note" name="note" rows="3" placeholder="A high chair, an allergy, a birthday"></textarea></div>
+        </div>
+        <div class="form-foot"><p class="small muted">We confirm by email within the hour.</p><button class="btn" type="submit">Request the table</button></div>
+      </form>
+      <div class="success" data-success="reserve" hidden tabindex="-1">
+        <svg class="seal" aria-hidden="true"><use href="#i-seal"/></svg>
+        <h2 class="split"><span>Table</span><span>Requested</span></h2>
+        <p>We have your request for <span data-echo="size"></span> at <span data-echo="house"></span> on <span data-echo="date"></span> at <span data-echo="time"></span>. A confirmation will reach you within the hour.</p>
+        <div class="actions center"><button class="link" type="button" data-again>Make another request</button></div>
+      </div>
+    </div>
+    <aside class="aside">
+      <div><h2 class="h3">Walking in</h2><p>Half of every room is kept for walk-ins. Leave your name at the door and we will call you back when your table is ready.</p></div>
+      <div><h2 class="h3">Nine or more</h2><p>Lantern Row has a private room for up to twelve. <a href="#/contact?topic=rooms">Write to us</a> and we will plan the menu with you.</p></div>
+      <div><h2 class="h3">Changing a booking</h2><p>Reply to your confirmation or call <a href="tel:+15550136">+1 555 0136</a>. There is never a charge for cancelling.</p></div>
+    </aside>
+  </section>
+</div>
+
+<!-- ======================= GIFTS ======================= -->
+<div data-view="gifts">
+  <section class="page-head">
+    <div class="wrap title"><h1 class="split"><span>To</span><span>Carry</span><span>Home</span></h1><p class="gloss">Gift boxes and jars from our kitchen</p></div>
+    <div class="band far wash" aria-hidden="true"><img src="illustrations/far-peaks.svg" alt="" width="1600" height="240"></div>
+  </section>
+  <section class="sec wrap">
+    <h2 class="sr">All gifts</h2>
+    <ul class="cards" id="gift-list">
+      <li class="card reveal" style="--i:0"><span class="fan"><img src="images/dumplings.svg" alt="A plate of soup dumplings" width="400" height="400"></span><p class="gloss">Frozen &middot; thirty pieces</p><h3 class="h3">Soup dumplings to steam at home</h3><p>Folded the same morning and frozen at once. Eight minutes in a steamer.</p><span class="price">$38</span><a class="btn sm" href="#/gifts?gift=dumplings&amp;at=order">Order this</a></li>
+      <li class="card reveal" style="--i:1"><span class="fan"><img src="images/chilli-jar.svg" alt="A glass jar of red chilli oil tied with string" width="400" height="400"></span><p class="gloss">Jar &middot; 200 ml</p><h3 class="h3">Chilli oil</h3><p>The oil from our wontons: warm, fragrant, more crunch than fire.</p><span class="price">$12</span><a class="btn sm" href="#/gifts?gift=chilli&amp;at=order">Order this</a></li>
+      <li class="card reveal" style="--i:2"><span class="fan"><img src="images/tea.svg" alt="A clay teapot beside two small celadon cups" width="400" height="400"></span><p class="gloss">Tin and two cups</p><h3 class="h3">Tea for two</h3><p>A tin of mountain oolong with two celadon cups to drink it from.</p><span class="price">$46</span><a class="btn sm" href="#/gifts?gift=tea&amp;at=order">Order this</a></li>
+      <li class="card reveal" style="--i:3"><span class="fan"><img src="images/gift-box.svg" alt="A paper gift box tied with red cord" width="400" height="400"></span><p class="gloss">Winter only</p><h3 class="h3">The new year box</h3><p>Dumplings, chilli oil and pine nut biscuits, wrapped in paper and red cord.</p><span class="price">$68</span><a class="btn sm" href="#/gifts?gift=newyear&amp;at=order">Order this</a></li>
+    </ul>
+  </section>
+  <section class="sec tight wrap" id="order">
+    <div class="title reveal"><h2 class="split"><span>Order</span><span>a</span><span>Gift</span></h2><p class="gloss">Collect from any house, two days from now</p></div>
+    <div class="form-card narrow">
+      <form data-form="order" novalidate>
+        <div class="fields">
+          <div class="field full"><label class="label" for="o-gift">Gift</label><select class="input" id="o-gift" name="gift" required aria-describedby="o-gift-e"><option value="">Choose a gift</option><option value="dumplings">Soup dumplings to steam at home, $38</option><option value="chilli">Chilli oil, $12</option><option value="tea">Tea for two, $46</option><option value="newyear">The new year box, $68</option></select><p class="error" id="o-gift-e"></p></div>
+          <div class="field"><label class="label" for="o-qty">Quantity</label><input class="input" id="o-qty" name="qty" type="number" min="1" max="20" value="1" required aria-describedby="o-qty-e" data-range-overflow="For more than twenty, write to us."><p class="error" id="o-qty-e"></p></div>
+          <div class="field"><label class="label" for="o-date">Collect on</label><input class="input" id="o-date" name="date" type="date" required aria-describedby="o-date-e" data-range-underflow="We need two days to fold and pack your order."><p class="error" id="o-date-e"></p></div>
+          <div class="field full"><label class="label" for="o-house">Collect from</label><select class="input" id="o-house" name="house" required aria-describedby="o-house-e"><option value="">Choose a house</option><option value="ferry">Ferry Lane, Kilnford</option><option value="lantern">Lantern Row, Kilnford</option><option value="arcade">Eastmere Arcade, Eastmere</option><option value="harbour">Harbour Steps, Harrow Bay</option></select><p class="error" id="o-house-e"></p></div>
+          <div class="field"><label class="label" for="o-name">Name</label><input class="input" id="o-name" name="name" autocomplete="name" required aria-describedby="o-name-e"><p class="error" id="o-name-e"></p></div>
+          <div class="field"><label class="label" for="o-email">Email</label><input class="input" id="o-email" name="email" type="email" autocomplete="email" required aria-describedby="o-email-e"><p class="error" id="o-email-e"></p></div>
+          <div class="field full"><label class="label" for="o-card">A line for the card <i>(optional)</i></label><input class="input" id="o-card" name="card" maxlength="120"></div>
+        </div>
+        <div class="form-foot"><p class="small muted">Pay when you collect.</p><button class="btn" type="submit">Place the order</button></div>
+      </form>
+      <div class="success" data-success="order" hidden tabindex="-1">
+        <svg class="seal" aria-hidden="true"><use href="#i-seal"/></svg>
+        <h2 class="split"><span>Order</span><span>Received</span></h2>
+        <p><span data-echo="qty"></span> &times; <span data-echo="gift"></span>, ready at <span data-echo="house"></span> on <span data-echo="date"></span>. We will write when it is packed.</p>
+        <div class="actions center"><button class="link" type="button" data-again>Order another gift</button></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= STORY ======================= -->
+<div data-view="story">
+  <section class="sec">
+    <div class="wrap story-grid">
+      <div class="inscription">
+        <h1 class="vtitle"><span>Six stools,</span><span style="--i:1">one window kitchen</span></h1>
+        <p class="vgloss">Ferry Lane &middot; 1979</p>
+        <svg class="seal" aria-hidden="true"><use href="#i-seal"/></svg>
+      </div>
+      <div class="reveal">
+        <p class="gloss">Our story</p>
+        <p class="lead">Lo Wen opened a counter on Ferry Lane in the spring of 1979, with six stools, one steamer stack and a window onto the street so people could watch him fold.</p>
+        <p class="muted">The window is still there. So is the rule he made that first year: every dumpling is folded the same way on a quiet Tuesday as on New Year's Eve. Today forty cooks fold in four houses, and each of them learned at that window.</p>
+        <div class="actions"><a class="btn" href="#/locations">Visit Ferry Lane</a></div>
+      </div>
+    </div>
+  </section>
+  <div class="band wash reveal" aria-hidden="true"><img src="illustrations/ridge.svg" alt="" width="1600" height="280"></div>
+  <section class="sec wrap">
+    <div class="title reveal"><h2 class="split"><span>Five</span><span>Steps</span></h2><p class="gloss">The same, every time</p></div>
+    <ol class="cells list reveal">
+      <li><span class="num">I</span><h3 class="h3">Knead</h3><p>Flour and warm water, rested for an hour under cloth.</p></li>
+      <li><span class="num">II</span><h3 class="h3">Roll</h3><p>Six centimetres across, thinner at the edge than the middle.</p></li>
+      <li><span class="num">III</span><h3 class="h3">Fill</h3><p>Twenty-one grams, weighed, with a cube of jellied broth.</p></li>
+      <li><span class="num">IV</span><h3 class="h3">Fold</h3><p>Eighteen pleats, closed with a small twist at the top.</p></li>
+      <li><span class="num">V</span><h3 class="h3">Steam</h3><p>Five minutes over a fierce boil, straight to the table.</p></li>
+    </ol>
+  </section>
+  <section class="sec tight wrap quote-block">
+    <figure class="fan reveal"><img src="images/wrappers.svg" alt="Round wrappers, a rolling pin and one folded dumpling on a floured table" width="400" height="400"></figure>
+    <blockquote class="reveal">A dumpling should be folded the same way on a quiet Tuesday as on New Year's Eve.<footer>Lo Wen, founder</footer></blockquote>
+  </section>
+  <section class="sec tight wrap">
+    <div class="title reveal"><h2 class="split"><span>The</span><span>Years</span></h2><p class="gloss">From one counter to four houses</p></div>
+    <ol class="timeline">
+      <li class="reveal"><span class="year">1979</span><div><h3 class="h3">A counter on Ferry Lane</h3><p>Six stools, one steamer stack, a window onto the street.</p></div></li>
+      <li class="reveal"><span class="year">1988</span><div><h3 class="h3">Lantern Row</h3><p>A second house across the town, with a room upstairs for families.</p></div></li>
+      <li class="reveal"><span class="year">2004</span><div><h3 class="h3">The folding school</h3><p>Every cook spends three months at the Ferry Lane window before folding for guests.</p></div></li>
+      <li class="reveal"><span class="year">2019</span><div><h3 class="h3">Harbour Steps</h3><p>A long room by the water in Harrow Bay.</p></div></li>
+      <li class="reveal"><span class="year">2026</span><div><h3 class="h3">Eastmere Arcade</h3><p>The fourth house, open from late morning until evening.</p></div></li>
+    </ol>
+  </section>
+</div>
+
+<!-- ======================= NEWS ======================= -->
+<div data-view="news">
+  <section class="page-head">
+    <div class="wrap title"><h1 class="split"><span>Latest</span><span>News</span></h1><p class="gloss">Seasons, openings and gatherings</p></div>
+    <div class="band far wash" aria-hidden="true"><img src="illustrations/far-peaks.svg" alt="" width="1600" height="240"></div>
+  </section>
+  <section class="sec wrap">
+    <div class="filters">
+      <div class="chips" data-filter="kind" role="group" aria-label="Kind of news">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-value="seasonal" aria-pressed="false">Seasonal</button>
+        <button class="chip" type="button" data-value="notice" aria-pressed="false">Notices</button>
+        <button class="chip" type="button" data-value="gatherings" aria-pressed="false">Gatherings</button>
+      </div>
+      <p class="count" data-count="kind" data-one="story" data-many="stories" aria-live="polite"></p>
+    </div>
+    <ul class="news-list" data-list="news">
+      <li data-kind="seasonal"><a class="news-row" href="#/post"><time class="date" datetime="2026-11-12"><span>2026</span><b>Nov 12</b></time><span class="fan"><img src="images/dumplings.svg" alt="" width="400" height="400"></span><span><span class="kind">Seasonal</span><span class="h3">The crab dumplings are back for winter</span><span class="muted">The first crabs of the season arrived on Monday. Until the end of February, every house folds them by hand.</span></span><span class="link">Read</span></a></li>
+    </ul>
+    <p class="empty" data-empty="kind" hidden>Nothing here yet. <button class="link" type="button" data-reset="kind">Show all news</button></p>
+  </section>
+</div>
+
+<!-- ======================= POST ======================= -->
+<div data-view="post">
+  <article class="sec">
+    <header class="wrap article-head">
+      <time class="date" datetime="2026-11-12"><span>2026</span><b>Nov 12</b></time>
+      <p class="gloss" style="margin:0 0 1em">Seasonal</p>
+      <h1 class="post-title">The crab dumplings are back for winter</h1>
+      <p class="dek">The first crabs of the season arrived on Monday. Until the end of February, every house folds them by hand, a few baskets at a time.</p>
+    </header>
+    <figure class="fan article-fan reveal"><img src="images/dumplings.svg" alt="Crab and pork soup dumplings on a celadon plate" width="400" height="400"></figure>
+    <div class="wrap prose">
+      <p>Every autumn we wait for the same message from the boats in Harrow Bay: the water has turned cold and the crabs are full. This year it came on a Sunday night, and by Monday morning the kitchen at Ferry Lane smelled of ginger and crab.</p>
+      <p>Picking the roe is slow work. Two cooks spend the morning at it, and the roe is folded into the pork filling the same day, never frozen. That is why we only make a few baskets at a time, and why they sometimes run out before dinner.</p>
+      <h2>How to order them</h2>
+      <p>Crab and pork soup dumplings are on the menu at all four houses until the end of February. Ask for them when you sit down; we cannot hold them with a reservation.</p>
+      <ul><li>Ten to a basket, $19</li><li>Best with a pot of mountain oolong</li><li>Not suitable for anyone with a shellfish allergy</li></ul>
+      <blockquote>The roe goes into the filling the same day it is picked. Nothing else tastes like the first week.</blockquote>
+      <p>We will write again when the season ends. Until then, come early.</p>
+    </div>
+    <div class="wrap actions center"><a class="link" href="#/news">All news</a><a class="btn" href="#/reserve">Reserve a table</a></div>
+  </article>
+</div>
+
+<!-- ======================= CONTACT ======================= -->
+<div data-view="contact">
+  <section class="page-head">
+    <div class="wrap title"><h1 class="split"><span>Write</span><span>to</span><span>Us</span></h1><p class="gloss">Rooms, gifts, press and kind words</p></div>
+    <div class="band far wash" aria-hidden="true"><img src="illustrations/far-peaks.svg" alt="" width="1600" height="240"></div>
+  </section>
+  <section class="sec wrap split-grid">
+    <div class="form-card">
+      <form data-form="contact" novalidate>
+        <div class="fields">
+          <div class="field full"><label class="label" for="c-topic">About</label><select class="input" id="c-topic" name="topic" required aria-describedby="c-topic-e"><option value="">Choose a topic</option><option value="general">A general question</option><option value="rooms">The private room or a large group</option><option value="gifts">Gift orders</option><option value="press">Press</option><option value="feedback">Something about your visit</option></select><p class="error" id="c-topic-e"></p></div>
+          <div class="field"><label class="label" for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-e"><p class="error" id="c-name-e"></p></div>
+          <div class="field"><label class="label" for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-e"><p class="error" id="c-email-e"></p></div>
+          <div class="field full"><label class="label" for="c-message">Message</label><textarea class="input" id="c-message" name="message" rows="5" required aria-describedby="c-message-e"></textarea><p class="error" id="c-message-e"></p></div>
+          <label class="check full"><input type="checkbox" name="consent" required aria-describedby="c-consent-e" data-value-missing="Please agree so we can reply."><span>Use my details to answer this message, as described in the <a href="#/privacy">privacy note</a>.</span><span class="error" id="c-consent-e"></span></label>
+        </div>
+        <div class="form-foot"><p class="small muted">We reply within two working days.</p><button class="btn" type="submit">Send</button></div>
+      </form>
+      <div class="success" data-success="contact" hidden tabindex="-1">
+        <svg class="seal" aria-hidden="true"><use href="#i-seal"/></svg>
+        <h2 class="split"><span>Thank</span><span>You</span></h2>
+        <p>Thank you, <span data-echo="name"></span>. We will reply to <span data-echo="email"></span> within two working days.</p>
+        <div class="actions center"><button class="link" type="button" data-again>Write another</button></div>
+      </div>
+    </div>
+    <aside class="aside">
+      <div><h2 class="h3">General</h2><p><a href="mailto:hello@mistpine.example">hello@mistpine.example</a><br><a href="tel:+15550136">+1 555 0136</a></p></div>
+      <div><h2 class="h3">Gift orders</h2><p><a href="mailto:gifts@mistpine.example">gifts@mistpine.example</a></p></div>
+      <div><h2 class="h3">Press</h2><p><a href="mailto:press@mistpine.example">press@mistpine.example</a></p></div>
+    </aside>
+  </section>
+</div>
+
+<!-- ======================= FAQ ======================= -->
+<div data-view="faq">
+  <section class="page-head">
+    <div class="wrap title"><h1 class="split"><span>Before</span><span>You</span><span>Come</span></h1><p class="gloss">What we are asked most</p></div>
+    <div class="band far wash" aria-hidden="true"><img src="illustrations/far-peaks.svg" alt="" width="1600" height="240"></div>
+  </section>
+  <section class="sec wrap faq">
+    <nav class="faq-nav" aria-label="Questions"><a href="#q-tables">Tables</a><a href="#q-food">Food</a><a href="#q-gifts">Gifts</a></nav>
+    <div>
+      <section class="faq-group" id="q-tables"><h2 class="h3">Tables</h2>
+        <details><summary>Do you take walk-ins?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes. Half of every room is kept for walk-ins. Leave your name at the door and we will call you when a table is ready.</p></details>
+        <details><summary>How long do you hold a booking?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Fifteen minutes. If you are running late, call the house and we will do our best.</p></details>
+        <details><summary>Can we bring a large group?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Up to eight can book online. For nine to twelve, the private room at Lantern Row is yours; <a href="#/contact?topic=rooms">write to us</a>.</p></details>
+      </section>
+      <section class="faq-group" id="q-food"><h2 class="h3">Food</h2>
+        <details><summary>What can vegetarians eat?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>About a third of the menu. Use the vegetarian filter on the <a href="#/menu">menu</a>, and tell your server so the steamer is wiped first.</p></details>
+        <details><summary>Do you cater for allergies?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Ask your server before you order. Our kitchens use wheat, soy, sesame, egg and shellfish every day, so we cannot promise any dish is free of them.</p></details>
+        <details><summary>Can I watch the folding?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Every house has a window kitchen facing the room or the street. The best seats are at Ferry Lane.</p></details>
+      </section>
+      <section class="faq-group" id="q-gifts"><h2 class="h3">Gifts</h2>
+        <details><summary>How long do the frozen dumplings keep?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Three months in the freezer. Steam them straight from frozen for eight minutes.</p></details>
+        <details><summary>Do you deliver?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Not yet. Every gift is collected from the house you choose, two days after you order.</p></details>
+      </section>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= LEGAL ======================= -->
+<div data-view="privacy">
+  <section class="page-head"><div class="wrap title"><h1 class="split"><span>Privacy</span></h1><p class="gloss">Last updated 1 November 2026</p></div></section>
+  <section class="sec wrap legal">
+    <p>This note explains what we do with the details you give us through this website. Replace it with your own policy before you publish.</p>
+    <h2>What we collect</h2><p>Your name, email, phone number and anything you write in a form, only when you send it to us.</p>
+    <h2>Why</h2><p>To hold your table, prepare your order or answer your message. We do not sell your details or use them for advertising.</p>
+    <h2>How long</h2><p>Booking details are deleted ninety days after your visit. Messages are kept for one year.</p>
+    <h2>Your choices</h2><p>Write to <a href="mailto:hello@mistpine.example">hello@mistpine.example</a> to see, correct or delete what we hold about you.</p>
+  </section>
+</div>
+<div data-view="terms">
+  <section class="page-head"><div class="wrap title"><h1 class="split"><span>Terms</span></h1><p class="gloss">Last updated 1 November 2026</p></div></section>
+  <section class="sec wrap legal">
+    <p>These terms cover bookings and gift orders made through this website. Replace them with your own before you publish.</p>
+    <h2>Bookings</h2><p>Tables are held for fifteen minutes. There is no charge for cancelling.</p>
+    <h2>Gift orders</h2><p>Orders are paid when collected and ready two days after ordering. Uncollected orders are kept for three days.</p>
+    <h2>Prices</h2><p>Prices on the menu include tax. Seasonal dishes are available while they last.</p>
+  </section>
+</div>
+
+<!-- ======================= 404 ======================= -->
+<div data-view="404">
+  <section class="wrap notfound">
+    <div class="title"><h1 class="split"><span>Lost</span><span>in</span><span>the</span><span>Mist</span></h1><p class="gloss">The page you asked for is not here</p></div>
+    <div class="actions center"><a class="btn" href="#/">Back to the house</a><a class="link" href="#/menu">See the menu</a></div>
+  </section>
+  <div class="band wash" aria-hidden="true"><img src="illustrations/ridge.svg" alt="" width="1600" height="280"></div>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="band far wash" aria-hidden="true"><img src="illustrations/far-peaks.svg" alt="" width="1600" height="240"></div>
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <a class="brand" href="#/"><svg class="seal" aria-hidden="true"><use href="#i-seal"/></svg><span>Mistpine</span></a>
+      <p>Dumplings folded by hand and tea poured slowly, in four houses between the river and the harbour since 1979.</p>
+      <form class="inline-form" data-form="letters" novalidate>
+        <div class="field"><label class="sr" for="l-email">Email for seasonal letters</label><input class="input" id="l-email" name="email" type="email" autocomplete="email" placeholder="Your email, for a letter each season" required aria-describedby="l-email-e"><p class="error" id="l-email-e"></p></div>
+        <button class="btn" type="submit">Join</button>
+      </form>
+      <p class="muted" data-success="letters" hidden tabindex="-1">Thank you. The next letter comes with the first crabs of winter.</p>
+    </div>
+    <nav aria-label="Explore"><h2 class="foot-h">Explore</h2><ul><li><a href="#/menu">Menu</a></li><li><a href="#/gifts">Gifts</a></li><li><a href="#/story">Our story</a></li><li><a href="#/news">News</a></li><li><a href="#/faq">Questions</a></li></ul></nav>
+    <div><h2 class="foot-h">Houses</h2><ul><li><a href="#/locations?town=kilnford">Ferry Lane</a></li><li><a href="#/locations?town=kilnford">Lantern Row</a></li><li><a href="#/locations?town=eastmere">Eastmere Arcade</a></li><li><a href="#/locations?town=harrow">Harbour Steps</a></li></ul></div>
+    <div><h2 class="foot-h">Write to us</h2><address><a href="mailto:hello@mistpine.example">hello@mistpine.example</a><br><a href="tel:+15550136">+1 555 0136</a><br><a href="#/contact">Contact form</a></address></div>
+  </div>
+  <div class="wrap foot-bottom"><p>&copy; 2026 Mistpine Dumpling House</p><nav aria-label="Legal"><a href="#/privacy">Privacy</a><a href="#/terms">Terms</a></nav></div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Content as data: news rows are written once here (the newest is in the HTML, so it shows without JavaScript); the home lists copy rows and gifts ---------- */
+  const NEWS = [
+    { kind: "notice", date: "2026-11-03", title: "Winter hours at Harbour Steps", text: "From December the room by the water closes at eight on weekdays.", route: "locations?town=harrow", img: "images/house.svg" },
+    { kind: "gatherings", date: "2026-10-21", title: "Folding mornings for children", text: "Saturdays at Ferry Lane, eight places, flour on everything.", route: "post", img: "images/wrappers.svg" },
+    { kind: "seasonal", date: "2026-10-02", title: "New year boxes, ordered from today", text: "Dumplings, chilli oil and pine nut biscuits, packed by hand.", route: "gifts", img: "images/gift-box.svg" },
+    { kind: "notice", date: "2026-09-14", title: "Lantern Row reopens after a quiet refit", text: "New screens, the same stools, and a slightly bigger window kitchen.", route: "locations?town=kilnford", img: "images/buns.svg" },
+    { kind: "gatherings", date: "2026-08-30", title: "Tea evenings with the oolong growers", text: "Four evenings, four gardens, one pot at a time.", route: "post", img: "images/tea.svg" },
+  ];
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const KINDS = { seasonal: "Seasonal", notice: "Notice", gatherings: "Gatherings" };
+  const dateBlock = (iso) => { const [y, m, d] = iso.split("-"); return `<time class="date" datetime="${iso}"><span>${y}</span><b>${MONTHS[m - 1]} ${Number(d)}</b></time>`; };
+  const newsRow = (n) => `<li data-kind="${n.kind}"><a class="news-row" href="#/${n.route}">${dateBlock(n.date)}<span class="fan"><img src="${n.img}" alt="" width="400" height="400"></span><span><span class="kind">${KINDS[n.kind]}</span><span class="h3">${n.title}</span><span class="muted">${n.text}</span></span><span class="link">Read</span></a></li>`;
+  const newsList = $("[data-list='news']");
+  newsList.insertAdjacentHTML("beforeend", NEWS.map(newsRow).join(""));
+  $("[data-list='home-news']").innerHTML = newsList.firstElementChild.outerHTML + NEWS.slice(0, 2).map(newsRow).join("");
+  $("[data-list='home-gifts']").innerHTML = $$("#gift-list > li").slice(0, 3).map((li) => li.outerHTML).join("");
+
+  /* ---------- Theme: rice paper (light) and ink night (dark); the system setting is the default ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to rice paper" : "Switch to ink night");
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("mistpine-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("mistpine-theme", next);
+  });
+  systemDark.addEventListener("change", (event) => { if (!store.get("mistpine-theme")) applyTheme(event.matches ? "dark" : "light"); });
+
+  /* ---------- Ink loader: once per visit, and never with reduced motion ---------- */
+  const loader = $(".loader");
+  let seen = false;
+  try { seen = sessionStorage.getItem("ink-loader") === "1"; sessionStorage.setItem("ink-loader", "1"); } catch { /* sandboxed frame */ }
+  if (seen || matchMedia("(prefers-reduced-motion: reduce)").matches) loader.classList.add("done");
+  else { root.style.setProperty("--intro", "1.4s"); setTimeout(() => loader.classList.add("done"), 2600); }
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Mistpine: dumplings folded by hand, tea poured slowly",
+    menu: "Menu · Mistpine",
+    dish: "Pork soup dumplings · Mistpine",
+    locations: "Locations · Mistpine",
+    reserve: "Reserve a table · Mistpine",
+    gifts: "Gifts · Mistpine",
+    story: "Our story · Mistpine",
+    news: "News · Mistpine",
+    post: "The crab dumplings are back for winter · Mistpine",
+    contact: "Write to us · Mistpine",
+    faq: "Questions · Mistpine",
+    privacy: "Privacy · Mistpine",
+    terms: "Terms · Mistpine",
+    "404": "Page not found · Mistpine",
+  };
+  /* Which header link stays lit for each child view */
+  const section = { dish: "menu", post: "news" };
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function preselect(id, value) {
+    const select = document.getElementById(id);
+    if (value && select && select.querySelector(`option[value="${CSS.escape(value)}"]`)) select.value = value;
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    const active = section[name] || name;
+    $$(".nav a, .sheet-links a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === active) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "menu") press("course", p.get("course"));
+    if (name === "locations") press("town", p.get("town"));
+    if (name === "news") press("kind", p.get("kind"));
+    if (name === "reserve") preselect("r-house", p.get("house"));
+    if (name === "gifts") preselect("o-gift", p.get("gift"));
+    if (name === "contact") preselect("c-topic", p.get("topic"));
+    const at = p.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+    splitLines();
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = (current && current.querySelector(href)) || document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header: a hairline once the page scrolls; the menu sheet whenever the links do not fit on one line ---------- */
+  const header = $(".site-header");
+  const nav = $(".nav", header);
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  function fitNav() {
+    header.classList.remove("compact");
+    if (getComputedStyle(nav).display !== "none" && nav.scrollWidth > nav.clientWidth + 1) header.classList.add("compact");
+  }
+  window.addEventListener("resize", fitNav);
+  document.fonts.ready.then(fitNav);
+  fitNav();
+  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- Split titles: a word that wraps to a new line loses its rule ---------- */
+  function splitLines() {
+    $$(".split").forEach((title) => {
+      let top = null;
+      [...title.children].forEach((word) => {
+        word.classList.remove("line-start");
+        if (top !== null && word.offsetTop > top + 2) word.classList.add("line-start");
+        top = word.offsetTop;
+      });
+    });
+  }
+  window.addEventListener("resize", splitLines);
+  document.fonts.ready.then(splitLines);
+
+  /* ---------- Reveal: slow fades as things come into view (visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    $$(".reveal:not(.in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("in")));
+  }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("in")), 2500);
+
+  /* ---------- Signature dishes: tabs; arrow keys move between them ---------- */
+  const tabs = $$("[role='tab']");
+  function selectTab(id, focus) {
+    const chosen = tabs.find((tab) => tab.dataset.tab === id) || tabs[0];
+    tabs.forEach((tab) => {
+      const on = tab === chosen;
+      tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+      document.getElementById(tab.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) chosen.focus();
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => selectTab(tab.dataset.tab));
+    tab.addEventListener("keydown", (event) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      selectTab(tabs[(i + step + tabs.length) % tabs.length].dataset.tab, true);
+    });
+  });
+  selectTab(null);
+
+  /* ---------- Filters: the menu by course and diet, houses by town, news by kind; each with a count and an empty state ---------- */
+  const vegOnly = $("#veg-only");
+  const pressed = (group) => $(`[data-filter="${group}"] [aria-pressed="true"]`)?.dataset.value || "all";
+  function setCount(key, shown) {
+    const count = $(`[data-count="${key}"]`);
+    count.textContent = `${shown} ${shown === 1 ? count.dataset.one : count.dataset.many}`;
+    $(`[data-empty="${key}"]`).hidden = shown > 0;
+  }
+  function refresh(group) {
+    const value = pressed(group);
+    let shown = 0;
+    if (group === "course") {
+      const veg = vegOnly.getAttribute("aria-pressed") === "true";
+      $$(".course").forEach((course) => {
+        let n = 0;
+        $$(".dish", course).forEach((dish) => {
+          const match = (value === "all" || course.dataset.course === value) && (!veg || dish.hasAttribute("data-veg"));
+          dish.hidden = !match;
+          if (match) n += 1;
+        });
+        course.hidden = n === 0;
+        shown += n;
+      });
+      setCount("menu", shown);
+      return;
+    }
+    const view = $(`[data-filter="${group}"]`).closest("[data-view]");
+    $$(`[data-${group}]:not([data-filter])`, view).forEach((item) => {
+      const match = value === "all" || item.dataset[group] === value;
+      item.hidden = !match;
+      if (match) shown += 1;
+    });
+    setCount(group, shown);
+  }
+  function press(group, value) {
+    const chips = $$(`[data-filter="${group}"] [data-value]`);
+    const chosen = chips.some((chip) => chip.dataset.value === value) ? value : "all";
+    chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.value === chosen)));
+    refresh(group);
+  }
+  $$("[data-filter]").forEach((bar) => $$("[data-value]", bar).forEach((chip) => chip.addEventListener("click", () => press(bar.dataset.filter, chip.dataset.value))));
+  vegOnly.addEventListener("click", () => {
+    vegOnly.setAttribute("aria-pressed", String(vegOnly.getAttribute("aria-pressed") !== "true"));
+    refresh("course");
+  });
+  $$("[data-reset]").forEach((button) => button.addEventListener("click", () => {
+    if (button.dataset.reset === "menu") { vegOnly.setAttribute("aria-pressed", "false"); press("course", "all"); } else press(button.dataset.reset, "all");
+  }));
+  ["course", "town", "kind"].forEach(refresh);
+
+  /* ---------- Houses: open now or closed, from each card's hours ---------- */
+  const minutes = (time) => { const [h, m] = time.split(":").map(Number); return h * 60 + m; };
+  function houseStatus() {
+    const now = new Date();
+    const mins = now.getHours() * 60 + now.getMinutes();
+    $$("[data-open]").forEach((house) => {
+      const closedToday = house.dataset.closedDay === String(now.getDay());
+      const open = !closedToday && mins >= minutes(house.dataset.open) && mins < minutes(house.dataset.close);
+      const status = $(".status", house);
+      status.textContent = open ? `Open now, until ${house.dataset.close}` : closedToday ? "Closed today" : `Closed now, opens at ${house.dataset.open}`;
+      status.classList.toggle("open", open);
+    });
+  }
+  houseStatus();
+  setInterval(houseStatus, 60000);
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const iso = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  const inDays = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return iso(d); };
+  $("#r-date").min = inDays(0);
+  $("#r-date").max = inDays(60);
+  $("#o-date").min = inDays(2);
+  const messages = {
+    valueMissing: "Please fill this in.",
+    typeMismatch: "Please enter a valid email address.",
+    rangeUnderflow: "Please choose a later date.",
+    rangeOverflow: "Please choose an earlier date.",
+    badInput: "Please enter a number.",
+  };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    const fallback = problem === "valueMissing" && (field.type === "radio" || field.tagName === "SELECT") ? "Please choose one." : messages[problem];
+    error.textContent = problem ? field.dataset[problem] || fallback : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  function readable(form, name) {
+    const field = form.elements[name];
+    if (!field) return "";
+    if (field.tagName === "SELECT") return field.selectedOptions[0]?.textContent.replace(/, \$\d+$/, "") ?? "";
+    if (field.type === "date" && field.value) {
+      const [y, m, d] = field.value.split("-").map(Number);
+      return new Date(y, m - 1, d).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
+    }
+    return field.value;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("[aria-describedby]", form);
+    fields.forEach((field) => field.addEventListener(field.tagName === "SELECT" || field.type === "checkbox" ? "change" : "blur", () => checkField(field)));
+    form.addEventListener("change", (event) => {
+      if (event.target.type === "radio") { const first = $(`[name="${event.target.name}"][aria-describedby]`, form); if (first) checkField(first); }
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending";
+      setTimeout(() => {
+        $$("[data-echo]", success).forEach((el) => { el.textContent = readable(form, el.dataset.echo); });
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+        button.disabled = false;
+        button.textContent = label;
+      }, 700);
+    });
+    $("[data-again]", success)?.addEventListener("click", () => {
+      form.reset();
+      fields.forEach((field) => { field.removeAttribute("aria-invalid"); const error = document.getElementById(field.getAttribute("aria-describedby")); if (error) error.textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      $("input, select", form).focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

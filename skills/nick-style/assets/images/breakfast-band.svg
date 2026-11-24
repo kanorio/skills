@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+<defs>
+<pattern id="tiles" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="#ffd0e3"/><path d="M0 0h40v40" fill="none" stroke="#ffb3cf" stroke-width="3"/></pattern>
+<pattern id="cloth" width="48" height="48" patternUnits="userSpaceOnUse"><rect width="48" height="48" fill="#fff"/><rect width="24" height="24" fill="#ff5a4f"/><rect x="24" y="24" width="24" height="24" fill="#ff5a4f"/><rect x="24" width="24" height="24" fill="#ffb0a8"/><rect y="24" width="24" height="24" fill="#ffb0a8"/></pattern>
+<g id="eye"><circle r="11" fill="#fff" stroke="#1d1340" stroke-width="4.5"/><circle cx="2" cy="1" r="5.5" fill="#1d1340"/><circle cx="3.8" cy="-1.4" r="2" fill="#fff"/></g>
+<path id="note" d="M0 0v-26l18-6v26" fill="none" stroke="#1d1340" stroke-width="4" stroke-linejoin="round"/>
+</defs>
+<rect width="640" height="360" fill="url(#tiles)"/>
+<g stroke="#1d1340" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<rect x="430" y="34" width="150" height="110" rx="8" fill="#8fe0ff"/>
+<path d="M505 34v110M430 89h150" fill="none"/>
+<circle cx="130" cy="96" r="38" fill="#fff"/>
+<path d="M130 72v24l16 10" fill="none" stroke-width="4.5"/>
+</g>
+<circle cx="560" cy="58" r="16" fill="#fff3a0"/>
+<path d="M0 262h640v98H0z" fill="url(#cloth)"/>
+<path d="M0 262h640" stroke="#1d1340" stroke-width="5"/>
+<g fill="#1d1340"><use href="#note" x="120" y="190"/><use href="#note" x="520" y="214"/><use href="#note" x="420" y="60"/></g>
+<g fill="#1d1340"><ellipse cx="118" cy="190" rx="8" ry="6"/><ellipse cx="136" cy="184" rx="8" ry="6"/><ellipse cx="518" cy="214" rx="8" ry="6"/><ellipse cx="536" cy="208" rx="8" ry="6"/><ellipse cx="418" cy="60" rx="8" ry="6"/><ellipse cx="436" cy="54" rx="8" ry="6"/></g>
+<g stroke="#1d1340" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M196 270v-90c-26-4-34-30-20-50 14-20 44-22 58-10 16-12 46-10 58 10 14 22 4 46-20 50v90z" fill="#e8a45a"/>
+<path d="M208 260v-84c-18-4-24-22-14-36s34-16 44-6c12-10 34-8 42 6 10 16 4 32-14 36v84z" fill="#ffe2a8" stroke="none"/>
+<path d="M184 228l90 26" fill="none" stroke-width="6"/>
+<path d="M180 206c-8 4-12 16-6 26 6 12 22 14 30 4 8-12 0-28-12-30z" fill="#ff7a1a"/>
+<path d="M298 268c-30 0-52-14-50-30 2-18 22-20 34-30 8-16 34-22 52-12 18-8 42 2 46 20 20 4 30 18 26 32-4 14-22 20-40 20z" fill="#fff"/>
+<circle cx="340" cy="230" r="24" fill="#ffc21a"/>
+<rect x="372" y="236" width="62" height="34" rx="8" fill="#61c9ff"/>
+<path d="M372 248h62" fill="none"/>
+<path d="M394 214l18 22M424 210l-10 26" fill="none" stroke-width="4"/>
+<path d="M460 270v-108l20-26h60l20 26v108z" fill="#fff"/>
+<path d="M480 136l20-24h40l-20 24z" fill="#4fb6ff"/>
+<path d="M460 162h100v40H460z" fill="#4fb6ff"/>
+<path d="M456 224c-24-2-40 6-50 20" fill="none"/>
+<path d="M398 248l20-8" fill="none"/>
+<circle cx="398" cy="252" r="9" fill="#d7dbe6"/>
+<path d="M404 246l50-26" fill="none" stroke="#d7dbe6" stroke-width="7"/>
+</g>
+<use href="#eye" x="222" y="196"/><use href="#eye" x="252" y="196"/>
+<path d="M228 220c6 6 14 6 20 0" fill="none" stroke="#1d1340" stroke-width="4" stroke-linecap="round"/>
+<use href="#eye" x="330" y="226"/><use href="#eye" x="354" y="226"/>
+<path d="M334 244c6 5 12 5 18 0" fill="none" stroke="#1d1340" stroke-width="4" stroke-linecap="round"/>
+<use href="#eye" x="494" y="224"/><use href="#eye" x="526" y="224"/>
+<path d="M500 246c8 12 18 12 26 0z" fill="#7a1430" stroke="#1d1340" stroke-width="4" stroke-linejoin="round"/>
+<circle cx="208" cy="214" r="6" fill="#ff9ab8"/><circle cx="268" cy="214" r="6" fill="#ff9ab8"/>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<rect width="1200" height="630" fill="#1c1f26"/><rect y="430" width="1200" height="200" fill="#121419"/><ellipse cx="600" cy="520" rx="440" ry="60" fill="#1b1e25"/>
+<g transform="translate(240 300) scale(1.2)"><path fill="#8d939b" d="M28 150l-6-22q0-22 18-28l36-6c64-24 124-42 186-46h44c34 2 60 12 92 28l122 20c32 5 50 12 58 24l2 20q0 10-10 10h-54a46 46 0 0 0-92 0H176a46 46 0 0 0-92 0z"/><path fill="#0e1116" d="M104 98c46-20 101-36 158-40h42c28 2 52 12 74 24l-12 10-252 8z"/><circle cx="470" cy="152" r="38" fill="#121418"/><circle cx="130" cy="152" r="38" fill="#121418"/><circle cx="470" cy="152" r="25" fill="#b0b5bc"/><circle cx="130" cy="152" r="25" fill="#b0b5bc"/></g>
+<text x="600" y="150" fill="#fff" font-family="Montserrat, Arial, sans-serif" font-size="44" font-weight="600" letter-spacing="18" text-anchor="middle">AURVIK</text>
+<text x="600" y="210" fill="#c9cdd3" font-family="Montserrat, Arial, sans-serif" font-size="24" text-anchor="middle">Electric cars and home energy</text>
+</svg>

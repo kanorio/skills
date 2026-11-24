@@ -1,0 +1,1243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Quoin: a design studio in Lisbon, Osaka and Toronto</title>
+<meta name="description" content="Quoin is a design studio of six partners. We make identities, posters, packaging, books, typefaces, websites and the signs that help people find their way.">
+<meta property="og:title" content="Quoin: a design studio in Lisbon, Osaka and Toronto">
+<meta property="og:description" content="Identities, posters, packaging, books, typefaces, websites and signs, made by six partners and their teams.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/instrument-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font: one neutral grotesque for everything, at two weights ---------- */
+@font-face { font-family: "Instrument Sans"; src: url("fonts/instrument-sans-latin-wght-normal.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: white canvas (light, default) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);              /* the canvas */
+  --surface: oklch(95.5% 0 0);        /* grey fill: buttons, chips, fields, tags */
+  --surface-2: oklch(91.5% 0 0);      /* hover on grey */
+  --text: oklch(17% 0 0);
+  --text-muted: oklch(48% 0 0);       /* the second line of every caption */
+  --border: oklch(88% 0 0);           /* hairlines */
+  --accent: oklch(17% 0 0);           /* the one solid button, pressed chips */
+  --accent-text: oklch(100% 0 0);
+  --band: oklch(21% 0 0);             /* the dark feature band */
+  --band-inset: oklch(11% 0 0);       /* the panel inside the band */
+  --band-text: oklch(97% 0 0);
+  --band-muted: oklch(73% 0 0);
+  --tile: oklch(93% 0 0);             /* behind pictures while they load */
+  --pill: oklch(100% 0 0 / 0.82);     /* the sentence pill over the wall */
+  --error: oklch(51% 0.19 27);
+  --focus: oklch(17% 0 0);
+  --sans: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --fs-display: clamp(2.5rem, 1.2rem + 4.6vw, 5.5rem);
+  --fs-h1: clamp(2.25rem, 1.55rem + 2.6vw, 3.875rem);
+  --fs-h2: clamp(1.625rem, 1.25rem + 1.4vw, 2.5rem);
+  --fs-h3: 1.0625rem;
+  --fs-lead: clamp(1.1875rem, 1rem + 0.7vw, 1.5rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+  --gutter: clamp(16px, 1.7vw, 24px);
+  --gap: clamp(8px, 0.85vw, 12px);
+  --row: clamp(48px, 6vw, 96px);
+  --sec: clamp(72px, 9vw, 144px);
+  --seam: 2px;
+  --r-control: 4px;
+  --r-panel: 8px;
+  --dur-fast: 160ms;
+  --dur-base: 320ms;
+  --dur-slow: 700ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+/* ---------- Tokens: dark. Charcoal canvas; the band goes deeper still ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(16.5% 0 0); --surface: oklch(23% 0 0); --surface-2: oklch(28% 0 0);
+  --text: oklch(95% 0 0); --text-muted: oklch(71% 0 0); --border: oklch(31% 0 0);
+  --accent: oklch(95% 0 0); --accent-text: oklch(16.5% 0 0);
+  --band: oklch(9.5% 0 0); --band-inset: oklch(19% 0 0); --band-text: oklch(96% 0 0); --band-muted: oklch(72% 0 0);
+  --tile: oklch(24% 0 0); --pill: oklch(16.5% 0 0 / 0.82); --error: oklch(72% 0.15 27); --focus: oklch(95% 0 0);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: oklch(16.5% 0 0); --surface: oklch(23% 0 0); --surface-2: oklch(28% 0 0);
+    --text: oklch(95% 0 0); --text-muted: oklch(71% 0 0); --border: oklch(31% 0 0);
+    --accent: oklch(95% 0 0); --accent-text: oklch(16.5% 0 0);
+    --band: oklch(9.5% 0 0); --band-inset: oklch(19% 0 0); --band-text: oklch(96% 0 0); --band-muted: oklch(72% 0 0);
+    --tile: oklch(24% 0 0); --pill: oklch(16.5% 0 0 / 0.82); --error: oklch(72% 0.15 27); --focus: oklch(95% 0 0);
+  }
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs-body)/1.5 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
+p { margin: 0 0 1em; text-wrap: pretty; }
+ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 60; padding: 10px 14px; border-radius: var(--r-control); background: var(--accent); color: var(--accent-text); }
+.skip:focus { top: 12px; }
+.wrap { max-width: 2200px; margin-inline: auto; padding-inline: var(--gutter); }
+.sec { padding-block: var(--sec); }
+.sec.tight { padding-top: 0; }
+.muted { color: var(--text-muted); }
+.small { font-size: var(--fs-small); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.js [data-view]:not(.is-active) { display: none; }
+.g12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); }
+
+/* ---------- Type: regular weight everywhere, hierarchy from size and grey ---------- */
+.label { margin: 0 0 14px; font-size: var(--fs-small); color: var(--text-muted); }
+.display { font-size: var(--fs-display); line-height: 1.02; letter-spacing: -0.035em; }
+.h1 { font-size: var(--fs-h1); line-height: 1.04; letter-spacing: -0.03em; }
+.h2 { font-size: var(--fs-h2); line-height: 1.1; letter-spacing: -0.02em; }
+.h3 { font-size: var(--fs-h3); font-weight: 500; line-height: 1.35; }
+.lead { font-size: var(--fs-lead); line-height: 1.38; letter-spacing: -0.01em; }
+.statement { font-size: clamp(1.75rem, 1.15rem + 2.2vw, 3.25rem); line-height: 1.1; letter-spacing: -0.028em; max-width: 19em; margin: 0; }
+
+/* ---------- Buttons, tags and chips: grey rectangles with a small radius ---------- */
+.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 10px 14px; border: 0; border-radius: var(--r-control); background: var(--surface); color: var(--text); text-decoration: none; line-height: 1.2; transition: background-color var(--dur-fast) var(--ease); }
+.btn:hover { background: var(--surface-2); }
+.btn svg { width: 14px; height: 14px; flex: none; transition: transform var(--dur-base) var(--ease); }
+.btn:hover .go { transform: translateX(3px); }
+.btn.solid { background: var(--accent); color: var(--accent-text); }
+.btn.solid:hover { background: color-mix(in oklch, var(--accent) 84%, var(--bg)); }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+.band .btn { background: oklch(100% 0 0 / 0.12); color: var(--band-text); }
+.band .btn:hover { background: oklch(100% 0 0 / 0.2); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { position: relative; display: inline-flex; align-items: center; min-height: 28px; padding: 3px 9px; border-radius: 3px; background: var(--surface); color: var(--text-muted); font-size: 0.8125rem; text-decoration: none; }
+.tag::after { content: ""; position: absolute; inset: -8px 0; }
+.tag:hover { color: var(--text); background: var(--surface-2); }
+.chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.chip { min-height: 44px; padding: 8px 14px; border: 0; border-radius: var(--r-control); background: var(--surface); font-size: var(--fs-small); transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.chip:hover { background: var(--surface-2); }
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); }
+.count { margin: 0; color: var(--text-muted); font-size: var(--fs-small); }
+.icon-btn { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: var(--r-control); background: none; color: var(--text); }
+.icon-btn:hover { background: var(--surface); }
+.icon-btn svg { width: 20px; height: 20px; }
+.linkish { padding: 0; border: 0; background: none; color: inherit; text-decoration: underline; text-underline-offset: 0.18em; }
+
+/* ---------- Header: wordmark left, grey links right; folds into the menu sheet when they do not fit ---------- */
+.site-header { position: relative; z-index: 20; display: flex; align-items: center; gap: 24px; height: 64px; padding-inline: var(--gutter); background: var(--bg); }
+.brand { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; font-size: 1.375rem; font-weight: 500; letter-spacing: -0.035em; text-decoration: none; white-space: nowrap; }
+.brand svg { width: 20px; height: 20px; fill: currentColor; }
+.nav { flex: 1; display: flex; justify-content: flex-end; gap: clamp(16px, 1.9vw, 30px); min-width: 0; overflow: hidden; }
+.nav a { padding: 10px 0; color: var(--text-muted); text-decoration: none; white-space: nowrap; transition: color var(--dur-fast) var(--ease); }
+.nav a:hover, .nav a[aria-current="page"] { color: var(--text); }
+.header-end { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+#menu-open { display: none; }
+.compact .nav { display: none; }
+.compact #menu-open { display: grid; }
+@media (max-width: 720px) { .nav { display: none; } #menu-open { display: grid; } }
+.sheet { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0; border: 0; background: var(--bg); color: var(--text); }
+.sheet::backdrop { background: transparent; }
+.sheet[open] { animation: fade var(--dur-base) var(--ease); }
+.sheet-top { display: flex; align-items: center; justify-content: space-between; height: 64px; padding-inline: var(--gutter); }
+.sheet-links { padding: clamp(24px, 6vw, 64px) var(--gutter); }
+.sheet-links a { display: block; padding: 4px 0; font-size: var(--fs-h1); line-height: 1.15; letter-spacing: -0.03em; text-decoration: none; }
+.sheet-links a[aria-current="page"] { color: var(--text-muted); }
+.sheet-foot { padding: 0 var(--gutter) 32px; color: var(--text-muted); }
+
+/* ---------- The wall: a full-bleed mosaic of work in mixed sizes (signature) ---------- */
+.wall { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-auto-rows: calc((100vw - 10px) / 6 * 0.64); gap: var(--seam); }
+.wall > a { position: relative; display: block; overflow: hidden; background: var(--tile); animation: tile-in var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 70ms); }
+.wall img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.wall > a:hover img { transform: scale(1.03); }
+.wa { grid-area: 1 / 1 / 4 / 4; } .wb { grid-area: 1 / 4 / 3 / 6; } .wc { grid-area: 1 / 6 / 3 / 7; } .wd { grid-area: 4 / 1 / 5 / 2; }
+.we { grid-area: 4 / 2 / 5 / 4; } .wf { grid-area: 3 / 4 / 5 / 5; } .wg { grid-area: 3 / 5 / 5 / 7; }
+.wall .label { position: absolute; left: 10px; bottom: 10px; max-width: calc(100% - 20px); margin: 0; padding: 5px 9px 6px; border-radius: var(--r-control); background: var(--bg); color: var(--text); line-height: 1.3; opacity: 0; transform: translateY(6px); transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease); }
+.wall .label span { color: var(--text-muted); }
+.wall > a:hover .label, .wall > a:focus-visible .label { opacity: 1; transform: none; }
+.wall > a:focus-visible { outline-offset: -4px; }
+@media (hover: none) { .wall .label { opacity: 1; transform: none; } }
+@media (max-width: 760px) {
+  .wall { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: calc((100vw - 2px) / 2 * 0.72); grid-auto-flow: dense; }
+  .wall > a { grid-area: auto; }
+  .wall > .wa { grid-column: span 2; grid-row: span 2; } .wall > .wc { grid-row: span 2; } .wall > .we { grid-column: span 2; }
+  .wall .label { left: 8px; bottom: 8px; padding: 3px 7px 4px; font-size: 0.8125rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .wall > a:not(.wa, .we):not(:focus-visible) .label { opacity: 0; }
+}
+
+/* ---------- The sentence: words you can swap to filter the work (signature) ---------- */
+.sentence-wrap { position: relative; }
+.sentence { margin: 0; }
+.word { display: inline-flex; align-items: baseline; gap: 0.16em; padding: 0; border: 0; background: none; font-weight: inherit; line-height: inherit; text-align: left; text-decoration: underline; text-decoration-color: var(--border); text-decoration-thickness: max(1px, 0.045em); text-underline-offset: 0.14em; transition: text-decoration-color var(--dur-fast) var(--ease); }
+.word:hover, .word[aria-expanded="true"] { text-decoration-color: currentColor; }
+.word .chev { width: 0.4em; height: 0.4em; align-self: center; flex: none; transition: transform var(--dur-base) var(--ease); }
+.word[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.w { display: inline-block; }
+.w.swap { animation: roll var(--dur-base) var(--ease); }
+.options { position: absolute; z-index: 40; top: 0; left: 0; width: max-content; min-width: 240px; max-width: min(340px, calc(100vw - 32px)); margin: 0; padding: 6px; border-radius: var(--r-panel); background: var(--bg); color: var(--text); box-shadow: 0 0 0 1px var(--border), 0 18px 40px -14px oklch(0% 0 0 / 0.28); font-size: var(--fs-body); font-weight: 400; letter-spacing: 0; line-height: 1.3; text-align: left; animation: drop var(--dur-fast) var(--ease); }
+.options [role="option"] { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 44px; padding: 8px 10px 8px 12px; border-radius: var(--r-control); cursor: pointer; }
+.options [role="option"]:hover, .options [role="option"]:focus { background: var(--surface); outline: none; }
+.options [role="option"]:focus-visible { box-shadow: inset 0 0 0 2px var(--focus); }
+.options [aria-selected="true"] { font-weight: 500; }
+.options .n { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
+.options .n svg { width: 14px; height: 14px; color: var(--text); }
+.options .none { color: var(--text-muted); }
+.pill { position: absolute; z-index: 3; left: 50%; top: 50%; transform: translate(-50%, -50%); width: max-content; max-width: calc(100% - 2 * var(--gutter)); padding: 10px 18px; border-radius: var(--r-panel); background: var(--pill); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 1px 2px oklch(0% 0 0 / 0.1); animation: fade var(--dur-slow) var(--ease) 500ms both; }
+.pill .sentence { font-size: 1.1875rem; }
+.pill .word { min-height: 36px; }
+.pill .word .chev { width: 12px; height: 12px; }
+
+/* ---------- Home ---------- */
+.intro { padding-block: var(--sec) calc(var(--sec) * 0.75); }
+.intro .btn { margin-top: clamp(24px, 3vw, 40px); }
+.row-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: clamp(24px, 3vw, 40px); }
+.more { display: flex; justify-content: center; margin-top: var(--row); }
+
+/* ---------- Work tiles: big pictures, small two-line captions, staggered rows ---------- */
+.tiles { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: var(--row); align-items: start; }
+.tile { grid-column: span 4; }
+.tile.s8 { grid-column: span 8; } .tile.s6 { grid-column: span 6; }
+.tile.drop { margin-top: clamp(40px, 7vw, 128px); }
+.tile > a, .card > a { display: block; text-decoration: none; }
+.ph { display: block; overflow: hidden; background: var(--tile); aspect-ratio: 3 / 2; }
+.ph img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.tile.tall .ph { aspect-ratio: 4 / 5; }
+.tile > a:hover img, .card > a:hover img { transform: scale(1.025); }
+.t { display: block; margin-top: 12px; font-size: var(--fs-h3); line-height: 1.35; }
+.d { display: block; color: var(--text-muted); font-size: var(--fs-h3); line-height: 1.35; }
+.tile.enter { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 50ms); }
+@media (max-width: 760px) { .tile, .tile.s8, .tile.s6 { grid-column: 1 / -1; } .tile.drop { margin-top: 0; } .tile.tall .ph { aspect-ratio: 4 / 4.4; } }
+
+/* ---------- Work view: the big sentence, a count, tiles or index ---------- */
+.page-head { padding-top: clamp(40px, 6vw, 96px); padding-bottom: clamp(32px, 4vw, 64px); }
+.work-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-top: clamp(28px, 3.5vw, 56px); }
+.work-bar .chips { gap: 12px 16px; }
+.seg { display: inline-flex; padding: 3px; border-radius: var(--r-control); background: var(--surface); }
+.seg button { min-height: 38px; padding: 6px 14px; border: 0; border-radius: 3px; background: none; color: var(--text-muted); font-size: var(--fs-small); }
+.seg button[aria-pressed="true"] { background: var(--bg); color: var(--text); box-shadow: 0 1px 2px oklch(0% 0 0 / 0.12); }
+.index { border-top: 1px solid var(--border); }
+.index li { border-bottom: 1px solid var(--border); }
+.index a, .index-head { display: grid; grid-template-columns: 2.2fr 3fr 2fr 1.4fr 56px; gap: var(--gap); align-items: baseline; padding: 14px 0; text-decoration: none; }
+.index a { transition: background-color var(--dur-fast) var(--ease), padding var(--dur-base) var(--ease); }
+.index a:hover { background: var(--surface); padding-inline: 10px; }
+.index-head { padding-block: 10px; color: var(--text-muted); font-size: var(--fs-small); }
+.index .y { text-align: right; font-variant-numeric: tabular-nums; }
+.index .m { color: var(--text-muted); }
+@media (max-width: 760px) { .index a, .index-head { grid-template-columns: 1fr auto; } .index .m { display: none; } }
+.empty { padding-block: var(--row); }
+.empty .h2 { margin-bottom: 12px; }
+
+/* ---------- The dark band: one feature per page (signature) ---------- */
+.band { --focus: var(--band-text); background: var(--band); color: var(--band-text); padding-block: var(--sec); }
+.band .muted, .band .d, .band .label { color: var(--band-muted); }
+.band-head { margin-bottom: clamp(32px, 4vw, 56px); }
+.band-head .h1 { max-width: 14em; margin-bottom: 20px; }
+.band-head p { max-width: 38em; }
+.inset { padding: var(--gutter); border-radius: var(--r-panel); background: var(--band-inset); }
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
+.cards .ph { aspect-ratio: 4 / 5; }
+.cards .d { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.principles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.principles li { padding: clamp(16px, 2vw, 28px); border-radius: var(--r-control); background: oklch(100% 0 0 / 0.05); }
+.principles .n { display: block; margin-bottom: clamp(32px, 5vw, 72px); color: var(--band-muted); font-variant-numeric: tabular-nums; }
+.principles h3 { margin-bottom: 8px; font-size: 1.25rem; font-weight: 400; letter-spacing: -0.01em; }
+.principles p { margin: 0; color: var(--band-muted); }
+@media (max-width: 900px) {
+  .cards { position: relative; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(220px, 72%); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .cards > * { scroll-snap-align: start; }
+  .principles { grid-template-columns: 1fr; }
+}
+.next { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); align-items: end; text-decoration: none; }
+.next > div { grid-column: 1 / 7; }
+.next .ph { grid-column: 8 / 13; aspect-ratio: 4 / 3; }
+.next .h1 { margin-bottom: 12px; }
+.next:hover img { transform: scale(1.025); }
+@media (max-width: 760px) { .next > div, .next .ph { grid-column: 1 / -1; } .next .ph { margin-top: 24px; } }
+
+/* ---------- Project page ---------- */
+.project-sub { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; margin-top: clamp(20px, 2.5vw, 36px); }
+.project-sub .lead { max-width: 30em; margin-bottom: 14px; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px var(--gap); margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+.facts dt { color: var(--text-muted); font-size: var(--fs-small); }
+.facts dd { margin-top: 4px; }
+.facts:not([hidden]) { animation: drop var(--dur-base) var(--ease); }
+[aria-expanded="true"] .plus { transform: rotate(45deg); }
+.p-hero { margin-top: clamp(24px, 3vw, 40px); aspect-ratio: 16 / 9; }
+.p-text { row-gap: 32px; padding-block: clamp(48px, 7vw, 112px); }
+.p-text > div { grid-column: span 5; }
+.p-text > div + div { grid-column: 7 / span 5; }
+.p-text .h3 { margin-bottom: 10px; }
+.p-text p { max-width: 34em; }
+.p-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
+.p-pair > * { aspect-ratio: 4 / 5; }
+.crop img { transform: scale(1.9); transform-origin: 62% 56%; }
+.palette { display: flex; flex-direction: column; overflow: hidden; background: var(--tile); }
+.palette div { flex: 1; display: flex; align-items: flex-end; justify-content: space-between; padding: 12px 14px; font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
+.palette div:first-child { flex: 2.4; }
+.p-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding-block: var(--row); }
+@media (max-width: 760px) { .facts { grid-template-columns: 1fr 1fr; } .p-text > div, .p-text > div + div { grid-column: 1 / -1; } .p-pair { grid-template-columns: 1fr; } .p-hero { aspect-ratio: 4 / 3; } }
+
+/* ---------- Studio, people, journal ---------- */
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px var(--gap); align-items: start; }
+.split .copy { max-width: 36em; }
+.wide { aspect-ratio: 21 / 9; }
+.rows { border-top: 1px solid var(--border); }
+.rows li { border-bottom: 1px solid var(--border); }
+.rows a { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 18px 0; font-size: var(--fs-h2); line-height: 1.1; letter-spacing: -0.02em; text-decoration: none; }
+.rows a > span { display: inline-flex; align-items: center; gap: 12px; color: var(--text-muted); font-size: var(--fs-small); letter-spacing: 0; }
+.rows svg { width: 16px; height: 16px; opacity: 0; transform: translateX(-6px); transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease); }
+.rows a:hover svg, .rows a:focus-visible svg { opacity: 1; transform: none; }
+.clients { columns: 4 200px; column-gap: var(--gap); line-height: 1.9; }
+.list-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-bottom: clamp(28px, 3.5vw, 48px); }
+.people { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--row) var(--gap); }
+.people .ph { aspect-ratio: 4 / 5; }
+.people p { margin: 0; }
+.people .t { margin-top: 12px; }
+.posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--row) var(--gap); }
+.card .meta { display: block; margin-top: 12px; color: var(--text-muted); font-size: var(--fs-small); }
+.card .title { display: block; margin-top: 6px; font-size: 1.375rem; line-height: 1.2; letter-spacing: -0.015em; }
+.card .d { margin-top: 6px; }
+@media (max-width: 1000px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } .posts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .split { grid-template-columns: 1fr; } .posts { grid-template-columns: 1fr; } .wide { aspect-ratio: 4 / 3; } }
+
+/* ---------- Article ---------- */
+.article-head { padding-top: clamp(40px, 6vw, 96px); }
+.article-head .h1 { max-width: 17em; margin-bottom: 20px; }
+.article-head .lead { max-width: 32em; color: var(--text-muted); }
+.article-wide { margin-block: clamp(24px, 3vw, 48px) clamp(40px, 6vw, 96px); }
+.article-body { align-items: start; }
+.byline { grid-column: 1 / 4; color: var(--text-muted); font-size: var(--fs-small); }
+.byline strong { display: block; color: var(--text); font-weight: 500; }
+.prose { grid-column: 4 / 11; max-width: 680px; font-size: 1.1875rem; line-height: 1.6; }
+.prose h2 { margin: 1.6em 0 0.5em; font-size: var(--fs-h2); line-height: 1.12; letter-spacing: -0.02em; }
+.prose .pull { margin: 1.4em 0; font-size: var(--fs-h2); line-height: 1.15; letter-spacing: -0.02em; }
+.prose figure { margin: 2em 0; }
+.prose figcaption { margin-top: 10px; color: var(--text-muted); font-size: var(--fs-small); }
+.article-foot { padding-block: var(--row) var(--sec); }
+@media (max-width: 900px) { .byline, .prose { grid-column: 1 / -1; } .byline { margin-bottom: 24px; } }
+
+/* ---------- Forms: grey fields, errors floating under them ---------- */
+.contact { align-items: start; row-gap: 48px; padding-bottom: var(--sec); }
+.contact .form-wrap { grid-column: 1 / 8; }
+.contact aside { grid-column: 9 / 13; display: grid; gap: 28px; }
+.contact aside p { margin: 0; }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 4px; }
+.field { position: relative; display: grid; gap: 6px; padding-bottom: 26px; }
+.field.full { grid-column: 1 / -1; }
+.field > label, .flabel { color: var(--text-muted); font-size: var(--fs-small); }
+.input { width: 100%; min-height: 48px; padding: 12px 14px; border: 0; border-radius: var(--r-control); background: var(--surface); color: var(--text); box-shadow: inset 0 0 0 1px transparent; transition: box-shadow var(--dur-fast) var(--ease); }
+.input::placeholder { color: var(--text-muted); }
+.input:hover { box-shadow: inset 0 0 0 1px var(--border); }
+.input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.input[aria-invalid="true"] { box-shadow: inset 0 0 0 1.5px var(--error); }
+textarea.input { min-height: 168px; resize: vertical; }
+.select { position: relative; }
+.select select { appearance: none; padding-right: 42px; }
+.select svg { position: absolute; right: 14px; top: 50%; width: 14px; height: 14px; transform: translateY(-50%); pointer-events: none; }
+.error { position: absolute; left: 0; bottom: 3px; margin: 0; color: var(--error); font-size: 0.8125rem; line-height: 1.3; }
+.check { display: flex; gap: 12px; align-items: flex-start; min-height: 44px; padding-top: 4px; cursor: pointer; }
+.check input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--accent); }
+.form-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 8px; }
+.form-foot p { margin: 0; }
+.success { padding: clamp(24px, 3vw, 40px); border-radius: var(--r-panel); background: var(--surface); animation: rise var(--dur-slow) var(--ease); }
+.success:focus { outline: none; }
+.success .h2 { margin-bottom: 12px; }
+@media (max-width: 900px) { .contact .form-wrap, .contact aside { grid-column: 1 / -1; } }
+@media (max-width: 560px) { .fields { grid-template-columns: 1fr; } }
+
+/* ---------- Footer ---------- */
+.site-footer { border-top: 1px solid var(--border); }
+.foot { row-gap: 48px; padding-block: clamp(48px, 6vw, 96px); }
+.foot-letter { grid-column: 1 / 6; }
+.foot-letter .h2 { margin-bottom: 12px; }
+.foot-col { grid-column: span 2; }
+.foot-col.first { grid-column: 7 / span 2; }
+.foot-col li { padding-block: 3px; }
+.foot-col a { text-decoration: none; }
+.foot-col a:hover { text-decoration: underline; }
+.letter { display: flex; gap: 8px; align-items: flex-start; margin-top: 20px; }
+.letter .field { flex: 1; }
+.letter .success { margin-top: 20px; padding: 16px 18px; }
+.foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 20px 28px; color: var(--text-muted); font-size: var(--fs-small); }
+.foot-bottom p { margin: 0; }
+.foot-bottom a { margin-left: 16px; }
+@media (max-width: 1200px) { .foot-letter { grid-column: 1 / -1; } .foot-col, .foot-col.first { grid-column: span 4; } }
+@media (max-width: 560px) { .foot-col, .foot-col.first { grid-column: span 6; } .letter { flex-direction: column; align-items: stretch; } }
+
+/* ---------- Legal and 404 ---------- */
+.legal { max-width: 44em; }
+.legal h2 { margin: 2em 0 0.5em; font-size: 1.25rem; font-weight: 500; }
+.notfound { padding-block: var(--sec); }
+.notfound .display { max-width: 12em; margin-bottom: 24px; }
+
+/* ---------- Motion: quick and plain; pictures settle, words roll into place ---------- */
+@keyframes tile-in { from { opacity: 0; transform: scale(1.04); } }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+@keyframes fade { from { opacity: 0; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-6px); } }
+@keyframes roll { from { opacity: 0; transform: translateY(0.35em); } }
+.js .reveal:not(.in) { opacity: 0; }
+.js .reveal.in { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 80ms); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal:not(.in) { opacity: 1; }
+}
+@media (max-width: 760px) {
+  .split .h1 { margin-bottom: 8px; }
+  .contact aside { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-mark" viewBox="0 0 24 24"><path d="M3 2h10v6H3zM3 9.5h6v5H3zM3 16h10v6H3zM14.5 16H21v6h-6.5z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 16 16"><path d="M3.5 6l4.5 4.5L12.5 6" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-down" viewBox="0 0 16 16"><path d="M8 2v11M4 9l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 2.5v11M2.5 8h11" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 16 16"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 8h18M3 16h18" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <a class="brand" href="#/"><svg aria-hidden="true"><use href="#i-mark"/></svg>Quoin</a>
+  <nav class="nav" aria-label="Main">
+    <a href="#/work">Work</a>
+    <a href="#/studio">Studio</a>
+    <a href="#/people">People</a>
+    <a href="#/journal">Journal</a>
+    <a href="#/contact">Contact</a>
+  </nav>
+  <div class="header-end">
+    <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark colours"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+    <button class="icon-btn" id="menu-open" type="button" aria-label="Open menu" aria-controls="menu"><svg aria-hidden="true"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-top">
+    <a class="brand" href="#/"><svg aria-hidden="true"><use href="#i-mark"/></svg>Quoin</a>
+    <button class="icon-btn" id="menu-close" type="button" aria-label="Close menu"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+  </div>
+  <nav class="sheet-links" aria-label="Menu">
+    <a href="#/work">Work</a>
+    <a href="#/studio">Studio</a>
+    <a href="#/people">People</a>
+    <a href="#/journal">Journal</a>
+    <a href="#/contact">Contact</a>
+  </nav>
+  <p class="sheet-foot">studio@quoin.example</p>
+</dialog>
+
+<main id="main">
+
+<!-- ================= HOME ================= -->
+<div data-view="home">
+  <section class="wall" aria-label="Selected work">
+    <a class="wa" style="--i:0" href="#/work/harrow-garden"><img src="illustrations/harrow-garden.svg" alt="" width="1200" height="1200"><p class="label">Harrow Botanic Garden <span>Identities</span></p></a>
+    <a class="wb" style="--i:1" href="#/work/vesper-opera"><img src="illustrations/vesper-opera.svg" alt="" width="1200" height="1200"><p class="label">Vesper Opera House <span>Posters</span></p></a>
+    <a class="wc" style="--i:2" href="#/work/saltwork-ferments"><img src="illustrations/saltwork-ferments.svg" alt="" width="1200" height="1200"><p class="label">Saltwork Ferments <span>Packaging</span></p></a>
+    <a class="wd" style="--i:3" href="#/work/marlow-tram"><img src="illustrations/marlow-tram.svg" alt="" width="1200" height="1200"><p class="label">Marlow Tramways <span>Typeface</span></p></a>
+    <a class="we" style="--i:4" href="#/work/saltmere-ferries"><img src="illustrations/saltmere-ferries.svg" alt="" width="1200" height="1200"><p class="label">Saltmere Ferries <span>Wayfinding</span></p></a>
+    <a class="wf" style="--i:5" href="#/work/ordinal-library"><img src="illustrations/ordinal-library.svg" alt="" width="1200" height="1200"><p class="label">The Ordinal Library <span>Signs</span></p></a>
+    <a class="wg" style="--i:6" href="#/work/kilnhouse-records"><img src="illustrations/kilnhouse-records.svg" alt="" width="1200" height="1200"><p class="label">Kilnhouse Records <span>Sleeves</span></p></a>
+    <div class="pill sentence-wrap" data-sentence="route">
+      <p class="sentence">We make <button class="word" type="button" data-pick="make" aria-haspopup="listbox" aria-expanded="false" aria-controls="lb-hero"><span class="w">anything</span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button> for <button class="word" type="button" data-pick="for" aria-haspopup="listbox" aria-expanded="false" aria-controls="lb-hero"><span class="w">anyone</span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button></p>
+      <div class="options" id="lb-hero" role="listbox" tabindex="-1" hidden></div>
+    </div>
+  </section>
+
+  <section class="intro wrap">
+    <p class="label">The studio</p>
+    <h1 class="statement">Quoin is a design studio of six partners in Lisbon, Osaka and Toronto. We make identities, posters, packaging, books, typefaces, websites and the signs that help people find their way.</h1>
+    <a class="btn" href="#/studio">About the studio <svg class="go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="band-head reveal">
+        <p class="label">In focus</p>
+        <h2 class="h1">Things you can hold</h2>
+        <p class="muted">Jars, sleeves, covers and posters still do the first and the last work of a brand: they are where people actually meet it. This year a third of our projects ended in something printed, folded, cut or filled.</p>
+        <a class="btn" href="#/work?make=print">All printed work <svg class="go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="inset reveal">
+        <ul class="cards">
+          <li class="card"><a href="#/work/saltwork-ferments"><span class="ph"><img src="illustrations/saltwork-ferments.svg" alt="" width="1200" height="1200"></span><span class="t">Saltwork Ferments</span><span class="d">Jars, labels and a shop for a kitchen that pickles everything.</span></a></li>
+          <li class="card"><a href="#/work/alderleaf-press"><span class="ph"><img src="illustrations/alderleaf-press.svg" alt="" width="1200" height="1200"></span><span class="t">Alderleaf Press</span><span class="d">Covers and a series design for a publisher of essays.</span></a></li>
+          <li class="card"><a href="#/work/kilnhouse-records"><span class="ph"><img src="illustrations/kilnhouse-records.svg" alt="" width="1200" height="1200"></span><span class="t">Kilnhouse Records</span><span class="d">Sleeves for an independent label's first fifty releases.</span></a></li>
+          <li class="card"><a href="#/work/vesper-opera"><span class="ph"><img src="illustrations/vesper-opera.svg" alt="" width="1200" height="1200"></span><span class="t">Vesper Opera House</span><span class="d">Posters for a season of twelve new productions.</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="latest">
+    <div class="row-head"><h2 class="h2">Latest work</h2><a class="btn" href="#/work">All work <svg class="go" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    <ul class="tiles">
+      <li class="tile tall reveal"><a href="#/work/harrow-garden"><span class="ph"><img src="illustrations/harrow-garden.svg" alt="" width="1200" height="1200"></span><span class="t">Harrow Botanic Garden</span><span class="d">One mark for a garden of nine glasshouses, in four seasonal colours.</span></a></li>
+      <li class="tile s8 reveal" style="--i:1"><a href="#/work/orwin-cinema"><span class="ph"><img src="illustrations/orwin-cinema.svg" alt="" width="1200" height="1200"></span><span class="t">Orwin Cinema</span><span class="d">A website and listings that change with every screening.</span></a></li>
+      <li class="tile reveal"><a href="#/work/marlow-tram"><span class="ph"><img src="illustrations/marlow-tram.svg" alt="" width="1200" height="1200"></span><span class="t">Marlow Tramways</span><span class="d">A typeface for stops, timetables and tickets.</span></a></li>
+      <li class="tile drop reveal" style="--i:1"><a href="#/work/ordinal-library"><span class="ph"><img src="illustrations/ordinal-library.svg" alt="" width="1200" height="1200"></span><span class="t">The Ordinal Library</span><span class="d">Signs, shelves and a floor plan you can read from the door.</span></a></li>
+      <li class="tile reveal" style="--i:2"><a href="#/work/north-quay-market"><span class="ph"><img src="illustrations/north-quay-market.svg" alt="" width="1200" height="1200"></span><span class="t">North Quay Market</span><span class="d">A name, a mark and forty stall signs for a covered market.</span></a></li>
+    </ul>
+  </section>
+
+  <section class="sec tight wrap">
+    <div class="row-head"><h2 class="h2">Journal</h2><a class="btn" href="#/journal">All writing <svg class="go" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    <ul class="posts">
+      <li class="card reveal"><a href="#/journal/logo-smallest-part"><span class="ph"><img src="illustrations/harrow-garden.svg" alt="" width="1200" height="1200"></span><span class="meta">Essay · 12 November 2026</span><span class="title">A logo is the smallest part of an identity</span></a></li>
+      <li class="card reveal" style="--i:1"><a href="#/journal/fen-opens"><span class="ph"><img src="illustrations/fen-observatory.svg" alt="" width="1200" height="1200"></span><span class="meta">Studio news · 28 October 2026</span><span class="title">The Fen Observatory exhibition is open</span></a></li>
+      <li class="card reveal" style="--i:2"><a href="#/journal/timetable-figures"><span class="ph"><img src="illustrations/marlow-tram.svg" alt="" width="1200" height="1200"></span><span class="meta">Talk · 9 October 2026</span><span class="title">Drawing figures for a timetable</span></a></li>
+    </ul>
+  </section>
+</div>
+
+<!-- ================= WORK (tiles are the data for the project view: slug, client, line, picture, data-make, data-for, data-year) ================= -->
+<div data-view="work">
+  <section class="page-head wrap">
+    <p class="label">Work</p>
+    <div class="sentence-wrap" data-sentence="filter">
+      <h1 class="sentence display">We make <button class="word" type="button" data-pick="make" aria-haspopup="listbox" aria-expanded="false" aria-controls="lb-work"><span class="w">anything</span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button> for <button class="word" type="button" data-pick="for" aria-haspopup="listbox" aria-expanded="false" aria-controls="lb-work"><span class="w">anyone</span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button></h1>
+      <div class="options" id="lb-work" role="listbox" tabindex="-1" hidden></div>
+    </div>
+    <div class="work-bar">
+      <div class="chips"><p class="count" id="work-count" aria-live="polite">Showing all 12 projects</p><button class="linkish small" type="button" data-reset-work hidden>Show everything</button></div>
+      <div class="seg" role="group" aria-label="Show work as"><button type="button" data-mode="tiles" aria-pressed="true">Tiles</button><button type="button" data-mode="index" aria-pressed="false">Index</button></div>
+    </div>
+  </section>
+  <section class="wrap" style="padding-bottom:var(--sec)">
+    <ul class="tiles" id="work-tiles">
+      <li class="tile tall" data-slug="harrow-garden" data-make="identities spaces" data-for="science" data-year="2026"><a href="#/work/harrow-garden"><span class="ph"><img src="illustrations/harrow-garden.svg" alt="A seed-shaped mark of four quarter circles in cream, green and ochre on deep green" width="1200" height="1200"></span><span class="t">Harrow Botanic Garden</span><span class="d">One mark for a garden of nine glasshouses, in four seasonal colours.</span></a></li>
+      <li class="tile s8" data-slug="orwin-cinema" data-make="digital identities" data-for="culture" data-year="2026"><a href="#/work/orwin-cinema"><span class="ph"><img src="illustrations/orwin-cinema.svg" alt="A cinema listings page in a browser window and on a phone, with blocks of film stills in plum and coral" width="1200" height="1200"></span><span class="t">Orwin Cinema</span><span class="d">A website and listings that change with every screening.</span></a></li>
+      <li class="tile" data-slug="vesper-opera" data-make="print" data-for="culture" data-year="2026"><a href="#/work/vesper-opera"><span class="ph"><img src="illustrations/vesper-opera.svg" alt="Three posters on a wall, each built from one circle and one cut, in black, red and cream" width="1200" height="1200"></span><span class="t">Vesper Opera House</span><span class="d">Posters for a season of twelve new productions.</span></a></li>
+      <li class="tile drop" data-slug="alderleaf-press" data-make="books" data-for="culture" data-year="2025"><a href="#/work/alderleaf-press"><span class="ph"><img src="illustrations/alderleaf-press.svg" alt="Four book covers fanned out on a grey table, in navy, cream, mustard and white" width="1200" height="1200"></span><span class="t">Alderleaf Press</span><span class="d">Covers and a series design for a publisher of essays.</span></a></li>
+      <li class="tile" data-slug="saltwork-ferments" data-make="packaging identities" data-for="food" data-year="2025"><a href="#/work/saltwork-ferments"><span class="ph"><img src="illustrations/saltwork-ferments.svg" alt="Three jars of red, yellow and green ferments with cream labels on a pink table" width="1200" height="1200"></span><span class="t">Saltwork Ferments</span><span class="d">Jars, labels and a shop for a kitchen that pickles everything.</span></a></li>
+      <li class="tile s8" data-slug="marlow-tram" data-make="type spaces" data-for="travel" data-year="2025"><a href="#/work/marlow-tram"><span class="ph"><img src="illustrations/marlow-tram.svg" alt="A capital R drawn in black over its construction lines on a yellow ground" width="1200" height="1200"></span><span class="t">Marlow Tramways</span><span class="d">A typeface for stops, timetables and tickets.</span></a></li>
+      <li class="tile drop" data-slug="ordinal-library" data-make="spaces type" data-for="civic" data-year="2025"><a href="#/work/ordinal-library"><span class="ph"><img src="illustrations/ordinal-library.svg" alt="A black hanging sign with a white arrow above shelves of coloured book spines" width="1200" height="1200"></span><span class="t">The Ordinal Library</span><span class="d">Signs, shelves and a floor plan you can read from the door.</span></a></li>
+      <li class="tile s6" data-slug="kilnhouse-records" data-make="print identities" data-for="culture" data-year="2024"><a href="#/work/kilnhouse-records"><span class="ph"><img src="illustrations/kilnhouse-records.svg" alt="Two record sleeves, one orange with rings and one navy with a cream square, and a record sliding out" width="1200" height="1200"></span><span class="t">Kilnhouse Records</span><span class="d">Sleeves for an independent label's first fifty releases.</span></a></li>
+      <li class="tile s6 drop" data-slug="north-quay-market" data-make="identities print" data-for="commerce" data-year="2024"><a href="#/work/north-quay-market"><span class="ph"><img src="illustrations/north-quay-market.svg" alt="A red and cream striped awning over a counter of fruit and a cream sign with the letters NQ" width="1200" height="1200"></span><span class="t">North Quay Market</span><span class="d">A name, a mark and forty stall signs for a covered market.</span></a></li>
+      <li class="tile tall" data-slug="saltmere-ferries" data-make="identities spaces" data-for="travel" data-year="2024"><a href="#/work/saltmere-ferries"><span class="ph"><img src="illustrations/saltmere-ferries.svg" alt="A striped round emblem over bands of waves, and a direction sign, in navy, cream and sky blue" width="1200" height="1200"></span><span class="t">Saltmere Ferries</span><span class="d">Identity and wayfinding for six crossings and two harbours.</span></a></li>
+      <li class="tile s8" data-slug="fen-observatory" data-make="spaces print" data-for="science" data-year="2023"><a href="#/work/fen-observatory"><span class="ph"><img src="illustrations/fen-observatory.svg" alt="Dotted orbits around a yellow sun on dark blue, above three white exhibition panels" width="1200" height="1200"></span><span class="t">Fen Observatory</span><span class="d">An exhibition about the night sky, built for daylight.</span></a></li>
+      <li class="tile" data-slug="brook-lane-housing" data-make="identities digital" data-for="civic" data-year="2023"><a href="#/work/brook-lane-housing"><span class="ph"><img src="illustrations/brook-lane-housing.svg" alt="Three terraced houses in cream, coral and teal with coloured front doors under a pale sky" width="1200" height="1200"></span><span class="t">Brook Lane Housing Co-op</span><span class="d">An identity and a website for 400 homes run by their tenants.</span></a></li>
+    </ul>
+    <ol class="index" id="work-index" hidden></ol>
+    <div class="empty" id="work-empty" hidden>
+      <p class="h2">Nothing yet for that pairing.</p>
+      <p class="muted">Try another word, or <button class="linkish" type="button" data-reset-work>show all the work</button>.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ================= PROJECT (filled from the chosen tile and the cases data; shows Harrow without JavaScript) ================= -->
+<div data-view="project">
+  <article>
+    <header class="page-head wrap" style="padding-bottom:0">
+      <h1 class="h1" data-p="client">Harrow Botanic Garden</h1>
+      <div class="project-sub">
+        <div>
+          <p class="lead" data-p="line">One mark for a garden of nine glasshouses, in four seasonal colours.</p>
+          <ul class="tags" data-p="tags"><li><a class="tag" href="#/work?make=identities">Identities</a></li><li><a class="tag" href="#/work?make=spaces">Spaces and signs</a></li><li><a class="tag" href="#/work?for=science">Science</a></li></ul>
+        </div>
+        <button class="btn" type="button" id="facts-toggle" aria-expanded="true" aria-controls="p-facts">About the project <svg class="plus" aria-hidden="true"><use href="#i-plus"/></svg></button>
+      </div>
+      <dl class="facts" id="p-facts">
+        <div><dt>Client</dt><dd data-p="client">Harrow Botanic Garden</dd></div>
+        <div><dt>Year</dt><dd data-p="year">2026</dd></div>
+        <div><dt>Partner</dt><dd data-p="partner">Ines Corvo</dd></div>
+        <div><dt>Scope</dt><dd data-p="scope">Identity, signs, tickets, website</dd></div>
+      </dl>
+      <figure class="ph p-hero"><img data-p="hero" src="illustrations/harrow-garden.svg" alt="A seed-shaped mark of four quarter circles in cream, green and ochre on deep green" width="1200" height="1200"></figure>
+    </header>
+    <section class="wrap g12 p-text">
+      <div><h2 class="h3">The brief</h2><p data-p="brief">The garden had eleven logos, one for each glasshouse and shop, and visitors could not tell the café from the herbarium. It needed one name on the gate and one voice on every sign.</p></div>
+      <div><h2 class="h3">The idea</h2><p data-p="idea">We drew one mark from four quarter circles, a seed seen from above, and let it change colour with the season. Signs, tickets and the website all switch on the first day of spring, summer, autumn and winter.</p></div>
+    </section>
+    <section class="wrap p-pair">
+      <div class="ph crop"><img data-p="crop" src="illustrations/harrow-garden.svg" alt="A close view of the mark's ochre circle and cream quarter" width="1200" height="1200"></div>
+      <div class="palette" data-p="palette" aria-label="The project's colours">
+        <div style="background:#1d4a37;color:#fff"><span>Glasshouse green</span><span>#1D4A37</span></div>
+        <div style="background:#f2ecdc;color:#111"><span>Seed cream</span><span>#F2ECDC</span></div>
+        <div style="background:#86b46e;color:#111"><span>Leaf</span><span>#86B46E</span></div>
+        <div style="background:#e3a83b;color:#111"><span>Ochre</span><span>#E3A83B</span></div>
+      </div>
+    </section>
+    <section class="wrap p-cta">
+      <p class="lead" style="margin:0">Planning something like this?</p>
+      <a class="btn solid" data-p="cta" href="#/contact?topic=project&amp;make=identities">Start a project <svg class="go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </section>
+  </article>
+  <section class="band">
+    <div class="wrap">
+      <a class="next" data-p="next" href="#/work/orwin-cinema">
+        <div><p class="label">Next project</p><p class="h1" data-p="next-client">Orwin Cinema</p><p class="lead muted" data-p="next-line">A website and listings that change with every screening.</p></div>
+        <span class="ph"><img data-p="next-img" src="illustrations/orwin-cinema.svg" alt="" width="1200" height="1200"></span>
+      </a>
+    </div>
+  </section>
+</div>
+
+<!-- ================= STUDIO ================= -->
+<div data-view="studio">
+  <section class="page-head wrap split">
+    <h1 class="h1">About Quoin</h1>
+    <div class="copy">
+      <p class="lead">Quoin is an independent design studio with six partners and forty designers, writers and makers in Lisbon, Osaka and Toronto.</p>
+      <p>We make identities, posters, packaging, books, typefaces, websites and the signs that help people find their way. Most projects need several of these at once, so most of our teams mix them too.</p>
+      <p>Every project is led by a partner who designs it. The person you meet in the first conversation is the person who presents the work, and the one who answers the phone a year later.</p>
+      <a class="btn" href="#/contact?topic=project">Start a project <svg class="go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </section>
+  <section class="wrap"><figure class="ph wide"><img src="illustrations/studio-table.svg" alt="A cutting mat seen from above with poster proofs, a fan of colour swatches, a ruler and a pencil" width="1200" height="1200"></figure></section>
+  <section class="sec wrap split">
+    <h2 class="h2">What we make</h2>
+    <ul class="rows">
+      <li><a href="#/work?make=identities">Identities <span><span data-count-make="identities">7 projects</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li><a href="#/work?make=print">Posters and print <span><span data-count-make="print">4 projects</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li><a href="#/work?make=spaces">Spaces and signs <span><span data-count-make="spaces">5 projects</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li><a href="#/work?make=packaging">Packaging <span><span data-count-make="packaging">1 project</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li><a href="#/work?make=type">Typefaces <span><span data-count-make="type">2 projects</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li><a href="#/work?make=books">Books <span><span data-count-make="books">1 project</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li><a href="#/work?make=digital">Websites <span><span data-count-make="digital">2 projects</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+    </ul>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <div class="band-head reveal">
+        <p class="label">How we work</p>
+        <h2 class="h1">Small teams, start to finish</h2>
+        <p class="muted">A project team is a partner, two to six designers and whoever the work needs: a writer, a type designer, a developer, a fabricator. It stays together until the work is in use.</p>
+      </div>
+      <div class="inset reveal">
+        <ol class="principles">
+          <li><span class="n">01</span><h3>One partner, from the first call</h3><p>The partner who meets you designs the work and stays until it is in use.</p></li>
+          <li><span class="n">02</span><h3>Make it early</h3><p>Real things are on the table in week two: a sign at full size, a jar, a spread. Opinions get better when there is something to hold.</p></li>
+          <li><span class="n">03</span><h3>Leave rules behind</h3><p>Every project ends with guidelines short enough to read, and an afternoon with the people who will use them.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+  <section class="sec wrap split">
+    <h2 class="h2">Clients, past and present</h2>
+    <ul class="clients">
+      <li>Alderleaf Press</li><li>Brook Lane Housing Co-op</li><li>Calder Street Baths</li><li>Fen Observatory</li><li>Harrow Botanic Garden</li><li>Kilnhouse Records</li><li>Larch &amp; Hound Bakery</li><li>Marlow Tramways</li><li>North Quay Market</li><li>Orwin Cinema</li><li>Pellow Bicycle Works</li><li>Saltmere Ferries</li><li>Saltwork Ferments</li><li>The Ordinal Library</li><li>Tidewater Arts Festival</li><li>Vesper Opera House</li>
+    </ul>
+  </section>
+</div>
+
+<!-- ================= PEOPLE ================= -->
+<div data-view="people">
+  <section class="page-head wrap split">
+    <h1 class="h1">People</h1>
+    <p class="lead copy">Six partners lead the work, and each of them designs. Around them are forty designers, writers, developers and makers.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:var(--sec)">
+    <div class="list-bar">
+      <div class="chips" data-filter="studio" role="group" aria-label="Studio">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">All studios</button>
+        <button class="chip" type="button" data-value="lisbon" aria-pressed="false">Lisbon</button>
+        <button class="chip" type="button" data-value="osaka" aria-pressed="false">Osaka</button>
+        <button class="chip" type="button" data-value="toronto" aria-pressed="false">Toronto</button>
+      </div>
+      <p class="count" data-count="studio" data-one="partner" data-many="partners" aria-live="polite">6 partners</p>
+    </div>
+    <ul class="people">
+      <li data-studio="lisbon"><div class="ph"><img src="illustrations/portrait-1.svg" alt="Portrait of Ines Corvo, black and white" width="960" height="1200"></div><p class="t">Ines Corvo</p><p class="d">Identities and books · Lisbon</p></li>
+      <li data-studio="toronto"><div class="ph"><img src="illustrations/portrait-2.svg" alt="Portrait of Teo Lindqvist, black and white" width="960" height="1200"></div><p class="t">Teo Lindqvist</p><p class="d">Posters and music · Toronto</p></li>
+      <li data-studio="lisbon"><div class="ph"><img src="illustrations/portrait-3.svg" alt="Portrait of Maren Oduya, black and white" width="960" height="1200"></div><p class="t">Maren Oduya</p><p class="d">Packaging and food · Lisbon</p></li>
+      <li data-studio="osaka"><div class="ph"><img src="illustrations/portrait-4.svg" alt="Portrait of Kenji Arata, black and white" width="960" height="1200"></div><p class="t">Kenji Arata</p><p class="d">Typefaces and websites · Osaka</p></li>
+      <li data-studio="toronto"><div class="ph"><img src="illustrations/portrait-5.svg" alt="Portrait of Pia Halvorsen, black and white" width="960" height="1200"></div><p class="t">Pia Halvorsen</p><p class="d">Exhibitions and spaces · Toronto</p></li>
+      <li data-studio="osaka"><div class="ph"><img src="illustrations/portrait-6.svg" alt="Portrait of Sol Ferreira, black and white" width="960" height="1200"></div><p class="t">Sol Ferreira</p><p class="d">Wayfinding and civic work · Osaka</p></li>
+    </ul>
+    <div class="empty" data-empty="studio" hidden><p class="h2">No partners there yet.</p></div>
+  </section>
+  <section class="band">
+    <div class="wrap split">
+      <h2 class="h1">Work with us</h2>
+      <div class="copy">
+        <p class="muted">We hire twice a year, in March and September, for designers, writers and developers. Send a short note and up to ten pieces of work you made yourself.</p>
+        <a class="btn" href="#/contact?topic=jobs">Write to us about jobs <svg class="go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= JOURNAL (cards are the data for the post view) ================= -->
+<div data-view="journal">
+  <section class="page-head wrap split">
+    <h1 class="h1">Journal</h1>
+    <p class="lead copy">Essays, talks and news from the three studios.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:var(--sec)">
+    <div class="list-bar">
+      <div class="chips" data-filter="kind" role="group" aria-label="Kind of writing">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">Everything</button>
+        <button class="chip" type="button" data-value="essay" aria-pressed="false">Essays</button>
+        <button class="chip" type="button" data-value="news" aria-pressed="false">Studio news</button>
+        <button class="chip" type="button" data-value="talk" aria-pressed="false">Talks</button>
+      </div>
+      <p class="count" data-count="kind" data-one="piece" data-many="pieces" aria-live="polite">5 pieces</p>
+    </div>
+    <ul class="posts" id="journal-list">
+      <li class="card" data-kind="essay" data-slug="logo-smallest-part" data-author="Ines Corvo"><a href="#/journal/logo-smallest-part"><span class="ph"><img src="illustrations/harrow-garden.svg" alt="The garden's seed mark in its spring colours" width="1200" height="1200"></span><span class="meta">Essay · 12 November 2026</span><span class="title">A logo is the smallest part of an identity</span><span class="d">What people remember is the voice, the rhythm and the way a place is signed. The mark is only where that starts.</span></a></li>
+      <li class="card" data-kind="news" data-slug="fen-opens" data-author="Pia Halvorsen"><a href="#/journal/fen-opens"><span class="ph"><img src="illustrations/fen-observatory.svg" alt="Dotted orbits around a yellow sun above three exhibition panels" width="1200" height="1200"></span><span class="meta">Studio news · 28 October 2026</span><span class="title">The Fen Observatory exhibition is open</span><span class="d">Eleven rooms about the night sky, designed to be read in daylight.</span></a></li>
+      <li class="card" data-kind="talk" data-slug="timetable-figures" data-author="Kenji Arata"><a href="#/journal/timetable-figures"><span class="ph"><img src="illustrations/marlow-tram.svg" alt="A capital R over its construction lines on yellow" width="1200" height="1200"></span><span class="meta">Talk · 9 October 2026</span><span class="title">Drawing figures for a timetable</span><span class="d">Why a 1 and a 7 should never look alike at six point.</span></a></li>
+      <li class="card" data-kind="essay" data-slug="print-the-season" data-author="Teo Lindqvist"><a href="#/journal/print-the-season"><span class="ph"><img src="illustrations/vesper-opera.svg" alt="Three posters on a wall in black, red and cream" width="1200" height="1200"></span><span class="meta">Essay · 17 September 2026</span><span class="title">Why we still print the whole season</span><span class="d">Twelve posters, one grid and a long wall outside the opera house.</span></a></li>
+      <li class="card" data-kind="news" data-slug="toronto-move" data-author="The studio"><a href="#/journal/toronto-move"><span class="ph"><img src="illustrations/studio-table.svg" alt="Proofs, swatches and a ruler on a cutting mat" width="1200" height="1200"></span><span class="meta">Studio news · 2 September 2026</span><span class="title">Our Toronto studio has moved</span><span class="d">Same street, more daylight, and a workshop for making things at full size.</span></a></li>
+    </ul>
+    <div class="empty" data-empty="kind" hidden><p class="h2">Nothing here yet.</p></div>
+  </section>
+</div>
+
+<!-- ================= POST (filled from the chosen card and the posts data; shows the essay without JavaScript) ================= -->
+<div data-view="post">
+  <article>
+    <header class="article-head wrap">
+      <p class="label" data-a="meta">Essay · 12 November 2026</p>
+      <h1 class="h1" data-a="title">A logo is the smallest part of an identity</h1>
+      <p class="lead" data-a="dek">What people remember is the voice, the rhythm and the way a place is signed. The mark is only where that starts.</p>
+      <figure class="ph wide article-wide"><img data-a="img" src="illustrations/harrow-garden.svg" alt="The garden's seed mark in its spring colours" width="1200" height="1200"></figure>
+    </header>
+    <div class="wrap g12 article-body">
+      <p class="byline">Written by <strong data-a="author">Ines Corvo</strong></p>
+      <div class="prose" data-a="body">
+        <p>Every new client asks to see the logo first. We understand why: it is the part you can point at. But in our experience it does the least work of anything we make.</p>
+        <h2>What people actually meet</h2>
+        <p>A visitor to a botanic garden meets the ticket, the signs at the gate, the map, the menu in the café, the labels on two thousand plants and the voice on the website. The mark is on all of them, and it is rarely what anyone looks at.</p>
+        <p>So we design the system first: a grid, a type family, a palette, a way of writing, and a short list of what changes and what stays. The mark comes out of that system, not the other way round.</p>
+        <p class="pull">Design the voice first. The mark is the signature at the bottom of the letter.</p>
+        <h2>Rules people can keep</h2>
+        <p>An identity is only as good as the person setting a poster at five o'clock on a Friday. Our guidelines are short, they live in the tools people already use, and every rule comes with the reason for it.</p>
+        <figure><div class="ph"><img src="illustrations/studio-table.svg" alt="Poster proofs and colour swatches on a cutting mat" width="1200" height="1200"></div><figcaption>Proofs of the spring palette, checked at full size before anything is printed.</figcaption></figure>
+        <p>When a rule is broken often, we treat it as a design problem rather than a discipline problem, and redraw the rule.</p>
+      </div>
+    </div>
+    <div class="wrap article-foot"><a class="btn" href="#/journal">Back to the journal <svg class="go" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  </article>
+</div>
+
+<!-- ================= CONTACT ================= -->
+<div data-view="contact">
+  <section class="page-head wrap split">
+    <h1 class="h1">Contact</h1>
+    <p class="lead copy">New projects, press, jobs or a visit to one of the studios. Write to us and a partner will reply.</p>
+  </section>
+  <section class="wrap g12 contact">
+    <div class="form-wrap">
+      <form class="form" data-form="contact" novalidate>
+        <div class="fields">
+          <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" type="text" autocomplete="name" required aria-describedby="c-name-error" data-value-missing="Please tell us your name."><p class="error" id="c-name-error" aria-live="polite"></p></div>
+          <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" inputmode="email" autocomplete="email" required aria-describedby="c-email-error"><p class="error" id="c-email-error" aria-live="polite"></p></div>
+          <div class="field"><label for="c-org">Organisation <span class="muted">(optional)</span></label><input class="input" id="c-org" name="org" type="text" autocomplete="organization"></div>
+          <div class="field"><label for="c-topic">About</label><span class="select"><select class="input" id="c-topic" name="topic" required aria-describedby="c-topic-error"><option value="project">A new project</option><option value="press">Press</option><option value="jobs">Jobs</option><option value="visit">A studio visit</option><option value="other">Something else</option></select><svg aria-hidden="true"><use href="#i-chev"/></svg></span><p class="error" id="c-topic-error" aria-live="polite"></p></div>
+          <div class="field full" id="c-make-field"><label for="c-make">What should we make?</label><span class="select"><select class="input" id="c-make" name="make"><option value="all">Not sure yet</option><option value="identities">An identity</option><option value="print">Posters and print</option><option value="spaces">Spaces and signs</option><option value="packaging">Packaging</option><option value="type">A typeface</option><option value="books">Books</option><option value="digital">A website</option></select><svg aria-hidden="true"><use href="#i-chev"/></svg></span></div>
+          <div class="field full"><label for="c-message">Message</label><textarea class="input" id="c-message" name="message" required minlength="20" aria-describedby="c-message-error" data-value-missing="Please write a few words." data-too-short="A little more, please: at least 20 characters."></textarea><p class="error" id="c-message-error" aria-live="polite"></p></div>
+          <label class="check field full" for="c-letter"><input id="c-letter" name="letter" type="checkbox"><span>Send me the studio letter, four times a year.</span></label>
+        </div>
+        <div class="form-foot"><button class="btn solid" type="submit">Send message <svg class="go" aria-hidden="true"><use href="#i-arrow"/></svg></button><p class="small muted">We reply within three working days.</p></div>
+      </form>
+      <div class="success" data-success="contact" tabindex="-1" hidden>
+        <p class="label">Message sent</p>
+        <h2 class="h2">Thank you, <span data-echo="name"></span>.</h2>
+        <p>A partner will reply to <span data-echo="email"></span> about <span data-echo="topic"></span> within three working days.</p>
+        <button class="btn" type="button" data-again>Write another message</button>
+      </div>
+    </div>
+    <aside aria-label="Studios">
+      <div><h2 class="h3">Lisbon</h2><p class="muted">4 Cordage Yard<br>1200 Lisbon</p></div>
+      <div><h2 class="h3">Osaka</h2><p class="muted">2-8 Hamaguri-cho<br>Kita-ku, Osaka</p></div>
+      <div><h2 class="h3">Toronto</h2><p class="muted">61 Tannery Row<br>Toronto, Ontario</p></div>
+      <div><h2 class="h3">Write or call</h2><p class="muted"><a href="mailto:studio@quoin.example">studio@quoin.example</a><br>+1 555 0172</p></div>
+    </aside>
+  </section>
+</div>
+
+<!-- ================= LEGAL AND 404 ================= -->
+<div data-view="privacy">
+  <section class="page-head wrap legal">
+    <h1 class="h1">Privacy</h1>
+    <p class="lead">This page says what we collect through this website and what we do with it.</p>
+    <h2>What we collect</h2>
+    <p>When you write to us, we keep your name, email address, organisation and message. When you sign up for the studio letter, we keep your email address. We do not use advertising cookies or tracking pixels.</p>
+    <h2>Why</h2>
+    <p>To reply to you, and to send the letter if you asked for it. We never sell or share your details.</p>
+    <h2>How long</h2>
+    <p>Messages are kept for two years. You can unsubscribe from the letter at any time, and ask us to delete everything we hold about you by writing to studio@quoin.example.</p>
+  </section>
+</div>
+<div data-view="terms">
+  <section class="page-head wrap legal">
+    <h1 class="h1">Terms</h1>
+    <p class="lead">The short version: look, share links, and ask before you reuse anything.</p>
+    <h2>The work shown here</h2>
+    <p>Projects on this site belong to our clients and are shown with their permission. Please ask before reproducing any image.</p>
+    <h2>Writing</h2>
+    <p>You are welcome to quote from the journal with a link back to the original piece.</p>
+  </section>
+</div>
+<div data-view="404">
+  <section class="wrap notfound">
+    <p class="label">Page not found</p>
+    <h1 class="display">This page has moved, or never existed.</h1>
+    <div class="chips"><a class="btn solid" href="#/work">See the work</a><a class="btn" href="#/">Go home</a></div>
+  </section>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap g12 foot">
+    <div class="foot-letter">
+      <h2 class="h2">The studio letter</h2>
+      <p class="muted">New work, one essay and what we are reading, four times a year.</p>
+      <form class="letter" data-form="newsletter" novalidate>
+        <div class="field"><label class="sr" for="n-email">Email address</label><input class="input" id="n-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="Email address" required aria-describedby="n-email-error"><p class="error" id="n-email-error" aria-live="polite"></p></div>
+        <button class="btn solid" type="submit">Subscribe</button>
+      </form>
+      <div class="success" data-success="newsletter" tabindex="-1" hidden><p style="margin:0">Thank you. The next letter goes to <span data-echo="email"></span>.</p></div>
+    </div>
+    <nav class="foot-col first" aria-label="Footer"><p class="label">Quoin</p><ul><li><a href="#/work">Work</a></li><li><a href="#/studio">Studio</a></li><li><a href="#/people">People</a></li><li><a href="#/journal">Journal</a></li><li><a href="#/contact">Contact</a></li></ul></nav>
+    <div class="foot-col"><p class="label">Studios</p><ul><li>Lisbon</li><li>Osaka</li><li>Toronto</li></ul></div>
+    <div class="foot-col"><p class="label">Write to us</p><ul><li><a href="mailto:studio@quoin.example">studio@quoin.example</a></li><li><a href="#/contact?topic=press">Press</a></li><li><a href="#/contact?topic=jobs">Jobs</a></li></ul></div>
+  </div>
+  <div class="wrap foot-bottom"><p>© 2026 Quoin Studio</p><p><a href="#/privacy">Privacy</a><a href="#/terms">Terms</a></p></div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+
+  /* ---------- The two vocabularies of the sentence: [word in the sentence, label on tags] ---------- */
+  const VOCAB = {
+    make: {
+      all: ["anything", "All work"], identities: ["identities", "Identities"], print: ["posters and print", "Posters and print"],
+      spaces: ["spaces and signs", "Spaces and signs"], packaging: ["packaging", "Packaging"], type: ["typefaces", "Typefaces"],
+      books: ["books", "Books"], digital: ["websites", "Websites"],
+    },
+    for: {
+      all: ["anyone", "Everyone"], culture: ["the arts", "Arts and culture"], food: ["food and drink", "Food and drink"],
+      civic: ["public life", "Civic"], science: ["science", "Science"], commerce: ["shops and markets", "Shops and markets"], travel: ["travel", "Travel"],
+    },
+  };
+
+  /* ---------- Case studies: what the tile does not say. p: partner, s: scope, c: colours [hex, name], b: brief, i: idea ---------- */
+  const cases = {
+    "harrow-garden": { p: "Ines Corvo", s: "Identity, signs, tickets, website", c: [["#1D4A37", "Glasshouse green"], ["#F2ECDC", "Seed cream"], ["#86B46E", "Leaf"], ["#E3A83B", "Ochre"]], b: "The garden had eleven logos, one for each glasshouse and shop, and visitors could not tell the café from the herbarium. It needed one name on the gate and one voice on every sign.", i: "We drew one mark from four quarter circles, a seed seen from above, and let it change colour with the season. Signs, tickets and the website all switch on the first day of spring, summer, autumn and winter." },
+    "orwin-cinema": { p: "Kenji Arata", s: "Identity, website, listings", c: [["#2B1D33", "Projection plum"], ["#F0E6D8", "Screen"], ["#E2553B", "Usher red"], ["#F2B880", "Foyer"]], b: "A two-screen cinema showing forty films a month, with a programme that used to live in a spreadsheet and a website nobody could update on a Sunday.", i: "Listings that build themselves from the programme, a poster grid that takes any film still, and one red that marks tonight." },
+    "vesper-opera": { p: "Teo Lindqvist", s: "Season posters, programmes", c: [["#141414", "Stage black"], ["#D8342B", "Curtain red"], ["#E6E1D7", "House lights"]], b: "Twelve productions in a season, from a two-hander in the studio theatre to a five-hour cycle, and one poster template for all of them.", i: "Each production gets one circle and one cut. The circle is the voice, the cut is the drama, and their places on a twelve-column grid change with every opening night." },
+    "alderleaf-press": { p: "Ines Corvo", s: "Series design, covers", c: [["#233A5E", "Ink navy"], ["#E9B949", "Mustard"], ["#F4EFE6", "Paper"]], b: "A publisher of short essays with forty titles in print and no two covers alike.", i: "A series design built on four shapes and three colours, so a new cover takes an afternoon and still looks like it belongs on the shelf." },
+    "saltwork-ferments": { p: "Maren Oduya", s: "Identity, jars, labels, shop", c: [["#C9542F", "Chilli"], ["#E2B33C", "Turmeric"], ["#6F8F3F", "Greens"], ["#F5EFE3", "Label"]], b: "Forty recipes, three jar sizes and a label printer in the back of the kitchen.", i: "Labels the cooks set themselves: one colour band per family of flavours, the batch date written large, and a seal that tears when the jar is first opened." },
+    "marlow-tram": { p: "Kenji Arata", s: "Typeface, timetables, stop signs", c: [["#F2C230", "Tram yellow"], ["#151515", "Rail black"], ["#FFFFFF", "Ticket white"]], b: "Timetables printed at six point, stop names read from forty metres, and a ticket machine with a screen the size of a postcard.", i: "One family in three widths, with open shapes that survive rain on glass and figures that never collide in a timetable column." },
+    "ordinal-library": { p: "Sol Ferreira", s: "Wayfinding, shelf system, floor plans", c: [["#1B1B1B", "Sign black"], ["#D9D4CB", "Stone"], ["#C8553D", "Brick"], ["#3B5A7A", "Reading blue"]], b: "Four floors, half a million books and a catalogue system that only the librarians understood.", i: "Every shelf, sign and floor plan counts in the same order. Find your number once and the building reads like a book." },
+    "kilnhouse-records": { p: "Teo Lindqvist", s: "Identity, sleeves", c: [["#E0672C", "Kiln orange"], ["#22303F", "Night"], ["#E9C46A", "Label gold"]], b: "An independent label about to release its fiftieth record, with fifty different sleeves.", i: "A sleeve system with one fixed corner and one free square, so every artist gets their own cover and the shelf still reads as one label." },
+    "north-quay-market": { p: "Maren Oduya", s: "Name, identity, stall signs", c: [["#C8372D", "Awning red"], ["#F4EFE6", "Canvas"], ["#1E1E1E", "Counter"]], b: "A covered market reopening after three years, with forty traders and no name anyone agreed on.", i: "A short name, a mark built from the awning stripes and forty stall signs the traders paint and repaint themselves." },
+    "saltmere-ferries": { p: "Pia Halvorsen", s: "Identity, wayfinding, timetables", c: [["#12305A", "Deep water"], ["#F4F1EA", "Hull"], ["#6FA8DC", "Shallows"], ["#E5533D", "Buoy"]], b: "Six crossings, two harbours and departure boards that changed with every tide.", i: "One emblem, a colour for each crossing and signs that read the same from the quay, the deck and a phone." },
+    "fen-observatory": { p: "Pia Halvorsen", s: "Exhibition, graphics, guide", c: [["#0F1D3A", "Night sky"], ["#F5D76E", "Sun"], ["#9DB4E8", "Orbit"]], b: "An exhibition about the night sky in a building that is only open during the day.", i: "Eleven rooms that darken one step at a time, with panels that read from five metres and a printed guide you can take outside after dark." },
+    "brook-lane-housing": { p: "Sol Ferreira", s: "Identity, website, signs", c: [["#2C7A7B", "Door teal"], ["#E9785E", "Brick coral"], ["#F4EFE6", "Render"]], b: "Four hundred homes run by their tenants, and notices that were mostly photocopies.", i: "An identity the tenants' committee can use without us: one door shape, three colours and a website where every notice has a date and a name." },
+  };
+
+  /* ---------- Journal bodies (the first essay is written in the page itself) ---------- */
+  const posts = {
+    "fen-opens": ["The Fen Observatory exhibition opened on 24 October. It fills eleven rooms with the night sky, in a building that closes at five.", "Each room is a little darker than the one before. The panels are set in a single size that reads from five metres, and the printed guide is made to be taken outside after dark."],
+    "timetable-figures": ["At six point, a 1 and a 7 look alike unless you make them different on purpose. In a timetable that difference is a missed tram.", "Kenji walked through the figures he drew for Marlow Tramways: a 1 with a long flag, a 7 with a straight stem, and tabular widths so the columns never wander."],
+    "print-the-season": ["Every autumn we print the whole opera season at once: twelve posters, side by side on the long wall outside the house.", "Seen together, they show the system better than any guideline could. One circle, one cut, twelve different places on the same grid."],
+    "toronto-move": ["Our Toronto studio has moved two doors down Tannery Row, into a building with north light and a ground-floor workshop.", "The workshop has room to build signs, displays and exhibition panels at full size before they go into production."],
+  };
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the toggle is used ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light colours" : "Switch to dark colours");
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("quoin-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("quoin-theme", next);
+  });
+  systemDark.addEventListener("change", (event) => { if (!store.get("quoin-theme")) applyTheme(event.matches ? "dark" : "light"); });
+
+  /* ---------- Router: #/view, #/work/<slug>, #/journal/<slug>; state first, so it works when the frame refuses URL changes ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Quoin: a design studio in Lisbon, Osaka and Toronto",
+    work: "Work · Quoin", studio: "About the studio · Quoin", people: "People · Quoin", journal: "Journal · Quoin",
+    contact: "Contact · Quoin", privacy: "Privacy · Quoin", terms: "Terms · Quoin", "404": "Page not found · Quoin",
+  };
+  /* Which header link stays dark for each child view */
+  const section = { project: "work", post: "journal" };
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", slug: "", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    const [view = "", slug = ""] = path.split("/");
+    const child = { work: "project", journal: "post" }[view];
+    return { view: slug && child ? child : view || "home", slug, params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    let name = views.has(route.view) ? route.view : "404";
+    if (name === "project" && !renderProject(route.slug)) name = "404";
+    if (name === "post" && !renderPost(route.slug)) name = "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    if (titles[name]) document.title = titles[name];
+    const active = section[name] || name;
+    $$(".nav a, .sheet-links a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === active) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "work") applyWork({ make: p.get("make") || "all", for: p.get("for") || "all", mode: p.get("view") || "tiles" });
+    if (name === "people") applyFilter("studio", p.get("studio") || "all");
+    if (name === "journal") applyFilter("kind", p.get("kind") || "all");
+    if (name === "contact") { preselect("c-topic", p.get("topic")); preselect("c-make", p.get("make")); syncMake(); }
+    closeOptions();
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    const same = parse(hash).view === parse(location.hash).view && current === views.get(parse(hash).view);
+    show(parse(hash), { scroll: !same });
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  function preselect(id, value) {
+    const select = document.getElementById(id);
+    if (value && select.querySelector(`option[value="${CSS.escape(value)}"]`)) select.value = value;
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = (current && current.querySelector(href)) || document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header: the menu sheet whenever the links do not fit on one line ---------- */
+  const header = $(".site-header");
+  const nav = $(".nav", header);
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  function fitNav() {
+    header.classList.remove("compact");
+    if (getComputedStyle(nav).display !== "none" && nav.scrollWidth > nav.clientWidth + 1) header.classList.add("compact");
+  }
+  window.addEventListener("resize", fitNav);
+  document.fonts.ready.then(fitNav);
+  fitNav();
+
+  /* ---------- Reveal: things rise once as they come into view (visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -6% 0px" }) : null;
+  function observeReveals(scope) { $$(".reveal:not(.in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("in"))); }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("in")), 2500);
+
+  /* ---------- Work: filter by the sentence, lay the visible tiles out in a repeating rhythm, or list them ---------- */
+  const tiles = $$("#work-tiles > .tile");
+  const state = { make: "all", for: "all", mode: "tiles" };
+  /* Row rhythm: a tall third beside two thirds, three thirds with the middle dropped, two thirds beside a dropped third, two halves */
+  const PATTERN = ["tall", "s8", "", "drop", "", "s8", "drop", "s6", "s6 drop"];
+  const matches = (tile, make, sector) => (make === "all" || tile.dataset.make.split(" ").includes(make)) && (sector === "all" || tile.dataset.for === sector);
+  const countFor = (key, value) => tiles.filter((tile) => matches(tile, key === "make" ? value : state.make, key === "for" ? value : state.for)).length;
+  const index = $("#work-index");
+  index.innerHTML = `<li class="index-head" aria-hidden="true"><span>Client</span><span class="m">Project</span><span class="m">Work</span><span class="m">For</span><span class="y">Year</span></li>` +
+    tiles.map((tile) => `<li data-slug="${tile.dataset.slug}"><a href="#/work/${tile.dataset.slug}"><span>${$(".t", tile).textContent}</span><span class="m">${$(".d", tile).textContent}</span><span class="m">${tile.dataset.make.split(" ").map((m) => VOCAB.make[m][1]).join(", ")}</span><span class="m">${VOCAB.for[tile.dataset.for][1]}</span><span class="y">${tile.dataset.year}</span></a></li>`).join("");
+  function applyWork(next) {
+    state.make = VOCAB.make[next.make] ? next.make : "all";
+    state.for = VOCAB.for[next.for] ? next.for : "all";
+    state.mode = next.mode === "index" ? "index" : "tiles";
+    const shown = tiles.filter((tile) => matches(tile, state.make, state.for));
+    tiles.forEach((tile) => { tile.hidden = !shown.includes(tile); tile.classList.remove("enter"); });
+    shown.forEach((tile, i) => {
+      tile.className = `tile ${PATTERN[i % PATTERN.length]}`.trim();
+      tile.style.setProperty("--i", String(i % 6));
+      void tile.offsetWidth;
+      tile.classList.add("enter");
+    });
+    $$("li[data-slug]", index).forEach((row) => { row.hidden = !shown.some((tile) => tile.dataset.slug === row.dataset.slug); });
+    const filtered = state.make !== "all" || state.for !== "all";
+    $("#work-count").textContent = filtered ? `Showing ${shown.length} ${shown.length === 1 ? "project" : "projects"}` : `Showing all ${tiles.length} projects`;
+    $$("[data-reset-work]").forEach((button) => { if (button.closest(".work-bar")) button.hidden = !filtered; });
+    $("#work-empty").hidden = shown.length > 0;
+    $("#work-tiles").hidden = state.mode !== "tiles" || shown.length === 0;
+    index.hidden = state.mode !== "index" || shown.length === 0;
+    $$(".seg button").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.mode === state.mode)));
+    setWords();
+  }
+  const workHash = (patch) => {
+    const next = { ...state, ...patch };
+    const q = new URLSearchParams();
+    if (next.make !== "all") q.set("make", next.make);
+    if (next.for !== "all") q.set("for", next.for);
+    if (next.mode === "index") q.set("view", "index");
+    return `#/work${q.size ? `?${q}` : ""}`;
+  };
+  $$(".seg button").forEach((button) => button.addEventListener("click", () => go(workHash({ mode: button.dataset.mode }))));
+  $$("[data-reset-work]").forEach((button) => button.addEventListener("click", () => go(workHash({ make: "all", for: "all" }))));
+  $$("[data-count-make]").forEach((el) => {
+    const n = tiles.filter((tile) => matches(tile, el.dataset.countMake, "all")).length;
+    el.textContent = `${n} ${n === 1 ? "project" : "projects"}`;
+  });
+
+  /* ---------- The sentence: each word opens a list of alternatives with counts; arrow keys, Enter and Escape work ---------- */
+  let open = null;
+  function setWords() {
+    $$("[data-pick]").forEach((button) => {
+      const word = $(".w", button);
+      const text = VOCAB[button.dataset.pick][state[button.dataset.pick]][0];
+      if (word.textContent === text) return;
+      word.textContent = text;
+      word.classList.remove("swap");
+      void word.offsetWidth;
+      word.classList.add("swap");
+    });
+  }
+  function closeOptions(focusButton) {
+    if (!open) return;
+    open.list.hidden = true;
+    open.button.setAttribute("aria-expanded", "false");
+    if (focusButton) open.button.focus();
+    open = null;
+  }
+  function openOptions(button) {
+    const wrap = button.closest("[data-sentence]");
+    const list = $(".options", wrap);
+    const key = button.dataset.pick;
+    closeOptions();
+    list.setAttribute("aria-label", key === "make" ? "Kind of work" : "Kind of client");
+    list.innerHTML = Object.entries(VOCAB[key]).map(([value, [word]]) => {
+      const n = countFor(key, value);
+      const on = state[key] === value;
+      return `<div role="option" tabindex="-1" data-value="${value}" aria-selected="${on}"${n ? "" : ` class="none"`}><span>${word}</span><span class="n">${n}${on ? `<svg aria-hidden="true"><use href="#i-check"/></svg>` : ""}</span></div>`;
+    }).join("");
+    list.hidden = false;
+    button.setAttribute("aria-expanded", "true");
+    const wr = wrap.getBoundingClientRect();
+    const br = button.getBoundingClientRect();
+    list.style.top = `${br.bottom - wr.top + 8}px`;
+    list.style.left = `${Math.max(0, Math.min(br.left - wr.left, wrap.clientWidth - list.offsetWidth))}px`;
+    open = { button, list, key, wrap };
+    ($("[aria-selected='true']", list) || list.firstElementChild).focus();
+  }
+  function choose(value) {
+    const { key, wrap } = open;
+    closeOptions(true);
+    const patch = { [key]: value };
+    if (wrap.dataset.sentence === "route") patch.mode = "tiles";
+    go(workHash(patch));
+  }
+  $$("[data-pick]").forEach((button) => button.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (open && open.button === button) closeOptions(); else openOptions(button);
+  }));
+  $$(".options").forEach((list) => {
+    list.addEventListener("click", (event) => {
+      const option = event.target.closest("[role='option']");
+      if (option) choose(option.dataset.value);
+    });
+    list.addEventListener("keydown", (event) => {
+      const options = $$("[role='option']", list);
+      const i = options.indexOf(document.activeElement);
+      const step = { ArrowDown: 1, ArrowUp: -1 }[event.key];
+      if (step) { event.preventDefault(); options[(i + step + options.length) % options.length].focus(); }
+      else if (event.key === "Home" || event.key === "End") { event.preventDefault(); options[event.key === "Home" ? 0 : options.length - 1].focus(); }
+      else if ((event.key === "Enter" || event.key === " ") && i > -1) { event.preventDefault(); choose(options[i].dataset.value); }
+      else if (event.key === "Escape") { event.preventDefault(); closeOptions(true); }
+      else if (event.key === "Tab") closeOptions();
+    });
+  });
+  document.addEventListener("click", (event) => { if (open && !open.wrap.contains(event.target)) closeOptions(); });
+  window.addEventListener("resize", () => closeOptions());
+
+  /* ---------- Project view: built from the tile (name, line, picture, tags, year) and the cases entry ---------- */
+  const P = (key) => $$(`[data-p="${key}"]`);
+  const factsToggle = $("#facts-toggle");
+  const facts = $("#p-facts");
+  function setFacts(on) { facts.hidden = !on; factsToggle.setAttribute("aria-expanded", String(on)); }
+  factsToggle.addEventListener("click", () => setFacts(facts.hidden));
+  setFacts(false);
+  const ink = (hex) => {
+    const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+    return 0.299 * r + 0.587 * g + 0.114 * b > 150 ? "#111" : "#fff";
+  };
+  function renderProject(slug) {
+    const i = tiles.findIndex((tile) => tile.dataset.slug === slug);
+    const data = cases[slug];
+    if (i < 0 || !data) return false;
+    const tile = tiles[i];
+    const img = $("img", tile);
+    const makes = tile.dataset.make.split(" ");
+    P("client").forEach((el) => { el.textContent = $(".t", tile).textContent; });
+    P("line")[0].textContent = $(".d", tile).textContent;
+    P("year")[0].textContent = tile.dataset.year;
+    P("partner")[0].textContent = data.p;
+    P("scope")[0].textContent = data.s;
+    P("brief")[0].textContent = data.b;
+    P("idea")[0].textContent = data.i;
+    P("tags")[0].innerHTML = makes.map((m) => `<li><a class="tag" href="#/work?make=${m}">${VOCAB.make[m][1]}</a></li>`).join("") +
+      `<li><a class="tag" href="#/work?for=${tile.dataset.for}">${VOCAB.for[tile.dataset.for][1]}</a></li>`;
+    const hero = P("hero")[0];
+    hero.src = img.currentSrc || img.src;
+    hero.alt = img.alt;
+    const crop = P("crop")[0];
+    crop.src = hero.src;
+    crop.alt = `A close view of the work for ${$(".t", tile).textContent}`;
+    P("palette")[0].innerHTML = data.c.map(([hex, name]) => `<div style="background:${hex};color:${ink(hex)}"><span>${name}</span><span>${hex}</span></div>`).join("");
+    P("cta")[0].setAttribute("href", `#/contact?topic=project&make=${makes[0]}`);
+    const next = tiles[(i + 1) % tiles.length];
+    const nextImg = $("img", next);
+    P("next")[0].setAttribute("href", `#/work/${next.dataset.slug}`);
+    P("next-client")[0].textContent = $(".t", next).textContent;
+    P("next-line")[0].textContent = $(".d", next).textContent;
+    P("next-img")[0].src = nextImg.currentSrc || nextImg.src;
+    setFacts(false);
+    titles.project = `${$(".t", tile).textContent} · Quoin`;
+    return true;
+  }
+
+  /* ---------- Post view: built from the journal card and the posts entry ---------- */
+  const A = (key) => $(`[data-a="${key}"]`);
+  const essayBody = A("body").innerHTML;
+  const firstPost = $("#journal-list .card").dataset.slug;
+  function renderPost(slug) {
+    const card = $(`#journal-list .card[data-slug="${CSS.escape(slug)}"]`);
+    if (!card || (slug !== firstPost && !posts[slug])) return false;
+    const img = $("img", card);
+    A("meta").textContent = $(".meta", card).textContent;
+    A("title").textContent = $(".title", card).textContent;
+    A("dek").textContent = $(".d", card).textContent;
+    A("author").textContent = card.dataset.author;
+    A("img").src = img.currentSrc || img.src;
+    A("img").alt = img.alt;
+    if (slug === firstPost) A("body").innerHTML = essayBody;
+    else {
+      A("body").replaceChildren(...posts[slug].map((text) => Object.assign(document.createElement("p"), { textContent: text })));
+    }
+    titles.post = `${$(".title", card).textContent} · Quoin`;
+    return true;
+  }
+
+  /* ---------- Chip filters: people by studio, writing by kind ---------- */
+  function applyFilter(group, value) {
+    const bar = $(`[data-filter="${group}"]`);
+    const chips = $$("[data-value]", bar);
+    const chosen = chips.some((chip) => chip.dataset.value === value) ? value : "all";
+    chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.value === chosen)));
+    let shown = 0;
+    $$(`li[data-${group}]`).forEach((item) => {
+      const match = chosen === "all" || item.dataset[group] === chosen;
+      item.hidden = !match;
+      if (match) shown += 1;
+    });
+    const count = $(`[data-count="${group}"]`);
+    count.textContent = `${shown} ${shown === 1 ? count.dataset.one : count.dataset.many}`;
+    $(`[data-empty="${group}"]`).hidden = shown > 0;
+  }
+  $$("[data-filter]").forEach((bar) => $$("[data-value]", bar).forEach((chip) => chip.addEventListener("click", () => applyFilter(bar.dataset.filter, chip.dataset.value))));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const topic = $("#c-topic");
+  function syncMake() { $("#c-make-field").hidden = topic.value !== "project"; }
+  topic.addEventListener("change", syncMake);
+  syncMake();
+  const messages = {
+    valueMissing: "Please fill this in.",
+    typeMismatch: "Please enter a valid email address.",
+    tooShort: "A little more, please.",
+  };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const tooShort = field.minLength > 0 && field.value.trim().length > 0 && field.value.trim().length < field.minLength;
+    const problem = tooShort ? "tooShort" : Object.keys(messages).find((key) => field.validity[key]);
+    /* data-value-missing, data-type-mismatch and data-too-short on a field override the default message */
+    error.textContent = problem ? field.dataset[problem] || messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  function readable(form, name) {
+    const field = form.elements[name];
+    if (!field) return "";
+    if (field.tagName === "SELECT") return field.selectedOptions[0]?.textContent.toLowerCase() ?? "";
+    return field.value.trim();
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("[aria-describedby]", form);
+    fields.forEach((field) => {
+      field.addEventListener(field.tagName === "SELECT" ? "change" : "blur", () => checkField(field));
+      field.addEventListener("input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    const label = button.innerHTML;
+    const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        $$("[data-echo]", success).forEach((el) => { el.textContent = readable(form, el.dataset.echo); });
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+        button.disabled = false;
+        button.innerHTML = label;
+      }, 700);
+    });
+    $("[data-again]", success)?.addEventListener("click", () => {
+      form.reset();
+      syncMake();
+      fields.forEach((field) => { field.removeAttribute("aria-invalid"); document.getElementById(field.getAttribute("aria-describedby")).textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      $("input", form).focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

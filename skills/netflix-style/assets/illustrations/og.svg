@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<defs>
+<linearGradient id="veil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#140d0e" stop-opacity=".55"/><stop offset="1" stop-color="#140d0e" stop-opacity=".95"/></linearGradient>
+<linearGradient id="rim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d01a34" stop-opacity="0"/><stop offset=".5" stop-color="#ff5a5f"/><stop offset="1" stop-color="#d01a34" stop-opacity="0"/></linearGradient>
+</defs>
+<rect width="1200" height="630" fill="#140d0e"/>
+<g transform="rotate(-10 600 315)" opacity=".9">
+<rect x="-40" y="-60" width="220" height="124" rx="8" fill="#b8452a"/><rect x="196" y="-60" width="220" height="124" rx="8" fill="#26306a"/><rect x="432" y="-60" width="220" height="124" rx="8" fill="#0d4148"/><rect x="668" y="-60" width="220" height="124" rx="8" fill="#6e4a1c"/><rect x="904" y="-60" width="220" height="124" rx="8" fill="#b24f85"/><rect x="1140" y="-60" width="220" height="124" rx="8" fill="#3a2116"/>
+<rect x="-160" y="80" width="220" height="124" rx="8" fill="#1b2c5a"/><rect x="76" y="80" width="220" height="124" rx="8" fill="#5d7069"/><rect x="312" y="80" width="220" height="124" rx="8" fill="#c8312a"/><rect x="548" y="80" width="220" height="124" rx="8" fill="#0a2a5e"/><rect x="784" y="80" width="220" height="124" rx="8" fill="#9ccbe0"/><rect x="1020" y="80" width="220" height="124" rx="8" fill="#2b3a5e"/>
+<rect x="-40" y="220" width="220" height="124" rx="8" fill="#9c5a52"/><rect x="196" y="220" width="220" height="124" rx="8" fill="#7c2419"/><rect x="432" y="220" width="220" height="124" rx="8" fill="#2b7c78"/><rect x="668" y="220" width="220" height="124" rx="8" fill="#26402a"/><rect x="904" y="220" width="220" height="124" rx="8" fill="#e3a43a"/><rect x="1140" y="220" width="220" height="124" rx="8" fill="#1f1035"/>
+<rect x="-160" y="360" width="220" height="124" rx="8" fill="#46615c"/><rect x="76" y="360" width="220" height="124" rx="8" fill="#d9643a"/><rect x="312" y="360" width="220" height="124" rx="8" fill="#121735"/><rect x="548" y="360" width="220" height="124" rx="8" fill="#b98447"/><rect x="784" y="360" width="220" height="124" rx="8" fill="#0d1b3d"/><rect x="1020" y="360" width="220" height="124" rx="8" fill="#c8402f"/>
+</g>
+<rect width="1200" height="630" fill="url(#veil)"/>
+<rect x="520" y="200" width="72" height="72" rx="14" fill="#d01a34"/><circle cx="556" cy="236" r="20" fill="#fff4ea"/><circle cx="564" cy="229" r="11" fill="#d01a34"/>
+<text x="612" y="258" font-family="system-ui, sans-serif" font-size="52" font-weight="800" fill="#ffffff">Ferrotype</text>
+<text x="600" y="350" text-anchor="middle" font-family="system-ui, sans-serif" font-size="40" font-weight="800" fill="#ffffff">Watch how it's made. Then make it yourself.</text>
+<path d="M0 600Q600 520 1200 600" stroke="url(#rim)" stroke-width="5" fill="none"/>
+</svg>

@@ -1,0 +1,1365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Fernwick: ideas for slow homes, small kitchens and patient hands</title>
+<meta name="description" content="Rooms, recipes and things to make, saved by three people and sorted into boards. Find an idea, save it, make it.">
+<meta property="og:title" content="Fernwick: ideas for slow homes">
+<meta property="og:description" content="Rooms, recipes and things to make, saved into boards by three people.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font: one open grotesque, heavy and tight for headings, plain for everything else ---------- */
+@font-face { font-family: "Plus Jakarta Sans"; src: url("fonts/plus-jakarta-sans-latin-wght-normal.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: light (default) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);                  /* the page: white, so pictures carry all the colour */
+  --surface: oklch(92.6% 0.006 95);       /* warm grey: search, chips, secondary buttons */
+  --surface-hover: oklch(88.6% 0.007 95);
+  --surface-2: oklch(97.2% 0.004 95);     /* soft bands and the footer */
+  --raised: oklch(100% 0 0);              /* the close-up card, popovers */
+  --text: oklch(21.5% 0.012 330);
+  --text-muted: oklch(46% 0.012 330);
+  --border: oklch(88% 0.005 95);
+  --field: oklch(76% 0.006 95);           /* field outlines */
+  --accent: oklch(55.5% 0.22 25);         /* the one red: Save, the main button, the mark */
+  --accent-hover: oklch(48.5% 0.2 25);
+  --accent-text: oklch(100% 0 0);
+  --ink: oklch(21.5% 0.012 330);          /* chosen chips, Saved, Following */
+  --ink-text: oklch(100% 0 0);
+  --scrim: oklch(0% 0 0 / 0.32);          /* over a picture while you point at it */
+  --error: oklch(50% 0.2 25);
+  --focus: oklch(56% 0.17 255);
+  --photo: oklch(92.6% 0.006 95);
+  --shadow-card: 0 1px 20px oklch(0% 0 0 / 0.1);
+  --shadow-overlay: 0 10px 32px oklch(0% 0 0 / 0.16);
+  --av-ines: oklch(62% 0.11 45); --av-teo: oklch(56% 0.07 150); --av-juno: oklch(48% 0.08 260);
+  --sans: "Plus Jakarta Sans", "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
+  --fs-display: clamp(2.375rem, 1.6rem + 2.9vw, 4.25rem);
+  --fs-h1: clamp(2rem, 1.55rem + 1.7vw, 3rem);
+  --fs-h2: clamp(1.5rem, 1.3rem + 0.75vw, 2rem);
+  --fs-h3: 1.125rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-tiny: 0.75rem;
+  --r-control: 16px; --r-card: 16px; --r-media: 16px; --r-panel: 32px; --r-pill: 999px;
+  --page: 1240px;
+  --edge: clamp(12px, 2vw, 32px);
+  --gap: 16px;
+  --sec: clamp(48px, 6vw, 88px);
+  --hh: 80px;
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 400ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}
+/* ---------- Tokens: dark. Chosen by the toggle, or by the system without JavaScript ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(17.5% 0.004 330); --surface: oklch(29% 0.006 330); --surface-hover: oklch(34% 0.007 330); --surface-2: oklch(21.5% 0.005 330); --raised: oklch(23.5% 0.005 330);
+  --text: oklch(96% 0.004 95); --text-muted: oklch(76% 0.008 330); --border: oklch(33% 0.006 330); --field: oklch(48% 0.008 330);
+  --accent-hover: oklch(62% 0.2 25); --ink: oklch(96% 0.004 95); --ink-text: oklch(17.5% 0.004 330); --scrim: oklch(0% 0 0 / 0.42);
+  --error: oklch(73% 0.15 25); --focus: oklch(74% 0.13 255); --photo: oklch(27% 0.006 330); --shadow-card: none; --shadow-overlay: 0 10px 32px oklch(0% 0 0 / 0.5);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: oklch(17.5% 0.004 330); --surface: oklch(29% 0.006 330); --surface-hover: oklch(34% 0.007 330); --surface-2: oklch(21.5% 0.005 330); --raised: oklch(23.5% 0.005 330);
+    --text: oklch(96% 0.004 95); --text-muted: oklch(76% 0.008 330); --border: oklch(33% 0.006 330); --field: oklch(48% 0.008 330);
+    --accent-hover: oklch(62% 0.2 25); --ink: oklch(96% 0.004 95); --ink-text: oklch(17.5% 0.004 330); --scrim: oklch(0% 0 0 / 0.42);
+    --error: oklch(73% 0.15 25); --focus: oklch(74% 0.13 255); --photo: oklch(27% 0.006 330); --shadow-card: none; --shadow-overlay: 0 10px 32px oklch(0% 0 0 / 0.5);
+  }
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--hh) + 16px); }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs-body)/1.5 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-underline-offset: 0.2em; }
+h1, h2, h3 { margin: 0; font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; text-wrap: balance; }
+p { margin: 0 0 1em; text-wrap: pretty; }
+ul, ol, figure, dl, dd { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 60; padding: 12px 18px; border-radius: var(--r-pill); background: var(--ink); color: var(--ink-text); font-weight: 600; }
+.skip:focus { top: 12px; }
+.wrap { max-width: var(--page); margin-inline: auto; padding-inline: var(--edge); }
+.edge { padding-inline: var(--edge); }
+.sec { padding-block: var(--sec); }
+.center { text-align: center; }
+.muted { color: var(--text-muted); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.js [data-view]:not(.is-active) { display: none; }
+:root:not(.js) .needs-js { display: none; }  /* parts the script draws from data */
+
+/* ---------- Type: heavy, tight headings; plain body ---------- */
+.display { font-size: var(--fs-display); font-weight: 800; line-height: 1.02; letter-spacing: -0.045em; }
+.h1 { font-size: var(--fs-h1); font-weight: 800; line-height: 1.06; letter-spacing: -0.035em; }
+.h2 { font-size: var(--fs-h2); letter-spacing: -0.025em; }
+.h3 { font-size: var(--fs-h3); letter-spacing: -0.01em; }
+.lead { font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); color: var(--text-muted); }
+.small { font-size: var(--fs-small); }
+.kicker { margin: 0 0 12px; font-size: var(--fs-small); font-weight: 600; color: var(--text-muted); }
+
+/* ---------- Buttons: pills. Red for the main action, warm grey for the rest, ink for a chosen state ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border: 0; border-radius: var(--r-pill); background: var(--surface); color: var(--text); font-weight: 600; font-size: var(--fs-body); line-height: 1; text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.btn:hover { background: var(--surface-hover); }
+.btn:active { transform: scale(0.96); }
+.btn.red { background: var(--accent); color: var(--accent-text); }
+.btn.red:hover { background: var(--accent-hover); }
+.btn.ink, .btn[aria-pressed="true"], .btn[aria-pressed="true"]:hover { background: var(--ink); color: var(--ink-text); }
+.btn.sm { min-height: 40px; padding: 0 16px; font-size: var(--fs-small); }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+.btn svg { width: 18px; height: 18px; }
+.icon-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; flex: none; width: 48px; height: 48px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--text); text-decoration: none; transition: background-color var(--dur-fast) var(--ease); }
+.icon-btn:hover { background: var(--surface); }
+.icon-btn svg { width: 22px; height: 22px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.center .actions, .actions.center { justify-content: center; }
+
+/* ---------- Chips: pill tags that filter or link; the chosen one turns ink ---------- */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border: 0; border-radius: var(--r-pill); background: var(--surface); color: var(--text); font-weight: 600; font-size: var(--fs-small); text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease); }
+.chip:hover { background: var(--surface-hover); }
+.chip[aria-pressed="true"], .chip[aria-current="page"] { background: var(--ink); color: var(--ink-text); }
+.chipbar { position: relative; display: flex; gap: 8px; overflow-x: auto; padding: 4px var(--edge) 12px; scrollbar-width: none; }
+.chipbar::-webkit-scrollbar { display: none; }
+.chipbar.centered { justify-content: safe center; }
+
+/* ---------- Header: mark, a few links, the pill search across the middle, one red button ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; background: var(--bg); }
+.header-inner { display: flex; align-items: center; gap: 8px; min-height: var(--hh); padding-inline: var(--edge); }
+.brand { display: inline-flex; align-items: center; gap: 8px; flex: none; padding: 6px 8px 6px 0; color: var(--accent); font-weight: 800; font-size: 1.375rem; letter-spacing: -0.05em; text-decoration: none; }
+.brand svg { width: 32px; height: 32px; }
+.nav { display: flex; flex: none; gap: 4px; }
+.nav a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 14px; border-radius: var(--r-pill); font-weight: 600; text-decoration: none; white-space: nowrap; }
+.nav a:hover { background: var(--surface); }
+.nav a[aria-current="page"] { background: var(--ink); color: var(--ink-text); }
+.search { position: relative; flex: 1 1 auto; min-width: 160px; }
+.search > svg { position: absolute; left: 18px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
+.search-input { width: 100%; height: 48px; padding: 0 48px 0 46px; border: 0; border-radius: var(--r-pill); background: var(--surface); font-size: var(--fs-body); transition: background-color var(--dur-fast) var(--ease); }
+.search-input:hover { background: var(--surface-hover); }
+.search-input:focus { background: var(--raised); box-shadow: 0 0 0 2px var(--field); outline: 0; }
+.search-input:focus-visible { box-shadow: 0 0 0 3px var(--focus); }
+.search-input::placeholder { color: var(--text-muted); }
+.search-input::-webkit-search-cancel-button { display: none; }
+.search-clear { position: absolute; right: 4px; top: 4px; width: 40px; height: 40px; }
+.search-clear svg { width: 16px; height: 16px; }
+.suggest { position: absolute; z-index: 40; top: calc(100% + 8px); left: 0; right: 0; display: grid; gap: 20px; padding: 24px; border-radius: var(--r-panel); background: var(--raised); box-shadow: var(--shadow-overlay); border: 1px solid var(--border); animation: drop var(--dur-base) var(--ease) both; }
+.suggest h2 { font-size: var(--fs-small); letter-spacing: 0; color: var(--text-muted); margin-bottom: 10px; }
+.cat-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.cat-tile { position: relative; display: grid; place-items: center; aspect-ratio: 3 / 2; overflow: hidden; border-radius: var(--r-card); color: oklch(100% 0 0); font-weight: 700; text-decoration: none; }
+.cat-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cat-tile::after { content: ""; position: absolute; inset: 0; background: oklch(0% 0 0 / 0.34); transition: background-color var(--dur-fast) var(--ease); }
+.cat-tile:hover::after { background: oklch(0% 0 0 / 0.5); }
+.cat-tile span { position: relative; z-index: 1; }
+.header-end { display: flex; align-items: center; gap: 4px; flex: none; }
+.count-badge { position: absolute; top: 4px; right: 2px; min-width: 20px; height: 20px; padding: 0 6px; border-radius: var(--r-pill); background: var(--ink); color: var(--ink-text); font-size: var(--fs-tiny); font-weight: 700; line-height: 20px; text-align: center; }
+#menu-open { display: none; }
+.site-header.compact .nav, .site-header.compact .wide-only { display: none; }
+.site-header.compact #menu-open { display: inline-flex; }
+@media (max-width: 899px) { .nav, .wide-only { display: none; } #menu-open { display: inline-flex; } }
+@media (max-width: 599px) {
+  :root { --hh: 64px; --gap: 10px; }
+  .header-inner { gap: 4px; }
+  .brand .word { display: none; }
+  .search { min-width: 0; }
+  .search-input { height: 44px; padding-left: 42px; }
+  .search > svg { left: 15px; }
+  .header-end .icon-btn { width: 44px; height: 44px; }
+  .suggest { position: fixed; top: var(--hh); left: 8px; right: 8px; max-height: calc(100vh - var(--hh) - 16px); overflow: auto; }
+  .cat-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .search-input { padding-right: 38px; }
+  .search-clear { width: 36px; height: 36px; top: 4px; right: 2px; }
+  .save-to .pill-select { max-width: 150px; }
+}
+
+/* ---------- Menu sheet ---------- */
+.sheet { width: min(420px, 100%); max-width: none; height: 100%; max-height: none; margin: 0 0 0 auto; padding: 0; border: 0; background: var(--bg); color: var(--text); }
+.sheet[open] { animation: slide var(--dur-slow) var(--ease) both; }
+.sheet::backdrop { background: oklch(0% 0 0 / 0.4); }
+.sheet-inner { display: grid; align-content: start; gap: 24px; padding: 12px 20px 32px; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; }
+.sheet-links a { display: block; padding: 10px 0; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.035em; text-decoration: none; }
+.sheet-links a[aria-current="page"] { color: var(--accent); }
+
+/* ---------- Home intro: a heavy headline beside a loose collage of rounded pictures ---------- */
+.intro { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: center; gap: clamp(24px, 4vw, 64px); padding-block: clamp(16px, 3vw, 40px) clamp(24px, 3vw, 40px); }
+.intro .lead { max-width: 34ch; margin: 18px 0 26px; }
+.collage { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: repeat(10, 1fr); gap: 12px; aspect-ratio: 16 / 10; }
+.collage img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--r-panel); background: var(--photo); }
+.collage img:nth-child(1) { grid-area: 2 / 1 / 8 / 4; border-radius: 24px; }
+.collage img:nth-child(2) { grid-area: 1 / 4 / 11 / 8; }
+.collage img:nth-child(3) { grid-area: 3 / 8 / 7 / 11; border-radius: 24px; }
+.collage img:nth-child(4) { grid-area: 7 / 8 / 11 / 13; border-radius: 24px; }
+.collage img:nth-child(5) { grid-area: 8 / 2 / 11 / 4; border-radius: 20px; }
+@media (max-width: 859px) {
+  .intro { grid-template-columns: 1fr; padding-top: 8px; }
+  .collage { order: -1; aspect-ratio: 16 / 9; gap: 8px; }
+  .collage img { border-radius: 20px; }
+}
+
+/* ---------- The wall: pictures at their own ratios in columns. CSS columns without JavaScript; the script deals
+   tiles into the shortest column so they read left to right ---------- */
+.wall { columns: 7 220px; column-gap: var(--gap); margin-inline: auto; }
+.wall > .tile { break-inside: avoid; margin-bottom: calc(var(--gap) + 8px); }
+.wall.masonry { columns: auto; display: flex; align-items: flex-start; gap: var(--gap); }
+.wall-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: calc(var(--gap) + 8px); }
+@media (max-width: 599px) { .wall { columns: 2; } }
+.tile { position: relative; }
+.tile-media { position: relative; overflow: hidden; border-radius: var(--r-media); background: var(--photo); }
+.tile-media > a { display: block; }
+.tile-media img { width: 100%; }
+.tile-media::after { content: ""; position: absolute; inset: 0; background: var(--scrim); opacity: 0; pointer-events: none; transition: opacity var(--dur-base) var(--ease); }
+.tile .save { position: absolute; top: 12px; right: 12px; z-index: 1; opacity: 0; transform: translateY(-4px); transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease), background-color var(--dur-fast) var(--ease); }
+.tile:hover .tile-media::after, .tile:focus-within .tile-media::after { opacity: 1; }
+.tile:hover .save, .tile:focus-within .save { opacity: 1; transform: none; }
+@media (hover: none) { .tile .save { display: none; } }
+.save { min-height: 44px; padding: 0 18px; }
+.save[aria-pressed="true"] { background: var(--ink); color: var(--ink-text); }
+.save.pop { animation: pop var(--dur-slow) var(--ease) both; }
+.tile-title { margin: 8px 4px 2px; font-size: var(--fs-small); font-weight: 600; line-height: 1.3; letter-spacing: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.tile-title a { text-decoration: none; }
+.tile-title a:hover { text-decoration: underline; }
+.by { display: inline-flex; align-items: center; gap: 6px; margin: 2px 4px; color: var(--text-muted); font-size: var(--fs-tiny); text-decoration: none; }
+.by:hover { color: var(--text); }
+.av { display: inline-grid; place-items: center; flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--av, var(--text-muted)); color: oklch(100% 0 0); font-size: 0.625rem; font-weight: 700; letter-spacing: 0.02em; }
+[data-u="ines"] { --av: var(--av-ines); } [data-u="teo"] { --av: var(--av-teo); } [data-u="juno"] { --av: var(--av-juno); }
+.av.lg { width: 120px; height: 120px; font-size: 2.5rem; letter-spacing: -0.02em; }
+.av.md { width: 48px; height: 48px; font-size: 1rem; }
+.more { display: flex; justify-content: center; padding-top: 24px; }
+.empty { display: grid; justify-items: center; gap: 16px; padding: 64px 16px; text-align: center; }
+.empty p { margin: 0; color: var(--text-muted); }
+
+/* ---------- Page heads ---------- */
+.page-head { padding-block: clamp(24px, 4vw, 48px) 20px; }
+.page-head .lead { max-width: 56ch; margin: 14px auto 0; }
+.page-head.left .lead { margin-inline: 0; }
+.count { margin: 0; font-size: var(--fs-small); font-weight: 600; color: var(--text-muted); }
+.head-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; margin-bottom: 16px; }
+
+/* ---------- Boards: a three-picture cover, the name, a count ---------- */
+.board-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 32px var(--gap); }
+.board { display: block; color: inherit; text-decoration: none; }
+.cover { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; aspect-ratio: 3 / 2; overflow: hidden; border-radius: var(--r-card); background: var(--photo); }
+.cover img { width: 100%; height: 100%; object-fit: cover; transition: filter var(--dur-base) var(--ease); }
+.cover img:first-child { grid-row: 1 / 3; }
+.board:hover .cover img { filter: brightness(0.86); }
+.board h3 { margin: 10px 4px 2px; font-size: var(--fs-h3); }
+.board p { margin: 0 4px; font-size: var(--fs-small); color: var(--text-muted); }
+.board-head { padding-block: clamp(24px, 4vw, 48px) 24px; text-align: center; }
+.board-head .who { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; font-weight: 600; text-decoration: none; }
+.board-head .lead { max-width: 52ch; margin: 12px auto 4px; }
+.board-head .actions { margin-top: 20px; }
+
+/* ---------- Close-up: the picture at full ratio beside its details, in one rounded card ---------- */
+.closeup-wrap { position: relative; padding-top: clamp(8px, 2vw, 24px); }
+.back { position: absolute; left: var(--edge); top: clamp(8px, 2vw, 24px); }
+.closeup { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); max-width: 1016px; margin-inline: auto; overflow: hidden; border-radius: var(--r-panel); background: var(--raised); box-shadow: var(--shadow-card); }
+:root[data-theme="dark"] .closeup { border: 1px solid var(--border); }
+.closeup-media { align-self: start; background: var(--photo); }
+.closeup-media img { width: 100%; }
+.closeup-body { display: grid; align-content: start; gap: 18px; padding: clamp(20px, 3vw, 32px); }
+.closeup-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; }
+.save-to { display: flex; align-items: center; gap: 8px; }
+.pill-select { min-height: 48px; max-width: 190px; padding: 0 40px 0 18px; border: 0; border-radius: var(--r-pill); background: linear-gradient(45deg, transparent 50%, currentColor 50%) right 24px center / 6px 6px no-repeat, linear-gradient(135deg, currentColor 50%, transparent 50%) right 18px center / 6px 6px no-repeat, var(--surface); font-weight: 600; appearance: none; text-overflow: ellipsis; }
+.pill-select option { background: var(--raised); color: var(--text); }
+.crumb { margin: 0; font-size: var(--fs-small); font-weight: 600; }
+.crumb a { color: var(--text-muted); text-decoration: none; }
+.crumb a:hover { color: var(--text); text-decoration: underline; }
+.closeup-body p { margin: 0; }
+.notes { display: grid; gap: 10px; }
+.notes li { display: flex; gap: 12px; align-items: baseline; }
+.notes li::before { content: counter(n); counter-increment: n; display: inline-grid; place-items: center; flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--surface); font-size: var(--fs-tiny); font-weight: 700; }
+.notes { counter-reset: n; }
+.person { display: flex; align-items: center; gap: 12px; }
+.person a { text-decoration: none; }
+.person strong { display: block; }
+.person strong + span { font-size: var(--fs-small); color: var(--text-muted); }
+.person .btn { margin-left: auto; }
+@media (max-width: 819px) {
+  .closeup { grid-template-columns: 1fr; }
+  .back { position: static; margin-bottom: 8px; }
+}
+
+/* ---------- Profile and tabs ---------- */
+.profile { display: grid; justify-items: center; gap: 10px; padding-block: clamp(24px, 4vw, 48px) 16px; text-align: center; }
+.profile .lead { max-width: 46ch; margin: 4px 0 0; }
+.tabs { display: flex; justify-content: center; gap: 8px; margin: 12px 0 24px; }
+.tab { min-height: 48px; padding: 0 18px; border: 0; background: none; font-weight: 600; box-shadow: inset 0 -3px 0 transparent; transition: box-shadow var(--dur-base) var(--ease); }
+.tab[aria-selected="true"] { box-shadow: inset 0 -3px 0 var(--text); }
+
+/* ---------- Bands, trios, about ---------- */
+.band { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 24px 40px; padding: clamp(28px, 4vw, 56px); border-radius: var(--r-panel); background: var(--surface-2); }
+.band .lead { margin: 10px 0 0; }
+@media (max-width: 719px) { .band { grid-template-columns: 1fr; } }
+.trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.trio > div { padding: 28px; border-radius: var(--r-card); background: var(--surface-2); }
+.trio .num { display: inline-grid; place-items: center; width: 40px; height: 40px; margin-bottom: 18px; border-radius: 50%; background: var(--accent); color: var(--accent-text); font-weight: 800; }
+.trio p { margin: 8px 0 0; color: var(--text-muted); }
+@media (max-width: 759px) { .trio { grid-template-columns: 1fr; } }
+.people { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.people a { display: grid; justify-items: center; gap: 8px; padding: 32px 20px; border-radius: var(--r-card); background: var(--surface-2); text-align: center; text-decoration: none; transition: background-color var(--dur-fast) var(--ease); }
+.people a:hover { background: var(--surface); }
+.people p { margin: 0; font-size: var(--fs-small); color: var(--text-muted); }
+@media (max-width: 759px) { .people { grid-template-columns: 1fr; } }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: clamp(24px, 5vw, 80px); }
+@media (max-width: 859px) { .split { grid-template-columns: 1fr; } }
+
+/* ---------- Forms: rounded fields, errors float under the field and never move the button ---------- */
+.form-card { max-width: 640px; margin-inline: auto; padding: clamp(24px, 4vw, 40px); border-radius: var(--r-panel); background: var(--raised); box-shadow: var(--shadow-card); }
+:root[data-theme="dark"] .form-card { border: 1px solid var(--border); }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; }
+.field { position: relative; display: grid; align-content: start; gap: 6px; padding-bottom: 28px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+.label { font-size: var(--fs-small); font-weight: 600; }
+.label i { font-style: normal; font-weight: 400; color: var(--text-muted); }
+.input { width: 100%; min-height: 48px; padding: 11px 16px; border: 2px solid var(--field); border-radius: var(--r-control); background: var(--bg); transition: border-color var(--dur-fast) var(--ease); }
+.input:hover { border-color: var(--text-muted); }
+.input:focus { border-color: var(--focus); outline: 0; }
+.input::placeholder { color: var(--text-muted); }
+textarea.input { min-height: 120px; resize: vertical; }
+select.input { appearance: none; padding-right: 40px; background: linear-gradient(45deg, transparent 50%, currentColor 50%) right 24px center / 6px 6px no-repeat, linear-gradient(135deg, currentColor 50%, transparent 50%) right 18px center / 6px 6px no-repeat, var(--bg); }
+select.input option { background: var(--raised); color: var(--text); }
+.input[aria-invalid="true"], .group[aria-invalid="true"] .opt span { border-color: var(--error); }
+.error { position: absolute; left: 2px; right: 0; bottom: 6px; font-size: var(--fs-tiny); font-weight: 600; line-height: 1.3; color: var(--error); }
+.group { position: relative; min-width: 0; margin: 0; padding: 0 0 28px; border: 0; }
+.group legend { padding: 0; margin-bottom: 10px; }
+.opt { position: relative; display: inline-flex; }
+.opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.opt span { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border: 2px solid transparent; border-radius: var(--r-pill); background: var(--surface); font-weight: 600; font-size: var(--fs-small); cursor: pointer; transition: background-color var(--dur-fast) var(--ease); }
+.opt span:hover { background: var(--surface-hover); }
+.opt input:checked + span { background: var(--ink); color: var(--ink-text); }
+.opt input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+.check { display: flex; align-items: flex-start; gap: 10px; font-size: var(--fs-small); cursor: pointer; }
+.check input { flex: none; width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--accent); }
+.form-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
+.form-foot p { margin: 0; }
+.success { text-align: center; }
+.success:focus { outline: 0; }
+.success .tick { display: grid; place-items: center; width: 56px; height: 56px; margin: 0 auto 16px; border-radius: 50%; background: var(--accent); color: var(--accent-text); }
+.success .tick svg { width: 26px; height: 26px; }
+.inline-form { display: flex; align-items: flex-start; gap: 8px; }
+.inline-form .field { flex: 1; padding-bottom: 24px; }
+.inline-form .input { border-radius: var(--r-pill); }
+.inline-form .error { bottom: 4px; left: 16px; }
+@media (max-width: 599px) { .fields { grid-template-columns: 1fr; } }
+
+/* ---------- FAQ ---------- */
+.faq { max-width: 760px; margin-inline: auto; display: grid; gap: 8px; }
+.faq details { border-radius: var(--r-card); background: var(--surface-2); }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 64px; padding: 16px 20px; font-weight: 700; list-style: none; cursor: pointer; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary svg { flex: none; width: 20px; height: 20px; transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary svg { transform: rotate(180deg); }
+.faq details p { margin: 0; padding: 0 20px 20px; color: var(--text-muted); }
+
+/* ---------- Footer ---------- */
+.site-footer { margin-top: var(--sec); padding-block: clamp(40px, 5vw, 64px) 24px; border-radius: var(--r-panel) var(--r-panel) 0 0; background: var(--surface-2); }
+.footer-grid { display: grid; grid-template-columns: minmax(0, 4fr) repeat(2, minmax(0, 2fr)) minmax(0, 4fr); gap: 32px var(--gap); }
+.footer-grid h2 { margin-bottom: 10px; font-size: var(--fs-small); letter-spacing: 0; }
+.footer-grid ul a { display: inline-block; padding: 6px 0; font-size: var(--fs-small); text-decoration: none; }
+.footer-grid ul a:hover { text-decoration: underline; }
+.footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); font-size: var(--fs-tiny); color: var(--text-muted); }
+.footer-bottom nav { display: flex; gap: 20px; }
+.footer-bottom a { padding: 6px 0; text-decoration: none; }
+.footer-bottom a:hover { color: var(--text); }
+@media (max-width: 859px) { .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .footer-grid > :first-child, .footer-grid > :last-child { grid-column: 1 / -1; } }
+.legal { max-width: 720px; margin-inline: auto; }
+.legal h2 { margin: 1.6em 0 0.5em; font-size: 1.375rem; }
+.notfound { padding-block: clamp(48px, 8vw, 96px) 24px; text-align: center; }
+
+/* ---------- Toast ---------- */
+.toast { position: fixed; z-index: 50; left: 50%; bottom: 24px; display: flex; align-items: center; gap: 12px; max-width: calc(100% - 24px); padding: 8px 8px 8px 8px; border-radius: var(--r-card); background: var(--ink); color: var(--ink-text); box-shadow: var(--shadow-overlay); transform: translateX(-50%); animation: toast var(--dur-slow) var(--ease) both; }
+.toast img { width: 44px; height: 44px; object-fit: cover; border-radius: 10px; }
+.toast p { margin: 0 8px 0 0; font-weight: 600; font-size: var(--fs-small); }
+.toast a { margin-left: auto; padding: 10px 14px; border-radius: var(--r-pill); background: oklch(100% 0 0 / 0.14); color: inherit; font-weight: 700; font-size: var(--fs-small); text-decoration: none; }
+:root[data-theme="dark"] .toast a { background: oklch(0% 0 0 / 0.08); }
+
+/* ---------- Motion: quick, light, keyframed so it also plays on elements the script adds ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+@keyframes fade { from { opacity: 0; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-6px); } }
+@keyframes slide { from { transform: translateX(24px); opacity: 0; } }
+@keyframes pop { 40% { transform: scale(0.9); } 70% { transform: scale(1.06); } }
+@keyframes toast { from { opacity: 0; transform: translate(-50%, 16px); } }
+.tile.enter { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 35ms); }
+.collage img { animation: rise 700ms var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-mark" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="currentColor"/><g fill="#fff"><rect x="8" y="7" width="7" height="11" rx="3.5"/><rect x="8" y="20" width="7" height="5" rx="2.5"/><rect x="17" y="7" width="7" height="6" rx="3"/><rect x="17" y="15" width="7" height="10" rx="3.5"/></g></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></g></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></g></symbol>
+  <symbol id="i-saved" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="10" rx="2.5"/><rect x="3.5" y="16" width="7" height="4.5" rx="2"/><rect x="13.5" y="3.5" width="7" height="5" rx="2"/><rect x="13.5" y="11" width="7" height="9.5" rx="2.5"/></g></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3.5M7.5 8 12 3.5 16.5 8"/><path d="M5 12v6.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V12"/></g></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#/" aria-label="Fernwick, home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span class="word">fernwick</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/explore">Explore</a>
+      <a href="#/boards">Boards</a>
+      <a href="#/about">About</a>
+    </nav>
+    <div class="search" role="search">
+      <svg aria-hidden="true"><use href="#i-search"/></svg>
+      <label class="sr" for="q">Search ideas</label>
+      <input class="search-input" id="q" type="search" placeholder="Search ideas" autocomplete="off" enterkeyhint="search">
+      <button class="icon-btn search-clear" type="button" aria-label="Clear the search" hidden><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+      <div class="suggest" id="suggest" hidden>
+        <div><h2>Popular searches</h2><div class="chips" id="popular"></div></div>
+        <div><h2>Browse by category</h2><div class="cat-tiles" id="cat-tiles"></div></div>
+      </div>
+    </div>
+    <div class="header-end">
+      <a class="btn red sm wide-only" href="#/letter">Subscribe</a>
+      <a class="icon-btn" href="#/saved" id="saved-link" aria-label="Saved ideas"><svg aria-hidden="true"><use href="#i-saved"/></svg><span class="count-badge" id="saved-count" hidden>0</span></a>
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark colours"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button class="icon-btn" id="menu-open" type="button" aria-label="Open the menu" aria-controls="menu"><svg aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+<nav class="chipbar" id="catbar" aria-label="Categories">
+    <a class="chip" href="#/explore">All ideas</a>
+    <a class="chip" href="#/explore?c=kitchens">Kitchens</a>
+    <a class="chip" href="#/explore?c=rooms">Rooms</a>
+    <a class="chip" href="#/explore?c=light">Light</a>
+    <a class="chip" href="#/explore?c=bakes">Bakes</a>
+    <a class="chip" href="#/explore?c=suppers">Suppers</a>
+    <a class="chip" href="#/explore?c=clay">Clay</a>
+    <a class="chip" href="#/explore?c=textiles">Textiles</a>
+    <a class="chip" href="#/explore?c=gardens">Gardens</a>
+</nav>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-inner">
+    <div class="sheet-top">
+      <a class="brand" href="#/"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>fernwick</span></a>
+      <button class="icon-btn" id="menu-close" type="button" aria-label="Close the menu"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <ul class="sheet-links">
+      <li><a href="#/explore">Explore</a></li>
+      <li><a href="#/boards">Boards</a></li>
+      <li><a href="#/saved">Saved</a></li>
+      <li><a href="#/about">About</a></li>
+      <li><a href="#/contact">Share your work</a></li>
+      <li><a href="#/faq">Questions</a></li>
+    </ul>
+    <a class="btn red" href="#/letter">Get the Sunday letter</a>
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ======================= HOME ======================= -->
+<div data-view="home">
+  <section class="intro wrap">
+    <div>
+      <h1 class="display">Ideas for slow homes and patient hands</h1>
+      <p class="lead">Rooms, recipes and things to make, saved by three people and sorted into boards. Find one you like, save it, make it this weekend.</p>
+      <div class="actions"><a class="btn red" href="#/explore">Start exploring</a><a class="btn" href="#/boards">See the boards</a></div>
+    </div>
+    <div class="collage" aria-hidden="true">
+      <img src="images/corner.webp" alt="" width="720" height="1080" style="--i:0">
+      <img src="images/tart.webp" alt="" width="720" height="900" style="--i:1">
+      <img src="images/indigo.webp" alt="" width="720" height="960" style="--i:2">
+      <img src="images/lemons.webp" alt="" width="720" height="720" style="--i:3">
+      <img src="images/vases.webp" alt="" width="720" height="960" style="--i:4">
+    </div>
+  </section>
+  <section class="edge" aria-labelledby="fresh-h">
+    <h2 class="sr" id="fresh-h">Fresh ideas</h2>
+    <div class="wall" id="wall-home">
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=shelf" tabindex="-1" aria-hidden="true"><img src="images/shelf.webp" alt="" width="720" height="1080"></a></div><h3 class="tile-title"><a href="#/idea?id=shelf">Open oak shelves for everyday bowls</a></h3><a class="by" href="#/curator?u=ines"><span class="av" data-u="ines">IM</span>Ines Marlow</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=loaf" tabindex="-1" aria-hidden="true"><img src="images/loaf.webp" alt="" width="720" height="720"></a></div><h3 class="tile-title"><a href="#/idea?id=loaf">Country sourdough, scored for a tall ear</a></h3><a class="by" href="#/curator?u=teo"><span class="av" data-u="teo">TA</span>Teo Abara</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=indigo" tabindex="-1" aria-hidden="true"><img src="images/indigo.webp" alt="" width="720" height="960"></a></div><h3 class="tile-title"><a href="#/idea?id=indigo">Indigo cloth drying in the yard</a></h3><a class="by" href="#/curator?u=juno"><span class="av" data-u="juno">JS</span>Juno Sato</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=corner" tabindex="-1" aria-hidden="true"><img src="images/corner.webp" alt="" width="720" height="1080"></a></div><h3 class="tile-title"><a href="#/idea?id=corner">A reading corner with one good lamp</a></h3><a class="by" href="#/curator?u=ines"><span class="av" data-u="ines">IM</span>Ines Marlow</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=lemons" tabindex="-1" aria-hidden="true"><img src="images/lemons.webp" alt="" width="720" height="720"></a></div><h3 class="tile-title"><a href="#/idea?id=lemons">A bowl of lemons on blue linen</a></h3><a class="by" href="#/curator?u=teo"><span class="av" data-u="teo">TA</span>Teo Abara</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=quilt" tabindex="-1" aria-hidden="true"><img src="images/quilt.webp" alt="" width="720" height="1080"></a></div><h3 class="tile-title"><a href="#/idea?id=quilt">A quilt pieced from old shirts</a></h3><a class="by" href="#/curator?u=juno"><span class="av" data-u="juno">JS</span>Juno Sato</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=tart" tabindex="-1" aria-hidden="true"><img src="images/tart.webp" alt="" width="720" height="900"></a></div><h3 class="tile-title"><a href="#/idea?id=tart">Plum and almond tart</a></h3><a class="by" href="#/curator?u=teo"><span class="av" data-u="teo">TA</span>Teo Abara</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=galley" tabindex="-1" aria-hidden="true"><img src="images/galley.webp" alt="" width="720" height="960"></a></div><h3 class="tile-title"><a href="#/idea?id=galley">A narrow galley kitchen that still feels open</a></h3><a class="by" href="#/curator?u=ines"><span class="av" data-u="ines">IM</span>Ines Marlow</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=balcony" tabindex="-1" aria-hidden="true"><img src="images/balcony.webp" alt="" width="720" height="1080"></a></div><h3 class="tile-title"><a href="#/idea?id=balcony">Herbs in a row along the railing</a></h3><a class="by" href="#/curator?u=juno"><span class="av" data-u="juno">JS</span>Juno Sato</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=desk" tabindex="-1" aria-hidden="true"><img src="images/desk.webp" alt="" width="720" height="720"></a></div><h3 class="tile-title"><a href="#/idea?id=desk">A desk lamp, a stack of books, a slow evening</a></h3><a class="by" href="#/curator?u=ines"><span class="av" data-u="ines">IM</span>Ines Marlow</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=vases" tabindex="-1" aria-hidden="true"><img src="images/vases.webp" alt="" width="720" height="960"></a></div><h3 class="tile-title"><a href="#/idea?id=vases">Three shapes thrown in one afternoon</a></h3><a class="by" href="#/curator?u=juno"><span class="av" data-u="juno">JS</span>Juno Sato</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=tomatoes" tabindex="-1" aria-hidden="true"><img src="images/tomatoes.webp" alt="" width="720" height="1080"></a></div><h3 class="tile-title"><a href="#/idea?id=tomatoes">Tomatoes, good oil and torn basil</a></h3><a class="by" href="#/curator?u=teo"><span class="av" data-u="teo">TA</span>Teo Abara</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=whiteroom" tabindex="-1" aria-hidden="true"><img src="images/whiteroom.webp" alt="" width="720" height="960"></a></div><h3 class="tile-title"><a href="#/idea?id=whiteroom">White walls, a stool and one branch</a></h3><a class="by" href="#/curator?u=ines"><span class="av" data-u="ines">IM</span>Ines Marlow</a></article>
+      <article class="tile"><div class="tile-media"><a href="#/idea?id=buns" tabindex="-1" aria-hidden="true"><img src="images/buns.webp" alt="" width="720" height="960"></a></div><h3 class="tile-title"><a href="#/idea?id=buns">Cardamom buns on a crowded tray</a></h3><a class="by" href="#/curator?u=teo"><span class="av" data-u="teo">TA</span>Teo Abara</a></article>
+    </div>
+    <div class="more"><button class="btn" type="button" id="more" hidden>See more ideas</button></div>
+  </section>
+  <section class="wrap sec needs-js" aria-labelledby="boards-h">
+    <div class="head-row"><h2 class="h2" id="boards-h">Boards worth following</h2><a class="btn sm" href="#/boards">All boards</a></div>
+    <div class="board-grid" id="home-boards"></div>
+  </section>
+  <section class="wrap">
+    <div class="band">
+      <div><h2 class="h2">Twelve ideas, every Sunday morning</h2><p class="lead">One letter a week with the best new saves from every board. No ads, and one click to leave.</p></div>
+      <a class="btn red" href="#/letter">Get the Sunday letter</a>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= EXPLORE (categories and search) ======================= -->
+<div data-view="explore">
+  <section class="page-head wrap center">
+    <h1 class="h1" id="x-title">Explore every idea</h1>
+    <p class="lead" id="x-lead">26 ideas across rooms, food, clay, cloth and gardens. Pick a category, or search for anything.</p>
+  </section>
+  <section class="edge needs-js">
+    <div class="head-row"><p class="count" id="x-count" aria-live="polite"></p><a class="btn sm" href="#/explore" id="x-clear" hidden>Clear the search</a></div>
+    <div class="wall" id="wall-explore"></div>
+    <div class="empty" id="x-empty" hidden><h2 class="h3">Nothing matches that yet</h2><p>Try a shorter word, or one of these.</p><div class="chips" id="x-suggest"></div></div>
+  </section>
+</div>
+
+<!-- ======================= IDEA (close-up) ======================= -->
+<div data-view="idea">
+  <section class="closeup-wrap edge">
+    <a class="icon-btn back" href="#/" id="back" aria-label="Back"><svg aria-hidden="true"><use href="#i-back"/></svg></a>
+    <article class="closeup">
+      <figure class="closeup-media"><img id="d-img" src="images/tart.webp" alt="A plum and almond tart seen from above, plum slices in rings, a bowl of cream and a spoon beside it" width="720" height="900"></figure>
+      <div class="closeup-body">
+        <div class="closeup-bar">
+          <button class="icon-btn" type="button" data-share aria-label="Copy a link to this idea"><svg aria-hidden="true"><use href="#i-share"/></svg></button>
+          <div class="save-to"><label class="sr" for="d-board">Board to save to</label><select class="pill-select" id="d-board"></select><button class="btn red save" type="button" id="d-save" data-save="tart" aria-pressed="false">Save</button></div>
+        </div>
+        <p class="crumb"><a href="#/explore?c=bakes" id="d-cat">Bakes</a></p>
+        <h1 class="h1" id="d-title">Plum and almond tart</h1>
+        <p id="d-desc">Almond cream in a sweet crust, topped with rings of sliced plums. Good warm, better the next morning.</p>
+        <div><h2 class="h3" style="margin-bottom:12px">What makes it work</h2><ol class="notes" id="d-notes"><li>Blind-bake the crust for 15 minutes</li><li>Slice plums thin and overlap them</li><li>Brush with warm jam to finish</li></ol></div>
+        <div class="person"><a href="#/curator?u=teo" id="d-person-av"><span class="av md" data-u="teo">TA</span></a><a href="#/curator?u=teo" id="d-person"><strong>Teo Abara</strong><span>Bakes and suppers</span></a><button class="btn sm" type="button" data-follow="teo" aria-pressed="false">Follow</button></div>
+      </div>
+    </article>
+  </section>
+  <section class="edge sec needs-js">
+    <h2 class="h2 center" style="margin-bottom:24px">More like this</h2>
+    <div class="wall" id="wall-related"></div>
+  </section>
+</div>
+
+<!-- ======================= BOARDS ======================= -->
+<div data-view="boards">
+  <section class="page-head wrap center">
+    <h1 class="h1">Boards</h1>
+    <p class="lead">Each board is one person’s shortlist on one subject. Follow a board to find it again.</p>
+    <div class="chips" style="justify-content:center;margin-top:24px" data-filter="curator">
+      <button class="chip" type="button" data-value="all" aria-pressed="true">Everyone</button>
+      <button class="chip" type="button" data-value="ines" aria-pressed="false">Ines Marlow</button>
+      <button class="chip" type="button" data-value="teo" aria-pressed="false">Teo Abara</button>
+      <button class="chip" type="button" data-value="juno" aria-pressed="false">Juno Sato</button>
+    </div>
+  </section>
+  <section class="wrap">
+    <p class="count" id="boards-count" style="margin-bottom:16px" aria-live="polite">7 boards</p>
+    <div class="board-grid" id="all-boards">
+      <a class="board" href="#/board?b=small-kitchens" data-curator="ines"><div class="cover"><img src="images/shelf.webp" alt="" width="720" height="1080"><img src="images/galley.webp" alt="" width="720" height="960"><img src="images/sink.webp" alt="" width="720" height="900"></div><h3>Small kitchens that work</h3><p>6 ideas · Ines Marlow</p></a>
+      <a class="board" href="#/board?b=warm-white" data-curator="ines"><div class="cover"><img src="images/whiteroom.webp" alt="" width="720" height="960"><img src="images/bed.webp" alt="" width="720" height="540"><img src="images/stairs.webp" alt="" width="720" height="1200"></div><h3>Warm white rooms</h3><p>6 ideas · Ines Marlow</p></a>
+      <a class="board" href="#/board?b=low-light" data-curator="ines"><div class="cover"><img src="images/lantern.webp" alt="" width="720" height="1080"><img src="images/candles.webp" alt="" width="720" height="900"><img src="images/desk.webp" alt="" width="720" height="720"></div><h3>Low light, long evenings</h3><p>5 ideas · Ines Marlow</p></a>
+      <a class="board" href="#/board?b=weekend-bakes" data-curator="teo"><div class="cover"><img src="images/loaf.webp" alt="" width="720" height="720"><img src="images/buns.webp" alt="" width="720" height="960"><img src="images/tart.webp" alt="" width="720" height="900"></div><h3>Weekend bakes</h3><p>4 ideas · Teo Abara</p></a>
+      <a class="board" href="#/board?b=table-for-six" data-curator="teo"><div class="cover"><img src="images/supper.webp" alt="" width="720" height="540"><img src="images/tomatoes.webp" alt="" width="720" height="1080"><img src="images/soup.webp" alt="" width="720" height="900"></div><h3>A table for six</h3><p>6 ideas · Teo Abara</p></a>
+      <a class="board" href="#/board?b=made-by-hand" data-curator="juno"><div class="cover"><img src="images/vases.webp" alt="" width="720" height="960"><img src="images/glaze.webp" alt="" width="720" height="1080"><img src="images/quilt.webp" alt="" width="720" height="1080"></div><h3>Made by hand</h3><p>6 ideas · Juno Sato</p></a>
+      <a class="board" href="#/board?b=balcony-garden" data-curator="juno"><div class="cover"><img src="images/balcony.webp" alt="" width="720" height="1080"><img src="images/seedlings.webp" alt="" width="720" height="540"><img src="images/dried.webp" alt="" width="720" height="960"></div><h3>A balcony garden</h3><p>4 ideas · Juno Sato</p></a>
+    </div>
+    <div class="empty" data-empty="curator" hidden><p>No boards here yet.</p><button class="btn" type="button" data-reset="curator">Show every board</button></div>
+  </section>
+</div>
+
+<!-- ======================= BOARD ======================= -->
+<div data-view="board">
+  <section class="board-head wrap">
+    <h1 class="h1" id="b-title">Weekend bakes</h1>
+    <a class="who" href="#/curator?u=teo" id="b-who"><span class="av" data-u="teo">TA</span><span>Teo Abara</span></a>
+    <p class="lead" id="b-desc">Breads, buns and tarts for slow Saturday mornings.</p>
+    <p class="count" id="b-count">4 ideas</p>
+    <div class="actions center"><button class="btn" type="button" data-share><svg aria-hidden="true"><use href="#i-share"/></svg>Share</button><button class="btn" type="button" id="b-follow" data-follow="weekend-bakes" aria-pressed="false">Follow</button></div>
+  </section>
+  <nav class="chipbar centered needs-js" id="b-sections" aria-label="Sections of this board"></nav>
+  <section class="edge needs-js"><div class="wall" id="wall-board"></div></section>
+</div>
+
+<!-- ======================= CURATOR ======================= -->
+<div data-view="curator">
+  <section class="profile wrap">
+    <span class="av lg" id="p-av" data-u="ines">IM</span>
+    <h1 class="h1" id="p-name">Ines Marlow</h1>
+    <p class="count" id="p-role">Rooms and light</p>
+    <p class="lead" id="p-bio">Styles small flats for a living and keeps the ideas that survive real life: a shelf that holds, a lamp at the right height.</p>
+    <p class="small" id="p-stats"><strong>10 ideas</strong> · <strong>3 boards</strong></p>
+    <div class="actions center"><button class="btn red" type="button" id="p-follow" data-follow="ines" aria-pressed="false">Follow</button><a class="btn" href="#/contact?topic=collaboration" id="p-contact">Get in touch</a></div>
+  </section>
+  <div class="tabs needs-js" role="tablist" aria-label="Ideas and boards">
+    <button class="tab" type="button" role="tab" id="t-ideas" data-tab="ideas" aria-selected="true" aria-controls="pane-ideas">Ideas</button>
+    <button class="tab" type="button" role="tab" id="t-boards" data-tab="boards" aria-selected="false" aria-controls="pane-boards" tabindex="-1">Boards</button>
+  </div>
+  <section class="edge needs-js" id="pane-ideas" role="tabpanel" aria-labelledby="t-ideas"><div class="wall" id="wall-curator"></div></section>
+  <section class="wrap" id="pane-boards" role="tabpanel" aria-labelledby="t-boards" hidden><div class="board-grid" id="curator-boards"></div></section>
+</div>
+
+<!-- ======================= SAVED ======================= -->
+<div data-view="saved">
+  <section class="page-head wrap center">
+    <h1 class="h1">Saved</h1>
+    <p class="lead">Ideas you saved in this browser, newest first. They stay here until you clear them.</p>
+  </section>
+  <section class="edge needs-js">
+    <div class="head-row"><p class="count" id="s-count" aria-live="polite"></p><button class="btn sm" type="button" id="s-clear" hidden>Clear saved ideas</button></div>
+    <div class="wall" id="wall-saved"></div>
+    <div class="empty" id="s-empty" hidden><h2 class="h3">Nothing saved yet</h2><p>Point at any picture and press Save. It will wait for you here.</p><a class="btn red" href="#/explore">Find ideas</a></div>
+  </section>
+</div>
+
+<!-- ======================= ABOUT ======================= -->
+<div data-view="about">
+  <section class="wrap sec split">
+    <div>
+      <h1 class="display">Three people, one big wall of ideas</h1>
+      <p class="lead" style="margin-top:20px">Fernwick started as a shared folder of pictures between friends who kept asking each other how things were made. Now it is a small library: every idea has a picture, a few notes on how to do it, and the name of the person who saved it.</p>
+      <div class="actions" style="margin-top:24px"><a class="btn red" href="#/explore">Start exploring</a><a class="btn" href="#/contact?topic=share">Share your work</a></div>
+    </div>
+    <div class="collage" aria-hidden="true">
+      <img src="images/glaze.webp" alt="" width="720" height="1080" style="--i:0">
+      <img src="images/shelf.webp" alt="" width="720" height="1080" style="--i:1">
+      <img src="images/loaf.webp" alt="" width="720" height="720" style="--i:2">
+      <img src="images/balcony.webp" alt="" width="720" height="1080" style="--i:3">
+      <img src="images/yarn.webp" alt="" width="720" height="900" style="--i:4">
+    </div>
+  </section>
+  <section class="wrap">
+    <h2 class="h2" style="margin-bottom:20px">How it works</h2>
+    <div class="trio">
+      <div><span class="num">1</span><h3 class="h3">Find</h3><p>Browse the wall, pick a category or search for a word. Every picture opens to the notes behind it.</p></div>
+      <div><span class="num">2</span><h3 class="h3">Save</h3><p>Point at a picture and press Save. Your saves collect in one place, ready for the weekend.</p></div>
+      <div><span class="num">3</span><h3 class="h3">Make</h3><p>Each idea ends in three short notes: the measurements, the order, the thing we got wrong first.</p></div>
+    </div>
+  </section>
+  <section class="wrap sec">
+    <h2 class="h2" style="margin-bottom:20px">Who saves them</h2>
+    <div class="people">
+      <a href="#/curator?u=ines"><span class="av md" data-u="ines">IM</span><strong>Ines Marlow</strong><p>Rooms and light</p></a>
+      <a href="#/curator?u=teo"><span class="av md" data-u="teo">TA</span><strong>Teo Abara</strong><p>Bakes and suppers</p></a>
+      <a href="#/curator?u=juno"><span class="av md" data-u="juno">JS</span><strong>Juno Sato</strong><p>Clay, cloth and gardens</p></a>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= SUNDAY LETTER (signup) ======================= -->
+<div data-view="letter">
+  <section class="page-head wrap center">
+    <h1 class="h1">The Sunday letter</h1>
+    <p class="lead">Twelve new ideas every Sunday at 8 am, picked from the boards you choose.</p>
+  </section>
+  <section class="wrap">
+    <div class="form-card">
+      <form data-form="signup" novalidate>
+        <div class="fields">
+          <div class="field"><label class="label" for="l-name">First name <i>(optional)</i></label><input class="input" id="l-name" name="name" autocomplete="given-name"></div>
+          <div class="field"><label class="label" for="l-email">Email</label><input class="input" id="l-email" name="email" type="email" autocomplete="email" required aria-describedby="l-email-err"><span class="error" id="l-email-err" aria-live="polite"></span></div>
+        </div>
+        <fieldset class="group" data-min="1" aria-describedby="l-topics-err">
+          <legend class="label">What should we send?</legend>
+          <div class="chips">
+            <label class="opt"><input type="checkbox" name="topics" value="Rooms and light" checked><span>Rooms and light</span></label>
+            <label class="opt"><input type="checkbox" name="topics" value="Kitchens"><span>Kitchens</span></label>
+            <label class="opt"><input type="checkbox" name="topics" value="Bakes and suppers" checked><span>Bakes and suppers</span></label>
+            <label class="opt"><input type="checkbox" name="topics" value="Clay and cloth"><span>Clay and cloth</span></label>
+            <label class="opt"><input type="checkbox" name="topics" value="Gardens"><span>Gardens</span></label>
+          </div>
+          <span class="error" id="l-topics-err" aria-live="polite"></span>
+        </fieldset>
+        <fieldset class="group">
+          <legend class="label">How often</legend>
+          <div class="chips">
+            <label class="opt"><input type="radio" name="often" value="every Sunday" checked><span>Every Sunday</span></label>
+            <label class="opt"><input type="radio" name="often" value="the first Sunday of the month"><span>Once a month</span></label>
+          </div>
+        </fieldset>
+        <div class="form-foot"><p class="small muted">One click to leave, in every letter.</p><button class="btn red" type="submit">Subscribe</button></div>
+      </form>
+      <div class="success" data-success="signup" tabindex="-1" hidden>
+        <span class="tick"><svg aria-hidden="true"><use href="#i-check"/></svg></span>
+        <h2 class="h2">You’re on the list</h2>
+        <p class="lead" style="margin:12px auto 20px;max-width:40ch">We’ll write to <strong data-echo="email"></strong> <span data-echo="often"></span> with <span data-echo="topics"></span>.</p>
+        <button class="btn" type="button" data-again>Change your choices</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= CONTACT ======================= -->
+<div data-view="contact">
+  <section class="page-head wrap center">
+    <h1 class="h1">Share your work, or just say hello</h1>
+    <p class="lead">Made something from a board? Want to work together? We read everything and reply within a week.</p>
+  </section>
+  <section class="wrap">
+    <div class="form-card">
+      <form data-form="contact" novalidate>
+        <div class="fields">
+          <div class="field"><label class="label" for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-err"><span class="error" id="c-name-err" aria-live="polite"></span></div>
+          <div class="field"><label class="label" for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-err"><span class="error" id="c-email-err" aria-live="polite"></span></div>
+          <div class="field full"><label class="label" for="c-topic">What is it about?</label><select class="input" id="c-topic" name="topic"><option value="share">I made something from an idea</option><option value="collaboration">Working together</option><option value="press">Press</option><option value="other">Something else</option></select></div>
+          <div class="field full"><label class="label" for="c-link">Link to your pictures <i>(optional)</i></label><input class="input" id="c-link" name="link" type="url" placeholder="https://" aria-describedby="c-link-err" data-type-mismatch="Please enter a full link, starting with https://"><span class="error" id="c-link-err" aria-live="polite"></span></div>
+          <div class="field full"><label class="label" for="c-message">Message</label><textarea class="input" id="c-message" name="message" rows="4" required data-min="20" aria-describedby="c-message-err"></textarea><span class="error" id="c-message-err" aria-live="polite"></span></div>
+          <div class="field full"><label class="check"><input type="checkbox" id="c-own" name="own" aria-describedby="c-own-err" data-needed-for="share"> I took these pictures, or I have permission to share them</label><span class="error" id="c-own-err" aria-live="polite"></span></div>
+        </div>
+        <div class="form-foot"><p class="small muted">Or write to <a href="mailto:hello@fernwick.example">hello@fernwick.example</a></p><button class="btn red" type="submit">Send message</button></div>
+      </form>
+      <div class="success" data-success="contact" tabindex="-1" hidden>
+        <span class="tick"><svg aria-hidden="true"><use href="#i-check"/></svg></span>
+        <h2 class="h2">Thanks, <span data-echo="name"></span></h2>
+        <p class="lead" style="margin:12px auto 20px;max-width:40ch">Your message is with us. We’ll reply to <strong data-echo="email"></strong> within a week.</p>
+        <button class="btn" type="button" data-again>Send another message</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= FAQ ======================= -->
+<div data-view="faq">
+  <section class="page-head wrap center"><h1 class="h1">Questions</h1><p class="lead">How saving, boards and the letter work.</p></section>
+  <section class="wrap">
+    <div class="faq">
+      <details id="f-saving"><summary>Do I need an account to save ideas?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>No. Saved ideas stay in this browser until you clear them. If you switch devices, they stay behind.</p></details>
+      <details><summary>Can I make the things I find here?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>Please do. Every idea is here to be copied in your own home. The pictures belong to the people who made them, so ask before you publish them elsewhere.</p></details>
+      <details><summary>Where do the pictures come from?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>From the three of us, and from readers who send their work with permission. Each idea names the person who saved it.</p></details>
+      <details><summary>How do I suggest an idea?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>Send it through the <a href="#/contact?topic=share">contact form</a> with a link to your pictures. We reply to everything within a week.</p></details>
+      <details><summary>How often does the letter come?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>Every Sunday at 8 am, or once a month if you prefer. You choose the subjects when you <a href="#/letter">subscribe</a>.</p></details>
+      <details><summary>Can I share a board?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>Yes. Open the board and press Share to copy its link.</p></details>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= LEGAL ======================= -->
+<div data-view="privacy">
+  <section class="sec wrap legal">
+    <p class="kicker">Last updated 1 November 2026</p>
+    <h1 class="h1">Privacy</h1>
+    <p class="lead" style="margin-top:16px">We keep as little as we can, and we never sell it.</p>
+    <h2>What we collect</h2><p>Your email if you subscribe, and what you send us through the contact form. Saved ideas stay in your browser; we never see them.</p>
+    <h2>Why</h2><p>To send the letter you asked for and to answer your messages.</p>
+    <h2>How long</h2><p>Until you unsubscribe or ask us to delete it. Messages are deleted after a year.</p>
+    <h2>Your choices</h2><p>Write to <a href="mailto:hello@fernwick.example">hello@fernwick.example</a> to see, correct or delete what we hold about you.</p>
+  </section>
+</div>
+<div data-view="terms">
+  <section class="sec wrap legal">
+    <p class="kicker">Last updated 1 November 2026</p>
+    <h1 class="h1">Terms</h1>
+    <p class="lead" style="margin-top:16px">The short version: make anything you like, and credit the people whose pictures you share.</p>
+    <h2>Pictures</h2><p>Every picture belongs to the person who made it. Saving and linking are fine; republishing needs their permission.</p>
+    <h2>Ideas and instructions</h2><p>We test what we can, but measurements and materials vary. Take care with tools, heat and kilns.</p>
+    <h2>Sending us your work</h2><p>When you send pictures, you confirm they are yours to share, and you let us show them on Fernwick with your name.</p>
+  </section>
+</div>
+
+<div data-view="404">
+  <section class="wrap notfound">
+    <h1 class="display">This idea got lost</h1>
+    <p class="lead" style="margin:16px auto 24px;max-width:36ch">The link may be old, or the idea may have moved to another board.</p>
+    <div class="actions center"><a class="btn red" href="#/">Back to the wall</a><a class="btn" href="#/boards">Browse boards</a></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <a class="brand" href="#/"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>fernwick</span></a>
+      <p class="small muted" style="margin-top:12px;max-width:34ch">Rooms, recipes and things to make, saved by three people and sorted into boards.</p>
+    </div>
+    <div><h2>Explore</h2><ul><li><a href="#/explore?c=kitchens">Kitchens</a></li><li><a href="#/explore?c=rooms">Rooms</a></li><li><a href="#/explore?c=bakes">Bakes</a></li><li><a href="#/explore?c=clay">Clay</a></li></ul></div>
+    <div><h2>Fernwick</h2><ul><li><a href="#/boards">Boards</a></li><li><a href="#/about">About</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/faq">Questions</a></li></ul></div>
+    <div>
+      <h2>The Sunday letter</h2>
+      <form class="inline-form" data-form="newsletter" novalidate>
+        <div class="field"><label class="sr" for="n-email">Email address</label><input class="input" id="n-email" name="email" type="email" autocomplete="email" placeholder="Your email" required aria-describedby="n-email-err"><span class="error" id="n-email-err" aria-live="polite"></span></div>
+        <button class="btn red" type="submit">Subscribe</button>
+      </form>
+      <div class="success" data-success="newsletter" tabindex="-1" hidden style="text-align:left"><p class="small" style="margin:0">Thanks. The next letter arrives on Sunday at 8 am.</p></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="footer-bottom"><p style="margin:0">© 2026 Fernwick</p><nav aria-label="Legal"><a href="#/privacy">Privacy</a><a href="#/terms">Terms</a><a href="#/contact">Contact</a></nav></div></div>
+</footer>
+
+<div id="toast-slot" aria-live="polite"></div>
+
+<script>
+  // Every image path is written out in full: scripts/inline.mjs can only embed paths it can read,
+  // not ones assembled at runtime. Add new images here.
+  const IMAGES = {
+    "balcony": "images/balcony.webp",
+    "bed": "images/bed.webp",
+    "buns": "images/buns.webp",
+    "candles": "images/candles.webp",
+    "corner": "images/corner.webp",
+    "desk": "images/desk.webp",
+    "dried": "images/dried.webp",
+    "galley": "images/galley.webp",
+    "glaze": "images/glaze.webp",
+    "indigo": "images/indigo.webp",
+    "lantern": "images/lantern.webp",
+    "lemons": "images/lemons.webp",
+    "loaf": "images/loaf.webp",
+    "quilt": "images/quilt.webp",
+    "seedlings": "images/seedlings.webp",
+    "shelf": "images/shelf.webp",
+    "sink": "images/sink.webp",
+    "soup": "images/soup.webp",
+    "stairs": "images/stairs.webp",
+    "supper": "images/supper.webp",
+    "tart": "images/tart.webp",
+    "tomatoes": "images/tomatoes.webp",
+    "vases": "images/vases.webp",
+    "wheel": "images/wheel.webp",
+    "whiteroom": "images/whiteroom.webp",
+    "yarn": "images/yarn.webp",
+  };
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  /* ---------- Data: replace with the user's own. Each idea: id (also the picture's file name), category, person, picture size, title, description, alt text, three notes ---------- */
+  const CATS = { kitchens: "Kitchens", rooms: "Rooms", light: "Light", bakes: "Bakes", suppers: "Suppers", clay: "Clay", textiles: "Textiles", gardens: "Gardens" };
+  const PEOPLE = {
+    ines: { name: "Ines Marlow", role: "Rooms and light", bio: "Styles small flats for a living and keeps the ideas that survive real life: a shelf that holds, a lamp at the right height." },
+    teo: { name: "Teo Abara", role: "Bakes and suppers", bio: "Cooks for six most weekends. Saves recipes that work on a weeknight and bakes that forgive a busy morning." },
+    juno: { name: "Juno Sato", role: "Clay, cloth and gardens", bio: "Throws pots two days a week and grows herbs on a fourth-floor balcony. Writes down every glaze." },
+  };
+  const IDEAS = [
+    ["shelf", "kitchens", "ines", 720, 1080, "Open oak shelves for everyday bowls", "Two oak boards on black brackets replace a run of wall cupboards. Daily bowls live at eye level; the good plates lean at the back.", "Two oak shelves with stacked bowls, jars, bottles and leaning plates, a bowl of lemons on the counter below", ["Leave 30 cm between boards so a jug fits", "Keep the lower shelf for things used daily", "Oil the oak once a season"]],
+    ["loaf", "bakes", "teo", 720, 720, "Country sourdough, scored for a tall ear", "A long cold proof and one confident cut at a shallow angle. Bake in a lidded pot for the first twenty minutes.", "A round sourdough loaf with one curved score on a wooden board, flour dust and a bread knife beside it", ["Proof overnight in the fridge", "Score at 30 degrees, 1 cm deep", "Lid on for 20 minutes, off for 25"]],
+    ["indigo", "textiles", "juno", 720, 960, "Indigo cloth drying in the yard", "Linen bound with rubber bands and dipped six times, then left to oxidise in the shade.", "A long indigo cloth printed with rings of white circles, hanging from a line with wooden pegs, a garden behind", ["Dip for one minute, air for five", "Rinse until the water runs clear", "Dry in the shade"]],
+    ["corner", "rooms", "ines", 720, 1080, "A reading corner with one good lamp", "A rust armchair, a floor lamp at shoulder height and a plant big enough to count as furniture.", "A rust armchair on a round rug beside a floor lamp and a large plant, a framed print above", ["Lower edge of the shade at shoulder height", "A round rug marks out the corner", "One print, hung low"]],
+    ["lemons", "suppers", "teo", 720, 720, "A bowl of lemons on blue linen", "Not a recipe, a habit: a bowl of lemons on the table means dressing, tea and a cake are always close.", "A speckled white bowl of lemons on a blue linen cloth, two lemons and a green sprig beside it", ["Keep lemons out of the fridge for a week", "Zest before you juice", "Blue cloth makes yellow brighter"]],
+    ["quilt", "textiles", "juno", 720, 1080, "A quilt pieced from old shirts", "Half-square triangles cut from shirts and pillowcases, hand-quilted in a square around every block.", "A patchwork quilt of triangles in terracotta, mustard, indigo, sage and cream with dashed hand stitching", ["Press seams towards the dark side", "Cut every triangle before you sew", "Quilt from the centre out"]],
+    ["tart", "bakes", "teo", 720, 900, "Plum and almond tart", "Almond cream in a sweet crust, topped with rings of sliced plums. Good warm, better the next morning.", "A plum and almond tart seen from above, plum slices in rings, a bowl of cream and a spoon beside it", ["Blind-bake the crust for 15 minutes", "Slice plums thin and overlap them", "Brush with warm jam to finish"]],
+    ["galley", "kitchens", "ines", 720, 960, "A narrow galley kitchen that still feels open", "Sage cabinets run down both sides and stop short of the window, so the light reaches the floor.", "A narrow kitchen with sage green cabinets on both sides and a bright window at the end", ["Stop wall cupboards before the window", "One colour for every door", "A pale floor doubles the light"]],
+    ["balcony", "gardens", "juno", 720, 1080, "Herbs in a row along the railing", "Rosemary, basil and thyme in terracotta pots, on a balcony that gets four hours of sun.", "Three terracotta pots of rosemary, basil and thyme along a black balcony railing", ["Four hours of sun is enough for these three", "Water in the evening", "Pinch out basil tips every week"]],
+    ["desk", "light", "ines", 720, 720, "A desk lamp, a stack of books, a slow evening", "A dark green wall, a walnut desk and a lamp angled low, so the light pools on the page and not in your eyes.", "A black desk lamp lighting a walnut desk with an open notebook, a stack of books and a steaming mug", ["Angle the shade below eye level", "Warm bulbs, 2700 K or lower", "Dark walls make a small room feel close"]],
+    ["vases", "clay", "juno", 720, 960, "Three shapes thrown in one afternoon", "A bottle, a moon jar and a cylinder from the same bag of clay, glazed charcoal, speckled white and terracotta.", "Three ceramic vases in window light: a dark bottle, a round speckled white jar and a terracotta cylinder", ["Wedge the clay well before throwing", "Trim when leather-hard", "Fire the dark glaze on its own shelf"]],
+    ["tomatoes", "suppers", "teo", 720, 1080, "Tomatoes, good oil and torn basil", "A summer supper that is mostly shopping: ripe tomatoes, flaky salt, plenty of olive oil and basil torn at the table.", "A white bowl of halved tomatoes with basil and olive oil on a striped tea towel, whole tomatoes around it", ["Salt the tomatoes ten minutes ahead", "Never refrigerate them", "Tear basil, don't cut it"]],
+    ["whiteroom", "rooms", "ines", 720, 960, "White walls, a stool and one branch", "A warm white room where the window does the decorating. A three-legged stool holds a jug of cut branches.", "Window light falling across a white wall onto a wooden stool with a jug of green branches", ["Choose a warm white, not a blue one", "Cut branches last two weeks in water", "Let the shadows be the art"]],
+    ["buns", "bakes", "teo", 720, 960, "Cardamom buns on a crowded tray", "Twelve swirled buns, brushed with syrup straight from the oven and finished with pearl sugar.", "Twelve glazed cardamom buns in rows on a parchment-lined tray, sprinkled with sugar", ["Crush the cardamom fresh", "Let shaped buns rise for about 45 minutes", "Syrup while hot, sugar right after"]],
+    ["lantern", "light", "ines", 720, 1080, "A paper lantern over the table", "A large paper shade hung low over the table turns one bulb into soft, even light for everyone.", "A glowing round paper lantern hanging over a table in a dim room, a bowl beneath it", ["Hang it 75 cm above the table", "Use a warm, dimmable bulb", "A bigger shade gives softer light"]],
+    ["sink", "kitchens", "ines", 720, 900, "Herbs on the sill above a deep sink", "A deep sink under a two-pane window, with basil and thyme on a sill wide enough for three pots.", "Herbs in clay pots on a window sill above a sink with a brass tap, tiles around the window", ["A 12 cm sill holds a standard pot", "Water herbs at the sink, not in place", "Brass taps darken; let them"]],
+    ["glaze", "clay", "juno", 720, 1080, "Glaze tests, fired and labelled", "Fifteen test tiles, one glaze each, dipped twice so you can see thin and thick. The recipe goes on the back.", "Fifteen ceramic test tiles in rows on raw wood, each dipped in a different glaze, with handwritten labels", ["Dip half of each tile twice", "Label before firing", "Keep a tile from every kiln load"]],
+    ["supper", "suppers", "teo", 720, 540, "A long table for a late supper", "Linen down the middle, plates at every seat, and candles low enough to see across.", "A long table set with plates and glasses, three lit candles in the middle, a blue window at dusk", ["Candles below eye level", "One cloth, no runners", "Light them before guests arrive"]],
+    ["stairs", "rooms", "ines", 720, 1200, "Morning light on the stairs", "Oak treads on painted risers, a black handrail and one plant halfway up, where the light lands at nine.", "A staircase with oak treads and a black handrail, diagonal stripes of sunlight and a potted plant on one step", ["Paint risers darker than the walls", "Oil the treads, don't varnish them", "One plant, out of the way of feet"]],
+    ["yarn", "textiles", "juno", 720, 900, "Undyed wool, wound and waiting", "Four balls of wool in rust, sage and two creams, wound by hand and kept in a basket by the chair.", "A woven basket of wool in cream, rust and sage, two wooden knitting needles in one ball", ["Wind loosely so the wool keeps its spring", "Store it out of the sun", "Label each ball with its weight"]],
+    ["soup", "suppers", "teo", 720, 900, "A pot of white bean soup for the week", "Beans, garlic, rosemary and stock, simmered slowly in a heavy pot. It thickens by day three, in a good way.", "A mustard enamel pot of white bean soup steaming on a dark counter, a wooden spoon and a small bowl beside it", ["Soak the beans overnight", "Simmer, never boil", "Thin with water as it thickens"]],
+    ["dried", "gardens", "juno", 720, 960, "Dried grasses in a stoneware jug", "Grasses and seed heads cut in late summer, hung upside down for two weeks and kept all winter.", "A grey stoneware jug of dried grasses and pale seed heads against a cream wall, its shadow behind", ["Cut on a dry afternoon", "Hang upside down in the dark", "A light mist of hairspray holds the seeds"]],
+    ["bed", "rooms", "ines", 720, 540, "Washed linen, a low bed and nothing else", "An oak headboard, washed linen and one rust cushion. The bedside lamp does all the evening work.", "A low bed with white linen and a rust cushion against an oak headboard, a lamp glowing on a side table", ["Wash new linen three times first", "Keep the headboard below the window", "One accent colour, no more"]],
+    ["wheel", "clay", "juno", 720, 900, "Trimming a bowl on the wheel", "Leather-hard, centred, and trimmed in three passes to reveal a foot ring.", "A clay bowl on a pottery wheel seen from above, slip on the splash pan, a trimming tool and a sponge beside it", ["Tap the bowl to centre it", "Keep the tool at a steady angle", "Check the wall by its weight"]],
+    ["candles", "light", "ines", 720, 900, "Candles on the sill at blue hour", "Three candles of different heights on a deep sill, lit just as the sky outside turns blue.", "Three lit cream candles and a bud vase on a window sill, a deep blue evening sky outside", ["Group them in odd numbers", "Different heights, one colour", "Never leave them burning alone"]],
+    ["seedlings", "gardens", "juno", 720, 540, "Seed trays on the kitchen table", "Two trays of salad leaves and herbs, started indoors in March and moved out once the nights are warm.", "Two black seed trays of soil and small seedlings on a wooden table, with wooden plant labels", ["Sow two seeds per cell", "Keep the soil damp, not wet", "Harden them off over a week"]],
+  ].map(([id, c, by, w, h, t, d, a, n]) => ({ id, c, by, w, h, t, d, a, n }));
+  const byId = new Map(IDEAS.map((idea) => [idea.id, idea]));
+  const BOARDS = [
+    ["small-kitchens", "Small kitchens that work", "ines", "Galley plans, open shelves and the few things worth wall space.", ["shelf", "galley", "sink", "soup", "lemons", "seedlings"]],
+    ["warm-white", "Warm white rooms", "ines", "Rooms where the window does the decorating.", ["whiteroom", "bed", "stairs", "corner", "dried", "vases"]],
+    ["low-light", "Low light, long evenings", "ines", "Lamps at the right height, candles and dark walls for winter.", ["lantern", "candles", "desk", "corner", "supper"]],
+    ["weekend-bakes", "Weekend bakes", "teo", "Breads, buns and tarts for slow Saturday mornings.", ["loaf", "buns", "tart", "lemons"]],
+    ["table-for-six", "A table for six", "teo", "Suppers that feed a crowd without keeping you in the kitchen.", ["supper", "tomatoes", "soup", "lemons", "candles", "tart"]],
+    ["made-by-hand", "Made by hand", "juno", "Pots, cloth and wool, with notes on how each was made.", ["vases", "wheel", "glaze", "quilt", "indigo", "yarn"]],
+    ["balcony-garden", "A balcony garden", "juno", "Herbs, seedlings and cut grasses from a fourth-floor balcony.", ["balcony", "seedlings", "dried", "sink"]],
+  ].map(([id, t, by, d, ideas]) => ({ id, t, by, d, ideas }));
+  const POPULAR = ["sourdough", "small kitchen", "lamp", "glaze", "linen", "herbs"];
+  const HOME_FIRST = 20;
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+  const readJSON = (key, fallback) => { try { return JSON.parse(store.get(key)) ?? fallback; } catch { return fallback; } };
+
+  /* ---------- Theme: light by default following the system, dark behind the toggle ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light colours" : "Switch to dark colours");
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const savedTheme = store.get("fernwick-theme");
+  applyTheme(savedTheme === "light" || savedTheme === "dark" ? savedTheme : systemDark.matches ? "dark" : "light");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("fernwick-theme", next);
+  });
+  systemDark.addEventListener("change", (event) => { if (!store.get("fernwick-theme")) applyTheme(event.matches ? "dark" : "light"); });
+
+  /* ---------- Saved ideas and follows ---------- */
+  const saved = new Map(readJSON("fernwick-saved", []));
+  const follows = new Set(readJSON("fernwick-follows", []));
+  const persist = () => { store.set("fernwick-saved", JSON.stringify([...saved])); store.set("fernwick-follows", JSON.stringify([...follows])); };
+
+  /* ---------- Rendering: one tile, one board card, one wall ---------- */
+  const initials = (u) => PEOPLE[u].name.split(" ").map((p) => p[0]).join("");
+  const av = (u, size = "") => `<span class="av ${size}" data-u="${u}">${initials(u)}</span>`;
+  function tileHTML(idea, i) {
+    const on = saved.has(idea.id);
+    return `<article class="tile enter" style="--i:${i % 14}" data-ar="${idea.h / idea.w}"><div class="tile-media">` +
+      `<a href="#/idea?id=${idea.id}" tabindex="-1" aria-hidden="true"><img src="${IMAGES[idea.id]}" alt="" width="${idea.w}" height="${idea.h}"></a>` +
+      `<button class="btn red save" type="button" data-save="${idea.id}" aria-pressed="${on}" aria-label="Save ${esc(idea.t)}">${on ? "Saved" : "Save"}</button></div>` +
+      `<h3 class="tile-title"><a href="#/idea?id=${idea.id}">${esc(idea.t)}</a></h3>` +
+      `<a class="by" href="#/curator?u=${idea.by}">${av(idea.by)}${PEOPLE[idea.by].name}</a></article>`;
+  }
+  function boardHTML(board) {
+    const pics = board.ideas.slice(0, 3).map((id) => byId.get(id)).map((idea) => `<img src="${IMAGES[idea.id]}" alt="" width="${idea.w}" height="${idea.h}">`).join("");
+    return `<a class="board" href="#/board?b=${board.id}" data-curator="${board.by}"><div class="cover">${pics}</div><h3>${esc(board.t)}</h3><p>${board.ideas.length} ideas · ${PEOPLE[board.by].name}</p></a>`;
+  }
+  function renderWall(wall, list) {
+    wall.classList.remove("masonry");
+    wall.dataset.cols = "";
+    wall.innerHTML = list.map(tileHTML).join("");
+    setTimeout(() => $$(".tile.enter", wall).forEach((tile) => tile.classList.remove("enter")), 900);
+    layout(wall);
+  }
+  /* Deal tiles into the shortest column, using each picture's ratio so nothing has to load first */
+  function layout(wall) {
+    const tiles = $$(".tile", wall);
+    wall.style.maxWidth = "";
+    const width = wall.clientWidth;
+    if (!width) return;
+    const gap = parseFloat(getComputedStyle(wall).columnGap) || 16;
+    const min = innerWidth < 600 ? 140 : 220;
+    const fit = Math.max(2, Math.min(7, Math.floor((width + gap) / (min + gap))));
+    const colWidth = (width - gap * (fit - 1)) / fit;
+    /* Fewer ideas than columns: keep the column width and centre the wall */
+    const count = Math.max(1, Math.min(fit, tiles.length));
+    if (count < fit) wall.style.maxWidth = `${count * colWidth + (count - 1) * gap}px`;
+    if (wall.dataset.cols === `${count}/${fit}`) return;
+    const cols = Array.from({ length: count }, () => Object.assign(document.createElement("div"), { className: "wall-col", h: 0 }));
+    tiles.forEach((tile) => {
+      const img = $("img", tile);
+      const ratio = Number(tile.dataset.ar) || img.getAttribute("height") / img.getAttribute("width");
+      const col = cols.reduce((a, b) => (b.h < a.h - 1 ? b : a));
+      col.append(tile);
+      col.h += colWidth * ratio + 70;
+    });
+    wall.replaceChildren(...cols);
+    wall.classList.add("masonry");
+    wall.dataset.cols = `${count}/${fit}`;
+  }
+  let resizeFrame = 0;
+  window.addEventListener("resize", () => {
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(() => { if (current) $$(".wall", current).forEach(layout); fitNav(); });
+  });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Fernwick: ideas for slow homes, small kitchens and patient hands",
+    explore: "Explore · Fernwick", idea: "Idea · Fernwick", boards: "Boards · Fernwick", board: "Board · Fernwick", curator: "People · Fernwick",
+    saved: "Saved · Fernwick", about: "About · Fernwick", letter: "The Sunday letter · Fernwick", contact: "Contact · Fernwick",
+    faq: "Questions · Fernwick", privacy: "Privacy · Fernwick", terms: "Terms · Fernwick", "404": "Not found · Fernwick",
+  };
+  /* Which header link stays highlighted on child views */
+  const section = { idea: "explore", board: "boards", curator: "about" };
+  let current = null;
+  let currentHash = location.hash || "#/";
+  let previous = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  const renderers = {
+    home: renderHome, explore: renderExplore, idea: renderIdea, boards: () => applyFilter("curator", "all"),
+    board: renderBoard, curator: renderCurator, saved: renderSaved,
+    contact: (p) => { const topic = $("#c-topic"); if (p.get("topic") && topic.querySelector(`option[value="${CSS.escape(p.get("topic"))}"]`)) topic.value = p.get("topic"); },
+  };
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    const active = section[name] || name;
+    $$(".nav a, .sheet-links a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === active) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const cat = name === "explore" ? route.params.get("c") || (route.params.get("q") ? "-" : "") : "-";
+    $$("#catbar .chip").forEach((chip) => {
+      if ((parse(chip.getAttribute("href")).params.get("c") || "") === cat) chip.setAttribute("aria-current", "page"); else chip.removeAttribute("aria-current");
+    });
+    $("#catbar").hidden = !(name === "home" || name === "explore");
+    closeSuggest();
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    renderers[name]?.(route.params);
+    const at = route.params.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+  }
+  function go(hash) {
+    previous = currentHash;
+    currentHash = hash;
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      if (link.id === "back" && previous) { go(previous); return; }
+      go(href);
+    } else if (href.length > 1) {
+      const target = (current && current.querySelector(href)) || document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => { currentHash = location.hash || "#/"; show(parse(location.hash)); });
+
+  /* ---------- Views ---------- */
+  let homeCount = HOME_FIRST;
+  const moreButton = $("#more");
+  function renderHome() {
+    const wall = $("#wall-home");
+    if (wall.dataset.done !== String(homeCount)) { renderWall(wall, IDEAS.slice(0, homeCount)); wall.dataset.done = String(homeCount); } else layout(wall);
+    moreButton.hidden = homeCount >= IDEAS.length;
+    const boards = $("#home-boards");
+    if (!boards.children.length) boards.innerHTML = BOARDS.slice(0, 4).map(boardHTML).join("");
+  }
+  moreButton.addEventListener("click", () => { homeCount = IDEAS.length; renderHome(); });
+
+  const words = (text) => text.toLowerCase().split(/\s+/).filter(Boolean);
+  const haystack = (idea) => [idea.t, idea.d, CATS[idea.c], PEOPLE[idea.by].name, ...BOARDS.filter((b) => b.ideas.includes(idea.id)).map((b) => `${b.t} ${b.d}`)].join(" ").toLowerCase();
+  function renderExplore(p) {
+    const c = CATS[p.get("c")] ? p.get("c") : "";
+    const q = (p.get("q") || "").trim();
+    let list = c ? IDEAS.filter((idea) => idea.c === c) : IDEAS;
+    if (q) list = list.filter((idea) => words(q).every((w) => haystack(idea).includes(w)));
+    $("#x-title").textContent = q ? `Ideas for “${q}”` : c ? CATS[c] : "Explore every idea";
+    $("#x-lead").textContent = q ? "Matching titles, descriptions, categories, boards and people." : c ? `Every ${CATS[c].toLowerCase()} idea on the wall, newest first.` : `${IDEAS.length} ideas across rooms, food, clay, cloth and gardens. Pick a category, or search for anything.`;
+    $("#x-count").textContent = `${list.length} ${list.length === 1 ? "idea" : "ideas"}`;
+    $("#x-clear").hidden = !q;
+    $("#x-empty").hidden = list.length > 0;
+    $("#x-suggest").innerHTML = POPULAR.slice(0, 4).map((w) => `<a class="chip" href="#/explore?q=${encodeURIComponent(w)}">${w}</a>`).join("");
+    searchInput.value = q;
+    clearButton.hidden = !q;
+    renderWall($("#wall-explore"), list);
+  }
+
+  function renderIdea(p) {
+    const idea = byId.get(p.get("id")) || IDEAS[6];
+    const img = $("#d-img");
+    img.src = `${IMAGES[idea.id]}`; img.alt = idea.a; img.width = idea.w; img.height = idea.h;
+    $("#d-title").textContent = idea.t;
+    $("#d-desc").textContent = idea.d;
+    $("#d-cat").textContent = CATS[idea.c];
+    $("#d-cat").setAttribute("href", `#/explore?c=${idea.c}`);
+    $("#d-notes").innerHTML = idea.n.map((note) => `<li>${esc(note)}</li>`).join("");
+    const person = PEOPLE[idea.by];
+    $("#d-person-av").setAttribute("href", `#/curator?u=${idea.by}`);
+    $("#d-person-av").innerHTML = av(idea.by, "md");
+    $("#d-person").setAttribute("href", `#/curator?u=${idea.by}`);
+    $("#d-person").innerHTML = `<strong>${person.name}</strong><span>${person.role}</span>`;
+    const follow = $(".person [data-follow]");
+    follow.dataset.follow = idea.by;
+    syncFollow(follow);
+    const boards = BOARDS.filter((board) => board.ideas.includes(idea.id));
+    const select = $("#d-board");
+    select.innerHTML = BOARDS.map((board) => `<option value="${board.id}">${esc(board.t)}</option>`).join("");
+    select.value = saved.get(idea.id) || (boards[0] || BOARDS[0]).id;
+    const save = $("#d-save");
+    save.dataset.save = idea.id;
+    syncSave(save);
+    titles.idea = `${idea.t} · Fernwick`;
+    document.title = titles.idea;
+    const related = IDEAS.filter((other) => other.id !== idea.id).sort((a, b) => (b.c === idea.c) - (a.c === idea.c) || (b.by === idea.by) - (a.by === idea.by));
+    renderWall($("#wall-related"), related.slice(0, 18));
+  }
+
+  function renderBoard(p) {
+    const board = BOARDS.find((b) => b.id === p.get("b")) || BOARDS[3];
+    $("#b-title").textContent = board.t;
+    $("#b-desc").textContent = board.d;
+    $("#b-count").textContent = `${board.ideas.length} ideas`;
+    const who = $("#b-who");
+    who.setAttribute("href", `#/curator?u=${board.by}`);
+    who.innerHTML = `${av(board.by)}<span>${PEOPLE[board.by].name}</span>`;
+    const follow = $("#b-follow");
+    follow.dataset.follow = board.id;
+    syncFollow(follow);
+    const list = board.ideas.map((id) => byId.get(id));
+    const cats = [...new Set(list.map((idea) => idea.c))];
+    const bar = $("#b-sections");
+    bar.hidden = cats.length < 2;
+    bar.innerHTML = ["all", ...cats].map((c) => `<button class="chip" type="button" data-section="${c}" aria-pressed="${c === "all"}">${c === "all" ? "All" : CATS[c]}</button>`).join("");
+    $$("[data-section]", bar).forEach((chip) => chip.addEventListener("click", () => {
+      $$("[data-section]", bar).forEach((other) => other.setAttribute("aria-pressed", String(other === chip)));
+      renderWall($("#wall-board"), chip.dataset.section === "all" ? list : list.filter((idea) => idea.c === chip.dataset.section));
+    }));
+    titles.board = `${board.t} · Fernwick`;
+    document.title = titles.board;
+    renderWall($("#wall-board"), list);
+  }
+
+  function renderCurator(p) {
+    const u = PEOPLE[p.get("u")] ? p.get("u") : "ines";
+    const person = PEOPLE[u];
+    const ideas = IDEAS.filter((idea) => idea.by === u);
+    const boards = BOARDS.filter((board) => board.by === u);
+    const avatar = $("#p-av");
+    avatar.dataset.u = u; avatar.textContent = initials(u);
+    $("#p-name").textContent = person.name;
+    $("#p-role").textContent = person.role;
+    $("#p-bio").textContent = person.bio;
+    $("#p-stats").innerHTML = `<strong>${ideas.length} ideas</strong> · <strong>${boards.length} boards</strong>`;
+    const follow = $("#p-follow");
+    follow.dataset.follow = u;
+    syncFollow(follow);
+    $("#curator-boards").innerHTML = boards.map(boardHTML).join("");
+    titles.curator = `${person.name} · Fernwick`;
+    document.title = titles.curator;
+    selectTab(p.get("tab") === "boards" ? "boards" : "ideas");
+    renderWall($("#wall-curator"), ideas);
+  }
+
+  function renderSaved() {
+    const list = [...saved.keys()].reverse().map((id) => byId.get(id)).filter(Boolean);
+    $("#s-count").textContent = list.length ? `${list.length} saved ${list.length === 1 ? "idea" : "ideas"}` : "";
+    $("#s-empty").hidden = list.length > 0;
+    $("#s-clear").hidden = !list.length;
+    renderWall($("#wall-saved"), list);
+  }
+  $("#s-clear").addEventListener("click", () => { saved.clear(); persist(); updateSavedCount(); $$("[data-save]").forEach(syncSave); renderSaved(); });
+
+  /* ---------- Save, follow, share ---------- */
+  function syncSave(button) {
+    const on = saved.has(button.dataset.save);
+    button.setAttribute("aria-pressed", String(on));
+    button.textContent = on ? "Saved" : "Save";
+  }
+  function syncFollow(button) {
+    const on = follows.has(button.dataset.follow);
+    button.setAttribute("aria-pressed", String(on));
+    button.textContent = on ? "Following" : "Follow";
+  }
+  function updateSavedCount() {
+    const badge = $("#saved-count");
+    badge.textContent = String(saved.size);
+    badge.hidden = saved.size === 0;
+    $("#saved-link").setAttribute("aria-label", saved.size ? `Saved ideas (${saved.size})` : "Saved ideas");
+  }
+  let toastTimer = 0;
+  function toast(html) {
+    const slot = $("#toast-slot");
+    slot.innerHTML = `<div class="toast">${html}</div>`;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { slot.innerHTML = ""; }, 3600);
+  }
+  document.addEventListener("click", (event) => {
+    const save = event.target.closest("[data-save]");
+    if (save) {
+      const id = save.dataset.save;
+      const idea = byId.get(id);
+      if (saved.has(id)) { saved.delete(id); toast(`<p>Removed from your saves</p>`); }
+      else {
+        const boardId = save.id === "d-save" ? $("#d-board").value : (BOARDS.find((b) => b.ideas.includes(id)) || BOARDS[0]).id;
+        saved.set(id, boardId);
+        toast(`<img src="${IMAGES[id]}" alt="" width="${idea.w}" height="${idea.h}"><p>Saved to ${esc(BOARDS.find((b) => b.id === boardId).t)}</p><a href="#/saved">View</a>`);
+      }
+      persist();
+      updateSavedCount();
+      $$(`[data-save="${id}"]`).forEach(syncSave);
+      save.classList.remove("pop"); void save.offsetWidth; save.classList.add("pop");
+      return;
+    }
+    const follow = event.target.closest("[data-follow]");
+    if (follow) {
+      const key = follow.dataset.follow;
+      if (follows.has(key)) follows.delete(key); else follows.add(key);
+      persist();
+      syncFollow(follow);
+      return;
+    }
+    if (event.target.closest("[data-share]")) {
+      const url = location.href;
+      const done = () => toast(`<p>Link copied</p>`);
+      try { navigator.clipboard.writeText(url).then(done, () => toast(`<p>Copy the address from your browser to share</p>`)); }
+      catch { toast(`<p>Copy the address from your browser to share</p>`); }
+    }
+  });
+  $("#d-board").addEventListener("change", () => { const id = $("#d-save").dataset.save; if (saved.has(id)) { saved.set(id, $("#d-board").value); persist(); } });
+
+  /* ---------- Search: the pill field, suggestions on focus, Enter searches ---------- */
+  const searchInput = $("#q");
+  const clearButton = $(".search-clear");
+  const suggest = $("#suggest");
+  $("#popular").innerHTML = POPULAR.map((w) => `<a class="chip" href="#/explore?q=${encodeURIComponent(w)}">${w}</a>`).join("");
+  $("#cat-tiles").innerHTML = [["bakes", "loaf"], ["rooms", "corner"], ["clay", "vases"], ["gardens", "balcony"]].map(([c, id]) => `<a class="cat-tile" href="#/explore?c=${c}"><img src="${IMAGES[id]}" alt="" width="720" height="${byId.get(id).h}"><span>${CATS[c]}</span></a>`).join("");
+  function openSuggest() { suggest.hidden = false; }
+  function closeSuggest() { suggest.hidden = true; }
+  searchInput.addEventListener("focus", openSuggest);
+  searchInput.addEventListener("input", () => { clearButton.hidden = !searchInput.value; });
+  searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") { closeSuggest(); return; }
+    if (event.key === "Enter" && !event.isComposing) {
+      event.preventDefault();
+      const q = searchInput.value.trim();
+      searchInput.blur();
+      go(q ? `#/explore?q=${encodeURIComponent(q)}` : "#/explore");
+    }
+  });
+  clearButton.addEventListener("click", () => { searchInput.value = ""; clearButton.hidden = true; searchInput.focus(); });
+  document.addEventListener("pointerdown", (event) => { if (!event.target.closest(".search")) closeSuggest(); });
+  document.addEventListener("focusin", (event) => { if (!event.target.closest(".search")) closeSuggest(); });
+
+  /* ---------- Header: the menu sheet whenever the links do not fit on one line ---------- */
+  const header = $(".site-header");
+  const inner = $(".header-inner");
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  function fitNav() {
+    header.classList.remove("compact");
+    if (inner.scrollWidth > inner.clientWidth + 1) header.classList.add("compact");
+  }
+  document.fonts.ready.then(fitNav);
+  fitNav();
+
+  /* ---------- Filters: boards by person ---------- */
+  function applyFilter(group, value) {
+    const bar = $(`[data-filter="${group}"]`);
+    const chips = $$("[data-value]", bar);
+    const chosen = chips.some((chip) => chip.dataset.value === value) ? value : "all";
+    chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.value === chosen)));
+    let shown = 0;
+    $$("#all-boards [data-curator]").forEach((item) => {
+      const match = chosen === "all" || item.dataset.curator === chosen;
+      item.hidden = !match;
+      if (match) shown += 1;
+    });
+    $("#boards-count").textContent = `${shown} ${shown === 1 ? "board" : "boards"}`;
+    $(`[data-empty="${group}"]`).hidden = shown > 0;
+  }
+  $$("[data-filter]").forEach((bar) => $$("[data-value]", bar).forEach((chip) => chip.addEventListener("click", () => applyFilter(bar.dataset.filter, chip.dataset.value))));
+  $$("[data-reset]").forEach((button) => button.addEventListener("click", () => applyFilter(button.dataset.reset, "all")));
+
+  /* ---------- Tabs (profile); arrow keys move between them ---------- */
+  const tabs = $$("[role='tab']");
+  function selectTab(id, focus) {
+    const chosen = tabs.find((tab) => tab.dataset.tab === id) || tabs[0];
+    tabs.forEach((tab) => {
+      const on = tab === chosen;
+      tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+      document.getElementById(tab.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) chosen.focus();
+    if (current) $$(".wall", current).forEach(layout);
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => selectTab(tab.dataset.tab));
+    tab.addEventListener("keydown", (event) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      selectTab(tabs[(i + step + tabs.length) % tabs.length].dataset.tab, true);
+    });
+  });
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please write a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    let problem = "";
+    if (field.matches("fieldset")) {
+      if ($$("input:checked", field).length < Number(field.dataset.min || 1)) problem = "Choose at least one.";
+    } else if (field.dataset.neededFor) {
+      if (field.form.elements.topic.value === field.dataset.neededFor && !field.checked) problem = "Please confirm before you share pictures.";
+    } else {
+      const key = Object.keys(messages).find((k) => field.validity[k]) || (field.dataset.min && field.value.trim() && field.value.trim().length < Number(field.dataset.min) ? "tooShort" : "");
+      if (key) problem = (key === "typeMismatch" && field.dataset.typeMismatch) || messages[key];
+    }
+    error.textContent = problem;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  function readable(form, name) {
+    const field = form.elements[name];
+    if (!field) return "";
+    if (field instanceof RadioNodeList && name === "topics") {
+      const chosen = $$(`input[name="${name}"]:checked`, form).map((input) => input.value.toLowerCase());
+      return chosen.length > 1 ? `${chosen.slice(0, -1).join(", ")} and ${chosen.at(-1)}` : chosen[0] || "";
+    }
+    return field.value;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("[aria-describedby]", form);
+    fields.forEach((field) => field.addEventListener(field.matches("fieldset, select, [type=checkbox]") ? "change" : "blur", () => checkField(field)));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) { const bad = fields.find((f) => f.getAttribute("aria-invalid") === "true"); (bad.matches("fieldset") ? $("input", bad) : bad).focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        $$("[data-echo]", success).forEach((el) => { el.textContent = readable(form, el.dataset.echo); });
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+        button.disabled = false;
+        button.textContent = label;
+      }, 700);
+    });
+    $("[data-again]", success)?.addEventListener("click", () => {
+      success.hidden = true;
+      form.hidden = false;
+      $("input, select", form).focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  updateSavedCount();
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

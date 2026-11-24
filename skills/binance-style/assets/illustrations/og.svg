@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#15171b"/>
+  <rect x="80" y="80" width="56" height="56" rx="14" fill="#f8cf32"/>
+  <path d="M96 122v-9M105 122v-16M114 122V96M123 122v-11" fill="none" stroke="#15171b" stroke-width="5" stroke-linecap="round"/>
+  <text x="156" y="122" font-family="Sora, Arial, sans-serif" font-size="38" font-weight="800" fill="#f8cf32" letter-spacing="1">SPINRANK</text>
+  <text x="80" y="330" font-family="Sora, Arial, sans-serif" font-size="120" font-weight="800" fill="#f8cf32">482,906,310</text>
+  <text x="80" y="450" font-family="Sora, Arial, sans-serif" font-size="96" font-weight="800" fill="#ebedef">PLAYS COUNTED</text>
+  <text x="80" y="530" font-family="Sora, Arial, sans-serif" font-size="34" font-weight="600" fill="#949ca7">The independent music chart, counted every hour.</text>
+  <g fill="#1e2227"><rect x="880" y="80" width="240" height="150" rx="20"/></g>
+  <path d="M904 200 944 186 984 172 1024 168 1064 140 1096 110" fill="none" stroke="#1dbe84" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

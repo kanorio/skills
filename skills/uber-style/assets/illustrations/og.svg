@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#000"/>
+<text x="80" y="120" fill="#fff" font-family="Helvetica Neue, Arial, sans-serif" font-size="44" font-weight="500" letter-spacing="-1">Tendwell</text>
+<text x="80" y="300" fill="#fff" font-family="Helvetica Neue, Arial, sans-serif" font-size="80" font-weight="700" letter-spacing="-2">Home help,</text>
+<text x="80" y="390" fill="#fff" font-family="Helvetica Neue, Arial, sans-serif" font-size="80" font-weight="700" letter-spacing="-2">booked in minutes</text>
+<rect x="80" y="450" width="480" height="64" rx="8" fill="#f3f3f3"/>
+<circle cx="112" cy="482" r="7" fill="#000"/>
+<text x="140" y="491" fill="#555" font-family="Helvetica Neue, Arial, sans-serif" font-size="26">Your address</text>
+<rect x="720" y="120" width="400" height="390" rx="32" fill="#f2c230"/>
+<circle cx="920" cy="315" r="150" fill="#e8693a"/>
+<path d="M800 510 Q810 380 900 370 H940 Q1030 380 1040 510Z" fill="#2d5bd7"/>
+<ellipse cx="920" cy="300" rx="56" ry="64" fill="#c98a5e"/>
+<path d="M862 270 Q868 220 920 220 Q972 222 978 270Z" fill="#2e7d5b"/>
+</svg>

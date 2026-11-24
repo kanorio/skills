@@ -1,0 +1,1575 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Calver Daily: news from Calvermouth and the Calver Valley</title>
+<meta name="description" content="Local news, live updates, video, podcasts and newsletters from Calvermouth, Saltmere, Brindle Edge and the towns along the Calver.">
+<meta property="og:title" content="Calver Daily: news from Calvermouth and the Calver Valley">
+<meta property="og:description" content="Local news, live updates, video, podcasts and newsletters from Calvermouth, Saltmere, Brindle Edge and the towns along the Calver.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/literata-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/source-sans-3-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts: a serif for headlines and reading, a sans for everything that is interface ---------- */
+@font-face { font-family: "Literata"; src: url("fonts/literata-latin-wght.woff2") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Source Sans 3"; src: url("fonts/source-sans-3-latin-wght.woff2") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: light (newsprint white) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);
+  --surface: oklch(96.5% 0 0);        /* summary boxes, live posts, picture wells */
+  --text: oklch(18% 0 0);
+  --soft: oklch(32% 0 0);             /* summaries under headlines */
+  --text-muted: oklch(45% 0 0);       /* times, captions, roles */
+  --border: oklch(88% 0 0);           /* hairlines between stories */
+  --rule: oklch(18% 0 0);             /* section rules, the wordmark plate, filled buttons, current tab */
+  --accent: oklch(47% 0.19 27);       /* live, section titles, numbers: text on the page */
+  --accent-fill: oklch(47% 0.19 27);  /* live time tabs and badges with white text */
+  --accent-text: oklch(100% 0 0);
+  --danger: oklch(47% 0.19 27);
+  --ok: oklch(46% 0.11 150);
+  --band: oklch(15% 0 0);             /* the watch band and the footer */
+  --band-surface: oklch(22% 0 0);
+  --band-text: oklch(97% 0 0);
+  --band-muted: oklch(78% 0 0);
+  --band-border: oklch(34% 0 0);
+  --band-accent: oklch(72% 0.15 25);
+  --shadow-overlay: 0 16px 48px oklch(0% 0 0 / 0.24);
+
+  --serif: "Literata", Georgia, "Times New Roman", serif;
+  --sans: "Source Sans 3", "Segoe UI", Roboto, system-ui, sans-serif;
+
+  --fs-display: clamp(2.25rem, 1.5rem + 2.4vw, 3.5rem);
+  --fs-h1: clamp(2rem, 1.45rem + 1.7vw, 2.875rem);
+  --fs-h2: clamp(1.625rem, 1.25rem + 1.2vw, 2.25rem);
+  --fs-h3: 1.125rem;
+  --fs-body: 1.1875rem;
+  --fs-small: 0.8125rem;
+
+  --gutter: clamp(16px, 4vw, 48px);
+  --max: 1248px;
+  --gap: 16px;
+
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}
+/* ---------- Tokens: dark (night edition). Same structure ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(16.5% 0 0); --surface: oklch(22% 0 0); --text: oklch(95% 0 0); --soft: oklch(85% 0 0); --text-muted: oklch(75% 0 0);
+  --border: oklch(33% 0 0); --rule: oklch(95% 0 0); --accent: oklch(72% 0.15 25); --accent-fill: oklch(52% 0.2 27); --danger: oklch(72% 0.15 25);
+  --ok: oklch(76% 0.13 150); --band: oklch(11% 0 0); --band-surface: oklch(19% 0 0); --band-border: oklch(30% 0 0);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: oklch(16.5% 0 0); --surface: oklch(22% 0 0); --text: oklch(95% 0 0); --soft: oklch(85% 0 0); --text-muted: oklch(75% 0 0);
+    --border: oklch(33% 0 0); --rule: oklch(95% 0 0); --accent: oklch(72% 0.15 25); --accent-fill: oklch(52% 0.2 27); --danger: oklch(72% 0.15 25);
+    --ok: oklch(76% 0.13 150); --band: oklch(11% 0 0); --band-surface: oklch(19% 0 0); --band-border: oklch(30% 0 0);
+  }
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 88px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.5 var(--sans); }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+h1, h2, h3, h4 { margin: 0; font-family: var(--serif); font-weight: 600; line-height: 1.2; text-wrap: balance; }
+p, ul, ol, figure, blockquote, dl, dd, fieldset { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+fieldset { padding: 0; border: 0; min-width: 0; }
+legend { padding: 0; }
+p { text-wrap: pretty; }
+:focus-visible { outline: 3px solid var(--rule); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: 8px; top: -80px; z-index: 60; padding: 12px 16px; background: var(--rule); color: var(--bg); font-weight: 700; }
+.skip:focus { top: 8px; }
+.wrap { width: min(100% - 2 * var(--gutter), var(--max)); margin-inline: auto; }
+.icon { width: 24px; height: 24px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+html:not(.js) .js-only { display: none; }
+
+/* ---------- Type roles ---------- */
+.hed { font: 600 var(--fs-h3)/1.28 var(--serif); }
+.hed a:hover, .card:hover .hed a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.dek { color: var(--soft); font: 400 1rem/1.5 var(--serif); }
+.meta { display: flex; flex-wrap: wrap; align-items: center; row-gap: 4px; color: var(--text-muted); font: 400 var(--fs-small)/1.3 var(--sans); }
+.meta > * + * { margin-left: 10px; padding-left: 10px; border-left: 1px solid currentColor; }
+.meta a { position: relative; z-index: 1; }
+.meta a:hover { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
+.label { font: 700 0.9375rem/1.25 var(--sans); letter-spacing: 0.05em; text-transform: uppercase; }
+.accent { color: var(--accent); }
+
+/* ---------- Signature: the live tag (a pulsing dot and the word) ---------- */
+.live { display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; color: var(--accent); font: 700 0.875rem/1 var(--sans); letter-spacing: 0.06em; text-transform: uppercase; vertical-align: 0.12em; }
+.live::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in oklch, currentColor 25%, transparent); animation: pulse 1.6s var(--ease) infinite; }
+@keyframes pulse { 50% { opacity: 0.3; } }
+
+/* ---------- Signature: the section head (heavy rule, capital label, chevron) ---------- */
+.sec-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; padding-top: 12px; border-top: 2px solid var(--rule); }
+.sec-head h2 { font: 700 1rem/1.25 var(--sans); letter-spacing: 0.05em; text-transform: uppercase; }
+.sec-head h2 a { display: inline-flex; align-items: center; gap: 2px; }
+.sec-head h2 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.sec-head h2 .live { text-transform: uppercase; }
+.sec-head .icon { width: 18px; height: 18px; stroke-width: 2.4; }
+.sec-head .count { color: var(--text-muted); font-size: 0.9375rem; }
+.block { margin-top: 48px; }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 20px; border: 2px solid var(--rule); background: var(--rule); color: var(--bg); font: 700 1rem/1 var(--sans); white-space: nowrap; cursor: pointer; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.btn:hover { background: transparent; color: var(--text); }
+.btn.ghost { background: transparent; color: var(--text); }
+.btn.ghost:hover { background: var(--rule); color: var(--bg); }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+.btn .icon { width: 20px; height: 20px; }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 44px; padding: 0 6px; border: 0; background: none; cursor: pointer; }
+.icon-btn:hover { background: var(--surface); }
+
+/* ---------- Header: menu and search, the centred wordmark plate, theme and sign-up ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; background: var(--bg); border-bottom: 1px solid var(--border); }
+.hdr { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 12px; min-height: 72px; padding-inline: clamp(8px, 2vw, 24px); }
+.menu-btn { justify-self: start; gap: 2px; }
+.brand { justify-self: center; display: inline-flex; align-items: flex-end; gap: 4px; }
+.plate { display: block; padding: 8px 8px 7px 11px; background: var(--rule); color: var(--bg); font: 800 1.5rem/1 var(--sans); letter-spacing: 0.14em; }
+.dot { width: 9px; height: 9px; background: var(--accent-fill); }
+.hdr-end { justify-self: end; display: flex; align-items: center; gap: 10px; }
+.i-sun { display: none; }
+[data-theme="dark"] .i-sun { display: block; }
+[data-theme="dark"] .i-moon { display: none; }
+@media (max-width: 640px) { .hide-sm { display: none; } .plate { font-size: 1.25rem; padding: 7px 6px 6px 9px; } .hdr { min-height: 60px; } }
+
+/* The section row scrolls away under the sticky bar; it never wraps, it scrolls sideways on small screens */
+.nav { position: relative; background: var(--bg); border-bottom: 1px solid var(--border); }
+.nav ul { display: flex; justify-content: safe center; width: min(100% - 2 * var(--gutter), var(--max)); margin-inline: auto; overflow-x: auto; scrollbar-width: none; }
+.nav ul::-webkit-scrollbar { display: none; }
+.nav li { flex: none; display: flex; }
+.nav a { display: block; padding: 11px 8px 10px; font-weight: 600; font-size: 0.9375rem; white-space: nowrap; box-shadow: inset 0 -4px 0 transparent; transition: box-shadow var(--dur-fast) var(--ease); }
+.nav a:hover { box-shadow: inset 0 -4px 0 var(--border); }
+.nav a[aria-current="page"] { box-shadow: inset 0 -4px 0 var(--rule); }
+.nav .sep { margin-left: 6px; padding-left: 6px; border-left: 1px solid var(--border); }
+.nav .live { margin: 0; }
+
+/* ---------- Menu (dialog) with search ---------- */
+.menu { margin: 0; inset: 0 auto 0 0; width: min(420px, 100%); max-width: none; height: 100dvh; max-height: none; padding: 0; border: 0; background: var(--bg); color: var(--text); overflow-y: auto; box-shadow: var(--shadow-overlay); }
+.menu::backdrop { background: oklch(0% 0 0 / 0.5); }
+.menu[open] { animation: menu-in var(--dur-slow) var(--ease); }
+@keyframes menu-in { from { opacity: 0; transform: translateX(-24px); } }
+.menu-top { display: flex; align-items: center; justify-content: space-between; min-height: 72px; padding: 0 12px 0 24px; border-bottom: 1px solid var(--border); }
+.menu-body { display: grid; gap: 28px; padding: 24px 24px 40px; }
+.search { position: relative; }
+.search .icon { position: absolute; left: 12px; top: 50%; translate: 0 -50%; pointer-events: none; }
+.search .input { padding-left: 44px; }
+.results-label { margin-bottom: -16px; color: var(--text-muted); font-weight: 600; font-size: 0.875rem; }
+.results a { display: block; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.results a:hover .hed { text-decoration: underline; text-underline-offset: 3px; }
+.results small { display: block; margin-top: 2px; color: var(--text-muted); font-size: var(--fs-small); }
+.menu-sections a { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); font: 700 1.125rem/1.2 var(--sans); }
+.menu-sections .icon { width: 20px; height: 20px; transition: transform var(--dur-base) var(--ease); }
+.menu-sections a:hover .icon { transform: translateX(4px); }
+.menu-links { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.menu-links a { padding: 8px 0; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Views ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.js [data-view].is-active { animation: view-in var(--dur-slow) var(--ease) both; }
+@keyframes view-in { from { opacity: 0; } }
+main { display: block; }
+
+/* ---------- Cards ---------- */
+.card { position: relative; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.card .hed a::after { content: ""; position: absolute; inset: 0; }
+.media { position: relative; display: block; overflow: hidden; background: var(--surface); }
+.media img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.card .media { margin-bottom: 4px; }
+.card .meta { margin-top: 4px; }
+.badge { position: absolute; left: 0; bottom: 0; display: inline-flex; align-items: center; gap: 6px; padding-right: 10px; background: oklch(12% 0 0); color: oklch(100% 0 0); font: 600 0.8125rem/1 var(--sans); font-variant-numeric: tabular-nums; }
+.badge .icon { width: 36px; height: 36px; padding: 9px; fill: currentColor; stroke: none; }
+.badge.audio .icon { fill: none; stroke: currentColor; stroke-width: 2.2; }
+.credit { position: absolute; right: 0; bottom: 0; padding: 3px 7px; background: oklch(12% 0 0 / 0.78); color: oklch(100% 0 0); font: 600 0.75rem/1.3 var(--sans); }
+.cards4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px var(--gap); }
+.cards4 > .card { padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+@media (max-width: 1000px) { .cards4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 599px) {
+  .cards4 { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .h-sm, .cards4 > .card:has(> .media) { display: grid; grid-template-columns: 128px minmax(0, 1fr); align-content: start; gap: 6px 14px; }
+  :is(.h-sm, .cards4 > .card:has(> .media)) > :not(.media) { grid-column: 2; }
+  :is(.h-sm, .cards4 > .card:has(> .media)) > .media { grid-row: 1 / span 3; align-self: start; margin: 0; }
+  :is(.h-sm, .cards4 > .card:has(> .media)) .dek { display: none; }
+  :is(.h-sm, .cards4 > .card) .badge .icon { width: 28px; height: 28px; padding: 7px; }
+  :is(.h-sm, .cards4 > .card) .badge span { display: none; }
+}
+
+/* ---------- Home: the three-column front ---------- */
+.top { padding-top: 28px; }
+.top-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.05fr) minmax(0, 1fr); grid-template-areas: "left lead right"; gap: 24px var(--gap); align-items: start; }
+.col-left { grid-area: left; display: grid; gap: 24px; }
+.col-left > .card { padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.lead { grid-area: lead; }
+.lead .hed { font-size: var(--fs-h2); line-height: 1.16; }
+.lead .dek { font-size: 1.0625rem; }
+.col-right { grid-area: right; }
+.stack > * + * { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.stack .hed { font-size: 1.1875rem; }
+@media (max-width: 1099px) {
+  .top-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "lead lead" "left right"; }
+  .lead { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 8px 20px; align-items: start; }
+  .lead > .media { grid-row: 1 / span 3; }
+}
+@media (max-width: 699px) {
+  .top { padding-top: 0; }
+  .top-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "lead" "left" "right"; }
+  .lead { display: flex; }
+  .lead > .media { margin: 0 calc(-1 * var(--gutter)) 4px; }
+  .col-left { gap: 16px; }
+}
+
+/* Live strip: the newest updates as a horizontal timeline */
+.ticker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.ticker a { position: relative; display: grid; gap: 4px; padding: 0 0 4px 14px; border-left: 2px solid var(--accent-fill); }
+.ticker time { color: var(--accent); font: 700 0.875rem/1.2 var(--sans); font-variant-numeric: tabular-nums; }
+.ticker a:hover .hed { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 760px) { .ticker { grid-template-columns: minmax(0, 1fr); gap: 0; } .ticker a { padding-bottom: 16px; } }
+
+/* Features beside the numbered most-read list */
+.split { display: grid; grid-template-columns: minmax(0, 3.05fr) minmax(0, 1fr); gap: 40px var(--gap); }
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px var(--gap); }
+.duo .hed { font-size: 1.375rem; }
+.most { counter-reset: most; }
+.most li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); counter-increment: most; }
+.most li:first-child { padding-top: 0; }
+.most li::before { content: counter(most); color: var(--accent); font: 600 2.125rem/0.95 var(--serif); }
+.most a:hover { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 1000px) { .split { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 599px) { .duo { grid-template-columns: minmax(0, 1fr); } }
+
+/* Text-only headline row */
+.row5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px var(--gap); }
+.row5 .card { padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+@media (max-width: 1000px) { .row5 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 599px) { .row5 { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Bands (watch and listen, the footer): dark in both themes ---------- */
+.band { --bg: var(--band); --surface: var(--band-surface); --text: var(--band-text); --soft: var(--band-muted); --text-muted: var(--band-muted); --border: var(--band-border); --rule: var(--band-text); --accent: var(--band-accent); background: var(--bg); color: var(--text); }
+.band-block { margin-top: 56px; padding: 28px 0 48px; }
+
+/* Newsletter promo */
+.promo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 48px; align-items: center; padding: 28px 32px; background: var(--surface); border-top: 4px solid var(--rule); }
+.promo h2 { margin-top: 6px; font-size: var(--fs-h2); }
+.promo .dek { margin-top: 8px; }
+.inline-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 12px; align-items: start; }
+.inline-form .btn { margin-top: 27px; }
+@media (max-width: 860px) { .promo { grid-template-columns: minmax(0, 1fr); padding: 24px 20px; } }
+@media (max-width: 480px) { .inline-form { grid-template-columns: minmax(0, 1fr); } .inline-form .btn { margin-top: 0; } }
+
+/* ---------- Section pages ---------- */
+.sec-page { padding: 32px 0 0; text-align: center; }
+.sec-title { color: var(--accent); font: 800 clamp(2rem, 1.6rem + 1.2vw, 2.75rem)/1 var(--sans); letter-spacing: 0.03em; text-transform: uppercase; }
+.sec-dek { max-width: 60ch; margin: 10px auto 0; color: var(--soft); font: 400 1.0625rem/1.5 var(--serif); }
+.subnav { position: relative; display: flex; justify-content: safe center; margin-top: 20px; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+.subnav::-webkit-scrollbar { display: none; }
+.subnav button { flex: none; min-height: 44px; padding: 0 10px; border: 0; background: none; font: 600 0.9375rem/1 var(--sans); white-space: nowrap; cursor: pointer; box-shadow: inset 0 -3px 0 transparent; transition: box-shadow var(--dur-fast) var(--ease); }
+.subnav button:hover { box-shadow: inset 0 -3px 0 var(--border); }
+.subnav button[aria-pressed="true"] { box-shadow: inset 0 -3px 0 var(--rule); }
+.sec-lead { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.05fr) minmax(0, 1fr); grid-template-areas: "text pic side"; gap: 24px var(--gap); align-items: center; margin-top: 28px; }
+.sec-lead > .lead-text { grid-area: text; }
+.sec-lead > .media { grid-area: pic; }
+.sec-lead > .lead-side { grid-area: side; align-self: start; }
+.sec-lead > .lead-text .hed { font-size: clamp(1.5rem, 1.2rem + 0.8vw, 2rem); line-height: 1.18; }
+.sec-lead.no-pic { display: block; max-width: 780px; }
+@media (max-width: 1000px) { .sec-lead { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "pic pic" "text side"; align-items: start; } }
+@media (max-width: 599px) { .sec-lead { grid-template-columns: minmax(0, 1fr); grid-template-areas: "pic" "text" "side"; } .sec-lead > .media { margin-inline: calc(-1 * var(--gutter)); } }
+.empty { padding: 24px 0; color: var(--soft); }
+.more-wrap { display: flex; justify-content: center; margin-top: 32px; }
+
+/* ---------- Article ---------- */
+.art { width: min(100% - 2 * var(--gutter), 1000px); margin-inline: auto; }
+.art-head { max-width: 780px; padding-top: 32px; }
+.kicker { color: var(--accent); font: 700 0.9375rem/1.2 var(--sans); }
+.kicker:hover { text-decoration: underline; text-underline-offset: 3px; }
+.art-title { margin-top: 8px; font: 600 var(--fs-h1)/1.14 var(--serif); }
+.art-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-top: 14px; }
+.acts { display: flex; gap: 8px; }
+.act { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 8px; border: 0; background: none; font: 700 0.9375rem/1 var(--sans); cursor: pointer; }
+.act:hover { background: var(--surface); }
+.act .icon { width: 20px; height: 20px; }
+.act[aria-pressed="true"] .icon { fill: currentColor; }
+.byline { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+.avatar { display: inline-grid; place-items: center; flex: none; width: 48px; height: 48px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font: 700 0.9375rem/1 var(--sans); letter-spacing: 0.02em; }
+.by-name { font: 700 1rem/1.3 var(--sans); }
+a.by-name:hover { text-decoration: underline; text-underline-offset: 3px; }
+.by-role { color: var(--text-muted); font-size: 0.875rem; }
+.art-hero { margin-top: 24px; }
+figcaption { margin-top: 8px; color: var(--text-muted); font: 400 0.875rem/1.45 var(--serif); }
+.art-body { display: grid; grid-template-columns: minmax(0, 640px) minmax(0, 1fr); gap: 40px 56px; margin-top: 28px; }
+.prose { font: 400 var(--fs-body)/1.62 var(--serif); }
+.prose > * + * { margin-top: 1em; }
+.prose > p:first-child { font-weight: 600; }
+.prose h2 { margin-top: 1.6em; font-size: 1.5rem; line-height: 1.25; }
+.prose a { font-weight: 700; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.prose a:hover { color: var(--accent); text-decoration-thickness: 2px; }
+.prose ul { padding-left: 1.1em; list-style: square; }
+.prose li + li { margin-top: 0.4em; }
+.prose figure { margin-block: 1.6em; }
+.quote { margin-block: 1.6em; padding: 2px 0 2px 20px; border-left: 4px solid var(--accent-fill); }
+.quote p { font: 500 1.5rem/1.38 var(--serif); }
+.quote cite { display: block; margin-top: 10px; color: var(--text-muted); font: 400 0.9375rem/1.4 var(--sans); font-style: normal; }
+.related { padding: 12px 0 14px; border-top: 2px solid var(--rule); border-bottom: 1px solid var(--border); }
+.related .label { font-size: 0.875rem; }
+.prose .related a { display: block; margin-top: 6px; font: 600 1.125rem/1.3 var(--serif); text-decoration: none; }
+.prose .related a:hover { color: inherit; text-decoration: underline; }
+.prose .topic { font-weight: 600; text-decoration: none; }
+.topics { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border); }
+.topics .label { margin-right: 4px; font-size: 0.875rem; }
+.topic { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid var(--border); font: 600 0.9375rem/1 var(--sans); }
+.topic:hover { border-color: var(--rule); }
+.rail .sec-head { margin-bottom: 14px; }
+@media (max-width: 900px) { .art-body { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 599px) { .art-hero .media { margin-inline: calc(-1 * var(--gutter)); } .art-hero figcaption { margin-top: 6px; } }
+
+/* ---------- Live page ---------- */
+.live-hero { padding: 36px 0; }
+.live-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 40px; align-items: center; }
+.live-top .live { font-size: 1rem; }
+.live-title { margin: 12px 0 14px; font: 600 var(--fs-h1)/1.15 var(--serif); }
+.live-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.05fr) minmax(0, 1fr); grid-template-areas: "sum feed aside"; gap: 32px var(--gap); margin-top: 32px; align-items: start; }
+.summary { grid-area: sum; padding: 20px 22px 22px; background: var(--surface); }
+.summary h2, .feed-head h2 { font: 700 1.375rem/1.2 var(--serif); }
+.summary ul { margin-top: 12px; }
+.summary li { position: relative; padding-left: 16px; font: 400 1rem/1.5 var(--serif); }
+.summary li + li { margin-top: 12px; }
+.summary li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 6px; background: var(--text); }
+.summary a { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.feed-wrap { grid-area: feed; }
+.feed-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.feed-head .meta { width: 100%; order: 3; }
+.switch { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0; border: 0; background: none; font: 600 0.9375rem/1 var(--sans); cursor: pointer; }
+.track { position: relative; width: 40px; height: 24px; border: 2px solid var(--rule); }
+.track::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: var(--rule); transition: transform var(--dur-base) var(--ease); }
+.switch[aria-pressed="true"] .track { background: var(--rule); }
+.switch[aria-pressed="true"] .track::after { background: var(--bg); transform: translateX(16px); }
+.new-posts { position: sticky; top: 84px; z-index: 5; display: flex; width: fit-content; align-items: center; gap: 8px; margin: 16px auto 0; padding: 0 18px; min-height: 44px; border: 0; background: var(--accent-fill); color: var(--accent-text); font: 700 0.9375rem/1 var(--sans); cursor: pointer; box-shadow: var(--shadow-overlay); animation: drop var(--dur-slow) var(--ease); }
+.new-posts .icon { width: 18px; height: 18px; stroke-width: 2.4; }
+@keyframes drop { from { opacity: 0; transform: translateY(-8px); } }
+.post { position: relative; margin-top: 28px; border-top: 2px solid var(--accent-fill); }
+.post-time { display: inline-block; padding: 4px 10px; background: var(--accent-fill); color: var(--accent-text); font: 600 0.875rem/1.3 var(--sans); font-variant-numeric: tabular-nums; }
+.post-body { padding: 16px 20px 22px; background: var(--surface); }
+.post-body > * + * { margin-top: 12px; }
+.post h3 { font-size: 1.375rem; line-height: 1.25; }
+.key { color: var(--accent); font: 700 0.8125rem/1 var(--sans); letter-spacing: 0.06em; text-transform: uppercase; }
+.who { display: flex; align-items: center; gap: 10px; }
+.who .avatar { width: 40px; height: 40px; background: var(--bg); font-size: 0.8125rem; }
+.who b { display: block; font: 700 0.9375rem/1.3 var(--sans); }
+.who span { color: var(--text-muted); font-size: 0.875rem; }
+.post-body > p:not(.key) { font: 400 1.0625rem/1.58 var(--serif); }
+.post-body > ul { padding-left: 1.1em; list-style: square; font: 400 1.0625rem/1.58 var(--serif); }
+.post .quote { margin: 4px 0; }
+.post .quote p { font-size: 1.25rem; }
+.post.is-new::after { content: ""; position: absolute; inset: 0; background: var(--accent-fill); opacity: 0; pointer-events: none; animation: flash 1.6s var(--ease); }
+@keyframes flash { from { opacity: 0.16; } }
+.feed-wrap .more-wrap { margin-top: 28px; }
+.live-aside { grid-area: aside; }
+.links li { border-bottom: 1px solid var(--border); }
+.links a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; font: 600 1rem/1.35 var(--serif); }
+.links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.links .icon { width: 18px; height: 18px; }
+@media (max-width: 1099px) { .live-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); grid-template-areas: "sum feed" "aside feed"; } }
+@media (max-width: 760px) {
+  .live-top, .live-grid { grid-template-columns: minmax(0, 1fr); }
+  .live-grid { grid-template-areas: "sum" "feed" "aside"; }
+  .live-top .media { order: -1; margin-inline: calc(-1 * var(--gutter)); }
+}
+
+/* ---------- Watch and listen ---------- */
+[data-view="watch"] { padding-bottom: 64px; }
+.watch-head { padding: 36px 0 24px; }
+.watch-head h1 { font-size: var(--fs-display); line-height: 1.08; }
+.watch-head .dek { max-width: 60ch; margin-top: 10px; }
+.player-wrap { display: grid; grid-template-columns: minmax(0, 2.05fr) minmax(0, 1fr); gap: 20px 32px; align-items: end; }
+.player { position: relative; }
+.play-big { position: absolute; left: 0; bottom: 6px; display: grid; place-items: center; width: 72px; height: 72px; border: 0; background: oklch(12% 0 0); color: oklch(100% 0 0); cursor: pointer; transition: transform var(--dur-fast) var(--ease); }
+.play-big:hover { transform: scale(1.06); }
+.play-big .icon { width: 30px; height: 30px; fill: currentColor; stroke: none; }
+.play-big .i-pause, .play-big[aria-pressed="true"] .i-play { display: none; }
+.play-big[aria-pressed="true"] .i-pause { display: block; }
+.bar { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: oklch(100% 0 0 / 0.28); }
+.bar span { display: block; height: 100%; background: var(--accent-fill); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
+.clock { position: absolute; left: 80px; bottom: 14px; padding: 3px 8px; background: oklch(12% 0 0 / 0.82); color: oklch(100% 0 0); font: 600 0.875rem/1.3 var(--sans); font-variant-numeric: tabular-nums; }
+.player-info .hed { margin-top: 8px; font-size: var(--fs-h2); line-height: 1.16; }
+.player-info .dek { margin-top: 10px; }
+.player-info .meta { margin-top: 12px; }
+[data-view="watch"] .subnav { justify-content: flex-start; margin-top: 40px; }
+.media-grid { margin-top: 28px; }
+.pods { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.pod { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 8px 14px; align-content: start; padding-top: 16px; border-top: 1px solid var(--border); }
+.pod > :not(.cover) { grid-column: 2; }
+.cover { grid-row: 1 / span 4; display: grid; align-content: end; aspect-ratio: 1; padding: 8px; background: var(--c); color: oklch(100% 0 0); font: 700 0.875rem/1.1 var(--serif); }
+.pod .label { color: var(--text-muted); font-size: 0.8125rem; }
+.listen { justify-self: start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border: 1px solid var(--rule); background: none; font: 700 0.9375rem/1 var(--sans); cursor: pointer; }
+.listen:hover { background: var(--surface); }
+.listen[aria-pressed="true"] { background: var(--rule); color: var(--bg); }
+.eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+.eq i { width: 3px; height: 100%; background: currentColor; transform-origin: 50% 100%; transform: scaleY(0.35); }
+.listen[aria-pressed="true"] .eq i { animation: eq 0.9s var(--ease) infinite alternate; }
+.eq i:nth-child(2) { animation-delay: -0.3s; }
+.eq i:nth-child(3) { animation-delay: -0.6s; }
+@keyframes eq { to { transform: scaleY(1); } }
+@media (max-width: 900px) { .player-wrap { grid-template-columns: minmax(0, 1fr); } .pods { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 599px) { .player { margin-inline: calc(-1 * var(--gutter)); } .play-big { width: 56px; height: 56px; } .clock { left: 64px; } }
+
+/* ---------- Author ---------- */
+.author-head { display: grid; grid-template-columns: 120px minmax(0, 760px); gap: 28px; align-items: center; padding-top: 40px; }
+.avatar.xl { width: 120px; height: 120px; border: 0; background: var(--rule); color: var(--bg); font: 600 2.5rem/1 var(--serif); }
+.author-head .by-role { margin-top: 6px; font-size: 1rem; }
+.author-head .dek { margin-top: 12px; font-size: 1.0625rem; }
+.inline-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 12px; }
+.inline-links a { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.rows > li { position: relative; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 8px 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+.rows > li:first-child { padding-top: 0; }
+.rows .media { grid-row: 1 / span 3; }
+.rows > li:not(:has(> .media)) { display: block; }
+.rows > li:not(:has(> .media)) > * + * { margin-top: 8px; }
+.rows .hed { font-size: 1.25rem; }
+.rows .hed a::after { content: ""; position: absolute; inset: 0; }
+.rows .hed a:hover { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 599px) {
+  .author-head { grid-template-columns: 72px minmax(0, 1fr); gap: 16px; }
+  .avatar.xl { width: 72px; height: 72px; font-size: 1.5rem; }
+  .rows > li { grid-template-columns: 112px minmax(0, 1fr); gap: 4px 14px; }
+  .rows .dek { display: none; }
+}
+
+/* ---------- Forms, newsletters, contact, about, legal, 404 ---------- */
+.page-head { padding-top: 40px; }
+.page-head > * { max-width: 780px; }
+.page-head .dek { margin-top: 12px; font-size: 1.125rem; }
+.field { position: relative; display: grid; gap: 6px; padding-bottom: 26px; }
+.field > label, .lbl { font: 600 0.9375rem/1.3 var(--sans); }
+.input { width: 100%; min-height: 48px; padding: 10px 12px; border: 1px solid var(--text-muted); border-radius: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.4 var(--sans); transition: border-color var(--dur-fast) var(--ease); }
+textarea.input { min-height: 150px; resize: vertical; }
+.input:hover { border-color: var(--rule); }
+.input:focus-visible { outline: 3px solid var(--rule); outline-offset: 0; }
+.input[aria-invalid="true"] { border-color: var(--danger); box-shadow: inset 4px 0 0 var(--danger); }
+.err { position: absolute; left: 0; bottom: 3px; color: var(--danger); font: 600 0.8125rem/1.3 var(--sans); }
+.check { position: relative; display: flex; align-items: flex-start; gap: 10px; padding-bottom: 26px; font-size: 0.9375rem; line-height: 1.45; }
+.check input { flex: none; width: 22px; height: 22px; margin: 0; accent-color: var(--rule); }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; }
+.form-grid .full { grid-column: 1 / -1; }
+@media (max-width: 560px) { .form-grid { grid-template-columns: minmax(0, 1fr); } }
+.success { padding: 24px; border-top: 4px solid var(--ok); background: var(--surface); }
+.success:focus { outline: none; }
+.success h2, .success h3 { display: flex; align-items: center; gap: 10px; font-size: 1.375rem; }
+.success .icon { color: var(--ok); stroke-width: 2.4; }
+.success p { margin-top: 8px; color: var(--soft); }
+.nl-wrap { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 40px 56px; align-items: start; margin-top: 28px; }
+.nl-list { position: relative; padding-bottom: 26px; }
+.nl-list legend { margin-bottom: 12px; }
+.nl { position: relative; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 4px 14px; padding: 18px 0; border-top: 1px solid var(--border); cursor: pointer; }
+.nl:last-of-type { border-bottom: 1px solid var(--border); }
+.nl input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.box { display: grid; place-items: center; width: 26px; height: 26px; margin-top: 2px; border: 2px solid var(--rule); }
+.box .icon { width: 18px; height: 18px; stroke-width: 2.6; opacity: 0; }
+.nl input:checked + .box { background: var(--rule); color: var(--bg); }
+.nl input:checked + .box .icon { opacity: 1; }
+.nl input:focus-visible + .box { outline: 3px solid var(--rule); outline-offset: 2px; }
+.nl:hover .box { background: var(--surface); }
+.nl:hover input:checked + .box { background: var(--rule); }
+.nl-when { display: block; margin-top: 2px; color: var(--accent); font: 700 0.8125rem/1.3 var(--sans); letter-spacing: 0.04em; text-transform: uppercase; }
+.nl .dek { display: block; margin-top: 4px; }
+.nl-list > .err { bottom: 4px; }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 12px 0; font: 600 1.0625rem/1.35 var(--serif); cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { width: 20px; height: 20px; transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(180deg); }
+.faq details p { padding-bottom: 16px; color: var(--soft); font: 400 1rem/1.55 var(--serif); }
+@media (max-width: 900px) { .nl-wrap { grid-template-columns: minmax(0, 1fr); } }
+.lede-xl { margin-top: 14px; font: 400 1.375rem/1.5 var(--serif); }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
+.facts div { padding-top: 12px; border-top: 1px solid var(--border); }
+.facts dt { color: var(--text-muted); font-weight: 600; font-size: 0.9375rem; }
+.facts dd { margin-top: 4px; font: 600 2rem/1.1 var(--serif); }
+.two { display: grid; grid-template-columns: minmax(0, 2.05fr) minmax(0, 1fr); gap: 40px 48px; }
+.steps { counter-reset: s; }
+.steps li { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); counter-increment: s; }
+.steps li:first-child { padding-top: 0; }
+.steps li::before { content: counter(s); color: var(--accent); font: 600 1.5rem/1 var(--serif); }
+.steps strong { display: block; font: 600 1.125rem/1.3 var(--serif); }
+.steps p, .two p { margin-top: 4px; color: var(--soft); font: 400 1rem/1.55 var(--serif); }
+.two .btn { margin-top: 18px; }
+.people { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 var(--gap); }
+.people a { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 12px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.people b { display: block; font: 600 1.0625rem/1.3 var(--serif); }
+.people a:hover b { text-decoration: underline; text-underline-offset: 3px; }
+.people small { color: var(--text-muted); font-size: 0.875rem; }
+@media (max-width: 900px) { .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } .two { grid-template-columns: minmax(0, 1fr); } .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .people { grid-template-columns: minmax(0, 1fr); } }
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 40px 64px; align-items: start; margin-top: 28px; }
+.ways li { padding: 16px 0; border-bottom: 1px solid var(--border); }
+.ways li:first-child { border-top: 2px solid var(--rule); }
+.ways h2 { font-size: 1.25rem; }
+.ways p { margin-top: 4px; color: var(--soft); font: 400 1rem/1.5 var(--serif); }
+.ways a { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+@media (max-width: 900px) { .contact { grid-template-columns: minmax(0, 1fr); } }
+.legal { max-width: 720px; }
+.legal .prose { margin-top: 28px; font-size: 1.0625rem; }
+.legal .prose > p:first-child { font-weight: 400; }
+.notfound { padding: 72px 0 24px; text-align: center; }
+.notfound h1 { margin-top: 10px; font-size: var(--fs-display); line-height: 1.1; }
+.notfound .dek { max-width: 44ch; margin: 14px auto 0; font-size: 1.125rem; }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+
+/* ---------- Footer ---------- */
+.site-footer { margin-top: 72px; padding: 40px 0 32px; }
+main:has(> [data-view="watch"].is-active) + .site-footer { margin-top: 0; border-top: 1px solid var(--band-border); }
+.foot-nav ul { display: flex; flex-wrap: wrap; gap: 4px 22px; margin-top: 24px; padding: 18px 0; border-block: 1px solid var(--border); }
+.foot-nav a, .foot-legal a { display: inline-block; padding: 6px 0; }
+.foot-nav a { font-weight: 700; }
+.foot-nav a:hover, .foot-legal a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.foot-legal { display: flex; flex-wrap: wrap; gap: 0 22px; margin-top: 14px; font-size: 0.9375rem; }
+.foot-copy { margin-top: 14px; color: var(--text-muted); font-size: 0.875rem; }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .js [data-view].is-active, .menu[open], .new-posts { animation: none; }
+}
+</style>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h14M3 12h9M3 18h14"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m15.5 15.5 5 5"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 10.5v3"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M6.5 3.5h11v17L12 16.5l-5.5 4z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></symbol>
+</svg>
+<!-- Pictures used by cards that the script builds; every picture lives here once (cards copy its src) -->
+<template id="pics">
+  <img data-pic="ferry" src="images/ferry.svg" alt="" width="1600" height="900">
+  <img data-pic="river" src="images/river.svg" alt="" width="1600" height="900">
+  <img data-pic="bakery" src="images/bakery.svg" alt="" width="1600" height="900">
+  <img data-pic="school" src="images/school.svg" alt="" width="1600" height="900">
+  <img data-pic="market" src="images/market.svg" alt="" width="1600" height="900">
+  <img data-pic="allotment" src="images/allotment.svg" alt="" width="1600" height="900">
+  <img data-pic="tram" src="images/tram.svg" alt="" width="1600" height="900">
+  <img data-pic="library" src="images/library.svg" alt="" width="1600" height="900">
+  <img data-pic="lanterns" src="images/lanterns.svg" alt="" width="1600" height="900">
+  <img data-pic="mill" src="images/mill.svg" alt="" width="1600" height="900">
+  <img data-pic="stadium" src="images/stadium.svg" alt="" width="1600" height="900">
+  <img data-pic="railyard" src="images/railyard.svg" alt="" width="1600" height="900">
+</template>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="hdr">
+    <button class="icon-btn menu-btn" id="menu-open" type="button" aria-label="Open menu and search" aria-haspopup="dialog"><svg class="icon"><use href="#i-menu"/></svg><svg class="icon"><use href="#i-search"/></svg></button>
+    <a class="brand" href="#/" aria-label="Calver Daily, front page"><span class="plate">CALVER</span><span class="dot"></span></a>
+    <div class="hdr-end">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark theme"><svg class="icon i-moon"><use href="#i-moon"/></svg><svg class="icon i-sun"><use href="#i-sun"/></svg></button>
+      <a class="btn hide-sm" href="#/newsletters">Newsletters</a>
+    </div>
+  </div>
+</header>
+<nav class="nav" aria-label="Sections">
+  <ul>
+    <li><a href="#/">Home</a></li>
+    <li><a href="#/section?c=local">Local</a></li>
+    <li><a href="#/section?c=council">Council</a></li>
+    <li><a href="#/section?c=business">Business</a></li>
+    <li><a href="#/section?c=schools">Schools</a></li>
+    <li><a href="#/section?c=transport">Transport</a></li>
+    <li><a href="#/section?c=sport">Sport</a></li>
+    <li><a href="#/section?c=culture">Culture</a></li>
+    <li class="sep"><a href="#/watch">Watch</a></li>
+    <li><a href="#/live"><span class="live">Live</span></a></li>
+  </ul>
+</nav>
+
+<dialog class="menu" id="menu" aria-label="Menu and search">
+  <div class="menu-top">
+    <span class="brand"><span class="plate">CALVER</span><span class="dot"></span></span>
+    <button class="icon-btn" id="menu-close" type="button" aria-label="Close menu"><svg class="icon"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="menu-body">
+    <div class="search">
+      <label class="sr-only" for="q">Search stories</label>
+      <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+      <input class="input" id="q" type="search" placeholder="Search stories, towns or sections" autocomplete="off">
+    </div>
+    <p class="results-label" id="q-status" aria-live="polite">Latest stories</p>
+    <ul class="results" id="results"></ul>
+    <p class="empty" id="q-empty" hidden>No stories match that yet. Try a town or a section.</p>
+    <nav aria-label="All sections">
+      <ul class="menu-sections">
+        <li><a href="#/">Home <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+        <li><a href="#/section?c=local">Local <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+        <li><a href="#/section?c=council">Council <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+        <li><a href="#/section?c=business">Business <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+        <li><a href="#/section?c=schools">Schools <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+        <li><a href="#/section?c=transport">Transport <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+        <li><a href="#/section?c=sport">Sport <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+        <li><a href="#/section?c=culture">Culture <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+        <li><a href="#/watch">Watch and listen <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+        <li><a href="#/live">Live updates <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+      </ul>
+    </nav>
+    <ul class="menu-links">
+      <li><a href="#/newsletters">Newsletters</a></li>
+      <li><a href="#/about">About us</a></li>
+      <li><a href="#/contact">Contact</a></li>
+      <li><a href="#/privacy">Privacy</a></li>
+    </ul>
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ======================= HOME ======================= -->
+<div data-view="home">
+  <h1 class="sr-only">Calver Daily: news from Calvermouth and the Calver Valley</h1>
+  <section class="wrap top" aria-label="Top stories">
+    <div class="top-grid">
+      <article class="card lead">
+        <a class="media" href="#/article" tabindex="-1" aria-hidden="true"><img src="images/ferry.svg" alt="" width="1600" height="900"><span class="credit">Calver Daily</span></a>
+        <h2 class="hed"><a href="#/article">Night ferry returns to Calvermouth after nine years</a></h2>
+        <p class="dek">A refitted boat and a new timetable bring back the 11pm crossing to Saltmere from March, and the first week of sailings is already booked out.</p>
+        <p class="meta"><time datetime="2026-11-23T07:40">2 hrs ago</time><a href="#/section?c=transport">Transport</a></p>
+      </article>
+      <div class="col-left">
+        <article class="card h-sm">
+          <span class="media"><img src="images/bakery.svg" alt="" width="1600" height="900"><span class="badge"><svg class="icon"><use href="#i-play"/></svg><span>2:48</span></span></span>
+          <h2 class="hed"><a href="#/watch?v=bakery">Inside the 140-year-old oven that still bakes 600 loaves a day</a></h2>
+          <p class="dek">We spent a night shift with the people who keep the Copperhill bakery's brick oven going.</p>
+          <p class="meta"><time datetime="2026-11-23T04:10">5 hrs ago</time><a href="#/section?c=business">Business</a></p>
+        </article>
+        <article class="card h-sm">
+          <span class="media"><img src="images/school.svg" alt="" width="1600" height="900"></span>
+          <h2 class="hed"><a href="#/article">Pupils' rooftop weather station now feeds the valley forecast</a></h2>
+          <p class="dek">Readings from a Year 9 science project are now part of the daily forecast for the upper valley.</p>
+          <p class="meta"><time datetime="2026-11-23T02:30">7 hrs ago</time><a href="#/section?c=schools">Schools</a></p>
+        </article>
+      </div>
+      <div class="col-right stack">
+        <article class="card">
+          <h2 class="hed"><a href="#/live"><span class="live">Live</span>Flood warnings along the lower Calver as the river keeps rising</a></h2>
+          <p class="dek">Sandbags are available at three points and the towpath is closed between the bridges.</p>
+          <p class="meta"><span>Updated 4 mins ago</span><a href="#/section?c=local">Local</a></p>
+        </article>
+        <article class="card">
+          <h2 class="hed"><a href="#/article">Council sets out plan for 400 homes on the old rail yard</a></h2>
+          <p class="dek">The engine shed would become a covered market. Residents can comment until 9 January.</p>
+          <p class="meta"><time datetime="2026-11-23T06:15">3 hrs ago</time><a href="#/section?c=council">Council</a></p>
+        </article>
+        <article class="card">
+          <h2 class="hed"><a href="#/article">Tram extension: what the new timetable means for your commute</a></h2>
+          <p class="dek">Trams every eight minutes at peak, and a later last tram from Saltmere.</p>
+          <p class="meta"><time datetime="2026-11-23T00:20">9 hrs ago</time><a href="#/section?c=transport">Transport</a></p>
+        </article>
+        <article class="card">
+          <h2 class="hed"><a href="#/article">Saltmere Rovers reach the county cup final for the first time since 1998</a></h2>
+          <p class="meta"><time datetime="2026-11-23T01:05">8 hrs ago</time><a href="#/section?c=sport">Sport</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap block" aria-labelledby="live-h">
+    <div class="sec-head"><h2 id="live-h"><a href="#/live"><span class="live">Live</span>Flood warnings along the lower Calver<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></h2></div>
+    <ol class="ticker">
+      <li><a href="#/live"><time datetime="2026-11-23T14:32">14:32</time><span class="hed">River level at Saltmere bridge passes 3.1 metres</span></a></li>
+      <li><a href="#/live"><time datetime="2026-11-23T14:18">14:18</time><span class="hed">Sandbags available at three collection points until 20:00</span></a></li>
+      <li><a href="#/live"><time datetime="2026-11-23T13:55">13:55</time><span class="hed">Trams still running, but the Riverside stop is closed</span></a></li>
+    </ol>
+  </section>
+
+  <section class="wrap block js-only" aria-labelledby="valley-h">
+    <div class="sec-head"><h2 id="valley-h"><a href="#/section?c=local">Across the valley<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></h2></div>
+    <div class="cards4" data-list="valley"></div>
+  </section>
+
+  <div class="wrap block split js-only">
+    <section aria-labelledby="feat-h">
+      <div class="sec-head"><h2 id="feat-h">Features</h2></div>
+      <div class="duo" data-list="features"></div>
+    </section>
+    <section aria-labelledby="most-h">
+      <div class="sec-head"><h2 id="most-h">Most read</h2></div>
+      <ol class="most" data-list="most"></ol>
+    </section>
+  </div>
+
+  <section class="band band-block js-only" aria-labelledby="watch-h">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="watch-h"><a href="#/watch">Watch and listen<svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></h2></div>
+      <div class="cards4" data-list="watch-home"></div>
+    </div>
+  </section>
+
+  <section class="wrap block js-only" aria-labelledby="more-h">
+    <div class="sec-head"><h2 id="more-h">More from the valley</h2></div>
+    <div class="row5" data-list="more"></div>
+  </section>
+
+  <section class="wrap block" aria-labelledby="promo-h">
+    <div class="promo">
+      <div>
+        <p class="label accent">Newsletter</p>
+        <h2 id="promo-h">The Morning Calver</h2>
+        <p class="dek">The five stories you need before you leave the house, every weekday at 7am. Free, and one click to stop.</p>
+      </div>
+      <div>
+        <form class="inline-form" data-form="newsletter" novalidate>
+          <div class="field">
+            <label for="h-email">Email address</label>
+            <input class="input" id="h-email" name="email" type="email" required autocomplete="email" inputmode="email" aria-describedby="h-email-err">
+            <p class="err" id="h-email-err" aria-live="polite"></p>
+          </div>
+          <button class="btn" type="submit">Sign up</button>
+        </form>
+        <div class="success" data-success="newsletter" hidden>
+          <h3><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>You're on the list</h3>
+          <p>The first Morning Calver arrives tomorrow at 7am. Sample form: connect it to your email service to send real issues.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= SECTION ======================= -->
+<div data-view="section">
+  <header class="wrap sec-page">
+    <h1 class="sec-title" id="sec-title">Local</h1>
+    <p class="sec-dek" id="sec-dek">Streets, services and the people who run them, from Calvermouth to Ashby Rise.</p>
+    <div class="subnav" role="group" aria-label="Filter by town">
+      <button type="button" data-town="all" aria-pressed="true">All towns</button>
+      <button type="button" data-town="calvermouth" aria-pressed="false">Calvermouth</button>
+      <button type="button" data-town="saltmere" aria-pressed="false">Saltmere</button>
+      <button type="button" data-town="brindle" aria-pressed="false">Brindle Edge</button>
+      <button type="button" data-town="ashby" aria-pressed="false">Ashby Rise</button>
+      <button type="button" data-town="copperhill" aria-pressed="false">Copperhill</button>
+    </div>
+  </header>
+  <section class="wrap" aria-label="Top story">
+    <div class="sec-lead" data-list="sec-lead">
+      <article class="card lead-text">
+        <h2 class="hed"><a href="#/article">Market hall roof repair finishes three weeks early</a></h2>
+        <p class="dek">Traders move back under the glass on Saturday, with twelve new stalls along the east aisle.</p>
+        <p class="meta"><time datetime="2026-11-23T05:30">4 hrs ago</time><span>Calvermouth</span></p>
+      </article>
+      <a class="media" href="#/article" tabindex="-1" aria-hidden="true"><img src="images/market.svg" alt="" width="1600" height="900"></a>
+      <article class="card lead-side">
+        <span class="media"><img src="images/allotment.svg" alt="" width="1600" height="900"></span>
+        <h3 class="hed"><a href="#/article">Allotment waiting list halves as 60 new plots open</a></h3>
+        <p class="meta"><time datetime="2026-11-23T03:10">6 hrs ago</time><span>Ashby Rise</span></p>
+      </article>
+    </div>
+  </section>
+  <section class="wrap block" aria-labelledby="sec-latest-h">
+    <div class="sec-head"><h2 id="sec-latest-h">Latest</h2><p class="count" id="sec-count" aria-live="polite"></p></div>
+    <div class="cards4" data-list="sec-cards"></div>
+    <p class="empty" data-empty hidden>No more stories from this town in this section yet. Try All towns.</p>
+    <div class="more-wrap"><button class="btn ghost" type="button" id="more">Show more stories<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></button></div>
+  </section>
+</div>
+
+<!-- ======================= ARTICLE ======================= -->
+<article data-view="article">
+  <div class="art">
+    <header class="art-head">
+      <a class="kicker" href="#/section?c=transport">Transport</a>
+      <h1 class="art-title">Night ferry returns to Calvermouth after nine years</h1>
+      <div class="art-bar">
+        <p class="meta"><time datetime="2026-11-23T07:40">2 hrs ago</time><span>Calvermouth and Saltmere</span></p>
+        <div class="acts"><button class="act" type="button" data-save aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-save"/></svg><span>Save</span></button></div>
+      </div>
+      <div class="byline"><span class="avatar" aria-hidden="true">TA</span><div><a class="by-name" href="#/author?id=tomas">Tomás Aldana</a><p class="by-role">Transport correspondent</p></div></div>
+    </header>
+    <figure class="art-hero">
+      <span class="media"><img src="images/ferry.svg" alt="A white passenger ferry with lit cabin windows crosses the estuary at dusk, people waiting on the pier." width="1600" height="900"><span class="credit">Calver Daily</span></span>
+      <figcaption>The rebuilt ferry on a trial crossing to Saltmere last week</figcaption>
+    </figure>
+    <div class="art-body">
+      <div class="prose">
+        <p>The 11pm ferry from Calvermouth to Saltmere will run again from 2 March, nine years after the last late crossing was cut.</p>
+        <p>The boat, a 1960s passenger ferry rebuilt over two winters at the Saltmere yard, will make four late crossings a week, rising to seven from June. Tickets for the first week went on sale on Friday morning and were gone by lunchtime, the operator said.</p>
+        <p>The council agreed to cover the running costs for the first two years in <a href="#/section?c=council">its February budget</a>, after a petition from hospital and harbour staff who finish their shifts after the last tram.</p>
+        <h2>What changes from March</h2>
+        <ul>
+          <li>Late crossings at 23:00 from Calvermouth and 23:30 from Saltmere, Thursday to Sunday</li>
+          <li>Bikes travel free, with space for twelve on each crossing</li>
+          <li>Fares stay the same as the daytime boat</li>
+        </ul>
+        <blockquote class="quote"><p>"People were walking the long way round the estuary after a late shift. Now they will be home in twenty minutes."</p><cite>Dee Harlow, who runs the café on Quay Row</cite></blockquote>
+        <p>Not everyone is pleased. Neighbours of the Saltmere slipway have asked for quieter engines after 10pm, and the operator says the refit included new silencers and a slower approach to the jetty.</p>
+        <aside class="related" aria-label="Related story"><p class="label">Related</p><a href="#/article">Tram extension: what the new timetable means for your commute</a></aside>
+        <figure>
+          <span class="media"><img src="images/tram.svg" alt="A tram with its headlights on in the rain, seen head-on." width="1600" height="900"><span class="badge"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg><span>3:45</span></span></span>
+          <figcaption>Watch: the 23:30 crossing is timed to meet the last tram from Saltmere</figcaption>
+        </figure>
+        <p>The first sailing on 2 March will be free for anyone who works nights in the valley, the operator said. Timetables are on the quay and on the council's travel page.</p>
+        <div class="topics"><span class="label">Topics</span><a class="topic" href="#/section?c=transport">Transport</a><a class="topic" href="#/section?c=local">Calvermouth</a><a class="topic" href="#/section?c=local">Saltmere</a></div>
+      </div>
+      <aside class="rail js-only" aria-labelledby="rail-h">
+        <div class="sec-head"><h2 id="rail-h">Most read</h2></div>
+        <ol class="most" data-list="most"></ol>
+      </aside>
+    </div>
+  </div>
+  <section class="wrap block js-only" aria-labelledby="also-h">
+    <div class="sec-head"><h2 id="also-h">More on this story</h2></div>
+    <div class="cards4" data-list="also"></div>
+  </section>
+</article>
+
+<!-- ======================= LIVE ======================= -->
+<div data-view="live">
+  <section class="band live-hero">
+    <div class="wrap live-top">
+      <div>
+        <p class="live">Live</p>
+        <h1 class="live-title">Flood warnings along the lower Calver as the river keeps rising</h1>
+        <p class="meta"><span>Updated <time datetime="2026-11-23T14:32">14:32</time></span><span>Sunday 23 November</span></p>
+      </div>
+      <span class="media"><img src="images/river.svg" alt="The swollen brown river reaches the arches of the old stone bridge in heavy rain." width="1600" height="900"><span class="credit">Calver Daily</span></span>
+    </div>
+  </section>
+  <div class="wrap live-grid">
+    <aside class="summary" aria-labelledby="sum-h">
+      <h2 id="sum-h">Summary</h2>
+      <ul>
+        <li>Flood warnings are in place for the lower Calver from Saltmere bridge to the harbour</li>
+        <li>The river passed 3.1 metres at 14:15 and is <a href="#/live">expected to peak this evening</a></li>
+        <li>Sandbags are free at the market hall, Brindle Edge fire station and Ashby Rise community centre</li>
+        <li>The towpath is closed between the bridges and the Riverside tram stop is shut</li>
+      </ul>
+    </aside>
+    <section class="feed-wrap" aria-labelledby="rep-h">
+      <div class="feed-head">
+        <h2 id="rep-h">Live reporting</h2>
+        <button class="switch" id="key-only" type="button" aria-pressed="false"><span class="track" aria-hidden="true"></span>Key posts only</button>
+        <p class="meta"><span>Edited by <a href="#/author?id=jonah">Jonah Pryce</a></span></p>
+      </div>
+      <button class="new-posts" id="new-posts" type="button" hidden><svg class="icon" aria-hidden="true"><use href="#i-up"/></svg><span>New updates</span></button>
+      <ol class="feed" id="feed">
+        <li class="post" data-key>
+          <p class="post-time"><time datetime="2026-11-23T14:32">14:32</time></p>
+          <div class="post-body">
+            <p class="key">Key post</p>
+            <h3>River level at Saltmere bridge passes 3.1 metres</h3>
+            <div class="who"><span class="avatar" aria-hidden="true">JP</span><p><b>Jonah Pryce</b><span>Live editor</span></p></div>
+            <p>The gauge under Saltmere bridge read 3.12 metres at 14:15, five centimetres higher than an hour earlier. At this level the towpath gates close by themselves and the low road by the boatyard starts to take water.</p>
+          </div>
+        </li>
+        <li class="post">
+          <p class="post-time"><time datetime="2026-11-23T14:18">14:18</time></p>
+          <div class="post-body">
+            <h3>Where to collect sandbags</h3>
+            <div class="who"><span class="avatar" aria-hidden="true">RO</span><p><b>Ruth Okafor</b><span>Local democracy reporter</span></p></div>
+            <p>The council says sandbags are free until 20:00 at:</p>
+            <ul><li>the market hall loading bay, Calvermouth</li><li>Brindle Edge fire station</li><li>Ashby Rise community centre</li></ul>
+          </div>
+        </li>
+        <li class="post">
+          <p class="post-time"><time datetime="2026-11-23T13:55">13:55</time></p>
+          <div class="post-body">
+            <h3>Trams running, but the Riverside stop is closed</h3>
+            <div class="who"><span class="avatar" aria-hidden="true">TA</span><p><b>Tomás Aldana</b><span>Transport correspondent</span></p></div>
+            <p>Trams are running every ten minutes, but they will not stop at Riverside until the water drops. Use Mill Street, a four-minute walk up the hill.</p>
+          </div>
+        </li>
+        <li class="post">
+          <p class="post-time"><time datetime="2026-11-23T13:40">13:40</time></p>
+          <div class="post-body">
+            <h3>"We've moved everything upstairs"</h3>
+            <blockquote class="quote"><p>"The water came up to the step in 2019. We are not waiting to see if it does it again."</p><cite>A café owner on Quay Row, speaking to our reporter</cite></blockquote>
+          </div>
+        </li>
+      </ol>
+      <div class="more-wrap js-only"><button class="btn ghost" type="button" id="earlier">Show earlier updates<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></button></div>
+    </section>
+    <aside class="live-aside" aria-labelledby="useful-h">
+      <div class="sec-head"><h2 id="useful-h">Useful information</h2></div>
+      <ul class="links">
+        <li><a href="#/section?c=transport">Travel updates <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+        <li><a href="#/contact?topic=tip">Send us your photos and news <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+        <li><a href="#/newsletters">Get the Morning Calver <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+      </ul>
+    </aside>
+  </div>
+</div>
+
+<!-- ======================= WATCH AND LISTEN ======================= -->
+<div data-view="watch" class="band">
+  <header class="wrap watch-head">
+    <h1>Watch and listen</h1>
+    <p class="dek">Short films from our reporters, and podcasts for the walk to work.</p>
+  </header>
+  <section class="wrap player-wrap" aria-label="Featured video">
+    <div class="player">
+      <span class="media"><img src="images/ferry.svg" alt="The night ferry at the pier at dusk." width="1600" height="900"></span>
+      <button class="play-big" id="play" type="button" aria-pressed="false" aria-label="Play: How the night ferry crew trains for winter crossings"><svg class="icon i-play" aria-hidden="true"><use href="#i-play"/></svg><svg class="icon i-pause" aria-hidden="true"><use href="#i-pause"/></svg></button>
+      <p class="clock"><span id="clock">0:00</span> / <span id="clock-total">3:12</span></p>
+      <div class="bar" aria-hidden="true"><span id="bar"></span></div>
+    </div>
+    <div class="player-info">
+      <p class="label accent">Transport</p>
+      <h2 class="hed">How the night ferry crew trains for winter crossings</h2>
+      <p class="dek">Four crew, one boat and a lot of practice in the dark before the first late sailing in March.</p>
+      <p class="meta"><span>2 hrs ago</span><span>3:12</span></p>
+    </div>
+  </section>
+  <div class="wrap subnav" role="group" aria-label="Filter by format">
+    <button type="button" data-format="all" aria-pressed="true">All</button>
+    <button type="button" data-format="video" aria-pressed="false">Video</button>
+    <button type="button" data-format="audio" aria-pressed="false">Audio</button>
+  </div>
+  <section class="wrap media-grid" aria-labelledby="w-latest-h">
+    <h2 class="sr-only" id="w-latest-h">Latest video and audio</h2>
+    <div class="cards4" data-list="media"></div>
+  </section>
+  <section class="wrap block" aria-labelledby="pods-h">
+    <div class="sec-head"><h2 id="pods-h">Podcasts</h2></div>
+    <ul class="pods">
+      <li class="pod">
+        <span class="cover" style="--c: oklch(42% 0.09 210)">The Valley Briefing</span>
+        <p class="label">The Valley Briefing</p>
+        <h3 class="hed">Ferry's back, river's up: the week in ten minutes</h3>
+        <p class="meta"><span>10 min</span><span>Fridays</span></p>
+        <button class="listen" type="button" aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>Listen<span class="sr-only">: Ferry's back, river's up</span></button>
+      </li>
+      <li class="pod">
+        <span class="cover" style="--c: oklch(40% 0.12 25)">Council in Plain English</span>
+        <p class="label">Council in Plain English</p>
+        <h3 class="hed">What 400 homes on the rail yard would mean</h3>
+        <p class="meta"><span>24 min</span><span>Fortnightly</span></p>
+        <button class="listen" type="button" aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>Listen<span class="sr-only">: What 400 homes on the rail yard would mean</span></button>
+      </li>
+      <li class="pod">
+        <span class="cover" style="--c: oklch(45% 0.1 140)">Matchday</span>
+        <p class="label">Matchday</p>
+        <h3 class="hed">Rovers' cup run, with the people who were there in '98</h3>
+        <p class="meta"><span>31 min</span><span>Saturdays in season</span></p>
+        <button class="listen" type="button" aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>Listen<span class="sr-only">: Rovers' cup run</span></button>
+      </li>
+    </ul>
+  </section>
+</div>
+
+<!-- ======================= AUTHOR ======================= -->
+<div data-view="author">
+  <header class="wrap author-head">
+    <span class="avatar xl" id="au-initials" aria-hidden="true">TA</span>
+    <div>
+      <h1 class="art-title" id="au-name">Tomás Aldana</h1>
+      <p class="by-role" id="au-role">Transport correspondent</p>
+      <p class="dek" id="au-bio">Covers trams, buses, ferries and the roads between the valley towns. Before Calver Daily he drove the night bus for six years.</p>
+      <p class="inline-links"><a id="au-mail" href="mailto:tomas.aldana@calverdaily.example">tomas.aldana@calverdaily.example</a><a href="#/contact?topic=tip">Send a story tip</a></p>
+    </div>
+  </header>
+  <section class="wrap block" aria-labelledby="au-latest-h">
+    <div class="sec-head"><h2 id="au-latest-h">Latest stories</h2></div>
+    <ol class="rows" data-list="author-rows">
+      <li><span class="media"><img src="images/ferry.svg" alt="" width="1600" height="900"></span><h3 class="hed"><a href="#/article">Night ferry returns to Calvermouth after nine years</a></h3><p class="dek">A refitted boat and a new timetable bring back the 11pm crossing to Saltmere from March.</p><p class="meta"><time datetime="2026-11-23T07:40">2 hrs ago</time><span>Transport</span></p></li>
+    </ol>
+  </section>
+</div>
+
+<!-- ======================= NEWSLETTERS ======================= -->
+<div data-view="newsletters">
+  <header class="wrap page-head">
+    <p class="label accent">Newsletters</p>
+    <h1 class="art-title">Get the valley in your inbox</h1>
+    <p class="dek">Pick as many as you like. Every email has a one-click unsubscribe, and we never share your address.</p>
+  </header>
+  <div class="wrap nl-wrap">
+    <div>
+      <form data-form="newsletters" novalidate>
+        <fieldset class="nl-list" data-group aria-describedby="nl-err">
+          <legend class="label">Choose your newsletters</legend>
+          <label class="nl"><input type="checkbox" name="nl" value="morning" checked><span class="box" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span><span><b class="hed">The Morning Calver</b><span class="nl-when">Weekdays, 7am</span><span class="dek">The five stories you need before you leave the house.</span></span></label>
+          <label class="nl"><input type="checkbox" name="nl" value="council"><span class="box" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span><span><b class="hed">Council Watch</b><span class="nl-when">Thursdays</span><span class="dek">Every vote, budget line and planning decision, in plain English.</span></span></label>
+          <label class="nl"><input type="checkbox" name="nl" value="matchday"><span class="box" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span><span><b class="hed">Matchday</b><span class="nl-when">Fridays in season</span><span class="dek">Team news, fixtures and the best of the weekend's local sport.</span></span></label>
+          <label class="nl"><input type="checkbox" name="nl" value="weekend"><span class="box" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span><span><b class="hed">Weekend Read</b><span class="nl-when">Saturdays</span><span class="dek">Our longest stories and the photographs behind them.</span></span></label>
+          <p class="err" id="nl-err" aria-live="polite"></p>
+        </fieldset>
+        <div class="field">
+          <label for="nl-email">Email address</label>
+          <input class="input" id="nl-email" name="email" type="email" required autocomplete="email" inputmode="email" aria-describedby="nl-email-err">
+          <p class="err" id="nl-email-err" aria-live="polite"></p>
+        </div>
+        <label class="check"><input type="checkbox" id="nl-consent" required aria-describedby="nl-consent-err"><span>Send me the newsletters I picked. I can unsubscribe from any of them with one click.</span><span class="err" id="nl-consent-err" aria-live="polite"></span></label>
+        <button class="btn" type="submit" id="nl-submit">Sign up</button>
+      </form>
+      <div class="success" data-success="newsletters" hidden>
+        <h2><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Check your inbox</h2>
+        <p>We have sent a confirmation link. Your first newsletter arrives after you click it. Sample form: connect it to your email service to send real issues.</p>
+      </div>
+    </div>
+    <section class="faq" aria-labelledby="nl-faq-h">
+      <div class="sec-head"><h2 id="nl-faq-h">Questions</h2></div>
+      <details><summary>Do the newsletters cost anything?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>No. Every newsletter is free, and so is everything on the website.</p></details>
+      <details><summary>Can I change what I get later?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Yes. Every email has a link to your preferences, where you can add or drop any newsletter.</p></details>
+      <details><summary>What do you do with my email address?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>We use it only to send the newsletters you picked. Our <a href="#/privacy">privacy notice</a> explains the rest.</p></details>
+    </section>
+  </div>
+</div>
+
+<!-- ======================= ABOUT ======================= -->
+<div data-view="about">
+  <header class="wrap page-head">
+    <p class="label accent">About us</p>
+    <h1 class="art-title">Local news for the Calver Valley since 1911</h1>
+    <p class="lede-xl">Calver Daily started as a weekly paper printed above a chemist on Quay Row. Today a newsroom of reporters, editors and photographers covers nine towns along the river, online every day and in a print edition on Saturdays.</p>
+  </header>
+  <section class="wrap block" aria-labelledby="facts-h">
+    <div class="sec-head"><h2 id="facts-h">In numbers</h2></div>
+    <dl class="facts">
+      <div><dt>Founded</dt><dd>1911</dd></div>
+      <div><dt>Journalists</dt><dd>24</dd></div>
+      <div><dt>Towns covered</dt><dd>9</dd></div>
+      <div><dt>Newsletters</dt><dd>4</dd></div>
+    </dl>
+  </section>
+  <section class="wrap block two">
+    <div>
+      <div class="sec-head"><h2>How we work</h2></div>
+      <ol class="steps">
+        <li><div><strong>We name our sources</strong><p>When we cannot, we say why, and an editor knows who they are.</p></div></li>
+        <li><div><strong>We go to the meeting</strong><p>Council, planning and school board meetings are reported by someone who was in the room.</p></div></li>
+        <li><div><strong>We ask before we publish</strong><p>Anyone a story is about gets the chance to respond before it goes live.</p></div></li>
+        <li><div><strong>We fix mistakes in the open</strong><p>Corrections sit at the foot of the story, with the date we made them.</p></div></li>
+      </ol>
+    </div>
+    <div>
+      <div class="sec-head"><h2 id="corrections">Corrections</h2></div>
+      <p>Spotted something wrong? Tell us and an editor will reply within one working day.</p>
+      <a class="btn ghost" href="#/contact?topic=correction">Report a mistake</a>
+    </div>
+  </section>
+  <section class="wrap block" aria-labelledby="team-h">
+    <div class="sec-head"><h2 id="team-h">The newsroom</h2></div>
+    <ul class="people">
+      <li><a href="#/author?id=nadia"><span class="avatar" aria-hidden="true">NB</span><span><b>Nadia Brook</b><small>Editor</small></span></a></li>
+      <li><a href="#/author?id=jonah"><span class="avatar" aria-hidden="true">JP</span><span><b>Jonah Pryce</b><small>Live editor</small></span></a></li>
+      <li><a href="#/author?id=ruth"><span class="avatar" aria-hidden="true">RO</span><span><b>Ruth Okafor</b><small>Local democracy reporter</small></span></a></li>
+      <li><a href="#/author?id=tomas"><span class="avatar" aria-hidden="true">TA</span><span><b>Tomás Aldana</b><small>Transport correspondent</small></span></a></li>
+      <li><a href="#/author?id=priya"><span class="avatar" aria-hidden="true">PV</span><span><b>Priya Venn</b><small>Business reporter</small></span></a></li>
+      <li><a href="#/author?id=hannah"><span class="avatar" aria-hidden="true">HF</span><span><b>Hannah Ferris</b><small>Schools and families</small></span></a></li>
+    </ul>
+  </section>
+</div>
+
+<!-- ======================= CONTACT ======================= -->
+<div data-view="contact">
+  <header class="wrap page-head">
+    <p class="label accent">Contact</p>
+    <h1 class="art-title">Talk to the newsroom</h1>
+    <p class="dek">Tell us what is happening where you live, ask a question about a story, or let us know we got something wrong.</p>
+  </header>
+  <div class="wrap contact">
+    <ul class="ways">
+      <li><h2>Story tips</h2><p>Photos, videos and news from your street. <a href="mailto:tips@calverdaily.example">tips@calverdaily.example</a></p></li>
+      <li><h2>Corrections</h2><p>Name the story and what is wrong. <a href="mailto:corrections@calverdaily.example">corrections@calverdaily.example</a></p></li>
+      <li><h2>Advertising</h2><p>Local businesses and events. <a href="mailto:ads@calverdaily.example">ads@calverdaily.example</a></p></li>
+      <li><h2>The newsroom</h2><p>14 Quay Row, Calvermouth. Weekdays 9am to 5pm.</p></li>
+    </ul>
+    <div>
+      <form data-form="contact" novalidate>
+        <div class="form-grid">
+          <div class="field"><label for="c-name">Your name</label><input class="input" id="c-name" name="name" required autocomplete="name" aria-describedby="c-name-err"><p class="err" id="c-name-err" aria-live="polite"></p></div>
+          <div class="field"><label for="c-email">Email address</label><input class="input" id="c-email" name="email" type="email" required autocomplete="email" inputmode="email" aria-describedby="c-email-err"><p class="err" id="c-email-err" aria-live="polite"></p></div>
+          <div class="field full"><label for="c-topic">What is it about?</label>
+            <select class="input" id="c-topic" name="topic"><option value="tip">A story tip</option><option value="correction">A correction</option><option value="ads">Advertising</option><option value="other">Something else</option></select>
+          </div>
+          <div class="field full"><label for="c-msg">Your message</label><textarea class="input" id="c-msg" name="message" required minlength="20" aria-describedby="c-msg-err"></textarea><p class="err" id="c-msg-err" aria-live="polite"></p></div>
+        </div>
+        <label class="check"><input type="checkbox" id="c-consent" required aria-describedby="c-consent-err"><span>You can contact me about this message. My details are handled as the <a href="#/privacy">privacy notice</a> describes.</span><span class="err" id="c-consent-err" aria-live="polite"></span></label>
+        <button class="btn" type="submit">Send to the newsroom</button>
+      </form>
+      <div class="success" data-success="contact" hidden>
+        <h2><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Thank you, we have it</h2>
+        <p>An editor reads every message. If we follow it up, we will reply from a calverdaily.example address. Sample form: nothing was sent.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= PRIVACY ======================= -->
+<div data-view="privacy">
+  <div class="wrap legal">
+    <header class="page-head"><p class="label accent">Legal</p><h1 class="art-title">Privacy notice</h1><p class="dek">Last updated 1 November 2026. Sample text: replace it with your own notice.</p></header>
+    <div class="prose">
+      <h2>What we collect</h2>
+      <p>Your email address when you sign up for a newsletter, the details you give us in the contact form, and anonymous counts of which pages are read.</p>
+      <h2>How we use it</h2>
+      <p>To send the newsletters you asked for, to reply to your message, and to understand which stories readers find useful. We do not sell your details.</p>
+      <h2>How long we keep it</h2>
+      <p>Newsletter addresses until you unsubscribe. Messages for two years, unless they become part of a story you agreed to.</p>
+      <h2>Your rights</h2>
+      <p>You can ask to see, correct or delete what we hold about you. Write to <a href="mailto:privacy@calverdaily.example">privacy@calverdaily.example</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= 404 ======================= -->
+<div data-view="404">
+  <section class="wrap notfound">
+    <p class="label accent">Error 404</p>
+    <h1>We can't find that page</h1>
+    <p class="dek">It may have moved, or the link may be mistyped. The latest news is on the front page.</p>
+    <div class="actions"><a class="btn" href="#/">Go to the front page</a><a class="btn ghost" href="#/live">Follow the live updates</a></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer band">
+  <div class="wrap">
+    <a class="brand" href="#/" aria-label="Calver Daily, front page"><span class="plate">CALVER</span><span class="dot"></span></a>
+    <nav class="foot-nav" aria-label="Footer">
+      <ul>
+        <li><a href="#/">Home</a></li><li><a href="#/section?c=local">Local</a></li><li><a href="#/section?c=council">Council</a></li><li><a href="#/section?c=business">Business</a></li><li><a href="#/section?c=schools">Schools</a></li><li><a href="#/section?c=transport">Transport</a></li><li><a href="#/section?c=sport">Sport</a></li><li><a href="#/section?c=culture">Culture</a></li><li><a href="#/watch">Watch</a></li><li><a href="#/live">Live</a></li><li><a href="#/newsletters">Newsletters</a></li>
+      </ul>
+    </nav>
+    <ul class="foot-legal">
+      <li><a href="#/about">About us</a></li><li><a href="#/about?at=corrections">Corrections</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/privacy">Privacy</a></li>
+    </ul>
+    <p class="foot-copy">&copy; 2026 Calver Daily, 14 Quay Row, Calvermouth. Independent local news.</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const BRAND = "Calver Daily";
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: the system setting is the default; the toggle remembers a choice ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light theme" : "Switch to dark theme");
+  }
+  const saved = store.get("calver-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("calver-theme", next);
+  });
+  systemDark.addEventListener("change", (event) => { if (!store.get("calver-theme")) applyTheme(event.matches ? "dark" : "light"); });
+
+  /* ---------- Content as data. Stories, people and media are written once here; the HTML keeps the first screen of
+     every view so it reads without JavaScript. Pictures come from <template id="pics"> by key. ---------- */
+  const PICS = Object.fromEntries($$("img", $("#pics").content).map((img) => [img.dataset.pic, img.getAttribute("src")]));
+  const SECTIONS = {
+    all: ["Latest", "Everything we published today, newest first."],
+    local: ["Local", "Streets, services and the people who run them, from Calvermouth to Ashby Rise."],
+    council: ["Council", "Votes, budgets and planning decisions, explained by the reporter who was in the room."],
+    business: ["Business", "Shops, jobs and the companies that started here."],
+    schools: ["Schools", "Classrooms, results and the families around them."],
+    transport: ["Transport", "Trams, buses, ferries and the roads between the towns."],
+    sport: ["Sport", "Fixtures, results and the clubs that hold the valley together."],
+    culture: ["Culture", "Libraries, festivals, music and the people who make them."],
+  };
+  const TOWNS = { calvermouth: "Calvermouth", saltmere: "Saltmere", brindle: "Brindle Edge", ashby: "Ashby Rise", copperhill: "Copperhill" };
+  const AUTHORS = {
+    tomas: ["Tomás Aldana", "Transport correspondent", "Covers trams, buses, ferries and the roads between the valley towns. Before joining the paper he drove the night bus for six years."],
+    ruth: ["Ruth Okafor", "Local democracy reporter", "Goes to every council, planning and licensing meeting so you do not have to, and writes the Council Watch newsletter."],
+    priya: ["Priya Venn", "Business reporter", "Writes about the shops, workshops and employers of the valley, from market stalls to the brewery."],
+    hannah: ["Hannah Ferris", "Schools and families", "Covers schools, childcare and growing up in the valley. Former primary teacher."],
+    jonah: ["Jonah Pryce", "Live editor", "Runs the live pages when something big is happening, and the morning newsletter when it is not."],
+    nadia: ["Nadia Brook", "Editor", "Has edited the paper since 2019. Before that she was its court reporter for a decade."],
+    sam: ["Sam Whitlock", "Culture and sport", "Reviews the plays, follows the clubs and knows every choir in the valley."],
+  };
+  // [id, section, town, author, picture, format, duration, time, headline, summary]
+  const STORIES = [
+    ["ferry", "transport", "calvermouth", "tomas", "ferry", "", "", "2 hrs ago", "Night ferry returns to Calvermouth after nine years", "A refitted boat and a new timetable bring back the 11pm crossing to Saltmere from March."],
+    ["flood", "local", "saltmere", "jonah", "river", "live", "", "Updated 4 mins ago", "Flood warnings along the lower Calver as the river keeps rising", "Sandbags are available at three points and the towpath is closed between the bridges."],
+    ["railyard", "council", "calvermouth", "ruth", "railyard", "", "", "3 hrs ago", "Council sets out plan for 400 homes on the old rail yard", "The engine shed would become a covered market. Residents can comment until 9 January."],
+    ["hall", "local", "calvermouth", "ruth", "market", "", "", "4 hrs ago", "Market hall roof repair finishes three weeks early", "Traders move back under the glass on Saturday, with twelve new stalls along the east aisle."],
+    ["oven", "business", "copperhill", "priya", "bakery", "video", "2:48", "5 hrs ago", "Inside the 140-year-old oven that still bakes 600 loaves a day", "A night shift with the people who keep the Copperhill bakery's brick oven going."],
+    ["plots", "local", "ashby", "ruth", "allotment", "", "", "6 hrs ago", "Allotment waiting list halves as 60 new plots open", "The old bowling green has been split into half-size plots for first-time growers."],
+    ["weather", "schools", "brindle", "hannah", "school", "", "", "7 hrs ago", "Pupils' rooftop weather station now feeds the valley forecast", "Readings from a Year 9 science project are now part of the daily forecast for the upper valley."],
+    ["cup", "sport", "saltmere", "sam", "stadium", "", "", "8 hrs ago", "Saltmere Rovers reach the county cup final for the first time since 1998", "A late header at a sold-out Marsh Lane sends the part-time side to the final in April."],
+    ["tram", "transport", "saltmere", "tomas", "tram", "", "", "9 hrs ago", "Tram extension: what the new timetable means for your commute", "Trams every eight minutes at peak, and a later last tram from Saltmere."],
+    ["bins", "local", "brindle", "ruth", "", "", "", "10 hrs ago", "Bin collections move to Tuesdays in Brindle Edge from January", "Green waste goes fortnightly over the winter."],
+    ["budget", "council", "calvermouth", "ruth", "", "", "", "11 hrs ago", "Council tax: where this year's budget goes, in four charts", "Adult care, school transport and the bin fleet take the biggest share."],
+    ["lido", "local", "saltmere", "sam", "", "", "", "12 hrs ago", "Lido to stay open until November after a record summer", "Volunteers will run the café on weekdays."],
+    ["nightbus", "transport", "copperhill", "tomas", "", "", "", "13 hrs ago", "Night bus to run every hour over the holidays", "The 90 will run until 3am from 19 December to 2 January."],
+    ["library", "culture", "calvermouth", "sam", "library", "", "", "1 day ago", "Library sign-ups double after a late-night opening trial", "The central library stayed open until 10pm on Thursdays all autumn. It will now do so all year."],
+    ["lanterns", "culture", "calvermouth", "sam", "lanterns", "", "", "1 day ago", "Harbour festival returns with a night market and a lantern parade", "Two hundred lanterns made in school workshops will lead the parade along the quay."],
+    ["breakfast", "schools", "calvermouth", "hannah", "", "", "", "1 day ago", "Free breakfast clubs expand to six more primary schools", "Places open from January; families sign up through the school office."],
+    ["brewery", "business", "ashby", "priya", "", "", "", "1 day ago", "Ashby Rise brewery to hire 30 as it doubles output", "The new jobs include eight apprenticeships."],
+    ["mill", "business", "copperhill", "priya", "mill", "", "", "2 days ago", "Former wool mill reopens as the valley's first shared workspace", "Desks, a print room and a crèche fill three floors that stood empty for twenty years."],
+    ["hockey", "sport", "brindle", "sam", "", "", "", "2 days ago", "Brindle Edge under-14s win the regional hockey title", "Unbeaten all season, and the final went to penalty strokes."],
+    ["crossing", "local", "copperhill", "hannah", "", "", "", "2 days ago", "New zebra crossing outside Copperhill primary after parents' petition", "Work starts in the February half term."],
+  ].map(([id, sec, town, by, img, type, dur, time, title, dek]) => ({ id, sec, town, by, img, type, dur, time, title, dek }));
+  const byId = Object.fromEntries(STORIES.map((s) => [s.id, s]));
+  // Watch and listen: [picture, format, duration, section, time, headline]
+  const MEDIA = [
+    ["ferry", "video", "3:12", "transport", "2 hrs ago", "How the night ferry crew trains for winter crossings", "Four crew, one boat and a lot of practice in the dark before the first late sailing in March."],
+    ["river", "video", "1:05", "local", "3 hrs ago", "From above: the Calver at its highest in a decade"],
+    ["stadium", "video", "1:30", "sport", "8 hrs ago", "Rovers' road to the final in 90 seconds"],
+    ["lanterns", "video", "4:20", "culture", "1 day ago", "The lantern makers getting ready for the parade"],
+    ["bakery", "video", "2:48", "business", "5 hrs ago", "Inside the 140-year-old oven"],
+    ["school", "audio", "12:10", "schools", "7 hrs ago", "The Brindle Edge forecasters, in their own words"],
+    ["library", "audio", "18:52", "culture", "1 day ago", "Late Edition: a night at the central library"],
+    ["tram", "video", "3:45", "transport", "9 hrs ago", "Riding the tram extension before it opens"],
+  ].map(([img, type, dur, sec, time, title, dek = ""]) => ({ id: img, img, type, dur, sec, time, title, dek, by: "", town: "" }));
+  const MOST = ["ferry", "flood", "cup", "railyard", "lido"];
+  const LIVE_EARLIER = [
+    ["13:12", true, "HF", "Hannah Ferris", "Schools and families", "Schools open as normal", "All schools in the valley are open. Brindle Edge High has moved Monday's sports fixtures indoors."],
+    ["12:50", false, "TA", "Tomás Aldana", "Transport correspondent", "What a flood warning means", "A flood alert means flooding is possible. A flood warning, in place now, means it is expected and you should act. A severe warning means danger to life."],
+    ["12:30", false, "JP", "Jonah Pryce", "Live editor", "Welcome to our live coverage", "Heavy rain since Friday has pushed the Calver close to the top of its banks. We will bring you updates, advice and pictures through the day."],
+  ];
+  const LIVE_QUEUE = [
+    ["14:41", true, "JP", "Jonah Pryce", "Live editor", "Rain expected to ease from 18:00", "Forecasters expect the rain to stop by early evening, but the river will keep rising for a few hours as water arrives from the hills."],
+    ["14:39", false, "RO", "Ruth Okafor", "Local democracy reporter", "Riverside car park closed", "The council has closed the Riverside car park and asked owners to move their cars to Mill Street by 16:00."],
+  ];
+
+  /* ---------- Templates for repeated components ---------- */
+  const label = (sec) => SECTIONS[sec][0];
+  const linkFor = (s) => (s.type === "live" ? "live" : s.type ? `watch?v=${s.img}` : "article"); // route after "#/"
+  const badge = (s) => (s.type === "video" || s.type === "audio" ? `<span class="badge ${s.type}"><svg class="icon" aria-hidden="true"><use href="#i-${s.type === "audio" ? "wave" : "play"}"/></svg><span>${s.dur}</span><span class="sr-only">${s.type}</span></span>` : "");
+  const pic = (s) => (s.img ? `<span class="media"><img data-pic="${s.img}" alt="" width="1600" height="900">${badge(s)}</span>` : "");
+  const meta = (s) => `<p class="meta"><span>${s.time}</span><a href="#/section?c=${s.sec}">${label(s.sec)}</a></p>`;
+  const hed = (s, tag = "h3") => `<${tag} class="hed"><a href="#/${linkFor(s)}">${s.type === "live" ? '<span class="live">Live</span>' : ""}${s.title}</a></${tag}>`;
+  const card = (s, { image = true, dek = true } = {}) => `<article class="card">${image ? pic(s) : ""}${hed(s)}${dek && s.dek ? `<p class="dek">${s.dek}</p>` : ""}${meta(s)}</article>`;
+  const row = (s) => `<li>${s.img ? `<span class="media"><img data-pic="${s.img}" alt="" width="1600" height="900"></span>` : ""}${hed(s)}<p class="dek">${s.dek}</p>${meta(s)}</li>`;
+  const post = ([time, key, initials, name, role, title, text], isNew = false) => `<li class="post${isNew ? " is-new" : ""}"${key ? " data-key" : ""}><p class="post-time"><time>${time}</time></p><div class="post-body">${key ? '<p class="key">Key post</p>' : ""}<h3>${title}</h3><div class="who"><span class="avatar" aria-hidden="true">${initials}</span><p><b>${name}</b><span>${role}</span></p></div><p>${text}</p></div></li>`;
+  function fill(target, html) {
+    const lists = typeof target === "string" ? $$(`[data-list='${target}']`) : [target];
+    lists.forEach((list) => {
+      list.innerHTML = html;
+      $$("img[data-pic]", list).forEach((img) => { img.src = PICS[img.dataset.pic]; });
+    });
+  }
+  const pick = (...ids) => ids.map((id) => byId[id]);
+  fill("valley", pick("hall", "plots", "railyard", "mill").map((s) => card(s)).join(""));
+  fill("features", pick("lanterns", "library").map((s) => card(s)).join(""));
+  fill("most", MOST.map((id) => `<li><a class="hed" href="#/${linkFor(byId[id])}">${byId[id].title}</a></li>`).join(""));
+  fill("watch-home", MEDIA.slice(0, 4).map((m) => card(m, { dek: false })).join(""));
+  fill("more", pick("budget", "lido", "bins", "nightbus", "brewery").map((s) => card(s, { image: false, dek: false })).join(""));
+  fill("also", pick("tram", "railyard", "plots", "mill").map((s) => card(s, { dek: false })).join(""));
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: `${BRAND}: news from Calvermouth and the Calver Valley`,
+    article: "Night ferry returns to Calvermouth after nine years",
+    live: "Live: Flood warnings along the lower Calver",
+    watch: "Watch and listen",
+    newsletters: "Newsletters",
+    about: "About us",
+    contact: "Contact the newsroom",
+    privacy: "Privacy notice",
+    "404": "Page not found",
+  };
+  let current = null;
+  let currentHash = "#/";
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, hash, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    currentHash = hash || "#/";
+    root.dataset.page = name;
+    let title = titles[name];
+    if (name === "section") title = setSection(route.params.get("c"));
+    if (name === "author") title = setAuthor(route.params.get("id"));
+    if (name === "contact") preselect("c-topic", route.params.get("topic"));
+    if (name === "watch") title = setVideo(route.params.get("v"));
+    document.title = name === "home" ? title : `${title} | ${BRAND}`;
+    // The section row underlines where you are: the exact route, or the page a route with options belongs to
+    const here = currentHash === "" ? "#/" : currentHash;
+    $$(".nav a, .menu-sections a").forEach((a) => {
+      const href = a.getAttribute("href");
+      if (href === here || (href !== "#/" && !href.includes("?") && here.split("?")[0] === href)) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (name !== "live") stopQueue(); else startQueue();
+    if (name !== "watch") setPlaying(false);
+    const at = route.params.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function preselect(id, value) {
+    const select = document.getElementById(id);
+    if (value && select.querySelector(`option[value="${CSS.escape(value)}"]`)) select.value = value;
+  }
+  function go(hash, options) {
+    show(parse(hash), hash, options);
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ block: "start" }); target.focus?.({ preventScroll: true }); }
+    }
+  });
+  window.addEventListener("popstate", () => { if (menu.open) menu.close(); show(parse(location.hash), location.hash); });
+
+  /* ---------- Section pages: the section from the route, a town filter, the lead and "show more" ---------- */
+  const PAGE = 8;
+  let section = "all";
+  let town = "all";
+  let shown = PAGE;
+  function setSection(key) {
+    section = key && SECTIONS[key] ? key : "all";
+    const [title, dek] = SECTIONS[section];
+    $("#sec-title").textContent = title;
+    $("#sec-dek").textContent = dek;
+    town = "all";
+    shown = PAGE;
+    renderSection();
+    return title;
+  }
+  function renderSection() {
+    $$("[data-town]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.town === town)));
+    const list = STORIES.filter((s) => (section === "all" || s.sec === section) && (town === "all" || s.town === town));
+    const withPics = list.filter((s) => s.img);
+    const lead = withPics[0] ?? list[0];
+    const side = withPics[1];
+    const rest = list.filter((s) => s !== lead && s !== side);
+    rest.sort((a, b) => Boolean(b.img) - Boolean(a.img));
+    const leadBox = $("[data-list='sec-lead']");
+    leadBox.hidden = !lead;
+    leadBox.classList.toggle("no-pic", !lead?.img);
+    if (lead) {
+      fill(leadBox, `<article class="card lead-text">${hed(lead, "h2")}<p class="dek">${lead.dek}</p><p class="meta"><span>${lead.time}</span><span>${TOWNS[lead.town]}</span></p></article>${lead.img ? `<a class="media" href="#/${linkFor(lead)}" tabindex="-1" aria-hidden="true"><img data-pic="${lead.img}" alt="" width="1600" height="900">${badge(lead)}</a>` : ""}${side ? card(side, { dek: false }).replace('class="card"', 'class="card lead-side"') : ""}`);
+    }
+    fill("sec-cards", rest.slice(0, shown).map((s) => card(s)).join(""));
+    $("[data-empty]").hidden = rest.length > 0;
+    $("#more").hidden = rest.length <= shown;
+    $("#sec-count").textContent = `${list.length} ${list.length === 1 ? "story" : "stories"}`;
+  }
+  $$("[data-town]").forEach((button) => button.addEventListener("click", () => { town = button.dataset.town; shown = PAGE; renderSection(); }));
+  $("#more").addEventListener("click", () => {
+    const before = shown;
+    shown += PAGE;
+    renderSection();
+    $$("[data-list='sec-cards'] .hed a")[before]?.focus();
+  });
+
+  /* ---------- Author pages ---------- */
+  function setAuthor(id) {
+    const key = AUTHORS[id] ? id : "tomas";
+    const [name, role, bio] = AUTHORS[key];
+    const initials = name.split(" ").map((w) => w[0]).join("");
+    $("#au-initials").textContent = initials;
+    $("#au-name").textContent = name;
+    $("#au-role").textContent = role;
+    $("#au-bio").textContent = bio;
+    const mail = `${name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, ".")}@calverdaily.example`;
+    $("#au-mail").textContent = mail;
+    $("#au-mail").href = `mailto:${mail}`;
+    const theirs = STORIES.filter((s) => s.by === key);
+    fill("author-rows", (theirs.length ? theirs : STORIES.slice(0, 3)).map(row).join(""));
+    return name;
+  }
+
+  /* ---------- Menu and search ---------- */
+  const menu = $("#menu");
+  const query = $("#q");
+  function search() {
+    const term = query.value.trim().toLowerCase();
+    const found = term
+      ? STORIES.filter((s) => `${s.title} ${s.dek} ${label(s.sec)} ${TOWNS[s.town]}`.toLowerCase().includes(term))
+      : STORIES.slice(0, 5);
+    fill($("#results"), found.slice(0, 8).map((s) => `<li><a href="#/${linkFor(s)}"><span class="hed">${s.title}</span><small>${label(s.sec)}, ${TOWNS[s.town]}</small></a></li>`).join(""));
+    $("#q-status").textContent = term ? `${found.length} ${found.length === 1 ? "story" : "stories"}` : "Latest stories";
+    $("#q-empty").hidden = found.length > 0;
+  }
+  query.addEventListener("input", search);
+  search();
+  $("#menu-open").addEventListener("click", () => { menu.showModal(); query.focus(); });
+  $("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+
+  /* ---------- Article: save ---------- */
+  const save = $("[data-save]");
+  function renderSave(on) {
+    save.setAttribute("aria-pressed", String(on));
+    $("span", save).textContent = on ? "Saved" : "Save";
+  }
+  renderSave(store.get("calver-saved") === "1");
+  save.addEventListener("click", () => {
+    const on = save.getAttribute("aria-pressed") !== "true";
+    renderSave(on);
+    store.set("calver-saved", on ? "1" : "0");
+  });
+
+  /* ---------- Live page: key posts only, earlier updates, and new updates that wait for the reader ---------- */
+  const feed = $("#feed");
+  const keyOnly = $("#key-only");
+  const newPosts = $("#new-posts");
+  function applyKey() {
+    const on = keyOnly.getAttribute("aria-pressed") === "true";
+    $$(".post", feed).forEach((p) => { p.hidden = on && !p.hasAttribute("data-key"); });
+  }
+  keyOnly.addEventListener("click", () => { keyOnly.setAttribute("aria-pressed", String(keyOnly.getAttribute("aria-pressed") !== "true")); applyKey(); });
+  $("#earlier").addEventListener("click", (event) => {
+    feed.insertAdjacentHTML("beforeend", LIVE_EARLIER.map((p) => post(p)).join(""));
+    event.currentTarget.parentElement.hidden = true;
+    applyKey();
+  });
+  let queueTimer = 0;
+  function startQueue() {
+    if (queueTimer || !LIVE_QUEUE.length) return;
+    queueTimer = setTimeout(() => {
+      $("span", newPosts).textContent = `${LIVE_QUEUE.length} new ${LIVE_QUEUE.length === 1 ? "update" : "updates"}`;
+      newPosts.hidden = false;
+    }, 8000);
+  }
+  function stopQueue() { clearTimeout(queueTimer); queueTimer = 0; }
+  newPosts.addEventListener("click", () => {
+    feed.insertAdjacentHTML("afterbegin", LIVE_QUEUE.splice(0).map((p) => post(p, true)).join(""));
+    newPosts.hidden = true;
+    applyKey();
+    $(".post h3", feed).setAttribute("tabindex", "-1");
+    $(".post h3", feed).focus({ preventScroll: true });
+    $(".post", feed).scrollIntoView({ block: "center" });
+  });
+
+  /* ---------- Watch: sample player, format filter, podcast buttons ---------- */
+  fill("media", MEDIA.map((m) => card(m, { dek: false }).replace('<article class="card">', `<article class="card" data-format="${m.type}">`)).join(""));
+  $$("[data-view='watch'] button[data-format]").forEach((b) => {
+    b.addEventListener("click", () => {
+      $$("[data-view='watch'] button[data-format]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      $$("[data-list='media'] .card").forEach((c) => { c.hidden = b.dataset.format !== "all" && c.dataset.format !== b.dataset.format; });
+    });
+  });
+  const play = $("#play");
+  let video = MEDIA[0];
+  let length = 192;
+  let elapsed = 0;
+  let ticker = 0;
+  function setVideo(id) {
+    const next = MEDIA.find((m) => m.id === id) ?? MEDIA[0];
+    if (next !== video) {
+      video = next;
+      const [min, sec] = video.dur.split(":").map(Number);
+      length = min * 60 + sec;
+      elapsed = 0;
+      $(".player img").src = PICS[video.img];
+      $(".player-info .label").textContent = label(video.sec);
+      $(".player-info .hed").textContent = video.title;
+      $(".player-info .dek").textContent = video.dek;
+      $(".player-info .dek").hidden = !video.dek;
+      $(".player-info .meta").innerHTML = `<span>${video.time}</span><span>${video.dur}</span>`;
+      $("#clock-total").textContent = video.dur;
+      paint();
+    }
+    setPlaying(false);
+    return video.title;
+  }
+  function setPlaying(on) {
+    play.setAttribute("aria-pressed", String(on));
+    play.setAttribute("aria-label", `${on ? "Pause" : "Play"}: ${video.title}`);
+    clearInterval(ticker);
+    if (on) ticker = setInterval(() => { elapsed = (elapsed + 1) % (length + 1); paint(); }, 1000);
+  }
+  function paint() {
+    $("#clock").textContent = `${Math.floor(elapsed / 60)}:${String(elapsed % 60).padStart(2, "0")}`;
+    $("#bar").style.setProperty("--p", (elapsed / length).toFixed(3));
+  }
+  play.addEventListener("click", () => setPlaying(play.getAttribute("aria-pressed") !== "true"));
+  $$(".listen").forEach((button) => button.addEventListener("click", () => {
+    const on = button.getAttribute("aria-pressed") !== "true";
+    $$(".listen").forEach((b) => b.setAttribute("aria-pressed", "false"));
+    button.setAttribute("aria-pressed", String(on));
+  }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address, like name@example.com.", tooShort: "Please write a little more (20 characters or more)." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    if (field.hasAttribute("data-group")) {
+      const ok = Boolean(field.querySelector("input:checked"));
+      error.textContent = ok ? "" : "Pick at least one newsletter.";
+      return ok;
+    }
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (field.type === "checkbox" ? "Please tick this box to continue." : messages[problem]) : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input[aria-describedby], textarea[aria-describedby], [data-group]", form);
+    fields.forEach((field) => {
+      if (field.hasAttribute("data-group")) { $$("input", field).forEach((box) => box.addEventListener("change", () => checkField(field))); return; }
+      field.addEventListener(field.type === "checkbox" ? "change" : "blur", () => { if (field.value || field.type === "checkbox") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) {
+        const first = fields.find((f) => (f.hasAttribute("data-group") ? !f.querySelector("input:checked") : f.getAttribute("aria-invalid") === "true"));
+        (first?.matches("[data-group]") ? $("input", first) : first)?.focus();
+        return;
+      }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+        if (success) { success.hidden = false; success.setAttribute("tabindex", "-1"); success.focus({ preventScroll: true }); }
+      }, 500);
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), location.hash, { scroll: false });
+})();
+</script>
+</body>
+</html>

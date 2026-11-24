@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000"/><stop offset=".6" stop-color="#0b1105"/><stop offset="1" stop-color="#000"/></linearGradient>
+<linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#79bb00" stop-opacity="0"/><stop offset=".45" stop-color="#79bb00" stop-opacity=".55"/><stop offset="1" stop-color="#9be01a"/></linearGradient>
+<radialGradient id="sun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#9be01a" stop-opacity=".55"/><stop offset="1" stop-color="#9be01a" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1600" height="1000" fill="url(#bg)"/>
+<ellipse cx="800" cy="430" rx="520" ry="200" fill="url(#sun)"/>
+<g fill="none" stroke="url(#fade)" stroke-width="2.2">
+<path d="M-40 420q200-40 420 10t420-30 420 20 420-10"/>
+<path d="M-40 470q200-60 420 20t420-50 420 40 420-20"/>
+<path d="M-40 530q200-80 420 30t420-70 420 60 420-30"/>
+<path d="M-40 600q200-100 420 40t420-90 420 80 420-40"/>
+<path d="M-40 690q200-120 420 50t420-110 420 100 420-50"/>
+<path d="M-40 800q200-150 420 60t420-130 420 120 420-60"/>
+<path d="M-40 930q200-180 420 70t420-160 420 150 420-70"/>
+</g>
+<g fill="none" stroke="#79bb00" stroke-opacity=".35" stroke-width="1.6">
+<path d="M800 400V1000M700 400 560 1000M600 402 300 1000M500 405 40 1000M900 400 1040 1000M1000 402 1300 1000M1100 405 1560 1000M400 410-200 1000M1200 410 1800 1000"/>
+</g>
+<g fill="#c8f25a"><circle cx="380" cy="520" r="5"/><circle cx="840" cy="470" r="6"/><circle cx="1260" cy="560" r="5"/><circle cx="640" cy="640" r="4"/><circle cx="1050" cy="700" r="4"/></g>
+</svg>

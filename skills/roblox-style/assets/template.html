@@ -1,0 +1,1218 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Bramble Builders · A game-making club for ages 9 to 16</title>
+<meta name="description" content="Bramble Builders is a game-making club for ages 9 to 16: online on weeknights, in the studio on Saturdays, with a showcase of members' games and worlds.">
+<meta property="og:title" content="Bramble Builders">
+<meta property="og:description" content="A game-making club for ages 9 to 16. Book a free taster session.">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("bb-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}</script>
+<style>
+@font-face{font-family:"Lexend";src:url(fonts/lexend-latin-wght.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Unbounded";src:url(fonts/unbounded-latin-wght.woff2) format("woff2");font-weight:200 900;font-display:swap}
+
+/* ---------- Tokens: light first; the wall and its cards stay dark in both themes ---------- */
+:root{
+  --bg:oklch(100% 0 0);--bar:oklch(97.6% .003 265);--surface:oklch(96.2% .004 265);--surface-2:oklch(92.4% .006 265);
+  --text:oklch(23% .012 265);--muted:oklch(48% .014 265);--border:oklch(88.5% .007 265);
+  --accent:oklch(55% .235 268);--accent-hover:oklch(50% .23 268);--accent-text:oklch(100% 0 0);--link:oklch(50% .22 268);
+  --ink:oklch(23% .012 265);--ink-text:oklch(100% 0 0);
+  --card:oklch(100% 0 0);--card-line:oklch(84% .008 265);--field:oklch(100% 0 0);
+  --wall:oklch(14.5% .01 265);--on-wall:oklch(97% 0 0);
+  --good:oklch(52% .15 150);--bad:oklch(53% .2 25);
+  --shadow-card:0 1px 2px oklch(20% .02 265 / .08),0 8px 20px oklch(20% .02 265 / .1);
+  --shadow-overlay:0 24px 64px oklch(8% .02 265 / .5);
+  --display:"Unbounded","Lexend",system-ui,sans-serif;
+  --body:"Lexend",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r-control:8px;--r-card:10px;--r-media:8px;--r-pill:999px;--r-panel:12px;
+  --fast:120ms;--base:220ms;--slow:480ms;--ease:cubic-bezier(.2,.7,.2,1);
+  --chev:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath d=%27M6 9l6 6 6-6%27 fill=%27none%27 stroke=%27%238a8f99%27 stroke-width=%272.4%27 stroke-linecap=%27round%27/%3E%3C/svg%3E");
+  --wrap:1240px;--gut:24px;
+  color-scheme:light
+}
+[data-theme=dark]{
+  --bg:oklch(17% .008 265);--bar:oklch(20.5% .009 265);--surface:oklch(22.5% .009 265);--surface-2:oklch(28.5% .011 265);
+  --text:oklch(95.5% .004 265);--muted:oklch(73% .012 265);--border:oklch(32% .011 265);
+  --accent:oklch(56% .23 268);--accent-hover:oklch(61% .21 268);--link:oklch(75% .14 268);
+  --ink:oklch(95.5% .004 265);--ink-text:oklch(20% .01 265);
+  --card:oklch(20% .009 265);--card-line:oklch(37% .012 265);--field:oklch(16.5% .008 265);
+  --shadow-card:0 1px 2px oklch(0% 0 0 / .4),0 10px 24px oklch(0% 0 0 / .4);
+  color-scheme:dark
+}
+
+/* ---------- Base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.55 var(--body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img,svg{display:block;max-width:100%}
+img{height:auto}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit}
+button{cursor:pointer}
+h1,h2,h3,p,figure,dl,dd{margin:0}
+h1,h2,h3{text-wrap:balance}
+p{text-wrap:pretty}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:12px;top:-60px;z-index:40;padding:10px 14px;border-radius:var(--r-control);background:var(--ink);color:var(--ink-text)}
+.skip:focus{top:12px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gut)}
+.narrow{max-width:1020px}
+.link,.prose a,.fine a{color:var(--link);text-decoration:underline;text-underline-offset:2px}
+.muted{color:var(--muted)}
+.js [data-view]:not(.is-active){display:none}
+html:not(.js) .js-only{display:none}
+
+/* ---------- Header: one bar, the search in the middle, two buttons at the end ---------- */
+.bar{position:sticky;top:0;z-index:20;background:var(--bar);border-bottom:1px solid var(--border)}
+.bar-in{display:flex;align-items:center;gap:16px;height:60px;padding:0 20px}
+.brand{display:flex;align-items:center;gap:10px;font:700 15px/1 var(--display);letter-spacing:-.01em;white-space:nowrap}
+.brand svg{width:30px;height:30px}
+.nav{display:flex;gap:2px}
+.nav a{position:relative;display:block;padding:10px 14px;border-radius:var(--r-control);font-weight:500;white-space:nowrap}
+.nav a:hover{background:var(--surface-2)}
+.nav a[aria-current=page]::after{content:"";position:absolute;left:14px;right:14px;bottom:2px;height:3px;border-radius:3px;background:var(--accent)}
+.search{position:relative;flex:1;max-width:440px;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;background:var(--surface-2);border:1px solid transparent;border-radius:var(--r-control);color:var(--muted)}
+.search:focus-within{border-color:var(--accent);background:var(--bg)}
+.search input{flex:1;min-width:0;height:100%;border:0;background:none;outline:none;color:var(--text)}
+.search input::placeholder{color:var(--muted)}
+.bar-end{margin-left:auto;display:flex;align-items:center;gap:8px}
+.icon-btn{width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:var(--r-control);background:none}
+.icon-btn:hover{background:var(--surface-2)}
+.search-link{display:none}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border:1px solid transparent;border-radius:var(--r-control);font-weight:600;line-height:1.2;white-space:nowrap;transition:background-color var(--fast),border-color var(--fast),color var(--fast),transform var(--fast)}
+.btn:active{transform:scale(.98)}
+.btn-sm{min-height:40px;padding:0 14px;font-size:15px}
+.btn-blue{background:var(--accent);color:var(--accent-text)}
+.btn-blue:hover{background:var(--accent-hover)}
+.btn-ink{background:var(--ink);color:var(--ink-text)}
+.btn-ink:hover{opacity:.88}
+.btn-line{border-color:color-mix(in oklch,var(--text) 55%,transparent);background:transparent}
+.btn-line:hover{background:var(--surface-2)}
+.btn-soft{background:var(--surface-2)}
+.btn-soft:hover{background:var(--border)}
+.btn-block{display:flex;width:100%}
+.btn[aria-pressed=true]{background:var(--surface-2);color:var(--text)}
+
+/* ---------- The wall: a tilted grid of project art, dimmed, with loose outline squares ---------- */
+.hero{position:relative;overflow:hidden;isolation:isolate;background:var(--wall);color:var(--on-wall);padding:36px var(--gut) 40px}
+.wall{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.wall::after{content:"";position:absolute;inset:0;background:radial-gradient(56% 60% at 50% 46%,oklch(14.5% .01 265 / .5),oklch(14.5% .01 265 / .86))}
+.wall-grid{position:absolute;left:50%;top:50%;width:2100px;display:grid;grid-template-columns:repeat(9,1fr);gap:30px;transform:translate(-50%,-50%) rotate(-12deg);animation:drift 70s linear infinite alternate}
+.wall-grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;filter:brightness(.6) saturate(1.15)}
+.sq{position:absolute;left:var(--x);top:var(--y);width:var(--s);aspect-ratio:1;border:2px solid oklch(100% 0 0 / .2);border-radius:8px;transform:rotate(var(--r));z-index:1}
+.sq.blue{border-color:color-mix(in oklch,var(--accent) 70%,transparent)}
+@keyframes drift{to{translate:-150px -70px}}
+.hero-in{position:relative;display:grid;justify-items:center;gap:14px;text-align:center}
+.hero-title{font:700 clamp(28px,3vw,42px)/1.12 var(--display);letter-spacing:-.025em;max-width:30ch}
+[data-view=login] .hero{min-height:calc(100svh - 61px);display:grid;align-content:center}
+.hero-sub{max-width:56ch;color:oklch(100% 0 0 / .8)}
+
+/* ---------- The card on the wall ---------- */
+.card{width:min(100%,468px);margin-top:4px;text-align:left;background:var(--card);color:var(--text);border-radius:var(--r-panel);padding:22px 26px 20px;box-shadow:var(--shadow-overlay);animation:rise var(--slow) var(--ease) both}
+[data-theme=dark] .card{border:1px solid var(--card-line)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+.card-title{font:800 17px/1.25 var(--body);text-transform:uppercase;letter-spacing:.01em;text-align:center;margin-bottom:14px}
+.field{position:relative;display:grid;gap:6px;padding-bottom:20px}
+.field>label,.field>legend,.label{font-size:13.5px;font-weight:500;padding:0}
+.field>legend{float:left;width:100%}
+.input{width:100%;height:44px;padding:0 12px;border:1px solid var(--card-line);border-radius:var(--r-control);background:var(--field);color:var(--text);transition:border-color var(--fast),box-shadow var(--fast)}
+textarea.input{height:auto;min-height:132px;padding:10px 12px;resize:vertical}
+select.input,.trio select{appearance:none;background:var(--field) var(--chev) no-repeat right 10px center/16px;padding-right:32px;cursor:pointer}
+.input::placeholder{color:var(--muted)}
+.input:hover{border-color:color-mix(in oklch,var(--text) 40%,transparent)}
+.input:focus,.trio select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in oklch,var(--accent) 28%,transparent)}
+.input[aria-invalid=true],fieldset[aria-invalid=true] .trio,fieldset[aria-invalid=true] .seg{border-color:var(--bad)}
+.err{position:absolute;left:0;bottom:3px;font-size:12.5px;line-height:16px;color:var(--bad)}
+.hint{font-size:12.5px;color:var(--muted)}
+.trio{display:grid;grid-template-columns:1.25fr 1fr 1fr;border:1px solid var(--card-line);border-radius:var(--r-control);overflow:hidden}
+.trio select{height:42px;border:0;border-left:1px solid var(--card-line);border-radius:0;padding-left:10px;font-size:15px;min-width:0;color:var(--text)}
+.trio select:first-child{border-left:0}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1px solid var(--card-line);border-radius:var(--r-control);overflow:hidden}
+.seg label{position:relative;display:grid;place-items:center;height:42px;border-left:1px solid var(--card-line);font-weight:500;cursor:pointer;transition:background-color var(--fast)}
+.seg label:first-child{border-left:0}
+.seg label:hover{background:var(--surface)}
+.seg input{position:absolute;inset:0;margin:0;opacity:0;cursor:pointer}
+.seg label:has(:checked){background:var(--ink);color:var(--ink-text)}
+.seg label:has(:focus-visible){outline:3px solid var(--accent);outline-offset:-3px}
+.pw{position:relative}
+.pw .input{padding-right:48px}
+.pw button{position:absolute;right:2px;top:2px;width:40px;height:40px;display:grid;place-items:center;border:0;background:none;color:var(--muted);border-radius:var(--r-control)}
+.fine{font-size:13px;line-height:1.45;color:var(--muted);margin:0 0 14px}
+.go{width:100%;min-height:46px;border:0;border-radius:var(--r-control);background:var(--surface-2);color:var(--muted);font-weight:600;transition:background-color var(--base),color var(--base)}
+.go.ready{background:var(--accent);color:var(--accent-text)}
+.go.ready:hover{background:var(--accent-hover)}
+.card-foot{margin-top:14px;text-align:center;font-size:14px}
+.done{display:grid;justify-items:center;gap:10px;text-align:center;padding:10px 0 4px}
+.done:focus{outline:none}
+.tick{width:56px;height:56px;display:grid;place-items:center;border-radius:14px;background:color-mix(in oklch,var(--good) 16%,transparent);color:var(--good);transform:rotate(-8deg)}
+.tick .ic{width:28px;height:28px;transform:rotate(8deg)}
+.done h2,.done h3{font:800 18px/1.3 var(--body);text-transform:uppercase}
+.done-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:6px}
+
+/* ---------- Outlined badges under the card ---------- */
+.ways{position:relative;display:grid;justify-items:center;gap:14px;margin-top:26px;text-align:center}
+.caps{font:800 18px/1.2 var(--body);text-transform:uppercase;letter-spacing:.015em}
+.badges{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.badges li{display:flex;align-items:center;gap:10px;min-width:176px;padding:9px 18px 9px 14px;border:1px solid oklch(100% 0 0 / .62);border-radius:var(--r-control);background:oklch(10% .01 265 / .72);text-align:left;line-height:1.15}
+.badges .ic{width:26px;height:26px}
+.badges small{display:block;font-size:11.5px;opacity:.82}
+.badges b{font-size:17px;font-weight:600}
+
+/* ---------- Sections, shelves and tiles ---------- */
+.section{padding:44px 0}
+.section+.section{padding-top:8px}
+.head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.head h2{display:flex;align-items:center;gap:6px;font:700 21px/1.25 var(--body)}
+.see-all{display:inline-flex;align-items:center;gap:4px;padding:6px 0;font-weight:500;white-space:nowrap}
+.see-all:hover{text-decoration:underline}
+.see-all .ic{width:18px;height:18px}
+.info{position:relative;display:inline-grid;place-items:center;width:28px;height:28px;padding:0;border:0;border-radius:50%;background:none;color:var(--muted)}
+.info .ic{width:18px;height:18px}
+.tip{display:none;position:absolute;left:50%;top:calc(100% + 4px);transform:translateX(-50%);width:max-content;max-width:230px;padding:8px 10px;border-radius:var(--r-control);background:var(--ink);color:var(--ink-text);font:400 13px/1.4 var(--body);text-align:left;z-index:5}
+.info:hover .tip,.info:focus-visible .tip{display:block}
+.shelf+.shelf{margin-top:30px}
+.track{position:relative}
+.row{display:grid;grid-auto-flow:column;grid-auto-columns:162px;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none;padding:4px 2px 6px}
+.row::-webkit-scrollbar{display:none}
+.arrow{position:absolute;top:4px;z-index:2;width:40px;height:162px;display:grid;place-items:center;border:0;border-radius:var(--r-media);background:color-mix(in oklch,var(--bg) 82%,transparent);color:var(--text);opacity:0;transition:opacity var(--base)}
+.arrow.prev{left:-6px}
+.arrow.next{right:-6px}
+.track:hover .arrow,.arrow:focus-visible{opacity:1}
+.arrow:disabled{display:none}
+.tile{display:grid;align-content:start;gap:6px;min-width:0;scroll-snap-align:start}
+.tile a{display:grid;gap:8px}
+.tile img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--r-media);background:var(--surface-2);transition:transform var(--base) var(--ease),box-shadow var(--base)}
+.tile a:hover img,.tile a:focus-visible img{transform:translateY(-3px);box-shadow:var(--shadow-card)}
+.tile h3{font:600 15.5px/1.3 var(--body);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
+.stats{display:flex;gap:12px;font-size:13px;color:var(--muted);white-space:nowrap}
+.more .row{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent)}
+.stats span{display:inline-flex;align-items:center;gap:4px}
+.stats .ic{width:15px;height:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(162px,1fr));gap:26px 16px}
+
+/* ---------- Page heads, filters, pill selects ---------- */
+.page{padding:32px 0 24px}
+.page-title{font:700 clamp(28px,3vw,36px)/1.15 var(--display);letter-spacing:-.025em}
+.lede{max-width:64ch;margin-top:10px;color:var(--muted)}
+.filters{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:20px 0 28px}
+.pill{appearance:none;height:40px;padding:0 40px 0 18px;border:0;border-radius:var(--r-pill);background:var(--surface-2) var(--chev) no-repeat right 14px center/16px;font-weight:600;cursor:pointer}
+.pill.ink{background-color:var(--ink);color:var(--ink-text)}
+.find{position:relative;display:flex;align-items:center;gap:8px;height:40px;flex:1;min-width:200px;max-width:340px;padding:0 14px;border:1px solid var(--border);border-radius:var(--r-pill);color:var(--muted)}
+.find:focus-within{border-color:var(--accent)}
+.find input{flex:1;min-width:0;height:100%;border:0;outline:none;background:none;color:var(--text)}
+.count{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin-bottom:16px;color:var(--muted)}
+.empty{padding:48px 0;text-align:center;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 26px}
+.chip{min-height:40px;padding:0 18px;border:0;border-radius:var(--r-pill);background:var(--surface-2);font-weight:600}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--ink-text)}
+
+/* ---------- Project page: art and a side column with the big play button ---------- */
+.proj-top{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:22px;padding-top:28px}
+.media{position:relative;aspect-ratio:16/9;border-radius:var(--r-media);overflow:hidden;background:var(--wall)}
+.media img{width:100%;height:100%;object-fit:cover}
+.stage{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:14px;padding:20px;background:oklch(12% .01 265 / .8);color:#fff;text-align:center;animation:fade var(--base) both}
+@keyframes fade{from{opacity:0}}
+.stage b{font-size:18px}
+.stage .btn{border-color:oklch(100% 0 0 / .45);background:oklch(100% 0 0 / .12);color:#fff}
+.meter{width:min(70vw,280px);height:6px;border-radius:6px;background:oklch(100% 0 0 / .2);overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--accent);transition:width 1.4s linear}
+.side{display:flex;flex-direction:column;gap:6px}
+.side h1{font:700 clamp(26px,2.6vw,32px)/1.15 var(--body);letter-spacing:-.01em}
+.by{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.by a{color:var(--link);font-weight:500}
+.by .ic{width:16px;height:16px;color:var(--accent)}
+.play{margin-top:auto;min-height:64px;display:grid;place-items:center;border:0;border-radius:var(--r-control);background:var(--accent);color:var(--accent-text);transition:background-color var(--fast),transform var(--fast)}
+.play:hover{background:var(--accent-hover)}
+.play:active{transform:scale(.985)}
+.play .ic{width:34px;height:34px;fill:currentColor;stroke:none}
+.votes{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:8px 6px 0}
+.vote{display:grid;justify-items:center;gap:2px;min-width:64px;padding:4px;border:0;border-radius:var(--r-control);background:none;color:var(--muted);font-size:12.5px}
+.vote:hover{color:var(--text)}
+.vote[aria-pressed=true]{color:var(--accent)}
+.vote[aria-pressed=true] .ic{fill:currentColor}
+.vote .ic{width:24px;height:24px}
+.ratio{flex:1;max-width:150px;height:4px;margin-top:22px;border-radius:4px;background:var(--surface-2);overflow:hidden}
+.ratio i{display:block;height:100%;width:var(--v,50%);background:var(--text);transition:width var(--slow) var(--ease)}
+.tabs{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;margin:36px 0 22px;background:var(--surface);border-radius:4px}
+.tabs button{position:relative;min-height:46px;border:0;background:none;font-weight:500}
+.tabs [aria-selected=true]{font-weight:600}
+.tabs [aria-selected=true]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:var(--text)}
+.panel h2{font:700 20px/1.3 var(--body);margin:0 0 10px}
+.panel>p{max-width:72ch}
+.age{display:inline-flex;gap:10px;margin-top:18px;padding:12px 16px;border-radius:var(--r-control);background:var(--surface)}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:12px 0;margin:26px 0;padding:16px 0;border-block:1px solid var(--border);text-align:center}
+.strip div{display:grid;gap:6px;min-width:0;padding:0 8px}
+.strip dt{font-size:13px;color:var(--muted)}
+.strip dd{font-weight:600;overflow-wrap:anywhere}
+.log{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.log li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:16px;padding:14px 16px;border-radius:var(--r-card);background:var(--surface)}
+.log li>*,.desks dd{overflow-wrap:anywhere}
+.log b{font-weight:600}
+
+/* ---------- Event cards with the date chip ---------- */
+.events{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.event{display:flex;flex-direction:column;overflow:hidden;border-radius:var(--r-card);background:var(--surface)}
+.event figure{position:relative;aspect-ratio:16/9}
+.event img{width:100%;height:100%;object-fit:cover}
+.date{position:absolute;left:10px;top:10px;padding:4px 10px;border-radius:var(--r-pill);background:oklch(100% 0 0 / .94);color:oklch(20% .01 265);font-size:12.5px;font-weight:600}
+.event-body{flex:1;display:flex;flex-direction:column;gap:4px;padding:14px 14px 16px}
+.event h3{font:700 16px/1.25 var(--body);text-transform:uppercase;letter-spacing:.01em}
+.event p{margin-bottom:12px;font-size:14px;color:var(--muted)}
+.event .btn{margin-top:auto}
+
+/* ---------- Bands, cards, steps, people ---------- */
+.band{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:36px;align-items:center;overflow:hidden;padding:40px;border-radius:var(--r-panel);background:var(--surface)}
+.band h2{font:700 clamp(22px,2.4vw,30px)/1.2 var(--display);letter-spacing:-.02em}
+.band p{margin:12px 0 20px;color:var(--muted);max-width:52ch}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.stack{position:relative;height:230px}
+.stack img{position:absolute;width:150px;aspect-ratio:1;object-fit:cover;border-radius:12px;box-shadow:var(--shadow-card)}
+.stack img:nth-child(1){left:6%;top:40px;transform:rotate(-12deg)}
+.stack img:nth-child(2){left:34%;top:8px;transform:rotate(6deg);z-index:1}
+.stack img:nth-child(3){left:60%;top:56px;transform:rotate(-4deg)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.box{padding:24px;border-radius:var(--r-card);background:var(--surface)}
+.box h3{font:700 18px/1.3 var(--body);margin:16px 0 6px}
+.box p{color:var(--muted);font-size:15px}
+.tilt{width:46px;height:46px;display:grid;place-items:center;border-radius:11px;background:var(--accent);color:var(--accent-text);transform:rotate(-9deg)}
+.tilt .ic{transform:rotate(9deg)}
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid var(--border)}
+.faq summary{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;font-weight:600;cursor:pointer;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .ic{transition:transform var(--base) var(--ease)}
+.faq details[open] summary .ic{transform:rotate(180deg)}
+.faq details p{padding:0 0 18px;color:var(--muted);max-width:70ch}
+.statement{font:600 clamp(24px,3vw,40px)/1.22 var(--display);letter-spacing:-.025em;max-width:26ch;margin-top:20px}
+.statement em{font-style:normal;color:var(--link)}
+.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.steps li{padding:24px;border-radius:var(--r-card);background:var(--surface)}
+.steps li::before{counter-increment:s;content:counter(s);display:block;margin-bottom:12px;font:700 30px/1 var(--display);color:var(--link)}
+.steps b{display:block;margin-bottom:4px;font-size:17px}
+.people{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.person{display:grid;gap:2px}
+.avatar{width:68px;height:68px;margin-bottom:12px;display:grid;place-items:center;border-radius:16px;background:var(--c);color:#fff;font:700 21px/1 var(--display);transform:rotate(-6deg)}
+.person span{color:var(--muted);font-size:14.5px}
+.split{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:40px;align-items:start}
+.panel-box{padding:28px;border-radius:var(--r-panel);background:var(--surface)}
+.panel-box .input{background:var(--field)}
+.desks{display:grid;gap:18px}
+.desks dt{font-weight:600}
+.desks dd{color:var(--muted)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+
+/* ---------- News ---------- */
+.posts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 18px}
+.post-card a{display:grid;gap:10px}
+.post-card img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r-media);transition:transform var(--base) var(--ease)}
+.post-card a:hover img{transform:translateY(-3px)}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13.5px;color:var(--muted)}
+.tag{padding:2px 9px;border-radius:var(--r-pill);background:var(--surface-2);color:var(--text);font-size:12.5px;font-weight:600}
+.post-card h2{font:700 18px/1.3 var(--body)}
+.post-card p{color:var(--muted);font-size:15px}
+.article{max-width:740px;margin:0 auto;padding:32px var(--gut) 24px}
+.article h1{font:700 clamp(26px,3.4vw,40px)/1.18 var(--display);letter-spacing:-.025em;margin:12px 0 14px}
+.article .lead-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r-media);margin:22px 0 26px}
+.prose p{margin:0 0 18px;font-size:17px;line-height:1.7}
+.prose h2{font:700 21px/1.3 var(--body);margin:30px 0 10px}
+.prose ul{padding-left:20px;margin:0 0 18px}
+.prose li{margin-bottom:6px}
+
+/* ---------- 404, footer, toast ---------- */
+.lost{position:relative;display:grid;justify-items:center;gap:14px;padding:96px var(--gut) 72px;text-align:center;overflow:hidden}
+.lost .num{font:800 clamp(72px,12vw,140px)/1 var(--display);letter-spacing:-.04em;transform:rotate(-6deg)}
+.lost .sq{border-color:color-mix(in oklch,var(--text) 18%,transparent)}
+.foot{margin-top:56px;padding:34px var(--gut) 40px;border-top:1px solid var(--border);background:var(--bar)}
+.foot nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 26px}
+.foot nav a{padding:6px 0;font-weight:500}
+.foot nav a:hover{text-decoration:underline}
+.foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;max-width:1080px;margin:24px auto 0;padding-top:22px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;z-index:50;max-width:calc(100vw - 32px);padding:11px 16px;border-radius:var(--r-control);background:var(--ink);color:var(--ink-text);font-weight:500;transform:translateX(-50%);box-shadow:var(--shadow-overlay);animation:rise var(--base) var(--ease)}
+.toast:empty{display:none}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1180px){.search{display:none}.search-link{display:grid}}
+@media (max-width:1024px){.events,.posts{grid-template-columns:repeat(2,minmax(0,1fr))}.people{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:940px){.brand span{display:none}}
+@media (max-width:860px){
+  .proj-top,.band,.split{grid-template-columns:1fr}
+  .cards,.steps{grid-template-columns:1fr}
+  .play{min-height:58px}
+  .stack{height:200px}
+}
+@media (max-width:640px){
+  :root{--gut:16px}
+  .bar-in{flex-wrap:wrap;height:auto;padding:8px 12px 0;gap:6px 8px}
+  .brand span{display:inline}
+  .nav{order:3;width:100%;justify-content:space-between;overflow-x:auto;scrollbar-width:none;margin:0 -4px}
+  .nav a{padding:10px 8px}
+  .nav a[aria-current=page]::after{left:8px;right:8px}
+  .icon-btn{width:44px;height:44px}
+  .hero{padding:32px 16px 36px}
+  .card{padding:22px 18px 18px}
+  .badges{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .badges li{min-width:0;padding:8px 10px}
+  .badges b{font-size:15px}
+  .row{grid-auto-columns:144px;gap:12px}
+  .stats{gap:8px;font-size:12.5px}
+  .head h2{font-size:19px}
+  .arrow{display:none}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}
+  .events,.posts,.people{grid-template-columns:1fr}
+  .band{padding:26px 20px}
+  .log li{grid-template-columns:1fr;gap:2px}
+  .two{grid-template-columns:1fr}
+  .panel-box{padding:20px 16px}
+  .foot-base{justify-content:center;text-align:center}
+}
+@media (max-width:520px){.brand span{display:none}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:1ms!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-mark" viewBox="0 0 32 32"><path d="M16 3.5 28 10 16 16.5 4 10z" fill="#9db4ff"/><path d="M4 10l12 6.5V30L4 23.5z" fill="#3d5cff"/><path d="M28 10 16 16.5V30l12-6.5z" fill="#2338c9"/><path d="M16 10.5c-.4-3.6 1.8-6.4 5.6-6.8.3 3.6-2 6.3-5.6 6.8z" fill="#36c46e"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.1"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 10v10H4V10zM7 10l4-7a2 2 0 0 1 3 2.2L13 10h6a2 2 0 0 1 2 2.3l-1.3 6A2 2 0 0 1 17.7 20H7"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><g transform="rotate(180 12 12)"><path d="M7 10v10H4V10zM7 10l4-7a2 2 0 0 1 3 2.2L13 10h6a2 2 0 0 1 2 2.3l-1.3 6A2 2 0 0 1 17.7 20H7"/></g></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+  <symbol id="i-playfill" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3l-5.5 2.9 1-6.2L3 9.6l6.2-.9z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-seal" viewBox="0 0 24 24"><path d="M12 2.5l2.4 1.8 3-.2.9 2.9 2.5 1.7-1 2.8 1 2.8-2.5 1.7-.9 2.9-3-.2L12 21.5l-2.4-1.8-3 .2-.9-2.9-2.5-1.7 1-2.8-1-2.8 2.5-1.7.9-2.9 3 .2z" fill="currentColor"/><path d="m8.6 12 2.3 2.3 4.5-4.6" stroke="#fff"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></symbol>
+  <symbol id="i-studio" viewBox="0 0 24 24"><path d="M3 10.5 12 4l9 6.5V20H3z"/><path d="M9.5 20v-6h5v6"/></symbol>
+  <symbol id="i-tent" viewBox="0 0 24 24"><path d="M12 4 2.5 20h19zM8.5 20 12 13l3.5 7"/></symbol>
+  <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v6c0 4.5 3.2 7.8 7.5 9 4.3-1.2 7.5-4.5 7.5-9V6z"/><path d="m8.6 12 2.4 2.4 4.5-4.5"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 7 8.5-7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="#/" aria-label="Bramble Builders home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>Bramble Builders</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/showcase">Showcase</a>
+      <a href="#/events">Events</a>
+      <a href="#/parents">Parents</a>
+      <a href="#/news">News</a>
+    </nav>
+    <form class="search" role="search" data-search>
+      <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+      <input type="search" name="q" placeholder="Search games and makers" aria-label="Search games and makers" autocomplete="off">
+      <button class="sr-only" type="submit">Search</button>
+    </form>
+    <div class="bar-end">
+      <a class="icon-btn search-link" href="#/showcase?at=f-q" aria-label="Search the showcase"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg></a>
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark colors"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="btn btn-line btn-sm" href="#/login">Log in</a>
+      <a class="btn btn-blue btn-sm" href="#/?at=join">Join</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ================= HOME ================= -->
+<div data-view="home">
+  <section class="hero" aria-labelledby="home-title">
+    <div class="wall" aria-hidden="true">
+      <div class="wall-grid">
+        <img src="images/lantern-drift.svg" alt="" width="640" height="360"><img src="images/molten-run.svg" alt="" width="640" height="360"><img src="images/sky-orchard.svg" alt="" width="640" height="360"><img src="images/glasshouse-after-dark.svg" alt="" width="640" height="360"><img src="images/reef-rangers.svg" alt="" width="640" height="360"><img src="images/tower-tumble.svg" alt="" width="640" height="360"><img src="images/snowbound-post.svg" alt="" width="640" height="360"><img src="images/ferry-rush.svg" alt="" width="640" height="360"><img src="images/carousel-town.svg" alt="" width="640" height="360"><img src="images/moonbase-picnic.svg" alt="" width="640" height="360"><img src="images/kite-meadow.svg" alt="" width="640" height="360"><img src="images/clockwork-canyon.svg" alt="" width="640" height="360">
+      </div>
+      <i class="sq" style="--x:7%;--y:14%;--s:150px;--r:18deg"></i><i class="sq blue" style="--x:22%;--y:62%;--s:110px;--r:-8deg"></i><i class="sq" style="--x:74%;--y:8%;--s:190px;--r:24deg"></i><i class="sq" style="--x:83%;--y:58%;--s:130px;--r:12deg"></i><i class="sq blue" style="--x:63%;--y:78%;--s:90px;--r:30deg"></i><i class="sq" style="--x:-2%;--y:80%;--s:170px;--r:-16deg"></i>
+    </div>
+    <div class="hero-in">
+      <h1 class="hero-title" id="home-title">Make the game you wish existed.</h1>
+      <p class="hero-sub">Bramble Builders is a game-making club for ages 9 to 16. Online on weeknights, in the studio on Saturdays, and the first session is free.</p>
+      <div class="card" id="join">
+        <form data-form="signup" novalidate>
+          <h2 class="card-title">Book a free taster</h2>
+          <fieldset class="field" data-group aria-describedby="e-slot">
+            <legend>Taster session</legend>
+            <div class="trio">
+              <select name="day" aria-label="Day" required><option value="">Day</option><option>Tue 9 Dec</option><option>Sat 13 Dec</option><option>Thu 18 Dec</option><option>Sat 10 Jan</option></select>
+              <select name="time" aria-label="Time" required><option value="">Time</option><option>10:00</option><option>14:00</option><option>17:30</option></select>
+              <select name="where" aria-label="Where" required><option value="">Where</option><option>Studio</option><option>Online</option></select>
+            </div>
+            <p class="err" id="e-slot" aria-live="polite"></p>
+          </fieldset>
+          <div class="field">
+            <label for="j-nick">Nickname</label>
+            <input class="input" id="j-nick" name="nickname" required minlength="2" maxlength="20" autocomplete="nickname" placeholder="Not your full name" aria-describedby="e-nick">
+            <p class="err" id="e-nick" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="j-email">Parent or guardian email</label>
+            <input class="input" id="j-email" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="name@example.com" aria-describedby="e-email">
+            <p class="err" id="e-email" aria-live="polite"></p>
+          </div>
+          <fieldset class="field" data-group aria-describedby="e-age">
+            <legend>Age group</legend>
+            <div class="seg">
+              <label><input type="radio" name="age" value="9-11" required>9–11</label>
+              <label><input type="radio" name="age" value="12-13">12–13</label>
+              <label><input type="radio" name="age" value="14-16">14–16</label>
+            </div>
+            <p class="err" id="e-age" aria-live="polite"></p>
+          </fieldset>
+          <p class="fine">By booking you agree to our <a href="#/legal?at=rules">club rules</a> and confirm you have read our <a href="#/legal">privacy notice</a>. Under 16? A parent or guardian books for you, and every message goes to them.</p>
+          <button class="go" type="submit" data-busy="Booking…">Book my taster</button>
+        </form>
+        <div class="done" data-success="signup" tabindex="-1" hidden>
+          <span class="tick"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <h3>You're booked in, <span data-echo="nickname">friend</span>!</h3>
+          <p class="muted">We sent the details to <b data-echo="email">your email</b>. Bring a charged laptop if you have one; we lend them if not.</p>
+          <div class="done-actions"><a class="btn btn-blue btn-sm" href="#/showcase">Explore the showcase</a><button class="btn btn-soft btn-sm" type="button" data-reset>Book another</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="ways">
+      <h2 class="caps">Ways to take part</h2>
+      <ul class="badges">
+        <li><svg class="ic" aria-hidden="true"><use href="#i-laptop"/></svg><span><small>Online on</small><b>Tue and Thu</b></span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-studio"/></svg><span><small>In the studio</small><b>Saturdays</b></span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-tent"/></svg><span><small>Every holiday</small><b>Camp week</b></span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-people"/></svg><span><small>Once a term</small><b>Family jam</b></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="section js-only" id="home-shelves" aria-label="From the showcase"></section>
+    <section class="section js-only" aria-labelledby="coming-title">
+      <div class="head"><h2 id="coming-title">Coming up</h2><a class="see-all" href="#/events">All events<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div class="events" id="home-events"></div>
+    </section>
+    <section class="section" aria-labelledby="glance-title">
+      <div class="head"><h2 id="glance-title">The club at a glance</h2></div>
+      <dl class="strip">
+        <div><dt>Ages</dt><dd>9 to 16</dd></div>
+        <div><dt>Group size</dt><dd>8 members</dd></div>
+        <div><dt>Mentors</dt><dd>2 per group</dd></div>
+        <div><dt>Session</dt><dd>90 minutes</dd></div>
+        <div><dt>First session</dt><dd>Free</dd></div>
+        <div><dt>Laptops</dt><dd>We lend them</dd></div>
+      </dl>
+    </section>
+    <section class="section">
+      <div class="band">
+        <div>
+          <h2>Built with parents in the room.</h2>
+          <p>Nicknames instead of full names, background-checked mentors in every session, and every project reviewed before it goes public. You get the same messages your child does.</p>
+          <div class="actions"><a class="btn btn-ink" href="#/parents">Read the parents' guide</a><a class="btn btn-line" href="#/contact">Ask us anything</a></div>
+        </div>
+        <div class="stack" aria-hidden="true"><img src="images/reef-rangers.svg" alt="" width="640" height="360"><img src="images/snowbound-post.svg" alt="" width="640" height="360"><img src="images/kite-meadow.svg" alt="" width="640" height="360"></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ================= SHOWCASE ================= -->
+<div data-view="showcase" class="wrap">
+  <div class="page">
+    <h1 class="page-title">Showcase</h1>
+    <p class="lede">Games and worlds made by club members. A mentor reviews every project before it appears here.</p>
+    <div class="filters" id="find">
+      <select class="pill ink" id="f-genre" aria-label="Genre"><option value="">All genres</option><option value="adventure">Adventure</option><option value="platformer">Platformer</option><option value="puzzle">Puzzle</option><option value="building">Building</option><option value="party">Party</option><option value="racing">Racing</option></select>
+      <select class="pill" id="f-sort" aria-label="Sort"><option value="">Most liked</option><option value="plays">Most played</option><option value="az">A to Z</option></select>
+      <label class="find"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><span class="sr-only">Search by title or maker</span><input type="search" id="f-q" placeholder="Search by title or maker" autocomplete="off"></label>
+    </div>
+    <div class="js-only" id="shelves"></div>
+    <div id="results">
+      <h2 class="sr-only">All projects</h2>
+      <p class="count js-only"><span id="count" aria-live="polite">12 projects</span><a class="link" href="#/showcase">Clear filters</a></p>
+      <div class="grid" id="grid">
+        <article class="tile" data-id="lantern-drift" data-genre="adventure" data-likes="94" data-plays="1840" data-maker="@quillfox" data-shelves="fresh picks"><a href="#/project?id=lantern-drift"><img src="images/lantern-drift.svg" alt="" width="640" height="360"><h3>Lantern Drift</h3></a><p class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg>94%</span><span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>1.8K plays</span></p></article>
+        <article class="tile" data-id="molten-run" data-genre="platformer" data-likes="88" data-plays="2310" data-maker="@jumpkit" data-shelves="fresh jam"><a href="#/project?id=molten-run"><img src="images/molten-run.svg" alt="" width="640" height="360"><h3>Molten Run</h3></a><p class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg>88%</span><span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>2.3K plays</span></p></article>
+        <article class="tile" data-id="glasshouse-after-dark" data-genre="adventure" data-likes="95" data-plays="1410" data-maker="@ottermoss" data-shelves="fresh picks"><a href="#/project?id=glasshouse-after-dark"><img src="images/glasshouse-after-dark.svg" alt="" width="640" height="360"><h3>Glasshouse After Dark</h3></a><p class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg>95%</span><span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>1.4K plays</span></p></article>
+        <article class="tile" data-id="sky-orchard" data-genre="building" data-likes="91" data-plays="1520" data-maker="@nori_builds" data-shelves="fresh picks"><a href="#/project?id=sky-orchard"><img src="images/sky-orchard.svg" alt="" width="640" height="360"><h3>Sky Orchard</h3></a><p class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg>91%</span><span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>1.5K plays</span></p></article>
+        <article class="tile" data-id="reef-rangers" data-genre="adventure" data-likes="93" data-plays="1260" data-maker="@marrowlight" data-shelves="fresh jam"><a href="#/project?id=reef-rangers"><img src="images/reef-rangers.svg" alt="" width="640" height="360"><h3>Reef Rangers</h3></a><p class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg>93%</span><span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>1.3K plays</span></p></article>
+        <article class="tile" data-id="snowbound-post" data-genre="puzzle" data-likes="96" data-plays="980" data-maker="@tinwhistle" data-shelves="fresh picks"><a href="#/project?id=snowbound-post"><img src="images/snowbound-post.svg" alt="" width="640" height="360"><h3>Snowbound Post</h3></a><p class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg>96%</span><span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>980 plays</span></p></article>
+        <article class="tile" data-id="carousel-town" data-genre="building" data-likes="92" data-plays="1130" data-maker="@pebblewick" data-shelves="fresh picks"><a href="#/project?id=carousel-town"><img src="images/carousel-town.svg" alt="" width="640" height="360"><h3>Carousel Town</h3></a><p class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg>92%</span><span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>1.1K plays</span></p></article>
+        <article class="tile" data-id="ferry-rush" data-genre="racing" data-likes="86" data-plays="1180" data-maker="@harbourkid" data-shelves="fresh jam"><a href="#/project?id=ferry-rush"><img src="images/ferry-rush.svg" alt="" width="640" height="360"><h3>Ferry Rush</h3></a><p class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg>86%</span><span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>1.2K plays</span></p></article>
+        <article class="tile" data-id="moonbase-picnic" data-genre="party" data-likes="89" data-plays="1690" data-maker="@starpip" data-shelves="jam"><a href="#/project?id=moonbase-picnic"><img src="images/moonbase-picnic.svg" alt="" width="640" height="360"><h3>Moonbase Picnic</h3></a><p class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg>89%</span><span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>1.7K plays</span></p></article>
+        <article class="tile" data-id="tower-tumble" data-genre="party" data-likes="85" data-plays="2050" data-maker="@jumpkit" data-shelves="jam"><a href="#/project?id=tower-tumble"><img src="images/tower-tumble.svg" alt="" width="640" height="360"><h3>Tower Tumble</h3></a><p class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg>85%</span><span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>2.1K plays</span></p></article>
+        <article class="tile" data-id="kite-meadow" data-genre="racing" data-likes="87" data-plays="760" data-maker="@fennelfly" data-shelves="jam"><a href="#/project?id=kite-meadow"><img src="images/kite-meadow.svg" alt="" width="640" height="360"><h3>Kite Meadow</h3></a><p class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg>87%</span><span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>760 plays</span></p></article>
+        <article class="tile" data-id="clockwork-canyon" data-genre="puzzle" data-likes="90" data-plays="870" data-maker="@gearling" data-shelves="picks"><a href="#/project?id=clockwork-canyon"><img src="images/clockwork-canyon.svg" alt="" width="640" height="360"><h3>Clockwork Canyon</h3></a><p class="stats"><span><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg>90%</span><span><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>870 plays</span></p></article>
+      </div>
+      <p class="empty" id="empty" hidden>Nothing matches yet. Try another genre, or <a class="link" href="#/showcase">clear the filters</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PROJECT ================= -->
+<article data-view="project" class="wrap narrow">
+  <div class="proj-top">
+    <div class="media">
+      <img id="p-img" src="images/lantern-drift.svg" alt="A night river of block tiles with floating lanterns and a small wooden jetty" width="640" height="360">
+      <div class="stage" id="stage" hidden><b id="stage-title">Loading Lantern Drift</b><span class="meter"><i id="stage-bar"></i></span><span id="stage-note">Getting the build ready</span><button class="btn btn-soft btn-sm" type="button" id="stage-exit">Exit</button></div>
+    </div>
+    <div class="side">
+      <h1 id="p-title">Lantern Drift</h1>
+      <p class="by">By <a id="p-by" href="#/showcase?q=%40quillfox">@quillfox</a><svg class="ic" aria-hidden="true"><use href="#i-seal"/></svg><span class="muted" id="p-team">· Team Kestrel</span></p>
+      <p class="muted">Ages: <span id="p-age">9 and up</span></p>
+      <button class="play" type="button" id="play" aria-label="Play Lantern Drift"><svg class="ic" aria-hidden="true"><use href="#i-playfill"/></svg></button>
+      <div class="votes">
+        <button class="vote" type="button" id="fav" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-star"/></svg><span>Favorite</span></button>
+        <button class="vote" type="button" data-vote="up" aria-pressed="false" aria-label="Like"><svg class="ic" aria-hidden="true"><use href="#i-up"/></svg><span id="p-up">94%</span></button>
+        <span class="ratio" aria-hidden="true"><i id="p-ratio" style="--v:94%"></i></span>
+        <button class="vote" type="button" data-vote="down" aria-pressed="false" aria-label="Dislike"><svg class="ic" aria-hidden="true"><use href="#i-down"/></svg><span id="p-down">6%</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="tabs" role="tablist" aria-label="Project">
+    <button role="tab" type="button" id="tab-about" aria-controls="t-about" aria-selected="true">About</button>
+    <button role="tab" type="button" id="tab-updates" aria-controls="t-updates" aria-selected="false" tabindex="-1">Updates</button>
+    <button role="tab" type="button" id="tab-credits" aria-controls="t-credits" aria-selected="false" tabindex="-1">Credits</button>
+  </div>
+  <section class="panel" role="tabpanel" id="t-about" aria-labelledby="tab-about">
+    <h2>Description</h2>
+    <p id="p-desc">Guide a paper boat down a river at night and light every lantern before dawn. Gentle, quiet, and surprisingly hard on the last bend.</p>
+    <p class="age"><b>Ages 9 and up</b><span class="muted">Suitable for everyone</span></p>
+    <dl class="strip" id="p-strip">
+      <div><dt>Plays</dt><dd>1,840</dd></div><div><dt>Favorites</dt><dd>312</dd></div><div><dt>Genre</dt><dd>Adventure</dd></div><div><dt>Made in</dt><dd>6 weeks</dd></div><div><dt>Team</dt><dd>3 members</dd></div><div><dt>Updated</dt><dd>Nov 18, 2026</dd></div>
+    </dl>
+  </section>
+  <section class="panel" role="tabpanel" id="t-updates" aria-labelledby="tab-updates" hidden>
+    <h2>Updates</h2>
+    <ul class="log" id="p-log"><li><b>Nov 18, 2026</b><span>Added a lantern counter and a calmer night palette.</span></li><li><b>Oct 30, 2026</b><span>First version shared at the club showcase.</span></li></ul>
+  </section>
+  <section class="panel" role="tabpanel" id="t-credits" aria-labelledby="tab-credits" hidden>
+    <h2>Credits</h2>
+    <ul class="log" id="p-credits"><li><b>@quillfox</b><span>Code and level design</span></li><li><b>@pebblewick</b><span>Art</span></li><li><b>@ottermoss</b><span>Music and sound</span></li></ul>
+  </section>
+  <div class="section js-only" id="more"></div>
+</article>
+
+<!-- ================= EVENTS ================= -->
+<div data-view="events" class="wrap">
+  <div class="page">
+    <h1 class="page-title">Events</h1>
+    <p class="lede">Jams, labs and open evenings. Studio times are local to Wexcombe; online sessions run in the browser.</p>
+    <div class="chips js-only" id="ev-filter" role="group" aria-label="Show events">
+      <button class="chip" type="button" data-kind="" aria-pressed="true">All</button><button class="chip" type="button" data-kind="studio" aria-pressed="false">Studio</button><button class="chip" type="button" data-kind="online" aria-pressed="false">Online</button><button class="chip" type="button" data-kind="family" aria-pressed="false">Family</button>
+    </div>
+    <h2 class="sr-only">Upcoming events</h2>
+    <div class="events" id="event-list">
+      <article class="event" data-kind="studio" data-id="winter-jam"><figure><img src="images/tower-tumble.svg" alt="" width="640" height="360"><span class="date">Sat, Dec 13 · 10:00</span></figure><div class="event-body"><h3>Winter Jam: one-room games</h3><p>Make a whole game that fits in one room. Teams of three, four hours, snacks on us.</p><a class="btn btn-blue btn-block" href="#/?at=join">Save a spot</a></div></article>
+      <article class="event" data-kind="online" data-id="light-lab"><figure><img src="images/glasshouse-after-dark.svg" alt="" width="640" height="360"><span class="date">Tue, Dec 9 · 17:30</span></figure><div class="event-body"><h3>Online lab: light and shadow</h3><p>A live session on making night scenes feel warm, not scary.</p><button class="btn btn-ink btn-block" type="button" data-remind="light-lab" aria-pressed="false">Remind me</button></div></article>
+      <article class="event" data-kind="family" data-id="showcase-evening"><figure><img src="images/carousel-town.svg" alt="" width="640" height="360"><span class="date">Thu, Dec 11 · 18:30</span></figure><div class="event-body"><h3>Parents' showcase evening</h3><p>Members present this term's projects. Families welcome, no booking needed.</p><button class="btn btn-ink btn-block" type="button" data-remind="showcase-evening" aria-pressed="false">Remind me</button></div></article>
+      <article class="event" data-kind="studio" data-id="holiday-camp"><figure><img src="images/sky-orchard.svg" alt="" width="640" height="360"><span class="date">Mon, Dec 22 · 09:30</span></figure><div class="event-body"><h3>Holiday camp week</h3><p>Five mornings, one finished game. Ages 9 to 13.</p><a class="btn btn-blue btn-block" href="#/?at=join">Save a spot</a></div></article>
+      <article class="event" data-kind="family" data-id="family-jam"><figure><img src="images/kite-meadow.svg" alt="" width="640" height="360"><span class="date">Sat, Jan 10 · 13:00</span></figure><div class="event-body"><h3>Family jam</h3><p>Grown-ups and kids build side by side. No experience needed on either side.</p><a class="btn btn-blue btn-block" href="#/?at=join">Save a spot</a></div></article>
+      <article class="event" data-kind="online" data-id="mentor-hour"><figure><img src="images/lantern-drift.svg" alt="" width="640" height="360"><span class="date">Wed, Jan 14 · 19:00</span></figure><div class="event-body"><h3>Ask a mentor: first games</h3><p>Bring your questions about starting out. Parents welcome too.</p><button class="btn btn-ink btn-block" type="button" data-remind="mentor-hour" aria-pressed="false">Remind me</button></div></article>
+    </div>
+    <p class="empty" id="ev-empty" hidden>No events of this kind right now. <a class="link" href="#/events">Show all events</a>.</p>
+  </div>
+</div>
+
+<!-- ================= PARENTS ================= -->
+<div data-view="parents" class="wrap">
+  <div class="page">
+    <h1 class="page-title">For parents and carers</h1>
+    <p class="lede">Bramble Builders is a club first and a showcase second. Here is how we keep it safe, kind and worth the trip.</p>
+  </div>
+  <h2 class="sr-only">How we keep it safe</h2>
+  <div class="cards">
+    <div class="box"><span class="tilt"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Nicknames only</h3><p>Members never show full names, photos or schools. A mentor checks every project page before it goes live.</p></div>
+    <div class="box"><span class="tilt"><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg></span><h3>Adults in every room</h3><p>Two background-checked mentors per group, online and in the studio. Sessions are never one to one.</p></div>
+    <div class="box"><span class="tilt"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg></span><h3>You see what they see</h3><p>Every booking, reminder and message goes to a parent or guardian's email address.</p></div>
+  </div>
+  <section class="section faq" aria-labelledby="faq-title">
+    <div class="head"><h2 id="faq-title">Questions parents ask</h2></div>
+    <details open><summary>What age is the club for?<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>Ages 9 to 16, in three groups: 9 to 11, 12 to 13 and 14 to 16. Each group has its own sessions and mentors.</p></details>
+    <details><summary>Does my child need any experience?<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>No. Most members start with no coding at all. Early sessions use visual blocks, and text code comes when they ask for it.</p></details>
+    <details><summary>What do they need to bring?<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>A laptop if they have one. We lend laptops in the studio, and online sessions run in a web browser.</p></details>
+    <details><summary>How much does it cost?<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>The taster session is free. Membership is paid by the term, and we keep funded places for families who need them. Ask us and we will explain.</p></details>
+    <details><summary>Can I see my child's projects?<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>Yes. We email you a link to every project page, and you can ask us to take a page down at any time.</p></details>
+    <details><summary>What can visitors do on the showcase?<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>Play, favorite and vote. There are no comments and no messages between visitors and members.</p></details>
+    <p style="margin-top:24px"><a class="btn btn-ink" href="#/contact?topic=parents">Talk to us</a></p>
+  </section>
+</div>
+
+<!-- ================= NEWS ================= -->
+<div data-view="news" class="wrap">
+  <div class="page">
+    <h1 class="page-title">News</h1>
+    <p class="lede">What the club made, what changed, and who is behind it.</p>
+  </div>
+  <div class="posts">
+    <article class="post-card"><a href="#/post?id=autumn-jam"><img src="images/moonbase-picnic.svg" alt="" width="640" height="360"><span class="meta"><span class="tag">Club news</span><time datetime="2026-11-03">Nov 3, 2026</time></span><h2>Autumn Jam: fourteen games in one weekend</h2><p>Forty-two members, fourteen teams and a lot of low-gravity sandwiches. Here is what got made.</p></a></article>
+    <article class="post-card"><a href="#/post?id=studio-hours"><img src="images/snowbound-post.svg" alt="" width="640" height="360"><span class="meta"><span class="tag">Studio</span><time datetime="2026-10-21">Oct 21, 2026</time></span><h2>Saturday studio opens an hour earlier</h2><p>From December, the studio opens at 09:00 for anyone who wants quiet building time before the session.</p></a></article>
+    <article class="post-card"><a href="#/post?id=mentor-spotlight"><img src="images/reef-rangers.svg" alt="" width="640" height="360"><span class="meta"><span class="tag">People</span><time datetime="2026-10-09">Oct 9, 2026</time></span><h2>Mentor spotlight: from reef surveys to level design</h2><p>Mira spent six years counting fish. Now she helps members build the oceans they read about.</p></a></article>
+    <article class="post-card"><a href="#/post?id=night-scenes"><img src="images/glasshouse-after-dark.svg" alt="" width="640" height="360"><span class="meta"><span class="tag">How-to</span><time datetime="2026-09-28">Sep 28, 2026</time></span><h2>How to light a night scene without scaring anyone</h2><p>Three tricks members used to make dark levels feel cosy instead of creepy.</p></a></article>
+    <article class="post-card"><a href="#/post?id=funded-places"><img src="images/sky-orchard.svg" alt="" width="640" height="360"><span class="meta"><span class="tag">Club news</span><time datetime="2026-09-12">Sep 12, 2026</time></span><h2>Funded places for next term are open</h2><p>One in four places is free for families who need it. No forms about income, just a short note.</p></a></article>
+  </div>
+</div>
+
+<!-- ================= POST ================= -->
+<article data-view="post">
+  <div class="article">
+    <a class="see-all" href="#/news"><svg class="ic" aria-hidden="true"><use href="#i-left"/></svg>All news</a>
+    <h1 id="post-title">Autumn Jam: fourteen games in one weekend</h1>
+    <p class="meta"><span class="tag" id="post-tag">Club news</span><time id="post-date" datetime="2026-11-03">Nov 3, 2026</time></p>
+    <img class="lead-img" id="post-img" src="images/moonbase-picnic.svg" alt="" width="640" height="360">
+    <div class="prose" id="post-body">
+      <p>Forty-two members arrived on Saturday morning with one rule: every game had to fit on a single screen. By Sunday afternoon there were fourteen finished games, three of which now sit in the showcase.</p>
+      <p>Moonbase Picnic won the vote for the game everyone wanted to play again. Four players share one picnic blanket in low gravity, and the only goal is to keep the sandwiches on the moon. It sounds simple; it is not.</p>
+      <h2>What we learned</h2>
+      <ul><li>Small teams finish. Every team of three shipped; one of the two teams of five did not.</li><li>Playtest early. The teams that swapped games on Saturday evening fixed their hardest bugs before bed.</li><li>Snacks matter more than we planned for.</li></ul>
+      <p>The Winter Jam is on Saturday 13 December. Places go to members first, then to anyone who has booked a taster.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ================= ABOUT ================= -->
+<div data-view="about" class="wrap">
+  <div class="page">
+    <h1 class="page-title">About the club</h1>
+    <p class="statement">We help young people make <em>the games they want to play</em>, with mentors beside them and friends around them.</p>
+    <p class="lede">Bramble Builders started in 2019 as a Saturday club in a borrowed classroom in Wexcombe. Today about 120 members meet online on weeknights and at our studio in Mill Yard on Saturdays. We are a not-for-profit: membership fees pay for mentors, laptops and funded places.</p>
+  </div>
+  <section class="section" aria-labelledby="session-title">
+    <div class="head"><h2 id="session-title">How a session runs</h2></div>
+    <ol class="steps">
+      <li><b>Show and tell</b><span class="muted">Ten minutes to share what changed since last time, however small.</span></li>
+      <li><b>Build</b><span class="muted">An hour of making in pairs or small teams, with mentors moving between tables.</span></li>
+      <li><b>Playtest</b><span class="muted">Everyone plays someone else's game and leaves one kind note and one idea.</span></li>
+    </ol>
+  </section>
+  <section class="section" aria-labelledby="team-title">
+    <div class="head"><h2 id="team-title">The mentors</h2></div>
+    <div class="people">
+      <div class="person"><span class="avatar" style="--c:oklch(55% .2 268)" aria-hidden="true">AW</span><b>Ada Wren</b><span>Club lead</span></div>
+      <div class="person"><span class="avatar" style="--c:oklch(55% .16 155)" aria-hidden="true">TH</span><b>Tomas Hale</b><span>Studio mentor</span></div>
+      <div class="person"><span class="avatar" style="--c:oklch(58% .17 200)" aria-hidden="true">MO</span><b>Mira Osei</b><span>Online lead</span></div>
+      <div class="person"><span class="avatar" style="--c:oklch(58% .19 20)" aria-hidden="true">JP</span><b>Jun Park</b><span>Art mentor</span></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= CONTACT ================= -->
+<div data-view="contact" class="wrap">
+  <div class="page">
+    <h1 class="page-title">Contact</h1>
+    <p class="lede">We reply within two working days. During a session, mentors cannot answer email; call the studio if it is urgent.</p>
+  </div>
+  <div class="split">
+    <div class="panel-box">
+      <form data-form="contact" novalidate>
+        <div class="two">
+          <div class="field"><label for="c-name">Your name</label><input class="input" id="c-name" name="name" required autocomplete="name" aria-describedby="e-cname"><p class="err" id="e-cname" aria-live="polite"></p></div>
+          <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" required autocomplete="email" inputmode="email" aria-describedby="e-cemail"><p class="err" id="e-cemail" aria-live="polite"></p></div>
+        </div>
+        <div class="field"><label for="c-topic">Topic</label><select class="input" id="c-topic" name="topic" required aria-describedby="e-ctopic"><option value="">Choose a topic</option><option value="booking">Booking a taster</option><option value="parents">Parents and safety</option><option value="volunteer">Volunteering as a mentor</option><option value="account">Account and login help</option><option value="press">Press</option></select><p class="err" id="e-ctopic" aria-live="polite"></p></div>
+        <div class="field"><label for="c-msg">Message</label><textarea class="input" id="c-msg" name="message" required minlength="10" aria-describedby="e-cmsg"></textarea><p class="err" id="e-cmsg" aria-live="polite"></p></div>
+        <button class="go ready" type="submit" data-busy="Sending…">Send message</button>
+      </form>
+      <div class="done" data-success="contact" tabindex="-1" hidden>
+        <span class="tick"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+        <h2>Message received</h2>
+        <p class="muted">We will reply to <b data-echo="email">your email</b> within two working days.</p>
+        <div class="done-actions"><button class="btn btn-soft btn-sm" type="button" data-reset>Send another</button></div>
+      </div>
+    </div>
+    <dl class="desks">
+      <div><dt>Bookings and tasters</dt><dd>hello@bramblebuilders.example</dd></div>
+      <div><dt>Parents and safety</dt><dd>safety@bramblebuilders.example</dd></div>
+      <div><dt>Volunteering</dt><dd>mentors@bramblebuilders.example</dd></div>
+      <div><dt>The studio</dt><dd>4 Mill Yard, Wexcombe<br>Saturdays 09:00 to 16:00</dd></div>
+    </dl>
+  </div>
+</div>
+
+<!-- ================= LOG IN ================= -->
+<div data-view="login">
+  <section class="hero" aria-labelledby="login-title">
+    <div class="wall" aria-hidden="true"><div class="wall-grid"></div></div>
+    <div class="hero-in">
+      <div class="card">
+        <form data-form="login" novalidate>
+          <h1 class="card-title" id="login-title">Log in</h1>
+          <div class="field"><label for="l-user">Nickname or email</label><input class="input" id="l-user" name="nickname" required autocomplete="username" aria-describedby="e-luser"><p class="err" id="e-luser" aria-live="polite"></p></div>
+          <div class="field"><label for="l-pass">Password</label><div class="pw"><input class="input" id="l-pass" name="password" type="password" required minlength="8" autocomplete="current-password" aria-describedby="e-lpass"><button type="button" data-reveal="l-pass" aria-pressed="false" aria-label="Show password"><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg></button></div><p class="err" id="e-lpass" aria-live="polite"></p></div>
+          <button class="go" type="submit" data-busy="Logging in…">Log in</button>
+          <p class="card-foot"><a class="link" href="#/contact?topic=account">Forgot your password?</a></p>
+          <p class="card-foot muted">New here? <a class="link" href="#/?at=join">Book a free taster</a></p>
+        </form>
+        <div class="done" data-success="login" tabindex="-1" hidden>
+          <span class="tick"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <h2>Welcome back, <span data-echo="nickname">builder</span>!</h2>
+          <p class="muted">You are logged in on this device.</p>
+          <div class="done-actions"><a class="btn btn-blue btn-sm" href="#/showcase">Go to the showcase</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= LEGAL ================= -->
+<div data-view="legal" class="article">
+  <h1>Privacy and club rules</h1>
+  <p class="meta">Last updated Nov 1, 2026</p>
+  <div class="prose">
+    <h2>Privacy notice</h2>
+    <p>We collect a member's nickname and age group, and a parent or guardian's email address. We use them to book sessions, send reminders and show a member's projects under their nickname. We never sell or share them, and we never ask for a member's full name, school or photo.</p>
+    <p>We keep booking details for as long as a member is in the club and delete them twelve months after the last session. A parent or guardian can ask for a copy, a correction or deletion at any time by writing to safety@bramblebuilders.example.</p>
+    <h2 id="rules">Club rules</h2>
+    <ul><li>Be kind in every session, online and in the studio.</li><li>Use your nickname, never your full name.</li><li>Ask before you use someone else's work, and credit them.</li><li>Mentors have the last word on what goes in the showcase.</li></ul>
+  </div>
+</div>
+
+<!-- ================= 404 ================= -->
+<div data-view="404" class="lost">
+  <i class="sq" style="--x:12%;--y:18%;--s:120px;--r:16deg"></i><i class="sq" style="--x:76%;--y:30%;--s:160px;--r:-10deg"></i>
+  <p class="num" aria-hidden="true">404</p>
+  <h1 class="page-title">This level does not exist yet.</h1>
+  <p class="muted">The link may be old, or the page has moved.</p>
+  <div class="actions"><a class="btn btn-blue" href="#/">Back to home</a><a class="btn btn-soft" href="#/showcase">See the showcase</a></div>
+</div>
+
+</main>
+
+<footer class="foot">
+  <nav aria-label="Footer">
+    <a href="#/about">About</a><a href="#/events">Events</a><a href="#/parents">Parents</a><a href="#/news">News</a><a href="#/contact">Contact</a><a href="#/legal">Privacy and rules</a><a href="#/login">Log in</a>
+  </nav>
+  <div class="foot-base"><span>© 2026 Bramble Builders, a not-for-profit game-making club for young people.</span><span>4 Mill Yard, Wexcombe</span></div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<template id="shelf-tpl">
+  <section class="shelf">
+    <div class="head"><h2><span></span><button class="info" type="button" aria-label="About this list"><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg><span class="tip"></span></button></h2><a class="see-all" href="#/showcase">See all<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    <div class="track"><button class="arrow prev" type="button" aria-label="Scroll back"><svg class="ic" aria-hidden="true"><use href="#i-left"/></svg></button><div class="row"></div><button class="arrow next" type="button" aria-label="Scroll forward"><svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></button></div>
+  </section>
+</template>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (s, scope = document) => scope.querySelector(s);
+  const $$ = (s, scope = document) => [...scope.querySelectorAll(s)];
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const smooth = () => (reduced.matches ? "auto" : "smooth");
+
+  /* ---------- Storage that survives a sandboxed frame ---------- */
+  const memory = new Map();
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch { return memory.get(k) ?? null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch { memory.set(k, v); } },
+  };
+  const readSet = (k) => { try { return new Set(JSON.parse(store.get(k)) || []); } catch { return new Set(); } };
+  const saveSet = (k, set) => store.set(k, JSON.stringify([...set]));
+
+  /* ---------- Toast ---------- */
+  const toastEl = $("#toast");
+  let toastTimer;
+  function toast(text) {
+    clearTimeout(toastTimer);
+    toastEl.textContent = "";
+    requestAnimationFrame(() => { toastEl.textContent = text; });
+    toastTimer = setTimeout(() => { toastEl.textContent = ""; }, 2600);
+  }
+
+  /* ---------- Theme: light first, follows the system until the visitor chooses ---------- */
+  const themeBtn = $("#theme-toggle");
+  const system = matchMedia("(prefers-color-scheme: dark)");
+  function syncTheme() {
+    const dark = root.dataset.theme === "dark";
+    themeBtn.setAttribute("aria-label", dark ? "Switch to light colors" : "Switch to dark colors");
+    $("use", themeBtn).setAttribute("href", dark ? "#i-sun" : "#i-moon");
+  }
+  new MutationObserver(syncTheme).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  syncTheme();
+  system.addEventListener("change", (e) => { if (!store.get("bb-theme")) root.dataset.theme = e.matches ? "dark" : "light"; });
+  themeBtn.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    store.set("bb-theme", next);
+  });
+
+  /* ---------- Projects. The showcase tiles hold each project's title, art, genre, likes, plays, maker and shelves;
+     shelves, the wall and the project page copy them (so a single-file build keeps one copy of each image).
+     PROJECTS adds what only the project page shows. ---------- */
+  const PROJECTS = {
+    "lantern-drift": { team: "Team Kestrel", age: 9, favs: 312, made: "6 weeks", updated: "Nov 18, 2026", alt: "A night river of block tiles with floating lanterns and a small wooden jetty", desc: "Guide a paper boat down a river at night and light every lantern before dawn. Gentle, quiet, and surprisingly hard on the last bend.", log: [["Nov 18, 2026", "Added a lantern counter and a calmer night palette."], ["Oct 30, 2026", "First version shared at the club showcase."]], credits: [["@quillfox", "Code and level design"], ["@pebblewick", "Art"], ["@ottermoss", "Music and sound"]] },
+    "molten-run": { team: "Team Ember", age: 12, favs: 401, made: "3 weeks", updated: "Nov 20, 2026", alt: "A path of grey stepping stones across a glowing lava floor", desc: "A lava obstacle course with twelve checkpoints, moving stones and one very rude jump near the end.", log: [["Nov 20, 2026", "Checkpoint seven is now kinder. Slightly."], ["Oct 26, 2026", "Started at the Autumn Jam."]], credits: [["@jumpkit", "Code and levels"], ["@cinderloop", "Art and sound"]] },
+    "glasshouse-after-dark": { team: "Team Moth", age: 12, favs: 288, made: "4 weeks", updated: "Nov 19, 2026", alt: "A pale green glasshouse glowing on a dark island at night", desc: "Explore a greenhouse where the plants glow after dark and something keeps moving the pots. A mystery with no jump scares, promised.", log: [["Nov 19, 2026", "New ending room and a hint button."], ["Nov 2, 2026", "First version."]], credits: [["@ottermoss", "Story and code"], ["@fernhaze", "Art"]] },
+    "sky-orchard": { team: "Team Nori", age: 9, favs: 236, made: "4 weeks", updated: "Nov 12, 2026", alt: "A floating grass island with three block trees and red fruit", desc: "Grow an orchard on a floating island, one block at a time. Plant, water, harvest and trade fruit with the islands nearby.", log: [["Nov 12, 2026", "Trading between islands."], ["Oct 15, 2026", "First version."]], credits: [["@nori_builds", "Everything, with mentor help"]] },
+    "reef-rangers": { team: "Team Coral", age: 9, favs: 198, made: "6 weeks", updated: "Nov 15, 2026", alt: "A sandy sea floor with coral towers in pink, orange and purple", desc: "Dive between coral towers to find lost fish and guide them home. Made with help from a mentor who used to survey reefs.", log: [["Nov 15, 2026", "Two new fish and a map."], ["Oct 26, 2026", "Started at the Autumn Jam."]], credits: [["@marrowlight", "Code"], ["@saltpip", "Art"], ["@tidecounter", "Fish facts"]] },
+    "snowbound-post": { team: "Team Robin", age: 9, favs: 174, made: "5 weeks", updated: "Nov 9, 2026", alt: "A snowy village square with a red post office and a pine tree", desc: "Deliver letters across a snowed-in village. Every house needs a different route, and the paths change at night.", log: [["Nov 9, 2026", "Night routes."], ["Oct 12, 2026", "First version."]], credits: [["@tinwhistle", "Code and puzzles"], ["@frostbyte", "Art"]] },
+    "carousel-town": { team: "Team Lark", age: 9, favs: 205, made: "5 weeks", updated: "Nov 10, 2026", alt: "Pastel block houses around a small town square", desc: "Design a pastel seaside town, then open it to visitors and watch where they walk.", log: [["Nov 10, 2026", "Visitors now stop at the bakery."], ["Oct 8, 2026", "First version."]], credits: [["@pebblewick", "Code and art"], ["@larkspur", "Buildings"]] },
+    "ferry-rush": { team: "Team Gull", age: 9, favs: 142, made: "3 weeks", updated: "Nov 6, 2026", alt: "A harbour of blue water with a white ferry, a yellow boat and a lighthouse", desc: "Steer a ferry across a busy harbour and get every passenger to the right pier on time.", log: [["Nov 6, 2026", "Rush hour mode."], ["Oct 26, 2026", "Started at the Autumn Jam."]], credits: [["@harbourkid", "Code"], ["@gullwing", "Art"]] },
+    "moonbase-picnic": { team: "Team Orbit", age: 9, favs: 266, made: "1 weekend", updated: "Oct 27, 2026", alt: "A grey moon surface with a white base, a red flag and a picnic", desc: "Four players, one picnic blanket, low gravity. Keep the sandwiches on the moon.", log: [["Oct 27, 2026", "Made at the Autumn Jam."]], credits: [["@starpip", "Code"], ["@lunabug", "Art"], ["@crumbcake", "Sound"]] },
+    "tower-tumble": { team: "Team Ember", age: 9, favs: 251, made: "1 weekend", updated: "Oct 27, 2026", alt: "A wobbly tower of bright blocks on a small white platform", desc: "Take turns stacking blocks on a wobbly tower. Whoever tips it over starts the next round.", log: [["Oct 27, 2026", "Made at the Autumn Jam."]], credits: [["@jumpkit", "Code"], ["@cinderloop", "Art"]] },
+    "kite-meadow": { team: "Team Breeze", age: 9, favs: 97, made: "1 weekend", updated: "Oct 27, 2026", alt: "A green meadow under a yellow sky with kites flying above", desc: "Race kites through rings above a meadow. The wind changes every lap.", log: [["Oct 27, 2026", "Made at the Autumn Jam."]], credits: [["@fennelfly", "Code and art"], ["@dandelion", "Levels"]] },
+    "clockwork-canyon": { team: "Team Cog", age: 12, favs: 133, made: "7 weeks", updated: "Nov 4, 2026", alt: "A desert canyon of orange blocks with a thin blue river", desc: "Turn gears to shift the canyon walls and open a path for the river. Forty rooms, no timers.", log: [["Nov 4, 2026", "Rooms thirty-one to forty."], ["Sep 20, 2026", "First version."]], credits: [["@gearling", "Code and puzzles"], ["@rustyquill", "Art"]] },
+  };
+  const SHELVES = {
+    fresh: ["Fresh from the club", "Projects members shared in the last 30 days."],
+    jam: ["Made at the Autumn Jam", "Started in one weekend, in teams of two or three."],
+    picks: ["Mentor picks", "Chosen by mentors for a clever idea, finished well."],
+  };
+  const GENRES = { adventure: "Adventure", platformer: "Platformer", puzzle: "Puzzle", building: "Building", party: "Party", racing: "Racing" };
+  const tiles = $$("#grid .tile");
+  const byId = Object.fromEntries(tiles.map((t) => [t.dataset.id, t]));
+  const nameOf = (id) => $("h3", byId[id]).textContent;
+  const artOf = (id) => $("img", byId[id]).getAttribute("src");
+
+  /* ---------- Shelves: a heading with an info tip, See all, and a sideways row with arrow buttons ---------- */
+  const shelfTpl = $("#shelf-tpl");
+  function makeShelf(title, tip, ids, href) {
+    const node = shelfTpl.content.firstElementChild.cloneNode(true);
+    $("h2 > span", node).textContent = title;
+    if (tip) $(".tip", node).textContent = tip; else $(".info", node).remove();
+    const all = $(".see-all", node);
+    if (href) all.setAttribute("href", href); else all.remove();
+    const row = $(".row", node);
+    ids.forEach((id) => { if (!byId[id]) return; const tile = byId[id].cloneNode(true); tile.hidden = false; row.append(tile); });
+    const prev = $(".prev", node), next = $(".next", node);
+    const sync = () => {
+      prev.disabled = row.scrollLeft < 4;
+      next.disabled = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
+      node.classList.toggle("more", !next.disabled);
+    };
+    prev.addEventListener("click", () => row.scrollBy({ left: -row.clientWidth * 0.85, behavior: smooth() }));
+    next.addEventListener("click", () => row.scrollBy({ left: row.clientWidth * 0.85, behavior: smooth() }));
+    row.addEventListener("scroll", sync, { passive: true });
+    new ResizeObserver(sync).observe(row);
+    return node;
+  }
+  const shelfIds = (key) => tiles.filter((t) => t.dataset.shelves.split(" ").includes(key)).map((t) => t.dataset.id);
+  const shelfFor = (key) => makeShelf(SHELVES[key][0], SHELVES[key][1], shelfIds(key), `#/showcase?shelf=${key}`);
+  $("#home-shelves").append(shelfFor("fresh"), shelfFor("jam"));
+  $("#shelves").append(...Object.keys(SHELVES).map(shelfFor));
+
+  /* ---------- The wall: fill the tilted grid from the project art; the log-in page gets a copy ---------- */
+  const homeWall = $("[data-view=home] .wall");
+  const wallGrid = $(".wall-grid", homeWall);
+  const ids = Object.keys(byId);
+  for (let i = wallGrid.children.length; i < 63; i++) {
+    const img = new Image(640, 360);
+    img.alt = "";
+    img.src = artOf(ids[(i * 5 + Math.floor(i / 9)) % ids.length]);
+    wallGrid.append(img);
+  }
+  $("[data-view=login] .wall").replaceWith(homeWall.cloneNode(true));
+
+  /* ---------- Showcase: genre, sort and search; a shelf link shows that shelf as a grid ---------- */
+  const fGenre = $("#f-genre"), fSort = $("#f-sort"), fQ = $("#f-q");
+  let shelfKey = "";
+  function applyFilters(params) {
+    if (params) {
+      fGenre.value = GENRES[params.get("genre")] ? params.get("genre") : "";
+      fSort.value = ["plays", "az"].includes(params.get("sort")) ? params.get("sort") : "";
+      fQ.value = params.get("q") || "";
+      shelfKey = SHELVES[params.get("shelf")] ? params.get("shelf") : "";
+    }
+    const genre = fGenre.value, sort = fSort.value, q = fQ.value.trim().toLowerCase();
+    const filtering = Boolean(genre || sort || q || shelfKey);
+    $("#shelves").hidden = filtering;
+    $("#results").hidden = !filtering;
+    const shown = tiles.filter((t) => {
+      const ok = (!genre || t.dataset.genre === genre) && (!shelfKey || t.dataset.shelves.split(" ").includes(shelfKey)) &&
+        (!q || `${nameOf(t.dataset.id)} ${t.dataset.maker}`.toLowerCase().includes(q));
+      t.hidden = !ok;
+      return ok;
+    });
+    const key = sort === "plays" ? (t) => -t.dataset.plays : sort === "az" ? null : (t) => -t.dataset.likes;
+    const sorted = [...tiles].sort(key ? (a, b) => key(a) - key(b) : (a, b) => nameOf(a.dataset.id).localeCompare(nameOf(b.dataset.id)));
+    $("#grid").append(...sorted);
+    $("#count").textContent = `${shown.length} ${shown.length === 1 ? "project" : "projects"}${shelfKey ? ` in ${SHELVES[shelfKey][0]}` : ""}${q ? ` matching "${fQ.value.trim()}"` : ""}`;
+    $("#empty").hidden = shown.length > 0;
+  }
+  [fGenre, fSort].forEach((el) => el.addEventListener("change", () => applyFilters()));
+  fQ.addEventListener("input", () => applyFilters());
+  $("[data-search] button").addEventListener("click", (e) => {
+    e.preventDefault();
+    const q = $("[data-search] input").value.trim();
+    go(q ? `#/showcase?q=${encodeURIComponent(q)}` : "#/showcase");
+  });
+  $("[data-search]").addEventListener("submit", (e) => e.preventDefault());
+
+  /* ---------- Project page ---------- */
+  const favs = readSet("bb-favs");
+  const votes = (() => { try { return JSON.parse(store.get("bb-votes")) || {}; } catch { return {}; } })();
+  let projectId = "lantern-drift";
+  function syncVotes() {
+    const fav = $("#fav");
+    fav.setAttribute("aria-pressed", String(favs.has(projectId)));
+    $("span", fav).textContent = favs.has(projectId) ? "Favorited" : "Favorite";
+    $$("[data-vote]").forEach((b) => b.setAttribute("aria-pressed", String(votes[projectId] === b.dataset.vote)));
+  }
+  function renderProject(id) {
+    if (!PROJECTS[id] || !byId[id]) id = "lantern-drift";
+    projectId = id;
+    const p = PROJECTS[id], t = byId[id], name = nameOf(id), likes = Number(t.dataset.likes);
+    stopStage();
+    Object.assign($("#p-img"), { src: artOf(id), alt: p.alt });
+    $("#p-title").textContent = name;
+    $("#play").setAttribute("aria-label", `Play ${name}`);
+    $("#p-by").textContent = t.dataset.maker;
+    $("#p-by").setAttribute("href", `#/showcase?q=${encodeURIComponent(t.dataset.maker)}`);
+    $("#p-team").textContent = `· ${p.team}`;
+    $("#p-age").textContent = `${p.age} and up`;
+    $(".age b").textContent = `Ages ${p.age} and up`;
+    $(".age span").textContent = p.age < 12 ? "Suitable for everyone" : "Mild peril, nothing graphic";
+    $("#p-up").textContent = `${likes}%`;
+    $("#p-down").textContent = `${100 - likes}%`;
+    $("#p-ratio").style.setProperty("--v", `${likes}%`);
+    $("#p-desc").textContent = p.desc;
+    const facts = [["Plays", Number(t.dataset.plays).toLocaleString("en-US")], ["Favorites", p.favs], ["Genre", GENRES[t.dataset.genre]], ["Made in", p.made], ["Team", `${p.credits.length} ${p.credits.length === 1 ? "member" : "members"}`], ["Updated", p.updated]];
+    $("#p-strip").replaceChildren(...facts.map(([k, v]) => { const d = document.createElement("div"); d.innerHTML = "<dt></dt><dd></dd>"; d.firstChild.textContent = k; d.lastChild.textContent = v; return d; }));
+    const list = (rows) => rows.map(([a, b]) => { const li = document.createElement("li"); li.innerHTML = "<b></b><span></span>"; li.firstChild.textContent = a; li.lastChild.textContent = b; return li; });
+    $("#p-log").replaceChildren(...list(p.log));
+    $("#p-credits").replaceChildren(...list(p.credits));
+    selectTab($("#tab-about"), false);
+    const same = ids.filter((x) => x !== id && byId[x].dataset.genre === t.dataset.genre);
+    $("#more").replaceChildren(makeShelf("More like this", "", [...same, ...ids.filter((x) => x !== id && !same.includes(x))].slice(0, 9), null));
+    syncVotes();
+    return name;
+  }
+  $("#fav").addEventListener("click", () => {
+    if (favs.has(projectId)) favs.delete(projectId); else favs.add(projectId);
+    saveSet("bb-favs", favs);
+    syncVotes();
+    toast(favs.has(projectId) ? "Added to your favorites on this device." : "Removed from your favorites.");
+  });
+  $$("[data-vote]").forEach((b) => b.addEventListener("click", () => {
+    votes[projectId] = votes[projectId] === b.dataset.vote ? undefined : b.dataset.vote;
+    store.set("bb-votes", JSON.stringify(votes));
+    syncVotes();
+    if (votes[projectId]) toast("Thanks, your vote is in.");
+  }));
+  const tabs = $$("[role=tab]");
+  function selectTab(tab, focus = true) {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+      $(`#${t.getAttribute("aria-controls")}`).hidden = !on;
+    });
+    if (focus) tab.focus();
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => selectTab(t));
+    t.addEventListener("keydown", (e) => {
+      const step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (step) { e.preventDefault(); selectTab(tabs[(i + step + tabs.length) % tabs.length]); }
+    });
+  });
+
+  /* The play button: a short loading state, then a running clock. Swap the stage for the real build (an iframe or canvas). */
+  const stage = $("#stage");
+  let stageTimer, clock;
+  function stopStage() { clearTimeout(stageTimer); clearInterval(clock); stage.hidden = true; $("#stage-bar").style.width = "0"; }
+  $("#play").addEventListener("click", () => {
+    stopStage();
+    const name = nameOf(projectId);
+    $("#stage-title").textContent = `Loading ${name}`;
+    $("#stage-note").textContent = "Getting the build ready";
+    stage.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => { $("#stage-bar").style.width = "100%"; }));
+    stageTimer = setTimeout(() => {
+      let s = 0;
+      $("#stage-title").textContent = `Playing ${name}`;
+      const tick = () => { $("#stage-note").textContent = `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")} played`; s += 1; };
+      tick();
+      clock = setInterval(tick, 1000);
+    }, reduced.matches ? 300 : 1500);
+    $("#stage-exit").focus({ preventScroll: true });
+  });
+  $("#stage-exit").addEventListener("click", () => { stopStage(); $("#play").focus(); });
+
+  /* ---------- Events: kind chips, reminders kept on this device, and the next three on the home page ---------- */
+  const reminders = readSet("bb-reminders");
+  function syncReminders() {
+    $$("[data-remind]").forEach((b) => {
+      const on = reminders.has(b.dataset.remind);
+      b.setAttribute("aria-pressed", String(on));
+      b.textContent = on ? "Reminder set" : "Remind me";
+    });
+  }
+  $("#home-events").append(...$$("#event-list .event").slice(0, 3).map((e) => e.cloneNode(true)));
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-remind]");
+    if (!b) return;
+    const id = b.dataset.remind;
+    if (reminders.has(id)) reminders.delete(id); else reminders.add(id);
+    saveSet("bb-reminders", reminders);
+    syncReminders();
+    toast(reminders.has(id) ? "Reminder set. We will nudge you the day before." : "Reminder removed.");
+  });
+  syncReminders();
+  $$("#ev-filter .chip").forEach((chip) => chip.addEventListener("click", () => {
+    $$("#ev-filter .chip").forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
+    const shown = $$("#event-list .event").filter((ev) => { const ok = !chip.dataset.kind || ev.dataset.kind === chip.dataset.kind; ev.hidden = !ok; return ok; });
+    $("#ev-empty").hidden = shown.length > 0;
+  }));
+
+  /* ---------- News posts: the first post is the static article; the rest come from POSTS ---------- */
+  const firstPost = { title: $("#post-title").textContent, tag: $("#post-tag").textContent, date: $("#post-date").textContent, iso: $("#post-date").getAttribute("datetime"), art: "moonbase-picnic", body: $("#post-body").innerHTML };
+  const POSTS = {
+    "autumn-jam": firstPost,
+    "studio-hours": { title: "Saturday studio opens an hour earlier", tag: "Studio", date: "Oct 21, 2026", iso: "2026-10-21", art: "snowbound-post", body: ["From December, the studio opens at 09:00 on Saturdays. The first hour is quiet building time: no lesson, no plan, just a table, a laptop and a mentor if you get stuck.", "Sessions still start at 10:00. Members who come early should bring a snack; the kitchen opens at 10:30."] },
+    "mentor-spotlight": { title: "Mentor spotlight: from reef surveys to level design", tag: "People", date: "Oct 9, 2026", iso: "2026-10-09", art: "reef-rangers", body: ["Mira Osei spent six years counting fish on reef surveys before she joined the club as online lead. Her first question to new members is always the same: what do you know a lot about?", "Reef Rangers started with that question. Its maker knew every fish in a field guide, so the game teaches them one at a time, and nobody notices they are learning."] },
+    "night-scenes": { title: "How to light a night scene without scaring anyone", tag: "How-to", date: "Sep 28, 2026", iso: "2026-09-28", art: "glasshouse-after-dark", body: ["Warm lights close to the player, cool lights far away. That one rule did more for Glasshouse After Dark than any amount of extra detail.", "Two more tricks from the session: give every dark room one thing that glows on purpose, and never hide the exit. Cosy is about knowing where you are."] },
+    "funded-places": { title: "Funded places for next term are open", tag: "Club news", date: "Sep 12, 2026", iso: "2026-09-12", art: "sky-orchard", body: ["One in four places next term is free for families who need it. There is no form about income; write us a short note and we will hold a place.", "Funded members get the same sessions, the same laptops and the same showcase page as everyone else. Nobody else is told."] },
+  };
+  function renderPost(id) {
+    const post = POSTS[id] || firstPost;
+    $("#post-title").textContent = post.title;
+    $("#post-tag").textContent = post.tag;
+    $("#post-date").textContent = post.date;
+    $("#post-date").setAttribute("datetime", post.iso);
+    $("#post-img").src = artOf(post.art);
+    if (Array.isArray(post.body)) $("#post-body").replaceChildren(...post.body.map((text) => { const p = document.createElement("p"); p.textContent = text; return p; }));
+    else $("#post-body").innerHTML = post.body;
+    return post.title;
+  }
+
+  /* ---------- Router: #/view?param=value; views show one at a time once JavaScript runs ---------- */
+  const views = new Map($$("[data-view]").map((v) => [v.dataset.view, v]));
+  const TITLES = { showcase: "Showcase", events: "Events", parents: "For parents", news: "News", about: "About", contact: "Contact", login: "Log in", legal: "Privacy and club rules", 404: "Page not found" };
+  const parentOf = { project: "showcase", post: "news" };
+  const parse = (hash) => { const [path, query = ""] = (hash || "").replace(/^#\/?/, "").split("?"); return { name: path || "home", params: new URLSearchParams(query) }; };
+  let current;
+  function show({ name, params }, { scroll = true } = {}) {
+    if (!views.has(name)) name = "404";
+    if (current && current !== views.get(name)) stopStage();
+    current?.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    let title = TITLES[name];
+    if (name === "showcase") applyFilters(params);
+    if (name === "project") title = renderProject(params.get("id"));
+    if (name === "post") title = renderPost(params.get("id"));
+    if (name === "contact" && params.get("topic")) $("#c-topic").value = $(`#c-topic option[value="${CSS.escape(params.get("topic"))}"]`) ? params.get("topic") : "";
+    document.title = title ? `${title} · Bramble Builders` : "Bramble Builders · A game-making club for ages 9 to 16";
+    const section = parentOf[name] || name;
+    $$(".nav a").forEach((a) => { if (parse(a.getAttribute("href")).name === section) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    const at = params.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => { target.scrollIntoView({ block: "center" }); (target.matches("input, select") ? target : $("select, input", target))?.focus({ preventScroll: true }); });
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a[href^='#']");
+    if (!link || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { e.preventDefault(); go(href); return; }
+    const target = href.length > 1 && document.querySelector(href);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: smooth(), block: "start" });
+    if (target.tabIndex === -1) target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Forms: errors next to each field (space reserved, so the button never moves), a busy state, then success.
+     Nothing is sent: connect a real endpoint to deliver. The submit button's click is handled instead of the submit
+     event: a sandbox without allow-forms blocks submission first, while the click (also the one Enter makes) arrives. ---------- */
+  const MESSAGES = { valueMissing: "Please fill this in.", typeMismatch: "Enter a valid email address.", tooShort: "Please write a little more." };
+  function problemOf(field) {
+    if (field.matches("fieldset")) {
+      const selects = $$("select", field);
+      if (selects.length) return selects.every((s) => s.value) ? "" : "Pick a day, a time and a place.";
+      return $("input:checked", field) ? "" : "Choose one to continue.";
+    }
+    const key = Object.keys(MESSAGES).find((k) => field.validity[k]);
+    if (!key) return "";
+    if (field.tagName === "SELECT") return "Please choose one.";
+    if (field.matches("[autocomplete$=password]") && key === "tooShort") return "Use at least 8 characters.";
+    return MESSAGES[key];
+  }
+  function check(field) {
+    const problem = problemOf(field);
+    $(`#${field.getAttribute("aria-describedby")}`).textContent = problem;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input[aria-describedby], select[aria-describedby], textarea[aria-describedby], fieldset[aria-describedby]", form);
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    /* A grey button turns blue once every field is complete; a button that starts blue stays blue */
+    const gated = !button.classList.contains("ready");
+    const ready = () => { if (gated) button.classList.toggle("ready", fields.every((f) => !problemOf(f))); };
+    fields.forEach((f) => {
+      f.addEventListener(f.matches("fieldset, select") ? "change" : "blur", () => { if (f.matches("fieldset") || f.value || f.getAttribute("aria-invalid")) check(f); });
+      f.addEventListener("input", () => { if (f.getAttribute("aria-invalid") === "true") check(f); });
+    });
+    form.addEventListener("input", ready);
+    form.addEventListener("change", ready);
+    form.addEventListener("submit", (e) => e.preventDefault());
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (!fields.map(check).every(Boolean)) {
+        const first = fields.find((f) => f.getAttribute("aria-invalid") === "true");
+        (first.matches("fieldset") ? $("select, input", first) : first).focus();
+        return;
+      }
+      button.disabled = true;
+      button.textContent = button.dataset.busy || "Sending…";
+      setTimeout(() => {
+        const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+        $$("[data-echo]", success).forEach((el) => { const v = form.elements[el.dataset.echo]?.value.trim(); if (v) el.textContent = v; });
+        form.hidden = true;
+        button.disabled = false;
+        button.textContent = label;
+        success.hidden = false;
+        success.focus({ preventScroll: true });
+      }, 700);
+    });
+  });
+  document.addEventListener("click", (e) => {
+    const reset = e.target.closest("[data-reset]");
+    if (!reset) return;
+    const success = reset.closest("[data-success]"), form = $("form", success.parentElement);
+    form.reset();
+    $$("[aria-invalid]", form).forEach((f) => f.removeAttribute("aria-invalid"));
+    $$(".err", form).forEach((el) => { el.textContent = ""; });
+    form.dispatchEvent(new Event("input"));
+    success.hidden = true;
+    form.hidden = false;
+    $("select, input", form).focus();
+  });
+  $$("[data-reveal]").forEach((b) => b.addEventListener("click", () => {
+    const input = $(`#${b.dataset.reveal}`), show = input.type === "password";
+    input.type = show ? "text" : "password";
+    b.setAttribute("aria-pressed", String(show));
+    b.setAttribute("aria-label", show ? "Hide password" : "Show password");
+  }));
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

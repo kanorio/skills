@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 570" width="600" height="570">
+<defs>
+<linearGradient id="wall" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#efe4d4"/><stop offset="1" stop-color="#e2d3bf"/></linearGradient>
+<linearGradient id="win" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe2d0"/><stop offset="1" stop-color="#9cbf96"/></linearGradient>
+<linearGradient id="light" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7e6" stop-opacity=".7"/><stop offset="1" stop-color="#fff7e6" stop-opacity="0"/></linearGradient>
+</defs>
+<rect width="600" height="570" fill="url(#wall)"/>
+<g stroke="#d7c6ae" stroke-width="2"><path d="M0 60H600M0 120H600M0 180H600M0 240H600"/></g>
+<rect x="360" y="70" width="180" height="200" rx="6" fill="#c8a57e"/>
+<rect x="372" y="82" width="156" height="176" fill="url(#win)"/>
+<g fill="#6f9a5c"><circle cx="410" cy="200" r="40"/><circle cx="480" cy="180" r="46"/><circle cx="520" cy="230" r="30"/></g>
+<path d="M450 82V258M372 170H528" stroke="#c8a57e" stroke-width="6"/>
+<path d="M372 258L180 570H560Z" fill="url(#light)"/>
+<rect y="420" width="600" height="150" fill="#b98d62"/>
+<g stroke="#a67b52" stroke-width="2"><path d="M0 460H600M0 510H600"/></g>
+<rect x="60" y="250" width="300" height="80" rx="10" fill="#8a6545"/>
+<rect x="40" y="320" width="360" height="110" rx="16" fill="#f8f5ef"/>
+<rect x="40" y="368" width="360" height="62" rx="12" fill="#dfe6e9"/>
+<rect x="72" y="296" width="120" height="44" rx="18" fill="#ffffff"/>
+<rect x="208" y="296" width="120" height="44" rx="18" fill="#f3ede3"/>
+<rect x="52" y="428" width="12" height="40" fill="#6e4f35"/>
+<rect x="376" y="428" width="12" height="40" fill="#6e4f35"/>
+<rect x="420" y="360" width="70" height="80" rx="6" fill="#8a6545"/>
+<path d="M455 120V250" stroke="#4b4038" stroke-width="2"/>
+<path d="M430 270Q455 236 480 270Z" fill="#2f3a35"/>
+<ellipse cx="455" cy="272" rx="12" ry="5" fill="#ffe3a0"/>
+<path d="M520 440Q530 380 556 350M528 440Q520 390 496 362M540 440Q560 400 580 392" stroke="#5f8a4d" stroke-width="8" stroke-linecap="round" fill="none"/>
+<rect x="512" y="430" width="44" height="40" rx="6" fill="#d9c6ad"/>
+</svg>

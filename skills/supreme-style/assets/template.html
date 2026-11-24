@@ -1,0 +1,1131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>corvo: skate and clothing, lisbon</title>
+<meta name="description" content="corvo makes clothes and skateboards in small runs in lisbon. new things most thursdays at 11:00, online and in two shops.">
+<meta property="og:title" content="corvo: skate and clothing, lisbon">
+<meta property="og:description" content="new things most thursdays at 11:00, online and in two shops.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/courier-prime-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font: one typewriter face for everything; bold marks where you are ---------- */
+@font-face { font-family: "Courier Prime"; src: url("fonts/courier-prime-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Courier Prime"; src: url("fonts/courier-prime-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Courier Prime"; src: url("fonts/courier-prime-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: a white page and black type (light, default) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);
+  --surface: oklch(96.5% 0 0);      /* fields, hovered rows */
+  --ink: oklch(16% 0 0);
+  --muted: oklch(46% 0 0);
+  --line: oklch(87% 0 0);
+  --tile: oklch(100% 0 0);          /* behind product pictures: white, like the page */
+  --accent: oklch(55% 0.21 27);     /* thin marks only: the picked thumbnail, "new", "open now" */
+  --accent-ink: oklch(100% 0 0);
+  --slab: oklch(16% 0 0);           /* the black slab buttons */
+  --slab-ink: oklch(100% 0 0);
+  --off: oklch(82% 0 0);            /* a sold out slab */
+  --off-ink: oklch(98% 0 0);
+  --error: oklch(52% 0.2 28);
+  --mono: "Courier Prime", "Courier New", ui-monospace, Menlo, monospace;
+  --fs-display: 1.5rem;
+  --fs-h1: 0.875rem;
+  --fs-title: 1rem;
+  --fs-body: 0.875rem;
+  --fs-small: 0.75rem;
+  --wide: 768px;                    /* the centred column for grids, the nav row and the footer */
+  --col: 600px;                     /* text pages and forms */
+  --gutter: 16px;
+  --dur-fast: 100ms;
+  --dur-base: 160ms;
+  --dur-slow: 420ms;
+  --ease: steps(4, end);
+}
+/* ---------- Tokens: dark. The page turns near-black; product pictures stay on paper-white tiles ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(15% 0 0);
+  --surface: oklch(20% 0 0);
+  --ink: oklch(93% 0 0);
+  --muted: oklch(70% 0 0);
+  --line: oklch(31% 0 0);
+  --tile: oklch(94% 0 0);
+  --accent: oklch(68% 0.19 27);
+  --accent-ink: oklch(15% 0 0);
+  --slab: oklch(93% 0 0);
+  --slab-ink: oklch(15% 0 0);
+  --off: oklch(34% 0 0);
+  --off-ink: oklch(72% 0 0);
+  --error: oklch(74% 0.16 28);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--bg); color: var(--ink); -webkit-text-size-adjust: 100%; }
+body { position: relative; margin: 0; min-height: 100svh; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); font: 400 var(--fs-body)/1.5 var(--mono); }
+main { flex: 1; width: 100%; max-width: calc(var(--wide) + 2 * var(--gutter)); margin: 0 auto; padding: 0 var(--gutter) 72px; }
+a { color: inherit; text-decoration: none; }
+a:hover, .ul { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+h1, h2, h3, p, ul, ol, dl, dd, figure, fieldset { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+fieldset { border: 0; padding: 0; min-width: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a, button, summary { -webkit-tap-highlight-color: transparent; }
+h1, h2, h3 { font-size: var(--fs-h1); font-weight: 700; text-wrap: balance; }
+p { text-wrap: pretty; }
+::selection { background: var(--ink); color: var(--bg); }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 8px; top: -64px; z-index: 5; padding: 8px 12px; background: var(--slab); color: var(--slab-ink); }
+.skip:focus { top: 8px; }
+.small { font-size: var(--fs-small); }
+.muted { color: var(--muted); }
+.b { font-weight: 700; }
+.ic { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.6; flex: none; }
+.link-btn { padding: 0; border: 0; background: none; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Header: a typed wordmark and the local time, centred; the cart and the theme at the corners ---------- */
+.top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 12px; width: 100%; max-width: calc(var(--wide) + 2 * var(--gutter)); margin: 0 auto; padding: 24px var(--gutter) 0; font-size: var(--fs-small); }
+.corner { display: inline-flex; align-items: center; min-height: 32px; padding: 0 4px; margin: -6px -4px 0; white-space: nowrap; }
+.tog { justify-self: end; border: 0; background: none; }
+.tog:hover { text-decoration: underline; text-underline-offset: 3px; }
+.brand { text-align: center; }
+.wordmark { display: inline-block; padding: 0 3px 5px; border-bottom: 3px solid currentColor; font-size: var(--fs-display); font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
+.wordmark:hover { text-decoration: none; }
+.clock { margin-top: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* The one navigation row: the shop at the left end, the season at the right; the current page in bold */
+.row { display: flex; justify-content: space-between; gap: 8px 24px; width: 100%; max-width: calc(var(--wide) + 2 * var(--gutter)); margin: 40px auto 0; padding: 0 var(--gutter); white-space: nowrap; }
+.row div { display: flex; gap: 16px; }
+.row a, .cats a, .menu a, .foot nav a { display: inline-block; }
+[aria-current="page"], [aria-pressed="true"] { font-weight: 700; }
+.on-home .row { display: none; }
+@media (max-width: 560px) { .row .long { display: none; } .row div { gap: 12px; } }
+
+/* ---------- Footer: every page as plain words ---------- */
+.foot { width: 100%; max-width: 1040px; margin: 0 auto; padding: 32px var(--gutter) 28px; font-size: var(--fs-small); color: var(--muted); text-align: center; }
+.foot nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 16px; }
+.foot a:hover { color: var(--ink); }
+.foot p { margin-top: 12px; }
+
+/* ---------- Home: one picture beside a short list of words ---------- */
+.home { display: grid; grid-template-columns: 300px auto; justify-content: center; align-items: center; gap: 64px; margin-top: 52px; }
+.hero { background: var(--tile); }
+.hero img { width: 300px; height: auto; }
+.menu { display: grid; gap: 12px; }
+.drop { margin-bottom: 28px; font-size: var(--fs-small); }
+.drop .live { color: var(--accent); font-weight: 700; }
+@media (max-width: 640px) {
+  .home { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 36px; margin-top: 36px; }
+  .home .hero img { width: min(260px, 64vw); }
+  .menu { justify-items: center; text-align: center; }
+  .drop { text-align: center; }
+}
+
+/* ---------- Shared page heads ---------- */
+.head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin: 48px 0 14px; }
+.narrow { max-width: var(--col); margin: 0 auto; }
+.narrow > h1 { margin: 48px 0 18px; }
+.prose p + p, .prose p + ul, .prose ul + p { margin-top: 1em; }
+.prose h2 { margin: 2.2em 0 0.6em; }
+.prose a { text-decoration: underline; text-underline-offset: 3px; }
+.prose ul li { padding-left: 2ch; text-indent: -2ch; }
+.prose ul li::before { content: "- "; }
+
+/* ---------- News: one picture, one story, a pager under the picture ---------- */
+.story { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 320px); justify-content: center; gap: 28px; margin-top: 48px; }
+.story .pic img { width: 100%; height: auto; background: var(--tile); }
+.pager { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 10px; font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
+.pager a { display: inline-grid; place-items: center; min-width: 28px; min-height: 28px; }
+.story .date { font-size: var(--fs-small); }
+.story h1 { margin: 2px 0 14px; font-size: var(--fs-title); font-weight: 400; }
+.story .body { font-size: var(--fs-small); }
+.story .body p + p { margin-top: 1em; }
+.story .avail { margin-top: 1em; font-size: var(--fs-small); font-weight: 700; }
+.story .ul { display: inline-block; margin-top: 18px; font-size: var(--fs-small); }
+@media (max-width: 640px) { .story { grid-template-columns: minmax(0, 1fr); gap: 20px; margin-top: 32px; } }
+
+/* ---------- Archive: dated rows with filter words ---------- */
+.words { display: flex; flex-wrap: wrap; gap: 2px 16px; margin-bottom: 20px; font-size: var(--fs-small); }
+.words button { min-height: 28px; padding: 0; border: 0; background: none; }
+.words button:hover { text-decoration: underline; text-underline-offset: 3px; }
+.words .n { margin-left: 4px; color: var(--muted); font-weight: 400; }
+.rows { border-top: 1px solid var(--line); }
+.rows a { display: grid; grid-template-columns: 11ch minmax(0, 1fr) auto; gap: 4px 20px; padding: 9px 4px; border-bottom: 1px solid var(--line); }
+.rows a:hover { background: var(--surface); text-decoration: none; }
+.rows a:hover .t { text-decoration: underline; text-underline-offset: 3px; }
+.rows .k { font-size: var(--fs-small); color: var(--muted); }
+.empty { padding: 28px 0; color: var(--muted); }
+@media (max-width: 560px) { .rows a { grid-template-columns: minmax(0, 1fr) auto; } .rows time { grid-column: 1 / -1; font-size: var(--fs-small); color: var(--muted); } }
+
+/* ---------- The wall: a season as a dense grid of close crops, no words until you point ---------- */
+.wall { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 2px; }
+.wall a { position: relative; display: block; aspect-ratio: 1; overflow: hidden; background: var(--tile); }
+.wall img { width: 100%; height: 100%; object-fit: cover; scale: 2.3; transform-origin: var(--ox, 50%) var(--oy, 45%); }
+.wall a:hover::after, .wall a:focus-visible::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 2px var(--ink); }
+.wall a:focus-visible { outline: none; }
+.peek { min-height: 1.5em; margin-top: 10px; font-size: var(--fs-small); display: flex; justify-content: space-between; gap: 16px; }
+@media (max-width: 640px) { .wall { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.js .nojs { display: none; }
+
+/* ---------- Lookbook: a big picture, the whole season as thumbnails, a caption line ---------- */
+.lb { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 252px); justify-content: center; align-items: start; gap: 48px; margin-top: 48px; }
+.lb .main { background: var(--tile); }
+.lb .main img { width: 100%; height: auto; }
+.thumbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.thumbs a { display: block; }
+.thumbs img { width: 100%; height: auto; }
+.thumbs a[aria-current="page"] img { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lb .pager { justify-content: flex-end; }
+.lb-cap { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 252px); justify-content: center; gap: 48px; margin-top: 18px; font-size: var(--fs-small); }
+.lb-cap h1 { font-size: var(--fs-small); }
+.lb-cap ul a:hover { text-decoration: underline; }
+@media (max-width: 640px) {
+  .lb, .lb-cap { grid-template-columns: minmax(0, 1fr); gap: 20px; margin-top: 32px; }
+  .lb-cap { margin-top: 18px; gap: 6px; }
+  .thumbs { grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; }
+  .lb .pager { justify-content: center; }
+}
+
+/* ---------- Shop: categories as a right-aligned list of words, pictures with no names ---------- */
+.shop { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 28px; margin-top: 48px; }
+.cats { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; font-size: var(--fs-small); text-align: right; }
+.cats .new { color: var(--accent); }
+.shop .head { margin: 0 0 14px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 6px 14px; }
+.tile a { display: block; background: var(--tile); }
+.tile img { width: 100%; padding: 3%; }
+.tile a:hover { outline: 1px solid var(--ink); text-decoration: none; }
+/* Under each picture one reserved line: "sold out" stays; the name and price lie over it while you point */
+.cap { position: relative; min-height: 1.7em; padding-top: 2px; font-size: 0.6875rem; line-height: 1.3; text-align: center; }
+.cap .nm { position: absolute; inset: 2px 0 auto; z-index: 1; visibility: hidden; background: var(--bg); }
+.cap .so { font-style: italic; }
+.tile:hover .nm, .tile:focus-within .nm { visibility: visible; }
+@media (max-width: 640px) {
+  .shop { grid-template-columns: minmax(0, 1fr); gap: 20px; margin-top: 32px; }
+  .cats { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 2px 14px; }
+  .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px 8px; }
+}
+
+/* ---------- Product: picture left, typed spec sheet right, two slab buttons ---------- */
+.pd { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 300px); justify-content: center; gap: 36px; margin-top: 48px; }
+.pd .pic { background: var(--tile); }
+.pd .pic img { width: 100%; height: auto; padding: 4%; }
+.pd h1 { font-size: var(--fs-title); font-weight: 400; line-height: 1.3; }
+.pd .col { margin-top: 2px; font-size: var(--fs-small); font-weight: 700; }
+.pd .desc { margin-top: 16px; font-size: var(--fs-small); }
+.rel { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 16px; }
+.rel a { display: block; width: 42px; background: var(--tile); border: 1px solid var(--line); }
+.rel img { width: 100%; }
+.rel a[aria-current="page"] { outline: 2px solid var(--accent); outline-offset: 1px; }
+.price { margin-top: 2px; font-size: var(--fs-title); font-variant-numeric: tabular-nums; }
+.nextl { margin-top: 14px; font-size: var(--fs-small); text-align: right; }
+.acts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+@media (max-width: 640px) { .pd { grid-template-columns: minmax(0, 1fr); gap: 20px; margin-top: 32px; } }
+
+/* ---------- Buttons and fields ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 132px; min-height: 30px; padding: 0 14px; border: 0; border-radius: 0; background: var(--slab); color: var(--slab-ink); font-size: var(--fs-small); font-weight: 700; }
+.btn:hover { background: var(--muted); color: var(--bg); text-decoration: none; }
+.btn:disabled { background: var(--off); color: var(--off-ink); cursor: not-allowed; }
+.form { display: grid; gap: 2px; margin-top: 24px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+@media (max-width: 560px) { .two { grid-template-columns: 1fr; } }
+.field { display: grid; gap: 4px; }
+.field > label, legend { font-size: var(--fs-small); }
+legend { margin-bottom: 6px; }
+.opt-note { color: var(--muted); }
+.input { width: 100%; min-height: 32px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 0; background: var(--bg); }
+.input:hover { border-color: var(--muted); }
+.input:focus-visible { outline: 2px solid var(--ink); outline-offset: 0; border-color: var(--ink); }
+.input[aria-invalid="true"] { border-color: var(--error); }
+textarea.input { min-height: 120px; resize: vertical; }
+.select { position: relative; }
+.select select { appearance: none; padding-right: 28px; }
+.select .ic { position: absolute; right: 9px; top: 50%; translate: 0 -50%; pointer-events: none; }
+.error { min-height: 1.5em; font-size: var(--fs-small); color: var(--error); }
+.check, .radio { display: flex; align-items: flex-start; gap: 10px; font-size: var(--fs-small); }
+.radios { display: grid; gap: 6px; margin-bottom: 18px; }
+input[type="checkbox"], input[type="radio"] { width: 15px; height: 15px; margin: 2px 0 0; accent-color: var(--ink); flex: none; }
+.status { margin-top: 12px; font-size: var(--fs-small); }
+.typed { animation: type var(--dur-slow) steps(28, end) both; }
+@keyframes type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.done { margin-top: 24px; padding: 16px 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+.done:focus { outline: none; }
+.done p + p { margin-top: 0.8em; }
+
+/* ---------- Cart ---------- */
+.lines { border-top: 1px solid var(--line); }
+.line { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto auto; align-items: center; gap: 12px 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: var(--fs-small); }
+.line img { width: 56px; height: 56px; background: var(--tile); padding: 3px; }
+.line .t { font-size: var(--fs-body); }
+.qty { display: inline-flex; align-items: center; border: 1px solid var(--line); }
+.qty button { width: 28px; min-height: 28px; border: 0; background: none; }
+.qty button:hover { background: var(--surface); }
+.qty span { min-width: 2ch; text-align: center; font-variant-numeric: tabular-nums; }
+.sum { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; margin-top: 16px; font-size: var(--fs-small); }
+.sum dd { text-align: right; font-variant-numeric: tabular-nums; }
+.sum .total { font-size: var(--fs-body); font-weight: 700; }
+@media (max-width: 560px) { .line { grid-template-columns: 56px minmax(0, 1fr) auto; } .line .lp { grid-column: 2; } }
+
+/* ---------- Stores, questions, sizes ---------- */
+.stores { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; margin-top: 8px; }
+.store img { width: 100%; height: auto; margin-bottom: 12px; }
+.store h2 { margin-bottom: 4px; }
+.store p { font-size: var(--fs-small); }
+.store .now { margin-top: 8px; font-weight: 700; }
+.store .now.open { color: var(--accent); }
+@media (max-width: 560px) { .stores { grid-template-columns: minmax(0, 1fr); } }
+.qa { border-top: 1px solid var(--line); }
+.qa details { border-bottom: 1px solid var(--line); }
+.qa summary { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; cursor: pointer; list-style: none; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after { content: "+"; }
+.qa details[open] summary { font-weight: 700; }
+.qa details[open] summary::after { content: "-"; }
+.qa p { padding: 0 0 14px; font-size: var(--fs-small); max-width: 62ch; }
+.sizes { width: 100%; border-collapse: collapse; font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
+.sizes th, .sizes td { padding: 6px 8px 6px 0; border-bottom: 1px solid var(--line); text-align: left; }
+.sizes th { font-weight: 700; }
+.notfound { font-size: var(--fs-display); font-weight: 700; }
+
+/* ---------- Touch screens: words keep their size, targets grow to 44px ---------- */
+@media (pointer: coarse) {
+  body { font-size: 0.9375rem; }
+  .corner, .menu a, .row a, .cats a, .foot nav a, .pager a, .words button, .story .ul, .nextl a { display: inline-flex; align-items: center; min-height: 44px; }
+  .pager a { min-width: 44px; }
+  .menu { gap: 0; }
+  .btn, .input, .qty button, .skip { min-height: 44px; }
+  .qty button { width: 44px; }
+  .check, .radio { min-height: 44px; align-items: center; }
+  .check input, .radio input { margin: 0; }
+}
+
+/* ---------- Views: one at a time once the script runs; every view in order without it ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.js .is-active { animation: show var(--dur-base) var(--ease) both; }
+.js .swap { animation: show var(--dur-base) var(--ease) both; }
+@keyframes show { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-down" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 12 12"><path d="M10 6H2M5 3L2 6l3 3"/></symbol>
+  <symbol id="i-next" viewBox="0 0 12 12"><path d="M2 6h8M7 3l3 3-3 3"/></symbol>
+</svg>
+<a class="skip" href="#main">skip to content</a>
+
+<header class="top">
+  <a class="corner" href="#/cart">cart&nbsp;(<span data-count>0</span>)</a>
+  <div class="brand">
+    <a class="wordmark" href="#/" aria-label="corvo, front page">corvo</a>
+    <p class="clock"><time data-clock datetime="2026-11-23T09:52">23/11/2026 09:52</time> lis</p>
+  </div>
+  <button class="corner tog" id="theme-toggle" type="button" aria-label="Switch to dark colours">dark</button>
+</header>
+<nav class="row" aria-label="Sections">
+  <div><a href="#/shop">shop</a><a href="#/shop?cat=new">new</a></div>
+  <div><a href="#/preview"><span class="long">fall/winter 2026 </span>preview</a><a href="#/lookbook">lookbook</a><a href="#/news">news</a></div>
+</nav>
+
+<main id="main">
+
+<!-- ========== Home ========== -->
+<section class="home" data-view="home" aria-labelledby="h-home">
+  <h1 id="h-home" class="sr-only">corvo, skate and clothing from lisbon</h1>
+  <a class="hero" href="#/lookbook" aria-label="fall/winter 2026 lookbook"><img src="images/look-02.svg" alt="A model in an orange puffer jacket, black track trousers and an orange beanie against a navy wall" width="400" height="500"></a>
+  <div>
+    <p class="drop">drop 07: thursday 11:00 lis <span data-countdown></span></p>
+    <ul class="menu">
+      <li><a href="#/news">news</a></li>
+      <li><a href="#/preview">fall/winter 2026 preview</a></li>
+      <li><a href="#/lookbook">fall/winter 2026 lookbook</a></li>
+      <li><a href="#/shop">shop</a></li>
+      <li><a href="#/archive">archive</a></li>
+      <li><a href="#/about">about</a></li>
+      <li><a href="#/stores">stores</a></li>
+      <li><a href="#/contact">contact</a></li>
+      <li><a href="#/mailing-list">mailing list</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========== News: one story at a time (the first is written in the page; the rest come from NEWS) ========== -->
+<section data-view="news" aria-labelledby="n-title">
+  <article class="story">
+    <figure class="pic">
+      <img data-n="img" src="images/look-02.svg" alt="A model in an orange puffer jacket, black track trousers and an orange beanie against a navy wall" width="400" height="500">
+      <figcaption class="pager"><a data-n="prev" href="#/news/rib-beanie-restock" aria-label="Previous story"><svg class="ic" aria-hidden="true"><use href="#i-prev"/></svg></a><span data-n="pos">1 of 6</span><a data-n="next" href="#/news/low-tide" aria-label="Next story"><svg class="ic" aria-hidden="true"><use href="#i-next"/></svg></a></figcaption>
+    </figure>
+    <div>
+      <p class="date"><time data-n="date">20/11/2026</time></p>
+      <h1 id="n-title" data-n="title">fall/winter 2026</h1>
+      <div class="body" data-n="body">
+        <p>the fall/winter 2026 collection starts this thursday. twenty-five pieces: quilted work jackets, an orange puffer, flannel and stripe shirts, heavy fleece, double knee pants, two caps, a beanie and two decks.</p>
+        <p>everything is cut and sewn in small runs. the preview and the lookbook are up now.</p>
+      </div>
+      <p class="avail" data-n="avail">available thursday 26/11, 11:00 lis, in lisbon, porto and online.</p>
+      <a class="ul" href="#/archive">archive</a>
+    </div>
+  </article>
+</section>
+
+<!-- ========== Archive ========== -->
+<section class="narrow" data-view="archive" aria-labelledby="h-archive">
+  <div class="head"><h1 id="h-archive">archive</h1><p class="small muted" data-count-of="archive">6 stories</p></div>
+  <div class="words" data-filter="archive" aria-label="Filter stories">
+    <button type="button" data-value="all" aria-pressed="true">all</button>
+    <button type="button" data-value="drops" aria-pressed="false">drops</button>
+    <button type="button" data-value="collaborations" aria-pressed="false">collaborations</button>
+    <button type="button" data-value="stores" aria-pressed="false">stores</button>
+    <button type="button" data-value="video" aria-pressed="false">video</button>
+  </div>
+  <ul class="rows" data-rows></ul>
+  <p class="empty" data-empty="archive" hidden>no stories of that kind yet. <button class="link-btn" type="button" data-reset="archive">show all</button></p>
+  <p class="nojs small"><a class="ul" href="#/news">read the latest story</a></p>
+</section>
+
+<!-- ========== Preview: the wall ========== -->
+<section data-view="preview" aria-labelledby="h-preview">
+  <div class="head"><h1 id="h-preview">fall/winter 2026 preview</h1><p class="small muted" data-count-of="preview">25 pieces</p></div>
+  <ul class="wall" data-wall></ul>
+  <p class="peek"><span data-peek>&nbsp;</span><a class="ul" href="#/shop">view all</a></p>
+  <p class="nojs small">every piece of the season is in the <a class="ul" href="#/shop">shop</a>.</p>
+</section>
+
+<!-- ========== Lookbook ========== -->
+<section data-view="lookbook" aria-labelledby="h-look">
+  <div class="lb">
+    <figure class="main"><img data-l="img" src="images/look-01.svg" alt="A model in a black quilted work jacket and tan double knee trousers against a stone wall" width="400" height="500"></figure>
+    <div>
+      <ol class="thumbs" data-thumbs>
+        <li><a href="#/lookbook?look=1" aria-label="look 1"><img src="images/look-01.svg" alt="A model in a black quilted work jacket and tan double knee trousers against a stone wall" width="400" height="500"></a></li>
+        <li><a href="#/lookbook?look=2" aria-label="look 2"><img src="images/look-02.svg" alt="A model in an orange puffer jacket, black track trousers and an orange beanie against a navy wall" width="400" height="500"></a></li>
+        <li><a href="#/lookbook?look=3" aria-label="look 3"><img src="images/look-03.svg" alt="A model in a red check flannel shirt and navy trousers against a cream wall" width="400" height="500"></a></li>
+        <li><a href="#/lookbook?look=4" aria-label="look 4"><img src="images/look-04.svg" alt="A model in a grey hooded sweatshirt and grey fleece shorts against a sage wall" width="400" height="500"></a></li>
+        <li><a href="#/lookbook?look=5" aria-label="look 5"><img src="images/look-05.svg" alt="A model in a white bird T-shirt, black trousers and a black cap against a black wall" width="400" height="500"></a></li>
+        <li><a href="#/lookbook?look=6" aria-label="look 6"><img src="images/look-06.svg" alt="A model in a burgundy star sweatshirt and cream trousers against a yellow wall" width="400" height="500"></a></li>
+        <li><a href="#/lookbook?look=7" aria-label="look 7"><img src="images/look-07.svg" alt="A model in a navy work jacket, grey trousers and an olive cap against a pale blue wall" width="400" height="500"></a></li>
+        <li><a href="#/lookbook?look=8" aria-label="look 8"><img src="images/look-08.svg" alt="A model in a green striped sweater and green trousers against a white wall" width="400" height="500"></a></li>
+      </ol>
+      <p class="pager"><a data-l="prev" href="#/lookbook?look=8" aria-label="Previous look"><svg class="ic" aria-hidden="true"><use href="#i-prev"/></svg></a><span data-l="pos">1 of 8</span><a data-l="next" href="#/lookbook?look=2" aria-label="Next look"><svg class="ic" aria-hidden="true"><use href="#i-next"/></svg></a></p>
+    </div>
+  </div>
+  <div class="lb-cap">
+    <div><h1 id="h-look">fall/winter 2026</h1><ul data-l="items"><li><a href="#/shop/quilted-work-jacket">quilted work jacket</a></li><li><a href="#/shop/double-knee-pant">double knee pant</a></li></ul></div>
+    <p class="muted">photographs in the lisbon shop, november 2026</p>
+  </div>
+</section>
+
+<!-- ========== Shop ========== -->
+<section class="shop" data-view="shop" aria-labelledby="h-shop">
+  <nav class="cats" aria-label="Categories">
+    <a class="new" href="#/shop?cat=new">new</a>
+    <a href="#/shop?cat=jackets">jackets</a>
+    <a href="#/shop?cat=shirts">shirts</a>
+    <a href="#/shop?cat=tops">tops/sweaters</a>
+    <a href="#/shop?cat=sweatshirts">sweatshirts</a>
+    <a href="#/shop?cat=pants">pants</a>
+    <a href="#/shop?cat=hats">hats</a>
+    <a href="#/shop?cat=bags">bags</a>
+    <a href="#/shop?cat=accessories">accessories</a>
+    <a href="#/shop?cat=shoes">shoes</a>
+    <a href="#/shop?cat=skate">skate</a>
+    <a href="#/shop?cat=all">all</a>
+  </nav>
+  <div>
+    <div class="head"><h1 id="h-shop" data-shop-title>all</h1><p class="small muted" data-count-of="shop">25 pieces</p></div>
+    <ul class="tiles" data-tiles>
+      <li class="tile" data-slug="quilted-work-jacket" data-k="jackets" data-p="238" data-new><a href="#/shop/quilted-work-jacket"><img src="images/p-quilted-work-jacket.svg" alt="A black quilted work jacket with a square collar and two patch pockets" width="400" height="400"></a><p class="cap"><span class="nm">quilted work jacket</span></p></li>
+      <li class="tile" data-slug="nylon-puffer" data-k="jackets" data-p="268" data-new><a href="#/shop/nylon-puffer"><img src="images/p-nylon-puffer.svg" alt="An orange quilted nylon puffer jacket" width="400" height="400"></a><p class="cap"><span class="nm">nylon puffer</span></p></li>
+      <li class="tile" data-slug="coach-jacket" data-k="jackets" data-p="178"><a href="#/shop/coach-jacket"><img src="images/p-coach-jacket.svg" alt="A navy work jacket with a small cream bird on the chest" width="400" height="400"></a><p class="cap"><span class="nm">coach jacket</span></p></li>
+      <li class="tile" data-slug="pile-fleece" data-k="jackets" data-p="198" data-out><a href="#/shop/pile-fleece"><img src="images/p-pile-fleece.svg" alt="A cream pile fleece jacket with a stand collar" width="400" height="400"></a><p class="cap"><span class="nm">pile fleece</span><span class="so">sold out</span></p></li>
+      <li class="tile" data-slug="flannel-shirt" data-k="shirts" data-p="128" data-new><a href="#/shop/flannel-shirt"><img src="images/p-flannel-shirt.svg" alt="A red and black check flannel shirt" width="400" height="400"></a><p class="cap"><span class="nm">flannel shirt</span></p></li>
+      <li class="tile" data-slug="stripe-work-shirt" data-k="shirts" data-p="118" data-out><a href="#/shop/stripe-work-shirt"><img src="images/p-stripe-work-shirt.svg" alt="A white shirt with blue stripes and a chest pocket" width="400" height="400"></a><p class="cap"><span class="nm">stripe work shirt</span><span class="so">sold out</span></p></li>
+      <li class="tile" data-slug="crow-tee" data-k="tops" data-p="48" data-new><a href="#/shop/crow-tee"><img src="images/p-crow-tee.svg" alt="A white T-shirt with a black bird printed on the chest" width="400" height="400"></a><p class="cap"><span class="nm">crow tee</span></p></li>
+      <li class="tile" data-slug="wave-tee" data-k="tops" data-p="48"><a href="#/shop/wave-tee"><img src="images/p-wave-tee.svg" alt="A black T-shirt with two yellow wavy lines" width="400" height="400"></a><p class="cap"><span class="nm">wave tee</span></p></li>
+      <li class="tile" data-slug="pocket-tee" data-k="tops" data-p="42" data-out><a href="#/shop/pocket-tee"><img src="images/p-pocket-tee.svg" alt="A grey T-shirt with a chest pocket" width="400" height="400"></a><p class="cap"><span class="nm">pocket tee</span><span class="so">sold out</span></p></li>
+      <li class="tile" data-slug="stripe-knit" data-k="tops" data-p="148" data-new><a href="#/shop/stripe-knit"><img src="images/p-stripe-knit.svg" alt="A cream sweater with wide green stripes" width="400" height="400"></a><p class="cap"><span class="nm">stripe knit</span></p></li>
+      <li class="tile" data-slug="arc-hooded-sweatshirt" data-k="sweatshirts" data-p="138" data-new><a href="#/shop/arc-hooded-sweatshirt"><img src="images/p-arc-hooded-sweatshirt.svg" alt="A grey hooded sweatshirt with three black arcs" width="400" height="400"></a><p class="cap"><span class="nm">arc hooded sweatshirt</span></p></li>
+      <li class="tile" data-slug="crew-sweatshirt" data-k="sweatshirts" data-p="118"><a href="#/shop/crew-sweatshirt"><img src="images/p-crew-sweatshirt.svg" alt="A burgundy crew neck sweatshirt with a cream star" width="400" height="400"></a><p class="cap"><span class="nm">crew sweatshirt</span></p></li>
+      <li class="tile" data-slug="zip-hooded-sweatshirt" data-k="sweatshirts" data-p="148" data-out><a href="#/shop/zip-hooded-sweatshirt"><img src="images/p-zip-hooded-sweatshirt.svg" alt="A charcoal zip hooded sweatshirt" width="400" height="400"></a><p class="cap"><span class="nm">zip hooded sweatshirt</span><span class="so">sold out</span></p></li>
+      <li class="tile" data-slug="double-knee-pant" data-k="pants" data-p="138"><a href="#/shop/double-knee-pant"><img src="images/p-double-knee-pant.svg" alt="Tan work trousers with double knees" width="400" height="400"></a><p class="cap"><span class="nm">double knee pant</span></p></li>
+      <li class="tile" data-slug="nylon-track-pant" data-k="pants" data-p="118" data-new><a href="#/shop/nylon-track-pant"><img src="images/p-nylon-track-pant.svg" alt="Black track trousers with white side stripes" width="400" height="400"></a><p class="cap"><span class="nm">nylon track pant</span></p></li>
+      <li class="tile" data-slug="fleece-short" data-k="pants" data-p="88"><a href="#/shop/fleece-short"><img src="images/p-fleece-short.svg" alt="Grey fleece shorts" width="400" height="400"></a><p class="cap"><span class="nm">fleece short</span></p></li>
+      <li class="tile" data-slug="six-panel-cap" data-k="hats" data-p="54"><a href="#/shop/six-panel-cap"><img src="images/p-six-panel-cap.svg" alt="A black six panel cap with a small white bird" width="400" height="400"></a><p class="cap"><span class="nm">six panel cap</span></p></li>
+      <li class="tile" data-slug="camp-cap" data-k="hats" data-p="54"><a href="#/shop/camp-cap"><img src="images/p-camp-cap.svg" alt="An olive camp cap" width="400" height="400"></a><p class="cap"><span class="nm">camp cap</span></p></li>
+      <li class="tile" data-slug="rib-beanie" data-k="hats" data-p="38" data-out><a href="#/shop/rib-beanie"><img src="images/p-rib-beanie.svg" alt="An orange rib knit beanie" width="400" height="400"></a><p class="cap"><span class="nm">rib beanie</span><span class="so">sold out</span></p></li>
+      <li class="tile" data-slug="canvas-tote" data-k="bags" data-p="38"><a href="#/shop/canvas-tote"><img src="images/p-canvas-tote.svg" alt="A natural canvas tote bag with a black bird" width="400" height="400"></a><p class="cap"><span class="nm">canvas tote</span></p></li>
+      <li class="tile" data-slug="shoulder-bag" data-k="bags" data-p="78"><a href="#/shop/shoulder-bag"><img src="images/p-shoulder-bag.svg" alt="A black nylon shoulder bag" width="400" height="400"></a><p class="cap"><span class="nm">shoulder bag</span></p></li>
+      <li class="tile" data-slug="crew-socks" data-k="accessories" data-p="22"><a href="#/shop/crew-socks"><img src="images/p-crew-socks.svg" alt="White crew socks with an orange stripe" width="400" height="400"></a><p class="cap"><span class="nm">crew socks</span></p></li>
+      <li class="tile" data-slug="paisley-bandana" data-k="accessories" data-p="24"><a href="#/shop/paisley-bandana"><img src="images/p-paisley-bandana.svg" alt="A navy bandana with white dots" width="400" height="400"></a><p class="cap"><span class="nm">dot bandana</span></p></li>
+      <li class="tile" data-slug="crow-deck" data-k="skate" data-p="68" data-new><a href="#/shop/crow-deck"><img src="images/p-crow-deck.svg" alt="A yellow skateboard deck with a black bird" width="400" height="400"></a><p class="cap"><span class="nm">crow deck</span></p></li>
+      <li class="tile" data-slug="wave-deck" data-k="skate" data-p="68"><a href="#/shop/wave-deck"><img src="images/p-wave-deck.svg" alt="A blue skateboard deck with white wavy lines" width="400" height="400"></a><p class="cap"><span class="nm">wave deck</span></p></li>
+    </ul>
+    <p class="empty" data-empty="shop" hidden>nothing here this week. <a class="ul" href="#/shop?cat=all">view all</a></p>
+  </div>
+</section>
+
+<!-- ========== Product: built from its tile and the ITEMS entry ========== -->
+<section data-view="item" aria-labelledby="i-name">
+  <div class="pd">
+    <figure class="pic"><img data-i="img" src="images/p-nylon-puffer.svg" alt="An orange quilted nylon puffer jacket" width="400" height="400"></figure>
+    <form class="pd-info" data-form="cart" novalidate>
+      <h1 id="i-name" data-i="name">nylon puffer</h1>
+      <p class="col" data-i="col">orange</p>
+      <p class="desc" data-i="desc">ripstop nylon shell with a light synthetic fill, quilted throughout. two-way zip, elastic cuffs, a bird embroidered on the back.</p>
+      <ul class="rel" data-i="rel" aria-label="More in this category"></ul>
+      <div class="field">
+        <label for="size">size</label>
+        <div class="select">
+          <select class="input" id="size" name="size" required aria-describedby="size-e" data-value-missing="Choose a size first.">
+            <option value="">choose</option><option>s</option><option>m</option><option>l</option><option disabled>xl, sold out</option>
+          </select>
+          <svg class="ic" aria-hidden="true"><use href="#i-down"/></svg>
+        </div>
+        <p class="error" id="size-e"></p>
+      </div>
+      <p class="price" data-i="price">€268</p>
+      <div class="acts">
+        <button class="btn" type="submit" data-i="add">add to cart</button>
+        <a class="btn" href="#/shop">keep shopping</a>
+      </div>
+      <p class="nextl"><a data-i="next" href="#/shop/coach-jacket">next jacket</a></p>
+      <p class="status" data-added role="status" hidden></p>
+    </form>
+  </div>
+</section>
+
+<!-- ========== Cart ========== -->
+<section class="narrow" data-view="cart" aria-labelledby="h-cart">
+  <h1 id="h-cart">cart</h1>
+  <div data-cart-empty><p>your cart is empty.</p><p class="small" style="margin-top:12px"><a class="ul" href="#/shop">keep shopping</a></p></div>
+  <div data-cart-full hidden>
+    <ul class="lines" data-lines></ul>
+    <dl class="sum">
+      <dt>subtotal</dt><dd data-sub>€0</dd>
+      <dt>shipping</dt><dd>at checkout</dd>
+      <dt class="total">total</dt><dd class="total" data-total>€0</dd>
+    </dl>
+    <div class="acts"><button class="btn" type="button" data-checkout>check out</button><a class="btn" href="#/shop">keep shopping</a></div>
+    <p class="status" data-checkout-status role="status" hidden></p>
+  </div>
+</section>
+
+<!-- ========== About ========== -->
+<section class="narrow prose" data-view="about" aria-labelledby="h-about">
+  <h1 id="h-about">about</h1>
+  <p>corvo opened in 2012 in a garage under a steep street in lisbon, selling decks, wheels and a few shirts printed in the back. the people who came to buy wheels stayed to skate the street, and some of them still work here.</p>
+  <p>we make clothes in small runs: a jacket, a few shirts, a pair of pants, a cap at a time, sewn by workshops north of the city. when a run sells out it is usually gone. a few basics come back each season.</p>
+  <p>new things come out most thursdays at 11:00 lisbon time, in both shops and online at the same moment. the front page counts down to the next one.</p>
+  <p>we also make skate videos, put up shows by friends in the lisbon shop, and keep a mailing list that tells you a day before anything comes out.</p>
+</section>
+
+<!-- ========== Stores ========== -->
+<section class="narrow" data-view="stores" aria-labelledby="h-stores">
+  <div class="head"><h1 id="h-stores">stores</h1><p class="small muted">times are lisbon time</p></div>
+  <div class="stores">
+    <article class="store" data-hours="1-6 11-19, 0 12-18">
+      <img src="images/scene-shopfront.svg" alt="A narrow shop front at dusk with a lit window, a dark green door and a round hanging sign" width="500" height="400">
+      <h2>lisbon</h2>
+      <p>14 rua do vento<br>1200-000 lisbon</p>
+      <p>mon to sat 11:00 to 19:00<br>sun 12:00 to 18:00</p>
+      <p>+351 210 000 140</p>
+      <p class="now" data-now></p>
+    </article>
+    <article class="store" data-hours="1-6 11-19">
+      <img src="images/scene-street.svg" alt="A quiet street corner at night with one lamp, a closed shutter and wet cobbles" width="500" height="400">
+      <h2>porto</h2>
+      <p>62 rua da ponte<br>4050-000 porto</p>
+      <p>mon to sat 11:00 to 19:00<br>closed on sundays</p>
+      <p>+351 220 000 162</p>
+      <p class="now" data-now></p>
+    </article>
+  </div>
+</section>
+
+<!-- ========== Contact ========== -->
+<section class="narrow" data-view="contact" aria-labelledby="h-contact">
+  <h1 id="h-contact">contact</h1>
+  <p class="small">questions about an order, sizes, wholesale or press. we answer within two working days. for the shops, see <a class="ul" href="#/stores">stores</a>.</p>
+  <div>
+    <form class="form" data-form="contact" novalidate>
+      <div class="two">
+        <div class="field"><label for="c-name">name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-e"><p class="error" id="c-name-e"></p></div>
+        <div class="field"><label for="c-email">email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="c-email-e"><p class="error" id="c-email-e"></p></div>
+      </div>
+      <div class="two">
+        <div class="field"><label for="c-topic">about</label><div class="select"><select class="input" id="c-topic" name="topic" required aria-describedby="c-topic-e"><option value="">choose</option><option value="order">an order</option><option value="sizing">sizes</option><option value="wholesale">wholesale</option><option value="press">press</option><option value="other">something else</option></select><svg class="ic" aria-hidden="true"><use href="#i-down"/></svg></div><p class="error" id="c-topic-e"></p></div>
+        <div class="field"><label for="c-order">order number <span class="opt-note">(if there is one)</span></label><input class="input" id="c-order" name="order" inputmode="numeric" pattern="[0-9]{4,8}" aria-describedby="c-order-e" data-pattern-mismatch="Order numbers are 4 to 8 digits."><p class="error" id="c-order-e"></p></div>
+      </div>
+      <div class="field"><label for="c-msg">message</label><textarea class="input" id="c-msg" name="message" minlength="20" required aria-describedby="c-msg-e"></textarea><p class="error" id="c-msg-e"></p></div>
+      <div class="acts"><button class="btn" type="submit">send</button></div>
+    </form>
+    <div class="done" data-success="contact" tabindex="-1" hidden>
+      <p class="b">sent.</p>
+      <p class="small">thanks, <span data-echo="name"></span>. we answer at <span data-echo="email"></span> within two working days.</p>
+      <p class="small"><button class="link-btn" type="button" data-again>write another</button></p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Questions and sizes ========== -->
+<section class="narrow" data-view="faq" aria-labelledby="h-faq">
+  <h1 id="h-faq">f.a.q.</h1>
+  <div class="qa">
+    <details open><summary>when do new things come out?</summary><p>most thursdays at 11:00 lisbon time, online and in both shops at the same moment. the front page counts down to the next one, and the mailing list hears a day before.</p></details>
+    <details><summary>will something come back?</summary><p>usually not. a run is made once. a few basics, the tees and the beanie, come back once a season.</p></details>
+    <details><summary>where do you ship?</summary><p>everywhere in the eu and the uk. orders leave lisbon within two working days.</p></details>
+    <details><summary>can i return something?</summary><p>within 30 days, unworn and with the tags on. socks and anything bought on sale cannot be returned.</p></details>
+    <details><summary>do you sell to other shops?</summary><p>a few, by season. write to us from the <a class="ul" href="#/contact">contact</a> page.</p></details>
+  </div>
+  <h2 id="sizing" style="margin:40px 0 6px">sizing</h2>
+  <p class="small" style="margin-bottom:12px">garments laid flat, in centimetres. everything is cut with room to layer.</p>
+  <table class="sizes">
+    <thead><tr><th scope="col">size</th><th scope="col">chest</th><th scope="col">length</th><th scope="col">sleeve</th></tr></thead>
+    <tbody><tr><td>s</td><td>54</td><td>70</td><td>62</td></tr><tr><td>m</td><td>57</td><td>72</td><td>63</td></tr><tr><td>l</td><td>60</td><td>74</td><td>64</td></tr><tr><td>xl</td><td>63</td><td>76</td><td>65</td></tr></tbody>
+  </table>
+</section>
+
+<!-- ========== Mailing list ========== -->
+<section class="narrow" data-view="mailing-list" aria-labelledby="h-list">
+  <h1 id="h-list">mailing list</h1>
+  <p class="small">one email the day before a drop, and nothing else unless you ask for it.</p>
+  <div>
+    <form class="form" data-form="newsletter" novalidate>
+      <div class="two">
+        <div class="field"><label for="m-email">email</label><input class="input" id="m-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="m-email-e"><p class="error" id="m-email-e"></p></div>
+        <div class="field"><label for="m-country">country</label><div class="select"><select class="input" id="m-country" name="country" autocomplete="country-name" required aria-describedby="m-country-e"><option value="">choose</option><option>portugal</option><option>spain</option><option>france</option><option>germany</option><option>italy</option><option>netherlands</option><option>united kingdom</option><option>somewhere else</option></select><svg class="ic" aria-hidden="true"><use href="#i-down"/></svg></div><p class="error" id="m-country-e"></p></div>
+      </div>
+      <fieldset class="radios"><legend>send me</legend>
+        <label class="radio"><input type="radio" name="kind" value="drops" checked> drops only</label>
+        <label class="radio"><input type="radio" name="kind" value="all"> drops, videos and shows in the shops</label>
+      </fieldset>
+      <label class="check"><input type="checkbox" name="consent" required aria-describedby="m-consent-e" data-value-missing="Tick this so we can write to you."> it is fine to email me. i can leave with one click.</label>
+      <p class="error" id="m-consent-e"></p>
+      <div class="acts"><button class="btn" type="submit">sign up</button></div>
+    </form>
+    <div class="done" data-success="newsletter" tabindex="-1" hidden>
+      <p class="b">you are on the list.</p>
+      <p class="small">the next email goes to <span data-echo="email"></span> the day before drop 07.</p>
+      <p class="small"><button class="link-btn" type="button" data-again>add another address</button></p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Terms and privacy ========== -->
+<section class="narrow prose" data-view="legal" aria-labelledby="h-legal">
+  <h1 id="h-legal">terms and privacy</h1>
+  <p class="small muted">sample text: replace it with your own terms before you sell anything.</p>
+  <h2 id="terms">terms</h2>
+  <p>prices are in euros and include vat. quantities are limited and an item in your cart is not reserved until you pay.</p>
+  <p>you can return unworn items with the tags on within 30 days. refunds go back to the card you paid with within ten days of the parcel reaching us.</p>
+  <h2 id="privacy">privacy</h2>
+  <p>we keep what we need to send your order and, if you sign up, your email address for the mailing list. we do not sell or share it.</p>
+  <ul><li>to change or delete anything we hold about you, write from the contact page.</li><li>this site stores your theme and cart in your own browser and nothing else.</li></ul>
+</section>
+
+<!-- ========== Not found ========== -->
+<section class="narrow" data-view="404" aria-labelledby="h-404">
+  <h1 id="h-404" class="notfound" style="margin-top:48px">404</h1>
+  <p style="margin-top:12px">nothing at this address.</p>
+  <p class="small" style="margin-top:12px"><a class="ul" href="#/">front page</a> or <a class="ul" href="#/shop">shop</a></p>
+</section>
+
+</main>
+
+<footer class="foot">
+  <nav aria-label="All pages">
+    <a href="#/shop">shop</a><a href="#/preview">preview</a><a href="#/lookbook">lookbook</a><a href="#/news">news</a><a href="#/archive">archive</a><a href="#/about">about</a><a href="#/stores">stores</a><a href="#/faq">f.a.q.</a><a href="#/faq?to=sizing">sizing</a><a href="#/contact">contact</a><a href="#/legal?to=terms">terms</a><a href="#/legal?to=privacy">privacy</a><a href="#/mailing-list">mailing list</a>
+  </nav>
+  <p>corvo, lisbon. sample shop: nothing here is for sale.</p>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+  const make = (tag, cls, text) => Object.assign(document.createElement(tag), cls ? { className: cls } : {}, text != null ? { textContent: text } : {});
+  const euro = (n) => `€${n}`;
+
+  /* ---------- Local time: the clock under the wordmark, the drop countdown and "open now" all read it ---------- */
+  const PLACE = { zone: "Europe/Lisbon", drop: { day: 4, hour: 11 } };
+
+  /* ---------- Products: what the tile does not say. [colour, sizes, sold-out sizes, description] ---------- */
+  const ITEMS = {
+    "quilted-work-jacket": ["black", "s m l xl", "", "cotton duck shell quilted to a light fill. square corduroy collar, two patch pockets, snap cuffs."],
+    "nylon-puffer": ["orange", "s m l xl", "xl", "ripstop nylon shell with a light synthetic fill, quilted throughout. two-way zip, elastic cuffs, a bird embroidered on the back."],
+    "coach-jacket": ["navy", "s m l xl", "s", "cotton twill work jacket with a bird printed small on the chest. corduroy collar, two patch pockets."],
+    "pile-fleece": ["cream", "s m l xl", "s m l xl", "heavy pile fleece with a stand collar and a full zip. nylon trim at the pockets."],
+    "flannel-shirt": ["red check", "s m l xl", "", "brushed cotton flannel. two chest pockets, a long back hem."],
+    "stripe-work-shirt": ["blue stripe", "s m l xl", "s m l xl", "cotton poplin with a chest pocket and a straight hem."],
+    "crow-tee": ["white", "s m l xl", "", "heavyweight cotton jersey with a bird printed on the chest."],
+    "wave-tee": ["black", "s m l xl", "l", "heavyweight cotton jersey with two printed waves."],
+    "pocket-tee": ["grey", "s m l xl", "s m l xl", "heavyweight cotton jersey with a chest pocket."],
+    "stripe-knit": ["cream and green", "s m l xl", "", "wool and cotton knit in wide stripes. ribbed collar, cuffs and hem."],
+    "arc-hooded-sweatshirt": ["heather grey", "s m l xl", "m", "heavyweight cotton fleece with three arcs printed on the chest. ribbed cuffs and hem, a lined hood."],
+    "crew-sweatshirt": ["burgundy", "s m l xl", "", "heavyweight cotton fleece with a star embroidered on the chest."],
+    "zip-hooded-sweatshirt": ["charcoal", "s m l xl", "s m l xl", "heavyweight cotton fleece with a full metal zip."],
+    "double-knee-pant": ["tan", "30 32 34 36", "36", "cotton canvas work pant with double knees, a hammer loop and a straight leg."],
+    "nylon-track-pant": ["black", "s m l xl", "", "crinkle nylon with white side stripes, an elastic waist and zip ankles."],
+    "fleece-short": ["grey", "s m l xl", "", "heavyweight cotton fleece with an elastic waist and side pockets."],
+    "six-panel-cap": ["black", "one size", "", "cotton twill six panel cap with a small bird embroidered on the front. strap back."],
+    "camp-cap": ["olive", "one size", "", "washed cotton camp cap with a flat brim and a strap back."],
+    "rib-beanie": ["orange", "one size", "one size", "rib knit acrylic with a deep cuff."],
+    "canvas-tote": ["natural", "one size", "", "heavy cotton canvas with a printed bird and long handles."],
+    "shoulder-bag": ["black", "one size", "", "nylon shoulder bag with a zip top, an inside pocket and an adjustable strap."],
+    "crew-socks": ["white", "one size", "", "three pairs of cotton crew socks with a stripe at the top."],
+    "paisley-bandana": ["navy", "one size", "", "printed cotton bandana, 55 cm square."],
+    "crow-deck": ["yellow", "8.25 8.5", "", "seven-ply maple deck with a bird screened on the top."],
+    "wave-deck": ["blue", "8.25 8.5", "8.25", "seven-ply maple deck with waves screened on the top."],
+  };
+  /* "next jacket", "next hat": the word for one thing in each category */
+  const ONE = { jackets: "jacket", shirts: "shirt", tops: "top", sweatshirts: "sweatshirt", pants: "pant", hats: "hat", bags: "bag", accessories: "accessory", skate: "deck" };
+  /* Close crops for the preview wall: where to look in each picture [x, y] */
+  const CROP = { "pile-fleece": ["50%", "30%"], "crow-tee": ["52%", "42%"], "wave-tee": ["50%", "42%"], "six-panel-cap": ["50%", "52%"], "canvas-tote": ["50%", "62%"], "crow-deck": ["50%", "45%"], "wave-deck": ["50%", "46%"], "arc-hooded-sweatshirt": ["50%", "44%"], "crew-sweatshirt": ["50%", "38%"], "coach-jacket": ["64%", "33%"], "nylon-track-pant": ["32%", "40%"], "crew-socks": ["50%", "26%"], "rib-beanie": ["50%", "68%"], "shoulder-bag": ["50%", "62%"] };
+
+  /* ---------- News: the first story is written in the page; picture paths are full quoted strings ---------- */
+  const NEWS = [
+    { s: "fall-winter-2026", d: "20/11/2026", k: "drops", t: "fall/winter 2026" },
+    { s: "low-tide", d: "12/11/2026", k: "video", t: "low tide, a skate video", img: "images/scene-ramp.svg", alt: "A wooden half-pipe ramp under a pale evening sky with a small skater at the top of one side", p: ["low tide is twenty-two minutes of skating filmed over two summers on the river side of the city, at night, after the tourists go home.", "it plays once in the lisbon shop on friday 21/11 at 21:00, then it is online for everyone the next morning."], a: "friday 21/11, 21:00, lisbon shop. free." },
+    { s: "porto", d: "30/10/2026", k: "stores", t: "porto", img: "images/scene-street.svg", alt: "A quiet street corner at night with one lamp, a closed shutter and wet cobbles", p: ["the second shop opens on a corner in porto, two streets up from the river. same opening times, same thursday drops, a small bowl in the back.", "come by on saturday for the opening. there will be coffee until it runs out."], a: "opening saturday 07/11, 11:00." },
+    { s: "harbour-rope-works", d: "16/10/2026", k: "collaborations", t: "corvo / harbour rope works", img: "images/look-07.svg", alt: "A model in a navy work jacket, grey trousers and an olive cap against a pale blue wall", p: ["harbour rope works has made rope for fishing boats in the same shed since 1958. together we made a work jacket with rope-stitched seams and a camp cap with a cord strap.", "both are made in one run and will not come back."], a: "available thursday 22/10, 11:00 lis." },
+    { s: "late-hours", d: "02/10/2026", k: "stores", t: "late on fridays", img: "images/scene-shopfront.svg", alt: "A narrow shop front at dusk with a lit window, a dark green door and a round hanging sign", p: ["the lisbon shop now stays open until 22:00 on fridays through the winter. the street is lit and the ramp in the yard is open to anyone with a board."], a: "" },
+    { s: "rib-beanie-restock", d: "18/09/2026", k: "drops", t: "rib beanie", img: "images/look-02.svg", alt: "A model in an orange puffer jacket, black track trousers and an orange beanie against a navy wall", p: ["the rib beanie comes back in orange, black and grey. it is the one thing we remake every year."], a: "sold out." },
+  ];
+
+  /* ---------- Lookbook: which products each look shows (the pictures are the thumbnails in the page) ---------- */
+  const LOOKS = [
+    ["quilted-work-jacket", "double-knee-pant"],
+    ["nylon-puffer", "nylon-track-pant", "rib-beanie"],
+    ["flannel-shirt"],
+    ["arc-hooded-sweatshirt", "fleece-short"],
+    ["crow-tee", "six-panel-cap"],
+    ["crew-sweatshirt"],
+    ["coach-jacket", "camp-cap"],
+    ["stripe-knit"],
+  ];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the toggle is used ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.textContent = theme === "dark" ? "light" : "dark";
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light colours" : "Switch to dark colours");
+  }
+  const saved = store.get("cv-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("cv-theme", next);
+  });
+  systemDark.addEventListener("change", (event) => { if (!store.get("cv-theme")) applyTheme(event.matches ? "dark" : "light"); });
+
+  /* ---------- The clock ---------- */
+  const parts = new Intl.DateTimeFormat("en-GB", { timeZone: PLACE.zone, weekday: "short", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+  const DAYS = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  function local() {
+    const p = Object.fromEntries(parts.formatToParts(new Date()).map((x) => [x.type, x.value]));
+    return { day: DAYS[p.weekday], h: Number(p.hour), m: Number(p.minute), date: `${p.day}/${p.month}/${p.year}`, iso: `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}`, time: `${p.hour}:${p.minute}` };
+  }
+  function tick() {
+    const now = local();
+    const clock = $("[data-clock]");
+    clock.textContent = `${now.date} ${now.time}`;
+    clock.setAttribute("datetime", now.iso);
+    /* Minutes until the next drop; a drop is "live" for its first hour */
+    const minutes = now.day * 1440 + now.h * 60 + now.m;
+    const dropAt = PLACE.drop.day * 1440 + PLACE.drop.hour * 60;
+    let wait = (dropAt - minutes + 10080) % 10080;
+    const live = (minutes - dropAt + 10080) % 10080 < 60;
+    const countdown = $("[data-countdown]");
+    countdown.className = live ? "live" : "";
+    countdown.textContent = live ? "(live now)" : `(in ${Math.floor(wait / 1440)}d ${Math.floor((wait % 1440) / 60)}h ${String(wait % 60).padStart(2, "0")}m)`;
+    /* Opening hours: "1-6 11-19, 0 12-18" = monday to saturday 11 to 19, sunday 12 to 18 */
+    $$("[data-hours]").forEach((shop) => {
+      const open = shop.dataset.hours.split(",").some((rule) => {
+        const [days, hours] = rule.trim().split(" ");
+        const [d1, d2 = d1] = days.split("-").map(Number);
+        const [h1, h2] = hours.split("-").map(Number);
+        return now.day >= d1 && now.day <= d2 && now.h >= h1 && now.h < h2;
+      });
+      const label = $("[data-now]", shop);
+      label.textContent = open ? "open now" : "closed now";
+      label.classList.toggle("open", open);
+    });
+  }
+  tick();
+  setInterval(tick, 20000);
+
+  /* ---------- Products: read the tiles once ---------- */
+  const tiles = $$("[data-tiles] > li");
+  tiles.forEach((li) => $(".nm", li).append(`, ${euro(li.dataset.p)}`));
+  const product = (slug) => {
+    const tile = tiles.find((li) => li.dataset.slug === slug);
+    if (!tile || !ITEMS[slug]) return null;
+    const [col, sizes, out, desc] = ITEMS[slug];
+    const img = $("img", tile);
+    return { slug, tile, name: $(".nm", tile).firstChild.textContent, k: tile.dataset.k, price: Number(tile.dataset.p), col, desc, src: img.getAttribute("src"), alt: img.alt, sizes: sizes.split(" "), out: out ? out.split(" ") : [] };
+  };
+
+  /* ---------- Router: #/view, #/view/<slug> and ?query; state first, so it works when the frame refuses URL changes ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const CHILD = { news: "news", shop: "item" };
+  const titles = {
+    home: "corvo: skate and clothing, lisbon", news: "news · corvo", archive: "archive · corvo", preview: "fall/winter 2026 preview · corvo",
+    lookbook: "fall/winter 2026 lookbook · corvo", shop: "shop · corvo", cart: "cart · corvo", about: "about · corvo", stores: "stores · corvo",
+    contact: "contact · corvo", faq: "f.a.q. · corvo", "mailing-list": "mailing list · corvo", legal: "terms and privacy · corvo", "404": "not found · corvo",
+  };
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", slug: "", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    const [view = "", slug = ""] = path.split("/");
+    return { view: slug ? (CHILD[view] ? CHILD[view] : "404") : view || "home", slug, params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    let name = views.has(route.view) ? route.view : "404";
+    if (name === "news" && !renderStory(route.slug)) name = "404";
+    if (name === "item" && !renderItem(route.slug)) name = "404";
+    if (name === "shop") filterShop(route.params.get("cat") || "all");
+    if (name === "lookbook") renderLook(Number(route.params.get("look")) || 1);
+    if (name === "cart") renderCart();
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    root.classList.toggle("on-home", name === "home");
+    document.title = titles[name] || titles.home;
+    const active = name === "item" ? "shop" : name;
+    const cat = name === "shop" ? route.params.get("cat") || "all" : "";
+    $$(".row a, .foot a, .cats a").forEach((a) => {
+      const target = parse(a.getAttribute("href"));
+      let here;
+      if (a.closest(".cats")) here = target.params.get("cat") === cat;
+      else if (target.params.get("cat")) here = name === "shop" && target.params.get("cat") === cat;
+      else here = target.view === active && !target.params.get("to") && !(cat === "new" && a.closest(".row"));
+      if (here) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const to = route.params.get("to");
+    const anchor = to && document.getElementById(to);
+    if (anchor) anchor.scrollIntoView({ block: "start" }); else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link || event.metaKey || event.ctrlKey) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); go(href); }
+    else if (href.length > 1) {
+      const target = document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ block: "start" }); target.focus?.({ preventScroll: true }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- News ---------- */
+  const N = (key) => $(`[data-n="${key}"]`);
+  const first = { img: N("img").getAttribute("src"), alt: N("img").alt, body: N("body").innerHTML, avail: N("avail").textContent };
+  function renderStory(slug) {
+    const i = slug ? NEWS.findIndex((s) => s.s === slug) : 0;
+    if (i < 0) return false;
+    const s = NEWS[i];
+    N("img").src = i === 0 ? first.img : s.img;
+    N("img").alt = i === 0 ? first.alt : s.alt;
+    N("img").classList.remove("swap"); void N("img").offsetWidth; N("img").classList.add("swap");
+    N("date").textContent = s.d;
+    N("title").textContent = s.t;
+    if (i === 0) N("body").innerHTML = first.body; else N("body").replaceChildren(...s.p.map((text) => make("p", "", text)));
+    const avail = i === 0 ? first.avail : s.a;
+    N("avail").textContent = avail;
+    N("avail").hidden = !avail;
+    N("pos").textContent = `${i + 1} of ${NEWS.length}`;
+    N("prev").setAttribute("href", `#/news/${NEWS[(i - 1 + NEWS.length) % NEWS.length].s}`);
+    N("next").setAttribute("href", `#/news/${NEWS[(i + 1) % NEWS.length].s}`);
+    titles.news = `${s.t} · corvo`;
+    return true;
+  }
+
+  /* ---------- Archive: rows from NEWS, filter words with counts ---------- */
+  $("[data-rows]").replaceChildren(...NEWS.map((s) => {
+    const li = make("li");
+    li.dataset.k = s.k;
+    const a = make("a");
+    a.href = `#/news/${s.s}`;
+    a.append(make("time", "", s.d), make("span", "t", s.t), make("span", "k", s.k));
+    li.append(a);
+    return li;
+  }));
+  function applyFilter(group, value) {
+    const bar = $(`[data-filter="${group}"]`);
+    const buttons = $$("button", bar);
+    const chosen = buttons.some((b) => b.dataset.value === value) ? value : "all";
+    buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.value === chosen)));
+    let shown = 0;
+    $$("[data-rows] > li").forEach((li) => { li.hidden = !(chosen === "all" || li.dataset.k === chosen); if (!li.hidden) shown += 1; });
+    $(`[data-count-of="${group}"]`).textContent = `${shown} ${shown === 1 ? "story" : "stories"}`;
+    $(`[data-empty="${group}"]`).hidden = shown > 0;
+  }
+  $$("[data-filter] button").forEach((button) => {
+    const value = button.dataset.value;
+    button.append(make("span", "n", String(value === "all" ? NEWS.length : NEWS.filter((s) => s.k === value).length)));
+    button.addEventListener("click", () => applyFilter(button.closest("[data-filter]").dataset.filter, value));
+  });
+  $$("[data-reset]").forEach((button) => button.addEventListener("click", () => applyFilter(button.dataset.reset, "all")));
+
+  /* ---------- Preview wall: every product as a close crop; names appear on point ---------- */
+  const peek = $("[data-peek]");
+  const wallItems = tiles.map((li) => product(li.dataset.slug));
+  const columns = 6;
+  const filled = wallItems.concat(wallItems.slice(0, (columns - (wallItems.length % columns)) % columns));
+  $("[data-wall]").replaceChildren(...filled.map((p, n) => {
+    const li = make("li");
+    const a = make("a");
+    a.href = `#/shop/${p.slug}`;
+    a.setAttribute("aria-label", `${p.name}, ${euro(p.price)}`);
+    const img = Object.assign(make("img"), { src: p.src, alt: "", width: 400, height: 400 });
+    const [x, y] = CROP[p.slug] || ["50%", "45%"];
+    img.style.setProperty("--ox", n >= wallItems.length ? `${100 - parseFloat(x)}%` : x);
+    img.style.setProperty("--oy", y);
+    a.append(img);
+    const say = () => { peek.textContent = `${p.name}, ${p.col}, ${p.tile.hasAttribute("data-out") ? "sold out" : euro(p.price)}`; };
+    a.addEventListener("pointerenter", say);
+    a.addEventListener("focus", say);
+    li.append(a);
+    return li;
+  }));
+  $("[data-wall]").addEventListener("pointerleave", () => { peek.innerHTML = "&nbsp;"; });
+  $('[data-count-of="preview"]').textContent = `${wallItems.length} pieces`;
+
+  /* ---------- Lookbook ---------- */
+  const L = (key) => $(`[data-l="${key}"]`);
+  const thumbs = $$("[data-thumbs] a");
+  function renderLook(n) {
+    const i = Math.min(Math.max(1, n), thumbs.length) - 1;
+    const img = $("img", thumbs[i]);
+    L("img").src = img.getAttribute("src");
+    L("img").alt = img.alt;
+    L("img").classList.remove("swap"); void L("img").offsetWidth; L("img").classList.add("swap");
+    thumbs.forEach((a, k) => { if (k === i) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    L("pos").textContent = `${i + 1} of ${thumbs.length}`;
+    L("prev").setAttribute("href", `#/lookbook?look=${((i - 1 + thumbs.length) % thumbs.length) + 1}`);
+    L("next").setAttribute("href", `#/lookbook?look=${((i + 1) % thumbs.length) + 1}`);
+    L("items").replaceChildren(...(LOOKS[i] || []).map(product).filter(Boolean).map((p) => {
+      const li = make("li");
+      const a = make("a", "", p.name);
+      a.href = `#/shop/${p.slug}`;
+      li.append(a);
+      return li;
+    }));
+  }
+  document.addEventListener("keydown", (event) => {
+    if (current?.dataset.view !== "lookbook" || event.target.closest("input, select, textarea") || !["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+    go(L(event.key === "ArrowLeft" ? "prev" : "next").getAttribute("href"));
+  });
+
+  /* ---------- Shop: categories filter the tiles ---------- */
+  function filterShop(cat) {
+    const known = cat === "all" || cat === "new" || $(`.cats a[href="#/shop?cat=${CSS.escape(cat)}"]`);
+    const chosen = known ? cat : "all";
+    let shown = 0;
+    tiles.forEach((li) => {
+      const match = chosen === "all" || (chosen === "new" ? li.hasAttribute("data-new") : li.dataset.k === chosen);
+      li.hidden = !match;
+      if (match) shown += 1;
+    });
+    $("[data-shop-title]").textContent = chosen === "tops" ? "tops/sweaters" : chosen;
+    $('[data-count-of="shop"]').textContent = `${shown} ${shown === 1 ? "piece" : "pieces"}`;
+    $('[data-empty="shop"]').hidden = shown > 0;
+  }
+
+  /* ---------- Product page ---------- */
+  const I = (key) => $(`[data-i="${key}"]`);
+  const cartForm = $('[data-form="cart"]');
+  const sizeSelect = $("#size");
+  let item = null;
+  function renderItem(slug) {
+    const p = product(slug);
+    if (!p) return false;
+    item = p;
+    const soldOut = p.tile.hasAttribute("data-out");
+    I("img").src = p.src;
+    I("img").alt = p.alt;
+    I("name").textContent = p.name;
+    I("col").textContent = p.col;
+    I("desc").textContent = p.desc;
+    I("price").textContent = euro(p.price);
+    const same = tiles.filter((li) => li.dataset.k === p.k);
+    I("rel").replaceChildren(...same.map((li) => {
+      const q = product(li.dataset.slug);
+      const row = make("li");
+      const a = make("a");
+      a.href = `#/shop/${q.slug}`;
+      a.setAttribute("aria-label", `${q.name}, ${q.col}`);
+      if (q.slug === p.slug) a.setAttribute("aria-current", "page");
+      a.append(Object.assign(make("img"), { src: q.src, alt: "", width: 400, height: 400 }));
+      row.append(a);
+      return row;
+    }));
+    I("rel").hidden = same.length < 2;
+    const one = p.sizes.length === 1;
+    sizeSelect.replaceChildren(...(one ? [] : [Object.assign(make("option", "", "choose"), { value: "" })]), ...p.sizes.map((s) => {
+      const out = soldOut || p.out.includes(s);
+      return Object.assign(make("option", "", out ? `${s}, sold out` : s), { value: s, disabled: out });
+    }));
+    if (one && !soldOut) sizeSelect.value = p.sizes[0];
+    sizeSelect.removeAttribute("aria-invalid");
+    $("#size-e").textContent = "";
+    I("add").disabled = soldOut;
+    I("add").textContent = soldOut ? "sold out" : "add to cart";
+    const next = same[(same.findIndex((li) => li.dataset.slug === slug) + 1) % same.length];
+    I("next").setAttribute("href", `#/shop/${next.dataset.slug}`);
+    I("next").textContent = `next ${ONE[p.k] || "piece"} ›`;
+    $("[data-added]").hidden = true;
+    titles.item = `${p.name} · corvo`;
+    return true;
+  }
+
+  /* ---------- Cart (kept in the browser; checkout needs a real shop behind it) ---------- */
+  const readCart = () => { try { return JSON.parse(store.get("cv-cart") || "[]").filter((line) => product(line.slug)); } catch { return []; } };
+  const writeCart = (lines) => { store.set("cv-cart", JSON.stringify(lines)); count(); };
+  function count() { $("[data-count]").textContent = String(readCart().reduce((sum, line) => sum + line.qty, 0)); }
+  function renderCart() {
+    const lines = readCart();
+    $("[data-cart-empty]").hidden = lines.length > 0;
+    $("[data-cart-full]").hidden = lines.length === 0;
+    $("[data-checkout-status]").hidden = true;
+    let sub = 0;
+    $("[data-lines]").replaceChildren(...lines.map((line, n) => {
+      const p = product(line.slug);
+      sub += p.price * line.qty;
+      const li = make("li", "line");
+      const pic = Object.assign(make("img"), { src: p.src, alt: "", width: 400, height: 400 });
+      const text = make("div");
+      const name = make("a", "t", p.name);
+      name.href = `#/shop/${p.slug}`;
+      text.append(name, make("p", "muted", `${p.col}, ${line.size}`));
+      const qty = make("div", "qty");
+      const minus = Object.assign(make("button", "", "-"), { type: "button" });
+      const plus = Object.assign(make("button", "", "+"), { type: "button" });
+      minus.setAttribute("aria-label", `One fewer ${p.name}`);
+      plus.setAttribute("aria-label", `One more ${p.name}`);
+      const step = (d) => { const all = readCart(); all[n].qty = Math.min(9, all[n].qty + d); writeCart(all[n].qty > 0 ? all : all.filter((_, k) => k !== n)); renderCart(); };
+      minus.addEventListener("click", () => step(-1));
+      plus.addEventListener("click", () => step(1));
+      qty.append(minus, make("span", "", String(line.qty)), plus);
+      const price = make("p", "lp", euro(p.price * line.qty));
+      li.append(pic, text, qty, price);
+      return li;
+    }));
+    $("[data-sub]").textContent = euro(sub);
+    $("[data-total]").textContent = euro(sub);
+  }
+  $("[data-checkout]").addEventListener("click", () => {
+    const status = $("[data-checkout-status]");
+    status.textContent = "checkout opens when the shop is connected to a payment provider. nothing has been charged.";
+    status.hidden = false;
+    status.classList.remove("typed"); void status.offsetWidth; status.classList.add("typed");
+  });
+  count();
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "That does not look like an email address.", tooShort: "A little more, please.", patternMismatch: "That does not look right." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const tooShort = field.minLength > 0 && field.value.trim().length > 0 && field.value.trim().length < field.minLength;
+    const problem = tooShort ? "tooShort" : Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? field.dataset[problem] || messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  const readable = (form, name) => {
+    const field = form.elements[name];
+    if (!field) return "";
+    if (field.tagName === "SELECT") return field.selectedOptions[0]?.textContent ?? "";
+    return (field.value || "").trim();
+  };
+  $$("form[data-form]").forEach((form) => {
+    form.addEventListener("submit", (event) => event.preventDefault());
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    const button = $("[type=submit]", form);
+    const fields = $$("[aria-describedby]", form);
+    fields.forEach((field) => {
+      field.addEventListener(field.tagName === "SELECT" || field.type === "checkbox" ? "change" : "blur", () => checkField(field));
+      field.addEventListener("input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+    });
+    if (form.dataset.form === "cart") {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (!checkField(sizeSelect)) { sizeSelect.focus(); return; }
+        const lines = readCart();
+        const same = lines.find((line) => line.slug === item.slug && line.size === sizeSelect.value);
+        if (same) same.qty = Math.min(9, same.qty + 1); else lines.push({ slug: item.slug, size: sizeSelect.value, qty: 1 });
+        writeCart(lines);
+        const status = $("[data-added]", form);
+        status.textContent = `added: ${item.name}, ${sizeSelect.value}. cart (${$("[data-count]").textContent}).`;
+        status.hidden = false;
+        status.classList.remove("typed"); void status.offsetWidth; status.classList.add("typed");
+      });
+      return;
+    }
+    const label = button.textContent;
+    const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (!fields.map(checkField).every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "sending...";
+      setTimeout(() => {
+        $$("[data-echo]", success).forEach((el) => { el.textContent = readable(form, el.dataset.echo); });
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+        button.disabled = false;
+        button.textContent = label;
+      }, 500);
+    });
+    $("[data-again]", success)?.addEventListener("click", () => {
+      form.reset();
+      fields.forEach((field) => { field.removeAttribute("aria-invalid"); document.getElementById(field.getAttribute("aria-describedby")).textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      $("input", form).focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" width="320" height="180">
+<defs>
+<pattern id="warp" width="5" height="10" patternUnits="userSpaceOnUse"><path d="M2.5 0v10" stroke="#f1e4c8" stroke-width="1" opacity=".55"/></pattern>
+</defs>
+<rect width="320" height="180" fill="#211311"/>
+<rect x="100" y="24" width="120" height="132" fill="url(#warp)"/>
+<rect x="100" y="70" width="120" height="12" fill="#c8312a"/>
+<rect x="100" y="82" width="120" height="6" fill="#e3a43a"/>
+<rect x="100" y="88" width="120" height="14" fill="#2b7c78"/>
+<rect x="100" y="102" width="120" height="5" fill="#f1e4c8"/>
+<rect x="100" y="107" width="120" height="12" fill="#c8312a"/>
+<rect x="100" y="119" width="120" height="8" fill="#e3a43a"/>
+<rect x="100" y="127" width="120" height="29" fill="#8f2a22"/>
+<path d="M100 70h120M100 88h120M100 107h120M100 127h120" stroke="#211311" stroke-width=".8" opacity=".6"/>
+<path d="M100 76h120M100 95h120M100 113h120M100 140h120" stroke="#f1e4c8" stroke-width=".6" stroke-dasharray="3 2" opacity=".35"/>
+<g fill="#6b452b"><rect x="84" y="14" width="152" height="12" rx="3"/><rect x="84" y="154" width="152" height="12" rx="3"/><rect x="80" y="10" width="10" height="164" rx="3"/><rect x="230" y="10" width="10" height="164" rx="3"/></g>
+<path d="M98 60l130-6" stroke="#d9b98a" stroke-width="4" stroke-linecap="round"/>
+</svg>

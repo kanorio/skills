@@ -1,0 +1,1282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Elvane · Tailoring, fragrance and jewellery from a Paris atelier</title>
+<meta name="description" content="Elvane is a small Paris house making tailoring, fragrance and gold jewellery by hand, with made-to-measure appointments in its atelier.">
+<meta property="og:title" content="Elvane · Paris atelier">
+<meta property="og:description" content="Tailoring, fragrance and gold jewellery, made by hand in a Paris atelier.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/josefin-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts: a geometric display face for the wordmark and plate titles, a plain grotesque for everything else ---------- */
+@font-face { font-family: "Josefin Sans"; src: url("fonts/josefin-sans-latin-wght-normal.woff2") format("woff2"); font-weight: 100 700; font-display: swap; }
+@font-face { font-family: "Schibsted Grotesk"; src: url("fonts/schibsted-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 400 900; font-display: swap; }
+
+/* ---------- Tokens: white (light, default). Black and white only; colour lives in the photographs ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);
+  --surface: oklch(96.8% 0 0);      /* product tiles, quiet bands */
+  --surface-2: oklch(93.5% 0 0);
+  --text: oklch(0% 0 0);
+  --text-muted: oklch(45% 0 0);
+  --border: oklch(87% 0 0);         /* hairlines */
+  --accent: oklch(0% 0 0);          /* the solid black button */
+  --accent-text: oklch(100% 0 0);
+  --error: oklch(50% 0.17 27);
+  --tile-glow: oklch(100% 0 0 / 0);
+  --foot-bg: oklch(0% 0 0); --foot-text: oklch(100% 0 0); --foot-muted: oklch(72% 0 0); --foot-line: oklch(30% 0 0);
+  --display: "Josefin Sans", Futura, "Century Gothic", "Avenir Next", sans-serif;
+  --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --fs-display: clamp(2rem, 1.3rem + 3.2vw, 4.25rem);
+  --fs-h1: clamp(2rem, 1.45rem + 1.9vw, 3.25rem);
+  --fs-h2: clamp(1.5rem, 1.2rem + 1vw, 2.25rem);
+  --fs-h3: 0.875rem;
+  --fs-body: 0.9375rem;
+  --fs-small: 0.8125rem;
+  --fs-label: 0.6875rem;
+  --track: 0.14em;
+  --page: 1440px;
+  --gutter: clamp(16px, 3.3vw, 48px);
+  --sec: clamp(64px, 9vw, 128px);
+  --hh: 64px;                       /* header bar; the category row adds 40px on wide screens */
+  --fast: 160ms; --base: 360ms; --slow: 900ms;
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+/* ---------- Tokens: black (dark). Chosen by the toggle, or by the system without JavaScript ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0% 0 0); --surface: oklch(15.5% 0 0); --surface-2: oklch(20% 0 0); --text: oklch(100% 0 0); --text-muted: oklch(72% 0 0);
+  --border: oklch(31% 0 0); --accent: oklch(100% 0 0); --accent-text: oklch(0% 0 0); --error: oklch(72% 0.15 27); --tile-glow: oklch(100% 0 0 / 0.09);
+  --foot-bg: oklch(9% 0 0); --foot-line: oklch(26% 0 0);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: oklch(0% 0 0); --surface: oklch(15.5% 0 0); --surface-2: oklch(20% 0 0); --text: oklch(100% 0 0); --text-muted: oklch(72% 0 0);
+    --border: oklch(31% 0 0); --accent: oklch(100% 0 0); --accent-text: oklch(0% 0 0); --error: oklch(72% 0.15 27); --tile-glow: oklch(100% 0 0 / 0.09);
+    --foot-bg: oklch(9% 0 0); --foot-line: oklch(26% 0 0);
+  }
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--hh) + 56px); }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs-body)/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg, video { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-underline-offset: 0.28em; text-decoration-thickness: 1px; }
+h1, h2, h3 { margin: 0; font-weight: 400; line-height: 1.1; text-wrap: balance; }
+p { margin: 0 0 1em; text-wrap: pretty; }
+ul, ol, dl, dd, figure, fieldset { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+fieldset { padding: 0; border: 0; min-width: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 1px solid var(--text); outline-offset: 3px; }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 60; padding: 12px 18px; background: var(--accent); color: var(--accent-text); font: 600 var(--fs-label) var(--sans); letter-spacing: var(--track); text-transform: uppercase; }
+.skip:focus { top: 12px; }
+.wrap { max-width: var(--page); margin-inline: auto; padding-inline: var(--gutter); }
+.narrow { max-width: 720px; margin-inline: auto; }
+.sec { padding-block: var(--sec); }
+.center { text-align: center; }
+.muted { color: var(--text-muted); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.js [data-view]:not(.is-active) { display: none; }
+.needs-js { display: none; }
+.js .needs-js { display: block; }
+
+/* ---------- Type: uppercase geometric titles, small tracked labels, a plain reading face ---------- */
+.kicker { margin: 0 0 14px; font: 600 var(--fs-label)/1.4 var(--sans); letter-spacing: var(--track); text-transform: uppercase; }
+.display, .h1, .h2 { font-family: var(--display); font-weight: 500; text-transform: uppercase; letter-spacing: 0.02em; }
+.display { font-size: var(--fs-display); line-height: 1.02; }
+.h1 { font-size: var(--fs-h1); line-height: 1.04; }
+.h2 { font-size: var(--fs-h2); line-height: 1.08; margin-bottom: 0.5em; }
+.h3 { font: 600 var(--fs-h3)/1.35 var(--sans); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+.lead { font-size: clamp(1.0625rem, 0.98rem + 0.35vw, 1.25rem); line-height: 1.55; }
+.small { font-size: var(--fs-small); }
+.head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 32px; margin-bottom: clamp(28px, 4vw, 48px); }
+.head .h2 { margin: 0; }
+
+/* ---------- Buttons: sharp rectangles, uppercase labels. Black on the page, white on a photograph ---------- */
+.btn, .btn-line, .btn-plate { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 28px; border: 1px solid var(--accent); border-radius: 0; background: var(--accent); color: var(--accent-text); font: 600 0.75rem/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease); }
+.btn:hover { background: transparent; color: var(--text); }
+.btn:disabled { opacity: 0.55; cursor: progress; }
+.btn.wide { width: 100%; }
+.btn-line { background: transparent; color: var(--text); border-color: var(--text); }
+.btn-line:hover { background: var(--text); color: var(--bg); }
+.btn-plate { background: oklch(100% 0 0); color: oklch(0% 0 0); border-color: oklch(100% 0 0); }
+.btn-plate:hover { background: transparent; color: oklch(100% 0 0); }
+.btn-plate:focus-visible { outline-color: oklch(100% 0 0); }
+.tlink { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0; border: 0; background: none; font: 600 0.75rem/1.3 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.5em; }
+.tlink:hover { text-decoration-color: transparent; }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-width: 44px; height: 44px; padding: 0 8px; border: 0; background: none; color: inherit; font: 600 var(--fs-label)/1 var(--sans); letter-spacing: var(--track); text-transform: uppercase; text-decoration: none; }
+.icon-btn svg { width: 20px; height: 20px; flex: none; }
+.ico { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.25; }
+.icon-btn svg, .ico { fill: none; stroke: currentColor; stroke-width: 1.25; }
+
+/* ---------- Header: a white bar with the wordmark in the middle, a category row under it on wide screens ---------- */
+.site-header { position: sticky; top: 0; z-index: 40; background: var(--bg); border-bottom: 1px solid transparent; transition: border-color var(--base) var(--ease); }
+.site-header.scrolled { border-bottom-color: var(--border); }
+.bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: var(--hh); }
+.bar-l, .bar-r { display: flex; align-items: center; gap: 2px; }
+.bar-r { justify-content: flex-end; }
+.brand { padding-left: 0.42em; font: 600 1.625rem/1 var(--display); letter-spacing: 0.42em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+.bag-count { min-width: 18px; height: 18px; padding: 0 4px; background: var(--text); color: var(--bg); font: 600 0.625rem/18px var(--sans); letter-spacing: 0; text-align: center; }
+.bag-count:empty { display: none; }
+.nav { display: flex; justify-content: center; gap: clamp(20px, 2.6vw, 40px); height: 40px; overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
+.nav a { display: inline-flex; align-items: center; height: 40px; padding-bottom: 6px; font: 600 var(--fs-label)/1 var(--sans); letter-spacing: var(--track); text-transform: uppercase; text-decoration: none; border-bottom: 1px solid transparent; }
+.nav a:hover, .nav a[aria-current="page"] { border-bottom-color: currentColor; }
+.menu-label { display: none; }
+.js .site-header.compact .nav { display: none; }
+@media (min-width: 900px) { .menu-label { display: inline; } }
+@media (max-width: 560px) { .brand { font-size: 1.25rem; letter-spacing: 0.36em; padding-left: 0.36em; } .hide-s { display: none; } }
+
+/* ---------- Menu: a full-height panel from the left with the categories in large type ---------- */
+.menu { width: min(440px, 100%); max-width: 100%; height: 100%; max-height: 100%; margin: 0; padding: 0; border: 0; background: var(--bg); color: var(--text); }
+.menu::backdrop { background: oklch(0% 0 0 / 0.42); }
+.menu[open] { display: flex; flex-direction: column; animation: slide-in var(--base) var(--ease); }
+.menu-top { display: flex; align-items: center; justify-content: space-between; height: var(--hh); padding-inline: var(--gutter); border-bottom: 1px solid var(--border); }
+.menu-links { padding: 24px var(--gutter); }
+.menu-links a { display: block; padding: 10px 0; font: 500 1.5rem/1.2 var(--display); text-transform: uppercase; letter-spacing: 0.03em; text-decoration: none; }
+.menu-links a:hover, .menu-links a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; }
+.menu-more { margin-top: auto; padding: 24px var(--gutter) 32px; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+.menu-more a { padding: 8px 0; font-size: var(--fs-small); text-decoration: none; }
+
+/* ---------- Plates: a photograph that fills the screen, a small category line, a large name, one white button ---------- */
+.plate { position: relative; display: grid; align-items: end; justify-items: center; min-height: calc(100svh - var(--hh) - 40px); overflow: hidden; background: oklch(18% 0 0); color: oklch(100% 0 0); isolation: isolate; }
+.plate-media { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 50%); }
+.plate::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, oklch(0% 0 0 / 0.6), oklch(0% 0 0 / 0.16) 45%, oklch(0% 0 0 / 0) 70%); }
+.plate-copy { display: grid; justify-items: center; gap: 18px; max-width: 900px; padding: 0 var(--gutter) clamp(40px, 7vh, 80px); text-align: center; }
+.plate-copy .kicker { margin: 0; }
+.plate-copy .display, .plate-copy .h1 { margin: 0; }
+.plate-copy .btn-plate { margin-top: 10px; }
+.plate-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--bg); }
+.plate.half .display { font-size: var(--fs-h2); }
+.plate.band { min-height: clamp(320px, 46vh, 480px); }
+.plates { display: grid; gap: 2px; }
+@media (max-width: 760px) { .plate-pair { grid-template-columns: 1fr; } .plate { min-height: calc(100svh - var(--hh) - 24px); } .plate.band { min-height: 360px; } }
+
+/* ---------- Product tiles: a pale ground, the piece centred, the name in small capitals underneath ---------- */
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px 2px; }
+.tile a { display: block; text-decoration: none; }
+.tile-media { display: block; position: relative; aspect-ratio: 4 / 5; background: radial-gradient(60% 55% at 50% 50%, var(--tile-glow), transparent), var(--surface); overflow: hidden; }
+.tile-media img { width: 100%; height: 100%; object-fit: contain; padding: 8%; transition: transform var(--slow) var(--ease); }
+.tile a:hover img { transform: scale(1.035); }
+.tile-text { display: grid; gap: 3px; padding: 14px 12px 0; }
+.tile-name { font: 600 var(--fs-h3)/1.35 var(--sans); letter-spacing: 0.06em; text-transform: uppercase; }
+.tile-meta { color: var(--text-muted); font-size: var(--fs-small); }
+.tile-price { font-size: var(--fs-small); }
+.tag { position: absolute; left: 12px; top: 12px; font: 600 0.625rem/1 var(--sans); letter-spacing: var(--track); text-transform: uppercase; }
+@media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 2px; } .tile-text { padding-inline: 8px; } }
+
+/* ---------- Rail: a sideways row of tiles with two square arrow buttons ---------- */
+.rail { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 6px) / 4); gap: 2px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.rail > * { scroll-snap-align: start; }
+.rail-btns { display: flex; gap: 8px; }
+.rail-btns button { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--text); background: none; }
+.rail-btns button:disabled { opacity: 0.3; cursor: default; }
+@media (max-width: 1100px) { .rail { grid-auto-columns: calc((100% - 4px) / 3); } }
+@media (max-width: 760px) { .rail { grid-auto-columns: 70%; } }
+
+/* ---------- Filters: a row of text tabs with a count, a sort and a search field ---------- */
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding-block: 18px; margin-bottom: 32px; border-bottom: 1px solid var(--border); }
+.chips { display: flex; gap: 6px 24px; overflow-x: auto; scrollbar-width: none; position: relative; }
+.chip { flex: none; min-height: 40px; padding: 0; border: 0; border-bottom: 1px solid transparent; background: none; font: 600 var(--fs-label)/1 var(--sans); letter-spacing: var(--track); text-transform: uppercase; color: var(--text-muted); }
+.chip:hover { color: var(--text); }
+.chip[aria-pressed="true"] { color: var(--text); border-bottom-color: var(--text); }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.count { color: var(--text-muted); font-size: var(--fs-small); white-space: nowrap; }
+.mini { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border: 1px solid var(--border); background: var(--bg); font-size: var(--fs-small); }
+.mini input, .mini select { min-width: 0; width: 100%; height: 38px; border: 0; background: none; outline: none; font-size: var(--fs-small); }
+.mini:focus-within { border-color: var(--text); }
+.empty { padding: 72px 0; text-align: center; }
+@media (max-width: 760px) { .tools { width: 100%; } .tools .mini:first-child { flex: 1 1 100%; } }
+
+/* ---------- Product page: the picture large on the left, few words on the right ---------- */
+.pdp { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 88px); padding-block: 32px var(--sec); }
+.gallery-main { aspect-ratio: 4 / 5; background: radial-gradient(60% 55% at 50% 50%, var(--tile-glow), transparent), var(--surface); overflow: hidden; }
+.gallery-main img { width: 100%; height: 100%; object-fit: contain; padding: 7%; }
+.gallery-main img.cover { object-fit: cover; padding: 0; }
+.gallery-main img.swap { animation: fade var(--base) var(--ease); }
+.thumbs { display: flex; gap: 2px; margin-top: 2px; }
+.thumb { flex: 1; max-width: 120px; aspect-ratio: 4 / 5; padding: 0; border: 1px solid transparent; background: var(--surface); overflow: hidden; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb[aria-pressed="true"] { border-color: var(--text); }
+.pdp-info { align-self: start; padding-top: 24px; max-width: 460px; }
+.pdp-info .h1 { font-size: var(--fs-h2); margin-bottom: 12px; }
+.ref { color: var(--text-muted); font-size: var(--fs-small); }
+.price { margin: 18px 0 24px; font-size: 1.0625rem; }
+.opt-label { display: flex; justify-content: space-between; margin-bottom: 10px; font: 600 var(--fs-label)/1 var(--sans); letter-spacing: var(--track); text-transform: uppercase; }
+.opts { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 28px; }
+.opt { min-width: 52px; height: 44px; padding: 0 14px; border: 1px solid var(--border); background: none; font-size: var(--fs-small); }
+.opt:hover { border-color: var(--text); }
+.opt[aria-pressed="true"] { border-color: var(--text); background: var(--text); color: var(--bg); }
+.note { min-height: 1.6em; margin: 12px 0 0; font-size: var(--fs-small); }
+.acc { margin-top: 32px; border-top: 1px solid var(--border); }
+.acc details { border-bottom: 1px solid var(--border); }
+.acc summary, .faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 56px; cursor: pointer; list-style: none; font: 600 0.75rem/1.3 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; }
+.acc summary::-webkit-details-marker, .faq summary::-webkit-details-marker { display: none; }
+.acc summary svg, .faq summary svg { transition: transform var(--base) var(--ease); }
+.acc details[open] summary svg, .faq details[open] summary svg { transform: rotate(45deg); }
+.acc details > div { padding-bottom: 20px; color: var(--text-muted); font-size: var(--fs-small); }
+.acc ul { list-style: disc; padding-left: 1.2em; }
+@media (max-width: 860px) { .pdp { grid-template-columns: 1fr; padding-top: 0; } .pdp-gallery { margin-inline: calc(var(--gutter) * -1); } .thumbs { padding-inline: var(--gutter); } }
+
+/* ---------- Bag ---------- */
+.bag { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: clamp(24px, 5vw, 80px); align-items: start; }
+.line { display: grid; grid-template-columns: 112px minmax(0, 1fr) auto; gap: 20px; padding-block: 20px; border-bottom: 1px solid var(--border); }
+.line:first-child { border-top: 1px solid var(--border); }
+.line .tile-media { aspect-ratio: 4 / 5; }
+.qty { display: inline-flex; align-items: center; border: 1px solid var(--border); margin-top: 12px; }
+.qty button { width: 36px; height: 36px; display: grid; place-items: center; border: 0; background: none; }
+.qty output { min-width: 28px; text-align: center; font-size: var(--fs-small); }
+.summary { padding: 28px; background: var(--surface); }
+.summary dl { display: grid; grid-template-columns: 1fr auto; gap: 10px 0; margin-bottom: 24px; font-size: var(--fs-small); }
+.summary dd { text-align: right; }
+.summary dt:last-of-type, .summary dd:last-of-type { padding-top: 12px; border-top: 1px solid var(--border); font-weight: 600; }
+@media (max-width: 860px) { .bag { grid-template-columns: 1fr; } .line { grid-template-columns: 88px minmax(0, 1fr); } .line .line-price { grid-column: 2; } }
+
+/* ---------- Atelier: numbered steps, services, the appointment form ---------- */
+.statement { max-width: 30ch; margin: 0 auto; font: 400 clamp(1.5rem, 1.15rem + 1.2vw, 2.25rem)/1.3 var(--display); text-align: center; }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; counter-reset: step; }
+.step { padding-top: 20px; border-top: 1px solid var(--text); }
+.step::before { counter-increment: step; content: counter(step, decimal-leading-zero); display: block; margin-bottom: 20px; font: 200 3rem/1 var(--display); }
+.services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; }
+.service { display: grid; align-content: start; gap: 8px; padding: clamp(24px, 3vw, 40px); background: var(--surface); }
+.service .tlink { margin-top: 8px; justify-self: start; }
+@media (max-width: 960px) { .steps { grid-template-columns: 1fr 1fr; } .services { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
+
+/* ---------- Forms: square fields, labels in small capitals, errors that float under the field ---------- */
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; }
+.field { position: relative; display: grid; gap: 8px; padding-bottom: 22px; }
+.field.full, .form > .full { grid-column: 1 / -1; }
+.field > label:not(.check), .legend { font: 600 var(--fs-label)/1.2 var(--sans); letter-spacing: var(--track); text-transform: uppercase; }
+.field :where(input:not([type="radio"]):not([type="checkbox"]), select, textarea) { width: 100%; min-height: 48px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 0; background: var(--bg); font-size: 1rem; }
+.field textarea { min-height: 128px; resize: vertical; }
+.field select { appearance: none; padding-right: 40px; background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23777' stroke-width='1.2'/%3E%3C/svg%3E") right 16px center / 12px 8px no-repeat; }
+.field :where(input, select, textarea):focus { outline: none; border-color: var(--text); }
+.field [aria-invalid="true"] { border-color: var(--error) !important; }
+.err { position: absolute; left: 0; bottom: 2px; color: var(--error); font-size: 0.75rem; line-height: 1.3; }
+.opt-tag { color: var(--text-muted); font-weight: 400; letter-spacing: 0; text-transform: none; }
+.slots { display: flex; flex-wrap: wrap; gap: 6px; }
+.slot input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.slot span { display: inline-flex; align-items: center; height: 44px; padding: 0 16px; border: 1px solid var(--border); font-size: var(--fs-small); cursor: pointer; }
+.slot input:checked + span { background: var(--text); color: var(--bg); border-color: var(--text); }
+.slot input:focus-visible + span { outline: 1px solid var(--text); outline-offset: 3px; }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: var(--fs-small); }
+.check input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--text); flex: none; }
+.form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; grid-column: 1 / -1; margin-top: 6px; }
+.success { padding: clamp(28px, 4vw, 48px); border: 1px solid var(--text); }
+.success:focus { outline: none; }
+.success .h2 { margin-bottom: 12px; }
+@media (max-width: 640px) { .form { grid-template-columns: 1fr; } }
+
+/* ---------- Journal and article ---------- */
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 2px; }
+.card a { display: grid; gap: 14px; text-decoration: none; }
+.card .ph { aspect-ratio: 4 / 5; overflow: hidden; background: var(--surface); }
+.card .ph img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 50%); transition: transform var(--slow) var(--ease); }
+.card a:hover img { transform: scale(1.03); }
+.card .card-text { padding-inline: 12px; }
+.card .kicker { margin-bottom: 8px; color: var(--text-muted); }
+.card.feature { grid-column: span 2; }
+.card.feature .ph { aspect-ratio: 8 / 5; }
+@media (max-width: 960px) { .cards { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .cards { grid-template-columns: 1fr; } .card.feature { grid-column: auto; } .card.feature .ph { aspect-ratio: 4 / 5; } }
+.prose { max-width: 680px; margin-inline: auto; font-size: 1.0625rem; line-height: 1.75; }
+.prose h2 { margin: 2em 0 0.7em; font: 500 1.375rem/1.2 var(--display); text-transform: uppercase; letter-spacing: 0.03em; }
+.pull { margin: 2.2em 0; padding: 28px 0; border-block: 1px solid var(--text); font: 400 clamp(1.375rem, 1.1rem + 1vw, 1.875rem)/1.3 var(--display); text-align: center; }
+.figure-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin: 2.4em calc(var(--gutter) * -1); }
+.figure-pair img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+figcaption { padding: 10px 12px 0; color: var(--text-muted); font-size: var(--fs-small); }
+
+/* ---------- The house, contact, FAQ, legal, 404 ---------- */
+.timeline { display: grid; gap: 0; border-top: 1px solid var(--border); }
+.timeline li { display: grid; grid-template-columns: 160px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--border); }
+.timeline b { font: 300 2rem/1 var(--display); }
+.values { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+.two { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 112px); }
+.info { display: grid; gap: 32px; align-content: start; }
+.info p { margin: 0; }
+.faq { max-width: 860px; margin-inline: auto; }
+.faq h2 { margin: 48px 0 8px; }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { font: 400 1rem/1.4 var(--sans); letter-spacing: 0; text-transform: none; }
+.faq details > div { padding-bottom: 24px; color: var(--text-muted); max-width: 64ch; }
+.legal { display: grid; grid-template-columns: 220px minmax(0, 720px); gap: clamp(32px, 6vw, 96px); }
+.toc { display: grid; gap: 4px; align-content: start; }
+.toc a { padding: 6px 0; font-size: var(--fs-small); }
+.legal h2 { margin: 40px 0 12px; }
+.legal h2:first-child { margin-top: 0; }
+@media (max-width: 860px) { .timeline li { grid-template-columns: 1fr; gap: 8px; } .values, .two, .legal { grid-template-columns: 1fr; } }
+
+/* ---------- Footer: black, columns of small links, the letters signup ---------- */
+.site-footer { background: var(--foot-bg); color: var(--foot-text); border-top: 1px solid var(--foot-line); }
+.site-footer a { text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
+.foot { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.6fr); gap: 40px; padding-block: 64px 48px; }
+.foot h2 { margin-bottom: 18px; font: 600 var(--fs-label)/1.2 var(--sans); letter-spacing: var(--track); text-transform: uppercase; }
+.foot li { padding: 5px 0; font-size: var(--fs-small); color: var(--foot-muted); }
+.letters p { color: var(--foot-muted); font-size: var(--fs-small); }
+.letters .row { display: flex; align-items: flex-start; gap: 0; }
+.letters .field { flex: 1; padding-bottom: 22px; }
+.letters input { width: 100%; height: 48px; padding: 0 14px; border: 1px solid var(--foot-line); border-right: 0; background: transparent; color: var(--foot-text); }
+.letters input:focus { outline: none; border-color: var(--foot-text); }
+.letters .btn { background: var(--foot-text); color: var(--foot-bg); border-color: var(--foot-text); }
+.letters .btn:hover { background: transparent; color: var(--foot-text); }
+.letters .err { color: oklch(75% 0.14 27); }
+.letters .success { border-color: var(--foot-line); padding: 20px; }
+.foot-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding-block: 24px 32px; border-top: 1px solid var(--foot-line); color: var(--foot-muted); font-size: 0.75rem; }
+.foot-word { font: 600 1.25rem/1 var(--display); letter-spacing: 0.42em; text-transform: uppercase; color: var(--foot-text); }
+@media (max-width: 960px) { .foot { grid-template-columns: 1fr 1fr; } .letters { grid-column: 1 / -1; } }
+
+/* ---------- Motion: plate copy rises once as the plate arrives, the photograph settles. Keyframes, so they play on load ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes settle { from { transform: scale(1.06); } to { transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-in { from { transform: translateX(-100%); } to { transform: none; } }
+.js .plate:not(.in) .plate-copy { opacity: 0; }
+.plate.in .plate-copy { animation: rise var(--slow) var(--ease) both; animation-delay: 120ms; }
+.plate.in .plate-media { animation: settle 2400ms var(--ease) both; }
+.js .is-active .reveal { animation: fade var(--slow) var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .plate:not(.in) .plate-copy { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M4.5 8h15l-1 13h-13zM8.5 8V6.5a3.5 3.5 0 0 1 7 0V8"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap bar">
+    <div class="bar-l">
+      <button class="icon-btn" id="menu-open" type="button" aria-haspopup="dialog" aria-controls="menu"><svg aria-hidden="true"><use href="#i-menu"/></svg><span class="menu-label">Menu</span></button>
+      <a class="icon-btn hide-s" href="#/collection?focus=search" aria-label="Search the collection"><svg aria-hidden="true"><use href="#i-search"/></svg></a>
+    </div>
+    <a class="brand" href="#/" aria-label="Elvane, home">Elvane</a>
+    <div class="bar-r">
+      <a class="icon-btn hide-s" href="#/atelier">Book</a>
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to black"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="icon-btn" href="#/bag" aria-label="Shopping bag"><svg aria-hidden="true"><use href="#i-bag"/></svg><span class="bag-count" id="bag-count"></span></a>
+    </div>
+  </div>
+  <nav class="nav wrap" aria-label="Categories">
+    <a href="#/collection?cat=tailoring">Ready-to-wear</a>
+    <a href="#/collection?cat=fragrance">Fragrance</a>
+    <a href="#/collection?cat=jewellery">Jewellery</a>
+    <a href="#/collection?cat=accessories">Accessories</a>
+    <a href="#/atelier">Atelier</a>
+    <a href="#/journal">Journal</a>
+    <a href="#/house">The house</a>
+  </nav>
+</header>
+
+<dialog class="menu" id="menu" aria-label="Menu">
+  <div class="menu-top">
+    <a class="brand" href="#/">Elvane</a>
+    <button class="icon-btn" id="menu-close" type="button" aria-label="Close the menu" autofocus><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+  </div>
+  <nav class="menu-links" aria-label="Menu">
+    <a href="#/collection">The collection</a>
+    <a href="#/collection?cat=tailoring">Ready-to-wear</a>
+    <a href="#/collection?cat=fragrance">Fragrance</a>
+    <a href="#/collection?cat=jewellery">Jewellery</a>
+    <a href="#/collection?cat=accessories">Accessories</a>
+    <a href="#/atelier">The atelier</a>
+    <a href="#/journal">Journal</a>
+    <a href="#/house">The house</a>
+  </nav>
+  <div class="menu-more">
+    <a href="#/contact">Client care</a>
+    <a href="#/contact?at=boutiques">Boutiques</a>
+    <a href="#/faq">Questions</a>
+    <a href="#/bag">Shopping bag</a>
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ===================== HOME: stacked plates ===================== -->
+<div data-view="home">
+  <div class="plates">
+    <section class="plate" style="--pos: 50% 40%">
+      <img class="plate-media" src="images/plate-tailoring.webp" alt="A long black double-breasted coat on a tailor's dress form under a single spotlight" width="1800" height="1080">
+      <div class="plate-copy">
+        <p class="kicker">Ready-to-wear · Autumn–Winter</p>
+        <h1 class="display">The long coat</h1>
+        <a class="btn-plate" href="#/collection?cat=tailoring">Discover the collection</a>
+      </div>
+    </section>
+    <section class="plate">
+      <img class="plate-media" src="images/plate-fragrance.webp" alt="A round glass flask of amber perfume on a dark stone block, with striped sunlight on the wall behind" width="1800" height="1080">
+      <div class="plate-copy">
+        <p class="kicker">Fragrance</p>
+        <h2 class="display">Cendre, eau de parfum</h2>
+        <a class="btn-plate" href="#/product?id=cendre">Discover Cendre</a>
+      </div>
+    </section>
+    <div class="plate-pair">
+      <section class="plate half">
+        <img class="plate-media" src="images/plate-jewellery.webp" alt="A gold oval-link bracelet and a gold ring on black velvet" width="1000" height="1250">
+        <div class="plate-copy">
+          <p class="kicker">Jewellery</p>
+          <h2 class="display">Oval link</h2>
+          <a class="btn-plate" href="#/collection?cat=jewellery">Discover</a>
+        </div>
+      </section>
+      <section class="plate half">
+        <img class="plate-media" src="images/plate-leather.webp" alt="A soft black leather tote standing on a stone step in late sun" width="1000" height="1250">
+        <div class="plate-copy">
+          <p class="kicker">Accessories</p>
+          <h2 class="display">The soft tote</h2>
+          <a class="btn-plate" href="#/product?id=soft-tote">Discover</a>
+        </div>
+      </section>
+    </div>
+    <section class="plate">
+      <img class="plate-media" src="images/plate-atelier.webp" alt="Paper patterns, black wool, tailor's shears and a measuring tape on a workroom table, seen from above" width="1800" height="1080">
+      <div class="plate-copy">
+        <p class="kicker">The atelier</p>
+        <h2 class="display">Made to measure in Paris</h2>
+        <a class="btn-plate" href="#/atelier">Book an appointment</a>
+      </div>
+    </section>
+  </div>
+
+  <section class="sec wrap needs-js" aria-labelledby="new-title">
+    <div class="head">
+      <div><p class="kicker">Autumn–Winter</p><h2 class="h2" id="new-title">New this season</h2></div>
+      <div class="rail-btns">
+        <button type="button" data-rail="-1" aria-label="Previous pieces"><svg class="ico" aria-hidden="true"><use href="#i-prev"/></svg></button>
+        <button type="button" data-rail="1" aria-label="Next pieces"><svg class="ico" aria-hidden="true"><use href="#i-next"/></svg></button>
+      </div>
+    </div>
+    <ul class="rail" id="new-rail"></ul>
+  </section>
+
+  <section class="plate">
+    <img class="plate-media" src="images/plate-salon.webp" alt="An empty salon with a tall curtained window and a single chair in a pool of light" width="1800" height="1080">
+    <div class="plate-copy">
+      <p class="kicker">Journal</p>
+      <h2 class="display">A season in the workroom</h2>
+      <a class="btn-plate" href="#/story">Read the story</a>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== COLLECTION ===================== -->
+<div data-view="collection">
+  <section class="plate band" id="band">
+    <img class="plate-media" id="band-img" src="images/plate-salon.webp" alt="" width="1800" height="1080">
+    <div class="plate-copy">
+      <p class="kicker" id="band-kicker">Autumn–Winter</p>
+      <h1 class="h1" id="band-title">The collection</h1>
+    </div>
+  </section>
+  <div class="wrap sec" style="padding-top: 0">
+    <div class="toolbar">
+      <div class="chips" data-filter="cat" role="group" aria-label="Category">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-value="tailoring" aria-pressed="false">Ready-to-wear</button>
+        <button class="chip" type="button" data-value="fragrance" aria-pressed="false">Fragrance</button>
+        <button class="chip" type="button" data-value="jewellery" aria-pressed="false">Jewellery</button>
+        <button class="chip" type="button" data-value="accessories" aria-pressed="false">Accessories</button>
+      </div>
+      <div class="tools">
+        <label class="mini"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><span class="sr">Search the collection</span><input id="q" type="search" placeholder="Search" autocomplete="off"></label>
+        <label class="mini"><span class="sr">Sort by</span><select id="sort"><option value="featured">Featured</option><option value="low">Price, low to high</option><option value="high">Price, high to low</option></select></label>
+        <span class="count" data-count="cat" data-one="piece" data-many="pieces" aria-live="polite">12 pieces</span>
+      </div>
+    </div>
+    <ul class="grid" id="grid">
+      <li class="tile" data-id="long-coat" data-cat="tailoring" data-price="2900" data-new>
+        <a href="#/product?id=long-coat"><span class="tile-media"><span class="tag">New</span><img src="images/coat.webp" alt="Long double-breasted coat in black wool" width="720" height="900"></span>
+        <span class="tile-text"><span class="tile-name">Long double-breasted coat</span><span class="tile-meta">Black wool</span><span class="tile-price">€2,900</span></span></a>
+      </li>
+      <li class="tile" data-id="tailored-jacket" data-cat="tailoring" data-price="2450" data-new>
+        <a href="#/product?id=tailored-jacket"><span class="tile-media"><span class="tag">New</span><img src="images/jacket.webp" alt="Short tailored jacket in ecru wool bouclé" width="720" height="900"></span>
+        <span class="tile-text"><span class="tile-name">Short tailored jacket</span><span class="tile-meta">Ecru wool bouclé</span><span class="tile-price">€2,450</span></span></a>
+      </li>
+      <li class="tile" data-id="column-dress" data-cat="tailoring" data-price="1850">
+        <a href="#/product?id=column-dress"><span class="tile-media"><img src="images/dress.webp" alt="Sleeveless column dress in black silk crêpe" width="720" height="900"></span>
+        <span class="tile-text"><span class="tile-name">Column dress</span><span class="tile-meta">Black silk crêpe</span><span class="tile-price">€1,850</span></span></a>
+      </li>
+      <li class="tile" data-id="cendre" data-cat="fragrance" data-price="210" data-new>
+        <a href="#/product?id=cendre"><span class="tile-media"><span class="tag">New</span><img src="images/flacon-amber.webp" alt="Round glass flask of amber eau de parfum with a black cap" width="720" height="900"></span>
+        <span class="tile-text"><span class="tile-name">Cendre</span><span class="tile-meta">Eau de parfum</span><span class="tile-price">€210</span></span></a>
+      </li>
+      <li class="tile" data-id="nuit-fauve" data-cat="fragrance" data-price="260">
+        <a href="#/product?id=nuit-fauve"><span class="tile-media"><img src="images/flacon-smoke.webp" alt="Tall smoked-glass bottle with a round gold cap" width="720" height="900"></span>
+        <span class="tile-text"><span class="tile-name">Nuit Fauve</span><span class="tile-meta">Extrait, 50 ml</span><span class="tile-price">€260</span></span></a>
+      </li>
+      <li class="tile" data-id="atelier-candle" data-cat="fragrance" data-price="95">
+        <a href="#/product?id=atelier-candle"><span class="tile-media"><img src="images/candle.webp" alt="Candle in a black glass tumbler with an ivory band" width="720" height="900"></span>
+        <span class="tile-text"><span class="tile-name">Atelier candle</span><span class="tile-meta">Cedar and chalk, 220 g</span><span class="tile-price">€95</span></span></a>
+      </li>
+      <li class="tile" data-id="ellipse-ring" data-cat="jewellery" data-price="1400">
+        <a href="#/product?id=ellipse-ring"><span class="tile-media"><img src="images/ring.webp" alt="Wide oval ring in polished yellow gold" width="720" height="900"></span>
+        <span class="tile-text"><span class="tile-name">Ellipse ring</span><span class="tile-meta">18k recycled gold</span><span class="tile-price">€1,400</span></span></a>
+      </li>
+      <li class="tile" data-id="onyx-drops" data-cat="jewellery" data-price="980" data-new>
+        <a href="#/product?id=onyx-drops"><span class="tile-media"><span class="tag">New</span><img src="images/earrings.webp" alt="Pair of long black onyx drop earrings on gold studs" width="720" height="900"></span>
+        <span class="tile-text"><span class="tile-name">Onyx drop earrings</span><span class="tile-meta">Onyx and 18k gold</span><span class="tile-price">€980</span></span></a>
+      </li>
+      <li class="tile" data-id="oval-link" data-cat="jewellery" data-price="2200">
+        <a href="#/product?id=oval-link"><span class="tile-media"><img src="images/bracelet.webp" alt="Bracelet of open oval gold links" width="720" height="900"></span>
+        <span class="tile-text"><span class="tile-name">Oval link bracelet</span><span class="tile-meta">18k recycled gold</span><span class="tile-price">€2,200</span></span></a>
+      </li>
+      <li class="tile" data-id="soft-tote" data-cat="accessories" data-price="1950" data-new>
+        <a href="#/product?id=soft-tote"><span class="tile-media"><span class="tag">New</span><img src="images/tote.webp" alt="Soft black calfskin tote with two round handles" width="720" height="900"></span>
+        <span class="tile-text"><span class="tile-name">Soft tote</span><span class="tile-meta">Black calfskin</span><span class="tile-price">€1,950</span></span></a>
+      </li>
+      <li class="tile" data-id="card-holder" data-cat="accessories" data-price="290">
+        <a href="#/product?id=card-holder"><span class="tile-media"><img src="images/card-holder.webp" alt="Slim black calfskin card holder" width="720" height="900"></span>
+        <span class="tile-text"><span class="tile-name">Card holder</span><span class="tile-meta">Black calfskin</span><span class="tile-price">€290</span></span></a>
+      </li>
+      <li class="tile" data-id="silk-square" data-cat="accessories" data-price="420">
+        <a href="#/product?id=silk-square"><span class="tile-media"><img src="images/scarf.webp" alt="Folded silk square with a black border and a fine diagonal print" width="720" height="900"></span>
+        <span class="tile-text"><span class="tile-name">Silk square, Workroom print</span><span class="tile-meta">Silk twill, 90 × 90 cm</span><span class="tile-price">€420</span></span></a>
+      </li>
+    </ul>
+    <div class="empty" data-empty="cat" hidden>
+      <p class="h3">Nothing matches</p>
+      <p class="muted">Try another category or a shorter word.</p>
+      <button class="btn-line" type="button" data-reset="cat">Show everything</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PRODUCT (filled from the tile and DETAILS; the static copy is the coat) ===================== -->
+<div data-view="product">
+  <div class="wrap pdp">
+    <div class="pdp-gallery" data-gallery>
+      <div class="gallery-main"><img id="p-img" src="images/coat.webp" alt="Long double-breasted coat in black wool" width="720" height="900"></div>
+      <div class="thumbs" id="p-thumbs">
+        <button class="thumb" type="button" aria-pressed="true" data-alt="Long double-breasted coat in black wool" aria-label="Picture 1"><img src="images/coat.webp" alt="" width="720" height="900"></button>
+        <button class="thumb" type="button" aria-pressed="false" data-alt="The coat on a dress form under a spotlight" data-cover aria-label="Picture 2"><img src="images/plate-tailoring.webp" alt="" width="1800" height="1080"></button>
+        <button class="thumb" type="button" aria-pressed="false" data-alt="The workroom table where the coat is cut" data-cover aria-label="Picture 3"><img src="images/plate-atelier.webp" alt="" width="1800" height="1080"></button>
+      </div>
+    </div>
+    <div class="pdp-info">
+      <p class="kicker" id="p-cat">Ready-to-wear</p>
+      <h1 class="h1" id="p-name">Long double-breasted coat</h1>
+      <p class="ref" id="p-ref">Black wool · Ref. E26-101</p>
+      <p class="price" id="p-price">€2,900</p>
+      <p id="p-desc">Cut long and double-breasted in a dense black wool that holds its line. Six horn buttons, a deep back vent and a body lined in silk.</p>
+      <div class="opt-label"><span id="p-opt-name">Size</span><a class="muted" id="p-guide" href="#/faq?at=sizes">Size guide</a></div>
+      <div class="opts" id="p-opts" role="group" aria-label="Size">
+        <button class="opt" type="button" aria-pressed="false">34</button><button class="opt" type="button" aria-pressed="false">36</button><button class="opt" type="button" aria-pressed="false">38</button><button class="opt" type="button" aria-pressed="false">40</button><button class="opt" type="button" aria-pressed="false">42</button>
+      </div>
+      <button class="btn wide" id="add" type="button">Add to bag</button>
+      <p class="note" id="add-note" role="status"></p>
+      <a class="tlink" id="p-book" href="#/atelier?service=fitting">Book a fitting at the atelier</a>
+      <div class="acc">
+        <details open><summary>Details<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><ul id="p-details"><li>Wool, lined in silk</li><li>Horn buttons</li><li>Cut and sewn in our Paris atelier</li></ul></div></details>
+        <details><summary>Care<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p id="p-care">Dry clean only. Brush after wearing and hang on a shaped hanger. We repair every piece we make.</p></div></details>
+        <details><summary>Delivery and returns<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Complimentary delivery in two to four working days. Returns within 30 days, collected from your door. <a href="#/faq?at=delivery">More about delivery</a></p></div></details>
+      </div>
+    </div>
+  </div>
+  <section class="wrap needs-js" style="padding-bottom: var(--sec)" aria-labelledby="also-title">
+    <div class="head"><h2 class="h2" id="also-title">You may also like</h2>
+      <div class="rail-btns"><button type="button" data-rail="-1" aria-label="Previous pieces"><svg class="ico" aria-hidden="true"><use href="#i-prev"/></svg></button><button type="button" data-rail="1" aria-label="Next pieces"><svg class="ico" aria-hidden="true"><use href="#i-next"/></svg></button></div></div>
+    <ul class="rail" id="also-rail"></ul>
+  </section>
+</div>
+
+<!-- ===================== BAG ===================== -->
+<div data-view="bag">
+  <div class="wrap sec">
+    <div class="head"><h1 class="h1">Shopping bag</h1><span class="count" id="bag-total-count"></span></div>
+    <div class="bag" id="bag-full" hidden>
+      <ul id="bag-lines"></ul>
+      <aside class="summary" aria-label="Order summary">
+        <h2 class="h3">Summary</h2>
+        <dl><dt>Subtotal</dt><dd id="sum-sub">€0</dd><dt>Delivery</dt><dd>Complimentary</dd><dt>Total</dt><dd id="sum-total">€0</dd></dl>
+        <button class="btn wide" type="button" id="checkout">Proceed to checkout</button>
+        <p class="note" id="checkout-note" role="status"></p>
+        <p class="small muted">Gift wrapping and a handwritten card are included with every order.</p>
+      </aside>
+    </div>
+    <div class="empty" id="bag-empty">
+      <p class="h3">Your bag is empty</p>
+      <p class="muted">Pieces you add will wait here.</p>
+      <a class="btn" href="#/collection">Discover the collection</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ATELIER (made to measure + appointment) ===================== -->
+<div data-view="atelier">
+  <section class="plate band" style="--pos: 50% 60%">
+    <img class="plate-media" src="images/plate-atelier.webp" alt="Paper patterns, black wool and tailor's shears on a workroom table" width="1800" height="1080">
+    <div class="plate-copy"><p class="kicker">Made to measure</p><h1 class="h1">The atelier</h1></div>
+  </section>
+  <section class="sec wrap">
+    <p class="statement reveal">Eleven people cut, sew and set stones in one workroom above the boutique. A coat takes three fittings and about sixty hours.</p>
+  </section>
+  <section class="wrap" aria-labelledby="steps-title" style="padding-bottom: var(--sec)">
+    <div class="head"><h2 class="h2" id="steps-title">How it works</h2></div>
+    <ol class="steps">
+      <li class="step"><h3 class="h3">A first conversation</h3><p class="muted">An hour in the atelier to talk about how you will wear it, choose cloth and take measurements.</p></li>
+      <li class="step"><h3 class="h3">The pattern</h3><p class="muted">Your pattern is drafted by hand and kept on file, so the next piece starts from it.</p></li>
+      <li class="step"><h3 class="h3">Two fittings</h3><p class="muted">A first fitting in calico, a second in the cloth itself. Small changes are made on the spot.</p></li>
+      <li class="step"><h3 class="h3">Collection</h3><p class="muted">Six to eight weeks later the piece is finished, pressed and ready to collect or be delivered.</p></li>
+    </ol>
+  </section>
+  <section class="wrap" aria-labelledby="services-title" style="padding-bottom: var(--sec)">
+    <div class="head"><h2 class="h2" id="services-title">Appointments</h2></div>
+    <div class="services">
+      <div class="service"><p class="kicker muted">90 minutes</p><h3 class="h3">Tailoring fitting</h3><p class="muted">Coats, jackets and trousers cut to your measurements.</p><a class="tlink" href="#/atelier?service=fitting&amp;at=book">Book this</a></div>
+      <div class="service"><p class="kicker muted">60 minutes</p><h3 class="h3">Jewellery commission</h3><p class="muted">A ring or a chain made in recycled gold, from a sketch to the bench.</p><a class="tlink" href="#/atelier?service=jewellery&amp;at=book">Book this</a></div>
+      <div class="service"><p class="kicker muted">45 minutes</p><h3 class="h3">Fragrance consultation</h3><p class="muted">Try the collection on skin and leave with a sample of the one that stays.</p><a class="tlink" href="#/atelier?service=fragrance&amp;at=book">Book this</a></div>
+    </div>
+  </section>
+  <section class="wrap" id="book" aria-labelledby="book-title" style="padding-bottom: var(--sec)">
+    <div class="narrow">
+      <div class="head"><div><p class="kicker">By appointment</p><h2 class="h2" id="book-title">Book an appointment</h2></div></div>
+      <form class="form" data-form="appointment" novalidate>
+        <div class="field"><label for="a-service">Appointment</label>
+          <select id="a-service" name="service" required aria-describedby="a-service-err"><option value="">Choose one</option><option value="fitting">Tailoring fitting</option><option value="jewellery">Jewellery commission</option><option value="fragrance">Fragrance consultation</option></select>
+          <span class="err" id="a-service-err"></span></div>
+        <div class="field"><label for="a-place">Boutique</label>
+          <select id="a-place" name="place"><option value="paris">Paris, rue Cendrée</option><option value="lyon">Lyon, passage Orvel</option></select></div>
+        <div class="field full"><label for="a-date">Date</label>
+          <input id="a-date" name="date" type="date" required aria-describedby="a-date-err" data-closed="0">
+          <span class="err" id="a-date-err"></span></div>
+        <fieldset class="field full"><legend class="legend">Time</legend>
+          <div class="slots" style="margin-top: 8px">
+            <label class="slot"><input type="radio" name="time" value="10:00" required aria-describedby="a-time-err"><span>10:00</span></label>
+            <label class="slot"><input type="radio" name="time" value="11:30"><span>11:30</span></label>
+            <label class="slot"><input type="radio" name="time" value="14:00"><span>14:00</span></label>
+            <label class="slot"><input type="radio" name="time" value="15:30"><span>15:30</span></label>
+            <label class="slot"><input type="radio" name="time" value="17:00"><span>17:00</span></label>
+          </div>
+          <span class="err" id="a-time-err"></span></fieldset>
+        <div class="field"><label for="a-name">Name</label><input id="a-name" name="name" autocomplete="name" required aria-describedby="a-name-err"><span class="err" id="a-name-err"></span></div>
+        <div class="field"><label for="a-email">Email</label><input id="a-email" name="email" type="email" autocomplete="email" required aria-describedby="a-email-err"><span class="err" id="a-email-err"></span></div>
+        <div class="field full"><label for="a-phone">Phone <span class="opt-tag">(optional)</span></label><input id="a-phone" name="phone" type="tel" autocomplete="tel"></div>
+        <div class="field full"><label for="a-notes">Anything we should know <span class="opt-tag">(optional)</span></label><textarea id="a-notes" name="notes" rows="4"></textarea></div>
+        <div class="field full"><label class="check"><input type="checkbox" name="consent" required aria-describedby="a-consent-err"> <span>I agree that the atelier may contact me about this appointment.</span></label><span class="err" id="a-consent-err"></span></div>
+        <div class="form-actions"><button class="btn" type="submit">Request the appointment</button><span class="small muted">We confirm every request by email within one working day.</span></div>
+      </form>
+      <div class="success" data-success="appointment" tabindex="-1" hidden>
+        <p class="kicker">Request received</p>
+        <h3 class="h2">Thank you, <span data-echo="name"></span></h3>
+        <p>We will confirm your <span data-echo="service"></span> at <span data-echo="place"></span> on <span data-echo="date"></span> at <span data-echo="time"></span> by email to <span data-echo="email"></span>.</p>
+        <button class="tlink" type="button" data-again>Request another appointment</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== JOURNAL ===================== -->
+<div data-view="journal">
+  <div class="wrap sec">
+    <div class="head"><div><p class="kicker">Stories from the house</p><h1 class="h1">Journal</h1></div></div>
+    <div class="toolbar">
+      <div class="chips" data-filter="kind" role="group" aria-label="Kind of story">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-value="collections" aria-pressed="false">Collections</button>
+        <button class="chip" type="button" data-value="atelier" aria-pressed="false">Atelier</button>
+        <button class="chip" type="button" data-value="fragrance" aria-pressed="false">Fragrance</button>
+      </div>
+      <span class="count" data-count="kind" data-one="story" data-many="stories" aria-live="polite">5 stories</span>
+    </div>
+    <ul class="cards">
+      <li class="card feature" data-kind="atelier"><a href="#/story"><span class="ph" style="--pos: 50% 70%"><img src="images/plate-salon.webp" alt="An empty salon with a tall curtained window" width="1800" height="1080"></span><span class="card-text"><p class="kicker">Atelier · 12 November</p><h2 class="h2">A season in the workroom</h2><p class="muted">From the first chalk line to the last pressing: three months with the coat.</p></span></a></li>
+      <li class="card" data-kind="fragrance"><a href="#/story"><span class="ph"><img src="images/flacon-amber.webp" alt="Round flask of amber perfume" width="720" height="900"></span><span class="card-text"><p class="kicker">Fragrance · 28 October</p><h2 class="h3">How Cendre was made</h2><p class="muted small">Cedar smoke, iris and a little salt, after two years of trials.</p></span></a></li>
+      <li class="card" data-kind="collections"><a href="#/story"><span class="ph" style="--pos: 50% 40%"><img src="images/plate-tailoring.webp" alt="A black coat on a dress form" width="1800" height="1080"></span><span class="card-text"><p class="kicker">Collections · 9 October</p><h2 class="h3">Autumn–Winter in nine pieces</h2><p class="muted small">Black, ecru and one shade of gold.</p></span></a></li>
+      <li class="card" data-kind="atelier"><a href="#/story"><span class="ph"><img src="images/plate-jewellery.webp" alt="Gold links on velvet" width="1000" height="1250"></span><span class="card-text"><p class="kicker">Atelier · 21 September</p><h2 class="h3">Gold that has been gold before</h2><p class="muted small">Why every chain we make starts as recycled metal.</p></span></a></li>
+      <li class="card" data-kind="collections"><a href="#/story"><span class="ph"><img src="images/plate-leather.webp" alt="A black tote on a stone step" width="1000" height="1250"></span><span class="card-text"><p class="kicker">Collections · 2 September</p><h2 class="h3">One bag, worn for ten years</h2><p class="muted small">The soft tote, and the repairs that keep it going.</p></span></a></li>
+    </ul>
+    <div class="empty" data-empty="kind" hidden><p class="h3">No stories yet</p><button class="btn-line" type="button" data-reset="kind">Show all stories</button></div>
+  </div>
+</div>
+
+<!-- ===================== STORY ===================== -->
+<div data-view="story">
+  <article>
+    <section class="plate band" style="--pos: 50% 60%">
+      <img class="plate-media" src="images/plate-salon.webp" alt="An empty salon with a tall curtained window and a single chair in a pool of light" width="1800" height="1080">
+      <div class="plate-copy"><p class="kicker">Atelier · 12 November</p><h1 class="h1">A season in the workroom</h1></div>
+    </section>
+    <div class="wrap sec">
+      <div class="prose">
+        <p class="lead">Every coat in the collection passes through the same four hands before it leaves the building. We spent the autumn watching one of them come together.</p>
+        <p>The cloth arrives in September, a dense wool woven for us in one mill. It rests on the cutting table for two days so that it relaxes before anyone measures it, because a cloth that is cut while it is still tense will move once it is sewn.</p>
+        <h2>Chalk first, scissors later</h2>
+        <p>The pattern is laid out by hand and traced in chalk. Nothing is cut until the whole layout is checked a second time by someone who did not draw it. The shears are sharpened every Monday.</p>
+        <p class="pull">A coat is finished when it hangs straight on the form and nobody wants to touch it again.</p>
+        <p>Canvas, padding and lining are cut on the same day, then the coat is basted together for its first fitting. Most of the time goes into what nobody sees: the shoulders, the roll of the lapel, the weight of the hem.</p>
+        <div class="figure-pair">
+          <figure><img src="images/plate-atelier.webp" alt="Paper patterns and shears on the workroom table" width="1800" height="1080"><figcaption>The pattern, traced in chalk.</figcaption></figure>
+          <figure><img src="images/coat.webp" alt="The finished long coat" width="720" height="900" style="background: var(--surface); object-fit: contain; padding: 8%"><figcaption>The finished coat.</figcaption></figure>
+        </div>
+        <h2>What it costs, and why</h2>
+        <p>Sixty hours of work, two fittings, and a lining sewn in by hand. We make fewer coats than we could sell, and we repair every one of them for as long as it is worn.</p>
+        <p><a class="tlink" href="#/journal">Back to the journal</a></p>
+      </div>
+    </div>
+  </article>
+</div>
+
+<!-- ===================== THE HOUSE (about) ===================== -->
+<div data-view="house">
+  <section class="plate band" style="--pos: 50% 40%">
+    <img class="plate-media" src="images/plate-tailoring.webp" alt="A black coat on a dress form under a spotlight" width="1800" height="1080">
+    <div class="plate-copy"><p class="kicker">Since 2009</p><h1 class="h1">The house</h1></div>
+  </section>
+  <section class="sec wrap"><p class="statement reveal">A small house in Paris that makes clothes, scent and jewellery slowly, in one building, and keeps repairing them.</p></section>
+  <section class="wrap" style="padding-bottom: var(--sec)" aria-labelledby="dates-title">
+    <div class="head"><h2 class="h2" id="dates-title">A few dates</h2></div>
+    <ol class="timeline">
+      <li><b>2009</b><div><h3 class="h3">One room, one table</h3><p class="muted">The atelier opens above a bookbinder in the 3rd arrondissement with two tailors and a single cutting table.</p></div></li>
+      <li><b>2014</b><div><h3 class="h3">The first fragrance</h3><p class="muted">Cendre is composed with an independent perfumer in Grasse after two years of trials.</p></div></li>
+      <li><b>2019</b><div><h3 class="h3">A bench for gold</h3><p class="muted">A jeweller joins the workroom; every chain since is made from recycled gold.</p></div></li>
+      <li><b>2024</b><div><h3 class="h3">Lyon</h3><p class="muted">A second boutique opens in a covered passage, with a fitting room for made to measure.</p></div></li>
+    </ol>
+  </section>
+  <section class="wrap" style="padding-bottom: var(--sec)" aria-labelledby="values-title">
+    <h2 class="sr" id="values-title">What we keep to</h2>
+    <div class="values">
+      <div><h3 class="h3">Made in one place</h3><p class="muted">Cutting, sewing, setting and bottling happen in the same building, so the people who make a piece can answer for it.</p></div>
+      <div><h3 class="h3">Repaired for life</h3><p class="muted">Bring back anything we made, at any age. Linings, buttons, clasps and stitching are mended in the atelier.</p></div>
+      <div><h3 class="h3">Few pieces</h3><p class="muted">Two collections a year, never more than fifteen pieces each, and nothing made only to be discounted.</p></div>
+    </div>
+    <p style="margin-top: 48px"><a class="btn-line" href="#/contact?at=boutiques">Visit a boutique</a></p>
+  </section>
+</div>
+
+<!-- ===================== CONTACT (client care + boutiques) ===================== -->
+<div data-view="contact">
+  <div class="wrap sec">
+    <div class="head"><div><p class="kicker">Client care</p><h1 class="h1">Contact us</h1></div></div>
+    <div class="two">
+      <div>
+        <form class="form" data-form="contact" novalidate>
+          <div class="field full"><label for="c-topic">Subject</label>
+            <select id="c-topic" name="topic" required aria-describedby="c-topic-err"><option value="">Choose a subject</option><option value="question">A question about a piece</option><option value="order">An order</option><option value="repair">Repairs and care</option><option value="press">Press</option></select>
+            <span class="err" id="c-topic-err"></span></div>
+          <div class="field full" id="c-order-field" hidden><label for="c-order">Order number <span class="opt-tag">(optional)</span></label><input id="c-order" name="order" inputmode="numeric" placeholder="E-10482"></div>
+          <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-err"><span class="err" id="c-name-err"></span></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-err"><span class="err" id="c-email-err"></span></div>
+          <div class="field full"><label for="c-message">Message</label><textarea id="c-message" name="message" rows="6" required minlength="10" aria-describedby="c-message-err" data-too-short="Please write a little more (10 characters or more)."></textarea><span class="err" id="c-message-err"></span></div>
+          <div class="form-actions"><button class="btn" type="submit">Send the message</button><span class="small muted">We answer within one working day.</span></div>
+        </form>
+        <div class="success" data-success="contact" tabindex="-1" hidden>
+          <p class="kicker">Message sent</p>
+          <h2 class="h2">Thank you, <span data-echo="name"></span></h2>
+          <p>Client care will answer at <span data-echo="email"></span> within one working day.</p>
+          <button class="tlink" type="button" data-again>Write another message</button>
+        </div>
+      </div>
+      <aside class="info" aria-label="Contact details">
+        <div><p class="kicker">By phone</p><p><a href="tel:+33199004120">+33 1 99 00 41 20</a></p><p class="muted small">Monday to Saturday, 10:00 to 19:00</p></div>
+        <div><p class="kicker">By email</p><p><a href="mailto:care@elvane.example">care@elvane.example</a></p></div>
+        <div id="boutiques"><p class="kicker">Boutiques</p>
+          <p><b>Paris</b><br>7 rue Cendrée, 75003 Paris<br><span class="muted small">Atelier upstairs · Tuesday to Saturday, 11:00 to 19:00</span></p>
+          <p style="margin-top: 16px"><b>Lyon</b><br>Passage Orvel, 69002 Lyon<br><span class="muted small">Tuesday to Saturday, 11:00 to 19:00</span></p></div>
+        <p><a class="btn-line" href="#/atelier?at=book">Book an appointment</a></p>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FAQ ===================== -->
+<div data-view="faq">
+  <div class="wrap sec">
+    <div class="faq">
+      <p class="kicker">Client care</p><h1 class="h1">Questions</h1>
+      <h2 class="h3" id="delivery">Delivery and returns</h2>
+      <details><summary>How long does delivery take?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Two to four working days within the European Union, five to eight elsewhere. Delivery is complimentary and every parcel is signed for.</p></div></details>
+      <details><summary>Can I return a piece?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Yes, within 30 days, unworn and with its labels. We collect it from your door. Made-to-measure pieces and opened fragrance cannot be returned.</p></div></details>
+      <h2 class="h3" id="sizes">Sizes and fit</h2>
+      <details><summary>How do your sizes run?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Our tailoring follows French sizing and is cut close at the shoulder. If you are between two sizes, take the larger and we will adjust the sleeves at no cost.</p></div></details>
+      <details><summary>How do I find my ring size?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Measure the inside circumference of a ring that fits, in millimetres. Ask client care for a free sizing ring by post.</p></div></details>
+      <h2 class="h3" id="care">Care and repairs</h2>
+      <details><summary>Do you repair older pieces?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Always, whatever their age. Bring them to a boutique or write to client care; most repairs take two to three weeks.</p></div></details>
+      <details><summary>How should I store a coat?<svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>On a shaped wooden hanger, in the cotton cover it came in, away from sunlight. Brush it after wearing.</p></div></details>
+      <p style="margin-top: 48px"><a class="btn-line" href="#/contact">Ask client care</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="legal">
+  <div class="wrap sec">
+    <div class="head"><h1 class="h1">Legal</h1></div>
+    <div class="legal">
+      <nav class="toc" aria-label="On this page"><a href="#privacy">Privacy</a><a href="#terms">Terms of sale</a><a href="#cookies">Cookies</a></nav>
+      <div>
+        <h2 class="h3" id="privacy">Privacy</h2>
+        <p class="muted">We collect only what we need to answer you, deliver your order or confirm an appointment: your name, email, phone number if you give it, and your address for deliveries. We never sell it. You can ask to see, correct or delete it at any time by writing to care@elvane.example.</p>
+        <h2 class="h3" id="terms">Terms of sale</h2>
+        <p class="muted">Prices include VAT for deliveries within the European Union. An order is confirmed when payment is accepted. Made-to-measure pieces require a deposit at the first fitting and are not returnable. Returns of other pieces are accepted within 30 days.</p>
+        <h2 class="h3" id="cookies">Cookies</h2>
+        <p class="muted">This site keeps your bag and your choice of light or black on your own device. It uses no advertising or tracking cookies.</p>
+        <p class="small muted">Last updated 1 November 2026.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <div class="wrap sec center">
+    <p class="kicker">Page not found</p>
+    <h1 class="h1">This page has moved on</h1>
+    <p class="muted" style="margin: 20px 0 32px">The piece or story you were looking for is no longer here.</p>
+    <a class="btn" href="#/collection">Discover the collection</a>
+  </div>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <div><h2>Client care</h2><ul><li><a href="#/contact">Contact us</a></li><li><a href="#/faq?at=delivery">Delivery and returns</a></li><li><a href="#/faq?at=care">Repairs and care</a></li><li><a href="#/faq">Questions</a></li></ul></div>
+    <div><h2>The house</h2><ul><li><a href="#/house">About the house</a></li><li><a href="#/atelier">The atelier</a></li><li><a href="#/journal">Journal</a></li><li><a href="#/contact?at=boutiques">Boutiques</a></li></ul></div>
+    <div><h2>Legal</h2><ul><li><a href="#/legal?at=privacy">Privacy</a></li><li><a href="#/legal?at=terms">Terms of sale</a></li><li><a href="#/legal?at=cookies">Cookies</a></li></ul></div>
+    <div class="letters">
+      <h2>Letters from the house</h2>
+      <p>New pieces and stories from the atelier, four times a year.</p>
+      <form data-form="newsletter" novalidate>
+        <div class="row"><div class="field"><label class="sr" for="n-email">Email</label><input id="n-email" name="email" type="email" autocomplete="email" placeholder="Email address" required aria-describedby="n-email-err"><span class="err" id="n-email-err"></span></div><button class="btn" type="submit">Subscribe</button></div>
+      </form>
+      <div class="success" data-success="newsletter" tabindex="-1" hidden><p>Thank you. The next letter will reach <span data-echo="email"></span>.</p></div>
+    </div>
+  </div>
+  <div class="wrap foot-base"><span class="foot-word">Elvane</span><span>Paris · Lyon · Delivering across Europe</span><span>© 2026 Elvane</span></div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  let ready = false;
+  /* If anything fails before the first view is shown, drop the js class so every view stays readable */
+  const unhide = () => { if (!ready) root.classList.remove("js"); };
+  window.addEventListener("error", unhide);
+  try {
+  const one = (sel, el = document) => el.querySelector(sel);
+  const all = (sel, el = document) => [...el.querySelectorAll(sel)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: white (light) and black (dark); the system setting is the default ---------- */
+  const themeButton = one("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to white" : "Switch to black");
+    one("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("elvane-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("elvane-theme", next);
+  });
+  systemDark.addEventListener("change", (event) => { if (!store.get("elvane-theme")) applyTheme(event.matches ? "dark" : "light"); });
+
+  /* ---------- Data: the tiles in the collection are the product list; DETAILS adds what only the product page shows ---------- */
+  const money = (n) => `€${Number(n).toLocaleString("en-GB")}`;
+  const tiles = all("#grid .tile");
+  const productOf = (id) => {
+    const tile = tiles.find((t) => t.dataset.id === id);
+    if (!tile) return null;
+    const img = one("img", tile);
+    return { id, tile, cat: tile.dataset.cat, price: Number(tile.dataset.price), name: one(".tile-name", tile).textContent, meta: one(".tile-meta", tile).textContent, src: img.currentSrc || img.src, alt: img.alt };
+  };
+  const CATS = {
+    all: { label: "The collection", kicker: "Autumn–Winter", img: "images/plate-salon.webp", pos: "50% 60%" },
+    tailoring: { label: "Ready-to-wear", kicker: "Autumn–Winter", img: "images/plate-tailoring.webp", pos: "50% 35%" },
+    fragrance: { label: "Fragrance", kicker: "Composed in Grasse", img: "images/plate-fragrance.webp", pos: "50% 40%" },
+    jewellery: { label: "Jewellery", kicker: "18k recycled gold", img: "images/plate-jewellery.webp", pos: "50% 22%" },
+    accessories: { label: "Accessories", kicker: "Leather and silk", img: "images/plate-leather.webp", pos: "50% 40%" },
+  };
+  const SIZES = { name: "Size", values: ["34", "36", "38", "40", "42", "44"] };
+  const DETAILS = {
+    "long-coat": { ref: "E26-101", opt: SIZES, desc: "Cut long and double-breasted in a dense black wool that holds its line. Six horn buttons, a deep back vent and a body lined in silk.", list: ["Wool, lined in silk", "Horn buttons", "Cut and sewn in our Paris atelier"], care: "Dry clean only. Brush after wearing and hang on a shaped hanger." },
+    "tailored-jacket": { ref: "E26-104", opt: SIZES, desc: "A short jacket with a narrow lapel and two pockets, in an ecru bouclé that softens with wear.", list: ["Wool bouclé, lined in silk", "Two horn buttons", "Cut and sewn in our Paris atelier"], care: "Dry clean only. Fold over a chair rather than a thin hanger." },
+    "column-dress": { ref: "E26-112", opt: SIZES, desc: "A sleeveless dress cut straight from the shoulder to the floor, in a heavy silk crêpe that moves slowly.", list: ["Silk crêpe", "Invisible side zip", "Hand-finished hem"], care: "Dry clean only. Steam rather than iron." },
+    cendre: { ref: "P-01", opt: { name: "Size", values: ["50 ml", "100 ml"] }, desc: "Cedar smoke, iris root and a trace of sea salt. Warm at first, then dry and close to the skin for the whole day.", list: ["Eau de parfum", "Composed in Grasse", "Refillable flask"], care: "Keep away from light and heat. The flask can be refilled in any boutique." },
+    "nuit-fauve": { ref: "P-03", opt: { name: "Size", values: ["50 ml"] }, desc: "Labdanum, dark plum and leather, at the concentration of an extract. A few drops last into the next morning.", list: ["Extrait de parfum", "Smoked glass", "Composed in Grasse"], care: "Keep away from light and heat." },
+    "atelier-candle": { ref: "H-02", opt: { name: "Size", values: ["220 g"] }, desc: "The smell of the workroom: cedar shelves, warm irons and a little chalk. About fifty hours of burning.", list: ["Rapeseed and coconut wax", "Cotton wick", "Reusable glass"], care: "Trim the wick to 5 mm before each lighting." },
+    "ellipse-ring": { ref: "J-21", opt: { name: "Ring size", values: ["48", "50", "52", "54", "56"] }, desc: "A wide, slightly oval band in polished gold, heavy enough to be noticed and smooth enough to forget.", list: ["18k recycled yellow gold", "About 11 g", "Made at our bench in Paris"], care: "Polish with a soft cloth. We re-polish it free of charge." },
+    "onyx-drops": { ref: "J-34", opt: { name: "Finish", values: ["Gold studs"] }, desc: "Two long drops of polished onyx hanging from small gold studs. They move with you and catch very little light.", list: ["Onyx and 18k recycled gold", "Butterfly backs", "Sold as a pair"], care: "Keep in the pouch provided, away from perfume." },
+    "oval-link": { ref: "J-12", opt: { name: "Length", values: ["17 cm", "19 cm"] }, desc: "Open oval links joined by hand and closed with a hidden clasp. Worn alone, or with a watch.", list: ["18k recycled yellow gold", "Hidden box clasp", "Made at our bench in Paris"], care: "Polish with a soft cloth. Clasps are checked free in any boutique." },
+    "soft-tote": { ref: "L-07", opt: { name: "Colour", values: ["Black", "Ecru"] }, desc: "An unlined calfskin tote that folds flat, with two round handles long enough for the shoulder.", list: ["Calfskin", "Inner zipped pocket", "Holds a 15-inch laptop"], care: "Wipe with a dry cloth. Feed the leather twice a year." },
+    "card-holder": { ref: "L-11", opt: { name: "Colour", values: ["Black", "Ecru"] }, desc: "Four card slots and a centre pocket, in the same calfskin as the tote.", list: ["Calfskin", "Edges painted by hand", "Initials on request"], care: "Wipe with a dry cloth." },
+    "silk-square": { ref: "A-05", opt: { name: "Size", values: ["90 × 90 cm"] }, desc: "A silk twill square printed with the fine diagonal lines of a pattern paper, framed in black.", list: ["Silk twill", "Hand-rolled edges", "Printed in Lyon"], care: "Dry clean, or hand wash cold." },
+  };
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map(all("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Elvane · Tailoring, fragrance and jewellery from a Paris atelier",
+    collection: "The collection · Elvane",
+    product: "Elvane",
+    bag: "Shopping bag · Elvane",
+    atelier: "The atelier · Elvane",
+    journal: "Journal · Elvane",
+    story: "A season in the workroom · Elvane",
+    house: "The house · Elvane",
+    contact: "Contact us · Elvane",
+    faq: "Questions · Elvane",
+    legal: "Legal · Elvane",
+    "404": "Page not found · Elvane",
+  };
+  const section = { story: "journal" };
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", params: new URLSearchParams(), hash: "#/" };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query), hash };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    const p = route.params;
+    const cat = name === "collection" ? p.get("cat") || "all" : "";
+    all(".nav a, .menu-links a").forEach((a) => {
+      const target = parse(a.getAttribute("href"));
+      const on = target.view === (section[name] || name) && (name !== "collection" || (target.params.get("cat") || "all") === cat);
+      if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (name === "collection") { one("#q").value = p.get("q") || ""; applyFilter("cat", cat); if (p.get("focus") === "search") requestAnimationFrame(() => one("#q").focus()); }
+    if (name === "journal") applyFilter("kind", p.get("kind") || "all");
+    if (name === "product") showProduct(p.get("id"));
+    if (name === "bag") renderBag();
+    if (name === "atelier") { const s = one("#a-service"); if (p.get("service") && one(`option[value="${CSS.escape(p.get("service"))}"]`, s)) s.value = p.get("service"); }
+    if (name === "contact") { const t = one("#c-topic"); if (p.get("topic") && one(`option[value="${CSS.escape(p.get("topic"))}"]`, t)) { t.value = p.get("topic"); t.dispatchEvent(new Event("change")); } }
+    const at = p.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observePlates(current);
+    updateRails();
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = (current && current.querySelector(href)) || document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header: hairline once the page scrolls; the category row folds into the menu when it does not fit ---------- */
+  const header = one(".site-header");
+  const nav = one(".nav", header);
+  const menu = one("#menu");
+  one("#menu-open").addEventListener("click", () => menu.showModal());
+  one("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+  function fitNav() {
+    header.classList.remove("compact");
+    if (nav.scrollWidth > nav.clientWidth + 1 || window.innerWidth < 900) header.classList.add("compact");
+  }
+  window.addEventListener("resize", fitNav);
+  document.fonts.ready.then(fitNav);
+  fitNav();
+  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 4);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- Plates: the copy rises once when a plate arrives (visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("in"); io.unobserve(entry.target); }
+  }, { threshold: 0.25 }) : null;
+  function observePlates(scope) { all(".plate:not(.in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("in"))); }
+  setTimeout(() => all(".plate").forEach((el) => el.classList.add("in")), 2500);
+
+  /* ---------- Tiles reused in rails and the bag (cloned from the collection, so pictures stay the same files) ---------- */
+  function tileClone(id) {
+    const item = productOf(id);
+    if (!item) return null;
+    const li = item.tile.cloneNode(true);
+    li.hidden = false;
+    li.style.order = "";
+    return li;
+  }
+  const newRail = one("#new-rail");
+  tiles.filter((t) => "new" in t.dataset).forEach((t) => newRail.append(tileClone(t.dataset.id)));
+  function updateRails() {
+    all(".rail").forEach((rail) => {
+      const btns = rail.parentElement.querySelectorAll("[data-rail]");
+      const max = rail.scrollWidth - rail.clientWidth;
+      btns.forEach((b) => { b.disabled = b.dataset.rail === "-1" ? rail.scrollLeft <= 1 : rail.scrollLeft >= max - 1; });
+    });
+  }
+  all(".rail").forEach((rail) => rail.addEventListener("scroll", updateRails, { passive: true }));
+  window.addEventListener("resize", updateRails);
+  all("[data-rail]").forEach((button) => button.addEventListener("click", () => {
+    const rail = one(".rail", button.closest("section"));
+    rail.scrollBy({ left: rail.clientWidth * Number(button.dataset.rail), behavior: "smooth" });
+  }));
+
+  /* ---------- Filters: category, search and sort in the collection; kind in the journal ---------- */
+  const q = one("#q");
+  const sort = one("#sort");
+  const grid = one("#grid");
+  function applyFilter(group, value) {
+    const bar = one(`[data-filter="${group}"]`);
+    const chips = all("[data-value]", bar);
+    const chosen = chips.some((chip) => chip.dataset.value === value) ? value : "all";
+    chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.value === chosen)));
+    const words = group === "cat" ? q.value.trim().toLowerCase() : "";
+    let shown = 0;
+    all(`[data-${group}]:not([data-filter])`, group === "cat" ? grid : document).forEach((item) => {
+      const match = (chosen === "all" || item.dataset[group] === chosen) && (!words || item.textContent.toLowerCase().includes(words));
+      item.hidden = !match;
+      if (match) shown += 1;
+    });
+    if (group === "cat") {
+      const c = CATS[chosen];
+      one("#band-title").textContent = c.label;
+      one("#band-kicker").textContent = c.kicker;
+      const img = one("#band-img");
+      if (img.getAttribute("src") !== c.img) img.src = c.img;
+      one("#band").style.setProperty("--pos", c.pos);
+      const order = sort.value;
+      tiles.forEach((t, i) => { t.style.order = order === "featured" ? i : order === "low" ? t.dataset.price : -t.dataset.price; });
+    }
+    const count = one(`[data-count="${group}"]`);
+    count.textContent = `${shown} ${shown === 1 ? count.dataset.one : count.dataset.many}`;
+    one(`[data-empty="${group}"]`).hidden = shown > 0;
+  }
+  const pressed = (group) => one(`[data-filter="${group}"] [aria-pressed="true"]`)?.dataset.value || "all";
+  all("[data-filter]").forEach((bar) => all("[data-value]", bar).forEach((chip) => chip.addEventListener("click", () => applyFilter(bar.dataset.filter, chip.dataset.value))));
+  q.addEventListener("input", () => applyFilter("cat", pressed("cat")));
+  sort.addEventListener("change", () => applyFilter("cat", pressed("cat")));
+  all("[data-reset]").forEach((button) => button.addEventListener("click", () => { if (button.dataset.reset === "cat") q.value = ""; applyFilter(button.dataset.reset, "all"); }));
+
+  /* ---------- Product page ---------- */
+  let shown = null;
+  let choice = "";
+  const mainImg = one("#p-img");
+  function setMain(src, alt, cover) {
+    mainImg.classList.remove("swap");
+    mainImg.src = src;
+    mainImg.alt = alt;
+    mainImg.classList.toggle("cover", Boolean(cover));
+    void mainImg.offsetWidth;
+    mainImg.classList.add("swap");
+  }
+  function showProduct(id) {
+    const item = productOf(id) || productOf(tiles[0].dataset.id);
+    const d = DETAILS[item.id] || { ref: "", opt: { name: "Size", values: ["One size"] }, desc: "", list: [], care: "" };
+    shown = item;
+    choice = d.opt.values.length === 1 ? d.opt.values[0] : "";
+    document.title = `${item.name} · Elvane`;
+    one("#p-cat").textContent = CATS[item.cat]?.label || "";
+    one("#p-name").textContent = item.name;
+    one("#p-ref").textContent = `${item.meta}${d.ref ? ` · Ref. ${d.ref}` : ""}`;
+    one("#p-price").textContent = money(item.price);
+    one("#p-desc").textContent = d.desc;
+    one("#p-opt-name").textContent = d.opt.name;
+    const opts = one("#p-opts");
+    opts.setAttribute("aria-label", d.opt.name);
+    opts.replaceChildren(...d.opt.values.map((v) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "opt"; b.textContent = v;
+      b.setAttribute("aria-pressed", String(v === choice));
+      b.addEventListener("click", () => { choice = v; all(".opt", opts).forEach((o) => o.setAttribute("aria-pressed", String(o === b))); one("#add-note").textContent = ""; });
+      return b;
+    }));
+    one("#p-details").replaceChildren(...d.list.map((t) => Object.assign(document.createElement("li"), { textContent: t })));
+    one("#p-care").textContent = `${d.care} We repair every piece we make.`;
+    const book = one("#p-book");
+    book.hidden = item.cat !== "tailoring" && item.cat !== "jewellery";
+    book.textContent = item.cat === "jewellery" ? "Commission a piece at the atelier" : "Book a fitting at the atelier";
+    book.setAttribute("href", `#/atelier?service=${item.cat === "jewellery" ? "jewellery" : "fitting"}&at=book`);
+    one("#p-guide").hidden = !/size/i.test(d.opt.name) || d.opt.values.length < 2;
+    one("#add-note").textContent = "";
+    const thumbs = all(".thumb", one("#p-thumbs"));
+    const pics = [[item.src, item.alt, false], [CATS[item.cat].img, `${item.name}, in the campaign`, true], ["images/plate-atelier.webp", "The workroom table in the atelier", true]];
+    thumbs.forEach((t, i) => {
+      const [src, alt, cover] = pics[i];
+      one("img", t).src = src;
+      t.dataset.alt = alt;
+      t.toggleAttribute("data-cover", cover);
+      t.setAttribute("aria-pressed", String(i === 0));
+    });
+    setMain(item.src, item.alt, false);
+    const rail = one("#also-rail");
+    rail.replaceChildren(...tiles.filter((t) => t.dataset.id !== item.id).sort((a, b) => (b.dataset.cat === item.cat) - (a.dataset.cat === item.cat)).slice(0, 6).map((t) => tileClone(t.dataset.id)));
+  }
+  all(".thumb").forEach((thumb) => thumb.addEventListener("click", () => {
+    all(".thumb").forEach((t) => t.setAttribute("aria-pressed", String(t === thumb)));
+    const img = one("img", thumb);
+    setMain(img.currentSrc || img.src, thumb.dataset.alt, "cover" in thumb.dataset);
+  }));
+
+  /* ---------- Bag: kept in the store wrapper; a real shop replaces it with its own cart and checkout ---------- */
+  let bag = [];
+  try { bag = JSON.parse(store.get("elvane-bag") || "[]").filter((l) => productOf(l.id)); } catch { bag = []; }
+  const saveBag = () => { store.set("elvane-bag", JSON.stringify(bag)); one("#bag-count").textContent = bag.reduce((n, l) => n + l.qty, 0) || ""; };
+  one("#add").addEventListener("click", () => {
+    const note = one("#add-note");
+    if (!choice) { note.textContent = `Please choose a ${one("#p-opt-name").textContent.toLowerCase()}.`; one(".opt", one("#p-opts"))?.focus(); return; }
+    const line = bag.find((l) => l.id === shown.id && l.opt === choice);
+    if (line) line.qty += 1; else bag.push({ id: shown.id, opt: choice, qty: 1 });
+    saveBag();
+    note.replaceChildren(document.createTextNode(`Added to your bag: ${shown.name}, ${choice}. `), Object.assign(document.createElement("a"), { href: "#/bag", textContent: "View the bag" }));
+  });
+  function renderBag() {
+    const list = one("#bag-lines");
+    const count = bag.reduce((n, l) => n + l.qty, 0);
+    one("#bag-full").hidden = count === 0;
+    one("#bag-empty").hidden = count > 0;
+    one("#bag-total-count").textContent = count ? `${count} ${count === 1 ? "piece" : "pieces"}` : "";
+    one("#checkout-note").textContent = "";
+    list.replaceChildren(...bag.map((l, i) => {
+      const item = productOf(l.id);
+      const li = document.createElement("li");
+      li.className = "line";
+      li.innerHTML = `<a class="tile-media" href="#/product?id=${l.id}"><img alt="" width="720" height="900"></a>
+        <div><p class="tile-name"></p><p class="tile-meta"></p><div class="qty"><button type="button" data-step="-1" aria-label="One fewer"><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg></button><output></output><button type="button" data-step="1" aria-label="One more"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        <p><button class="tlink" type="button" data-remove>Remove</button></p></div>
+        <p class="line-price small"></p>`;
+      one("img", li).src = item.src;
+      one(".tile-name", li).textContent = item.name;
+      one(".tile-meta", li).textContent = `${item.meta} · ${l.opt}`;
+      one("output", li).textContent = l.qty;
+      one(".line-price", li).textContent = money(item.price * l.qty);
+      all("[data-step]", li).forEach((b) => b.addEventListener("click", () => { l.qty += Number(b.dataset.step); if (l.qty < 1) bag.splice(i, 1); saveBag(); renderBag(); }));
+      one("[data-remove]", li).addEventListener("click", () => { bag.splice(i, 1); saveBag(); renderBag(); });
+      return li;
+    }));
+    const sub = bag.reduce((n, l) => n + productOf(l.id).price * l.qty, 0);
+    one("#sum-sub").textContent = money(sub);
+    one("#sum-total").textContent = money(sub);
+  }
+  one("#checkout").addEventListener("click", () => { one("#checkout-note").textContent = "Checkout is not connected in this preview. Connect a payment provider to take orders."; });
+  saveBag();
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const iso = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  const dateField = one("#a-date");
+  dateField.min = iso(new Date(Date.now() + 864e5));
+  dateField.addEventListener("input", () => {
+    const [y, m, d] = dateField.value.split("-").map(Number);
+    const closed = dateField.value && String(new Date(y, m - 1, d).getDay()) === dateField.dataset.closed;
+    dateField.setCustomValidity(closed ? "The atelier is closed on Sundays. Please choose another day." : "");
+  });
+  const topic = one("#c-topic");
+  topic.addEventListener("change", () => { one("#c-order-field").hidden = topic.value !== "order"; });
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", rangeUnderflow: "Please choose a later date.", tooShort: "Please write a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const v = field.validity;
+    let text = "";
+    if (v.customError) text = field.validationMessage;
+    else if (v.valueMissing) text = field.type === "radio" ? "Please choose a time." : field.type === "checkbox" ? "Please tick this box to continue." : messages.valueMissing;
+    else { const key = Object.keys(messages).find((k) => v[k]); if (key) text = (key === "tooShort" && field.dataset.tooShort) || messages[key]; }
+    if (!text && field.tagName === "TEXTAREA" && field.minLength > 0 && field.value.trim().length < field.minLength) text = field.dataset.tooShort || messages.tooShort;
+    error.textContent = text;
+    field.setAttribute("aria-invalid", String(Boolean(text)));
+    return !text;
+  }
+  function readable(form, name) {
+    const field = form.elements[name];
+    if (!field) return "";
+    if (field.tagName === "SELECT") return field.selectedOptions[0]?.textContent.toLowerCase() ?? "";
+    if (field.type === "date" && field.value) {
+      const [y, m, d] = field.value.split("-").map(Number);
+      return new Date(y, m - 1, d).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
+    }
+    return field.value;
+  }
+  all("form[data-form]").forEach((form) => {
+    const fields = all("[aria-describedby]", form);
+    fields.forEach((field) => field.addEventListener(field.tagName === "SELECT" || field.type === "checkbox" ? "change" : "blur", () => checkField(field)));
+    all("input[type=radio]", form).forEach((r) => r.addEventListener("change", () => { const first = fields.find((f) => f.name === r.name); if (first) checkField(first); }));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = one("[type=submit]", form);
+    const label = button.textContent;
+    const success = one(`[data-success="${form.dataset.form}"]`, form.parentElement);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        all("[data-echo]", success).forEach((el) => { el.textContent = el.dataset.echo === "place" ? form.elements.place.selectedOptions[0].textContent : readable(form, el.dataset.echo); });
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+        button.disabled = false;
+        button.textContent = label;
+      }, 700);
+    });
+    one("[data-again]", success)?.addEventListener("click", () => {
+      form.reset();
+      fields.forEach((f) => { f.removeAttribute("aria-invalid"); const e = document.getElementById(f.getAttribute("aria-describedby")); if (e) e.textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      one("input, select", form).focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+  ready = true;
+  } catch (error) {
+    root.classList.remove("js");
+    console.error(error);
+  }
+})();
+</script>
+</body>
+</html>

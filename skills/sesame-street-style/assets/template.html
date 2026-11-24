@@ -1,0 +1,1232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Puddlejump: play, read and make with the gang</title>
+<meta name="description" content="Games, picture books and colour-ins for children aged 2 to 7, plus small Saturday and weekday classes at the Puddlejump Play Studio.">
+<meta property="og:title" content="Puddlejump: play, read and make with the gang">
+<meta property="og:description" content="Games, picture books and colour-ins for children aged 2 to 7, and small classes at the studio.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/baloo-2-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/andika-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "Baloo 2"; src: url("fonts/baloo-2-latin-wght.woff2") format("woff2"); font-weight: 400 800; font-display: swap; }
+@font-face { font-family: "Andika"; src: url("fonts/andika-latin-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Andika"; src: url("fonts/andika-latin-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+/* ---------- Tokens: light-dark(light, dark); data-theme on <html> pins one ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(100% 0 0), oklch(21% 0.03 268));
+  --surface: light-dark(oklch(100% 0 0), oklch(26.5% 0.035 268));
+  --surface-2: light-dark(oklch(97.4% 0.014 95), oklch(24% 0.032 268));
+  --text: light-dark(oklch(27% 0.06 268), oklch(96.5% 0.01 268));
+  --text-muted: light-dark(oklch(44% 0.045 268), oklch(81% 0.025 268));
+  --border: light-dark(oklch(89% 0.018 268), oklch(37% 0.035 268));
+  --border-strong: light-dark(oklch(62% 0.04 268), oklch(58% 0.04 268));
+  --accent: light-dark(oklch(46% 0.2 263), oklch(80% 0.11 255));
+  --accent-text: light-dark(oklch(100% 0 0), oklch(21% 0.05 268));
+  --frame: light-dark(oklch(100% 0 0), oklch(31% 0.035 268));
+  --focus: light-dark(oklch(46% 0.2 263), oklch(90% 0.15 98));
+  --error: light-dark(oklch(50% 0.2 25), oklch(78% 0.13 25));
+  /* Section colours: pills, badges and stickers keep their fill in both themes; labels on them are white */
+  --sky: oklch(55% 0.14 240);
+  --orange: oklch(58% 0.17 45);
+  --magenta: oklch(57% 0.23 355);
+  --purple: oklch(51% 0.2 303);
+  --green: oklch(53% 0.145 150);
+  --red: oklch(57% 0.22 27);
+  /* Canvases: each section repaints the page in its own colour; deep tints of the same hue in dark */
+  --cv-sun: light-dark(oklch(91% 0.175 99), oklch(25% 0.06 276));
+  --cv-sun-2: light-dark(oklch(85% 0.17 90), oklch(30% 0.07 276));
+  --cv-sky: light-dark(oklch(82% 0.12 226), oklch(27% 0.06 240));
+  --cv-sky-2: light-dark(oklch(73% 0.13 232), oklch(32% 0.07 240));
+  --cv-orange: light-dark(oklch(83% 0.13 66), oklch(27% 0.05 50));
+  --cv-orange-2: light-dark(oklch(75% 0.15 58), oklch(32% 0.06 50));
+  --cv-magenta: light-dark(oklch(81% 0.115 355), oklch(26% 0.06 355));
+  --cv-magenta-2: light-dark(oklch(72% 0.16 355), oklch(31% 0.07 355));
+  --cv-purple: light-dark(oklch(80% 0.095 305), oklch(26% 0.06 305));
+  --cv-purple-2: light-dark(oklch(70% 0.13 305), oklch(31% 0.07 305));
+  /* Confetti: white paper by day; in dark it turns the section colour, like coloured paper at night */
+  --cc-sun: light-dark(oklch(100% 0 0 / 0.62), oklch(90% 0.16 98 / 0.3));
+  --cc-sky: light-dark(oklch(100% 0 0 / 0.62), oklch(80% 0.12 230 / 0.28));
+  --cc-orange: light-dark(oklch(100% 0 0 / 0.62), oklch(80% 0.14 60 / 0.28));
+  --cc-magenta: light-dark(oklch(100% 0 0 / 0.62), oklch(78% 0.14 355 / 0.28));
+  --cc-purple: light-dark(oklch(100% 0 0 / 0.62), oklch(78% 0.11 305 / 0.28));
+  --confetti: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520' fill='white' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath stroke='none' d='M40 62l28-11 4 10-28 11z'/%3E%3Cpath fill='none' d='M392 38l32 9-23 23z'/%3E%3Ccircle fill='none' cx='262' cy='128' r='13'/%3E%3Cpath fill='none' d='M84 352l15-15 15 15 15-15 15 15'/%3E%3Ccircle stroke='none' cx='452' cy='268' r='7'/%3E%3Cpath stroke='none' d='M312 418l21-6 6 21-21 6z'/%3E%3Cpath stroke='none' d='M168 214l24 4-15 19z'/%3E%3Cpath fill='none' d='M22 236q11-15 22 0t22 0'/%3E%3Cpath stroke='none' d='M458 452l8-29 10 3-8 29z'/%3E%3Ccircle fill='none' cx='64' cy='470' r='9'/%3E%3Ccircle stroke='none' cx='206' cy='40' r='5'/%3E%3Cpath fill='none' d='M372 184h34'/%3E%3Cpath fill='none' d='M196 470l14-24 14 24z'/%3E%3C/svg%3E");
+  --shadow-card: 0 14px 26px -18px oklch(25% 0.09 268 / 0.55);
+  --shadow-overlay: 0 22px 44px -18px oklch(20% 0.08 268 / 0.45);
+  --r-pill: 999px; --r-card: 18px; --r-media: 12px; --r-panel: 28px;
+  --dur-fast: 140ms; --dur-base: 240ms; --dur-slow: 480ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --font-display: "Baloo 2", ui-rounded, "Arial Rounded MT Bold", system-ui, sans-serif;
+  --font-body: "Andika", ui-sans-serif, system-ui, sans-serif;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1.0625rem/1.6 var(--font-body); }
+img, svg { display: block; max-width: 100%; }
+h1, h2, h3, .display { font-family: var(--font-display); font-weight: 800; line-height: 1.08; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2.25rem, 1.5rem + 2.8vw, 3.6rem); }
+h2 { font-size: clamp(1.75rem, 1.3rem + 1.7vw, 2.6rem); }
+h3 { font-size: 1.3rem; font-weight: 700; line-height: 1.2; }
+p { margin: 0; text-wrap: pretty; }
+a { color: inherit; }
+.prose a, .link { color: var(--accent); font-weight: 700; text-underline-offset: 3px; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 4px solid var(--focus); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 16px; top: -80px; z-index: 50; }
+.skip:focus { top: 16px; }
+.icon { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.wrap { width: min(1240px, 100% - 2 * var(--gutter)); margin-inline: auto; }
+.lead { font-size: clamp(1.125rem, 1rem + 0.4vw, 1.3rem); color: var(--text-muted); max-width: 60ch; }
+.muted { color: var(--text-muted); }
+.kicker .icon { width: 18px; height: 18px; }
+.kicker { display: inline-flex; align-items: center; gap: 8px; padding: 4px 14px; border-radius: var(--r-pill); background: var(--green); color: #fff; font: 700 0.95rem/1.5 var(--font-display); margin-bottom: 14px; }
+
+/* ---------- Buttons and chips ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; padding: 0 28px; border: 0; border-radius: var(--r-pill); background: var(--accent); color: var(--accent-text); font: 700 1.1875rem/1 var(--font-display); text-decoration: none; cursor: pointer; transition: transform var(--dur-fast) var(--ease-spring), background-color var(--dur-fast); }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(1px) scale(0.98); }
+.btn[disabled] { opacity: 0.6; cursor: progress; transform: none; }
+.btn-ghost { background: var(--frame); color: var(--text); box-shadow: inset 0 0 0 2px var(--text); }
+.btn-sm { min-height: 44px; padding: 0 20px; font-size: 1.0625rem; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { min-height: 46px; padding: 0 20px; border: 0; border-radius: var(--r-pill); background: var(--frame); color: var(--text); font: 700 1.0625rem/1 var(--font-display); cursor: pointer; box-shadow: inset 0 0 0 2px var(--border-strong); transition: transform var(--dur-fast) var(--ease-spring); }
+.chip:hover { transform: translateY(-2px); }
+.chip[aria-pressed="true"] { background: var(--text); color: var(--bg); box-shadow: none; }
+.tag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: var(--r-pill); background: var(--frame); font: 700 0.9375rem/1.4 var(--font-display); }
+.tag .icon { width: 18px; height: 18px; }
+
+/* ---------- Header: white bar, one coloured pill per section ---------- */
+.site-header { background: var(--surface); border-bottom: 1px solid var(--border); position: relative; z-index: 5; }
+.head-row { display: flex; align-items: center; gap: 24px; min-height: 92px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 800 1.75rem/1 var(--font-display); color: var(--text); white-space: nowrap; }
+.brand svg { width: 46px; height: 46px; }
+.pills { display: flex; gap: 10px; }
+.pill { --c: var(--sky); display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 22px 0 14px; border-radius: var(--r-pill); background: var(--c); color: #fff; font: 700 1.1875rem/1 var(--font-display); text-decoration: none; white-space: nowrap; transition: transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-fast); }
+.pill .icon { width: 28px; height: 28px; stroke-width: 2.2; }
+.pill:hover { transform: translateY(-3px); }
+.pill[aria-current="page"] { box-shadow: 0 0 0 4px var(--surface), 0 0 0 7px var(--c); }
+.c-sky { --c: var(--sky); } .c-orange { --c: var(--orange); } .c-magenta { --c: var(--magenta); } .c-purple { --c: var(--purple); } .c-green { --c: var(--green); } .c-red { --c: var(--red); }
+.head-end { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.grown { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 16px; border-radius: var(--r-pill); color: var(--text); font: 700 1.0625rem/1 var(--font-display); text-decoration: none; white-space: nowrap; }
+.grown:hover, .grown[aria-current="page"] { background: var(--surface-2); box-shadow: inset 0 0 0 2px var(--border); }
+.icon-btn { display: inline-grid; place-items: center; width: 48px; height: 48px; border: 0; border-radius: 50%; background: transparent; color: var(--text); cursor: pointer; }
+.icon-btn:hover { background: var(--surface-2); }
+.subnav { background: var(--surface); border-bottom: 1px solid var(--border); position: relative; }
+.subnav .wrap { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; position: relative; }
+.subnav a { flex: none; padding: 14px 14px 12px; font: 700 1.0625rem/1 var(--font-display); color: var(--text-muted); text-decoration: none; border-bottom: 4px solid transparent; }
+.subnav a:hover { color: var(--text); }
+.subnav a[aria-current="page"] { color: var(--text); border-color: var(--green); }
+
+/* ---------- Canvas: full-bleed colour with scattered paper confetti ---------- */
+.canvas { --cv: var(--cv-sun); --cv-2: var(--cv-sun-2); --cc: var(--cc-sun); position: relative; isolation: isolate; background: var(--cv); padding-bottom: clamp(56px, 7vw, 96px); }
+.canvas::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--cc); -webkit-mask: var(--confetti) 0 0 / 520px; mask: var(--confetti) 0 0 / 520px; pointer-events: none; }
+.cv-sky { --cv: var(--cv-sky); --cv-2: var(--cv-sky-2); --cc: var(--cc-sky); }
+.cv-orange { --cv: var(--cv-orange); --cv-2: var(--cv-orange-2); --cc: var(--cc-orange); }
+.cv-magenta { --cv: var(--cv-magenta); --cv-2: var(--cv-magenta-2); --cc: var(--cc-magenta); }
+.cv-purple { --cv: var(--cv-purple); --cv-2: var(--cv-purple-2); --cc: var(--cc-purple); }
+.canvas-head { padding-block: clamp(36px, 5vw, 60px) clamp(24px, 3vw, 36px); display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 32px; }
+.canvas-head p { font-size: 1.1875rem; max-width: 46ch; }
+.count { font: 700 1.0625rem/1 var(--font-display); }
+.back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px; font: 700 1.0625rem/1 var(--font-display); text-decoration: none; padding: 10px 16px 10px 10px; border-radius: var(--r-pill); background: var(--frame); }
+.back .icon { width: 20px; height: 20px; }
+
+/* Friend band: a deeper strip of round portraits that filters the list */
+.who-band { background: var(--cv-2); position: relative; }
+.who-band:not(:has(button)) { display: none; }
+.who-row { display: flex; gap: clamp(10px, 2vw, 22px); overflow-x: auto; padding: 16px 10px 12px; scrollbar-width: none; position: relative; }
+.who:first-child { margin-left: auto; } .who:last-child { margin-right: auto; }
+.who { flex: none; display: grid; justify-items: center; gap: 4px; padding: 0; border: 0; background: none; cursor: pointer; font: 700 1rem/1.2 var(--font-display); color: var(--text); }
+.who .face { width: 72px; height: 72px; }
+.who[aria-pressed="true"] .face { box-shadow: 0 0 0 4px var(--frame), 0 0 0 8px var(--text); }
+
+/* ---------- Faces, tiles and badges ---------- */
+.face { display: grid; place-items: center; border-radius: 50%; overflow: hidden; background: var(--t, oklch(92% 0.06 225)); box-shadow: 0 0 0 4px var(--frame); transition: transform var(--dur-base) var(--ease-spring); }
+.face svg { width: 82%; height: 82%; margin-top: 18%; }
+.face .icon { width: 50%; height: 50%; margin: 0; color: oklch(27% 0.06 268); }
+.face[class*="c-"] { background: var(--c); }
+.t-sky { --t: #c9efff; } .t-orange { --t: #ffe2c2; } .t-magenta { --t: #ffd6ea; } .t-purple { --t: #e6dcff; } .t-green { --t: #d3f5d8; } .t-sun { --t: #fff1a8; } .t-night { --t: #26306b; }
+.art { display: block; width: 100%; height: 100%; background: var(--t); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: clamp(16px, 2vw, 24px); }
+.tile { position: relative; display: flex; flex-direction: column; padding: 5px; border-radius: var(--r-card); background: var(--frame); box-shadow: var(--shadow-card); text-decoration: none; color: var(--text); transition: transform var(--dur-base) var(--ease-spring); }
+.tile:hover { transform: translateY(-5px) rotate(-0.8deg); }
+.tile:hover .badge { transform: rotate(-14deg) scale(1.06); }
+.tile-art { position: relative; aspect-ratio: 16 / 10; border-radius: var(--r-media); }
+.tile-art .art { border-radius: var(--r-media); }
+.tile-name { padding: 12px 70px 10px 10px; font: 700 1.1875rem/1.25 var(--font-display); }
+.badge { position: absolute; right: 8px; bottom: -26px; display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: var(--c); color: #fff; box-shadow: 0 0 0 5px var(--frame); transition: transform var(--dur-base) var(--ease-spring); }
+.badge .icon { width: 30px; height: 30px; stroke-width: 2.2; }
+.sticker { position: absolute; left: -10px; top: -12px; z-index: 1; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: var(--red); color: #fff; font: 800 1.0625rem/1 var(--font-display); transform: rotate(-12deg); box-shadow: 0 0 0 4px var(--frame); }
+.empty { padding: 40px 24px; border-radius: var(--r-card); background: var(--frame); text-align: center; font: 700 1.25rem/1.4 var(--font-display); }
+
+/* Home mosaic: one big tile, small tiles and a round portrait */
+.home-intro { padding-block: clamp(36px, 5vw, 64px) clamp(28px, 3.5vw, 44px); display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 16px 48px; align-items: end; }
+.home-intro .display { font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem); }
+.home-intro p { font-size: 1.25rem; max-width: 42ch; }
+.mosaic { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: clamp(16px, 2vw, 24px); }
+.mosaic .big { grid-row: span 2; }
+.mosaic .tile:not(.big) { align-self: start; }
+.mosaic .big .tile-art { aspect-ratio: auto; flex: 1; min-height: 300px; }
+.mosaic .big .tile-name { font-size: 1.5rem; }
+.round-tile { display: grid; justify-items: center; align-content: center; gap: 12px; text-decoration: none; color: var(--text); position: relative; }
+.round-tile .face { width: min(100%, 230px); aspect-ratio: 1; box-shadow: 0 0 0 7px var(--frame), var(--shadow-card); }
+.round-tile:hover .face { transform: scale(1.04) rotate(3deg); }
+.round-tile .badge { right: auto; left: calc(50% + 62px); bottom: 54px; }
+.round-tile span.tag { font-size: 1.0625rem; padding: 6px 16px; }
+.friends-row { margin-top: clamp(48px, 6vw, 72px); }
+.friends-row h2 { margin-bottom: 22px; }
+.avatars { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: clamp(10px, 3vw, 36px); }
+.avatars a { display: grid; justify-items: center; gap: 8px; text-decoration: none; font: 700 1.125rem/1 var(--font-display); }
+.avatars .face { width: clamp(58px, 9vw, 112px); height: clamp(58px, 9vw, 112px); }
+.avatars a:hover .face { transform: translateY(-6px) rotate(-4deg); }
+
+/* ---------- Grown-ups pages: white, calmer ---------- */
+.page-head { padding-block: clamp(40px, 6vw, 76px) clamp(28px, 4vw, 44px); }
+.page-head .lead { margin-top: 16px; }
+.head-split { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px 56px; align-items: center; }
+.circle-art { width: min(100%, 400px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; justify-self: center; box-shadow: 0 0 0 10px light-dark(oklch(91% 0.175 99), oklch(80% 0.15 95 / 0.55)); }
+.circle-art .art { aspect-ratio: 1; }
+.section { padding-block: clamp(56px, 7vw, 96px); }
+.band { background: var(--surface-2); }
+.section-head { margin-bottom: clamp(28px, 4vw, 44px); max-width: 720px; }
+.section-head .lead { margin-top: 12px; }
+.points { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 28px; }
+.point .face { width: 72px; height: 72px; margin-bottom: 16px; box-shadow: none; }
+.point h3 { margin-bottom: 6px; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px 64px; align-items: center; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 22px; }
+.card { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 26px; border-radius: var(--r-card); background: var(--surface); box-shadow: inset 0 0 0 2px var(--border); }
+.card .face { width: 60px; height: 60px; box-shadow: none; }
+.card .btn { align-self: start; }
+.card .face .icon, .point .face .icon { color: #fff; }
+.card-meta { list-style: none; margin: 4px 0 8px; padding: 0; display: grid; gap: 6px; color: var(--text-muted); }
+.card-meta li { display: flex; gap: 8px; align-items: center; }
+.card-meta .icon { width: 20px; height: 20px; }
+.price { font: 800 1.375rem/1 var(--font-display); margin-top: auto; }
+.price small { font: 400 1rem/1 var(--font-body); color: var(--text-muted); }
+.faq { display: grid; gap: 12px; max-width: 820px; }
+.faq details { border-radius: var(--r-card); background: var(--surface); box-shadow: inset 0 0 0 2px var(--border); }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 22px; cursor: pointer; list-style: none; font: 700 1.1875rem/1.3 var(--font-display); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(180deg); }
+.faq details p { padding: 0 22px 20px; color: var(--text-muted); }
+.cta-band { padding-block: clamp(48px, 6vw, 80px); }
+.cta-inner { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 40px; align-items: center; }
+.slots { display: grid; gap: 12px; }
+.slot { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto auto; gap: 8px 20px; align-items: center; padding: 16px 18px 16px 22px; border-radius: var(--r-card); background: var(--surface); box-shadow: inset 0 0 0 2px var(--border); }
+.slot time { font: 800 1.375rem/1 var(--font-display); }
+.slot h3 { display: flex; align-items: center; gap: 10px; font-size: 1.1875rem; }
+.slot h3::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--c); flex: none; }
+.slot .day { display: block; font: 700 0.9375rem/1.3 var(--font-display); color: var(--text-muted); margin-top: 4px; }
+.slot p { color: var(--text-muted); font-size: 1rem; }
+.spaces { font: 700 1rem/1.2 var(--font-display); white-space: nowrap; }
+.spaces.full { color: var(--error); }
+
+/* Forms */
+.form-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.form-card { padding: clamp(22px, 4vw, 40px); border-radius: var(--r-panel); background: var(--surface); box-shadow: inset 0 0 0 2px var(--border); }
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+.field { display: grid; gap: 6px; align-content: start; grid-column: span 2; }
+.field.half { grid-column: span 1; }
+.field > label, legend { font: 700 1.0625rem/1.3 var(--font-display); padding: 0; }
+.opt { font-weight: 400; color: var(--text-muted); font-family: var(--font-body); font-size: 0.9375rem; }
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+input:not([type=radio]):not([type=checkbox]), select, textarea { width: 100%; min-height: 54px; padding: 12px 18px; border: 2px solid var(--border-strong); border-radius: 16px; background: var(--bg); color: var(--text); }
+textarea { min-height: 120px; resize: vertical; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 0; border-color: var(--accent); box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 28%, transparent); }
+[aria-invalid="true"] { border-color: var(--error) !important; }
+.error { min-height: 1.6em; color: var(--error); font-size: 0.9375rem; font-weight: 700; }
+.age-pick { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.age-pick label { position: relative; }
+.age-pick input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.age-pick span { display: grid; place-items: center; min-width: 54px; height: 54px; padding: 0 14px; border-radius: 50%; background: var(--surface-2); box-shadow: inset 0 0 0 2px var(--border-strong); font: 800 1.25rem/1 var(--font-display); transition: transform var(--dur-fast) var(--ease-spring); }
+.age-pick input:checked + span { background: var(--purple); color: #fff; box-shadow: none; transform: scale(1.08); }
+.age-pick input:focus-visible + span { outline: 4px solid var(--focus); outline-offset: 3px; }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: 1rem; }
+.check input { width: 24px; height: 24px; margin: 2px 0 0; accent-color: var(--accent); flex: none; }
+.form .btn { grid-column: span 2; justify-self: start; margin-top: 6px; }
+[tabindex="-1"]:focus { outline: none; }
+.success { text-align: center; display: grid; justify-items: center; gap: 12px; padding: 12px 0; }
+.success svg.cast { width: 180px; height: 120px; }
+.aside { display: grid; gap: 16px; }
+.aside .card h3 { margin-bottom: 4px; }
+.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.ticks li { display: flex; gap: 10px; }
+.ticks .icon { color: var(--green); width: 22px; height: 22px; margin-top: 2px; }
+.team { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 28px; }
+.person { display: grid; justify-items: start; gap: 4px; }
+.initials { display: grid; place-items: center; width: 96px; height: 96px; border-radius: 50%; background: var(--c); color: #fff; font: 800 2rem/1 var(--font-display); margin-bottom: 10px; box-shadow: 0 0 0 5px var(--surface), 0 0 0 8px var(--c); }
+.prose { max-width: 720px; }
+.prose h2 { font-size: 1.6rem; margin: 36px 0 10px; }
+.prose p, .prose ul { margin: 0 0 14px; }
+
+/* ---------- Play view: the stage ---------- */
+.play-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; align-items: start; }
+.stage { padding: 6px; border-radius: var(--r-panel); background: var(--frame); box-shadow: var(--shadow-card); }
+.stage-inner { border-radius: 22px; overflow: hidden; background: var(--surface-2); }
+.stage-art { position: relative; aspect-ratio: 16 / 9; }
+.stage-art > svg { width: 100%; height: 100%; }
+.stage-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; padding: 18px 22px; }
+.prompt { font: 800 clamp(1.25rem, 1rem + 1vw, 1.75rem)/1.2 var(--font-display); }
+.stars { display: flex; gap: 4px; }
+.stars svg { width: 32px; height: 32px; color: var(--border); }
+.stars svg.on { color: oklch(82% 0.17 85); }
+.options { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(10px, 3vw, 32px); padding: 4px 12px 26px; }
+.option { display: grid; justify-items: center; gap: 6px; padding: 0; border: 0; background: none; cursor: pointer; font: 800 1.1875rem/1 var(--font-display); color: var(--text); }
+.option .face { width: clamp(72px, 12vw, 112px); height: clamp(72px, 12vw, 112px); }
+.option:hover .face { transform: translateY(-6px); }
+.option.is-wrong .face { animation: shake 360ms var(--ease); }
+.shadow { filter: brightness(0) opacity(0.82); }
+.found { animation: pop var(--dur-slow) var(--ease-spring); transform-box: fill-box; transform-origin: center; }
+.palette { display: flex; flex-wrap: wrap; gap: 10px; padding: 4px 22px 24px; justify-content: center; }
+.palette label { position: relative; }
+.palette input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.palette span { display: block; width: 48px; height: 48px; border-radius: 50%; background: var(--sw); box-shadow: inset 0 0 0 2px oklch(0% 0 0 / 0.15); transition: transform var(--dur-fast) var(--ease-spring); }
+.palette input:checked + span { transform: scale(1.12); box-shadow: 0 0 0 4px var(--frame), 0 0 0 7px var(--text); }
+.palette input:focus-visible + span { outline: 4px solid var(--focus); outline-offset: 6px; }
+[data-part] { cursor: pointer; transition: fill var(--dur-fast); }
+.side-card { padding: 24px; border-radius: var(--r-card); background: var(--frame); box-shadow: var(--shadow-card); display: grid; gap: 12px; }
+.side-card h2 { font-size: 1.4rem; }
+.more { margin-top: clamp(40px, 5vw, 64px); }
+.more h2 { margin-bottom: 22px; }
+
+/* ---------- Story reader ---------- */
+.book { padding: 6px; border-radius: var(--r-panel); background: var(--frame); box-shadow: var(--shadow-card); }
+.pages { display: grid; gap: 6px; }
+.page { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border-radius: 22px; overflow: hidden; background: var(--surface); }
+.page .art { aspect-ratio: 16 / 10; height: auto; }
+.page p { align-self: center; padding: clamp(22px, 4vw, 48px); font: 600 clamp(1.375rem, 1.1rem + 1vw, 2rem)/1.35 var(--font-display); }
+.js .pages.is-paged .page:not(.is-current) { display: none; }
+.js .pages.is-paged .page.is-current { animation: turn var(--dur-slow) var(--ease); }
+.book-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 12px 10px; }
+.round-btn { display: grid; place-items: center; width: 60px; height: 60px; border: 0; border-radius: 50%; background: var(--orange); color: #fff; cursor: pointer; transition: transform var(--dur-fast) var(--ease-spring); }
+.round-btn:hover { transform: scale(1.08); }
+.round-btn:disabled { background: var(--border); color: var(--text-muted); cursor: default; transform: none; }
+.round-btn .icon { width: 30px; height: 30px; stroke-width: 3; }
+.dots { display: flex; gap: 8px; align-items: center; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--border); transition: transform var(--dur-fast); }
+.dots i.on { background: var(--orange); transform: scale(1.3); }
+.book-nav:not(.ready) { display: none; }
+
+/* ---------- Friends ---------- */
+.friend-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 24px; }
+.friend { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 20px; align-items: center; padding: 22px; border-radius: var(--r-panel); background: var(--frame); box-shadow: var(--shadow-card); scroll-margin-top: 24px; }
+.friend .face { width: 128px; height: 128px; box-shadow: 0 0 0 5px var(--frame), 0 0 0 9px var(--c); }
+.friend h2 { font-size: 2rem; }
+.friend p { font-size: 1rem; }
+.friend .link { display: inline-block; margin-top: 8px; }
+
+/* ---------- 404 ---------- */
+.notfound { display: grid; justify-items: center; text-align: center; gap: 16px; padding-block: clamp(48px, 8vw, 96px) 0; }
+.notfound svg.cast { width: min(100%, 300px); height: auto; }
+
+/* ---------- Footer: the gang peeks over the edge ---------- */
+.site-footer { position: relative; background: oklch(27% 0.07 268); color: oklch(96% 0.01 268); padding-bottom: 32px; }
+main > [data-view]:not(:has(> .canvas:last-child)) { padding-bottom: clamp(88px, 10vw, 128px); }
+.site-footer .peek-row { position: absolute; left: 50%; bottom: 100%; width: min(640px, 92%); height: auto; transform: translateX(-50%); }
+.foot-grid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 32px; padding-block: 56px 36px; }
+.foot-grid .brand { color: inherit; }
+.foot-grid p { color: oklch(85% 0.03 268); margin-top: 14px; max-width: 34ch; }
+.foot-grid h2 { font-size: 1.1875rem; margin-bottom: 12px; }
+.foot-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.foot-grid a { text-decoration: none; color: oklch(90% 0.02 268); }
+.foot-grid a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 22px; border-top: 1px solid oklch(40% 0.05 268); color: oklch(82% 0.03 268); font-size: 0.9375rem; }
+.site-footer :focus-visible { outline-color: oklch(90% 0.15 98); }
+
+/* ---------- Views and motion ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.js .reveal:not(.is-in) { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease-spring) both; animation-delay: calc(var(--i, 0) * 60ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(18px) scale(0.96); } }
+@keyframes pop { 0% { transform: scale(0.85); } 60% { transform: scale(1.1); } }
+@keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+@keyframes turn { from { opacity: 0; transform: translateX(24px); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; transition-duration: 1ms !important; }
+  .tile:hover, .tile:hover .badge, .pill:hover, .btn:hover, .chip:hover, .round-tile:hover .face, .avatars a:hover .face, .option:hover .face { transform: none; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1099px) {
+  .pill { padding: 0 18px 0 12px; font-size: 1.0625rem; min-height: 48px; }
+  .pill .icon { width: 24px; height: 24px; }
+  .head-row { gap: 16px; }
+  .brand { font-size: 1.5rem; }
+  .brand svg { width: 40px; height: 40px; }
+}
+@media (max-width: 979px) {
+  .pill { padding: 0; width: 54px; min-height: 54px; justify-content: center; }
+  .pill .icon { width: 30px; height: 30px; }
+  .pill span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .mosaic { grid-template-columns: 1fr 1fr; }
+  .mosaic .big { grid-column: span 2; grid-row: auto; }
+  .mosaic .big .tile-art { min-height: 0; aspect-ratio: 16 / 9; }
+  .play-grid, .form-grid { grid-template-columns: 1fr; }
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 799px) {
+  .home-intro, .head-split, .split, .cta-inner { grid-template-columns: 1fr; }
+  .page { grid-template-columns: 1fr; }
+  .slot { grid-template-columns: 76px minmax(0, 1fr); }
+  .slot .spaces, .slot .btn { grid-column: 2; justify-self: start; }
+}
+@media (max-width: 639px) {
+  .head-row { flex-wrap: wrap; gap: 8px 12px; min-height: 0; padding-block: 12px 14px; }
+  .pills { order: 3; width: 100%; justify-content: space-around; }
+  .brand { font-size: 1.375rem; gap: 8px; }
+  .brand svg { width: 34px; height: 34px; }
+  .grown { padding: 0 8px; font-size: 1rem; }
+  .grown .icon { display: none; }
+  .head-end { gap: 0; }
+  .icon-btn { width: 44px; height: 44px; }
+  .mosaic { grid-template-columns: 1fr; }
+  .mosaic .big { grid-column: auto; }
+  .form { grid-template-columns: 1fr; }
+  .circle-art { width: min(100%, 280px); }
+  .age-pick { gap: 8px; }
+  .age-pick span { min-width: 44px; height: 44px; font-size: 1.125rem; }
+  .subnav a { padding-inline: 10px; }
+  .field, .field.half, .form .btn { grid-column: span 1; }
+  .friend { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .foot-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<a class="skip btn btn-sm" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M5 9l7 7 7-7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></symbol>
+  <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M4 7h4a2.5 2.5 0 1 1 5 0h4v4a2.5 2.5 0 1 1 0 5v4h-4.5a2.5 2.5 0 1 0-4.5 0H4v-4.5a2.5 2.5 0 1 0 0-4.5z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 5.5C5.5 4 8.5 4 12 6c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5zM12 6v13.5"/></symbol>
+  <symbol id="i-brush" viewBox="0 0 24 24"><path d="M20.5 3.5c-3 1-8.5 6.5-10.5 9.5l1.5 1.5c3-2 8.5-7.5 9-11zM8.5 14c-2.2 0-3.5 1.6-3.5 3.5 0 1.2-.7 2.2-1.8 2.5 3.8 1.2 7.8-.3 7.3-4"/></symbol>
+  <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1.8 2 5.2 2 7 0M9 9.5v.5M15 9.5v.5"/></symbol>
+  <symbol id="i-grown" viewBox="0 0 24 24"><circle cx="8.5" cy="7" r="3"/><path d="M3 20v-2a5 5 0 0 1 5-5h1a5 5 0 0 1 5 5v2"/><circle cx="17.5" cy="10.5" r="2.2"/><path d="M15.5 20v-1.5a3.5 3.5 0 0 1 6-2.4"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-kid" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1.5A5.5 5.5 0 0 1 10.5 14h3a5.5 5.5 0 0 1 5.5 5.5V21"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3.5 7l8.5 6 8.5-6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.5 3.5h3l1.5 4.5-2 1.5a11 11 0 0 0 5.5 5.5l1.5-2 4.5 1.5v3A2 2 0 0 1 18.5 20 16 16 0 0 1 4.5 6 2 2 0 0 1 6.5 3.5z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.8-8-10.5A4.5 4.5 0 0 1 12 6.8a4.5 4.5 0 0 1 8 2.7C20 15.2 12 20 12 20z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></symbol>
+  <symbol id="i-redo" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4v4.5H15"/></symbol>
+  <!-- The gang: simple geometric friends. Bodies read --body (and --line for colour-in outlines) from the <use> element -->
+  <symbol id="legs" viewBox="0 0 120 120"><path d="M48 96v16M72 96v16" stroke="#1f2547" stroke-width="7" stroke-linecap="round"/></symbol>
+  <symbol id="face" viewBox="0 0 60 36"><g fill="#1f2547"><ellipse cx="16" cy="12" rx="4.6" ry="6"/><ellipse cx="44" cy="12" rx="4.6" ry="6"/></g><g fill="#fff"><circle cx="17.6" cy="9.6" r="1.7"/><circle cx="45.6" cy="9.6" r="1.7"/></g><g fill="#ff8fb3" opacity=".75"><ellipse cx="6.5" cy="23" rx="5.5" ry="3.4"/><ellipse cx="53.5" cy="23" rx="5.5" ry="3.4"/></g><path d="M22 23q8 8 16 0" fill="none" stroke="#1f2547" stroke-width="3.6" stroke-linecap="round"/></symbol>
+  <symbol id="c-pim" viewBox="0 0 120 120"><use href="#legs"/><path d="M61 20c1-8 9-13 18-10-1 8-9 13-18 10z" fill="#35b85a"/><circle cx="60" cy="60" r="42" fill="var(--body,#29aee6)" stroke="var(--line,none)" stroke-width="3"/><use href="#face" x="30" y="48" width="60" height="36"/></symbol>
+  <symbol id="c-tiko" viewBox="0 0 120 120"><use href="#legs"/><path d="M60 12q6 0 10 7l36 72q5 11-7 11H21q-12 0-7-11l36-72q4-7 10-7z" fill="var(--body,#ff8a1e)" stroke="var(--line,none)" stroke-width="3"/><path d="M27 88h66" stroke="#ffc94d" stroke-width="7" stroke-linecap="round"/><use href="#face" x="30" y="52" width="60" height="36"/></symbol>
+  <symbol id="c-bodi" viewBox="0 0 120 120"><use href="#legs"/><rect x="17" y="24" width="86" height="78" rx="18" fill="var(--body,#e5328f)" stroke="var(--line,none)" stroke-width="3"/><path d="M60 22l-15-10v20zM60 22l15-10v20z" fill="#ffd23f"/><circle cx="60" cy="22" r="5.5" fill="#ffd23f"/><use href="#face" x="30" y="50" width="60" height="36"/></symbol>
+  <symbol id="c-lulu" viewBox="0 0 120 120"><use href="#legs"/><path d="M60 28c-1-9 7-14 13-9" fill="none" stroke="#8e5bd6" stroke-width="6" stroke-linecap="round"/><path d="M19 102V66a41 41 0 0 1 82 0v36z" fill="var(--body,#8e5bd6)" stroke="var(--line,none)" stroke-width="3"/><use href="#face" x="30" y="56" width="60" height="36"/></symbol>
+  <symbol id="c-zib" viewBox="0 0 120 120"><use href="#legs" y="-4"/><path d="M55.5 21.8Q60 12 64.5 21.8L71.6 37.1Q74.1 42.6 80.1 43.3L96.9 45.3Q107.6 46.5 99.6 53.9L87.3 65.3Q82.8 69.4 84 75.4L87.3 91.9Q89.4 102.5 80 97.2L65.3 89Q60 86 54.7 89L40 97.2Q30.6 102.5 32.7 91.9L36 75.4Q37.2 69.4 32.7 65.3L20.4 53.9Q12.4 46.5 23.1 45.3L39.9 43.3Q45.9 42.6 48.4 37.1Z" fill="var(--body,#35b85a)" stroke="var(--line,none)" stroke-width="3"/><use href="#face" x="35" y="52" width="50" height="30"/></symbol>
+  <symbol id="mark" viewBox="0 0 48 48"><circle cx="17" cy="19" r="13" fill="#29aee6"/><path d="M33 6q2.5 0 4 3l9 17q2 5-3 5H26q-5 0-3-5l8-17q1.5-3 2-3z" fill="#ff8a1e"/><rect x="14" y="26" width="20" height="20" rx="5" fill="#e5328f"/><circle cx="20" cy="35" r="1.8" fill="#1f2547"/><circle cx="28" cy="35" r="1.8" fill="#1f2547"/></symbol>
+  <!-- Scene props, 320 x 200: they frame the edges so a friend can stand in the middle -->
+  <symbol id="p-hills" viewBox="0 0 320 200"><circle cx="268" cy="44" r="22" fill="#ffd23f"/><ellipse cx="62" cy="40" rx="30" ry="12" fill="#fff"/><ellipse cx="84" cy="32" rx="18" ry="12" fill="#fff"/><path d="M0 150q80-50 170 0t150-10v60H0z" fill="#8fd89a"/><path d="M0 172q100-36 190 4t130-12v36H0z" fill="#4fbf6a"/></symbol>
+  <symbol id="p-kite" viewBox="0 0 320 200"><ellipse cx="70" cy="150" rx="40" ry="14" fill="#fff"/><ellipse cx="260" cy="168" rx="46" ry="14" fill="#fff"/><path d="M252 22l26 30-26 34-26-34z" fill="#ff5a5f"/><path d="M252 22v64M226 52h52" stroke="#fff" stroke-width="3"/><path d="M252 86q-12 18 4 30t-6 34" fill="none" stroke="#1f2547" stroke-width="3" stroke-linecap="round"/><path d="M0 188h320v12H0z" fill="#4fbf6a"/></symbol>
+  <symbol id="p-blocks" viewBox="0 0 320 200"><rect x="14" y="140" width="56" height="56" rx="8" fill="#ffd23f"/><rect x="24" y="90" width="46" height="46" rx="8" fill="#29aee6"/><rect x="250" y="146" width="56" height="50" rx="8" fill="#e5328f"/><path d="M262 142l16-36 16 36z" fill="#35b85a"/><circle cx="286" cy="40" r="14" fill="#ff8a1e"/><path d="M0 196h320v4H0z" fill="#1f2547" opacity=".15"/></symbol>
+  <symbol id="p-book" viewBox="0 0 320 200"><path d="M20 150q70-26 140 0 70-26 140 0v50H20z" fill="#8e5bd6"/><path d="M28 146q66-22 132 0v40q-66-22-132 0zM160 146q66-22 132 0v40q-66-22-132 0z" fill="#fff"/><path d="M48 154q40-10 90 0M48 166q40-10 90 0M182 154q40-10 90 0M182 166q40-10 90 0" stroke="#c9c3e6" stroke-width="4" stroke-linecap="round" fill="none"/><circle cx="46" cy="40" r="6" fill="#ffd23f"/><circle cx="280" cy="56" r="8" fill="#ff8fb3"/></symbol>
+  <symbol id="p-moon" viewBox="0 0 320 200"><rect width="320" height="200" fill="#26306b"/><path d="M262 30a28 28 0 1 0 22 44 22 22 0 1 1-22-44z" fill="#ffe27a"/><g fill="#fff"><circle cx="40" cy="36" r="3"/><circle cx="92" cy="70" r="2"/><circle cx="196" cy="28" r="2.5"/><circle cx="30" cy="120" r="2"/><circle cx="296" cy="130" r="2"/></g><path d="M0 182q160-24 320 0v18H0z" fill="#3b4790"/></symbol>
+  <symbol id="p-boat" viewBox="0 0 320 200"><circle cx="54" cy="46" r="20" fill="#ffd23f"/><path d="M246 116h52l-8 18h-36z" fill="#e5328f"/><path d="M272 114V60l24 50z" fill="#fff"/><path d="M0 160q20-12 40 0t40 0 40 0 40 0 40 0 40 0 40 0 40 0v40H0z" fill="#29aee6"/><path d="M0 178q20-10 40 0t40 0 40 0 40 0 40 0 40 0 40 0 40 0v22H0z" fill="#1d8fc4"/></symbol>
+  <symbol id="p-paint" viewBox="0 0 320 200"><circle cx="34" cy="36" r="22" fill="#ff8a1e"/><circle cx="58" cy="62" r="12" fill="#ffd23f"/><circle cx="292" cy="40" r="18" fill="#29aee6"/><circle cx="286" cy="160" r="26" fill="#e5328f"/><circle cx="40" cy="164" r="16" fill="#35b85a"/><path d="M238 112q20-30 40-26" stroke="#8e5bd6" stroke-width="12" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="p-music" viewBox="0 0 320 200"><g fill="#1f2547"><circle cx="44" cy="120" r="12"/><circle cx="268" cy="70" r="12"/><circle cx="296" cy="58" r="12"/></g><path d="M55 120V56l22 8M279 70V22l28-10v46" stroke="#1f2547" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="60" cy="40" r="7" fill="#ff5a5f"/><circle cx="250" cy="150" r="9" fill="#ffd23f"/><path d="M0 192h320v8H0z" fill="#8e5bd6"/></symbol>
+  <symbol id="p-garden" viewBox="0 0 320 200"><path d="M40 196v-60M78 196v-40M246 196v-52M284 196v-70" stroke="#35b85a" stroke-width="6"/><circle cx="40" cy="130" r="14" fill="#ff5a5f"/><circle cx="78" cy="150" r="11" fill="#ffd23f"/><circle cx="246" cy="138" r="12" fill="#8e5bd6"/><circle cx="284" cy="118" r="15" fill="#ff8a1e"/><circle cx="160" cy="30" r="18" fill="#ffd23f"/><path d="M0 190h320v10H0z" fill="#4fbf6a"/></symbol>
+  <symbol id="p-rain" viewBox="0 0 320 200"><ellipse cx="70" cy="38" rx="44" ry="18" fill="#fff"/><ellipse cx="250" cy="30" rx="40" ry="16" fill="#fff"/><path d="M50 70l-4 12M84 76l-4 12M234 62l-4 12M268 70l-4 12M60 104l-4 12M258 100l-4 12" stroke="#29aee6" stroke-width="5" stroke-linecap="round"/><ellipse cx="160" cy="186" rx="120" ry="14" fill="#29aee6" opacity=".55"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="wrap head-row">
+    <a class="brand" href="#/" aria-label="Puddlejump home"><svg aria-hidden="true"><use href="#mark"/></svg>puddlejump</a>
+    <nav class="pills" aria-label="Play">
+      <a class="pill c-sky" href="#/games"><svg class="icon" aria-hidden="true"><use href="#i-puzzle"/></svg><span>Games</span></a>
+      <a class="pill c-orange" href="#/stories"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><span>Stories</span></a>
+      <a class="pill c-magenta" href="#/make"><svg class="icon" aria-hidden="true"><use href="#i-brush"/></svg><span>Make</span></a>
+      <a class="pill c-purple" href="#/friends"><svg class="icon" aria-hidden="true"><use href="#i-smile"/></svg><span>Friends</span></a>
+    </nav>
+    <div class="head-end">
+      <a class="grown" href="#/grownups"><svg class="icon" aria-hidden="true"><use href="#i-grown"/></svg>Grown-ups</a>
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark theme"><svg class="icon"><use href="#i-moon"/></svg></button>
+    </div>
+  </div>
+</header>
+<nav class="subnav" aria-label="Grown-ups" data-subnav>
+  <div class="wrap">
+    <a href="#/grownups">Classes</a>
+    <a href="#/timetable">Timetable</a>
+    <a href="#/book">Book a visit</a>
+    <a href="#/about">About us</a>
+    <a href="#/contact">Contact</a>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ================= HOME ================= -->
+<div data-view="home">
+  <div class="canvas">
+    <section class="wrap home-intro">
+      <h1 class="display">Hop in! Let's play, read and make things.</h1>
+      <p>Games, picture books and colour-ins with Pim and the gang, for children aged 2 to 7. No ads, nothing to buy.</p>
+    </section>
+    <section class="wrap mosaic" aria-label="Today's picks">
+      <a class="tile big reveal" href="#/play?id=shadow-match"><span class="sticker">New</span><span class="tile-art"><svg class="art t-sky" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#p-hills"/><use href="#c-bodi" x="58" y="62" width="104" height="104"/><use href="#c-pim" x="162" y="62" width="104" height="104"/></svg><span class="badge c-sky"><svg class="icon" aria-hidden="true"><use href="#i-puzzle"/></svg><span class="sr-only">Game</span></span></span><span class="tile-name">Shadow Match</span></a>
+      <a class="tile reveal" style="--i:1" href="#/story?id=runaway-kite"><span class="tile-art"><svg class="art t-sky" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-kite"/><use href="#c-pim" x="105" y="62" width="110" height="110"/></svg><span class="badge c-orange"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><span class="sr-only">Story</span></span></span><span class="tile-name">Pim and the Runaway Kite</span></a>
+      <a class="tile reveal" style="--i:2" href="#/play?id=colour-zib"><span class="tile-art"><svg class="art t-green" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-paint"/><use href="#c-zib" x="105" y="62" width="110" height="110"/></svg><span class="badge c-magenta"><svg class="icon" aria-hidden="true"><use href="#i-brush"/></svg><span class="sr-only">Colour-in</span></span></span><span class="tile-name">Colour in Zib</span></a>
+      <a class="round-tile reveal" style="--i:3" href="#/friends?at=lulu"><span class="face t-purple"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-lulu"/></svg></span><span class="badge c-purple"><svg class="icon" aria-hidden="true"><use href="#i-smile"/></svg></span><span class="tag">Say hi to Lulu</span></a>
+      <a class="tile reveal" style="--i:4" href="#/play?id=tower-tumble"><span class="tile-art"><svg class="art t-orange" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-blocks"/><use href="#c-tiko" x="105" y="62" width="110" height="110"/></svg><span class="badge c-sky"><svg class="icon" aria-hidden="true"><use href="#i-puzzle"/></svg><span class="sr-only">Game</span></span></span><span class="tile-name">Tower Tumble</span></a>
+    </section>
+    <section class="wrap friends-row" aria-labelledby="pick-friend">
+      <h2 id="pick-friend">Pick a friend</h2>
+      <ul class="avatars">
+        <li><a href="#/games?who=pim"><span class="face t-sky"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-pim"/></svg></span>Pim</a></li>
+        <li><a href="#/games?who=tiko"><span class="face t-orange"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-tiko"/></svg></span>Tiko</a></li>
+        <li><a href="#/games?who=bodi"><span class="face t-magenta"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-bodi"/></svg></span>Bodi</a></li>
+        <li><a href="#/games?who=lulu"><span class="face t-purple"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-lulu"/></svg></span>Lulu</a></li>
+        <li><a href="#/games?who=zib"><span class="face t-green"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-zib"/></svg></span>Zib</a></li>
+      </ul>
+    </section>
+  </div>
+  <section class="wrap section split">
+    <div>
+      <p class="kicker"><svg class="icon" aria-hidden="true"><use href="#i-grown"/></svg>For grown-ups</p>
+      <h2>Real classes, two streets from the park</h2>
+      <p class="lead" style="margin-top:14px">The gang lives at our play studio, where small groups of children play, read and make things together. Classes run on weekday mornings and Saturdays, and your first visit is free.</p>
+      <div class="btn-row"><a class="btn" href="#/grownups">See classes</a><a class="btn btn-ghost" href="#/timetable">Timetable</a></div>
+    </div>
+    <div class="circle-art"><svg class="art t-sky" viewBox="0 0 200 200" aria-hidden="true"><use href="#p-rain" x="-60" y="10" width="320" height="200"/><use href="#c-tiko" x="16" y="66" width="92" height="92"/><use href="#c-pim" x="92" y="66" width="92" height="92"/></svg></div>
+  </section>
+  <section class="band section">
+    <div class="wrap">
+      <div class="section-head"><h2>This week at the studio</h2><p class="lead">A few places are still open. Every class is for up to eight children.</p></div>
+      <div class="cards">
+        <article class="card"><span class="face c-orange"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></span><h3>Story Circle</h3><ul class="card-meta"><li><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg>Tuesday, 10:00</li><li><svg class="icon" aria-hidden="true"><use href="#i-kid"/></svg>Ages 3 to 5</li></ul><a class="link" href="#/book?class=story-circle&amp;day=tue">Book a place</a></article>
+        <article class="card"><span class="face c-sky"><svg class="icon" aria-hidden="true"><use href="#i-puzzle"/></svg></span><h3>Shape Lab</h3><ul class="card-meta"><li><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg>Thursday, 15:45</li><li><svg class="icon" aria-hidden="true"><use href="#i-kid"/></svg>Ages 4 to 6</li></ul><a class="link" href="#/book?class=shape-lab&amp;day=thu">Book a place</a></article>
+        <article class="card"><span class="face c-magenta"><svg class="icon" aria-hidden="true"><use href="#i-brush"/></svg></span><h3>Little Makers</h3><ul class="card-meta"><li><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg>Saturday, 9:30</li><li><svg class="icon" aria-hidden="true"><use href="#i-kid"/></svg>Ages 2 to 3, with a grown-up</li></ul><a class="link" href="#/book?class=little-makers&amp;day=sat">Book a place</a></article>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= GAMES ================= -->
+<div data-view="games">
+  <div class="canvas cv-sky">
+    <div class="who-band"><div class="wrap who-row" role="group" aria-label="Show games with" data-who-filter></div></div>
+    <section class="wrap canvas-head"><div><h1>Games</h1><p>Tap a game to play. Pick a friend above to see their games.</p></div><p class="count" data-count aria-live="polite"></p></section>
+    <div class="wrap">
+      <div class="grid" data-list="game">
+        <a class="tile" href="#/play?id=shadow-match" data-who="pim bodi"><span class="sticker">New</span><span class="tile-art"><svg class="art t-sky" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-hills"/><use href="#c-bodi" x="58" y="70" width="100" height="100"/><use href="#c-pim" x="162" y="70" width="100" height="100"/></svg><span class="badge c-sky"><svg class="icon" aria-hidden="true"><use href="#i-puzzle"/></svg><span class="sr-only">Game</span></span></span><span class="tile-name">Shadow Match</span></a>
+        <a class="tile" href="#/play?id=tower-tumble" data-who="tiko"><span class="tile-art"><svg class="art t-orange" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-blocks"/><use href="#c-tiko" x="105" y="62" width="110" height="110"/></svg><span class="badge c-sky"><svg class="icon" aria-hidden="true"><use href="#i-puzzle"/></svg><span class="sr-only">Game</span></span></span><span class="tile-name">Tower Tumble</span></a>
+        <a class="tile" href="#/play?id=puddle-count" data-who="pim zib"><span class="tile-art"><svg class="art t-sky" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-rain"/><use href="#c-pim" x="58" y="70" width="100" height="100"/><use href="#c-zib" x="162" y="70" width="100" height="100"/></svg><span class="badge c-sky"><svg class="icon" aria-hidden="true"><use href="#i-puzzle"/></svg><span class="sr-only">Game</span></span></span><span class="tile-name">Puddle Count</span></a>
+      </div>
+      <p class="empty" data-empty hidden>No games with this friend yet. Try everyone!</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PLAY (one game or colour-in) ================= -->
+<div data-view="play">
+  <div class="canvas cv-sky" data-play-canvas>
+    <section class="wrap canvas-head" style="display:block">
+      <a class="back" href="#/games" data-play-back><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg><span>All games</span></a>
+      <h1 data-play-title>Shadow Match</h1>
+    </section>
+    <div class="wrap play-grid">
+      <div class="stage">
+        <div class="stage-inner" data-stage="match">
+          <div class="stage-art"><svg class="art t-sky" viewBox="0 0 320 180" aria-hidden="true"><use href="#p-hills" y="-20" width="320" height="200"/><use href="#c-bodi" class="shadow" data-shadow x="104" y="44" width="112" height="112"/></svg></div>
+          <div class="stage-bar"><p class="prompt" data-prompt aria-live="polite">Who is hiding in the shadow?</p><div class="stars" data-stars aria-label="0 of 3 found"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></div></div>
+          <div class="options" data-options></div>
+          <div class="options" data-again hidden><button class="btn" type="button" data-replay><svg class="icon" aria-hidden="true"><use href="#i-redo"/></svg>Play again</button></div>
+        </div>
+        <div class="stage-inner" data-stage="paint" hidden>
+          <div class="stage-art"><svg viewBox="0 0 320 180" aria-label="Colouring picture" role="img" data-paint style="--line:#1f2547"><g stroke="#1f2547" stroke-width="3" stroke-linejoin="round"><rect data-part="sky" x="1.5" y="1.5" width="317" height="177" rx="14" fill="#fff"/><circle data-part="sun" cx="262" cy="42" r="22" fill="#fff"/><path data-part="cloud" d="M40 52a14 14 0 0 1 20-16 18 18 0 0 1 32 6 12 12 0 0 1 0 24H44a8 8 0 0 1-4-14z" fill="#fff"/><path data-part="hill" d="M1.5 132q80-44 168 0t148.5-8v48a6 6 0 0 1-6 6H8a6 6 0 0 1-6.5-6z" fill="#fff"/><path data-part="path" d="M120 178q20-30 60-42 30-6 50 0-40 14-40 42z" fill="#fff"/></g><use data-part="friend" data-paint-friend href="#c-zib" x="104" y="46" width="112" height="112" style="--body:#fff"/></svg></div>
+          <div class="stage-bar"><p class="prompt">Pick a colour, then tap the picture.</p><button class="btn btn-sm btn-ghost" type="button" data-clear><svg class="icon" aria-hidden="true"><use href="#i-redo"/></svg>Start over</button></div>
+          <div class="palette" role="radiogroup" aria-label="Colours">
+            <label><input type="radio" name="sw" value="#29aee6" checked aria-label="Blue"><span style="--sw:#29aee6"></span></label>
+            <label><input type="radio" name="sw" value="#ff8a1e" aria-label="Orange"><span style="--sw:#ff8a1e"></span></label>
+            <label><input type="radio" name="sw" value="#e5328f" aria-label="Pink"><span style="--sw:#e5328f"></span></label>
+            <label><input type="radio" name="sw" value="#8e5bd6" aria-label="Purple"><span style="--sw:#8e5bd6"></span></label>
+            <label><input type="radio" name="sw" value="#35b85a" aria-label="Green"><span style="--sw:#35b85a"></span></label>
+            <label><input type="radio" name="sw" value="#ffd23f" aria-label="Yellow"><span style="--sw:#ffd23f"></span></label>
+            <label><input type="radio" name="sw" value="#ff5a5f" aria-label="Red"><span style="--sw:#ff5a5f"></span></label>
+            <label><input type="radio" name="sw" value="#fff" aria-label="White"><span style="--sw:#fff"></span></label>
+          </div>
+        </div>
+      </div>
+      <aside class="side-card" aria-labelledby="side-title">
+        <h2 id="side-title">For grown-ups</h2>
+        <p data-play-about>Children look closely at outlines and match each shadow to a friend. It practises shapes, comparing and naming.</p>
+        <ul class="card-meta"><li><svg class="icon" aria-hidden="true"><use href="#i-kid"/></svg><span data-play-ages>Ages 3 to 5</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span data-play-mins>About 3 minutes</span></li></ul>
+        <p class="muted">Play it together the first time, then let your child lead.</p>
+      </aside>
+    </div>
+    <section class="wrap more" aria-labelledby="more-title"><h2 id="more-title">More to play</h2><div class="grid" data-more></div></section>
+  </div>
+</div>
+
+<!-- ================= STORIES ================= -->
+<div data-view="stories">
+  <div class="canvas cv-orange">
+    <section class="wrap canvas-head"><div><h1>Stories</h1><p>Picture books to read together. Tap a page to turn it.</p></div><p class="count" data-count aria-live="polite"></p></section>
+    <div class="wrap">
+      <div class="chips" role="group" aria-label="Story topics" data-topic-filter style="margin-bottom:28px">
+        <button class="chip" type="button" data-topic="all" aria-pressed="true">All stories</button>
+        <button class="chip" type="button" data-topic="outdoors" aria-pressed="false">Outdoors</button>
+        <button class="chip" type="button" data-topic="silly" aria-pressed="false">Silly</button>
+        <button class="chip" type="button" data-topic="feelings" aria-pressed="false">Feelings</button>
+        <button class="chip" type="button" data-topic="bedtime" aria-pressed="false">Bedtime</button>
+      </div>
+      <div class="grid" data-list="story">
+        <a class="tile" href="#/story?id=runaway-kite" data-topic="outdoors"><span class="tile-art"><svg class="art t-sky" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-kite"/><use href="#c-pim" x="105" y="62" width="110" height="110"/></svg><span class="badge c-orange"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><span class="sr-only">Story</span></span></span><span class="tile-name">Pim and the Runaway Kite</span></a>
+        <a class="tile" href="#/story?id=goodnight-zib" data-topic="bedtime"><span class="tile-art"><svg class="art t-night" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-moon"/><use href="#c-zib" x="105" y="62" width="110" height="110"/></svg><span class="badge c-orange"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><span class="sr-only">Story</span></span></span><span class="tile-name">Goodnight, Zib</span></a>
+        <a class="tile" href="#/story?id=bodi-big-hat" data-topic="silly"><span class="tile-art"><svg class="art t-magenta" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-music"/><use href="#c-bodi" x="105" y="62" width="110" height="110"/></svg><span class="badge c-orange"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><span class="sr-only">Story</span></span></span><span class="tile-name">Bodi's Very Big Bow</span></a>
+      </div>
+      <p class="empty" data-empty hidden>No stories here yet.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= STORY (picture-book reader) ================= -->
+<div data-view="story">
+  <div class="canvas cv-orange">
+    <section class="wrap canvas-head" style="display:block">
+      <a class="back" href="#/stories"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg><span>All stories</span></a>
+      <h1 data-story-title>Pim and the Runaway Kite</h1>
+    </section>
+    <div class="wrap">
+      <div class="book">
+        <div class="pages" data-pages aria-live="polite">
+          <div class="page"><svg class="art t-sky" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-hills"/><use href="#c-pim" x="105" y="62" width="110" height="110"/></svg><p>Pim had a red kite with a long, wiggly tail.</p></div>
+          <div class="page"><svg class="art t-sky" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-kite"/><use href="#c-pim" x="105" y="62" width="110" height="110"/></svg><p>Whoosh! The wind pulled the kite up, up and away.</p></div>
+          <div class="page"><svg class="art t-orange" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-garden"/><use href="#c-pim" x="58" y="70" width="100" height="100"/><use href="#c-tiko" x="162" y="70" width="100" height="100"/></svg><p>Tiko ran too. "It's over the flowers!" said Tiko.</p></div>
+          <div class="page"><svg class="art t-sky" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-rain"/><use href="#c-pim" x="58" y="70" width="100" height="100"/><use href="#c-tiko" x="162" y="70" width="100" height="100"/></svg><p>Splash! The kite came down in a big puddle.</p></div>
+          <div class="page"><svg class="art t-sun" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-hills"/><use href="#c-pim" x="58" y="70" width="100" height="100"/><use href="#c-tiko" x="162" y="70" width="100" height="100"/></svg><p>A muddy kite still flies. And now it has a story.</p></div>
+        </div>
+        <div class="book-nav" data-book-nav>
+          <button class="round-btn" type="button" data-turn="-1" aria-label="Previous page"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button>
+          <div class="dots" data-dots aria-hidden="true"></div>
+          <span class="sr-only" data-page-label></span>
+          <button class="round-btn" type="button" data-turn="1" aria-label="Next page"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+        </div>
+      </div>
+      <section class="more" aria-labelledby="next-title"><h2 id="next-title">Read another</h2><div class="grid" data-more-stories></div></section>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MAKE ================= -->
+<div data-view="make">
+  <div class="canvas cv-magenta">
+    <section class="wrap canvas-head"><div><h1>Make</h1><p>Colour-ins to finish on screen. Pick a colour and tap.</p></div><p class="count" data-count aria-live="polite"></p></section>
+    <div class="wrap">
+      <div class="grid" data-list="make">
+        <a class="tile" href="#/play?id=colour-zib"><span class="tile-art"><svg class="art t-green" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-paint"/><use href="#c-zib" x="105" y="62" width="110" height="110"/></svg><span class="badge c-magenta"><svg class="icon" aria-hidden="true"><use href="#i-brush"/></svg><span class="sr-only">Colour-in</span></span></span><span class="tile-name">Colour in Zib</span></a>
+        <a class="tile" href="#/play?id=colour-tiko"><span class="tile-art"><svg class="art t-orange" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-boat"/><use href="#c-tiko" x="105" y="56" width="110" height="110"/></svg><span class="badge c-magenta"><svg class="icon" aria-hidden="true"><use href="#i-brush"/></svg><span class="sr-only">Colour-in</span></span></span><span class="tile-name">Tiko at the Seaside</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= FRIENDS ================= -->
+<div data-view="friends">
+  <div class="canvas cv-purple">
+    <section class="wrap canvas-head"><div><h1>Meet the gang</h1><p>Five friends, five shapes. Who is your favourite?</p></div></section>
+    <div class="wrap friend-cards">
+      <article class="friend c-sky reveal" id="pim"><span class="face t-sky"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-pim"/></svg></span><div><h2>Pim</h2><p>A round, bouncy circle with a leaf on top. Loves kites, puddles and asking "why?".</p><a class="link" href="#/games?who=pim">Play with Pim</a></div></article>
+      <article class="friend c-orange reveal" id="tiko" style="--i:1"><span class="face t-orange"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-tiko"/></svg></span><div><h2>Tiko</h2><p>A pointy triangle with a stripe. Builds the tallest towers and laughs when they fall.</p><a class="link" href="#/games?who=tiko">Play with Tiko</a></div></article>
+      <article class="friend c-magenta reveal" id="bodi" style="--i:2"><span class="face t-magenta"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-bodi"/></svg></span><div><h2>Bodi</h2><p>A square with a big yellow bow. Sings loudly, dances badly and never minds.</p><a class="link" href="#/games?who=bodi">Play with Bodi</a></div></article>
+      <article class="friend c-purple reveal" id="lulu" style="--i:3"><span class="face t-purple"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-lulu"/></svg></span><div><h2>Lulu</h2><p>An arch with one curl. Quiet, clever and the best at finding hidden things.</p><a class="link" href="#/games?who=lulu">Play with Lulu</a></div></article>
+      <article class="friend c-green reveal" id="zib" style="--i:4"><span class="face t-green"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-zib"/></svg></span><div><h2>Zib</h2><p>A star who sleeps in the day and counts everything at night, even yawns.</p><a class="link" href="#/games?who=zib">Play with Zib</a></div></article>
+    </div>
+  </div>
+</div>
+
+<!-- ================= GROWN-UPS ================= -->
+<div data-view="grownups">
+  <section class="wrap page-head head-split">
+    <div>
+      <p class="kicker"><svg class="icon" aria-hidden="true"><use href="#i-grown"/></svg>For grown-ups</p>
+      <h1>Small classes for curious kids aged 2 to 7</h1>
+      <p class="lead">Puddlejump is a play studio with four rooms, lots of glue and the gang on every wall. Groups stay small so every child gets a turn.</p>
+      <div class="btn-row"><a class="btn" href="#/book">Book a free first visit</a><a class="btn btn-ghost" href="#/timetable">See the timetable</a></div>
+    </div>
+    <div class="circle-art"><svg class="art t-sky" viewBox="0 0 200 200" aria-hidden="true"><use href="#p-hills" x="-60" y="14" width="320" height="200"/><use href="#c-bodi" x="18" y="70" width="90" height="90"/><use href="#c-lulu" x="92" y="70" width="90" height="90"/></svg></div>
+  </section>
+  <section class="band section">
+    <div class="wrap">
+      <div class="section-head"><h2>What happens in a class</h2></div>
+      <div class="points">
+        <div class="point"><span class="face c-sky"><svg class="icon" aria-hidden="true"><use href="#i-puzzle"/></svg></span><h3>Play with shapes and numbers</h3><p class="muted">Sorting, counting, building and knocking things down again.</p></div>
+        <div class="point"><span class="face c-orange"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></span><h3>Stories and songs</h3><p class="muted">A picture book read aloud, a song with actions and time to talk about it.</p></div>
+        <div class="point"><span class="face c-magenta"><svg class="icon" aria-hidden="true"><use href="#i-brush"/></svg></span><h3>Making and mess</h3><p class="muted">Paint, paper and clay. Aprons are ours, the masterpiece goes home with you.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="wrap section" id="classes">
+    <div class="section-head"><h2>Classes</h2><p class="lead">Eight-week terms. Join at any point and pay for the weeks that are left.</p></div>
+    <div class="cards">
+      <article class="card"><span class="face c-magenta"><svg class="icon" aria-hidden="true"><use href="#i-brush"/></svg></span><h3>Little Makers</h3><p class="muted">Messy play for the smallest makers, with a grown-up alongside.</p><ul class="card-meta"><li><svg class="icon" aria-hidden="true"><use href="#i-kid"/></svg>Ages 2 to 3</li><li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>45 minutes</li></ul><p class="price">$96 <small>a term</small></p><a class="btn btn-sm" href="#/book?class=little-makers">Book</a></article>
+      <article class="card"><span class="face c-orange"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></span><h3>Story Circle</h3><p class="muted">A book, a song and something to make about it.</p><ul class="card-meta"><li><svg class="icon" aria-hidden="true"><use href="#i-kid"/></svg>Ages 3 to 5</li><li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>50 minutes</li></ul><p class="price">$104 <small>a term</small></p><a class="btn btn-sm" href="#/book?class=story-circle">Book</a></article>
+      <article class="card"><span class="face c-sky"><svg class="icon" aria-hidden="true"><use href="#i-puzzle"/></svg></span><h3>Shape Lab</h3><p class="muted">Early maths with blocks, patterns and puzzles.</p><ul class="card-meta"><li><svg class="icon" aria-hidden="true"><use href="#i-kid"/></svg>Ages 4 to 6</li><li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>55 minutes</li></ul><p class="price">$112 <small>a term</small></p><a class="btn btn-sm" href="#/book?class=shape-lab">Book</a></article>
+      <article class="card"><span class="face c-purple"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span><h3>Big Builders</h3><p class="muted">Bigger projects over two weeks: a cardboard town, a shadow show.</p><ul class="card-meta"><li><svg class="icon" aria-hidden="true"><use href="#i-kid"/></svg>Ages 5 to 7</li><li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>60 minutes</li></ul><p class="price">$120 <small>a term</small></p><a class="btn btn-sm" href="#/book?class=big-builders">Book</a></article>
+    </div>
+  </section>
+  <section class="band section">
+    <div class="wrap split">
+      <div>
+        <h2>Safe, small and ad-free</h2>
+        <p class="lead" style="margin-top:12px">The same rules apply in the studio and on this website.</p>
+      </div>
+      <ul class="ticks">
+        <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Up to eight children in a class, with two teachers.</span></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Grown-ups stay for the whole first visit.</span></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>The kids' pages have no ads, no outside links and nothing to buy.</span></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>We only ask grown-ups for contact details, never children.</span></li>
+      </ul>
+    </div>
+  </section>
+  <section class="wrap section" id="faq">
+    <div class="section-head"><h2>Questions grown-ups ask</h2></div>
+    <div class="faq">
+      <details><summary>What should my child wear?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Clothes that can get messy and shoes that come off easily. We have aprons, spare socks and wipes.</p></details>
+      <details><summary>Can I stay during the class?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Grown-ups stay for Little Makers and for every first visit. For older groups there is a reading corner by the door.</p></details>
+      <details><summary>What if we miss a week?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Tell us by the day before and we will offer a place in another class that week.</p></details>
+      <details><summary>Is the studio step-free?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Yes. Everything is on the ground floor, with space to park a pram inside.</p></details>
+    </div>
+  </section>
+  <section class="canvas cta-band">
+    <div class="wrap cta-inner">
+      <div><h2>Come and play on a Saturday</h2><p style="margin-top:10px;font-size:1.1875rem">Your first visit is free. Pick a class and we will save a place.</p></div>
+      <a class="btn" href="#/book">Book a free first visit</a>
+    </div>
+  </section>
+</div>
+
+<!-- ================= TIMETABLE ================= -->
+<div data-view="timetable">
+  <section class="wrap page-head">
+    <p class="kicker"><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg>This term</p>
+    <h1>Timetable</h1>
+    <p class="lead">Pick a day to see its classes. Book a place and we will confirm by email.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:24px">
+    <div class="chips" role="group" aria-label="Day" data-day-filter style="margin-bottom:24px">
+      <button class="chip" type="button" data-day="all" aria-pressed="true">All week</button>
+      <button class="chip" type="button" data-day="mon" aria-pressed="false">Mon</button>
+      <button class="chip" type="button" data-day="tue" aria-pressed="false">Tue</button>
+      <button class="chip" type="button" data-day="wed" aria-pressed="false">Wed</button>
+      <button class="chip" type="button" data-day="thu" aria-pressed="false">Thu</button>
+      <button class="chip" type="button" data-day="fri" aria-pressed="false">Fri</button>
+      <button class="chip" type="button" data-day="sat" aria-pressed="false">Sat</button>
+      <button class="chip" type="button" data-day="sun" aria-pressed="false">Sun</button>
+    </div>
+    <div class="slots" data-slots>
+      <article class="slot c-magenta" data-day="mon"><time>9:30<span class="day">Monday</span></time><div><h3>Little Makers</h3><p>Ages 2 to 3 with a grown-up · Yellow room</p></div><span class="spaces">3 places left</span><a class="btn btn-sm" href="#/book?class=little-makers&amp;day=mon">Book</a></article>
+      <article class="slot c-orange" data-day="mon"><time>15:45<span class="day">Monday</span></time><div><h3>Story Circle</h3><p>Ages 3 to 5 · Reading nook</p></div><span class="spaces">5 places left</span><a class="btn btn-sm" href="#/book?class=story-circle&amp;day=mon">Book</a></article>
+      <article class="slot c-orange" data-day="tue"><time>10:00<span class="day">Tuesday</span></time><div><h3>Story Circle</h3><p>Ages 3 to 5 · Reading nook</p></div><span class="spaces">2 places left</span><a class="btn btn-sm" href="#/book?class=story-circle&amp;day=tue">Book</a></article>
+      <article class="slot c-sky" data-day="wed"><time>15:45<span class="day">Wednesday</span></time><div><h3>Shape Lab</h3><p>Ages 4 to 6 · Blue room</p></div><span class="spaces full">Full, join the waitlist</span><a class="btn btn-sm btn-ghost" href="#/book?class=shape-lab&amp;day=wed">Waitlist</a></article>
+      <article class="slot c-sky" data-day="thu"><time>15:45<span class="day">Thursday</span></time><div><h3>Shape Lab</h3><p>Ages 4 to 6 · Blue room</p></div><span class="spaces">4 places left</span><a class="btn btn-sm" href="#/book?class=shape-lab&amp;day=thu">Book</a></article>
+      <article class="slot c-purple" data-day="fri"><time>16:00<span class="day">Friday</span></time><div><h3>Big Builders</h3><p>Ages 5 to 7 · Workshop</p></div><span class="spaces">6 places left</span><a class="btn btn-sm" href="#/book?class=big-builders&amp;day=fri">Book</a></article>
+      <article class="slot c-magenta" data-day="sat"><time>9:30<span class="day">Saturday</span></time><div><h3>Little Makers</h3><p>Ages 2 to 3 with a grown-up · Yellow room</p></div><span class="spaces">1 place left</span><a class="btn btn-sm" href="#/book?class=little-makers&amp;day=sat">Book</a></article>
+      <article class="slot c-purple" data-day="sat"><time>11:00<span class="day">Saturday</span></time><div><h3>Big Builders</h3><p>Ages 5 to 7 · Workshop</p></div><span class="spaces">3 places left</span><a class="btn btn-sm" href="#/book?class=big-builders&amp;day=sat">Book</a></article>
+    </div>
+    <p class="empty" data-empty hidden style="box-shadow:inset 0 0 0 2px var(--border)">No classes on Sundays. The studio is having a nap.</p>
+  </section>
+</div>
+
+<!-- ================= BOOK ================= -->
+<div data-view="book">
+  <section class="wrap page-head">
+    <p class="kicker"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg>First visit free</p>
+    <h1>Book a free first visit</h1>
+    <p class="lead">Tell us about your child and pick a class. We reply within two working days to confirm.</p>
+  </section>
+  <section class="wrap form-grid" style="padding-bottom:24px">
+    <div class="form-card">
+      <form class="form" data-form="booking" novalidate>
+        <div class="field half"><label for="b-name">Your name</label><input id="b-name" name="name" autocomplete="name" required aria-describedby="b-name-e"><p class="error" id="b-name-e"></p></div>
+        <div class="field half"><label for="b-email">Email</label><input id="b-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="b-email-e"><p class="error" id="b-email-e"></p></div>
+        <div class="field half"><label for="b-child">Child's first name</label><input id="b-child" name="child" autocomplete="off" required aria-describedby="b-child-e" data-msg="Please tell us what to call your child."><p class="error" id="b-child-e"></p></div>
+        <div class="field half"><label for="b-phone">Phone <span class="opt">(optional)</span></label><input id="b-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"><p class="error"></p></div>
+        <fieldset class="field"><legend>How old is your child?</legend>
+          <div class="age-pick">
+            <label><input type="radio" name="age" value="2" required aria-describedby="b-age-e" data-msg="Please pick an age."><span>2</span></label>
+            <label><input type="radio" name="age" value="3"><span>3</span></label>
+            <label><input type="radio" name="age" value="4"><span>4</span></label>
+            <label><input type="radio" name="age" value="5"><span>5</span></label>
+            <label><input type="radio" name="age" value="6"><span>6</span></label>
+            <label><input type="radio" name="age" value="7"><span>7</span></label>
+          </div><p class="error" id="b-age-e"></p>
+        </fieldset>
+        <div class="field half"><label for="b-class">Class</label><select id="b-class" name="class" required aria-describedby="b-class-e" data-msg="Please pick a class."><option value="">Choose a class</option><option value="little-makers">Little Makers (2 to 3)</option><option value="story-circle">Story Circle (3 to 5)</option><option value="shape-lab">Shape Lab (4 to 6)</option><option value="big-builders">Big Builders (5 to 7)</option></select><p class="error" id="b-class-e"></p></div>
+        <div class="field half"><label for="b-day">Best day</label><select id="b-day" name="day"><option value="">Any day</option><option value="mon">Monday</option><option value="tue">Tuesday</option><option value="wed">Wednesday</option><option value="thu">Thursday</option><option value="fri">Friday</option><option value="sat">Saturday</option></select><p class="error"></p></div>
+        <div class="field"><label for="b-notes">Anything we should know? <span class="opt">(optional)</span></label><textarea id="b-notes" name="notes" placeholder="Allergies, how your child likes to settle in, questions"></textarea><p class="error"></p></div>
+        <div class="field"><label class="check"><input type="checkbox" name="consent" required aria-describedby="b-consent-e" data-msg="Please confirm so we can reply."><span>I am the child's parent or carer, and I have read the <a class="link" href="#/privacy">privacy notice</a>.</span></label><p class="error" id="b-consent-e"></p></div>
+        <button class="btn" type="submit">Send booking request</button>
+      </form>
+      <div class="success" data-success="booking" hidden>
+        <svg class="cast" viewBox="0 0 240 120" aria-hidden="true"><use href="#c-pim" x="0" width="120" height="120"/><use href="#c-tiko" x="120" width="120" height="120"/></svg>
+        <h2>Thank you, <span data-echo="name">friend</span>!</h2>
+        <p class="lead">We will email <strong data-echo="email">you</strong> within two working days to confirm a place for <span data-echo="child">your child</span>.</p>
+        <a class="btn btn-ghost" href="#/timetable">Back to the timetable</a>
+      </div>
+    </div>
+    <div class="aside">
+      <div class="card"><h3>What to expect</h3><ul class="ticks"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>Arrive ten minutes early to meet the teachers.</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>You stay for the whole first visit.</span></li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>If it is not for you, there is nothing to pay.</span></li></ul></div>
+      <div class="card"><h3>Rather talk?</h3><p class="muted">Call the studio on weekdays, 9:00 to 17:00.</p><a class="link" href="#/contact">Contact us</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<div data-view="about">
+  <section class="wrap page-head head-split">
+    <div>
+      <p class="kicker"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg>About us</p>
+      <h1>A studio full of shapes, stories and glue</h1>
+      <p class="lead">Puddlejump started as one Saturday class in a borrowed hall. Two teachers, a box of paper shapes and a puppet show about a circle called Pim.</p>
+    </div>
+    <div class="circle-art"><svg class="art t-sun" viewBox="0 0 200 200" aria-hidden="true"><use href="#p-garden" x="-60" width="320" height="200"/><use href="#c-zib" x="54" y="64" width="92" height="92"/></svg></div>
+  </section>
+  <section class="band section">
+    <div class="wrap">
+      <div class="section-head"><h2>What we care about</h2></div>
+      <div class="points">
+        <div class="point"><span class="face t-sky"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-pim"/></svg></span><h3>Play first</h3><p class="muted">Children learn the most when they are busy having fun, so every class starts with a game.</p></div>
+        <div class="point"><span class="face t-orange"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-tiko"/></svg></span><h3>Small groups</h3><p class="muted">Eight children and two teachers, so nobody waits long for a turn or a hug.</p></div>
+        <div class="point"><span class="face t-purple"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-lulu"/></svg></span><h3>Calm screens</h3><p class="muted">Our games are short and end on their own. No streaks, no ads, no pop-ups.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="wrap section">
+    <div class="section-head"><h2>The teachers</h2></div>
+    <div class="team">
+      <div class="person"><span class="initials c-orange" style="--c:var(--orange)">AB</span><h3>Ama Boateng</h3><p class="muted">Founder, early-years teacher</p></div>
+      <div class="person"><span class="initials" style="--c:var(--sky)">KM</span><h3>Kenji Mori</h3><p class="muted">Music and movement</p></div>
+      <div class="person"><span class="initials" style="--c:var(--magenta)">SR</span><h3>Sofia Reyes</h3><p class="muted">Art and making</p></div>
+      <div class="person"><span class="initials" style="--c:var(--purple)">PN</span><h3>Priya Nair</h3><p class="muted">Stories and the reading nook</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= CONTACT ================= -->
+<div data-view="contact">
+  <section class="wrap page-head">
+    <p class="kicker"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Say hello</p>
+    <h1>Contact us</h1>
+    <p class="lead">Questions about classes, the website or something else. A teacher answers every message.</p>
+  </section>
+  <section class="wrap form-grid" style="padding-bottom:24px">
+    <div class="form-card">
+      <form class="form" data-form="contact" novalidate>
+        <div class="field half"><label for="c-name">Your name</label><input id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-e"><p class="error" id="c-name-e"></p></div>
+        <div class="field half"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="c-email-e"><p class="error" id="c-email-e"></p></div>
+        <div class="field"><label for="c-topic">What is it about?</label><select id="c-topic" name="topic"><option value="classes">Classes and booking</option><option value="website">The games and stories</option><option value="parties">Birthday parties</option><option value="other">Something else</option></select><p class="error"></p></div>
+        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required minlength="10" aria-describedby="c-msg-e"></textarea><p class="error" id="c-msg-e"></p></div>
+        <button class="btn" type="submit">Send message</button>
+      </form>
+      <div class="success" data-success="contact" hidden>
+        <svg class="cast" viewBox="0 0 240 120" aria-hidden="true"><use href="#c-bodi" x="0" width="120" height="120"/><use href="#c-zib" x="120" width="120" height="120"/></svg>
+        <h2>Message sent!</h2>
+        <p class="lead">Thanks, <span data-echo="name">friend</span>. We will reply to <strong data-echo="email">your email</strong> soon.</p>
+      </div>
+    </div>
+    <div class="aside">
+      <div class="card"><h3>The studio</h3><ul class="card-meta"><li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>12 Willow Row, Brightwater</li><li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Mon to Sat, 9:00 to 17:00</li><li><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>(555) 014 2290</li><li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>hello@puddlejump.example</li></ul></div>
+      <div class="card"><h3>Booking a class?</h3><p class="muted">The booking form is quicker and saves your place.</p><a class="link" href="#/book">Book a free first visit</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= PRIVACY ================= -->
+<div data-view="privacy">
+  <section class="wrap page-head"><p class="kicker">For grown-ups</p><h1>Privacy notice</h1><p class="lead">Last updated 1 September. Sample text: replace it with your own notice.</p></section>
+  <section class="wrap" style="padding-bottom:24px"><div class="prose">
+    <h2>What we collect</h2><p>When a grown-up books a class or sends a message, we keep their name, email, phone number if given, and their child's first name and age. Children never fill in forms on this website.</p>
+    <h2>The games and stories</h2><p>The games, stories and colour-ins run in your browser. They do not ask for names, do not save drawings and do not show ads.</p>
+    <h2>How long we keep it</h2><p>Booking details are kept for the term and deleted twelve months after your child's last class.</p>
+    <h2>Your choices</h2><p>Write to hello@puddlejump.example to see, correct or delete what we hold about you or your child.</p></div>
+  </section>
+</div>
+
+<!-- ================= 404 ================= -->
+<div data-view="404">
+  <div class="canvas" style="min-height:72vh">
+    <section class="wrap notfound">
+      <svg class="cast" viewBox="0 0 300 200" aria-hidden="true"><use href="#p-rain" width="300" height="190"/><use href="#c-lulu" x="90" y="54" width="120" height="120"/></svg>
+      <h1>Oops! This page hopped away.</h1>
+      <p style="font-size:1.1875rem">Let's go somewhere we know.</p>
+      <div class="btn-row" style="justify-content:center;margin-top:8px"><a class="btn" href="#/">Go home</a><a class="btn btn-ghost" href="#/games">Play a game</a></div>
+    </section>
+  </div>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <svg class="peek-row" viewBox="0 0 560 64" aria-hidden="true"><use href="#c-tiko" x="40" y="0" width="100" height="100"/><use href="#c-pim" x="150" y="4" width="100" height="100"/><use href="#c-bodi" x="260" y="2" width="100" height="100"/><use href="#c-zib" x="370" y="6" width="100" height="100"/></svg>
+  <div class="wrap foot-grid">
+    <div><a class="brand" href="#/"><svg aria-hidden="true"><use href="#mark"/></svg>puddlejump</a><p>A play studio and a little online playroom for children aged 2 to 7.</p></div>
+    <nav aria-label="Play"><h2>Play</h2><ul><li><a href="#/games">Games</a></li><li><a href="#/stories">Stories</a></li><li><a href="#/make">Make</a></li><li><a href="#/friends">Meet the gang</a></li></ul></nav>
+    <nav aria-label="Grown-ups"><h2>Grown-ups</h2><ul><li><a href="#/grownups">Classes</a></li><li><a href="#/timetable">Timetable</a></li><li><a href="#/book">Book a visit</a></li><li><a href="#/grownups?at=faq">Questions</a></li></ul></nav>
+    <nav aria-label="Studio"><h2>Studio</h2><ul><li><a href="#/about">About us</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/privacy">Privacy</a></li></ul></nav>
+  </div>
+  <div class="wrap foot-bottom"><span>© Puddlejump Play Studio Ltd.</span><span>No ads. No outside links on the kids' pages.</span></div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (sel, scope = document) => scope.querySelector(sel);
+  const $$ = (sel, scope = document) => [...scope.querySelectorAll(sel)];
+
+  /* ---------- Data: replace with the real games, colour-ins and stories ---------- */
+  const friends = { pim: ["Pim", "sky"], tiko: ["Tiko", "orange"], bodi: ["Bodi", "magenta"], lulu: ["Lulu", "purple"], zib: ["Zib", "green"] };
+  // kind: game (sky, puzzle badge) or make (magenta, brush badge); art: a #p-* prop; tint: a .t-* background
+  const activities = [
+    { id: "shadow-match", kind: "game", title: "Shadow Match", who: ["bodi", "pim"], art: "hills", tint: "sky", isNew: true, ages: "Ages 3 to 5", mins: "About 3 minutes", about: "Children look closely at outlines and match each shadow to a friend. It practises shapes, comparing and naming." },
+    { id: "tower-tumble", kind: "game", title: "Tower Tumble", who: ["tiko"], art: "blocks", tint: "orange", ages: "Ages 3 to 6", mins: "About 4 minutes", about: "Stack, count and topple. Children guess how many blocks make a tower before it wobbles." },
+    { id: "puddle-count", kind: "game", title: "Puddle Count", who: ["pim", "zib"], art: "rain", tint: "sky", ages: "Ages 3 to 5", mins: "About 3 minutes", about: "Count the splashes from one to ten, then count back down again." },
+    { id: "bodi-band", kind: "game", title: "Bodi's Band", who: ["bodi"], art: "music", tint: "magenta", ages: "Ages 2 to 4", mins: "About 2 minutes", about: "Tap the drums loud and soft, fast and slow, and copy Bodi's beat." },
+    { id: "lulu-hide", kind: "game", title: "Where Is Lulu?", who: ["lulu"], art: "garden", tint: "purple", ages: "Ages 2 to 4", mins: "About 2 minutes", about: "Lulu hides behind the flowers. Words like behind, under and next to come up naturally." },
+    { id: "star-sort", kind: "game", title: "Star Sort", who: ["zib", "lulu"], art: "moon", tint: "night", ages: "Ages 4 to 6", mins: "About 4 minutes", about: "Sort stars by size and colour into Zib's night sky." },
+    { id: "boat-race", kind: "game", title: "Little Boat Race", who: ["tiko", "pim"], art: "boat", tint: "sky", ages: "Ages 4 to 7", mins: "About 3 minutes", about: "Which boat is first, second or last? Ordinal words with a splash." },
+    { id: "colour-zib", kind: "make", title: "Colour in Zib", who: ["zib"], art: "paint", tint: "green", isNew: true, ages: "Ages 2 to 7", mins: "As long as you like", about: "Choosing colours and filling shapes builds hand control and lots of talk about favourites." },
+    { id: "colour-tiko", kind: "make", title: "Tiko at the Seaside", who: ["tiko"], art: "boat", tint: "orange", ages: "Ages 2 to 7", mins: "As long as you like", about: "A seaside colour-in. Ask what else Tiko might find on the beach." },
+    { id: "colour-pim", kind: "make", title: "Pim's Garden", who: ["pim"], art: "garden", tint: "sky", ages: "Ages 2 to 7", mins: "As long as you like", about: "Colour Pim, the flowers and the sky, then count the petals together." },
+    { id: "colour-lulu", kind: "make", title: "Lulu's Rainy Day", who: ["lulu"], art: "rain", tint: "purple", ages: "Ages 2 to 7", mins: "As long as you like", about: "Grey sky or a rainbow one? There is no wrong colour." },
+  ];
+  // Each page: [art prop, friends (one or two), text, background tint]
+  const stories = [
+    { id: "runaway-kite", title: "Pim and the Runaway Kite", topic: "outdoors", who: ["pim"], art: "kite", tint: "sky", pages: [["hills", ["pim"], "Pim had a red kite with a long, wiggly tail.", "sky"], ["kite", ["pim"], "Whoosh! The wind pulled the kite up, up and away.", "sky"], ["garden", ["pim", "tiko"], "Tiko ran too. \"It's over the flowers!\" said Tiko.", "orange"], ["rain", ["pim", "tiko"], "Splash! The kite came down in a big puddle.", "sky"], ["hills", ["pim", "tiko"], "A muddy kite still flies. And now it has a story.", "sun"]] },
+    { id: "goodnight-zib", title: "Goodnight, Zib", topic: "bedtime", who: ["zib"], art: "moon", tint: "night", pages: [["moon", ["zib"], "When everyone yawns, Zib wakes up.", "night"], ["moon", ["zib", "lulu"], "\"One star, two stars,\" Zib counts with Lulu.", "night"], ["moon", ["zib"], "Three stars, four stars, and one big yawn.", "night"], ["hills", ["zib"], "The sun comes up. Goodnight, Zib. Good morning, everyone.", "sun"]] },
+    { id: "bodi-big-hat", title: "Bodi's Very Big Bow", topic: "silly", who: ["bodi"], art: "music", tint: "magenta", pages: [["music", ["bodi"], "Bodi found a bow. A very, very big bow.", "magenta"], ["blocks", ["bodi", "tiko"], "It was so big that Tiko could hide behind it.", "orange"], ["music", ["bodi", "tiko"], "So they made it into a drum. Boom, boom, bow!", "magenta"]] },
+    { id: "tiko-wobbly", title: "Tiko Feels Wobbly", topic: "feelings", who: ["tiko"], art: "blocks", tint: "orange", pages: [["blocks", ["tiko"], "Tiko's tower fell down. Tiko felt wobbly inside.", "orange"], ["blocks", ["tiko", "pim"], "Pim sat close. \"Let's take three big breaths.\"", "sky"], ["blocks", ["tiko", "pim"], "In, out. In, out. In, out. A little less wobbly.", "orange"], ["blocks", ["tiko", "pim"], "Then they built it again, wobbly and all.", "sun"]] },
+    { id: "lulu-seaside", title: "Lulu at the Seaside", topic: "outdoors", who: ["lulu"], art: "boat", tint: "purple", pages: [["boat", ["lulu"], "Lulu had never seen the sea.", "purple"], ["boat", ["lulu", "bodi"], "It was big and blue and it kept saying shhh.", "sky"], ["boat", ["lulu", "bodi"], "Lulu said shhh back. The sea did not mind.", "purple"]] },
+    { id: "rainy-day", title: "The Best Rainy Day", topic: "silly", who: ["pim", "zib"], art: "rain", tint: "sky", pages: [["rain", ["pim"], "Rain, rain, all day long.", "sky"], ["rain", ["pim", "zib"], "\"Puddles!\" said Pim. \"Jumping puddles!\" said Zib.", "sky"], ["hills", ["pim", "zib"], "Wet socks, big smiles, best day.", "green"]] },
+  ];
+
+  const scene = (art, who, tint) => {
+    const slots = who.length === 1 ? [[105, 62, 110]] : [[58, 70, 100], [162, 70, 100]];
+    return `<svg class="art t-${tint}" viewBox="0 0 320 200" aria-hidden="true"><use href="#p-${art}"/>${who.slice(0, 2).map((w, i) => `<use href="#c-${w}" x="${slots[i][0]}" y="${slots[i][1]}" width="${slots[i][2]}" height="${slots[i][2]}"/>`).join("")}</svg>`;
+  };
+  const badges = { game: ["sky", "puzzle", "Game"], make: ["magenta", "brush", "Colour-in"], story: ["orange", "book", "Story"] };
+  function tile(item, kind, i = 0) {
+    const [color, icon, label] = badges[kind];
+    const route = kind === "story" ? "story" : "play";
+    const data = kind === "story" ? `data-topic="${item.topic}"` : `data-who="${item.who.join(" ")}"`;
+    return `<a class="tile reveal" style="--i:${i % 8}" href="#/${route}?id=${item.id}" ${data}>${item.isNew ? '<span class="sticker">New</span>' : ""}<span class="tile-art">${scene(item.art, item.who, item.tint)}<span class="badge c-${color}"><svg class="icon" aria-hidden="true"><use href="#i-${icon}"/></svg><span class="sr-only">${label}</span></span></span><span class="tile-name">${item.title}</span></a>`;
+  }
+  function renderList(list, items, kind) {
+    list.innerHTML = items.map((item, i) => tile(item, item.kind || kind, i)).join("");
+    list.closest(".more")?.toggleAttribute("hidden", items.length === 0);
+  }
+  const face = (id) => `<span class="face t-${friends[id][1]}"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#c-${id}"/></svg></span>${friends[id][0]}`;
+  $("[data-who-filter]").innerHTML = `<button class="who" type="button" data-who="all" aria-pressed="true"><span class="face t-sun"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg></span>Everyone</button>` +
+    Object.keys(friends).map((id) => `<button class="who" type="button" data-who="${id}" aria-pressed="false">${face(id)}</button>`).join("");
+  renderList($("[data-list='game']"), activities.filter((a) => a.kind === "game"), "game");
+  renderList($("[data-list='make']"), activities.filter((a) => a.kind === "make"), "make");
+  renderList($("[data-list='story']"), stories, "story");
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("puddlejump-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("puddlejump-theme", next);
+  });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "Puddlejump: play, read and make with the gang", games: "Games · Puddlejump", play: "Play · Puddlejump", stories: "Stories · Puddlejump", story: "Story · Puddlejump", make: "Make · Puddlejump", friends: "Meet the gang · Puddlejump", grownups: "For grown-ups · Puddlejump", timetable: "Timetable · Puddlejump", book: "Book a free first visit · Puddlejump", about: "About us · Puddlejump", contact: "Contact · Puddlejump", privacy: "Privacy · Puddlejump", "404": "Page not found · Puddlejump" };
+  // Which header pill lights up for each view; views not listed belong to the grown-ups area
+  const sectionOf = { home: "", games: "games", play: "games", stories: "stories", story: "stories", make: "make", friends: "friends", "404": "" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    current?.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    const p = route.params;
+    let section = name in sectionOf ? sectionOf[name] : "grownups";
+    if (name === "games") filterBy("who", p.get("who") || "all");
+    if (name === "stories") filterBy("topic", p.get("topic") || "all");
+    if (name === "play") section = openActivity(p.get("id"));
+    if (name === "story") openStory(p.get("id"));
+    if (name === "timetable") filterBy("day", p.get("day") || "all");
+    if (name === "book") { for (const key of ["class", "day"]) { const s = $(`#b-${key}`); if (p.get(key) && $(`option[value="${p.get(key)}"]`, s)) s.value = p.get(key); } }
+    if (name === "contact" && p.get("topic")) { const s = $("#c-topic"); if ($(`option[value="${p.get("topic")}"]`, s)) s.value = p.get("topic"); }
+    $$(".pills a, .grown, .subnav a").forEach((a) => {
+      const target = parse(a.getAttribute("href")).view;
+      const on = a.matches(".subnav a") ? target === name : target === section;
+      if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    $("[data-subnav]").hidden = section !== "grownups";
+    const at = p.get("at") && current.querySelector(`#${CSS.escape(p.get("at"))}`);
+    if (at) setTimeout(() => at.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); go(href); }
+    else if (href.length > 1) {
+      const target = $(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); target.focus?.({ preventScroll: true }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Reveal (keyframes after the class lands; visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -6% 0px" }) : null;
+  function observeReveals(scope) { $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in"))); }
+  setInterval(() => $$(".is-active .reveal:not(.is-in)").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Filters: friends (games), topics (stories), days (timetable) ---------- */
+  const filters = { who: ["[data-who-filter]", "[data-list='game']", "game", "games"], topic: ["[data-topic-filter]", "[data-list='story']", "story", "stories"], day: ["[data-day-filter]", "[data-slots]", "class", "classes"] };
+  function filterBy(key, value) {
+    const [group, list, one, many] = filters[key];
+    const buttons = $$(`${group} [data-${key}]`);
+    if (!buttons.some((b) => b.dataset[key] === value)) value = "all";
+    buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset[key] === value)));
+    const items = $$(`${list} > [data-${key}]`);
+    let shown = 0;
+    items.forEach((item) => { const match = value === "all" || item.dataset[key].split(" ").includes(value); item.hidden = !match; shown += match; });
+    const scope = $(list).closest("[data-view]");
+    const count = $("[data-count]", scope);
+    if (count) count.textContent = `${shown} ${shown === 1 ? one : many}`;
+    $("[data-empty]", scope).hidden = shown > 0;
+  }
+  for (const key of Object.keys(filters)) $$(`${filters[key][0]} [data-${key}]`).forEach((b) => b.addEventListener("click", () => filterBy(key, b.dataset[key])));
+  $("[data-view='make'] [data-count]").textContent = `${activities.filter((a) => a.kind === "make").length} colour-ins`;
+
+  /* ---------- Play: one game or colour-in, chosen by ?id= ---------- */
+  const playView = views.get("play");
+  let activity = activities[0];
+  function openActivity(id) {
+    activity = activities.find((a) => a.id === id) || activities[0];
+    const make = activity.kind === "make";
+    const canvas = $("[data-play-canvas]", playView);
+    canvas.classList.toggle("cv-sky", !make);
+    canvas.classList.toggle("cv-magenta", make);
+    $("[data-play-title]", playView).textContent = activity.title;
+    const back = $("[data-play-back]", playView);
+    back.setAttribute("href", make ? "#/make" : "#/games");
+    $("span", back).textContent = make ? "All colour-ins" : "All games";
+    $("[data-play-about]", playView).textContent = activity.about;
+    $("[data-play-ages]", playView).textContent = activity.ages;
+    $("[data-play-mins]", playView).textContent = activity.mins;
+    $("[data-stage='match']", playView).hidden = make;
+    $("[data-stage='paint']", playView).hidden = !make;
+    titles.play = `${activity.title} · Puddlejump`;
+    document.title = titles.play;
+    if (make) paint.reset(activity.who[0]); else match.reset(activity.who);
+    // Same kind first, then the rest; the section hides itself when there is nothing else to show
+    renderList($("[data-more]", playView), activities.filter((a) => a.id !== activity.id).sort((a, b) => (b.kind === activity.kind) - (a.kind === activity.kind)).slice(0, 3), activity.kind);
+    return make ? "make" : "games";
+  }
+
+  /* Shadow match: three rounds, no wrong-answer penalty */
+  const match = (() => {
+    const stage = $("[data-stage='match']", playView);
+    const shadow = $("[data-shadow]", stage);
+    const prompt = $("[data-prompt]", stage);
+    const stars = $$("[data-stars] svg", stage);
+    let rounds = [], round = 0, locked = false;
+    function setRound() {
+      const target = rounds[round];
+      shadow.setAttribute("href", `#c-${target}`);
+      shadow.classList.add("shadow");
+      shadow.classList.remove("found");
+      const others = Object.keys(friends).filter((f) => f !== target);
+      const picks = [target, others[(round * 2) % others.length], others[(round * 2 + 1) % others.length]];
+      if (round % 3 === 1) picks.reverse(); else if (round % 3 === 2) picks.push(picks.shift());
+      $("[data-options]", stage).innerHTML = picks.map((id) => `<button class="option" type="button" data-pick="${id}">${face(id)}</button>`).join("");
+      prompt.textContent = "Who is hiding in the shadow?";
+      locked = false;
+    }
+    function reset(who) {
+      rounds = [...new Set([...who, ...Object.keys(friends)])].slice(0, 3);
+      round = 0;
+      stars.forEach((s) => s.classList.remove("on"));
+      $("[data-stars]", stage).setAttribute("aria-label", "0 of 3 found");
+      $("[data-options]", stage).hidden = false;
+      $("[data-again]", stage).hidden = true;
+      setRound();
+    }
+    $("[data-options]", stage).addEventListener("click", (event) => {
+      const button = event.target.closest("[data-pick]");
+      if (!button || locked) return;
+      if (button.dataset.pick !== rounds[round]) {
+        button.classList.remove("is-wrong");
+        void button.offsetWidth;
+        button.classList.add("is-wrong");
+        prompt.textContent = "Not that one. Look again!";
+        return;
+      }
+      locked = true;
+      shadow.classList.remove("shadow");
+      shadow.classList.add("found");
+      stars[round].classList.add("on");
+      round += 1;
+      $("[data-stars]", stage).setAttribute("aria-label", `${round} of 3 found`);
+      prompt.textContent = `Yes! It's ${friends[button.dataset.pick][0]}!`;
+      if (round < rounds.length) { setTimeout(setRound, 1100); return; }
+      prompt.textContent = "You found everyone!";
+      $("[data-options]", stage).hidden = true;
+      $("[data-again]", stage).hidden = false;
+      $("[data-replay]", stage).focus();
+    });
+    $("[data-replay]", stage).addEventListener("click", () => reset(activity.who));
+    return { reset };
+  })();
+
+  /* Colour-in: pick a swatch, tap a part */
+  const paint = (() => {
+    const svg = $("[data-paint]", playView);
+    const friend = $("[data-paint-friend]", svg);
+    const parts = $$("[data-part]", svg);
+    function reset(who) {
+      if (who) friend.setAttribute("href", `#c-${who}`);
+      parts.forEach((part) => (part === friend ? part.style.setProperty("--body", "#fff") : part.setAttribute("fill", "#fff")));
+    }
+    svg.addEventListener("click", (event) => {
+      const part = event.target.closest("[data-part]");
+      if (!part) return;
+      const color = $("input[name='sw']:checked", playView).value;
+      if (part === friend) part.style.setProperty("--body", color); else part.setAttribute("fill", color);
+    });
+    $("[data-clear]", playView).addEventListener("click", () => reset());
+    return { reset };
+  })();
+
+  /* ---------- Story reader: one page at a time; arrows, dots and keys ---------- */
+  const storyView = views.get("story");
+  const pagesBox = $("[data-pages]", storyView);
+  const dots = $("[data-dots]", storyView);
+  const [prevBtn, nextBtn] = $$("[data-turn]", storyView);
+  let page = 0;
+  function turn(to) {
+    const all = $$(".page", pagesBox);
+    page = Math.max(0, Math.min(all.length - 1, to));
+    all.forEach((el, i) => el.classList.toggle("is-current", i === page));
+    $$("i", dots).forEach((d, i) => d.classList.toggle("on", i === page));
+    prevBtn.disabled = page === 0;
+    nextBtn.disabled = page === all.length - 1;
+    $("[data-page-label]", storyView).textContent = `Page ${page + 1} of ${all.length}`;
+  }
+  function openStory(id) {
+    const story = stories.find((s) => s.id === id) || stories[0];
+    $("[data-story-title]", storyView).textContent = story.title;
+    titles.story = `${story.title} · Puddlejump`;
+    document.title = titles.story;
+    pagesBox.innerHTML = story.pages.map(([art, who, text, tint]) => `<div class="page">${scene(art, who, tint)}<p>${text}</p></div>`).join("");
+    pagesBox.classList.add("is-paged");
+    dots.innerHTML = story.pages.map(() => "<i></i>").join("");
+    $("[data-book-nav]", storyView).classList.add("ready");
+    turn(0);
+    renderList($("[data-more-stories]", storyView), stories.filter((s) => s.id !== story.id).slice(0, 3), "story");
+  }
+  $$("[data-turn]", storyView).forEach((b) => b.addEventListener("click", () => turn(page + Number(b.dataset.turn))));
+  pagesBox.addEventListener("click", () => turn(page + 1));
+  document.addEventListener("keydown", (event) => {
+    if (event.isComposing || current !== storyView || event.target.closest("input, textarea, select")) return;
+    if (event.key === "ArrowRight") turn(page + 1);
+    if (event.key === "ArrowLeft") turn(page - 1);
+  });
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please write a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (problem === "valueMissing" && field.dataset.msg) || messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = () => [...form.elements].filter((el) => el.getAttribute("aria-describedby"));
+    fields().forEach((field) => field.addEventListener(/radio|checkbox/.test(field.type) || field.tagName === "SELECT" ? "change" : "blur", () => checkField(field)));
+    form.addEventListener("change", (event) => { const first = form.elements[event.target.name]?.[0]; if (event.target.type === "radio" && first?.getAttribute("aria-describedby")) checkField(first); });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames (the live demo, AI tool previews) block native submission before the submit event fires,
+       so the submit button runs the handler; Enter in a field clicks that button (implicit submission). */
+    const send = () => {
+      const all = fields();
+      const valid = all.map(checkField).every(Boolean);
+      if (!valid) { all.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      const button = $("[type=submit]", form);
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        $$("[data-echo]", form.parentElement).forEach((el) => { const v = form.elements[el.dataset.echo]?.value.trim(); if (v) el.textContent = v; });
+        form.hidden = true;
+        const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+        if (success) { success.hidden = false; success.setAttribute("tabindex", "-1"); success.focus(); }
+      }, 500);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    $("[type=submit]", form).addEventListener("click", (event) => { event.preventDefault(); send(); });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

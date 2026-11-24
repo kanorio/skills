@@ -1,0 +1,1315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Turnip Union: veg boxes with a fair price tag</title>
+<meta name="description" content="Seasonal veg boxes, fruit and pantry goods from fourteen small farms, with the split of every dollar printed on the box.">
+<meta property="og:title" content="Turnip Union: veg boxes with a fair price tag">
+<meta property="og:description" content="Seasonal veg boxes from fourteen small farms, with the split of every dollar printed on the box.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/alfa-slab-one-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/zilla-slab-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "Alfa Slab One"; src: url("fonts/alfa-slab-one-latin-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Zilla Slab"; src: url("fonts/zilla-slab-latin-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Zilla Slab"; src: url("fonts/zilla-slab-latin-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+/* ---------- Tokens (light) ---------- */
+:root {
+  color-scheme: light dark;
+  --paper: oklch(98.6% 0.008 95);
+  --paper-2: oklch(93.6% 0.007 95);
+  --card: oklch(100% 0 0);
+  --frame: oklch(100% 0 0);
+  --ink: oklch(19% 0.012 60);
+  --ink-soft: oklch(40% 0.012 60);
+  --line: oklch(19% 0.012 60 / 0.16);
+  --red: oklch(55% 0.215 27);
+  --green: oklch(60% 0.175 145);
+  --blue: oklch(53% 0.19 257);
+  --yellow: oklch(92.5% 0.18 104);
+  --orange: oklch(70% 0.17 52);
+  --pink: oklch(70% 0.17 355);
+  --purple: oklch(52% 0.15 295);
+  --sun: var(--yellow);
+  --sun-ink: oklch(19% 0.012 60);
+  --shout: var(--red);
+  --on-color: oklch(99% 0.005 95);
+  --green-ink: oklch(19% 0.012 60);
+  --btn: var(--yellow);
+  --btn-ink: oklch(19% 0.012 60);
+  --focus: oklch(45% 0.2 262);
+  --danger: oklch(50% 0.2 27);
+
+  --font-shout: "Alfa Slab One", Rockwell, "Roboto Slab", Georgia, serif;
+  --font-text: "Zilla Slab", Rockwell, Georgia, serif;
+  --fs-display: clamp(3rem, 1rem + 8.6vw, 10.5rem);
+  --fs-h1: clamp(2.4rem, 1.4rem + 3.4vw, 4.25rem);
+  --fs-h2: clamp(1.6rem, 1.25rem + 1.3vw, 2.25rem);
+  --fs-h3: 1.375rem;
+  --fs-body: 1.125rem;
+  --fs-small: 0.9375rem;
+
+  --r-control: 0px;
+  --r-card: 0px;
+  --r-media: 0px;
+  --shadow-card: 0 18px 30px -20px oklch(0% 0 0 / 0.45);
+  --shadow-overlay: 0 24px 48px -16px oklch(0% 0 0 / 0.5);
+  --fast: 140ms;
+  --base: 260ms;
+  --slow: 520ms;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-pop: cubic-bezier(0.3, 1.5, 0.5, 1);
+
+  --pad: clamp(16px, 3vw, 40px);
+  --gap: clamp(14px, 1.6vw, 24px);
+  --max: 1400px;
+  /* Paper cuts: no card, button or frame is a true rectangle */
+  --cut-a: 0 1.4%, 100% 0, 99.4% 100%, 0.5% 98.2%;
+  --cut-b: 0.8% 0, 100% 1.8%, 99.5% 98%, 0 100%;
+  --cut-c: 0 0, 99.2% 1.5%, 100% 100%, 1.2% 97.8%;
+  --cut-btn: 0 6%, 100% 0, 98.8% 100%, 1% 92%;
+  --torn: 0 0, 100% 0, 100% 93%, 94% 96%, 87% 92.5%, 79% 96.5%, 71% 93%, 62% 97%, 54% 93.5%, 45% 96.5%, 37% 93%, 28% 97%, 20% 93.5%, 11% 96.5%, 4% 93%, 0 95.5%;
+}
+
+/* ---------- Tokens (dark): deeper bands, dark paper, light photo frames, the same yellow buttons ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: oklch(17.5% 0.012 60); --paper-2: oklch(21.5% 0.012 60); --card: oklch(25.5% 0.012 60); --frame: oklch(91% 0.012 95);
+    --ink: oklch(95% 0.012 95); --ink-soft: oklch(78% 0.012 95); --line: oklch(95% 0.012 95 / 0.16);
+    --red: oklch(45% 0.17 27); --green: oklch(43% 0.12 148); --blue: oklch(42% 0.15 258); --yellow: oklch(88% 0.17 103);
+    --orange: oklch(52% 0.14 50); --pink: oklch(50% 0.15 355); --purple: oklch(40% 0.12 295);
+    --sun: oklch(26% 0.045 100); --sun-ink: oklch(91% 0.16 103); --shout: oklch(68% 0.2 27);
+    --on-color: oklch(96% 0.01 95); --green-ink: oklch(96% 0.01 95); --focus: oklch(88% 0.17 103); --danger: oklch(72% 0.17 27);
+  }
+}
+:root[data-theme="dark"] {
+  --paper: oklch(17.5% 0.012 60); --paper-2: oklch(21.5% 0.012 60); --card: oklch(25.5% 0.012 60); --frame: oklch(91% 0.012 95);
+  --ink: oklch(95% 0.012 95); --ink-soft: oklch(78% 0.012 95); --line: oklch(95% 0.012 95 / 0.16);
+  --red: oklch(45% 0.17 27); --green: oklch(43% 0.12 148); --blue: oklch(42% 0.15 258); --yellow: oklch(88% 0.17 103);
+  --orange: oklch(52% 0.14 50); --pink: oklch(50% 0.15 355); --purple: oklch(40% 0.12 295);
+  --sun: oklch(26% 0.045 100); --sun-ink: oklch(91% 0.16 103); --shout: oklch(68% 0.2 27);
+  --on-color: oklch(96% 0.01 95); --green-ink: oklch(96% 0.01 95); --focus: oklch(88% 0.17 103); --danger: oklch(72% 0.17 27);
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 var(--fs-body)/1.5 var(--font-text); }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-underline-offset: 0.18em; text-decoration-thickness: 2px; }
+p { margin: 0 0 1em; }
+h1, h2, h3 { margin: 0; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.band :focus-visible { outline-color: currentColor; }
+.paper :focus-visible, .snap :focus-visible { outline-color: var(--focus); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 30; padding: 10px 14px; background: var(--btn); color: var(--btn-ink); font-weight: 700; }
+.skip:focus { top: 12px; }
+.wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--pad); position: relative; }
+.i { width: 24px; height: 24px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.i-sm { width: 18px; height: 18px; }
+
+/* ---------- Bands: full-width color blocks; each sets its own text and headline colors ---------- */
+.band { --shout-c: var(--band-shout, var(--shout)); background: var(--band, var(--paper)); color: var(--band-ink, var(--ink)); padding-block: clamp(40px, 6vw, 88px); position: relative; overflow-x: clip; }
+.on-red { --band: var(--red); --band-ink: var(--on-color); --band-shout: var(--on-color); }
+.on-green { --band: var(--green); --band-ink: var(--green-ink); --band-shout: var(--on-color); }
+.on-blue { --band: var(--blue); --band-ink: var(--on-color); --band-shout: var(--on-color); }
+.on-sun { --band: var(--sun); --band-ink: var(--sun-ink); --band-shout: var(--shout); }
+.on-grey { --band: var(--paper-2); }
+.tight { padding-block: clamp(24px, 3vw, 40px); }
+
+/* ---------- Shout: uneven slab capitals that fill the width (script splits letters and fits each line) ---------- */
+.shout { position: relative; margin: 0; font: 400 var(--fs-display)/0.92 var(--font-shout); text-transform: uppercase; letter-spacing: 0.005em; color: var(--shout-c, var(--shout)); text-align: center; overflow-wrap: break-word; }
+.shout > span { display: block; }
+.shout.start { text-align: start; }
+.js .shout[data-fit] .sl { display: block; width: max-content; max-width: none; margin-inline: auto; white-space: nowrap; }
+.js .shout.start[data-fit] .sl { margin-inline: 0; }
+.js .shout.wrap .sl { width: auto; white-space: normal; }
+.shout .w { display: inline-block; white-space: nowrap; }
+.shout .ch { display: inline-block; transform: translateY(var(--y)) rotate(var(--r)) scale(var(--s)); }
+.js .shout .ch { animation: drop var(--slow) var(--ease-pop) calc(var(--i) * 14ms) both; }
+@keyframes drop { from { opacity: 0; transform: translateY(-0.3em) rotate(calc(var(--r) * 4)); } }
+.band-title { margin-bottom: clamp(20px, 3vw, 40px); }
+.lead { font-weight: 700; font-size: clamp(1.125rem, 1rem + 0.4vw, 1.375rem); line-height: 1.35; max-width: 40ch; }
+.center { text-align: center; margin-inline: auto; }
+.title { font: 400 var(--fs-h1)/0.98 var(--font-shout); text-transform: uppercase; letter-spacing: 0.005em; color: var(--shout-c, var(--shout)); }
+.h2 { font: 700 var(--fs-h2)/1.15 var(--font-text); }
+.h3 { font: 700 var(--fs-h3)/1.2 var(--font-text); }
+.muted { color: var(--ink-soft); }
+
+/* ---------- Paper: cards and frames with hand-cut edges ---------- */
+.paper { position: relative; isolation: isolate; color: var(--ink); --shout-c: var(--shout); padding: clamp(22px, 3vw, 40px); }
+.paper::before, .snap::before, .btn::before { content: ""; position: absolute; inset: 0; z-index: -1; }
+.paper::before { background: var(--card); clip-path: polygon(var(--cut, var(--cut-a))); }
+.paper:nth-child(3n + 2) { --cut: var(--cut-b); }
+.paper:nth-child(3n) { --cut: var(--cut-c); }
+.paper.on-sun-card::before { background: var(--yellow); }
+.paper.on-sun-card { color: var(--btn-ink); --shout-c: var(--btn-ink); }
+.snap { position: relative; isolation: isolate; margin: 0; padding: clamp(10px, 2.2%, 22px); transform: rotate(var(--tilt, -1.8deg)); filter: drop-shadow(0 14px 16px oklch(0% 0 0 / 0.28)); }
+.snap::before { background: var(--frame); clip-path: polygon(var(--cut-a)); }
+.snap img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.snap figcaption { padding: 0.7em 0.2em 0.1em; font-weight: 700; color: var(--btn-ink); }
+.snap figcaption a { display: inline-flex; align-items: center; gap: 6px; }
+
+/* ---------- Buttons, chips, tags ---------- */
+.btn { position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: 0.5em; min-height: 48px; padding: 0.5em 1.1em 0.55em; border: 0; background: none; color: var(--btn-ink); font: 700 1.1875rem/1.1 var(--font-text); text-decoration: none; text-transform: lowercase; cursor: pointer; }
+.btn::before { background: var(--b, var(--btn)); clip-path: polygon(var(--cut-btn)); transition: transform var(--fast) var(--ease-pop); }
+.btn:hover::before { transform: rotate(-1.6deg) scale(1.05); }
+.btn:active::before { transform: scale(0.96); }
+.btn.alt { --b: var(--frame); }
+.btn.ink { --b: var(--ink); color: var(--paper); }
+.btn.sq { width: 48px; padding: 0; }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; }
+.actions.center { justify-content: center; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { min-height: 44px; padding: 0.4em 1em 0.45em; border: 0; background: var(--paper-2); color: var(--ink); font: 700 1.0625rem/1.1 var(--font-text); text-transform: lowercase; cursor: pointer; clip-path: polygon(var(--cut-btn)); }
+.band.on-grey .chip { background: var(--paper); }
+.chip:hover { background: color-mix(in oklch, var(--yellow) 45%, var(--paper-2)); }
+.chips .chip[aria-pressed="true"], .chips .chip:has(input:checked) { background: var(--yellow); color: var(--btn-ink); }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+.tag { display: inline-block; padding: 0.1em 0.5em 0.15em; background: var(--yellow); color: var(--btn-ink); font-weight: 700; font-size: var(--fs-small); text-transform: lowercase; }
+
+/* ---------- Header ---------- */
+.site-header { background: var(--sun); color: var(--sun-ink); position: relative; z-index: 5; }
+.bar { display: flex; align-items: center; gap: clamp(14px, 2vw, 32px); min-height: 68px; max-width: var(--max); margin-inline: auto; padding-inline: var(--pad); }
+.brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font: 400 1.375rem/1 var(--font-shout); text-transform: uppercase; white-space: nowrap; }
+.brand svg { width: 42px; height: 42px; }
+.nav { display: flex; gap: clamp(16px, 1.8vw, 30px); }
+.nav a { padding: 8px 0 6px; font-weight: 700; text-transform: lowercase; text-decoration: none; white-space: nowrap; background: linear-gradient(currentColor, currentColor) 0 100% / 0 3px no-repeat; transition: background-size var(--base) var(--ease); }
+.nav a:hover, .nav a[aria-current="page"] { background-size: 100% 3px; }
+.tools { display: flex; gap: 2px; margin-left: auto; }
+.tool { position: relative; display: grid; place-items: center; width: 44px; height: 44px; border: 0; background: none; color: inherit; cursor: pointer; }
+.count { position: absolute; top: 1px; right: -2px; min-width: 21px; height: 21px; padding: 0 5px; background: var(--red); color: var(--on-color); font: 700 0.75rem/21px var(--font-text); text-align: center; }
+.count.pop { animation: pop var(--slow) var(--ease-pop); }
+@keyframes pop { 40% { transform: scale(1.4) rotate(-8deg); } }
+.menu-btn { display: none; }
+.notice { margin: 0; padding: 10px var(--pad) 12px; text-align: center; font-weight: 700; line-height: 1.3; border-top: 2px solid color-mix(in oklch, currentColor 14%, transparent); }
+@media (max-width: 1100px) { .nav { display: none; } .menu-btn { display: grid; } }
+@media (max-width: 480px) { .brand { font-size: 1.05rem; gap: 8px; } .brand svg { width: 36px; height: 36px; } .notice { font-size: var(--fs-small); } }
+
+/* Menu sheet */
+.menu { inset: 0; width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0; border: 0; background: var(--red); color: var(--on-color); overflow-y: auto; }
+.menu::backdrop { background: oklch(0% 0 0 / 0.4); }
+.menu[open] { animation: sheet var(--base) var(--ease); }
+@keyframes sheet { from { opacity: 0; transform: translateY(-16px); } }
+.menu .bar { justify-content: space-between; }
+.menu nav { display: grid; padding: 12px 0 40px; }
+.menu nav a { padding: 0.12em var(--pad); font: 400 clamp(2.5rem, 11vw, 5rem)/1 var(--font-shout); text-transform: uppercase; text-decoration: none; }
+.menu nav a:hover { color: var(--yellow); }
+
+/* ---------- Views ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.js .reveal { opacity: 0; }
+.js .reveal.is-in { opacity: 1; animation: slap var(--slow) var(--ease-pop) both; }
+@keyframes slap { from { opacity: 0; transform: translateY(26px) rotate(2.5deg) scale(1.03); } }
+
+/* Hero */
+.hero { padding-block: clamp(36px, 6vw, 96px); }
+.hero-grid { display: grid; gap: clamp(32px, 5vw, 72px); align-items: center; }
+.hero-copy { text-align: center; }
+.hero-copy .lead { margin: clamp(18px, 2vw, 28px) auto clamp(20px, 2.4vw, 32px); }
+@media (min-width: 700px) { .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); } .hero-grid.flip > :first-child { order: 2; } }
+.bit { position: absolute; left: var(--x); top: var(--y); width: clamp(26px, 3.2vw, 48px); height: auto; rotate: var(--r, 0deg); pointer-events: none; }
+
+/* Rail */
+.rail-head { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: clamp(24px, 3vw, 40px); }
+.rail { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 3 * var(--gap)) / 4); gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+.rail::-webkit-scrollbar { display: none; }
+.rail > * { scroll-snap-align: start; }
+@media (max-width: 900px) { .rail { grid-auto-columns: 42%; } }
+@media (max-width: 560px) { .rail { grid-auto-columns: 74%; } }
+
+/* Product tiles */
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: clamp(22px, 2.4vw, 36px) var(--gap); }
+@media (max-width: 560px) { .tiles { grid-template-columns: 1fr 1fr; gap: 22px 12px; } }
+.tile { display: flex; flex-direction: column; min-width: 0; }
+.tile-media { display: block; aspect-ratio: 1; background: var(--tile, var(--red)); clip-path: polygon(var(--torn)); }
+.tile-media svg, .art svg { width: 100%; height: 100%; transition: transform var(--base) var(--ease-pop); }
+.tile:hover .tile-media svg { transform: rotate(-4deg) scale(1.06); }
+.tile-foot { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 10px; padding-top: 10px; }
+.tile-name { font: 700 1.0625rem/1.25 var(--font-text); }
+.tile-name a { text-decoration: none; }
+.tile-name a:hover { text-decoration: underline; }
+.tile-meta { margin: 2px 0 0; color: var(--ink-soft); font-size: var(--fs-small); line-height: 1.3; }
+.tile-price { margin: 2px 0 0; font-weight: 700; }
+.add { grid-column: 2; grid-row: 1 / span 3; align-self: start; }
+.add.btn { width: 44px; min-height: 44px; padding: 0; }
+.empty-note { padding: 24px 0; font-weight: 700; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-bottom: clamp(24px, 3vw, 40px); }
+.sort { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+select, input, textarea { font: inherit; color: var(--ink); }
+.sort select { min-height: 44px; padding: 0 36px 0 12px; border: 2px solid var(--ink); border-radius: 0; background: var(--paper); }
+
+/* Split: where the money goes */
+.split-grid { display: grid; gap: clamp(28px, 4vw, 64px); align-items: center; }
+@media (min-width: 900px) { .split-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
+.split { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(16px, 2vw, 24px); }
+.split li { display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 4px 16px; }
+.split strong { font: 400 clamp(2.2rem, 1.4rem + 3vw, 4rem)/1 var(--font-shout); }
+.split span { font-weight: 700; font-size: 1.1875rem; }
+.split .fill { grid-column: 1 / -1; height: clamp(18px, 2vw, 26px); width: calc(var(--w) * 1.6%); background: var(--c, var(--yellow)); clip-path: polygon(0 10%, 100% 0, 99% 100%, 0.5% 88%); }
+
+/* Card rows */
+.cards { display: grid; gap: clamp(18px, 2.2vw, 32px); }
+@media (min-width: 820px) { .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } .cards.four { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 560px) and (max-width: 819px) { .cards.four { grid-template-columns: 1fr 1fr; } }
+.cards .paper { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.cards .paper p { margin: 0; }
+.cards .paper .btn { margin-top: auto; }
+.cut-img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; clip-path: polygon(var(--cut-b)); }
+.num { font: 400 clamp(3.5rem, 6vw, 5.5rem)/0.9 var(--font-shout); color: var(--shout-c); }
+.year { font: 400 clamp(2.4rem, 4vw, 3.4rem)/1 var(--font-shout); color: var(--shout-c); }
+
+/* Journal cards */
+.posts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: clamp(26px, 3vw, 40px) var(--gap); }
+@media (min-width: 900px) { .posts.three { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.post-media { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--tile, var(--blue)); clip-path: polygon(var(--cut-c)); }
+.post-media img, .post-media svg { width: 100%; height: 100%; object-fit: cover; transition: transform var(--base) var(--ease); }
+.post-card:hover .post-media img, .post-card:hover .post-media svg { transform: scale(1.04); }
+.post-meta { display: flex; gap: 12px; align-items: center; margin: 12px 0 6px; font-size: var(--fs-small); font-weight: 700; }
+.post-title { font: 700 1.25rem/1.25 var(--font-text); }
+.post-title a { text-decoration: none; }
+.post-title a:hover { text-decoration: underline; }
+
+/* Product page */
+.product-grid { display: grid; gap: clamp(32px, 5vw, 80px); align-items: start; }
+@media (min-width: 900px) { .product-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.art { aspect-ratio: 1; background: var(--tile, var(--red)); }
+.crumbs { margin-bottom: 14px; font-weight: 700; font-size: var(--fs-small); }
+.price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 14px; margin: 14px 0 18px; }
+.price strong { font: 400 2.25rem/1 var(--font-shout); }
+fieldset { border: 0; margin: 0 0 22px; padding: 0; min-width: 0; }
+legend { padding: 0; margin-bottom: 10px; font-weight: 700; }
+.chip:has(input) { position: relative; display: inline-flex; align-items: center; }
+.buy-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.stepper { display: inline-flex; align-items: center; background: var(--paper); }
+.band.on-grey .stepper { background: var(--card); }
+.stepper button { width: 44px; height: 48px; display: grid; place-items: center; border: 0; background: none; color: var(--ink); cursor: pointer; }
+.stepper output { min-width: 32px; text-align: center; font-weight: 700; }
+.facts { margin-top: 26px; border-top: 2px solid var(--line); }
+details { border-bottom: 2px solid var(--line); }
+summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 56px; padding: 10px 0; font-weight: 700; font-size: 1.1875rem; cursor: pointer; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary .i { transition: transform var(--base) var(--ease-pop); }
+details[open] > summary .i { transform: rotate(45deg); }
+details > div { padding: 0 0 18px; max-width: 64ch; }
+details[open] > div { animation: sheet var(--base) var(--ease); }
+
+/* Basket */
+.cart-grid { display: grid; gap: clamp(28px, 4vw, 56px); align-items: start; }
+@media (min-width: 960px) { .cart-grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); } }
+.lines { list-style: none; margin: 0 0 28px; padding: 0; border-top: 2px solid var(--line); }
+.line { display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; grid-template-areas: "art info price" "art step remove"; gap: 8px 16px; align-items: center; padding: 16px 0; border-bottom: 2px solid var(--line); }
+.line .art { grid-area: art; width: 76px; clip-path: polygon(var(--torn)); }
+.line-info { grid-area: info; min-width: 0; }
+.line-name { margin: 0; font-weight: 700; }
+.line-meta { margin: 0; color: var(--ink-soft); font-size: var(--fs-small); }
+.line .stepper { grid-area: step; justify-self: start; background: var(--paper-2); }
+.line-price { grid-area: price; margin: 0; font-weight: 700; text-align: right; }
+.remove { grid-area: remove; justify-self: end; width: 44px; height: 44px; display: grid; place-items: center; border: 0; background: none; color: var(--ink); cursor: pointer; }
+.sums { display: grid; grid-template-columns: 1fr auto; gap: 8px 0; margin: 0 0 16px; }
+.sums dd { text-align: right; padding-left: 16px; }
+.sums dt, .sums dd { margin: 0; }
+.sums .total { font: 400 1.75rem/1.1 var(--font-shout); padding-top: 10px; border-top: 2px solid var(--line); }
+.note { display: flex; gap: 8px; align-items: center; margin: 0 0 20px; font-weight: 700; color: var(--shout-c); }
+
+/* Forms: errors float under the field, so nothing moves when they appear */
+.form { display: grid; gap: 4px 18px; }
+@media (min-width: 640px) { .form.two { grid-template-columns: 1fr 1fr; } .form .full { grid-column: 1 / -1; } }
+.field { position: relative; display: grid; gap: 6px; padding-bottom: 26px; }
+.field label { font-weight: 700; }
+.field input, .field select, .field textarea { width: 100%; min-height: 50px; padding: 10px 12px; border: 2px solid var(--ink); border-radius: 0; background: var(--paper); }
+.field textarea { min-height: 140px; resize: vertical; }
+.field [aria-invalid="true"] { border-color: var(--danger); box-shadow: inset 0 0 0 1px var(--danger); }
+.err { position: absolute; left: 0; bottom: 3px; margin: 0; font-size: 0.875rem; font-weight: 700; color: var(--danger); line-height: 1.2; }
+.inline { display: flex; flex-wrap: wrap; gap: 0 12px; align-items: start; }
+.inline .field { flex: 1 1 220px; }
+@media (min-width: 560px) { .inline .btn { margin-top: 30px; } }
+.done { display: grid; justify-items: start; gap: 12px; }
+.done .h2 { color: var(--shout-c); }
+
+/* Prose (article, legal) */
+.prose { max-width: 70ch; margin-inline: auto; }
+.prose h2 { font: 700 var(--fs-h2)/1.15 var(--font-text); margin: 1.6em 0 0.5em; }
+.prose ul, .prose ol { padding-left: 1.3em; margin: 0 0 1em; }
+.prose li { margin-bottom: 0.4em; }
+.pull { margin: 2em 0; }
+.pull p { font: 400 clamp(1.6rem, 1.2rem + 1.4vw, 2.3rem)/1.12 var(--font-shout); text-transform: uppercase; margin: 0 0 12px; }
+.byline { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: center; margin-bottom: 18px; font-weight: 700; }
+.post-head { max-width: 980px; margin-inline: auto; text-align: center; }
+.post-head .snap { max-width: 860px; margin: clamp(28px, 4vw, 48px) auto 0; }
+
+/* Farms */
+.farms { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: var(--gap); }
+.farm { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 18px; align-items: center; }
+.farm .art { width: 92px; clip-path: polygon(var(--torn)); }
+.farm p { margin: 4px 0 0; font-size: var(--fs-small); }
+
+/* Info list */
+.info { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.info li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; }
+.info p { margin: 0; }
+
+/* Footer */
+.site-footer .lead { margin-inline: 0; }
+.foot-grid { display: grid; gap: clamp(24px, 4vw, 56px); align-items: start; margin-bottom: clamp(36px, 5vw, 64px); }
+@media (min-width: 900px) { .foot-grid { grid-template-columns: 1fr 1.2fr; } }
+.foot-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 24px; padding-bottom: 32px; }
+.foot-links h2 { font-size: 1.0625rem; margin-bottom: 10px; }
+.foot-links ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.foot-links a { text-decoration: none; }
+.foot-links a:hover { text-decoration: underline; }
+.foot-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 20px; border-top: 2px solid color-mix(in oklch, currentColor 30%, transparent); font-size: var(--fs-small); }
+.foot-base p { margin: 0; }
+
+/* Toast */
+.toast { position: fixed; left: 50%; bottom: 20px; z-index: 40; display: flex; gap: 12px; align-items: center; width: max-content; max-width: calc(100% - 32px); padding: 14px 18px; background: var(--ink); color: var(--paper); font-weight: 700; opacity: 0; pointer-events: none; transform: translate(-50%, 24px); transition: transform var(--base) var(--ease-pop), opacity var(--fast) var(--ease); }
+.toast.is-shown { opacity: 1; pointer-events: auto; transform: translate(-50%, 0) rotate(-1deg); }
+.toast a { white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ===================== SPRITE: icons (line), product art and decorations (flat cut paper) ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8.5h14l-1.2 11.5H6.2z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6L6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3.5 6h17v12h-17z"/><path d="M4 7l8 6 8-6"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6.5h11v10H3zM14 10h4l3 3.5v3h-7z"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></symbol>
+  <symbol id="mark" viewBox="0 0 48 48"><path fill="#2f9a3c" d="M22 17C19 10 13 6 7 6c2 7 8 11 15 12zM25 17c1-8 6-13 13-14-1 8-6 12-13 15z"/><path fill="#f6f0e2" d="M24 16c9 0 15 6.5 15 14 0 7-7 11.5-15 17-8-5.5-15-10-15-17 0-7.5 6-14 15-14z"/><path fill="#9b3aa0" d="M9.3 27c1.7-6.5 7.3-11 14.7-11s13 4.5 14.7 11c-4.4 1.7-9.5 2.5-14.7 2.5S13.7 28.7 9.3 27z"/></symbol>
+  <symbol id="d-star" viewBox="0 0 40 40"><path fill="#ffe14d" d="M20 2l5.2 11.6 12.6 1.3-9.4 8.5 2.7 12.4L20 29.5 8.9 35.8l2.7-12.4-9.4-8.5 12.6-1.3z"/></symbol>
+  <symbol id="d-seed" viewBox="0 0 40 40"><path fill="#f6f0e2" d="M6 30C10 14 22 6 34 8c-2 14-14 24-28 22z"/></symbol>
+  <symbol id="p-box" viewBox="0 0 200 200"><path fill="#2e8f3a" d="M60 98c-12-22-10-46 2-62 8 20 8 42-2 62zM70 96c2-24 14-42 30-50-2 22-12 40-30 50zM150 92c2-24 14-40 30-46-2 20-12 36-30 46z"/><path fill="#f07a1a" d="M48 104l20-8 26 66-14 6z"/><path fill="#6cc04a" d="M150 70a32 32 0 1 1-1 0z"/><path fill="#8fd46c" d="M124 92c12-14 36-14 48 0-16-6-32-6-48 0z"/><path fill="#3c9a45" d="M108 74c-4-16-14-28-26-32 12 0 22 10 28 24 2-16 10-28 22-34-6 14-12 28-14 44z"/><circle cx="110" cy="96" r="26" fill="#8a1f4f"/><path fill="#d79a58" d="M28 112h144l-7 62H35z"/><path fill="#c08245" d="M28 112h144v14H28z"/><path fill="none" stroke="#a96f35" stroke-width="4" stroke-linecap="round" d="M52 144h40M112 158h36"/></symbol>
+  <symbol id="p-bag" viewBox="0 0 200 200"><circle cx="78" cy="66" r="26" fill="#d8262e"/><circle cx="120" cy="62" r="26" fill="#f2b632"/><circle cx="100" cy="76" r="26" fill="#c91f28"/><path fill="#5a3a1c" d="M99 50c0-10 3-18 9-24l4 3c-5 6-8 13-8 21z"/><path fill="#d9a066" d="M44 82h112l-10 96H54z"/><path fill="#c58a4f" d="M44 82h112l-4 18H48z"/><path fill="#f6f0e2" d="M74 124h52v30H74z"/></symbol>
+  <symbol id="p-eggs" viewBox="0 0 200 200"><path fill="#9fb3c0" d="M30 70h140l-12-30H42z"/><ellipse cx="66" cy="96" rx="20" ry="26" fill="#f6efe2"/><ellipse cx="100" cy="92" rx="20" ry="26" fill="#e9c9a0"/><ellipse cx="134" cy="96" rx="20" ry="26" fill="#f6efe2"/><path fill="#b7c8d3" d="M26 104h148l-10 52H36z"/><path fill="#9fb3c0" d="M26 104h148v12H26z"/><path fill="none" stroke="#8aa0ae" stroke-width="4" d="M76 120v32M124 120v32"/></symbol>
+  <symbol id="p-jar" viewBox="0 0 200 200"><path fill="#2b2b33" d="M66 38h68v24H66z"/><path fill="var(--c, #f2b632)" d="M60 62h80c8 0 14 6 14 14v88c0 8-6 14-14 14H60c-8 0-14-6-14-14V76c0-8 6-14 14-14z"/><path fill="#fff" fill-opacity=".35" d="M60 78h8v80h-8z"/><path fill="#f6f0e2" d="M66 100h68v44H66z"/><circle cx="100" cy="122" r="10" fill="var(--c, #f2b632)"/></symbol>
+  <symbol id="p-bottle" viewBox="0 0 200 200"><path fill="#2b2b33" d="M88 20h24v20H88z"/><path fill="#d6c13a" d="M88 40h24v22c18 8 26 20 26 36v66c0 8-6 14-14 14H76c-8 0-14-6-14-14V98c0-16 8-28 26-36z"/><path fill="#fff" fill-opacity=".3" d="M74 100h8v62h-8z"/><path fill="#f6f0e2" d="M70 112h60v40H70z"/><path fill="#3c9a45" d="M100 142c-12-8-12-22 0-30 12 8 12 22 0 30z"/></symbol>
+  <symbol id="p-sack" viewBox="0 0 200 200"><path fill="var(--c, #efe4cc)" d="M64 52h72l-4 14c22 14 32 40 30 74-2 26-16 40-40 40H78c-24 0-38-14-40-40-2-34 8-60 30-74z"/><path fill="#7a4a24" d="M64 60h72v10H64z"/><path fill="var(--c, #efe4cc)" d="M70 52l-12-20h26l16 12 16-12h26l-12 20z"/><path fill="#f6f0e2" d="M74 112h52v40H74z"/><path fill="#8a1f4f" d="M100 122c8 0 12 4 12 10s-6 10-12 10-12-4-12-10 4-10 12-10z"/></symbol>
+  <symbol id="p-card" viewBox="0 0 200 200"><path fill="none" stroke="#f6f0e2" stroke-width="5" stroke-linecap="round" d="M60 40c20 10 30 30 34 50"/><path fill="#f6f0e2" d="M64 64l92 18-16 86-92-18z"/><circle cx="84" cy="86" r="7" fill="var(--tile, #d8262e)"/><path fill="#9b3aa0" d="M96 124c4-12 16-18 28-16s20 12 18 24c-8 4-18 4-28 2s-16-4-18-10z"/><path fill="#2f9a3c" d="M118 108c-2-10 0-18 6-24 2 8 0 16-6 24z"/></symbol>
+</svg>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header" id="top-of-page">
+  <div class="bar">
+    <a class="brand" href="#/" aria-label="Turnip Union, home"><svg aria-hidden="true"><use href="#mark"/></svg><span>Turnip Union</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/shop">shop</a>
+      <a href="#/promise">our promise</a>
+      <a href="#/farms">the farms</a>
+      <a href="#/journal">journal</a>
+      <a href="#/faq">faq</a>
+      <a href="#/contact">contact</a>
+    </nav>
+    <div class="tools">
+      <button class="tool" type="button" id="theme-toggle" aria-label="Switch to dark theme"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="tool" href="#/cart" aria-label="Basket"><svg class="i" aria-hidden="true"><use href="#i-bag"/></svg><span class="count" data-count>2</span></a>
+      <button class="tool menu-btn" type="button" id="menu-open" aria-label="Open menu" aria-controls="menu"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+  <p class="notice">This week's boxes are packing now. Order by Sunday 8 pm for Tuesday delivery.</p>
+</header>
+
+<dialog class="menu" id="menu" aria-label="Menu">
+  <div class="bar">
+    <a class="brand" href="#/" aria-label="Turnip Union, home"><svg aria-hidden="true"><use href="#mark"/></svg><span>Turnip Union</span></a>
+    <button class="tool" type="button" id="menu-close" aria-label="Close menu"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
+  </div>
+  <nav aria-label="Menu">
+    <a href="#/shop">Shop</a><a href="#/promise">Our promise</a><a href="#/farms">The farms</a><a href="#/journal">Journal</a><a href="#/faq">FAQ</a><a href="#/contact">Contact</a><a href="#/cart">Basket</a>
+  </nav>
+</dialog>
+
+<main id="main" tabindex="-1">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="band on-green hero" aria-labelledby="home-title">
+    <svg class="bit" style="--x:44%;--y:8%;--r:-14deg" aria-hidden="true"><use href="#d-star"/></svg>
+    <svg class="bit" style="--x:93%;--y:22%;--r:18deg" aria-hidden="true"><use href="#d-star"/></svg>
+    <svg class="bit" style="--x:4%;--y:82%;--r:40deg" aria-hidden="true"><use href="#d-seed"/></svg>
+    <svg class="bit" style="--x:88%;--y:86%;--r:-30deg" aria-hidden="true"><use href="#d-seed"/></svg>
+    <div class="wrap hero-grid">
+      <figure class="snap">
+        <img src="images/crate.webp" alt="A wooden crate of carrots, beetroot, cabbage and radishes" width="1200" height="900">
+        <figcaption><a href="#/product">this week: the family veg box <svg class="i i-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></figcaption>
+      </figure>
+      <div class="hero-copy">
+        <h1 class="shout" id="home-title" data-fit><span>Veg with</span><span>a fair</span><span>price tag</span></h1>
+        <p class="lead">Seasonal boxes from fourteen small farms. We print the split of every dollar on the lid, so you know exactly who got paid.</p>
+        <div class="actions center"><a class="btn" href="#/shop">fill a box</a><a class="btn alt" href="#/promise">see the split</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="boxes-title">
+    <div class="wrap">
+      <h2 class="shout band-title" id="boxes-title" data-fit>This week's boxes</h2>
+      <p class="lead center">Packed on Monday, on your step by Tuesday. Pick a size, swap what you don't eat, and the rest is up to the weather.</p>
+      <div class="rail-head">
+        <button class="btn sq" type="button" data-rail-step="-1" aria-controls="home-rail" aria-label="Scroll back"><svg class="i" aria-hidden="true"><use href="#i-left"/></svg></button>
+        <button class="btn sq" type="button" data-rail-step="1" aria-controls="home-rail" aria-label="Scroll forward"><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></button>
+        <a class="btn" href="#/shop">shop all</a>
+      </div>
+      <div class="rail" id="home-rail" data-clone-tiles="home" aria-label="Featured boxes and goods"></div>
+    </div>
+  </section>
+
+  <section class="band on-red" aria-labelledby="split-title">
+    <div class="wrap">
+      <h2 class="shout band-title" id="split-title" data-fit>Where your $10 goes</h2>
+      <div class="split-grid">
+        <ol class="split" aria-label="How every $10 you spend is split">
+          <li class="reveal" style="--w:61"><strong>$6.10</strong><span>to the farm that grew it</span><span class="fill" aria-hidden="true"></span></li>
+          <li class="reveal" style="--w:16;--c:var(--frame)"><strong>$1.60</strong><span>van, fuel and driver</span><span class="fill" aria-hidden="true"></span></li>
+          <li class="reveal" style="--w:13;--c:var(--orange)"><strong>$1.30</strong><span>packing, boxes and paper</span><span class="fill" aria-hidden="true"></span></li>
+          <li class="reveal" style="--w:10;--c:var(--pink)"><strong>$1.00</strong><span>running the co-op</span><span class="fill" aria-hidden="true"></span></li>
+        </ol>
+        <div class="paper reveal">
+          <h3 class="h2">Printed on every lid</h3>
+          <p>Most of what you pay for food never reaches a field. We set the farm's share first, then build the price around it, and we print the result where you can't miss it.</p>
+          <a class="btn" href="#/promise">read our promise</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band on-blue" aria-labelledby="farms-title">
+    <div class="wrap">
+      <h2 class="shout band-title" id="farms-title" data-fit>Meet the farms</h2>
+      <div class="cards">
+        <article class="paper reveal">
+          <img class="cut-img" src="images/field.webp" alt="Green hills with crop rows, a red barn and a yellow sun" width="1200" height="900">
+          <h3 class="h3">Fourteen farms, one van</h3>
+          <p>None bigger than forty acres. All within an hour of the packing shed.</p>
+          <a class="btn" href="#/farms">see who grows what</a>
+        </article>
+        <article class="paper reveal">
+          <img class="cut-img" src="images/boots.webp" alt="Yellow rubber boots and a spade standing in mud" width="1200" height="900">
+          <h3 class="h3">Short of hands?</h3>
+          <p>Planting days need people. Come for a morning, leave with a crate.</p>
+          <a class="btn" href="#/contact?topic=volunteer">lend a hand</a>
+        </article>
+        <article class="paper reveal">
+          <img class="cut-img" src="images/stall.webp" alt="A market stall with a striped awning and crates of produce" width="1200" height="900">
+          <h3 class="h3">Grow with us</h3>
+          <p>Small farm, good soil, tired of guessing what you'll get paid? Talk to us.</p>
+          <a class="btn" href="#/contact?topic=join">join the co-op</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band on-grey" aria-labelledby="field-title">
+    <div class="wrap">
+      <h2 class="shout band-title" id="field-title" data-fit>From the field</h2>
+      <div class="posts" data-clone-posts="4"></div>
+      <div class="actions center" style="margin-top:clamp(28px,3vw,44px)"><a class="btn" href="#/journal">read the journal</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== SHOP ===================== -->
+<div data-view="shop">
+  <section class="band tight" aria-labelledby="shop-title">
+    <div class="wrap">
+      <h1 class="shout band-title" id="shop-title" data-fit>All the good stuff</h1>
+      <p class="lead center">Boxes, fruit and a short shelf of pantry goods, all from co-op farms. Prices include delivery over $40.</p>
+    </div>
+  </section>
+  <section class="band" style="padding-top:0" aria-label="Products">
+    <div class="wrap">
+      <div class="toolbar">
+        <div class="chips" data-filter-for="shop-grid" role="group" aria-label="Filter products">
+          <button class="chip" type="button" data-filter="all" aria-pressed="true">everything</button>
+          <button class="chip" type="button" data-filter="boxes" aria-pressed="false">boxes</button>
+          <button class="chip" type="button" data-filter="fruit" aria-pressed="false">fruit</button>
+          <button class="chip" type="button" data-filter="pantry" aria-pressed="false">pantry</button>
+          <button class="chip" type="button" data-filter="gifts" aria-pressed="false">gifts</button>
+        </div>
+        <label class="sort">sort <select data-sort-for="shop-grid"><option value="featured">featured</option><option value="low">price, low to high</option><option value="high">price, high to low</option></select></label>
+      </div>
+      <!-- The catalogue: one tile per product. The basket, the home rail and "goes well with" all read from these tiles. -->
+      <div class="tiles" id="shop-grid">
+        <article class="tile" data-product="family" data-price="29" data-cat="boxes" data-home style="--tile:var(--red)">
+          <a class="tile-media" href="#/product" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#p-box"/></svg></a>
+          <div class="tile-foot"><h3 class="tile-name"><a href="#/product">Family veg box</a></h3><p class="tile-meta">9 to 11 kinds of veg</p><p class="tile-price">$29</p><button class="btn add" type="button" data-add="family" aria-label="Add Family veg box to basket"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </article>
+        <article class="tile" data-product="small" data-price="18" data-cat="boxes" data-home style="--tile:var(--green)">
+          <a class="tile-media" href="#/product" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#p-box"/></svg></a>
+          <div class="tile-foot"><h3 class="tile-name"><a href="#/product">Small veg box</a></h3><p class="tile-meta">6 to 8 kinds of veg</p><p class="tile-price">$18</p><button class="btn add" type="button" data-add="small" aria-label="Add Small veg box to basket"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </article>
+        <article class="tile" data-product="orchard" data-price="14" data-cat="fruit" data-home style="--tile:var(--pink)">
+          <a class="tile-media" href="#/product" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#p-bag"/></svg></a>
+          <div class="tile-foot"><h3 class="tile-name"><a href="#/product">Orchard bag</a></h3><p class="tile-meta">apples and pears, 2.5 kg</p><p class="tile-price">$14</p><button class="btn add" type="button" data-add="orchard" aria-label="Add Orchard bag to basket"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </article>
+        <article class="tile" data-product="eggs" data-price="7" data-cat="pantry" data-home style="--tile:var(--yellow)">
+          <a class="tile-media" href="#/product" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#p-eggs"/></svg></a>
+          <div class="tile-foot"><h3 class="tile-name"><a href="#/product">Free-range eggs</a></h3><p class="tile-meta">a dozen, mixed sizes</p><p class="tile-price">$7</p><button class="btn add" type="button" data-add="eggs" aria-label="Add Free-range eggs to basket"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </article>
+        <article class="tile" data-product="big" data-price="39" data-cat="boxes" data-home style="--tile:var(--blue)">
+          <a class="tile-media" href="#/product" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#p-box"/></svg></a>
+          <div class="tile-foot"><h3 class="tile-name"><a href="#/product">Big batch box</a></h3><p class="tile-meta">12 kinds, kitchen-sized</p><p class="tile-price">$39</p><button class="btn add" type="button" data-add="big" aria-label="Add Big batch box to basket"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </article>
+        <article class="tile" data-product="honey" data-price="12" data-cat="pantry" data-home style="--tile:var(--purple)">
+          <a class="tile-media" href="#/product" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 200 200" style="--c:#f2b632"><use href="#p-jar"/></svg></a>
+          <div class="tile-foot"><h3 class="tile-name"><a href="#/product">Wildflower honey</a></h3><p class="tile-meta">340 g jar</p><p class="tile-price">$12</p><button class="btn add" type="button" data-add="honey" aria-label="Add Wildflower honey to basket"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </article>
+        <article class="tile" data-product="roots" data-price="22" data-cat="boxes" style="--tile:var(--orange)">
+          <a class="tile-media" href="#/product" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#p-box"/></svg></a>
+          <div class="tile-foot"><h3 class="tile-name"><a href="#/product">Roots and soup box</a></h3><p class="tile-meta">for slow-cooker people</p><p class="tile-price">$22</p><button class="btn add" type="button" data-add="roots" aria-label="Add Roots and soup box to basket"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </article>
+        <article class="tile" data-product="juicing" data-price="11" data-cat="fruit" style="--tile:var(--green)">
+          <a class="tile-media" href="#/product" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#p-bag"/></svg></a>
+          <div class="tile-foot"><h3 class="tile-name"><a href="#/product">Wonky juicing apples</a></h3><p class="tile-meta">seconds, 4 kg</p><p class="tile-price">$11</p><button class="btn add" type="button" data-add="juicing" aria-label="Add Wonky juicing apples to basket"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </article>
+        <article class="tile" data-product="oil" data-price="11" data-cat="pantry" style="--tile:var(--red)">
+          <a class="tile-media" href="#/product" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#p-bottle"/></svg></a>
+          <div class="tile-foot"><h3 class="tile-name"><a href="#/product">Cold-pressed rapeseed oil</a></h3><p class="tile-meta">500 ml bottle</p><p class="tile-price">$11</p><button class="btn add" type="button" data-add="oil" aria-label="Add Cold-pressed rapeseed oil to basket"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </article>
+        <article class="tile" data-product="beans" data-price="6" data-cat="pantry" style="--tile:var(--orange)">
+          <a class="tile-media" href="#/product" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#p-sack"/></svg></a>
+          <div class="tile-foot"><h3 class="tile-name"><a href="#/product">Heritage beans</a></h3><p class="tile-meta">500 g bag</p><p class="tile-price">$6</p><button class="btn add" type="button" data-add="beans" aria-label="Add Heritage beans to basket"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </article>
+        <article class="tile" data-product="chutney" data-price="8" data-cat="pantry" style="--tile:var(--pink)">
+          <a class="tile-media" href="#/product" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 200 200" style="--c:#8a1f4f"><use href="#p-jar"/></svg></a>
+          <div class="tile-foot"><h3 class="tile-name"><a href="#/product">Beetroot chutney</a></h3><p class="tile-meta">300 g jar</p><p class="tile-price">$8</p><button class="btn add" type="button" data-add="chutney" aria-label="Add Beetroot chutney to basket"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </article>
+        <article class="tile" data-product="gift" data-price="25" data-cat="gifts" style="--tile:var(--blue)">
+          <a class="tile-media" href="#/product" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#p-card"/></svg></a>
+          <div class="tile-foot"><h3 class="tile-name"><a href="#/product">Box gift card</a></h3><p class="tile-meta">sent by email</p><p class="tile-price">$25</p><button class="btn add" type="button" data-add="gift" aria-label="Add Box gift card to basket"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </article>
+      </div>
+      <p class="empty-note" data-empty hidden>Nothing here this week. Try another shelf.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== PRODUCT ===================== -->
+<div data-view="product">
+  <section class="band on-grey" aria-labelledby="product-title">
+    <div class="wrap product-grid">
+      <figure class="snap" style="--tilt:-2.4deg">
+        <div class="art" style="--tile:var(--red)"><svg viewBox="0 0 200 200" role="img" aria-label="A wooden crate of mixed vegetables"><use href="#p-box"/></svg></div>
+      </figure>
+      <div>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="#/shop">shop</a> / <a href="#/shop?cat=boxes">boxes</a> / <span aria-current="page">family veg box</span></nav>
+        <h1 class="title" id="product-title">Family veg box</h1>
+        <div class="price"><strong data-price-now>$29</strong><span class="muted">9 to 11 kinds of veg, feeds four</span></div>
+        <p>Whatever eleven farms pulled out of the ground this week, packed loose in a reused crate. Enough for four people and a few lunches, with the split printed on the lid.</p>
+        <form class="buy" data-buy="family" novalidate>
+          <fieldset>
+            <legend>Box mix</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="mix" value="Mixed" data-price="29" checked>mixed</label>
+              <label class="chip"><input type="radio" name="mix" value="Roots-heavy" data-price="27">roots-heavy</label>
+              <label class="chip"><input type="radio" name="mix" value="Leafy" data-price="31">leafy</label>
+            </div>
+          </fieldset>
+          <div class="buy-row">
+            <div class="stepper" role="group" aria-label="Quantity"><button type="button" data-qty="-1" aria-label="One fewer"><svg class="i i-sm" aria-hidden="true"><use href="#i-minus"/></svg></button><output data-qty-value>1</output><button type="button" data-qty="1" aria-label="One more"><svg class="i i-sm" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+            <button class="btn" type="submit">add to basket</button>
+          </div>
+        </form>
+        <div class="facts">
+          <details open><summary>In this week's box<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><ul><li>Carrots and beetroot, Hollow Lane Farm</li><li>Savoy cabbage and leeks, Marsh End Growers</li><li>New potatoes, Corner Plot Co.</li><li>Salad leaves, radishes and herbs, whoever had the most</li></ul></div></details>
+          <details><summary>Delivery<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Order by Sunday 8 pm for Tuesday. Free over $40, otherwise $5. We leave it in the shade if you're out.</p></div></details>
+          <details><summary>Keeping it fresh<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Leaves in the fridge first, roots somewhere cool and dark. Twist the tops off carrots and beetroot so they don't go soft.</p></div></details>
+          <details><summary>The packaging<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>The crate comes back with the driver next week. The paper goes in your compost.</p></div></details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="band" aria-labelledby="pairs-title">
+    <div class="wrap">
+      <h2 class="shout band-title" id="pairs-title" data-fit>Goes well with</h2>
+      <div class="rail" data-clone-tiles="related" aria-label="Goes well with"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== BASKET ===================== -->
+<div data-view="cart">
+  <section class="band tight" aria-labelledby="cart-title">
+    <div class="wrap"><h1 class="shout" id="cart-title" data-fit>Your basket</h1></div>
+  </section>
+  <section class="band" style="padding-top:0" aria-label="Basket">
+    <div class="wrap">
+      <div class="cart-grid" data-basket-full>
+        <div>
+          <ul class="lines" data-lines></ul>
+          <fieldset>
+            <legend>Delivery day</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="day" value="Tuesday" checked>tuesday</label>
+              <label class="chip"><input type="radio" name="day" value="Thursday">thursday</label>
+              <label class="chip"><input type="radio" name="day" value="Saturday">saturday</label>
+            </div>
+          </fieldset>
+        </div>
+        <aside class="paper" aria-labelledby="summary-title">
+          <h2 class="h2" id="summary-title" style="margin-bottom:16px">Summary</h2>
+          <dl class="sums"><dt>Subtotal</dt><dd data-subtotal>$0</dd><dt>Delivery</dt><dd data-shipping>$0</dd><dt class="total">Total</dt><dd class="total" data-total>$0</dd></dl>
+          <p class="note" data-free-note><svg class="i" aria-hidden="true"><use href="#i-truck"/></svg><span>Add $11 more for free delivery.</span></p>
+          <form class="form" data-form="checkout" novalidate>
+            <div class="field"><label for="k-name">Name</label><input id="k-name" name="name" autocomplete="name" required aria-describedby="k-name-err"><p class="err" id="k-name-err" aria-live="polite"></p></div>
+            <div class="field"><label for="k-email">Email</label><input id="k-email" name="email" type="email" autocomplete="email" required aria-describedby="k-email-err"><p class="err" id="k-email-err" aria-live="polite"></p></div>
+            <div class="field"><label for="k-address">Street and postcode</label><input id="k-address" name="address" autocomplete="street-address" required aria-describedby="k-address-err"><p class="err" id="k-address-err" aria-live="polite"></p></div>
+            <div><button class="btn" type="submit">place order</button></div>
+          </form>
+        </aside>
+      </div>
+      <div class="done" data-basket-empty hidden>
+        <p class="h2">Your basket is empty.</p>
+        <p>The veg is still in the ground. Pick a box and we'll go and get it.</p>
+        <a class="btn" href="#/shop">fill a box</a>
+      </div>
+      <div class="done" data-success="checkout" hidden>
+        <p class="h2">Order in. Thank you.</p>
+        <p>We've emailed your receipt. Your box leaves the packing shed on the morning of your delivery day.</p>
+        <a class="btn" href="#/journal">read the journal while you wait</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== OUR PROMISE (about) ===================== -->
+<div data-view="promise">
+  <section class="band on-green hero" aria-labelledby="promise-title">
+    <svg class="bit" style="--x:52%;--y:10%;--r:12deg" aria-hidden="true"><use href="#d-star"/></svg>
+    <div class="wrap hero-grid flip">
+      <figure class="snap" style="--tilt:2deg"><img src="images/field.webp" alt="Green hills with crop rows, a red barn and a yellow sun" width="1200" height="900"></figure>
+      <div class="hero-copy">
+        <h1 class="shout" id="promise-title" data-fit><span>We print</span><span>the split</span></h1>
+        <p class="lead">A fair price starts at the field, not at the till. So the growers set their share first, and we build everything else around it.</p>
+        <div class="actions center"><a class="btn" href="#/shop">fill a box</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="why-title">
+    <div class="wrap">
+      <h2 class="shout band-title" id="why-title" data-fit>Why we exist</h2>
+      <div class="cards">
+        <article class="paper reveal on-sun-card"><h3 class="h2">The problem</h3><p>Small farms take the weather, the pests and the price someone else sets. Many sell below what it cost to grow.</p></article>
+        <article class="paper reveal"><h3 class="h2">The fix</h3><p>Sell together, sell direct, and agree the farm's share before a single seed goes in. Then say it out loud.</p></article>
+        <article class="paper reveal"><h3 class="h2">Your part</h3><p>Eat what's in season, accept the odd wonky carrot, and tell a friend. That's honestly most of it.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band on-red" aria-labelledby="years-title">
+    <div class="wrap">
+      <h2 class="shout band-title" id="years-title" data-fit>How we got here</h2>
+      <ol class="cards four" style="list-style:none;padding:0;margin:0">
+        <li class="paper reveal"><span class="year">2019</span><p>Six farms share one van and a spreadsheet.</p></li>
+        <li class="paper reveal"><span class="year">2021</span><p>The first lid with the split printed on it.</p></li>
+        <li class="paper reveal"><span class="year">2023</span><p>Fourteen farms, one packing shed, two vans.</p></li>
+        <li class="paper reveal"><span class="year">2026</span><p>Still paying in fourteen days. Still loud about it.</p></li>
+      </ol>
+    </div>
+  </section>
+  <section class="band on-blue" aria-labelledby="rules-title">
+    <div class="wrap">
+      <h2 class="shout band-title" id="rules-title" data-fit>Four promises</h2>
+      <div class="cards four">
+        <article class="paper reveal"><span class="num" aria-hidden="true">1</span><h3 class="h3">Growers set the price</h3><p>Each farm names its price for the season, and we don't haggle it down.</p></article>
+        <article class="paper reveal"><span class="num" aria-hidden="true">2</span><h3 class="h3">Paid in 14 days</h3><p>Not ninety. Fourteen days from delivery to the shed, every time.</p></article>
+        <article class="paper reveal"><span class="num" aria-hidden="true">3</span><h3 class="h3">The split, printed</h3><p>Every lid shows where your money went, line by line.</p></article>
+        <article class="paper reveal"><span class="num" aria-hidden="true">4</span><h3 class="h3">Three-year handshakes</h3><p>Farms plan in years. So do we: every grower gets a three-year agreement.</p></article>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ===================== FARMS (team) ===================== -->
+<div data-view="farms">
+  <section class="band tight" aria-labelledby="farms-page-title">
+    <div class="wrap">
+      <h1 class="shout band-title" id="farms-page-title" data-fit>The farms</h1>
+      <p class="lead center">Fourteen of them, eight shown here. All family-run, all within an hour of the packing shed, all paid the same way.</p>
+      <div class="chips" style="justify-content:center" data-filter-for="farm-list" role="group" aria-label="Filter farms">
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">all farms</button>
+        <button class="chip" type="button" data-filter="veg" aria-pressed="false">veg</button>
+        <button class="chip" type="button" data-filter="fruit" aria-pressed="false">fruit</button>
+        <button class="chip" type="button" data-filter="pantry" aria-pressed="false">eggs and pantry</button>
+      </div>
+    </div>
+  </section>
+  <section class="band on-grey" aria-label="Farms">
+    <div class="wrap">
+      <div class="farms" id="farm-list">
+        <article class="paper farm" data-cat="veg"><div class="art" style="--tile:var(--red)"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#p-box"/></svg></div><div><h2 class="h3">Hollow Lane Farm</h2><p>Carrots, beetroot, squash. 12 acres. With us since 2019.</p></div></article>
+        <article class="paper farm" data-cat="fruit"><div class="art" style="--tile:var(--pink)"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#p-bag"/></svg></div><div><h2 class="h3">Two Pond Orchard</h2><p>Apples, pears, a stubborn quince. 9 acres. Since 2019.</p></div></article>
+        <article class="paper farm" data-cat="veg"><div class="art" style="--tile:var(--green)"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#p-box"/></svg></div><div><h2 class="h3">Marsh End Growers</h2><p>Cabbages, leeks, kale. 30 acres. Since 2020.</p></div></article>
+        <article class="paper farm" data-cat="pantry"><div class="art" style="--tile:var(--yellow)"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#p-eggs"/></svg></div><div><h2 class="h3">Nettlebed Hens</h2><p>Eggs from 400 hens on open grass. Since 2021.</p></div></article>
+        <article class="paper farm" data-cat="fruit"><div class="art" style="--tile:var(--orange)"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#p-bag"/></svg></div><div><h2 class="h3">Bramble Cross</h2><p>Plums, cherries, too many blackberries. Since 2022.</p></div></article>
+        <article class="paper farm" data-cat="veg"><div class="art" style="--tile:var(--blue)"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#p-box"/></svg></div><div><h2 class="h3">Corner Plot Co.</h2><p>Potatoes, onions, salad. 6 acres. Since 2022.</p></div></article>
+        <article class="paper farm" data-cat="pantry"><div class="art" style="--tile:var(--purple)"><svg viewBox="0 0 200 200" style="--c:#f2b632" aria-hidden="true"><use href="#p-jar"/></svg></div><div><h2 class="h3">Wren Valley Bees</h2><p>Forty hives on wildflower margins. Since 2023.</p></div></article>
+        <article class="paper farm" data-cat="pantry"><div class="art" style="--tile:var(--red)"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#p-bottle"/></svg></div><div><h2 class="h3">Oatfield and Daughters</h2><p>Oats, rapeseed oil, beans. 38 acres. Since 2024.</p></div></article>
+      </div>
+      <p class="empty-note" data-empty hidden>No farms in that group yet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== JOURNAL (blog) ===================== -->
+<div data-view="journal">
+  <section class="band tight" aria-labelledby="journal-title">
+    <div class="wrap">
+      <h1 class="shout band-title" id="journal-title" data-fit>The journal</h1>
+      <div class="chips" style="justify-content:center" data-filter-for="post-list" role="group" aria-label="Filter articles">
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">everything</button>
+        <button class="chip" type="button" data-filter="news" aria-pressed="false">news</button>
+        <button class="chip" type="button" data-filter="recipes" aria-pressed="false">recipes</button>
+        <button class="chip" type="button" data-filter="campaign" aria-pressed="false">campaign</button>
+      </div>
+    </div>
+  </section>
+  <section class="band" style="padding-top:0" aria-label="Articles">
+    <div class="wrap">
+      <!-- The article list: the home page and "keep reading" copy their cards from here. -->
+      <div class="posts three" id="post-list">
+        <article class="post-card" data-cat="campaign"><a class="post-media" href="#/post" tabindex="-1" aria-hidden="true"><img src="images/stall.webp" alt="" width="1200" height="900"></a><p class="post-meta"><span class="tag">campaign</span><time datetime="2026-05-12">12 May 2026</time></p><h2 class="post-title"><a href="#/post">Why we print the split on every box</a></h2></article>
+        <article class="post-card" data-cat="recipes"><a class="post-media" href="#/post" tabindex="-1" aria-hidden="true"><img src="images/soup.webp" alt="" width="1200" height="900"></a><p class="post-meta"><span class="tag">recipes</span><time datetime="2026-05-03">3 May 2026</time></p><h2 class="post-title"><a href="#/post">A soup for the end of the box</a></h2></article>
+        <article class="post-card" data-cat="news"><a class="post-media" href="#/post" tabindex="-1" aria-hidden="true"><img src="images/field.webp" alt="" width="1200" height="900"></a><p class="post-meta"><span class="tag">news</span><time datetime="2026-04-22">22 Apr 2026</time></p><h2 class="post-title"><a href="#/post">Two new farms join the co-op</a></h2></article>
+        <article class="post-card" data-cat="campaign"><a class="post-media" href="#/post" tabindex="-1" aria-hidden="true"><img src="images/apples.webp" alt="" width="1200" height="900"></a><p class="post-meta"><span class="tag">campaign</span><time datetime="2026-03-28">28 Mar 2026</time></p><h2 class="post-title"><a href="#/post">Wonky apples are still apples</a></h2></article>
+        <article class="post-card" data-cat="recipes"><a class="post-media" href="#/post" tabindex="-1" aria-hidden="true" style="--tile:var(--green)"><svg viewBox="0 0 200 200" style="--c:#4aa33f"><use href="#p-jar"/></svg></a><p class="post-meta"><span class="tag">recipes</span><time datetime="2026-03-19">19 Mar 2026</time></p><h2 class="post-title"><a href="#/post">Root-top pesto, nothing wasted</a></h2></article>
+        <article class="post-card" data-cat="news"><a class="post-media" href="#/post" tabindex="-1" aria-hidden="true"><img src="images/boots.webp" alt="" width="1200" height="900"></a><p class="post-meta"><span class="tag">news</span><time datetime="2026-03-14">14 Mar 2026</time></p><h2 class="post-title"><a href="#/post">Mud season: how we deliver when it pours</a></h2></article>
+      </div>
+      <p class="empty-note" data-empty hidden>Nothing in that pile yet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== ARTICLE ===================== -->
+<div data-view="post">
+  <article>
+    <section class="band" aria-labelledby="post-title">
+      <div class="wrap post-head">
+        <p class="byline"><span class="tag">campaign</span><time datetime="2026-05-12">12 May 2026</time><span>by the packing shed</span></p>
+        <h1 class="title" id="post-title">Why we print the split on every box</h1>
+        <figure class="snap" style="--tilt:1.4deg"><img src="images/stall.webp" alt="A market stall with a striped awning and crates of produce" width="1200" height="900"></figure>
+      </div>
+    </section>
+    <section class="band" style="padding-top:0" aria-label="Article">
+      <div class="wrap prose">
+        <p class="lead">Ask anyone who sells food what a fair price is and they'll talk about you, the buyer. We wanted to start with the person holding the spade.</p>
+        <p>When we started, six farms shared one van. Every week someone asked the same question at the door: how much of this actually goes to the farmer? We didn't have a good answer. So we worked it out, and then we printed it.</p>
+        <h2>How the number is made</h2>
+        <ol><li>Each farm names its price per crate for the season.</li><li>We add the real cost of the van, the packing and the paper.</li><li>We add one dollar in ten to keep the co-op running. That's the whole recipe.</li></ol>
+        <div class="paper on-sun-card pull"><p>If the price goes up, you'll see which line moved.</p><span>Mara, packing shed lead</span></div>
+        <h2>What changed</h2>
+        <p>People started asking better questions. Why is the van line higher in winter? (Longer routes, worse roads.) Why did the farm share jump in June? (A hailstorm, and we agreed to cover it.) The lid became a conversation, which is exactly what we wanted.</p>
+        <p>If you run a small food business and want to do the same, we're happy to share the template. Write to us.</p>
+        <div class="actions" style="margin-top:28px"><a class="btn" href="#/shop">fill a box</a><a class="btn alt" href="#/contact">write to us</a></div>
+      </div>
+    </section>
+  </article>
+  <section class="band on-grey" aria-labelledby="more-title">
+    <div class="wrap">
+      <h2 class="shout band-title" id="more-title" data-fit>Keep reading</h2>
+      <div class="posts three" data-clone-posts="3" data-skip="1"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== FAQ ===================== -->
+<div data-view="faq">
+  <section class="band tight" aria-labelledby="faq-title">
+    <div class="wrap"><h1 class="shout band-title" id="faq-title" data-fit>Good questions</h1><p class="lead center">The ones we hear at the door most weeks. Anything else, just ask.</p></div>
+  </section>
+  <section class="band" style="padding-top:0" aria-label="Questions">
+    <div class="wrap prose">
+      <h2>Ordering</h2>
+      <details><summary>When do I need to order by?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Sunday 8 pm for a Tuesday box, Tuesday 8 pm for Thursday, Thursday 8 pm for Saturday.</p></div></details>
+      <details><summary>Can I swap things I don't eat?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Yes. Add a note at checkout and we'll swap up to three things for whatever is plentiful.</p></div></details>
+      <details><summary>Do you deliver to me?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>We cover about an hour's drive around the packing shed. Put your postcode in at checkout and we'll tell you straight away.</p></div></details>
+      <h2>Delivery</h2>
+      <details><summary>What if I'm not home?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>We leave the box in the shade, out of sight from the street, and send you a photo.</p></div></details>
+      <details><summary>Where does the packaging go?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Leave the crate out on your next delivery day. The paper and string go in the compost.</p></div></details>
+      <h2>The farms</h2>
+      <details><summary>Is everything organic?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>Some farms are certified and some aren't. Each farm's page says how it grows, in plain words.</p></div></details>
+      <details><summary>Can my farm join?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><div><p>If you're small, family-run and within an hour of the shed, we'd love to talk. <a href="#/contact?topic=join">Write to us</a>.</p></div></details>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div data-view="contact">
+  <section class="band tight" aria-labelledby="contact-title">
+    <div class="wrap"><h1 class="shout band-title" id="contact-title" data-fit>Say hello</h1><p class="lead center">Orders, farms, wholesale, a lost crate. A real person in the packing shed reads everything.</p></div>
+  </section>
+  <section class="band on-blue" aria-label="Contact">
+    <div class="wrap cart-grid">
+      <div class="paper">
+        <form class="form two" data-form="contact" novalidate>
+          <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-err"><p class="err" id="c-name-err" aria-live="polite"></p></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-err"><p class="err" id="c-email-err" aria-live="polite"></p></div>
+          <div class="field full"><label for="c-topic">What's it about?</label><select id="c-topic" name="topic"><option value="order">An order</option><option value="join">My farm wants to join</option><option value="volunteer">Lending a hand</option><option value="wholesale">Wholesale</option><option value="other">Something else</option></select></div>
+          <div class="field full"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required minlength="10" aria-describedby="c-msg-err"></textarea><p class="err" id="c-msg-err" aria-live="polite"></p></div>
+          <div class="full"><button class="btn" type="submit">send it</button></div>
+        </form>
+        <div class="done" data-success="contact" hidden><p class="h2">Got it, thanks.</p><p>We answer within two working days, usually faster when it's raining.</p><a class="btn" href="#/">back to the start</a></div>
+      </div>
+      <ul class="info">
+        <li><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><p><strong>Email</strong><br><a href="mailto:hello@turnipunion.example">hello@turnipunion.example</a></p></li>
+        <li><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><p><strong>Packing shed</strong><br>Unit 2, Old Dairy Yard</p></li>
+        <li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><p><strong>Hours</strong><br>Monday to Friday, 8 am to 4 pm</p></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="legal">
+  <section class="band tight" aria-labelledby="legal-title">
+    <div class="wrap"><h1 class="shout band-title" id="legal-title" data-fit>The small print</h1></div>
+  </section>
+  <section class="band" style="padding-top:0" aria-label="Privacy and terms">
+    <div class="wrap prose">
+      <h2 id="privacy">Privacy</h2>
+      <p>We keep your name, email, address and order history so we can deliver boxes and answer questions. We don't sell it, and we don't use advertising trackers.</p>
+      <p>Ask us to see or delete what we hold and we'll do it within a month.</p>
+      <h2 id="terms">Terms</h2>
+      <p>Prices include tax. Box contents change with the weather; we swap like for like. If something arrives damaged, tell us within two days and we'll refund or replace it.</p>
+      <p>You can cancel an order up to the order deadline for that delivery day.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="band on-blue hero" aria-labelledby="lost-title">
+    <div class="wrap hero-copy">
+      <h1 class="shout" id="lost-title" data-fit><span>Lost in</span><span>the field</span></h1>
+      <p class="lead">That page isn't here. It may have been harvested.</p>
+      <div class="actions center"><a class="btn" href="#/">back to the start</a><a class="btn alt" href="#/shop">go to the shop</a></div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer band on-red" aria-labelledby="foot-title">
+  <div class="wrap">
+    <h2 class="shout band-title" id="foot-title" data-fit>Grow with us</h2>
+    <div class="foot-grid">
+      <p class="lead">One letter a month: what's coming out of the ground, which farm needs hands, and the split, line by line.</p>
+      <div class="paper">
+        <form class="inline" data-form="newsletter" novalidate>
+          <div class="field"><label for="n-email">Your email</label><input id="n-email" name="email" type="email" autocomplete="email" required aria-describedby="n-email-err"><p class="err" id="n-email-err" aria-live="polite"></p></div>
+          <button class="btn" type="submit">sign me up</button>
+        </form>
+        <div class="done" data-success="newsletter" hidden><p class="h2">You're in.</p><p>First letter lands at the start of next month.</p></div>
+      </div>
+    </div>
+    <div class="foot-links">
+      <div><h2>the shop</h2><ul><li><a href="#/shop?cat=boxes">veg boxes</a></li><li><a href="#/shop?cat=fruit">fruit</a></li><li><a href="#/shop?cat=pantry">pantry</a></li><li><a href="#/shop?cat=gifts">gift cards</a></li></ul></div>
+      <div><h2>the co-op</h2><ul><li><a href="#/promise">our promise</a></li><li><a href="#/farms">the farms</a></li><li><a href="#/journal">journal</a></li></ul></div>
+      <div><h2>help</h2><ul><li><a href="#/faq">faq</a></li><li><a href="#/contact">contact</a></li><li><a href="#/legal">the small print</a></li></ul></div>
+    </div>
+    <div class="foot-base"><p>&copy; 2026 Turnip Union Growers Co-op</p><a href="#top-of-page">back to top</a></div>
+  </div>
+</footer>
+
+<div class="toast" data-toast role="status" aria-live="polite"><span data-toast-text></span><a href="#/cart">see basket</a></div>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (s, scope = document) => scope.querySelector(s);
+  const $$ = (s, scope = document) => [...scope.querySelectorAll(s)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("turnip-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("turnip-theme", next);
+  });
+
+  /* ---------- Shout headlines: split into jostled letters, then fit each line to the width ----------
+     A .shout holds plain text, or one <span> per line. Screen readers get the plain text.
+     When a line would get too small (phones), the words are re-broken into more lines, each filling the width. */
+  const authored = new WeakMap();
+  function jostle(el) {
+    const label = el.textContent.replace(/\s+/g, " ").trim();
+    const parts = el.children.length ? [...el.children] : [el];
+    let n = 0;
+    const counts = [];
+    const words = parts.flatMap((part) => {
+      const list = part.textContent.trim().split(/\s+/);
+      counts.push(list.length);
+      return list.map((word) => {
+        const w = document.createElement("span");
+        w.className = "w";
+        for (const ch of word) {
+          const c = document.createElement("span");
+          c.className = "ch";
+          c.textContent = ch;
+          c.style.cssText = `--i:${n};--r:${((n * 37) % 9 - 4) * 0.75}deg;--y:${((n * 53) % 7 - 3) * 0.013}em;--s:${1 + ((n * 29) % 5 - 2) * 0.02}`;
+          n += 1;
+          w.append(c);
+        }
+        return w;
+      });
+    });
+    const sr = document.createElement("span");
+    sr.className = "sr-only";
+    sr.textContent = label;
+    el.replaceChildren(sr);
+    let start = 0;
+    authored.set(el, { words, groups: counts.map((count) => words.slice(start, (start += count))) });
+    setLines(el, authored.get(el).groups);
+  }
+  function setLines(el, groups) {
+    $$(".sl", el).forEach((line) => line.remove());
+    el.append(...groups.map((group) => {
+      const line = document.createElement("span");
+      line.className = "sl";
+      line.setAttribute("aria-hidden", "true");
+      group.forEach((w, i) => line.append(...(i ? [" ", w] : [w])));
+      return line;
+    }));
+  }
+  /* Break words into k lines of about equal length */
+  function balance(words, k) {
+    const len = words.map((w) => w.textContent.length + 1);
+    const total = len.reduce((a, b) => a + b, 0);
+    const groups = Array.from({ length: k }, () => []);
+    let before = 0;
+    words.forEach((w, i) => { groups[Math.min(k - 1, Math.floor(((before + len[i] / 2) * k) / total))].push(w); before += len[i]; });
+    return groups.filter((g) => g.length);
+  }
+  function fit(el) {
+    const avail = el.clientWidth;
+    if (!avail || el.dataset.fitted === String(avail)) return;
+    el.dataset.fitted = String(avail);
+    const { words, groups } = authored.get(el);
+    const max = Math.min(avail * 0.28, Number(el.dataset.max) || 260);
+    const floor = Math.max(40, Math.min(avail * 0.12, 72));
+    let sizes = [];
+    for (let k = groups.length; k <= words.length; k += 1) {
+      setLines(el, k === groups.length ? groups : balance(words, k));
+      sizes = $$(".sl", el).map((line) => { line.style.fontSize = "100px"; return Math.floor((100 * avail) / line.offsetWidth * 0.99); });
+      if (Math.min(...sizes) >= floor) break;
+    }
+    $$(".sl", el).forEach((line, i) => { line.style.fontSize = `${Math.max(28, Math.min(max, sizes[i]))}px`; });
+    el.classList.toggle("wrap", Math.min(...sizes) < 28);
+  }
+  const shouts = $$(".shout");
+  shouts.forEach(jostle);
+  const fitAll = (scope = document) => $$(".shout[data-fit]", scope).forEach(fit);
+  let resizeFrame = 0;
+  addEventListener("resize", () => { cancelAnimationFrame(resizeFrame); resizeFrame = requestAnimationFrame(() => fitAll()); });
+  document.fonts?.ready.then(() => { shouts.forEach((s) => delete s.dataset.fitted); fitAll(); });
+
+  /* ---------- Catalogue: read from the shop tiles, so products live in one place ---------- */
+  const products = {};
+  $$("#shop-grid [data-product]").forEach((tile, i) => {
+    tile.dataset.order = String(i);
+    products[tile.dataset.product] = {
+      name: $(".tile-name", tile).textContent.trim(),
+      unit: $(".tile-meta", tile).textContent.trim(),
+      price: Number(tile.dataset.price),
+      tile: tile.style.getPropertyValue("--tile"),
+      art: $(".tile-media svg", tile),
+    };
+  });
+  const tileClones = (filter, limit) => $$("#shop-grid [data-product]").filter(filter).slice(0, limit).map((t) => t.cloneNode(true));
+  $$("[data-clone-tiles]").forEach((rail) => {
+    const home = rail.dataset.cloneTiles === "home";
+    rail.append(...tileClones((t) => (home ? t.hasAttribute("data-home") : t.dataset.product !== "family"), 6));
+  });
+  $$("[data-clone-posts]").forEach((list) => {
+    const skip = Number(list.dataset.skip || 0);
+    list.append(...$$("#post-list .post-card").slice(skip, skip + Number(list.dataset.clonePosts)).map((c) => c.cloneNode(true)));
+  });
+
+  /* ---------- Basket ---------- */
+  const FREE_DELIVERY = 40;
+  const DELIVERY = 5;
+  const money = (n) => `$${n}`;
+  let basket = [{ id: "family", option: "Mixed", each: 29, qty: 1 }, { id: "eggs", option: "", each: 7, qty: 1 }];
+  try { const kept = JSON.parse(store.get("turnip-basket") || "null"); if (Array.isArray(kept)) basket = kept.filter((l) => products[l.id]); } catch { /* keep the sample */ }
+  const linesEl = $("[data-lines]");
+  function renderBasket() {
+    linesEl.replaceChildren(...basket.map((line, index) => {
+      const p = products[line.id];
+      const li = document.createElement("li");
+      li.className = "line";
+      li.innerHTML = `<div class="art"></div><div class="line-info"><p class="line-name"></p><p class="line-meta"></p></div>
+        <div class="stepper" role="group"><button type="button" data-step="-1" aria-label="One fewer"><svg class="i i-sm" aria-hidden="true"><use href="#i-minus"/></svg></button><output>${line.qty}</output><button type="button" data-step="1" aria-label="One more"><svg class="i i-sm" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        <p class="line-price">${money(line.each * line.qty)}</p>
+        <button class="remove" type="button" data-remove><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>`;
+      li.dataset.index = String(index);
+      $(".art", li).style.setProperty("--tile", p.tile);
+      $(".art", li).append(p.art.cloneNode(true));
+      $(".line-name", li).textContent = p.name;
+      $(".line-meta", li).textContent = line.option ? `${line.option} · ${p.unit}` : p.unit;
+      $(".stepper", li).setAttribute("aria-label", `Quantity of ${p.name}`);
+      $("[data-remove]", li).setAttribute("aria-label", `Remove ${p.name}`);
+      return li;
+    }));
+    const count = basket.reduce((s, l) => s + l.qty, 0);
+    const subtotal = basket.reduce((s, l) => s + l.each * l.qty, 0);
+    const shipping = subtotal === 0 || subtotal >= FREE_DELIVERY ? 0 : DELIVERY;
+    $$("[data-count]").forEach((el) => { el.textContent = String(count); el.hidden = count === 0; });
+    $("[data-subtotal]").textContent = money(subtotal);
+    $("[data-shipping]").textContent = shipping ? money(shipping) : "Free";
+    $("[data-total]").textContent = money(subtotal + shipping);
+    const note = $("[data-free-note]");
+    note.hidden = subtotal === 0 || subtotal >= FREE_DELIVERY;
+    $("span", note).textContent = `Add ${money(FREE_DELIVERY - subtotal)} more for free delivery.`;
+    $("[data-basket-full]").hidden = basket.length === 0;
+    $("[data-basket-empty]").hidden = basket.length > 0 || !$("[data-success=checkout]").hidden;
+    store.set("turnip-basket", JSON.stringify(basket));
+  }
+  function addToBasket(id, option, each, qty) {
+    const found = basket.find((l) => l.id === id && l.option === option);
+    if (found) found.qty += qty; else basket.push({ id, option, each, qty });
+    $("[data-success=checkout]").hidden = true;
+    $("[data-form=checkout]").hidden = false;
+    renderBasket();
+    $$("[data-count]").forEach((el) => { el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop"); });
+    showToast(`Added: ${products[id].name}${qty > 1 ? ` × ${qty}` : ""}`);
+  }
+  linesEl.addEventListener("click", (event) => {
+    const row = event.target.closest(".line");
+    if (!row) return;
+    const index = Number(row.dataset.index);
+    const step = event.target.closest("[data-step]");
+    if (step) {
+      basket[index].qty += Number(step.dataset.step);
+      if (basket[index].qty <= 0) basket.splice(index, 1);
+      renderBasket();
+    } else if (event.target.closest("[data-remove]")) {
+      basket.splice(index, 1);
+      renderBasket();
+    }
+  });
+  document.addEventListener("click", (event) => {
+    const add = event.target.closest("[data-add]");
+    if (!add) return;
+    const p = products[add.dataset.add];
+    addToBasket(add.dataset.add, "", p.price, 1);
+  });
+
+  /* ---------- Toast ---------- */
+  const toast = $("[data-toast]");
+  let toastTimer = 0;
+  function showToast(text) {
+    $("[data-toast-text]", toast).textContent = text;
+    toast.classList.add("is-shown");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("is-shown"), 3600);
+  }
+
+  /* Forms run on the submit button's click as well as on submit: inside <iframe sandbox="allow-scripts">
+     the browser blocks submission before the submit event fires. Enter in a field clicks the submit button. */
+  function onSubmit(form, handler) {
+    form.addEventListener("click", (event) => {
+      if (!event.target.closest("[type=submit]")) return;
+      event.preventDefault();
+      handler();
+    });
+    form.addEventListener("submit", (event) => { event.preventDefault(); handler(); });
+  }
+
+  /* ---------- Product page: option, quantity, add ---------- */
+  const buy = $("[data-buy]");
+  let qty = 1;
+  const option = () => $("input[name=mix]:checked", buy);
+  const updatePrice = () => { $("[data-price-now]").textContent = money(Number(option().dataset.price) * qty); };
+  $$("[data-qty]", buy).forEach((b) => b.addEventListener("click", () => {
+    qty = Math.min(20, Math.max(1, qty + Number(b.dataset.qty)));
+    $("[data-qty-value]", buy).textContent = String(qty);
+    updatePrice();
+  }));
+  $$("input[name=mix]", buy).forEach((input) => input.addEventListener("change", updatePrice));
+  onSubmit(buy, () => addToBasket(buy.dataset.buy, option().value, Number(option().dataset.price), qty));
+
+  /* ---------- Rails: arrow buttons ---------- */
+  $$("[data-rail-step]").forEach((b) => b.addEventListener("click", () => {
+    const rail = document.getElementById(b.getAttribute("aria-controls"));
+    rail.scrollBy({ left: Number(b.dataset.railStep) * rail.clientWidth * 0.8, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }));
+
+  /* ---------- Filters and sort (shop, farms, journal) ---------- */
+  function applyFilter(group, value) {
+    const list = document.getElementById(group.dataset.filterFor);
+    let shown = 0;
+    $$("[data-filter]", group).forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.filter === value)));
+    $$(":scope > [data-cat]", list).forEach((item) => {
+      item.hidden = !(value === "all" || item.dataset.cat === value);
+      if (!item.hidden) shown += 1;
+    });
+    const empty = $("[data-empty]", list.parentElement);
+    if (empty) empty.hidden = shown > 0;
+  }
+  $$("[data-filter-for]").forEach((group) => $$("[data-filter]", group).forEach((chip) => chip.addEventListener("click", () => applyFilter(group, chip.dataset.filter))));
+  $$("[data-sort-for]").forEach((select) => select.addEventListener("change", () => {
+    const list = document.getElementById(select.dataset.sortFor);
+    const by = { featured: (a, b) => a.dataset.order - b.dataset.order, low: (a, b) => a.dataset.price - b.dataset.price, high: (a, b) => b.dataset.price - a.dataset.price }[select.value];
+    list.append(...$$(":scope > [data-product]", list).sort(by));
+  }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "That email address doesn't look right.", tooShort: "A few more words, please." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    $$("input, textarea", form).forEach((field) => field.addEventListener("blur", () => { if (field.value || field.getAttribute("aria-invalid")) checkField(field); }));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    onSubmit(form, () => {
+      const fields = $$("input, textarea", form);
+      if (!fields.map(checkField).every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      const button = $("[type=submit]", form);
+      if (button.disabled) return;
+      button.disabled = true;
+      const label = button.textContent;
+      button.textContent = "sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        button.disabled = false;
+        button.textContent = label;
+        form.reset();
+        const success = $(`[data-success="${form.dataset.form}"]`);
+        if (form.dataset.form === "checkout") { form.hidden = false; success.hidden = false; basket = []; renderBasket(); window.scrollTo({ top: 0 }); }
+        else success.hidden = false;
+      }, 500);
+    });
+  });
+
+  /* ---------- Reveal (content stays visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  const observeReveals = (scope) => $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in")));
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Router: hash routes, state first so it works when the frame refuses URL changes ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Turnip Union: veg boxes with a fair price tag", shop: "Shop · Turnip Union", product: "Family veg box · Turnip Union",
+    cart: "Your basket · Turnip Union", promise: "Our promise · Turnip Union", farms: "The farms · Turnip Union",
+    journal: "Journal · Turnip Union", post: "Why we print the split on every box · Turnip Union", faq: "FAQ · Turnip Union",
+    contact: "Contact · Turnip Union", legal: "Privacy and terms · Turnip Union", 404: "Page not found · Turnip Union",
+  };
+  let current = null;
+  let currentHash = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(hash, { scroll = true } = {}) {
+    if (hash === currentHash) return;
+    currentHash = hash;
+    const route = parse(hash);
+    const name = views.has(route.view) ? route.view : "404";
+    current?.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    $$(".nav a, .menu nav a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const cat = route.params.get("cat");
+    const group = $("[data-filter-for]", current);
+    if (group) applyFilter(group, cat && $(`[data-filter="${CSS.escape(cat)}"]`, group) ? cat : "all");
+    const topic = route.params.get("topic");
+    if (name === "contact" && topic && $(`#c-topic option[value="${CSS.escape(topic)}"]`)) $("#c-topic").value = topic;
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    fitAll(current);
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(hash);
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href === "#top-of-page") {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (href.length > 1) {
+      const target = document.getElementById(href.slice(1));
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); target.focus?.({ preventScroll: true }); }
+    }
+  });
+  addEventListener("popstate", () => show(location.hash));
+  addEventListener("hashchange", () => show(location.hash));
+
+  /* ---------- Menu sheet ---------- */
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+
+  /* ---------- Start ---------- */
+  renderBasket();
+  show(location.hash, { scroll: false });
+  fitAll();
+})();
+</script>
+</body>
+</html>

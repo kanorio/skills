@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e7c08e"/><stop offset="1" stop-color="#b9824f"/></linearGradient>
+<filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="14"/></filter>
+<linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6e4"/><stop offset="1" stop-color="#e9f0ff"/></linearGradient>
+</defs>
+<rect width="800" height="800" fill="url(#bg)"/>
+<g filter="url(#soft)" fill="#fff1c9">
+<circle cx="110" cy="150" r="46" opacity=".8"/><circle cx="230" cy="70" r="30" opacity=".6"/><circle cx="120" cy="360" r="38" opacity=".55"/><circle cx="670" cy="120" r="54" opacity=".7"/><circle cx="730" cy="330" r="34" opacity=".55"/><circle cx="60" cy="560" r="40" opacity=".5"/><circle cx="590" cy="40" r="26" opacity=".6"/>
+</g>
+<g transform="translate(430 600) scale(1.45) translate(-400 -560)">
+<path d="M210 800c6-150 70-262 190-262s186 112 196 262z" fill="#d79b2e"/>
+<path d="M296 600c30 30 180 30 208 0" stroke="#bf8524" stroke-width="10" fill="none" stroke-linecap="round"/>
+<path d="M362 470h76v86c-20 14-56 14-76 0z" fill="#7d4f33"/>
+<ellipse cx="400" cy="385" rx="92" ry="106" fill="#8f5b3a"/>
+<path d="M306 380c-14-92 40-152 104-152 70 0 112 58 96 140-14-44-50-72-96-74-48-2-86 28-104 86z" fill="#241712"/>
+<g fill="#241712"><circle cx="318" cy="318" r="26"/><circle cx="350" cy="262" r="30"/><circle cx="404" cy="240" r="32"/><circle cx="458" cy="258" r="30"/><circle cx="492" cy="306" r="26"/></g>
+<path d="M352 402q16 10 32 0M418 402q16 10 32 0" stroke="#3a2418" stroke-width="6" fill="none" stroke-linecap="round"/>
+<path d="M376 446q24 20 48 0" stroke="#3a2418" stroke-width="6" fill="none" stroke-linecap="round"/>
+</g>
+<path d="M0 700h800v100H0z" fill="#7a4e33"/>
+<path d="M0 700h800v12H0z" fill="#93603f"/>
+<path d="M250 760l190-70 96 110H262z" fill="#eceae6"/>
+<path d="M266 760l170-62 84 102H276z" fill="url(#glow)"/>
+<ellipse cx="262" cy="752" rx="44" ry="32" fill="#8f5b3a"/>
+<ellipse cx="540" cy="770" rx="42" ry="30" fill="#8f5b3a"/>
+</svg>

@@ -1,0 +1,1536 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Larkhaven: the town guide</title>
+<meta name="description" content="Places, answers and what's on in Larkhaven, a small harbour town. Every listing and answer is written and checked by a neighbour.">
+<meta property="og:title" content="Larkhaven: the town guide">
+<meta property="og:description" content="Places, answers and what's on, kept by neighbours.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/gantari-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font: Gantari, one variable file for every weight ---------- */
+@font-face {
+  font-family: "Gantari";
+  src: url("fonts/gantari-latin-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Tokens: light (default, follows the system setting) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);
+  --surface: oklch(96.7% 0.007 255);       /* pale blue-grey bands, topic cards, callouts */
+  --surface-2: oklch(93.4% 0.012 255);     /* hover on surface, image wells */
+  --quiet: oklch(97.9% 0.002 250);         /* the quiet grey button */
+  --field: oklch(100% 0 0);                /* the pill search box and its suggestions */
+  --foot: oklch(96% 0.002 250);            /* the footer bar */
+  --text: oklch(23.5% 0 0);
+  --text-muted: oklch(46% 0.008 250);
+  --border: oklch(88.5% 0.004 250);
+  --border-strong: oklch(76% 0.007 250);
+  --accent: oklch(49.5% 0.19 261);         /* the one filled blue */
+  --accent-hover: oklch(45% 0.18 261);
+  --accent-text: oklch(100% 0 0);
+  --link: oklch(47% 0.19 262);
+  --tonal: oklch(91.5% 0.045 258);         /* selected chips, tonal buttons, the badge */
+  --tonal-text: oklch(27% 0.1 262);
+  --inverse: oklch(31% 0.005 250);         /* the toast */
+  --inverse-text: oklch(96% 0.002 250);
+  --ok: oklch(50% 0.13 150);
+  --danger: oklch(52% 0.2 27);
+  --focus: oklch(49.5% 0.19 261);
+  /* The only other colors: small category dots */
+  --c-eat: oklch(62% 0.17 33);
+  --c-outdoors: oklch(60% 0.14 150);
+  --c-shops: oklch(74% 0.15 75);
+  --c-services: oklch(56% 0.17 258);
+  --c-culture: oklch(56% 0.16 305);
+
+  --shadow-box: 0 1px 6px oklch(28% 0.01 250 / 0.24);
+  --shadow-overlay: 0 8px 28px oklch(28% 0.01 250 / 0.2);
+
+  --font: "Gantari", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-wordmark: clamp(52px, 7.6vw, 92px);
+  --fs-display: clamp(34px, 4.4vw, 54px);
+  --fs-h2: clamp(24px, 2.6vw, 32px);
+  --fs-h3: 20px;
+  --fs-body: 16px;
+  --fs-small: 14px;
+
+  --r-control: 8px;
+  --r-pill: 999px;
+  --r-card: 24px;
+  --r-media: 16px;
+  --r-panel: 28px;
+
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 360ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  --wrap: 1120px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --top-h: 64px;
+}
+
+/* ---------- Tokens: dark, from the system setting or the toggle ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: oklch(22.6% 0 0);
+    --surface: oklch(26.4% 0.004 250);
+    --surface-2: oklch(31% 0.005 250);
+    --quiet: oklch(29.5% 0.004 250);
+    --field: oklch(30.5% 0.004 250);
+    --foot: oklch(19.6% 0 0);
+    --text: oklch(91.5% 0 0);
+    --text-muted: oklch(78% 0.006 250);
+    --border: oklch(38% 0.005 250);
+    --border-strong: oklch(52% 0.006 250);
+    --accent: oklch(81% 0.08 258);
+    --accent-hover: oklch(86% 0.065 258);
+    --accent-text: oklch(29% 0.1 262);
+    --link: oklch(81% 0.08 258);
+    --tonal: oklch(37% 0.08 250);
+    --tonal-text: oklch(92% 0.045 235);
+    --inverse: oklch(91.5% 0 0);
+    --inverse-text: oklch(25% 0.004 250);
+    --ok: oklch(78% 0.12 150);
+    --danger: oklch(74% 0.14 27);
+    --focus: oklch(81% 0.08 258);
+    --c-eat: oklch(72% 0.14 35);
+    --c-outdoors: oklch(74% 0.13 150);
+    --c-shops: oklch(82% 0.13 80);
+    --c-services: oklch(73% 0.12 258);
+    --c-culture: oklch(72% 0.12 305);
+    --shadow-box: 0 1px 6px oklch(0% 0 0 / 0.5);
+    --shadow-overlay: 0 8px 28px oklch(0% 0 0 / 0.55);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(22.6% 0 0);
+  --surface: oklch(26.4% 0.004 250);
+  --surface-2: oklch(31% 0.005 250);
+  --quiet: oklch(29.5% 0.004 250);
+  --field: oklch(30.5% 0.004 250);
+  --foot: oklch(19.6% 0 0);
+  --text: oklch(91.5% 0 0);
+  --text-muted: oklch(78% 0.006 250);
+  --border: oklch(38% 0.005 250);
+  --border-strong: oklch(52% 0.006 250);
+  --accent: oklch(81% 0.08 258);
+  --accent-hover: oklch(86% 0.065 258);
+  --accent-text: oklch(29% 0.1 262);
+  --link: oklch(81% 0.08 258);
+  --tonal: oklch(37% 0.08 250);
+  --tonal-text: oklch(92% 0.045 235);
+  --inverse: oklch(91.5% 0 0);
+  --inverse-text: oklch(25% 0.004 250);
+  --ok: oklch(78% 0.12 150);
+  --danger: oklch(74% 0.14 27);
+  --focus: oklch(81% 0.08 258);
+  --c-eat: oklch(72% 0.14 35);
+  --c-outdoors: oklch(74% 0.13 150);
+  --c-shops: oklch(82% 0.13 80);
+  --c-services: oklch(73% 0.12 258);
+  --c-culture: oklch(72% 0.12 305);
+  --shadow-box: 0 1px 6px oklch(0% 0 0 / 0.5);
+  --shadow-overlay: 0 8px 28px oklch(0% 0 0 / 0.55);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
+body { display: flex; flex-direction: column; min-block-size: 100svh; margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+main { flex: 1; display: flex; flex-direction: column; }
+main > * { flex: none; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: var(--link); }
+p { margin: 0; }
+h1, h2, h3 { margin: 0; font-weight: 400; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 20px; border-radius: var(--r-pill); background: var(--accent); color: var(--accent-text); text-decoration: none; }
+.skip:focus { top: 12px; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.icon { inline-size: 20px; block-size: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.wrap { inline-size: 100%; max-inline-size: calc(var(--wrap) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
+.narrow { max-inline-size: calc(760px + 2 * var(--gutter)); }
+.muted { color: var(--text-muted); }
+.small { font-size: var(--fs-small); }
+.center { text-align: center; }
+
+/* ---------- Buttons: one filled blue pill per screen, quiet grey buttons for the rest ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-block-size: 40px; padding: 0 24px; border: 0; border-radius: var(--r-pill); background: var(--accent); color: var(--accent-text); font-size: 14px; font-weight: 500; letter-spacing: 0.01em; text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+.btn:hover { background: var(--accent-hover); box-shadow: 0 1px 3px oklch(28% 0.01 250 / 0.3); }
+.btn.tonal { background: var(--tonal); color: var(--tonal-text); }
+.btn.tonal:hover { box-shadow: 0 1px 2px oklch(28% 0.01 250 / 0.25); }
+.btn.text { background: transparent; color: var(--link); padding-inline: 12px; }
+.btn.text:hover { background: var(--surface); box-shadow: none; }
+.btn .icon, .qbtn .icon { inline-size: 18px; block-size: 18px; }
+.qbtn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-block-size: 36px; padding: 0 16px; border: 1px solid var(--quiet); border-radius: var(--r-control); background: var(--quiet); color: var(--text); font-size: 14px; text-decoration: none; white-space: nowrap; transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease); }
+.qbtn:hover { border-color: var(--border); box-shadow: 0 1px 1px oklch(28% 0.01 250 / 0.12); }
+.qbtn.pill { border-radius: var(--r-pill); border-color: var(--border); background: transparent; min-block-size: 40px; font-weight: 500; }
+.qbtn.pill:hover { background: var(--surface); }
+.qbtn[aria-pressed="true"] { background: var(--tonal); border-color: var(--tonal); color: var(--tonal-text); }
+.ibtn { display: inline-grid; place-items: center; inline-size: 40px; block-size: 40px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--text-muted); transition: background-color var(--dur-fast) var(--ease); }
+.ibtn:hover { background: var(--surface-2); color: var(--text); }
+.ibtn.sm { inline-size: 36px; block-size: 36px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+
+/* ---------- Chips and category dots (the only color beyond the blue) ---------- */
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 20px 0 0; }
+.chip { display: inline-flex; align-items: center; gap: 8px; min-block-size: 32px; padding: 0 16px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: transparent; color: var(--text-muted); font-size: 14px; font-weight: 500; transition: background-color var(--dur-fast) var(--ease); }
+.chip:hover { background: var(--surface); }
+.chip[aria-pressed="true"] { border-color: transparent; background: var(--tonal); color: var(--tonal-text); }
+.chip .ck { display: none; inline-size: 16px; block-size: 16px; margin-inline-start: -6px; }
+.chip[aria-pressed="true"] .ck { display: block; }
+.chip[aria-pressed="true"] .dot { display: none; }
+.dot { display: inline-block; flex: none; inline-size: 8px; block-size: 8px; border-radius: 50%; background: var(--cat, var(--text-muted)); }
+[data-cat="eat"], [data-c="eat"], [data-cat="family"], [data-c="family"] { --cat: var(--c-eat); }
+[data-cat="outdoors"], [data-c="outdoors"], [data-cat="seasons"], [data-c="seasons"] { --cat: var(--c-outdoors); }
+[data-cat="shops"], [data-c="shops"], [data-cat="market"], [data-c="market"] { --cat: var(--c-shops); }
+[data-cat="services"], [data-c="services"], [data-cat="news"], [data-c="news"] { --cat: var(--c-services); }
+[data-cat="culture"], [data-c="culture"], [data-cat="talk"], [data-c="talk"], [data-cat="people"], [data-c="people"] { --cat: var(--c-culture); }
+.tag { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: var(--text-muted); }
+
+/* ---------- Header: utility links in the corner on home, a quiet tab row on inner pages ---------- */
+.top { position: relative; z-index: 30; flex: none; block-size: var(--top-h); }
+.top-in { display: flex; align-items: center; gap: 8px; block-size: 100%; padding-inline: 16px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; margin-inline-end: 20px; color: var(--text); font-size: 22px; font-weight: 500; letter-spacing: -0.035em; text-decoration: none; }
+.brand svg { inline-size: 28px; block-size: 28px; color: var(--accent); }
+.nav { display: flex; align-self: stretch; }
+.nav a { position: relative; display: flex; align-items: center; padding: 0 14px; color: var(--text-muted); font-size: 14px; font-weight: 500; text-decoration: none; }
+.nav a:hover { color: var(--text); }
+.nav a[aria-current="page"] { color: var(--text); }
+.nav a[aria-current="page"]::after { content: ""; position: absolute; inset-inline: 14px; inset-block-end: 0; block-size: 3px; border-radius: 3px 3px 0 0; background: var(--accent); }
+.acts { display: flex; align-items: center; gap: 4px; margin-inline-start: auto; }
+.acts .btn { margin-inline-start: 8px; }
+.menu-btn { display: none; }
+[data-page="home"] .brand { display: none; }
+[data-page="home"] .nav { margin-inline-start: auto; }
+[data-page="home"] .nav a { padding: 0 9px; color: var(--text); font-size: 13px; font-weight: 400; }
+[data-page="home"] .nav a:hover { text-decoration: underline; }
+[data-page="home"] .acts { margin-inline-start: 4px; }
+@media (max-width: 900px) {
+  .nav { display: none; }
+  .menu-btn { display: inline-grid; }
+  [data-page="home"] .acts { margin-inline-start: auto; }
+}
+@media (max-width: 420px) {
+  .acts .btn { padding-inline: 16px; }
+  .brand { margin-inline-end: 0; }
+}
+
+/* ---------- Phone menu: a sheet that drops from the top ---------- */
+.menu { position: fixed; inset: 0 0 auto; inline-size: 100%; max-inline-size: none; max-block-size: 100svh; margin: 0; padding: 8px 16px 24px; border: 0; border-radius: 0 0 var(--r-panel) var(--r-panel); background: var(--bg); color: var(--text); box-shadow: var(--shadow-overlay); }
+.menu::backdrop { background: oklch(0% 0 0 / 0.32); }
+.menu[open] { animation: drop var(--dur-slow) var(--ease); }
+.menu-head { display: flex; justify-content: space-between; align-items: center; block-size: 48px; margin-block-end: 8px; }
+.menu-links a { display: block; padding: 12px 16px; border-radius: 16px; color: inherit; font-size: 20px; text-decoration: none; }
+.menu-links a:hover, .menu-links a[aria-current="page"] { background: var(--surface); }
+.menu .btn { margin: 16px 16px 0; }
+
+/* ---------- The search box: a pill that grows its suggestions underneath ---------- */
+.sbox { position: relative; inline-size: min(100%, 600px); margin-inline: auto; text-align: start; }
+.sfield { display: flex; align-items: center; gap: 12px; block-size: 50px; padding: 0 6px 0 18px; border: 1px solid var(--border); border-radius: 25px; background: var(--field); color: var(--text-muted); transition: box-shadow var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease); }
+.sfield:hover, .sbox:focus-within .sfield { border-color: transparent; box-shadow: var(--shadow-box); }
+.sfield input { flex: 1; min-inline-size: 0; block-size: 100%; padding: 0; border: 0; outline: 0; background: transparent; color: var(--text); font-size: 16px; }
+.sfield input::placeholder { color: var(--text-muted); }
+.sfield input::-webkit-search-cancel-button { display: none; }
+.sbox.is-open .sfield { border-color: transparent; border-end-start-radius: 0; border-end-end-radius: 0; box-shadow: var(--shadow-box); }
+.slist { position: absolute; inset-inline: 0; inset-block-start: 100%; z-index: 20; padding: 0 0 14px; border-radius: 0 0 25px 25px; background: var(--field); box-shadow: var(--shadow-box); clip-path: inset(0 -12px -12px -12px); animation: fade var(--dur-fast) ease-out; }
+.slist::before { content: ""; display: block; block-size: 1px; margin: 0 18px 8px; background: var(--border); }
+.slist a { display: flex; align-items: center; gap: 14px; min-block-size: 38px; padding: 4px 18px; color: var(--text); text-decoration: none; }
+.slist a[aria-selected="true"], .slist a:hover { background: var(--surface); }
+.slist .sg-ic { display: grid; place-items: center; inline-size: 20px; color: var(--text-muted); }
+.slist .sg-ic .icon { inline-size: 18px; block-size: 18px; }
+.slist .sg-l { flex: 1; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.slist .sg-l b { font-weight: 600; }
+.slist .sg-h { font-size: 13px; color: var(--text-muted); }
+.sbox.compact { margin-block-start: 28px; }
+.sbox.compact .sfield { block-size: 46px; }
+
+/* ---------- Home: the wordmark, the box, two quiet buttons and one line of links ---------- */
+.home { flex: 1; display: flex; flex-direction: column; align-items: center; padding: clamp(40px, 17vh, 190px) var(--gutter) 72px; text-align: center; }
+.wordmark { display: inline-flex; align-items: flex-start; gap: 8px; margin: 0 0 30px; font-size: var(--fs-wordmark); font-weight: 500; line-height: 1; letter-spacing: -0.05em; }
+.badge { margin-block-start: 0.32em; padding: 3px 10px; border-radius: var(--r-pill); background: var(--tonal); color: var(--tonal-text); font-size: 13px; font-weight: 500; letter-spacing: 0.02em; line-height: 1.4; }
+.home-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-block-start: 30px; }
+.home-line { margin-block-start: 30px; color: var(--text-muted); font-size: 13px; }
+.home-line a { text-decoration: none; }
+.home-line a:hover { text-decoration: underline; }
+.js .home > * { animation: rise var(--dur-slow) var(--ease) both; }
+.js .home > :nth-child(2) { animation-delay: 60ms; }
+.js .home > :nth-child(3) { animation-delay: 120ms; }
+.js .home > :nth-child(4) { animation-delay: 180ms; }
+
+/* ---------- Inner pages ---------- */
+.page { padding-block: 40px 96px; }
+.intro { max-inline-size: 760px; margin: 0 auto; text-align: center; }
+.eyebrow { margin-block-end: 12px; color: var(--text-muted); font-size: 14px; font-weight: 500; }
+.display { font-size: var(--fs-display); line-height: 1.12; letter-spacing: -0.02em; }
+.h2 { font-size: var(--fs-h2); line-height: 1.2; letter-spacing: -0.012em; }
+.lead { margin-block-start: 16px; color: var(--text-muted); font-size: 18px; }
+.band { margin-block: 72px; padding-block: 72px; background: var(--surface); }
+.sec { margin-block-start: 72px; }
+.sec > .h2 { margin-block-end: 24px; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-block-end: 24px; font-size: 14px; }
+.crumbs a { color: var(--text-muted); text-decoration: none; }
+.crumbs a:hover { color: var(--text); text-decoration: underline; }
+.crumbs .icon { inline-size: 16px; block-size: 16px; color: var(--text-muted); }
+.select-wrap { position: relative; display: inline-flex; }
+.select-wrap select { appearance: none; min-block-size: 40px; padding: 0 40px 0 14px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--bg); color: var(--text); font-size: 14px; }
+.select-wrap .icon { position: absolute; inset-inline-end: 12px; inset-block-start: 50%; inline-size: 16px; block-size: 16px; translate: 0 -50%; pointer-events: none; color: var(--text-muted); }
+.toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin: 36px 0 20px; color: var(--text-muted); font-size: 14px; }
+.toolbar label { display: inline-flex; align-items: center; gap: 10px; }
+.more { display: flex; justify-content: center; margin-block-start: 40px; }
+.empty { padding: 48px 16px; text-align: center; color: var(--text-muted); }
+.empty .row { justify-content: center; margin-block-start: 16px; }
+
+/* ---------- Cards: a rounded picture and quiet text, no box ---------- */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 40px 24px; }
+.card > a { display: block; color: inherit; text-decoration: none; border-radius: var(--r-media); }
+.card img { inline-size: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--r-media); background: var(--surface-2); }
+.card .tag { margin-block-start: 14px; }
+.card h3 { margin-block-start: 4px; font-size: var(--fs-h3); font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; }
+.card > a:hover h3 { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.card-line { margin-block-start: 4px; color: var(--text-muted); font-size: 15px; }
+.card-meta { margin-block-start: 6px; color: var(--text-muted); font-size: 13px; }
+
+/* ---------- Place ---------- */
+.detail { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 56px; align-items: center; }
+.detail .row { margin-block-start: 28px; }
+.detail .display { margin-block-start: 10px; }
+.detail img { inline-size: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--r-card); }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 16px; margin-block-start: 56px; }
+.fact { display: flex; gap: 16px; padding: 24px; border-radius: var(--r-card); background: var(--surface); }
+.fact h2 { font-size: 14px; font-weight: 500; color: var(--text-muted); }
+.fact p { margin-block-start: 2px; }
+.fic { display: grid; place-items: center; flex: none; inline-size: 40px; block-size: 40px; border-radius: 50%; background: var(--bg); color: var(--accent); }
+.note { max-inline-size: 760px; margin: 56px auto 0; }
+.note p { margin-block-start: 14px; font-size: 18px; }
+.note .small { font-size: var(--fs-small); }
+
+/* ---------- Guide ---------- */
+.topics { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 16px; margin-block-start: 48px; }
+.topic { padding: 28px 28px 24px; border-radius: var(--r-card); background: var(--surface); }
+.ticon { display: grid; place-items: center; inline-size: 44px; block-size: 44px; margin-block-end: 18px; border-radius: 50%; background: var(--bg); color: var(--accent); }
+.topic h2 { margin-block-end: 10px; font-size: 18px; font-weight: 500; }
+.topic li { padding-block: 3px; font-size: 15px; }
+.topic a { text-decoration: none; }
+.topic a:hover { text-decoration: underline; }
+.qa { max-inline-size: 760px; margin: 80px auto 0; }
+.qa .h2 { margin-block-end: 20px; }
+.qa details { border-block-end: 1px solid var(--border); }
+.qa summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 4px; font-size: 18px; cursor: pointer; list-style: none; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary .icon { color: var(--text-muted); transition: rotate var(--dur-base) var(--ease); }
+.qa details[open] summary .icon { rotate: 180deg; }
+.qa details p { padding: 0 4px 22px; color: var(--text-muted); }
+
+/* ---------- Article ---------- */
+.doc { display: grid; grid-template-columns: 200px minmax(0, 720px); justify-content: center; gap: 72px; }
+.toc { position: sticky; inset-block-start: 24px; align-self: start; padding-block-start: 64px; font-size: 14px; }
+.toc p { margin-block-end: 10px; font-weight: 500; }
+.toc a { display: block; padding: 6px 0 6px 14px; border-inline-start: 2px solid var(--border); color: var(--text-muted); text-decoration: none; }
+.toc a:hover { border-color: var(--accent); color: var(--text); }
+.meta { margin-block-start: 14px; color: var(--text-muted); font-size: 14px; }
+.answer { margin-block-start: 32px; padding: 28px; border-radius: var(--r-card); background: var(--surface); }
+.answer h2 { font-size: 20px; font-weight: 500; }
+.answer .row { margin-block-start: 14px; }
+.answer label { font-size: 14px; color: var(--text-muted); }
+.answer output { display: block; margin-block-start: 16px; font-size: 18px; }
+.prose { margin-block-start: 40px; font-size: 17px; line-height: 1.7; }
+.prose h2 { margin: 44px 0 12px; font-size: 26px; line-height: 1.25; letter-spacing: -0.01em; }
+.prose p + p { margin-block-start: 1em; }
+.prose a { text-underline-offset: 3px; }
+.prose blockquote { margin: 36px 0; padding-inline-start: 24px; border-inline-start: 3px solid var(--accent); font-size: 24px; line-height: 1.4; }
+.prose blockquote p { margin: 0; }
+.table-wrap { overflow-x: auto; position: relative; }
+.table { inline-size: 100%; border-collapse: collapse; font-size: 15px; }
+.table th, .table td { padding: 12px 12px 12px 0; border-block-end: 1px solid var(--border); text-align: start; vertical-align: top; }
+.table th { color: var(--text-muted); font-size: 13px; font-weight: 500; }
+.steps { counter-reset: s; }
+.steps li { position: relative; padding: 4px 0 14px 48px; counter-increment: s; }
+.steps li::before { content: counter(s); position: absolute; inset-inline-start: 0; inset-block-start: 0; display: grid; place-items: center; inline-size: 32px; block-size: 32px; border-radius: 50%; background: var(--tonal); color: var(--tonal-text); font-size: 14px; font-weight: 600; }
+.useful { margin-block-start: 48px; padding-block: 28px; border-block: 1px solid var(--border); }
+.useful .row { margin-block-start: 12px; }
+.useful .form { margin-block-start: 16px; }
+.related { margin-block-start: 40px; }
+.related h2 { margin-block-end: 8px; font-size: 18px; font-weight: 500; }
+.related a { display: inline-flex; align-items: center; gap: 6px; padding-block: 4px; text-decoration: none; }
+.related a:hover { text-decoration: underline; }
+
+/* ---------- Events ---------- */
+.events, .events-bar { max-inline-size: 880px; margin-inline: auto; }
+.events { border-block-start: 1px solid var(--border); }
+.ev { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; align-items: center; gap: 24px; padding-block: 20px; border-block-end: 1px solid var(--border); }
+.date { display: grid; place-content: center; inline-size: 64px; block-size: 64px; border-radius: var(--r-media); background: var(--surface); text-align: center; line-height: 1.1; }
+.date span { color: var(--text-muted); font-size: 13px; font-weight: 500; }
+.date b { font-size: 24px; font-weight: 400; }
+.ev h2 { font-size: 19px; font-weight: 500; }
+.ev-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-block-start: 4px; color: var(--text-muted); font-size: 14px; }
+
+/* ---------- Notes ---------- */
+.lead-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); margin-block-start: 48px; overflow: hidden; border-radius: var(--r-panel); background: var(--surface); color: inherit; text-decoration: none; }
+.lead-card > div { display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 48px; }
+.lead-card h2 { font-size: var(--fs-h2); line-height: 1.2; }
+.lead-card img { inline-size: 100%; block-size: 100%; min-block-size: 320px; object-fit: cover; }
+.lead-card .btn { align-self: flex-start; margin-block-start: 8px; }
+.notes-chips { margin-block-start: 56px; }
+.notes-grid { margin-block-start: 36px; }
+.lead-card:hover h2 { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+
+/* ---------- Post ---------- */
+.post-head { max-inline-size: 820px; margin: 0 auto; text-align: center; }
+.post-head .crumbs { justify-content: center; }
+.byline { display: flex; justify-content: center; align-items: center; gap: 12px; margin-block-start: 24px; color: var(--text-muted); font-size: 14px; text-align: start; }
+.avatar { display: grid; place-items: center; flex: none; inline-size: 40px; block-size: 40px; border-radius: 50%; background: var(--tonal); color: var(--tonal-text); font-weight: 600; }
+.byline b { display: block; color: var(--text); font-weight: 500; }
+.figure { max-inline-size: 1040px; margin: 40px auto 0; }
+.figure img { inline-size: 100%; aspect-ratio: 21 / 9; object-fit: cover; border-radius: var(--r-panel); }
+.figure figcaption { margin-block-start: 10px; color: var(--text-muted); font-size: 13px; text-align: center; }
+.post .prose { max-inline-size: 700px; margin-inline: auto; }
+
+/* ---------- About ---------- */
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 40px 32px; margin-block-start: 40px; }
+.col .ticon { background: var(--bg); }
+.col h3 { margin-block-end: 8px; font-size: var(--fs-h3); font-weight: 500; }
+.col p { color: var(--text-muted); }
+.how { max-inline-size: 560px; margin: 32px auto 0; }
+.how-cta { justify-content: center; margin-block-start: 16px; }
+.letter { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 40px; max-inline-size: 960px; margin: 88px auto 0; padding: 36px 40px; border-radius: var(--r-panel); background: var(--surface); }
+.letter > div:first-child { flex: 1 1 320px; }
+.letter .h2 { font-size: 26px; }
+.letter form, .letter [data-success] { flex: 1 1 340px; }
+.inline { display: flex; gap: 12px; align-items: flex-start; }
+.inline .field { flex: 1; }
+.inline .btn { min-block-size: 48px; }
+
+/* ---------- Forms: labels above, errors in reserved space so nothing moves ---------- */
+.split { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 64px; margin-block-start: 48px; }
+.form { display: grid; gap: 0 20px; grid-template-columns: 1fr 1fr; }
+.form .full { grid-column: 1 / -1; }
+.field label, .field legend { display: block; margin-block-end: 6px; padding: 0; font-size: 14px; font-weight: 500; }
+.field .opt { color: var(--text-muted); font-weight: 400; }
+fieldset.field { min-inline-size: 0; margin: 0; padding: 0; border: 0; }
+.input { inline-size: 100%; block-size: 48px; padding: 0 16px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--bg); color: var(--text); font-size: 16px; transition: border-color var(--dur-fast) var(--ease); }
+textarea.input { block-size: auto; min-block-size: 140px; padding: 12px 16px; resize: vertical; line-height: 1.5; }
+select.input { appearance: none; padding-inline-end: 40px; }
+.input:hover { border-color: var(--text-muted); }
+.input:focus { outline: 0; border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.input[aria-invalid="true"] { border-color: var(--danger); }
+.input[aria-invalid="true"]:focus { box-shadow: inset 0 0 0 1px var(--danger); }
+.field .select-wrap { display: flex; }
+.select-wrap .input { padding: 0 40px 0 16px; font-size: 16px; min-block-size: 48px; }
+main:focus { outline: 0; }
+.err { min-block-size: 20px; margin: 4px 0 10px; color: var(--danger); font-size: 13px; line-height: 20px; }
+.hint { display: flex; justify-content: space-between; gap: 12px; margin-block-start: 4px; color: var(--text-muted); font-size: 13px; }
+.pick { display: flex; flex-wrap: wrap; gap: 8px; }
+.pick label { position: relative; margin: 0; }
+.pick input { position: absolute; opacity: 0; inset: 0; }
+.pick span { display: inline-flex; align-items: center; gap: 8px; min-block-size: 36px; padding: 0 16px; border: 1px solid var(--border-strong); border-radius: var(--r-control); color: var(--text-muted); font-size: 14px; font-weight: 500; cursor: pointer; }
+.pick input:checked + span { border-color: transparent; background: var(--tonal); color: var(--tonal-text); }
+.pick input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.field .check { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; font-weight: 400; }
+.check input { flex: none; inline-size: 18px; block-size: 18px; margin: 2px 0 0; accent-color: var(--accent); }
+.form-end { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-block-start: 8px; }
+.success { padding: 40px 28px; border-radius: var(--r-card); background: var(--surface); text-align: center; animation: rise var(--dur-slow) var(--ease) both; }
+.success h2 { margin-block-end: 8px; font-size: 24px; }
+.success p { color: var(--text-muted); }
+.success .btn, .success .qbtn { margin-block-start: 20px; }
+.tick { display: grid; place-items: center; inline-size: 56px; block-size: 56px; margin: 0 auto 16px; border-radius: 50%; background: var(--tonal); color: var(--tonal-text); }
+.tick .icon { inline-size: 26px; block-size: 26px; stroke-width: 2.2; }
+.letter .success { padding: 20px; background: var(--bg); text-align: start; }
+.side h2 { margin-block-end: 16px; font-size: 20px; font-weight: 500; }
+.ways li { display: flex; gap: 16px; padding-block: 14px; border-block-end: 1px solid var(--border); }
+.ways li:first-child { border-block-start: 1px solid var(--border); }
+.ways .icon { margin-block-start: 3px; color: var(--accent); }
+.ways b { display: block; font-weight: 500; }
+.ways p { color: var(--text-muted); font-size: 15px; }
+
+/* ---------- Legal and 404 ---------- */
+.legal .chips { margin-block-start: 24px; }
+.legal .chip { text-decoration: none; }
+.nf { flex: 1; display: grid; place-content: center; padding: 80px var(--gutter); text-align: center; }
+.nf .big { font-size: clamp(72px, 12vw, 128px); font-weight: 300; line-height: 1; letter-spacing: -0.04em; color: var(--text-muted); }
+.nf .row { justify-content: center; margin-block-start: 28px; }
+
+/* ---------- Footer: a grey bar, the place on top, small links below ---------- */
+.foot { flex: none; background: var(--foot); color: var(--text-muted); font-size: 14px; }
+.foot-loc { padding: 14px 30px; border-block-end: 1px solid var(--border); }
+.foot-row { display: flex; flex-wrap: wrap; justify-content: space-between; padding: 0 15px; }
+.foot-row nav { display: flex; flex-wrap: wrap; }
+.foot-row a { padding: 14px 15px; color: inherit; text-decoration: none; }
+.foot-row a:hover { color: var(--text); text-decoration: underline; }
+
+/* ---------- Toast ---------- */
+.toast { position: fixed; inset-inline: 0; inset-block-end: 24px; z-index: 50; inline-size: fit-content; max-inline-size: calc(100% - 32px); margin-inline: auto; padding: 14px 20px; border-radius: var(--r-control); background: var(--inverse); color: var(--inverse-text); font-size: 14px; box-shadow: var(--shadow-overlay); animation: rise var(--dur-base) var(--ease) both; }
+
+/* ---------- Views ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.js .page.is-active > .wrap > *, .js .page.is-active > .band { animation: rise var(--dur-slow) var(--ease) both; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1000px) {
+  .doc { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .toc { display: none; }
+}
+@media (max-width: 800px) {
+  .detail, .split, .lead-card { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .lead-card { gap: 0; }
+  .lead-card > div { order: 2; padding: 28px; }
+  .lead-card img { min-block-size: 0; aspect-ratio: 16 / 10; }
+  .letter { padding: 28px; }
+}
+@media (max-width: 600px) {
+  .form { grid-template-columns: minmax(0, 1fr); }
+  .ev { grid-template-columns: 56px minmax(0, 1fr); gap: 16px; }
+  .ev .remind { grid-column: 2; justify-self: start; }
+  .date { inline-size: 56px; block-size: 56px; }
+  .inline { flex-direction: column; align-items: stretch; }
+  .lead { font-size: 17px; }
+  .band { padding-block: 56px; }
+  .foot-loc { padding-inline: 20px; }
+  .foot-row { justify-content: center; }
+}
+
+/* ---------- Motion: keyframes only (they also run on first load); reduced motion removes them ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="currentColor"/><circle cx="32" cy="26" r="9" style="fill:var(--accent-text)"/><path d="M10 42q5.5-5 11 0t11 0 11 0 11 0" style="stroke:var(--accent-text)" stroke-width="4.5" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6.5 3.5h11v17L12 16l-5.5 4.5Z"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="m8.2 10.8 7.6-4M8.2 13.2l7.6 4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-step" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.8"/><path d="M12 8v6M7 9.5h10M12 14l-3 6M12 14l3 6"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3.5 14 10l6.5 2-6.5 2-2 6.5-2-6.5-6.5-2L10 10Z"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15Z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6.5 3.5h7l4 4v13h-11Z"/><path d="M13.5 3.5v4h4M9 12.5h6M9 16h6"/></symbol>
+  <symbol id="i-bus" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="14" rx="3"/><path d="M5 11h14M8 17.5V20M16 17.5V20"/><circle cx="8.5" cy="14.3" r=".6"/><circle cx="15.5" cy="14.3" r=".6"/></symbol>
+  <symbol id="i-bin" viewBox="0 0 24 24"><path d="M4.5 6.5h15M9.5 6.5V4h5v2.5M6.5 6.5l1 14h9l1-14"/><path d="M10 10.5v6M14 10.5v6"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 9q2.25-2 4.5 0t4.5 0 4.5 0 4.5 0M3 14q2.25-2 4.5 0t4.5 0 4.5 0 4.5 0M3 19q2.25-2 4.5 0t4.5 0 4.5 0 4.5 0"/></symbol>
+  <symbol id="i-health" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><path d="M12 8v8M8 12h8"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5ZM12 6.5v13"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6h-6v6H4Z"/></symbol>
+  <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3"/><circle cx="17" cy="9.5" r="2.3"/><path d="M3.5 19.5c.5-3.5 2.7-5.5 5.5-5.5s5 2 5.5 5.5M15 14.3c2.8-.6 5 1.2 5.5 4.7"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5.5 21V4M5.5 4.5h11l-2 4 2 4h-11"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12.2 2.4 2.3 4.6-4.8"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.5-7.5-10A4.3 4.3 0 0 1 12 7.3 4.3 4.3 0 0 1 19.5 10c0 5.5-7.5 10-7.5 10Z"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#/" aria-label="Larkhaven guide, home"><svg aria-hidden="true"><use href="#mark"/></svg><span>larkhaven</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/places">Places</a>
+      <a href="#/guide">Guide</a>
+      <a href="#/events">Events</a>
+      <a href="#/notes">Notes</a>
+      <a href="#/about">About</a>
+    </nav>
+    <div class="acts">
+      <button class="ibtn" id="theme-toggle" type="button" aria-label="Switch to dark colors"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button class="ibtn menu-btn" id="menu-open" type="button" aria-label="Open the menu" aria-controls="menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+      <a class="btn" href="#/signup">List your place</a>
+    </div>
+  </div>
+</header>
+
+<dialog class="menu" id="menu" aria-label="Menu">
+  <div class="menu-head">
+    <a class="brand" href="#/"><svg aria-hidden="true"><use href="#mark"/></svg><span>larkhaven</span></a>
+    <button class="ibtn" id="menu-close" type="button" aria-label="Close the menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+  </div>
+  <nav class="menu-links" aria-label="Menu">
+    <a href="#/places">Places</a>
+    <a href="#/guide">Guide</a>
+    <a href="#/events">Events</a>
+    <a href="#/notes">Notes</a>
+    <a href="#/about">About</a>
+    <a href="#/contact">Contact</a>
+  </nav>
+  <a class="btn" href="#/signup">List your place</a>
+</dialog>
+
+<main id="main" tabindex="-1">
+
+<!-- ================= HOME ================= -->
+<section data-view="home" class="home" aria-labelledby="home-title">
+  <h1 class="wordmark" id="home-title"><span>larkhaven</span> <span class="badge">guide</span></h1>
+  <div class="sbox" role="search" id="home-search">
+    <div class="sfield">
+      <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+      <label class="sr-only" for="q-home">Search places, answers and events</label>
+      <input id="q-home" type="search" autocomplete="off" spellcheck="false" placeholder="Search places, answers and what's on" role="combobox" aria-expanded="false" aria-controls="q-home-list" aria-autocomplete="list">
+      <button class="ibtn sm" type="button" data-clear-box aria-label="Clear the search" hidden><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="slist" id="q-home-list" role="listbox" aria-label="Suggestions" hidden></div>
+  </div>
+  <div class="home-actions">
+    <button class="qbtn" type="button" id="home-go">Search the guide</button>
+    <button class="qbtn" type="button" id="surprise">Show me somewhere new</button>
+  </div>
+  <p class="home-line">Popular this week: <a href="#/article">Bin days</a> · <a href="#/places?q=tide">Tide pools</a> · <a href="#/events?cat=market">Saturday market</a></p>
+</section>
+
+<!-- ================= PLACES ================= -->
+<section data-view="places" class="page" aria-labelledby="places-title">
+  <div class="wrap">
+    <div class="intro">
+      <h1 class="display" id="places-title">Places in Larkhaven</h1>
+      <p class="lead">Cafés, walks, shops and services, each one visited and written up by a neighbour.</p>
+    </div>
+    <div class="sbox compact" role="search">
+      <div class="sfield">
+        <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+        <label class="sr-only" for="q-places">Search places</label>
+        <input id="q-places" type="search" autocomplete="off" placeholder="Search places" data-filter-input="places">
+        <button class="ibtn sm" type="button" data-clear-box aria-label="Clear the search" hidden><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </div>
+    </div>
+    <div class="chips" role="group" aria-label="Show" data-chips="places">
+      <button class="chip" type="button" data-value="all" aria-pressed="true"><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>All</button>
+      <button class="chip" type="button" data-value="eat" aria-pressed="false"><i class="dot" data-c="eat"></i><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>Eat &amp; drink</button>
+      <button class="chip" type="button" data-value="outdoors" aria-pressed="false"><i class="dot" data-c="outdoors"></i><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>Outdoors</button>
+      <button class="chip" type="button" data-value="shops" aria-pressed="false"><i class="dot" data-c="shops"></i><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>Shops</button>
+      <button class="chip" type="button" data-value="services" aria-pressed="false"><i class="dot" data-c="services"></i><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>Services</button>
+      <button class="chip" type="button" data-value="culture" aria-pressed="false"><i class="dot" data-c="culture"></i><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>Culture</button>
+      <button class="chip" type="button" data-value="saved" aria-pressed="false"><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>Saved <span data-saved-count></span></button>
+    </div>
+    <div class="toolbar">
+      <p data-count="places" aria-live="polite">12 places</p>
+      <label>Sort by <span class="select-wrap"><select id="places-sort"><option value="az">A to Z</option><option value="new">Recently added</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span></label>
+    </div>
+    <ul class="grid" data-list="places">
+      <li class="card" data-id="boatshed" data-cat="culture" data-added="2026-06-14"><a href="#/place?id=boatshed"><img src="images/boatshed.svg" width="640" height="400" alt="A red boatshed with a white rowing boat inside"><span class="tag"><i class="dot"></i>Culture</span><h3>Boatshed museum</h3><p class="card-line">Three rooms of boats, maps and lifeboat stories.</p><p class="card-meta"><span>Quay Street</span> · <span>Wed–Sun, 10:00–16:00</span></p></a></li>
+      <li class="card" data-id="cliff" data-cat="outdoors" data-added="2026-09-02"><a href="#/place?id=cliff"><img src="images/cliff.svg" width="640" height="400" alt="A grassy cliff path with a bench above the sea"><span class="tag"><i class="dot"></i>Outdoors</span><h3>Gull Point cliff path</h3><p class="card-line">A 4 km loop with two benches and one steep stretch.</p><p class="card-meta"><span>Gull Point</span> · <span>Always open</span></p></a></li>
+      <li class="card" data-id="health" data-cat="services" data-added="2026-03-21"><a href="#/place?id=health"><img src="images/street.svg" width="640" height="400" alt="A row of painted houses with a green sign"><span class="tag"><i class="dot"></i>Services</span><h3>Harbour health centre</h3><p class="card-line">Doctors and a nurse clinic; book by phone from 8:00.</p><p class="card-meta"><span>Chapel Square</span> · <span>Mon–Fri, 8:00–18:00</span></p></a></li>
+      <li class="card" data-id="library" data-cat="services" data-added="2026-02-10"><a href="#/place?id=library"><img src="images/library.svg" width="640" height="400" alt="Library shelves full of colourful books"><span class="tag"><i class="dot"></i>Services</span><h3>Larkhaven library</h3><p class="card-line">Free wifi, printing and a seed swap shelf.</p><p class="card-meta"><span>Chapel Square</span> · <span>Tue–Sat, 9:30–17:00</span></p></a></li>
+      <li class="card" data-id="netloft" data-cat="eat" data-added="2026-10-18"><a href="#/place?id=netloft"><img src="images/harbour.svg" width="640" height="400" alt="Small sailing boats in a calm harbour"><span class="tag"><i class="dot"></i>Eat &amp; drink</span><h3>Net Loft Kitchen</h3><p class="card-line">Fish suppers upstairs in an old rope store.</p><p class="card-meta"><span>Harbour Row</span> · <span>Thu–Sun, 17:00–21:30</span></p></a></li>
+      <li class="card" data-id="allotments" data-cat="outdoors" data-added="2026-05-30"><a href="#/place?id=allotments"><img src="images/garden.svg" width="640" height="400" alt="Allotment beds with sunflowers and a small shed"><span class="tag"><i class="dot"></i>Outdoors</span><h3>Orchard Lane allotments</h3><p class="card-line">Open garden mornings on the first Saturday.</p><p class="card-meta"><span>Orchard Lane</span> · <span>First Sat, 9:00–12:00</span></p></a></li>
+      <li class="card" data-id="hardware" data-cat="shops" data-added="2026-08-08"><a href="#/place?id=hardware"><img src="images/street.svg" width="640" height="400" alt="A row of painted houses with a green shop sign"><span class="tag"><i class="dot"></i>Shops</span><h3>Pell &amp; Daughter hardware</h3><p class="card-line">Keys cut, bikes patched, advice for free.</p><p class="card-meta"><span>Old Town</span> · <span>Mon–Sat, 8:30–17:30</span></p></a></li>
+      <li class="card" data-id="saltloaf" data-cat="eat" data-added="2026-11-02"><a href="#/place?id=saltloaf"><img src="images/bakery.svg" width="640" height="400" alt="Loaves cooling on wooden bakery shelves"><span class="tag"><i class="dot"></i>Eat &amp; drink</span><h3>Saltloaf Bakery</h3><p class="card-line">Sourdough, seaweed butter and a queue by eight.</p><p class="card-meta"><span>Harbour Row</span> · <span>Tue–Sun, 7:00–14:00</span></p></a></li>
+      <li class="card" data-id="market" data-cat="shops" data-added="2026-04-04"><a href="#/place?id=market"><img src="images/market.svg" width="640" height="400" alt="Market stalls under striped awnings"><span class="tag"><i class="dot"></i>Shops</span><h3>Saturday market</h3><p class="card-line">Twenty stalls under the old fish hall roof.</p><p class="card-meta"><span>Fish Hall</span> · <span>Sat, 9:00–13:00</span></p></a></li>
+      <li class="card" data-id="lantern" data-cat="eat" data-added="2026-07-19"><a href="#/place?id=lantern"><img src="images/harbour.svg" width="640" height="400" alt="Boats in the harbour seen from a café window"><span class="tag"><i class="dot"></i>Eat &amp; drink</span><h3>The Lantern Room</h3><p class="card-line">Upstairs café with the best view of the slipway.</p><p class="card-meta"><span>Quay Street</span> · <span>Daily, 8:00–17:00</span></p></a></li>
+      <li class="card" data-id="picturehouse" data-cat="culture" data-added="2026-10-05"><a href="#/place?id=picturehouse"><img src="images/cinema.svg" width="640" height="400" alt="A small cinema screen above rows of red seats"><span class="tag"><i class="dot"></i>Culture</span><h3>The Picturehouse</h3><p class="card-line">One screen, sixty seats, films every Friday.</p><p class="card-meta"><span>Old Town</span> · <span>Fri, from 19:00</span></p></a></li>
+      <li class="card" data-id="pools" data-cat="outdoors" data-added="2026-08-27"><a href="#/place?id=pools"><img src="images/pools.svg" width="640" height="400" alt="Rock pools on the sand with a starfish"><span class="tag"><i class="dot"></i>Outdoors</span><h3>Westmoor tide pools</h3><p class="card-line">Best two hours either side of low water.</p><p class="card-meta"><span>West Beach</span> · <span>At low tide</span></p></a></li>
+    </ul>
+    <div class="empty" data-empty="places" hidden>
+      <p>No places match that. The answer might be in the guide or on the events list.</p>
+      <div class="row"><button class="qbtn" type="button" data-clear="places">Clear search and filters</button><a class="btn text" href="#/guide">Search the guide</a></div>
+    </div>
+    <div class="more"><button class="qbtn" type="button" data-more="places">Show more places</button></div>
+  </div>
+</section>
+
+<!-- ================= PLACE (filled from the card and PLACES) ================= -->
+<section data-view="place" class="page" aria-labelledby="place-title">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#/places">Places</a><svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg><a href="#/places?cat=eat" id="place-crumb">Eat &amp; drink</a></nav>
+    <div class="detail" data-cat="eat" id="place-box">
+      <div>
+        <p class="tag"><i class="dot"></i><span id="place-cat">Eat &amp; drink</span></p>
+        <h1 class="display" id="place-title">Saltloaf Bakery</h1>
+        <p class="lead" id="place-line">Sourdough, seaweed butter and a queue by eight.</p>
+        <div class="row">
+          <button class="qbtn pill" id="save" type="button" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-bookmark"/></svg><span>Save</span></button>
+          <button class="qbtn pill" id="share" type="button"><svg class="icon" aria-hidden="true"><use href="#i-share"/></svg>Share</button>
+          <a class="btn text" href="#/contact?topic=edit">Suggest an edit</a>
+        </div>
+      </div>
+      <img id="place-img" src="images/bakery.svg" width="640" height="400" alt="Loaves cooling on wooden bakery shelves">
+    </div>
+    <div class="facts">
+      <div class="fact"><span class="fic"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg></span><div><h2>Opening hours</h2><p id="place-hours">Tue–Sun, 7:00–14:00</p></div></div>
+      <div class="fact"><span class="fic"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg></span><div><h2>Where</h2><p id="place-area">Harbour Row</p></div></div>
+      <div class="fact"><span class="fic"><svg class="icon" aria-hidden="true"><use href="#i-step"/></svg></span><div><h2>Getting in</h2><p id="place-access">Step-free door, two small tables inside.</p></div></div>
+      <div class="fact"><span class="fic"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg></span><div><h2>Good for</h2><p id="place-good">Early breakfast, picnic bread</p></div></div>
+    </div>
+    <div class="note">
+      <h2 class="h2">From the neighbour who wrote it up</h2>
+      <p id="place-about">Get there before eight on Saturdays or the seeded loaf is gone. The seaweed butter is made in the back on Tuesdays; ask for a small pot to take home. Card or cash, and they will slice any loaf for you.</p>
+      <p class="small muted" id="place-checked">Last checked on 2 Nov 2026.</p>
+    </div>
+    <section class="sec" aria-labelledby="nearby-title">
+      <h2 class="h2" id="nearby-title">Nearby</h2>
+      <ul class="grid" id="nearby"></ul>
+    </section>
+  </div>
+</section>
+
+<!-- ================= GUIDE ================= -->
+<section data-view="guide" class="page" aria-labelledby="guide-title">
+  <div class="wrap">
+    <div class="intro">
+      <h1 class="display" id="guide-title">How things work here</h1>
+      <p class="lead">Short, checked answers about getting around, bins, beaches and the rest of everyday life in Larkhaven.</p>
+    </div>
+    <div class="sbox compact" role="search">
+      <div class="sfield">
+        <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+        <label class="sr-only" for="q-guide">Search the guide</label>
+        <input id="q-guide" type="search" autocomplete="off" placeholder="Search the guide">
+        <button class="ibtn sm" type="button" data-clear-box aria-label="Clear the search" hidden><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </div>
+    </div>
+    <ul class="topics" data-topics>
+      <li class="topic"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-bus"/></svg></span><h2>Getting around</h2><ul><li><a href="#/post">Winter ferry times</a></li><li><a href="#/article">Parking permits</a></li><li><a href="#/article">Buses to the station</a></li></ul></li>
+      <li class="topic"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-bin"/></svg></span><h2>Bins and recycling</h2><ul><li><a href="#/article">Bin and recycling days</a></li><li><a href="#/article?at=a-what">What goes in which bin</a></li><li><a href="#/article?at=a-bulky">Bulky items</a></li></ul></li>
+      <li class="topic"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-wave"/></svg></span><h2>Beaches and tides</h2><ul><li><a href="#/article">Reading the tide table</a></li><li><a href="#/article">Swimming safely</a></li><li><a href="#/article">Dogs on the beaches</a></li></ul></li>
+      <li class="topic"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-health"/></svg></span><h2>Health and help</h2><ul><li><a href="#/place?id=health">Seeing a doctor</a></li><li><a href="#/article">When the surgery is closed</a></li><li><a href="#/article">Late pharmacy</a></li></ul></li>
+      <li class="topic"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></span><h2>Library and learning</h2><ul><li><a href="#/place?id=library">Joining the library</a></li><li><a href="#/article">Printing and wifi</a></li><li><a href="#/article">Classes for adults</a></li></ul></li>
+      <li class="topic"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg></span><h2>Moving here</h2><ul><li><a href="#/article">Your first week</a></li><li><a href="#/article">Broadband and signal</a></li><li><a href="#/article">Water and power cuts</a></li></ul></li>
+      <li class="topic"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-people"/></svg></span><h2>Families</h2><ul><li><a href="#/article">Playgrounds</a></li><li><a href="#/article">Holiday clubs</a></li><li><a href="#/events?cat=family">Toddler groups</a></li></ul></li>
+      <li class="topic"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-flag"/></svg></span><h2>Events and permits</h2><ul><li><a href="#/article">Booking a hall</a></li><li><a href="#/article">Street party permits</a></li><li><a href="#/article">Putting up posters</a></li></ul></li>
+    </ul>
+    <div class="empty" data-empty="guide" hidden>
+      <p>Nothing in the guide matches that yet. Ask, and a volunteer will write it up.</p>
+      <div class="row"><a class="btn tonal" href="#/contact?topic=question">Ask a question</a></div>
+    </div>
+    <section class="qa" aria-labelledby="qa-title" id="questions">
+      <h2 class="h2 center" id="qa-title">Common questions</h2>
+      <details><summary>Who writes the guide?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Volunteers who live in town. Each place and answer names the day it was last checked, and nobody is paid to be listed.</p></details>
+      <details><summary>Is it free to list my place?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Yes. Send the form on the "List your place" page; a volunteer visits before the listing goes live.</p></details>
+      <details><summary>Something here is wrong. How do I fix it?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Use "Suggest an edit" on any place, or write to us from the contact page. Corrections usually go up within a few days.</p></details>
+      <details><summary>Can I advertise here?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>No. There are no ads and no paid placements. Places appear in alphabetical order or by the date they were added.</p></details>
+      <details><summary>How often is the guide updated?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Answers are checked at least twice a year, and straight away when we hear that something has changed.</p></details>
+    </section>
+  </div>
+</section>
+
+<!-- ================= ARTICLE ================= -->
+<section data-view="article" class="page" aria-labelledby="article-title">
+  <div class="wrap doc">
+    <aside class="toc" aria-label="On this page">
+      <p>On this page</p>
+      <ul>
+        <li><a href="#/article?at=a-day">Find your day</a></li>
+        <li><a href="#/article?at=a-what">What goes in which bin</a></li>
+        <li><a href="#/article?at=a-holidays">Holidays and storms</a></li>
+        <li><a href="#/article?at=a-missed">If your bin was missed</a></li>
+        <li><a href="#/article?at=a-bulky">Bulky items</a></li>
+      </ul>
+    </aside>
+    <article>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/guide">Guide</a><svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg><a href="#/guide?q=bins">Bins and recycling</a></nav>
+      <h1 class="display" id="article-title">Bin and recycling days</h1>
+      <p class="meta">Checked by a volunteer on 12 Nov 2026 · 3 min read</p>
+      <div class="answer" id="a-day">
+        <h2>Find your day</h2>
+        <div class="row">
+          <label for="area">Your area</label>
+          <span class="select-wrap"><select id="area">
+            <option value="harbour">Harbour and Quay Street</option>
+            <option value="old">Old Town</option>
+            <option value="west">Westmoor</option>
+            <option value="gull">Gull Point</option>
+            <option value="orchard">Orchard Lane</option>
+          </select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span>
+        </div>
+        <output for="area" id="area-out" aria-live="polite"><b>Tuesday</b> · green bin and glass box every week, grey bin every other week</output>
+      </div>
+      <div class="prose">
+        <h2 id="a-what">What goes in which bin</h2>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th scope="col">Bin</th><th scope="col">What goes in</th><th scope="col">Collected</th></tr></thead>
+            <tbody>
+              <tr><td>Green bin</td><td>Paper, card, tins, cans and plastic bottles, rinsed</td><td>Weekly</td></tr>
+              <tr><td>Glass box</td><td>Bottles and jars, lids off</td><td>Weekly</td></tr>
+              <tr><td>Food caddy</td><td>Peelings, leftovers, tea bags</td><td>Weekly</td></tr>
+              <tr><td>Grey bin</td><td>Everything else that is not hazardous</td><td>Every other week</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h2 id="a-holidays">Holidays and storms</h2>
+        <p>Over the winter holidays every collection moves one day later. When a storm warning is out, crews skip the cliff roads and come back the next working day, so leave your bins out.</p>
+        <h2 id="a-missed">If your bin was missed</h2>
+        <ol class="steps">
+          <li>Leave it out until 18:00; late rounds still happen after storms.</li>
+          <li>Check with a neighbour whether their bin went too.</li>
+          <li>Report it the next morning, with your street and which bin.</li>
+        </ol>
+        <h2 id="a-bulky">Bulky items</h2>
+        <p>Sofas, mattresses and white goods are collected on the last Friday of each month. Book at least a week ahead and put them out the night before, off the pavement.</p>
+      </div>
+      <div class="useful">
+        <p id="useful-q">Was this page useful?</p>
+        <div class="row" data-useful-row>
+          <button class="qbtn" type="button" data-useful="yes">Yes</button>
+          <button class="qbtn" type="button" data-useful="no">No</button>
+        </div>
+        <p class="muted small" data-useful-thanks hidden>Thanks. That helps the volunteers know what to keep.</p>
+        <form class="form" data-form="feedback" novalidate hidden>
+          <div class="field full">
+            <label for="f-missing">What was missing?</label>
+            <textarea class="input" id="f-missing" name="missing" rows="3" required minlength="10" aria-describedby="f-missing-err"></textarea>
+            <p class="err" id="f-missing-err" aria-live="polite"></p>
+          </div>
+          <div class="form-end full"><button class="btn" type="submit">Send</button></div>
+        </form>
+        <div data-success="feedback" hidden><p class="muted small">Thanks. A volunteer reads every note.</p></div>
+      </div>
+      <div class="related">
+        <h2>Related answers</h2>
+        <a href="#/places?q=Harbour">Places on Harbour Row<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><br>
+        <a href="#/post">The winter ferry, explained<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ================= EVENTS ================= -->
+<section data-view="events" class="page" aria-labelledby="events-title">
+  <div class="wrap">
+    <div class="intro">
+      <h1 class="display" id="events-title">What's on</h1>
+      <p class="lead">Markets, walks, talks and things for children. Free unless it says otherwise.</p>
+    </div>
+    <div class="chips" role="group" aria-label="Show" data-chips="events">
+      <button class="chip" type="button" data-value="all" aria-pressed="true"><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>All</button>
+      <button class="chip" type="button" data-value="market" aria-pressed="false"><i class="dot" data-c="market"></i><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>Markets</button>
+      <button class="chip" type="button" data-value="outdoors" aria-pressed="false"><i class="dot" data-c="outdoors"></i><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>Outdoors</button>
+      <button class="chip" type="button" data-value="talk" aria-pressed="false"><i class="dot" data-c="talk"></i><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>Talks</button>
+      <button class="chip" type="button" data-value="family" aria-pressed="false"><i class="dot" data-c="family"></i><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>Family</button>
+    </div>
+    <div class="toolbar events-bar"><p data-count="events" aria-live="polite">8 events</p><a class="btn text" href="#/contact?topic=event">Add an event</a></div>
+    <ol class="events" data-list="events">
+      <li class="ev" data-id="e1" data-cat="market"><time class="date" datetime="2026-11-28"><span>Nov</span><b>28</b></time><div><h2>Saturday market</h2><p class="ev-meta"><span class="tag"><i class="dot"></i>Market</span><span>Fish Hall · 9:00–13:00</span></p></div><button class="qbtn pill remind" type="button" aria-pressed="false" data-remind="e1"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Remind me</span></button></li>
+      <li class="ev" data-id="e2" data-cat="outdoors"><time class="date" datetime="2026-11-29"><span>Nov</span><b>29</b></time><div><h2>Beach clean at Westmoor</h2><p class="ev-meta"><span class="tag"><i class="dot"></i>Outdoors</span><span>West Beach slipway · 10:00–12:00</span></p></div><button class="qbtn pill remind" type="button" aria-pressed="false" data-remind="e2"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Remind me</span></button></li>
+      <li class="ev" data-id="e3" data-cat="talk"><time class="date" datetime="2026-12-03"><span>Dec</span><b>3</b></time><div><h2>Talk: a century of the lifeboat</h2><p class="ev-meta"><span class="tag"><i class="dot"></i>Talk</span><span>Boatshed museum · 19:00</span></p></div><button class="qbtn pill remind" type="button" aria-pressed="false" data-remind="e3"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Remind me</span></button></li>
+      <li class="ev" data-id="e4" data-cat="family"><time class="date" datetime="2026-12-06"><span>Dec</span><b>6</b></time><div><h2>Lantern walk</h2><p class="ev-meta"><span class="tag"><i class="dot"></i>Family</span><span>From Chapel Square · 17:00</span></p></div><button class="qbtn pill remind" type="button" aria-pressed="false" data-remind="e4"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Remind me</span></button></li>
+      <li class="ev" data-id="e5" data-cat="market"><time class="date" datetime="2026-12-12"><span>Dec</span><b>12</b></time><div><h2>Winter craft fair</h2><p class="ev-meta"><span class="tag"><i class="dot"></i>Market</span><span>Fish Hall · 10:00–16:00</span></p></div><button class="qbtn pill remind" type="button" aria-pressed="false" data-remind="e5"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Remind me</span></button></li>
+      <li class="ev" data-id="e6" data-cat="family"><time class="date" datetime="2026-12-14"><span>Dec</span><b>14</b></time><div><h2>Story time for under-fives</h2><p class="ev-meta"><span class="tag"><i class="dot"></i>Family</span><span>Larkhaven library · 10:30</span></p></div><button class="qbtn pill remind" type="button" aria-pressed="false" data-remind="e6"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Remind me</span></button></li>
+      <li class="ev" data-id="e7" data-cat="outdoors"><time class="date" datetime="2026-12-20"><span>Dec</span><b>20</b></time><div><h2>Shortest-day cliff walk</h2><p class="ev-meta"><span class="tag"><i class="dot"></i>Outdoors</span><span>Gull Point car park · 8:00</span></p></div><button class="qbtn pill remind" type="button" aria-pressed="false" data-remind="e7"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Remind me</span></button></li>
+      <li class="ev" data-id="e8" data-cat="market"><time class="date" datetime="2027-01-09"><span>Jan</span><b>9</b></time><div><h2>Seed swap</h2><p class="ev-meta"><span class="tag"><i class="dot"></i>Market</span><span>Orchard Lane allotments · 11:00–13:00</span></p></div><button class="qbtn pill remind" type="button" aria-pressed="false" data-remind="e8"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Remind me</span></button></li>
+    </ol>
+    <div class="empty" data-empty="events" hidden><p>Nothing of that kind is coming up.</p></div>
+    <div class="more"><button class="qbtn" type="button" data-more="events">Show more events</button></div>
+  </div>
+</section>
+
+<!-- ================= NOTES ================= -->
+<section data-view="notes" class="page" aria-labelledby="notes-title">
+  <div class="wrap">
+    <div class="intro">
+      <h1 class="display" id="notes-title">Notes</h1>
+      <p class="lead">Short pieces about the town: what changed, who keeps it running and what the season brings.</p>
+    </div>
+    <a class="lead-card" href="#/post">
+      <div>
+        <span class="tag" data-cat="news"><i class="dot"></i>Town news · 9 Nov 2026</span>
+        <h2>The winter ferry, explained</h2>
+        <p class="muted">Fewer crossings, an earlier last boat and a new stop at Gull Point. Here is what changes on 1 December.</p>
+        <span class="btn tonal">Read the note</span>
+      </div>
+      <img src="images/harbour.svg" width="640" height="400" alt="Small sailing boats in a calm harbour">
+    </a>
+    <div class="chips notes-chips" role="group" aria-label="Show" data-chips="notes">
+      <button class="chip" type="button" data-value="all" aria-pressed="true"><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>All</button>
+      <button class="chip" type="button" data-value="news" aria-pressed="false"><i class="dot" data-c="news"></i><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>Town news</button>
+      <button class="chip" type="button" data-value="people" aria-pressed="false"><i class="dot" data-c="people"></i><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>People</button>
+      <button class="chip" type="button" data-value="seasons" aria-pressed="false"><i class="dot" data-c="seasons"></i><svg class="icon ck" aria-hidden="true"><use href="#i-check"/></svg>Seasons</button>
+    </div>
+    <ul class="grid notes-grid" data-list="notes">
+      <li class="card" data-cat="seasons"><a href="#/post"><img src="images/garden.svg" width="640" height="400" alt="Allotment beds with sunflowers and a shed"><span class="tag"><i class="dot"></i>Seasons · 2 Nov 2026</span><h3>What grows on Orchard Lane in November</h3><p class="card-line">Leeks, kale and a stubborn row of sunflowers.</p></a></li>
+      <li class="card" data-cat="people"><a href="#/post"><img src="images/library.svg" width="640" height="400" alt="Library shelves full of colourful books"><span class="tag"><i class="dot"></i>People · 26 Oct 2026</span><h3>Ten years behind the library desk</h3><p class="card-line">The questions people ask, and the ones they used to.</p></a></li>
+      <li class="card" data-cat="news"><a href="#/post"><img src="images/market.svg" width="640" height="400" alt="Market stalls under striped awnings"><span class="tag"><i class="dot"></i>Town news · 18 Oct 2026</span><h3>Why the market moved indoors</h3><p class="card-line">Wind, a new roof and twenty stallholders who voted.</p></a></li>
+      <li class="card" data-cat="seasons"><a href="#/post"><img src="images/pools.svg" width="640" height="400" alt="Rock pools on the sand with a starfish"><span class="tag"><i class="dot"></i>Seasons · 3 Oct 2026</span><h3>A quiet hour at the tide pools</h3><p class="card-line">What to look for, and what to leave where it is.</p></a></li>
+      <li class="card" data-cat="people"><a href="#/post"><img src="images/boatshed.svg" width="640" height="400" alt="A red boatshed with a white rowing boat inside"><span class="tag"><i class="dot"></i>People · 21 Sep 2026</span><h3>Meet the boatshed volunteers</h3><p class="card-line">Six people, one boat and a lot of varnish.</p></a></li>
+    </ul>
+    <div class="empty" data-empty="notes" hidden><p>No notes in this topic yet.</p></div>
+  </div>
+</section>
+
+<!-- ================= POST ================= -->
+<section data-view="post" class="page post" aria-labelledby="post-title">
+  <div class="wrap">
+    <header class="post-head">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/notes">Notes</a><svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg><a href="#/notes?cat=news">Town news</a></nav>
+      <h1 class="display" id="post-title">The winter ferry, explained</h1>
+      <div class="byline"><span class="avatar" aria-hidden="true">M</span><span><b>Written by Mari Ostend</b>9 Nov 2026 · 4 min read</span></div>
+    </header>
+    <figure class="figure">
+      <img src="images/harbour.svg" width="640" height="400" alt="Small sailing boats in a calm harbour">
+      <figcaption>The slipway at high water, where the ferry ties up.</figcaption>
+    </figure>
+    <div class="prose">
+      <p>From 1 December the ferry runs its winter timetable until the end of February. There are fewer crossings, the last boat leaves earlier, and for the first time the ferry calls at Gull Point on the way out.</p>
+      <h2>What changes</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th scope="col">Day</th><th scope="col">From the slipway</th><th scope="col">Last boat back</th></tr></thead>
+          <tbody>
+            <tr><td>Monday to Friday</td><td>7:10, 9:40, 13:00, 16:30</td><td>17:15</td></tr>
+            <tr><td>Saturday</td><td>9:40, 13:00</td><td>14:00</td></tr>
+            <tr><td>Sunday</td><td>No crossings</td><td>–</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2>The Gull Point stop</h2>
+      <p>The outward 9:40 and 13:00 boats stop at the Gull Point jetty for five minutes. It is a short walk from there to the start of the cliff path, so you can walk back to town along the top.</p>
+      <blockquote><p>“We would rather run four boats that leave on time than six that wait for the weather.”</p></blockquote>
+      <p>If the wind is above force six, the first boat of the day is cancelled and the rest run if it drops. The harbour office puts a notice on the slipway gate by 6:30.</p>
+      <h2>Tickets</h2>
+      <p>Prices stay the same. Return tickets bought in winter are valid until the end of March, and children under five travel free.</p>
+    </div>
+    <div class="related prose">
+      <div class="row"><a class="btn tonal" href="#/notes">More notes</a><a class="btn text" href="#/place?id=cliff">About the cliff path</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section data-view="about" class="page" aria-labelledby="about-title">
+  <div class="wrap">
+    <div class="intro">
+      <p class="eyebrow">About the guide</p>
+      <h1 class="display" id="about-title">A town guide, written by the people who live here</h1>
+      <p class="lead">Larkhaven is a harbour town of four thousand people. The guide started as a list pinned up in the library; now it is twelve volunteers, a few hundred pages and a short note every Sunday.</p>
+    </div>
+    <figure class="figure"><img src="images/harbour.svg" width="640" height="400" alt="Small sailing boats in a calm harbour"></figure>
+  </div>
+  <div class="band">
+    <div class="wrap">
+      <h2 class="h2 center">How we keep it useful</h2>
+      <div class="cols">
+        <div class="col"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-check-circle"/></svg></span><h3>Checked by a neighbour</h3><p>Every place is visited and every answer is checked by someone who lives here, with the date on the page.</p></div>
+        <div class="col"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg></span><h3>Free to read, free to list</h3><p>No ads and no paid placements. The guide is run on small donations and a lot of goodwill.</p></div>
+        <div class="col"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg></span><h3>Short answers first</h3><p>Each page starts with the answer, then the detail. If it takes more than three minutes to read, we split it.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="intro"><h2 class="h2">How a place gets listed</h2></div>
+    <ol class="steps how">
+      <li><b>Tell us about it.</b> Send the short form with what the place is and when it is open.</li>
+      <li><b>A volunteer visits.</b> They write the listing in their own words and take a note of access and hours.</li>
+      <li><b>It goes live.</b> You get an email with the page, and you can suggest changes at any time.</li>
+    </ol>
+    <div class="row how-cta"><a class="btn" href="#/signup">List your place</a><a class="btn text" href="#/contact">Contact the team</a></div>
+    <div class="letter" id="letter">
+      <div>
+        <h2 class="h2">The Sunday note</h2>
+        <p class="muted" style="margin-block-start:8px">One short email a week: what's on, what changed and one place worth a visit.</p>
+      </div>
+      <form data-form="newsletter" novalidate>
+        <div class="inline">
+          <div class="field">
+            <label class="sr-only" for="n-email">Email address</label>
+            <input class="input" id="n-email" name="email" type="email" autocomplete="email" placeholder="Email address" required aria-describedby="n-email-err">
+            <p class="err" id="n-email-err" aria-live="polite"></p>
+          </div>
+          <button class="btn tonal" type="submit">Subscribe</button>
+        </div>
+      </form>
+      <div class="success" data-success="newsletter" hidden>
+        <h2>You're on the list</h2>
+        <p>The next note arrives on Sunday morning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section data-view="contact" class="page" aria-labelledby="contact-title">
+  <div class="wrap">
+    <div class="intro">
+      <h1 class="display" id="contact-title">Get in touch</h1>
+      <p class="lead">Questions, corrections and ideas all go to the same small team. We reply within three working days.</p>
+    </div>
+    <div class="split">
+      <div>
+        <form class="form" data-form="contact" novalidate>
+          <div class="field">
+            <label for="c-name">Your name</label>
+            <input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-err">
+            <p class="err" id="c-name-err" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="c-email">Email</label>
+            <input class="input" id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-err">
+            <p class="err" id="c-email-err" aria-live="polite"></p>
+          </div>
+          <div class="field full">
+            <label for="c-topic">What is it about?</label>
+            <span class="select-wrap"><select class="input" id="c-topic" name="topic" required aria-describedby="c-topic-err">
+              <option value="">Choose one</option>
+              <option value="question">A question for the guide</option>
+              <option value="edit">Something on a page is wrong</option>
+              <option value="event">Adding an event</option>
+              <option value="other">Something else</option>
+            </select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span>
+            <p class="err" id="c-topic-err" aria-live="polite"></p>
+          </div>
+          <div class="field full">
+            <label for="c-msg">Message</label>
+            <textarea class="input" id="c-msg" name="message" rows="6" required minlength="20" aria-describedby="c-msg-err"></textarea>
+            <p class="err" id="c-msg-err" aria-live="polite"></p>
+          </div>
+          <div class="form-end full"><button class="btn" type="submit">Send message</button><span class="muted small">We only use your email to reply.</span></div>
+        </form>
+        <div class="success" data-success="contact" hidden>
+          <span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <h2>Message sent</h2>
+          <p>Thanks. Someone from the team will reply within three working days.</p>
+          <a class="qbtn" href="#/guide">Back to the guide</a>
+        </div>
+      </div>
+      <aside class="side" aria-labelledby="ways-title">
+        <h2 id="ways-title">Other ways</h2>
+        <ul class="ways">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><div><b>Email</b><p>hello@larkhaven.example</p></div></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><div><b>Drop in</b><p>The guide desk in the library, Chapel Square</p></div></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><div><b>Desk hours</b><p>Saturdays, 10:00–12:00</p></div></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SIGNUP: list your place ================= -->
+<section data-view="signup" class="page" aria-labelledby="signup-title">
+  <div class="wrap">
+    <div class="intro">
+      <h1 class="display" id="signup-title">List your place</h1>
+      <p class="lead">Listings are free. Tell us the basics and a volunteer will visit, write it up and send you the page.</p>
+    </div>
+    <div class="split">
+      <div>
+        <form class="form" data-form="signup" novalidate>
+          <div class="field full">
+            <label for="s-name">Name of the place</label>
+            <input class="input" id="s-name" name="place" required aria-describedby="s-name-err">
+            <p class="err" id="s-name-err" aria-live="polite"></p>
+          </div>
+          <fieldset class="field full" data-group-required aria-describedby="s-kind-err">
+            <legend>What kind of place is it?</legend>
+            <div class="pick">
+              <label><input type="radio" name="kind" value="eat"><span><i class="dot" data-c="eat"></i>Eat &amp; drink</span></label>
+              <label><input type="radio" name="kind" value="outdoors"><span><i class="dot" data-c="outdoors"></i>Outdoors</span></label>
+              <label><input type="radio" name="kind" value="shops"><span><i class="dot" data-c="shops"></i>Shop</span></label>
+              <label><input type="radio" name="kind" value="services"><span><i class="dot" data-c="services"></i>Service</span></label>
+              <label><input type="radio" name="kind" value="culture"><span><i class="dot" data-c="culture"></i>Culture</span></label>
+            </div>
+            <p class="err" id="s-kind-err" aria-live="polite"></p>
+          </fieldset>
+          <div class="field">
+            <label for="s-email">Your email</label>
+            <input class="input" id="s-email" name="email" type="email" autocomplete="email" required aria-describedby="s-email-err">
+            <p class="err" id="s-email-err" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="s-web">Website <span class="opt">(optional)</span></label>
+            <input class="input" id="s-web" name="website" type="url" placeholder="https://" aria-describedby="s-web-err">
+            <p class="err" id="s-web-err" aria-live="polite"></p>
+          </div>
+          <div class="field full">
+            <label for="s-about">In one or two sentences, what is it?</label>
+            <textarea class="input" id="s-about" name="about" rows="3" required minlength="20" maxlength="160" aria-describedby="s-about-err s-about-count"></textarea>
+            <p class="hint"><span>Plain words help. We will write the rest.</span><span id="s-about-count">0 / 160</span></p>
+            <p class="err" id="s-about-err" aria-live="polite"></p>
+          </div>
+          <div class="field full">
+            <label class="check"><input type="checkbox" id="s-ok" name="ok" required aria-describedby="s-ok-err"><span>A volunteer may visit and write about the place in their own words.</span></label>
+            <p class="err" id="s-ok-err" aria-live="polite"></p>
+          </div>
+          <div class="form-end full"><button class="btn" type="submit">Send for a visit</button></div>
+        </form>
+        <div class="success" data-success="signup" hidden>
+          <span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <h2>Thanks, we have it</h2>
+          <p>Your reference is <b id="s-ref">LH-0000</b>. A volunteer will email you to arrange a visit.</p>
+          <a class="qbtn" href="#/places">Browse places</a>
+        </div>
+      </div>
+      <aside class="side" aria-labelledby="next-title">
+        <h2 id="next-title">What happens next</h2>
+        <ol class="steps">
+          <li>We read every request within a week.</li>
+          <li>A volunteer visits at a time that suits you.</li>
+          <li>Your listing goes live and you get the link.</li>
+        </ol>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LEGAL ================= -->
+<section data-view="legal" class="page legal" aria-labelledby="legal-title">
+  <div class="wrap narrow">
+    <h1 class="display" id="legal-title">Privacy and terms</h1>
+    <p class="meta">Last updated 1 November 2026</p>
+    <div class="chips" style="justify-content:flex-start"><a class="chip" href="#/legal?at=privacy">Privacy</a><a class="chip" href="#/legal?at=terms">Terms</a></div>
+    <div class="prose">
+      <h2 id="privacy">Privacy</h2>
+      <p>The guide collects only what you send us through its forms: your name, your email and what you write. We use it to reply, to arrange a visit or to send the Sunday note you asked for, and nothing else.</p>
+      <p>We keep messages for twelve months and newsletter addresses until you unsubscribe. You can ask to see, correct or delete what we hold about you by writing to hello@larkhaven.example.</p>
+      <p>Your saved places, reminders and the light or dark setting stay in your own browser and are never sent to us.</p>
+      <h2 id="terms">Terms</h2>
+      <p>The guide is written by volunteers and checked as often as we can, but opening hours and timetables change. Check with the place before a long trip.</p>
+      <p>Listings are free and are written by the guide, not by the places themselves. We may decline or remove a listing that is closed, misleading or unsafe.</p>
+      <p>You may share and quote the guide for non-commercial use with a link back to the page.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 404 ================= -->
+<section data-view="404" class="nf" aria-labelledby="nf-title">
+  <p class="big" aria-hidden="true">404</p>
+  <h1 class="h2" id="nf-title">This page isn't in the guide</h1>
+  <p class="lead">It may have moved, or the link has a typo.</p>
+  <div class="row"><a class="btn" href="#/">Go to the start</a><a class="qbtn pill" href="#/places">Browse places</a></div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p class="foot-loc">Larkhaven, North Coast · Kept by neighbours</p>
+  <div class="foot-row">
+    <nav aria-label="About the guide"><a href="#/about">About</a><a href="#/contact">Contact</a><a href="#/signup">List your place</a><a href="#/about?at=letter">The Sunday note</a></nav>
+    <nav aria-label="Legal"><a href="#/legal?at=privacy">Privacy</a><a href="#/legal?at=terms">Terms</a></nav>
+  </div>
+</footer>
+<div class="toast" role="status" id="toast" hidden></div>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+  const readSet = (key) => { try { return new Set(JSON.parse(store.get(key) || "[]")); } catch { return new Set(); } };
+
+  /* ---------- Toast ---------- */
+  const toast = $("#toast");
+  let toastTimer;
+  function say(text) { toast.textContent = text; toast.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { toast.hidden = true; }, 3200); }
+
+  /* ---------- Theme: light by default following the system setting, dark behind the toggle ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light colors" : "Switch to dark colors");
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const savedTheme = store.get("larkhaven-theme");
+  applyTheme(savedTheme === "light" || savedTheme === "dark" ? savedTheme : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("larkhaven-theme", next);
+  });
+
+  /* ---------- Places: extra detail per card; the cards in the HTML hold the name, kind, line, area, hours and picture ---------- */
+  const PLACES = {
+    boatshed: { access: "Step-free ground floor; the map room is up a ladder stair.", good: "Rainy afternoons, curious children", about: "The lifeboat room is the one to see: the old boat sits on its trolley with the crew's names painted inside. Volunteers run the door, so ring the bell if it looks closed.", checked: "14 Jun 2026" },
+    cliff: { access: "Uneven grass, one steep stretch with a handrail.", good: "Sunsets, a morning loop with the dog", about: "Walk it clockwise so the steep part is uphill. The second bench has the best view back to the harbour, and the path is muddy after rain until about April.", checked: "2 Sep 2026" },
+    health: { access: "Step-free, with a hearing loop at the desk.", good: "Appointments, the nurse clinic, flu jabs", about: "Phone from 8:00 for same-day appointments; the nurse clinic runs on Tuesday and Thursday mornings without booking. The pharmacy counter is next door.", checked: "21 Mar 2026" },
+    library: { access: "Step-free, with a lift to the upstairs room.", good: "Printing, wifi, a quiet desk", about: "Printing is a few coins a page and the wifi needs no password. The seed swap shelf by the door is busiest in spring; bring an envelope.", checked: "10 Feb 2026" },
+    netloft: { access: "Upstairs only, steep stairs.", good: "Fish suppers, a table by the window", about: "Book the window table if there are two of you. The menu follows the boats, so if the weather kept them in, expect pie.", checked: "18 Oct 2026" },
+    allotments: { access: "Gravel paths, step-free from the lane gate.", good: "Garden tips, a quiet bench", about: "On open mornings the plot holders show visitors round and give away spare seedlings. The shed at the far end has a kettle and a visitors' book.", checked: "30 May 2026" },
+    hardware: { access: "One small step at the door; they will come out to you.", good: "Keys, bike repairs, odd screws", about: "If you need one screw, they will sell you one screw. Bike repairs are done while you wait on weekday mornings.", checked: "8 Aug 2026" },
+    saltloaf: { access: "Step-free door, two small tables inside.", good: "Early breakfast, picnic bread", about: "Get there before eight on Saturdays or the seeded loaf is gone. The seaweed butter is made in the back on Tuesdays; ask for a small pot to take home. Card or cash, and they will slice any loaf for you.", checked: "2 Nov 2026" },
+    market: { access: "Step-free, indoors under the fish hall roof.", good: "Vegetables, bread, second-hand books", about: "Twenty stalls on a good week: vegetables from the farms above town, two bakers, honey, and a book stall that takes swaps. Bring a bag.", checked: "4 Apr 2026" },
+    lantern: { access: "Upstairs; the ground-floor counter serves takeaway.", good: "Coffee with a view, writing a postcard", about: "Climb the stairs for the window seats over the slipway. They keep a box of board games and a tide table by the till.", checked: "19 Jul 2026" },
+    picturehouse: { access: "Step-free, with two spaces for wheelchairs.", good: "A Friday film, a rainy-day matinee", about: "One film a week, chosen by members, with a short talk before it starts. Tickets are sold at the door from 18:30.", checked: "5 Oct 2026" },
+    pools: { access: "Over rocks and wet sand, not step-free.", good: "Rock pooling, a slow walk", about: "Go in the two hours either side of low water and wear shoes that can get wet. Turn stones back over the way you found them.", checked: "27 Aug 2026" },
+  };
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Larkhaven: the town guide",
+    places: "Places · Larkhaven",
+    place: "Place · Larkhaven",
+    guide: "Guide · Larkhaven",
+    article: "Bin and recycling days · Larkhaven",
+    events: "What's on · Larkhaven",
+    notes: "Notes · Larkhaven",
+    post: "The winter ferry, explained · Larkhaven",
+    about: "About · Larkhaven",
+    contact: "Contact · Larkhaven",
+    signup: "List your place · Larkhaven",
+    legal: "Privacy and terms · Larkhaven",
+    "404": "Page not found · Larkhaven",
+  };
+  const parents = { place: "places", article: "guide", post: "notes" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    openList(false);
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.body.dataset.page = name;
+    document.title = titles[name];
+    const section = parents[name] || name;
+    $$(".nav a, .menu-links a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === section) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "places") lists.places.set({ cat: p.get("cat"), q: p.get("q") });
+    if (name === "events") lists.events.set({ cat: p.get("cat") });
+    if (name === "notes") lists.notes.set({ cat: p.get("cat") });
+    if (name === "guide") filterGuide(p.get("q") || "");
+    if (name === "place") showPlace(p.get("id"));
+    if (name === "contact" && p.get("topic")) $("#c-topic").value = p.get("topic");
+    const at = p.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = document.getElementById(href.slice(1));
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth" }); target.focus?.({ preventScroll: true }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Phone menu ---------- */
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+
+  /* ---------- Lists: chips, a search field, "Show more", a count and an empty state, from the items in the HTML ---------- */
+  let saved = readSet("larkhaven-saved");
+  function listControl(name, { per = Infinity, noun = ["item", "items"] } = {}) {
+    const list = $(`[data-list="${name}"]`);
+    const items = [...list.children];
+    const chips = $$(`[data-chips="${name}"] .chip`);
+    const input = $(`[data-filter-input="${name}"]`);
+    const more = $(`[data-more="${name}"]`);
+    const count = $(`[data-count="${name}"]`);
+    const empty = $(`[data-empty="${name}"]`);
+    const state = { cat: "all", q: "", limit: per };
+    function render() {
+      const q = state.q.trim().toLowerCase();
+      const matches = [...list.children].filter((el) =>
+        (state.cat === "all" || (state.cat === "saved" ? saved.has(el.dataset.id) : el.dataset.cat === state.cat)) &&
+        (!q || el.textContent.toLowerCase().includes(q)));
+      items.forEach((el) => { el.hidden = true; });
+      matches.slice(0, state.limit).forEach((el) => { el.hidden = false; });
+      chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.value === state.cat)));
+      if (count) count.textContent = `${matches.length} ${matches.length === 1 ? noun[0] : noun[1]}`;
+      if (empty) empty.hidden = matches.length > 0;
+      if (more) more.parentElement.hidden = matches.length <= state.limit;
+      return matches.length;
+    }
+    chips.forEach((chip) => chip.addEventListener("click", () => { state.cat = chip.dataset.value; state.limit = per; render(); }));
+    input?.addEventListener("input", () => { state.q = input.value; state.limit = per; render(); });
+    more?.addEventListener("click", () => { state.limit += per; render(); });
+    $(`[data-clear="${name}"]`)?.addEventListener("click", () => { state.cat = "all"; state.q = ""; if (input) { input.value = ""; input.dispatchEvent(new Event("input")); } render(); });
+    return {
+      list, items, render,
+      set({ cat, q } = {}) {
+        state.cat = chips.some((chip) => chip.dataset.value === cat) ? cat : "all";
+        state.q = q || "";
+        if (input) { input.value = state.q; syncClear(input); }
+        state.limit = per;
+        render();
+      },
+      count(q) { const s = q.toLowerCase(); return items.filter((el) => el.textContent.toLowerCase().includes(s)).length; },
+    };
+  }
+  const lists = {
+    places: listControl("places", { per: 9, noun: ["place", "places"] }),
+    events: listControl("events", { per: 6, noun: ["event", "events"] }),
+    notes: listControl("notes"),
+  };
+  const placeCards = lists.places.items;
+  $("#places-sort").addEventListener("change", (event) => {
+    const by = event.target.value;
+    const sorted = [...placeCards].sort((a, b) => by === "new"
+      ? b.dataset.added.localeCompare(a.dataset.added)
+      : $("h3", a).textContent.localeCompare($("h3", b).textContent));
+    sorted.forEach((card) => lists.places.list.append(card));
+    lists.places.render();
+  });
+  function syncSaved() { const n = saved.size; $("[data-saved-count]").textContent = n ? `(${n})` : ""; }
+  syncSaved();
+
+  /* ---------- Search boxes: clear buttons; the home box suggests places, answers and events as you type ---------- */
+  function syncClear(input) { const clear = $("[data-clear-box]", input.closest(".sfield")); if (clear) clear.hidden = !input.value; }
+  $$(".sfield input").forEach((input) => {
+    input.addEventListener("input", () => syncClear(input));
+    $("[data-clear-box]", input.closest(".sfield"))?.addEventListener("click", () => { input.value = ""; input.dispatchEvent(new Event("input")); input.focus(); });
+  });
+  const suggestions = [
+    ...placeCards.map((li) => ({ label: $("h3", li).textContent, hint: $(".tag", li).textContent, href: `#/place?id=${li.dataset.id}`, cat: li.dataset.cat })),
+    ...$$(".topic a").map((a) => ({ label: a.textContent, hint: "Guide", href: a.getAttribute("href"), icon: "i-doc" })),
+    ...lists.events.items.map((li) => ({ label: $("h2", li).textContent, hint: $(".date", li).textContent.replace(/(\D+)(\d+)/, "$2 $1"), href: `#/events?cat=${li.dataset.cat}`, icon: "i-bell" })),
+  ].filter((s, i, all) => all.findIndex((t) => t.label === s.label) === i);
+  const homeBox = $("#home-search");
+  const homeInput = $("#q-home");
+  const homeList = $("#q-home-list");
+  let active = -1;
+  function openList(open) {
+    homeList.hidden = !open;
+    homeBox.classList.toggle("is-open", open);
+    homeInput.setAttribute("aria-expanded", String(open));
+    if (!open) { active = -1; homeInput.removeAttribute("aria-activedescendant"); }
+  }
+  function suggest() {
+    const q = homeInput.value.trim();
+    if (!q) return openList(false);
+    const s = q.toLowerCase();
+    const found = suggestions
+      .map((item) => ({ item, at: item.label.toLowerCase().indexOf(s) }))
+      .filter((m) => m.at >= 0)
+      .sort((a, b) => (b.at === 0) - (a.at === 0) || a.item.label.localeCompare(b.item.label))
+      .slice(0, 6);
+    if (!found.length) return openList(false);
+    homeList.innerHTML = found.map(({ item, at }, i) => {
+      const label = item.label;
+      const text = `${esc(label.slice(0, at))}<span>${esc(label.slice(at, at + q.length))}</span><b>${esc(label.slice(at + q.length))}</b>`;
+      const icon = item.cat ? `<i class="dot" data-c="${item.cat}"></i>` : `<svg class="icon" aria-hidden="true"><use href="#${item.icon}"/></svg>`;
+      return `<a href="#${item.href.slice(1)}" id="sg-${i}" role="option" aria-selected="false"><span class="sg-ic">${icon}</span><span class="sg-l">${text}</span><span class="sg-h">${esc(item.hint)}</span></a>`;
+    }).join("");
+    active = -1;
+    openList(true);
+  }
+  function mark(i) {
+    const options = $$("[role=option]", homeList);
+    if (!options.length) return;
+    active = (i + options.length) % options.length;
+    options.forEach((o, n) => o.setAttribute("aria-selected", String(n === active)));
+    homeInput.setAttribute("aria-activedescendant", options[active].id);
+  }
+  function searchAll(q) {
+    const term = q.trim();
+    if (!term) { homeInput.focus(); return; }
+    openList(false);
+    const inGuide = $$(".topic, .qa details").some((el) => el.textContent.toLowerCase().includes(term.toLowerCase()));
+    go(lists.places.count(term) || !inGuide ? `#/places?q=${encodeURIComponent(term)}` : `#/guide?q=${encodeURIComponent(term)}`);
+  }
+  homeInput.addEventListener("input", suggest);
+  homeInput.addEventListener("focus", suggest);
+  homeInput.addEventListener("keydown", (event) => {
+    if (event.isComposing) return;
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") { event.preventDefault(); if (homeList.hidden) suggest(); mark(active + (event.key === "ArrowDown" ? 1 : -1)); }
+    else if (event.key === "Escape" && !homeList.hidden) { event.preventDefault(); openList(false); }
+    else if (event.key === "Enter") {
+      event.preventDefault();
+      const chosen = active >= 0 && $$("[role=option]", homeList)[active];
+      if (chosen) { openList(false); go(chosen.getAttribute("href")); } else searchAll(homeInput.value);
+    }
+  });
+  homeList.addEventListener("pointerdown", (event) => event.preventDefault());
+  homeInput.addEventListener("blur", () => openList(false));
+  $("#home-go").addEventListener("click", () => searchAll(homeInput.value));
+  $("#surprise").addEventListener("click", () => go(`#/place?id=${placeCards[Math.floor(Math.random() * placeCards.length)].dataset.id}`));
+
+  /* ---------- Guide: filter topics and questions as you type ---------- */
+  const guideInput = $("#q-guide");
+  function filterGuide(q) {
+    if (guideInput.value !== q) { guideInput.value = q; syncClear(guideInput); }
+    const s = q.trim().toLowerCase();
+    let shown = 0;
+    $$(".topic").forEach((topic) => {
+      const topicMatch = !s || $("h2", topic).textContent.toLowerCase().includes(s);
+      let inTopic = 0;
+      $$("li", topic).forEach((li) => { const hit = topicMatch || li.textContent.toLowerCase().includes(s); li.hidden = !hit; if (hit) inTopic += 1; });
+      topic.hidden = inTopic === 0;
+      shown += inTopic;
+    });
+    $$(".qa details").forEach((item) => { const hit = !s || item.textContent.toLowerCase().includes(s); item.hidden = !hit; if (hit) shown += 1; if (s && hit) item.open = true; });
+    $("[data-empty='guide']").hidden = shown > 0;
+  }
+  guideInput.addEventListener("input", () => filterGuide(guideInput.value));
+
+  /* ---------- Place: fill the view from the card and PLACES; save, share and nearby ---------- */
+  let placeId = "saltloaf";
+  function showPlace(id) {
+    const card = placeCards.find((li) => li.dataset.id === id) || placeCards.find((li) => li.dataset.id === "saltloaf");
+    placeId = card.dataset.id;
+    const extra = PLACES[placeId] || {};
+    const cat = card.dataset.cat;
+    const name = $("h3", card).textContent;
+    const [area, hours] = $$(".card-meta span", card).map((s) => s.textContent);
+    const img = $("img", card);
+    $("#place-box").dataset.cat = cat;
+    $("#place-cat").textContent = $("#place-crumb").textContent = $(".tag", card).textContent;
+    $("#place-crumb").setAttribute("href", `#/places?cat=${cat}`);
+    $("#place-title").textContent = name;
+    $("#place-line").textContent = $(".card-line", card).textContent;
+    $("#place-img").src = img.getAttribute("src");
+    $("#place-img").alt = img.alt;
+    $("#place-area").textContent = area;
+    $("#place-hours").textContent = hours;
+    $("#place-access").textContent = extra.access || "Ask the place.";
+    $("#place-good").textContent = extra.good || "";
+    $("#place-about").textContent = extra.about || "";
+    $("#place-checked").textContent = extra.checked ? `Last checked on ${extra.checked}.` : "";
+    document.title = `${name} · Larkhaven`;
+    setSave();
+    const others = placeCards.filter((li) => li !== card)
+      .map((li) => ({ li, score: ($(".card-meta span", li).textContent === area ? 2 : 0) + (li.dataset.cat === cat ? 1 : 0) }))
+      .sort((a, b) => b.score - a.score).slice(0, 3);
+    $("#nearby").replaceChildren(...others.map(({ li }) => { const copy = li.cloneNode(true); copy.hidden = false; return copy; }));
+  }
+  function setSave() {
+    const on = saved.has(placeId);
+    const button = $("#save");
+    button.setAttribute("aria-pressed", String(on));
+    $("span", button).textContent = on ? "Saved" : "Save";
+  }
+  $("#save").addEventListener("click", () => {
+    if (saved.has(placeId)) saved.delete(placeId); else saved.add(placeId);
+    store.set("larkhaven-saved", JSON.stringify([...saved]));
+    setSave();
+    syncSaved();
+    say(saved.has(placeId) ? "Saved. Find it under Saved on the places page." : "Removed from your saved places.");
+  });
+  $("#share").addEventListener("click", async () => {
+    const url = location.href.split("#")[0] + `#/place?id=${placeId}`;
+    try { await navigator.clipboard.writeText(url); say("Link copied."); }
+    catch { say("Copy the address from your browser to share this place."); }
+  });
+
+  /* ---------- Events: reminders are kept in this browser; a real site sends them from a backend ---------- */
+  const reminders = readSet("larkhaven-remind");
+  $$("[data-remind]").forEach((button) => {
+    const sync = () => { const on = reminders.has(button.dataset.remind); button.setAttribute("aria-pressed", String(on)); $("span", button).textContent = on ? "Reminder on" : "Remind me"; };
+    sync();
+    button.addEventListener("click", () => {
+      const id = button.dataset.remind;
+      if (reminders.has(id)) reminders.delete(id); else reminders.add(id);
+      store.set("larkhaven-remind", JSON.stringify([...reminders]));
+      sync();
+      say(reminders.has(id) ? "Reminder saved in this browser." : "Reminder removed.");
+    });
+  });
+
+  /* ---------- Article: find your day, and "Was this page useful?" ---------- */
+  const DAYS = {
+    harbour: "<b>Tuesday</b> · green bin and glass box every week, grey bin every other week",
+    old: "<b>Wednesday</b> · green bin and glass box every week, grey bin every other week",
+    west: "<b>Thursday</b> · green bin and glass box every week, grey bin every other week",
+    gull: "<b>Thursday</b> · all bins every other week; the cliff road is done by a small truck",
+    orchard: "<b>Friday</b> · green bin and glass box every week, grey bin every other week",
+  };
+  $("#area").addEventListener("change", (event) => { $("#area-out").innerHTML = DAYS[event.target.value]; });
+  $$("[data-useful]").forEach((button) => button.addEventListener("click", () => {
+    $("[data-useful-row]").hidden = true;
+    if (button.dataset.useful === "yes") $("[data-useful-thanks]").hidden = false;
+    else { $("[data-form='feedback']").hidden = false; $("#f-missing").focus(); }
+  }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Enter a full address, like name@example.com.", tooShort: "Please write a little more.", tooLong: "That is a little too long." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby").split(" ")[0]);
+    let problem = "";
+    if (field.matches("fieldset")) problem = $("input:checked", field) ? "" : "Please choose one.";
+    else if (!field.closest("[hidden]")) {
+      const key = Object.keys(messages).find((k) => field.validity[k]);
+      if (key) problem = field.type === "checkbox" ? "Please tick this box to continue." : field.tagName === "SELECT" ? "Please choose one." : field.type === "url" ? "Enter the full address, starting with https://" : field.validity.tooShort ? `Please write at least ${field.minLength} characters.` : messages[key];
+    }
+    error.textContent = problem;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  const onValid = {
+    signup() { $("#s-ref").textContent = `LH-${String(Date.now()).slice(-4)}`; },
+  };
+  $$("form[data-form]").forEach((form) => {
+    const fields = () => $$("input[aria-describedby], textarea[aria-describedby], select[aria-describedby], fieldset[data-group-required]", form);
+    fields().forEach((field) => field.addEventListener(field.matches("fieldset, [type=checkbox], select") ? "change" : "blur", () => checkField(field)));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const list = fields();
+      if (!list.map(checkField).every(Boolean)) {
+        const first = list.find((f) => f.getAttribute("aria-invalid") === "true");
+        (first?.matches("fieldset") ? $("input", first) : first)?.focus();
+        return;
+      }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        button.disabled = false;
+        button.textContent = label;
+        onValid[form.dataset.form]?.();
+        form.hidden = true;
+        const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+        if (success) { success.hidden = false; success.setAttribute("tabindex", "-1"); success.focus({ preventScroll: true }); }
+      }, 600);
+    });
+  });
+  const about = $("#s-about");
+  about.addEventListener("input", () => { $("#s-about-count").textContent = `${about.value.length} / 160`; });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

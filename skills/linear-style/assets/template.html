@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Hexlane: the support inbox that answers itself</title>
+<meta name="description" content="Hexlane reads every support message, drafts the reply in your team's voice and routes the rest. Built for small teams that answer fast.">
+<meta property="og:title" content="Hexlane: the support inbox that answers itself">
+<meta property="og:description" content="AI triage and drafts for support teams that answer fast.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/inter-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "Inter"; src: url("fonts/inter-latin-wght.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("fonts/jetbrains-mono-latin-wght.woff2") format("woff2"); font-weight: 100 800; font-display: swap; }
+
+/* ---------- Tokens: dark is the default ---------- */
+:root {
+  color-scheme: dark;
+  --bg: oklch(14.5% 0.006 275);
+  --surface: oklch(18% 0.007 275);
+  --surface-2: oklch(21.5% 0.008 275);
+  --surface-3: oklch(25% 0.009 275);
+  --text: oklch(96.5% 0.003 275);
+  --text-muted: oklch(70% 0.012 275);
+  --text-faint: oklch(55% 0.012 275);
+  --border: oklch(100% 0 0 / 0.08);
+  --border-strong: oklch(100% 0 0 / 0.14);
+  --highlight: oklch(100% 0 0 / 0.06);
+  --accent: oklch(96.5% 0.003 275);
+  --accent-text: oklch(14.5% 0.006 275);
+  --brand: oklch(66% 0.17 278);
+  --brand-soft: oklch(66% 0.17 278 / 0.16);
+  --glow-a: oklch(58% 0.2 285 / 0.38);
+  --glow-b: oklch(62% 0.15 235 / 0.22);
+  --success: oklch(76% 0.15 155);
+  --warning: oklch(80% 0.14 75);
+  --danger: oklch(68% 0.19 25);
+  --focus: oklch(72% 0.15 278);
+  --headline: linear-gradient(180deg, oklch(98% 0.003 275) 30%, oklch(72% 0.015 275));
+
+  --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --fs-display: clamp(2.75rem, 1.4rem + 5vw, 5rem);
+  --fs-h1: clamp(2.25rem, 1.4rem + 3.2vw, 3.5rem);
+  --fs-h2: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+  --fs-h3: 1.0625rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+
+  --r-control: 8px;
+  --r-card: 14px;
+  --r-media: 16px;
+  --shadow-card: inset 0 1px 0 var(--highlight), 0 1px 2px oklch(0% 0 0 / 0.3);
+  --shadow-overlay: inset 0 1px 0 var(--highlight), 0 24px 64px oklch(0% 0 0 / 0.5);
+
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 600ms;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --page: 1180px;
+  --gutter: clamp(20px, 4vw, 40px);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(99% 0.002 275);
+  --surface: oklch(100% 0 0);
+  --surface-2: oklch(97% 0.004 275);
+  --surface-3: oklch(94.5% 0.006 275);
+  --text: oklch(19% 0.012 275);
+  --text-muted: oklch(46% 0.015 275);
+  --text-faint: oklch(60% 0.012 275);
+  --border: oklch(19% 0.012 275 / 0.09);
+  --border-strong: oklch(19% 0.012 275 / 0.16);
+  --highlight: oklch(100% 0 0 / 0.8);
+  --accent: oklch(19% 0.012 275);
+  --accent-text: oklch(99% 0.002 275);
+  --brand: oklch(52% 0.2 278);
+  --brand-soft: oklch(52% 0.2 278 / 0.1);
+  --glow-a: oklch(70% 0.16 285 / 0.28);
+  --glow-b: oklch(78% 0.1 235 / 0.28);
+  --success: oklch(55% 0.15 155);
+  --warning: oklch(62% 0.15 70);
+  --danger: oklch(55% 0.2 25);
+  --focus: oklch(55% 0.2 278);
+  --headline: linear-gradient(180deg, oklch(19% 0.012 275) 40%, oklch(42% 0.02 275));
+  --shadow-card: 0 1px 2px oklch(20% 0.02 275 / 0.06);
+  --shadow-overlay: 0 24px 64px oklch(30% 0.05 275 / 0.16), 0 2px 6px oklch(20% 0.02 275 / 0.06);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+/* hidden wins over component display rules (cards, forms, panels are flex or grid) */
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); line-height: 1.6; -webkit-font-smoothing: antialiased; font-feature-settings: "cv11", "ss01", "ss03"; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.1; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+::selection { background: var(--brand-soft); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+.skip { position: absolute; left: 12px; top: -48px; padding: 8px 12px; background: var(--accent); color: var(--accent-text); border-radius: var(--r-control); z-index: 100; }
+.skip:focus { top: 12px; }
+.wrap { width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.narrow { width: min(100% - 2 * var(--gutter), 720px); margin-inline: auto; }
+.muted { color: var(--text-muted); }
+.mono { font-family: var(--mono); font-size: 0.8125rem; letter-spacing: 0; }
+.label { font-family: var(--mono); font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); }
+.icon { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.icon-sm { width: 14px; height: 14px; }
+
+/* ---------- Type ---------- */
+.gradient-text { background: var(--headline); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.display { font-size: var(--fs-display); font-weight: 600; letter-spacing: -0.045em; line-height: 1.02; }
+.h1 { font-size: var(--fs-h1); font-weight: 600; letter-spacing: -0.04em; }
+.h2 { font-size: var(--fs-h2); font-weight: 600; letter-spacing: -0.035em; line-height: 1.08; }
+.h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: -0.012em; line-height: 1.35; }
+.lead { font-size: clamp(1.0625rem, 0.98rem + 0.45vw, 1.25rem); color: var(--text-muted); line-height: 1.55; max-width: 36em; }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-block-size: 40px; padding: 0 16px; border-radius: var(--r-control); font: inherit; font-size: 0.9375rem; font-weight: 550; text-decoration: none; cursor: pointer; border: 1px solid transparent; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease); }
+.btn-lg { min-block-size: 46px; padding: 0 20px; font-size: 1rem; }
+.btn-primary { background: var(--accent); color: var(--accent-text); box-shadow: inset 0 -1px 0 oklch(0% 0 0 / 0.12); }
+.btn-primary:hover { opacity: 0.9; }
+.btn-ghost { background: var(--surface-2); color: var(--text); border-color: var(--border); box-shadow: inset 0 1px 0 var(--highlight); }
+.btn-ghost:hover { background: var(--surface-3); }
+.btn-quiet { background: transparent; color: var(--text-muted); padding-inline: 10px; }
+.btn-quiet:hover { color: var(--text); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.kbd { display: inline-grid; place-items: center; min-inline-size: 20px; block-size: 20px; padding: 0 5px; border-radius: 5px; border: 1px solid var(--border-strong); background: var(--surface-2); font-family: var(--mono); font-size: 0.6875rem; color: var(--text-muted); line-height: 1; }
+.btn-primary .kbd { border-color: oklch(0% 0 0 / 0.15); background: oklch(0% 0 0 / 0.06); color: inherit; opacity: 0.7; }
+.text-link { color: var(--text); text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 3px; }
+.text-link:hover { text-decoration-color: var(--text); }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; border-bottom: 1px solid transparent; background: color-mix(in oklch, var(--bg) 72%, transparent); backdrop-filter: blur(14px) saturate(1.3); transition: border-color var(--dur-base) var(--ease); }
+.site-header.is-scrolled { border-bottom-color: var(--border); }
+.header-inner { display: flex; align-items: center; gap: 28px; min-block-size: 60px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 1rem; letter-spacing: -0.02em; text-decoration: none; }
+.brand svg { width: 22px; height: 22px; }
+.nav { display: flex; gap: 2px; margin-right: auto; }
+.nav a { padding: 6px 12px; border-radius: var(--r-control); text-decoration: none; font-size: 0.875rem; color: var(--text-muted); }
+.nav a:hover, .nav a[aria-current="page"] { color: var(--text); }
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.icon-btn { inline-size: 40px; block-size: 40px; display: inline-grid; place-items: center; border-radius: var(--r-control); border: 0; background: transparent; color: var(--text-muted); cursor: pointer; }
+.icon-btn:hover { color: var(--text); background: var(--surface-2); }
+.menu-btn { display: none; }
+@media (max-width: 880px) { .nav, .header-actions .btn-quiet { display: none; } .menu-btn { display: inline-grid; } .header-inner { justify-content: space-between; } }
+.sheet { border: 0; padding: 0; margin: 0 0 0 auto; inline-size: min(360px, 100%); block-size: 100dvh; max-block-size: 100dvh; background: var(--surface); color: var(--text); box-shadow: var(--shadow-overlay); overscroll-behavior: contain; }
+.sheet::backdrop { background: oklch(0% 0 0 / 0.55); backdrop-filter: blur(4px); }
+.sheet-inner { display: flex; flex-direction: column; padding: 14px 20px 32px; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.sheet a:not(.btn) { padding: 14px 4px; text-decoration: none; font-weight: 500; font-size: 1.0625rem; border-bottom: 1px solid var(--border); }
+.sheet .btn { margin-top: 20px; }
+
+/* ---------- Views and sections ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+main { min-block-size: 70vh; }
+.section { position: relative; padding-block: clamp(72px, 10vw, 140px); }
+.section-head { max-width: 680px; margin-bottom: clamp(36px, 5vw, 64px); }
+.section-head.center { margin-inline: auto; text-align: center; }
+.section-head .label { display: block; margin-bottom: 16px; }
+.section-head .lead { margin-top: 18px; }
+.section-head.center .lead { margin-inline: auto; }
+.rule { border: 0; border-top: 1px solid var(--border); margin: 0; }
+
+/* ---------- Glow and grid (signature) ---------- */
+.glow { position: absolute; pointer-events: none; inset: auto; z-index: 0; filter: blur(40px); }
+.glow-hero { left: 50%; top: 210px; inline-size: min(1100px, 120vw); block-size: 560px; transform: translateX(-50%); background: radial-gradient(closest-side at 40% 50%, var(--glow-a), transparent), radial-gradient(closest-side at 65% 55%, var(--glow-b), transparent); }
+/* Page heads clip their overflow, so their glow sits higher and fades out inside the head */
+.glow-head { left: 50%; top: -260px; inline-size: min(1000px, 110vw); block-size: 560px; transform: translateX(-50%); background: radial-gradient(closest-side at 45% 50%, var(--glow-a), transparent), radial-gradient(closest-side at 62% 55%, var(--glow-b), transparent); }
+.grid-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 75%); opacity: 0.5; }
+.above { position: relative; z-index: 1; }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; padding-block: clamp(64px, 10vw, 128px) 0; text-align: center; overflow: clip; }
+.pill { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 6px; border-radius: 999px; border: 1px solid var(--border-strong); background: color-mix(in oklch, var(--surface) 70%, transparent); font-size: 0.8125rem; color: var(--text-muted); text-decoration: none; box-shadow: inset 0 1px 0 var(--highlight); }
+.pill .badge { padding: 2px 8px; border-radius: 999px; background: var(--brand-soft); color: var(--text); font-weight: 600; font-size: 0.75rem; }
+.pill:hover { color: var(--text); }
+.hero h1 { margin: 24px auto 22px; max-width: 13em; }
+.hero .lead { margin: 0 auto 36px; }
+.hero .btn-row { justify-content: center; }
+
+/* ---------- Product window (signature) ---------- */
+.stage { perspective: 2000px; margin-top: clamp(56px, 8vw, 96px); padding-bottom: clamp(48px, 6vw, 80px); }
+.window { position: relative; text-align: left; border-radius: var(--r-media); border: 1px solid var(--border-strong); background: var(--surface); box-shadow: var(--shadow-overlay); overflow: hidden; transform: rotateX(12deg) scale(0.98); transform-origin: 50% 0; transition: transform 1.2s var(--ease); }
+.js .stage.is-in .window, .stage:not(.reveal) .window { transform: none; }
+.window-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 0.75rem; color: var(--text-faint); }
+.window-bar i { inline-size: 10px; block-size: 10px; border-radius: 50%; background: var(--surface-3); }
+.app { display: grid; grid-template-columns: 200px 340px 1fr; min-block-size: 440px; font-size: 0.8125rem; }
+.app-side { border-right: 1px solid var(--border); padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; background: color-mix(in oklch, var(--surface) 60%, var(--bg)); }
+.app-side .row { display: flex; align-items: center; gap: 10px; padding: 6px 8px; border-radius: 6px; color: var(--text-muted); }
+.app-side .row.on { background: var(--surface-2); color: var(--text); }
+.app-side .row .count { margin-left: auto; font-family: var(--mono); font-size: 0.6875rem; color: var(--text-faint); }
+.app-side .group { margin: 14px 8px 4px; }
+.dot { inline-size: 8px; block-size: 8px; border-radius: 50%; flex: none; background: var(--text-faint); }
+.dot.ok { background: var(--success); } .dot.warn { background: var(--warning); } .dot.bad { background: var(--danger); } .dot.brand { background: var(--brand); }
+.app-list { border-right: 1px solid var(--border); }
+.ticket { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 10px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.ticket.on { background: var(--surface-2); box-shadow: inset 2px 0 0 var(--brand); }
+.ticket .who { font-weight: 550; color: var(--text); }
+.ticket .when { font-family: var(--mono); font-size: 0.6875rem; color: var(--text-faint); }
+.ticket .subj { grid-column: 2 / 4; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ticket .tags { grid-column: 2 / 4; display: flex; gap: 6px; }
+.chiplet { font-family: var(--mono); font-size: 0.625rem; padding: 1px 6px; border-radius: 4px; border: 1px solid var(--border-strong); color: var(--text-muted); }
+.chiplet.brand { border-color: color-mix(in oklch, var(--brand) 50%, transparent); color: var(--text); background: var(--brand-soft); }
+.app-detail { padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; }
+.msg { padding: 12px 14px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-muted); line-height: 1.5; }
+.draft { border-radius: 10px; border: 1px solid color-mix(in oklch, var(--brand) 45%, transparent); background: linear-gradient(180deg, var(--brand-soft), transparent 70%); padding: 14px; }
+.draft p { margin: 8px 0 12px; color: var(--text); line-height: 1.5; }
+.draft-actions { display: flex; align-items: center; gap: 8px; }
+.meter { block-size: 4px; border-radius: 4px; background: var(--surface-3); overflow: hidden; flex: 1; max-inline-size: 120px; }
+.meter i { display: block; block-size: 100%; inline-size: 92%; background: var(--success); }
+.mini-btn { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 550; background: var(--accent); color: var(--accent-text); }
+.mini-btn.alt { background: var(--surface-3); color: var(--text); }
+.av { inline-size: 24px; block-size: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 0.625rem; font-weight: 650; background: var(--surface-3); color: var(--text); grid-row: span 2; }
+@media (max-width: 1000px) { .app { grid-template-columns: 280px 1fr; } .app-side { display: none; } }
+@media (max-width: 680px) { .app { grid-template-columns: 1fr; min-block-size: 0; } .app-detail { display: none; } .window { transform: none; } }
+
+/* ---------- Logos ---------- */
+.logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px 48px; }
+.logos span { font-weight: 650; font-size: 1.0625rem; letter-spacing: -0.02em; color: var(--text-faint); }
+.logos span:nth-child(2) { font-family: var(--mono); font-weight: 500; letter-spacing: -0.04em; }
+.logos span:nth-child(3) { font-weight: 800; letter-spacing: 0.06em; font-size: 0.875rem; }
+.logos span:nth-child(5) { font-style: italic; font-weight: 500; }
+
+/* ---------- Bento (signature) ---------- */
+.bento { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+.tile { position: relative; grid-column: span 2; padding: 24px; border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-card); overflow: hidden; display: flex; flex-direction: column; gap: 10px; min-block-size: 280px; }
+.tile.wide { grid-column: span 3; }
+.tile.full { grid-column: span 6; }
+.tile p { margin: 0; color: var(--text-muted); font-size: 0.9375rem; }
+.tile .vignette { margin-top: auto; padding-top: 20px; }
+@media (max-width: 960px) { .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tile, .tile.wide { grid-column: span 1; } .tile.full { grid-column: span 2; } }
+@media (max-width: 640px) { .bento { grid-template-columns: 1fr; } .tile, .tile.wide, .tile.full { grid-column: span 1; } }
+.stack { display: grid; gap: 8px; }
+.stack .line { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2); font-size: 0.8125rem; color: var(--text-muted); }
+.stack .line .chiplet { margin-left: auto; }
+.keys { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.keys .kbd { min-inline-size: 36px; block-size: 36px; font-size: 0.875rem; border-radius: 8px; box-shadow: inset 0 -2px 0 var(--border-strong); }
+.typing { font-size: 0.875rem; padding: 12px 14px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); }
+.caret { display: inline-block; inline-size: 2px; block-size: 1.05em; background: var(--brand); vertical-align: -2px; margin-left: 1px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.chart { inline-size: 100%; block-size: auto; color: var(--brand); }
+
+/* ---------- Steps ---------- */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--border); }
+.step { padding: 28px 28px 8px 0; }
+.step + .step { padding-left: 28px; border-left: 1px solid var(--border); }
+.step .label { display: block; margin-bottom: 14px; color: var(--brand); }
+.step p { color: var(--text-muted); margin: 8px 0 0; font-size: 0.9375rem; }
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr; } .step + .step { padding-left: 0; border-left: 0; border-top: 1px solid var(--border); } }
+.code { margin-top: 40px; border-radius: var(--r-card); border: 1px solid var(--border); background: color-mix(in oklch, var(--bg) 60%, var(--surface)); box-shadow: var(--shadow-card); overflow: hidden; }
+.code-tabs { display: flex; gap: 4px; padding: 8px; border-bottom: 1px solid var(--border); }
+.code-tabs button { padding: 6px 12px; border-radius: 6px; border: 0; background: transparent; color: var(--text-muted); font-family: var(--mono); font-size: 0.75rem; cursor: pointer; }
+.code-tabs button[aria-selected="true"] { background: var(--surface-2); color: var(--text); }
+.code-tabs .copy { margin-left: auto; }
+.code pre { margin: 0; padding: 20px; overflow-x: auto; font-family: var(--mono); font-size: 0.8125rem; line-height: 1.7; color: var(--text-muted); }
+.code .k { color: var(--brand); } .code .s { color: var(--success); } .code .c { color: var(--text-faint); }
+
+/* ---------- Numbers and quote ---------- */
+.numbers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 56px; }
+.number { padding-top: 20px; border-top: 1px solid var(--border-strong); }
+.number strong { display: block; font-size: clamp(2.25rem, 1.6rem + 2vw, 3.25rem); font-weight: 600; letter-spacing: -0.04em; line-height: 1.1; }
+.number span { color: var(--text-muted); font-size: 0.9375rem; }
+@media (max-width: 720px) { .numbers { grid-template-columns: 1fr; } }
+.big-quote { margin: 0; text-align: center; }
+.big-quote blockquote { margin: 0 auto; max-width: 30em; font-size: clamp(1.375rem, 1.05rem + 1.2vw, 2rem); font-weight: 500; letter-spacing: -0.025em; line-height: 1.35; }
+.big-quote figcaption { margin-top: 28px; display: inline-flex; align-items: center; gap: 12px; font-size: 0.9375rem; text-align: left; }
+.avatar { inline-size: 40px; block-size: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 650; font-size: 0.8125rem; background: var(--brand-soft); border: 1px solid var(--border-strong); }
+
+/* ---------- Changelog ---------- */
+.log-item { display: grid; grid-template-columns: 180px 1fr; gap: 32px; padding-block: 44px; border-top: 1px solid var(--border); }
+.log-item time { font-family: var(--mono); font-size: 0.8125rem; color: var(--text-faint); position: sticky; top: 84px; align-self: start; }
+.log-item h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 12px; }
+.log-item p { color: var(--text-muted); }
+.log-item ul { color: var(--text-muted); padding-left: 1.2em; margin: 0; display: grid; gap: 6px; }
+.log-shot { margin: 22px 0; border-radius: var(--r-card); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow-card); padding: 18px; }
+@media (max-width: 760px) { .log-item { grid-template-columns: 1fr; gap: 10px; } .log-item time { position: static; } }
+.teaser { display: grid; gap: 0; border-top: 1px solid var(--border); }
+.teaser a { display: grid; grid-template-columns: 140px 1fr auto; gap: 20px; align-items: center; padding: 18px 4px; border-bottom: 1px solid var(--border); text-decoration: none; }
+.teaser a:hover .h3 { color: var(--text); }
+.teaser .h3 { color: var(--text-muted); font-weight: 550; }
+@media (max-width: 640px) { .teaser a { grid-template-columns: 1fr auto; } .teaser time { display: none; } }
+
+/* ---------- Pricing ---------- */
+.billing { display: inline-flex; padding: 3px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); margin-bottom: 40px; }
+.billing button { min-block-size: 34px; padding: 0 14px; border-radius: 7px; border: 0; background: transparent; color: var(--text-muted); font: inherit; font-size: 0.8125rem; font-weight: 550; cursor: pointer; }
+.billing button[aria-pressed="true"] { background: var(--surface-3); color: var(--text); box-shadow: inset 0 1px 0 var(--highlight); }
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; text-align: left; }
+@media (max-width: 920px) { .plans { grid-template-columns: 1fr; max-width: 460px; margin-inline: auto; } }
+.plan { position: relative; display: flex; flex-direction: column; padding: 28px; border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-card); }
+.plan.featured { border-color: color-mix(in oklch, var(--brand) 55%, transparent); box-shadow: var(--shadow-overlay), 0 0 0 1px color-mix(in oklch, var(--brand) 25%, transparent), 0 0 80px -20px var(--glow-a); }
+.plan-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.plan .amount { font-size: 2.5rem; font-weight: 600; letter-spacing: -0.04em; margin: 18px 0 0; line-height: 1.1; }
+.plan .per { color: var(--text-muted); font-size: var(--fs-small); min-block-size: 1.5em; margin: 4px 0 0; }
+.plan ul { list-style: none; padding: 0; margin: 24px 0 28px; display: grid; gap: 12px; font-size: 0.9375rem; color: var(--text-muted); }
+.plan li { display: flex; gap: 10px; }
+.plan li .icon { color: var(--text); margin-top: 3px; }
+.plan .btn { margin-top: auto; }
+.compare { margin-top: 64px; inline-size: 100%; border-collapse: collapse; font-size: 0.9375rem; text-align: left; }
+.compare th, .compare td { padding: 14px 12px; border-bottom: 1px solid var(--border); }
+.compare thead th { font-weight: 600; }
+.compare tbody th { font-weight: 450; color: var(--text-muted); }
+.compare td { text-align: center; }
+.table-scroll { overflow-x: auto; }
+
+/* ---------- Forms ---------- */
+.form-card { padding: clamp(24px, 4vw, 36px); border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-overlay); }
+.form-grid { display: grid; gap: 18px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+.field { display: grid; gap: 6px; align-content: start; }
+.field label { font-size: 0.8125rem; font-weight: 550; color: var(--text-muted); }
+.input, .select, .textarea { inline-size: 100%; min-block-size: 42px; padding: 9px 12px; border-radius: var(--r-control); border: 1px solid var(--border-strong); background: var(--surface-2); color: var(--text); font: inherit; font-size: 0.9375rem; transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+.textarea { min-block-size: 130px; resize: vertical; }
+.input::placeholder, .textarea::placeholder { color: var(--text-faint); }
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3px color-mix(in oklch, var(--focus) 28%, transparent); }
+.input:user-invalid, .textarea:user-invalid { border-color: var(--danger); }
+.error { font-size: 0.8125rem; color: var(--danger); min-block-size: 1.2em; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.success { display: flex; gap: 12px; align-items: flex-start; padding: 18px; border-radius: var(--r-card); border: 1px solid color-mix(in oklch, var(--success) 45%, transparent); background: color-mix(in oklch, var(--success) 10%, transparent); }
+.success[hidden] { display: none; }
+.success .icon { color: var(--success); margin-top: 3px; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+.ticks { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 14px; color: var(--text-muted); }
+.ticks li { display: flex; gap: 12px; }
+.ticks .icon { color: var(--brand); margin-top: 4px; }
+
+/* ---------- FAQ ---------- */
+.faq { max-width: 760px; margin-inline: auto; }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 2px; cursor: pointer; font-weight: 550; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { color: var(--text-faint); transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(45deg); }
+.faq details p { margin: 0; padding: 0 2px 22px; color: var(--text-muted); max-width: 60ch; }
+
+/* ---------- CTA ---------- */
+.cta { position: relative; text-align: center; overflow: clip; }
+.cta .glow { left: 50%; top: 50%; inline-size: 900px; block-size: 420px; transform: translate(-50%, -50%); background: radial-gradient(closest-side, var(--glow-a), transparent); }
+.cta .btn-row { justify-content: center; margin-top: 32px; }
+
+/* ---------- Page head, legal, 404 ---------- */
+.page-head { position: relative; padding-block: clamp(64px, 9vw, 112px) clamp(32px, 4vw, 56px); overflow: clip; }
+.page-head .lead { margin-top: 18px; }
+.legal h2 { font-size: 1.125rem; margin: 32px 0 8px; }
+.legal p { color: var(--text-muted); }
+.notfound { text-align: center; padding-block: clamp(96px, 14vw, 180px); position: relative; overflow: clip; }
+.notfound .code404 { font-family: var(--mono); font-size: 0.875rem; color: var(--brand); margin-bottom: 16px; }
+
+/* ---------- Footer ---------- */
+.site-footer { border-top: 1px solid var(--border); padding-block: 56px 40px; font-size: 0.875rem; }
+.footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 32px; }
+@media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-grid > :first-child { grid-column: 1 / -1; } }
+.footer-grid h4 { font-size: 0.8125rem; font-weight: 550; margin-bottom: 14px; }
+.footer-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.footer-grid a:not(.brand) { color: var(--text-muted); text-decoration: none; }
+.footer-grid a:not(.brand):hover { color: var(--text); }
+.footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 48px; color: var(--text-faint); }
+.status { display: inline-flex; align-items: center; gap: 8px; }
+
+/* ---------- Motion ---------- */
+.js .reveal { opacity: 0; transform: translateY(16px); filter: blur(4px); transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease), filter var(--dur-slow) var(--ease); }
+.js .reveal.is-in { opacity: 1; transform: none; filter: none; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .js .reveal { transform: none; filter: none; }
+  .window { transform: none; }
+  .caret { animation: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#/" aria-label="Hexlane home"><svg aria-hidden="true"><use href="#mark"/></svg>Hexlane</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/">Product</a>
+      <a href="#/changelog">Changelog</a>
+      <a href="#/pricing">Pricing</a>
+      <a href="#/contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to light theme"><svg class="icon" aria-hidden="true"><use href="#i-sun"/></svg></button>
+      <a class="btn btn-quiet" href="#/signup">Log in</a>
+      <a class="btn btn-primary" href="#/signup">Get started</a>
+      <button class="icon-btn menu-btn" type="button" id="menu-open" aria-label="Open menu" aria-controls="menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-inner">
+    <div class="sheet-top"><span class="brand"><svg aria-hidden="true"><use href="#mark"/></svg>Hexlane</span><button class="icon-btn" type="button" id="menu-close" aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <a href="#/">Product</a><a href="#/changelog">Changelog</a><a href="#/pricing">Pricing</a><a href="#/contact">Contact</a>
+    <a class="btn btn-primary btn-lg" href="#/signup">Get started</a>
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="hero">
+    <div class="grid-bg" aria-hidden="true"></div>
+    <div class="glow glow-hero" aria-hidden="true"></div>
+    <div class="wrap above">
+      <a class="pill" href="#/changelog"><span class="badge">New</span>Agents 2.0 handle refunds end to end <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <h1 class="display gradient-text">The support inbox that answers itself.</h1>
+      <p class="lead">Hexlane reads every message, drafts the reply in your team's voice and routes the rest. Your team reviews, sends and moves on.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary btn-lg" href="#/signup">Start free trial</a>
+        <a class="btn btn-ghost btn-lg" href="#/contact">Talk to sales</a>
+      </div>
+      <div class="stage reveal">
+        <div class="window" role="img" aria-label="The Hexlane inbox: a ticket list on the left and an AI-drafted reply ready to send on the right">
+          <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span style="margin-left:8px">Inbox · Northwind support</span></div>
+          <div class="app" aria-hidden="true">
+            <div class="app-side">
+              <div class="row on"><svg class="icon icon-sm"><use href="#i-inbox"/></svg>Inbox<span class="count">24</span></div>
+              <div class="row"><svg class="icon icon-sm"><use href="#i-spark"/></svg>Drafted<span class="count">17</span></div>
+              <div class="row"><svg class="icon icon-sm"><use href="#i-user"/></svg>Assigned to me<span class="count">5</span></div>
+              <div class="row"><svg class="icon icon-sm"><use href="#i-check"/></svg>Resolved</div>
+              <span class="label group">Queues</span>
+              <div class="row"><span class="dot bad"></span>Billing<span class="count">6</span></div>
+              <div class="row"><span class="dot warn"></span>Bugs<span class="count">9</span></div>
+              <div class="row"><span class="dot ok"></span>How-to<span class="count">9</span></div>
+            </div>
+            <div class="app-list">
+              <div class="ticket on"><span class="av">LR</span><span class="who">Lena Ruiz</span><span class="when">2m</span><span class="subj">Charged twice for the March invoice</span><span class="tags"><span class="chiplet brand">Drafted</span><span class="chiplet">Billing</span></span></div>
+              <div class="ticket"><span class="av">TO</span><span class="who">Tomás Ortega</span><span class="when">6m</span><span class="subj">Export to CSV skips archived rows</span><span class="tags"><span class="chiplet">Bug</span></span></div>
+              <div class="ticket"><span class="av">KS</span><span class="who">Kenji Sato</span><span class="when">14m</span><span class="subj">How do I add a second admin?</span><span class="tags"><span class="chiplet brand">Drafted</span><span class="chiplet">How-to</span></span></div>
+              <div class="ticket"><span class="av">AB</span><span class="who">Ada Brennan</span><span class="when">31m</span><span class="subj">SSO login loops on Safari</span><span class="tags"><span class="chiplet">Bug</span><span class="chiplet">Urgent</span></span></div>
+              <div class="ticket"><span class="av">MP</span><span class="who">Maya Patel</span><span class="when">1h</span><span class="subj">Can we pay yearly by bank transfer?</span><span class="tags"><span class="chiplet brand">Drafted</span><span class="chiplet">Billing</span></span></div>
+            </div>
+            <div class="app-detail">
+              <div style="display:flex;align-items:center;gap:10px"><span class="dot bad"></span><strong style="font-size:0.9375rem">Charged twice for the March invoice</strong></div>
+              <div class="msg">Hi, I see two charges of $240 on my card for March. Can you refund one? Thanks, Lena</div>
+              <div class="draft">
+                <span class="label" style="color:var(--text)">Draft · matched to refund policy</span>
+                <p>Hi Lena, you're right: the March invoice was charged twice. I've refunded the duplicate $240; it will reach your card in 3 to 5 days. Sorry for the trouble.</p>
+                <div class="draft-actions"><span class="mini-btn">Send <span class="kbd" style="block-size:16px;font-size:0.625rem">⌘↵</span></span><span class="mini-btn alt">Edit</span><span class="meter" title="Confidence"><i></i></span><span class="mono" style="color:var(--text-faint)">92%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-block:24px 8px" aria-label="Customers">
+    <div class="wrap">
+      <p class="label" style="text-align:center;margin-bottom:24px">Answering faster at</p>
+      <div class="logos"><span>Northwind</span><span>tallyhq</span><span>FERROUS</span><span>Kestrel Labs</span><span>Openfield</span><span>Monograph</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Product</span>
+        <h2 class="h2 gradient-text">Built for the first reply, not the fifth.</h2>
+        <p class="lead">Most tickets are questions you have answered before. Hexlane answers them in your words, so your team spends time on the ones that need a person.</p>
+      </div>
+      <div class="bento">
+        <div class="tile wide reveal">
+          <h3 class="h3">Triage in seconds</h3>
+          <p>Every message is tagged, prioritized and sent to the right queue before anyone opens it.</p>
+          <div class="vignette stack" aria-hidden="true">
+            <div class="line"><span class="dot bad"></span>Refund request, card charged twice<span class="chiplet brand">Billing · P1</span></div>
+            <div class="line"><span class="dot warn"></span>Export skips archived rows<span class="chiplet">Bug · P2</span></div>
+            <div class="line"><span class="dot ok"></span>Add a second admin<span class="chiplet">How-to · P3</span></div>
+          </div>
+        </div>
+        <div class="tile wide reveal">
+          <h3 class="h3">Drafts that sound like you</h3>
+          <p>Hexlane learns from your sent replies and help center, then drafts answers your customers can't tell apart.</p>
+          <div class="vignette" aria-hidden="true"><div class="typing">Hi Kenji, you can add a second admin from Settings, then Members. Pick the person and switch their role to Admin<span class="caret"></span></div></div>
+        </div>
+        <div class="tile reveal">
+          <h3 class="h3">Keyboard first</h3>
+          <p>Triage a full queue without touching the mouse.</p>
+          <div class="vignette keys" aria-hidden="true"><span class="kbd">J</span><span class="kbd">K</span><span class="kbd">E</span><span class="kbd">⌘</span><span class="kbd">↵</span></div>
+        </div>
+        <div class="tile reveal">
+          <h3 class="h3">Your rules, always</h3>
+          <p>Refund limits, tone and escalation paths are rules you write once. Drafts never break them.</p>
+          <div class="vignette stack" aria-hidden="true"><div class="line"><svg class="icon icon-sm"><use href="#i-shield"/></svg>Refunds over $500 need approval</div></div>
+        </div>
+        <div class="tile reveal">
+          <h3 class="h3">First reply, measured</h3>
+          <p>See response time drop week by week.</p>
+          <svg class="vignette chart" viewBox="0 0 240 90" aria-hidden="true"><path d="M0 20 C40 22 60 30 90 44 S150 70 240 78" fill="none" stroke="currentColor" stroke-width="2"/><path d="M0 20 C40 22 60 30 90 44 S150 70 240 78 V90 H0Z" fill="currentColor" opacity="0.12"/><line x1="0" y1="89" x2="240" y2="89" stroke="var(--border-strong)"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">How it works</span>
+        <h2 class="h2 gradient-text">Live in an afternoon.</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><span class="label">01</span><h3 class="h3">Connect your inbox</h3><p>Forward your support address or install the widget. History imports in minutes.</p></div>
+        <div class="step reveal"><span class="label">02</span><h3 class="h3">Review the first drafts</h3><p>Approve, edit or reject. Every correction teaches it your voice.</p></div>
+        <div class="step reveal"><span class="label">03</span><h3 class="h3">Turn on auto-send</h3><p>Pick the queues where drafts go out on their own, and keep the rest for review.</p></div>
+      </div>
+      <div class="code reveal">
+        <div class="code-tabs" role="tablist" aria-label="Setup method">
+          <button type="button" role="tab" aria-selected="true" aria-controls="code-cli" id="tab-cli">Terminal</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="code-api" id="tab-api">API</button>
+          <button class="copy" type="button" data-copy aria-label="Copy code"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-copy"/></svg></button>
+        </div>
+        <pre id="code-cli" role="tabpanel" aria-labelledby="tab-cli"><span class="c"># connect your support address</span>
+<span class="k">hexlane</span> connect support@yourcompany.com
+<span class="k">hexlane</span> import --since <span class="s">"90 days"</span></pre>
+        <pre id="code-api" role="tabpanel" aria-labelledby="tab-api" hidden><span class="k">POST</span> /v1/messages
+{ <span class="s">"from"</span>: <span class="s">"lena@example.com"</span>, <span class="s">"body"</span>: <span class="s">"Charged twice for March"</span> }
+<span class="c"># 201 Created · draft ready in 1.8 s</span></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <hr class="rule">
+      <div class="numbers">
+        <div class="number reveal"><strong>4 min</strong><span>median first reply, down from 3 hours</span></div>
+        <div class="number reveal"><strong>68%</strong><span>of tickets answered from a draft</span></div>
+        <div class="number reveal"><strong>2 weeks</strong><span>to break even on the Team plan</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <figure class="big-quote reveal">
+        <blockquote class="gradient-text">“We went from a two-day backlog to inbox zero by lunch. The drafts are good enough that we mostly just hit send.”</blockquote>
+        <figcaption><span class="avatar">IN</span><span><strong>Ines Navarro</strong><br><span class="muted">Head of Support, Kestrel Labs</span></span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head" style="display:flex;justify-content:space-between;align-items:end;max-width:none;gap:24px;flex-wrap:wrap">
+        <div><span class="label">Changelog</span><h2 class="h2 gradient-text" style="margin-top:16px">Shipping every week.</h2></div>
+        <a class="btn btn-ghost" href="#/changelog">All updates <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="teaser">
+        <a href="#/changelog"><time class="mono muted" datetime="2026-11-18">Nov 18</time><span class="h3">Agents 2.0: refunds handled end to end</span><svg class="icon icon-sm muted" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a href="#/changelog"><time class="mono muted" datetime="2026-11-11">Nov 11</time><span class="h3">Shared drafts and comment threads</span><svg class="icon icon-sm muted" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a href="#/changelog"><time class="mono muted" datetime="2026-11-04">Nov 4</time><span class="h3">Faster search across 5 years of history</span><svg class="icon icon-sm muted" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" id="faq">
+    <div class="wrap">
+      <div class="section-head center"><h2 class="h2 gradient-text">Questions</h2></div>
+      <div class="faq">
+        <details><summary>Does it send replies without asking?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Only in the queues where you turn auto-send on. Everywhere else, drafts wait for a person to review them.</p></details>
+        <details><summary>Which inboxes does it work with?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Any address you can forward email from, plus the chat widget and the API.</p></details>
+        <details><summary>Where is our data stored?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>In the region you pick when you sign up. We never use your messages to train models for other customers.</p></details>
+        <details><summary>Can we try it on real tickets first?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes. The trial runs on your real inbox in draft-only mode, so nothing goes out until you say so.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="wrap above">
+      <h2 class="h1 gradient-text">Clear the queue before lunch.</h2>
+      <p class="lead" style="margin:18px auto 0">Fourteen days free on your real inbox. Drafts only until you say so.</p>
+      <div class="btn-row"><a class="btn btn-primary btn-lg" href="#/signup">Start free trial</a><a class="btn btn-ghost btn-lg" href="#/contact">Talk to sales</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CHANGELOG ===================== -->
+<div data-view="changelog">
+  <section class="page-head">
+    <div class="grid-bg" aria-hidden="true"></div>
+    <div class="wrap above"><span class="label">Changelog</span><h1 class="h1 gradient-text" style="margin-top:16px">What's new in Hexlane</h1><p class="lead">New features and fixes, every week.</p></div>
+  </section>
+  <section style="padding-bottom:96px">
+    <div class="wrap">
+      <article class="log-item" id="agents-2">
+        <time datetime="2026-11-18">November 18, 2026</time>
+        <div>
+          <h2>Agents 2.0: refunds handled end to end</h2>
+          <p>Agents can now issue refunds within the limits you set, reply to the customer and close the ticket, all in one step.</p>
+          <div class="log-shot" aria-hidden="true"><div class="stack"><div class="line"><span class="dot ok"></span>Refund of $240 issued to card ending 4242<span class="chiplet brand">Agent</span></div><div class="line"><span class="dot ok"></span>Reply sent to Lena Ruiz<span class="chiplet">0:04</span></div></div></div>
+          <ul><li>Refund limits per queue</li><li>An approval step for anything above the limit</li><li>A full audit trail on every ticket</li></ul>
+        </div>
+      </article>
+      <article class="log-item" id="shared-drafts">
+        <time datetime="2026-11-11">November 11, 2026</time>
+        <div><h2>Shared drafts and comment threads</h2><p>Leave a comment on any draft and mention a teammate. Drafts stay locked while someone edits them.</p></div>
+      </article>
+      <article class="log-item" id="search">
+        <time datetime="2026-11-04">November 4, 2026</time>
+        <div><h2>Faster search across 5 years of history</h2><p>Search now returns in under 200 ms across every message you have imported, with filters for queue, tag and customer.</p></div>
+      </article>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== PRICING ===================== -->
+<div data-view="pricing">
+  <section class="page-head" style="text-align:center">
+    <div class="glow glow-head" aria-hidden="true"></div>
+    <div class="wrap above"><span class="label">Pricing</span><h1 class="h1 gradient-text" style="margin-top:16px">Pay for seats, not for tickets.</h1><p class="lead" style="margin-inline:auto">Every plan includes unlimited drafts. Start with fourteen days free.</p></div>
+  </section>
+  <section style="padding-bottom:96px">
+    <div class="wrap" style="text-align:center">
+      <div class="billing" role="group" aria-label="Billing period"><button type="button" aria-pressed="false" data-billing="monthly">Monthly</button><button type="button" aria-pressed="true" data-billing="yearly">Yearly · save 20%</button></div>
+      <div class="plans">
+        <div class="plan" data-plan="starter">
+          <div class="plan-head"><h2 class="h3">Starter</h2></div><p class="muted" style="margin:6px 0 0;font-size:0.9375rem">For one person answering on the side.</p>
+          <p class="amount">$0</p><p class="per">free forever, 1 seat</p>
+          <ul><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>200 drafted replies a month</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>Email and chat widget</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>Basic triage</li></ul>
+          <a class="btn btn-ghost" href="#/signup?plan=starter">Start free</a>
+        </div>
+        <div class="plan featured" data-plan="team">
+          <div class="plan-head"><h2 class="h3">Team</h2><span class="chiplet brand">Most popular</span></div><p class="muted" style="margin:6px 0 0;font-size:0.9375rem">For support teams up to 50.</p>
+          <p class="amount" data-monthly="$20" data-yearly="$16">$16</p><p class="per" data-monthly="per seat per month" data-yearly="per seat per month, billed yearly">per seat per month, billed yearly</p>
+          <ul><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>Unlimited drafted replies</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>Auto-send by queue</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>Rules and approvals</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>Reporting</li></ul>
+          <a class="btn btn-primary" href="#/signup?plan=team">Start 14-day trial</a>
+        </div>
+        <div class="plan" data-plan="enterprise">
+          <div class="plan-head"><h2 class="h3">Enterprise</h2></div><p class="muted" style="margin:6px 0 0;font-size:0.9375rem">For larger teams with security reviews.</p>
+          <p class="amount">Custom</p><p class="per">annual contract</p>
+          <ul><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>Everything in Team</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>SSO and audit export</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>Data region choice</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>A named contact</li></ul>
+          <a class="btn btn-ghost" href="#/contact?topic=enterprise">Talk to sales</a>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th scope="col">Compare plans</th><th scope="col">Starter</th><th scope="col">Team</th><th scope="col">Enterprise</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Drafted replies</th><td>200 / month</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Auto-send</th><td>No</td><td>By queue</td><td>By queue</td></tr>
+            <tr><th scope="row">Rules and approvals</th><td>No</td><td>Yes</td><td>Yes</td></tr>
+            <tr><th scope="row">SSO</th><td>No</td><td>No</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== SIGN UP ===================== -->
+<div data-view="signup">
+  <section class="page-head">
+    <div class="glow glow-head" aria-hidden="true"></div>
+    <div class="wrap split above">
+      <div>
+        <span class="label">Start free</span>
+        <h1 class="h1 gradient-text" style="margin-top:16px">Try it on your real inbox.</h1>
+        <p class="lead">Fourteen days, draft-only mode, no card. You'll see your first drafts within the hour.</p>
+        <ul class="ticks"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Nothing is sent until you turn on auto-send</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Import 90 days of history</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Invite your whole team</li></ul>
+      </div>
+      <div class="form-card">
+        <form class="form-grid" data-form="signup" novalidate>
+          <div class="field"><label for="s-email">Work email</label><input class="input" id="s-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="s-email-error" placeholder="you@company.com"><span class="error" id="s-email-error" aria-live="polite"></span></div>
+          <div class="form-row">
+            <div class="field"><label for="s-company">Company</label><input class="input" id="s-company" name="company" autocomplete="organization" required aria-describedby="s-company-error"><span class="error" id="s-company-error" aria-live="polite"></span></div>
+            <div class="field"><label for="s-size">Team size</label><select class="select" id="s-size" name="size"><option>1 to 5</option><option>6 to 20</option><option>21 to 50</option><option>More than 50</option></select></div>
+          </div>
+          <div class="field"><label for="s-plan">Plan</label><select class="select" id="s-plan" name="plan"><option value="starter">Starter</option><option value="team" selected>Team (14-day trial)</option></select></div>
+          <button class="btn btn-primary btn-lg" type="submit">Create workspace</button>
+          <p class="muted" style="font-size:0.8125rem;margin:0">By continuing you agree to the <a class="text-link" href="#/terms">Terms</a> and <a class="text-link" href="#/privacy">Privacy policy</a>.</p>
+        </form>
+        <div class="success" data-success="signup" hidden role="status"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Check your inbox.</strong><p class="muted" style="margin:4px 0 0">We sent a sign-in link to the address you gave.</p></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div data-view="contact">
+  <section class="page-head">
+    <div class="wrap split">
+      <div>
+        <span class="label">Contact</span>
+        <h1 class="h1 gradient-text" style="margin-top:16px">Talk to the team.</h1>
+        <p class="lead">Questions about plans, security or a larger rollout. A person replies within one working day.</p>
+        <ul class="ticks"><li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>hello@hexlane.example</li><li><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>Security questionnaires on request</li></ul>
+      </div>
+      <div class="form-card">
+        <form class="form-grid" data-form="contact" novalidate>
+          <div class="form-row">
+            <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-error"><span class="error" id="c-name-error" aria-live="polite"></span></div>
+            <div class="field"><label for="c-email">Work email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="c-email-error"><span class="error" id="c-email-error" aria-live="polite"></span></div>
+          </div>
+          <div class="field"><label for="c-topic">Topic</label><select class="select" id="c-topic" name="topic"><option value="sales">Plans and pricing</option><option value="enterprise">Enterprise</option><option value="security">Security</option><option value="other">Something else</option></select></div>
+          <div class="field"><label for="c-message">Message</label><textarea class="textarea" id="c-message" name="message" required minlength="10" aria-describedby="c-message-error"></textarea><span class="error" id="c-message-error" aria-live="polite"></span></div>
+          <button class="btn btn-primary btn-lg" type="submit">Send message</button>
+        </form>
+        <div class="success" data-success="contact" hidden role="status"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Message received.</strong><p class="muted" style="margin:4px 0 0">We'll reply within one working day.</p></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="privacy"><section class="page-head legal narrow"><h1 class="h1">Privacy</h1><p class="lead">How Hexlane handles your data.</p><h2>What we store</h2><p>The messages you connect, your team's accounts and usage data needed to run the service.</p><h2>What we never do</h2><p>Sell your data or use your messages to train models for other customers.</p><h2>Contact</h2><p>Write to hello@hexlane.example with any question.</p></section></div>
+<div data-view="terms"><section class="page-head legal narrow"><h1 class="h1">Terms</h1><p class="lead">The short version.</p><h2>Your account</h2><p>You are responsible for the people you invite and the rules you set.</p><h2>Your content</h2><p>Your messages and drafts stay yours. Cancel any time and export everything.</p></section></div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="notfound">
+    <div class="grid-bg" aria-hidden="true"></div>
+    <div class="wrap above"><p class="code404">404</p><h1 class="h1 gradient-text">This page isn't in the queue.</h1><p class="lead" style="margin:18px auto 32px">The link may be old or mistyped.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="#/">Go home</a><a class="btn btn-ghost" href="#/changelog">See what's new</a></div></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a class="brand" href="#/"><svg aria-hidden="true"><use href="#mark"/></svg>Hexlane</a><p class="muted" style="margin-top:14px;max-width:26em">The support inbox that answers itself.</p></div>
+      <div><h4>Product</h4><ul><li><a href="#features">Features</a></li><li><a href="#/changelog">Changelog</a></li><li><a href="#/pricing">Pricing</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#/contact">Contact</a></li><li><a href="#/signup">Sign up</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="#/privacy">Privacy</a></li><li><a href="#/terms">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Hexlane Inc.</span><span class="status"><span class="dot ok"></span>All systems normal</span></div>
+  </div>
+</footer>
+
+<!-- ===================== SVG SPRITE ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="mark" viewBox="0 0 24 24"><path d="M12 2l8.66 5v10L12 22l-8.66-5V7z" fill="currentColor"/><path d="M8 9.5h8M8 14.5h8" stroke="var(--bg)" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M3 13l3-8h12l3 8v6H3zM3 13h5l1 3h6l1-3h5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6 8.5-6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h9"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: dark by default, light on request ---------- */
+  const themeButton = document.getElementById("theme-toggle");
+  function applyTheme(theme) {
+    if (theme === "light") root.dataset.theme = "light"; else delete root.dataset.theme;
+    themeButton.setAttribute("aria-label", theme === "light" ? "Switch to dark theme" : "Switch to light theme");
+    themeButton.querySelector("use").setAttribute("href", theme === "light" ? "#i-moon" : "#i-sun");
+  }
+  applyTheme(store.get("hexlane-theme") === "light" ? "light" : "dark");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "light" ? "dark" : "light";
+    applyTheme(next);
+    store.set("hexlane-theme", next);
+  });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map([...document.querySelectorAll("[data-view]")].map((el) => [el.dataset.view, el]));
+  const titles = { home: "Hexlane: the support inbox that answers itself", changelog: "Changelog · Hexlane", pricing: "Pricing · Hexlane", signup: "Start free · Hexlane", contact: "Contact · Hexlane", privacy: "Privacy · Hexlane", terms: "Terms · Hexlane", "404": "Page not found · Hexlane" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query), anchor: "" };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    document.querySelectorAll(".nav a, .sheet a:not(.btn)").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (name === "pricing") document.querySelectorAll("[data-plan]").forEach((card) => card.classList.toggle("featured", card.dataset.plan === (route.params.get("plan") || "team")));
+    if (name === "signup" && route.params.get("plan")) document.getElementById("s-plan").value = route.params.get("plan") === "starter" ? "starter" : "team";
+    if (name === "contact" && route.params.get("topic")) { const select = document.getElementById("c-topic"); if (select.querySelector(`option[value="${route.params.get("topic")}"]`)) select.value = route.params.get("topic"); }
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      event.preventDefault();
+      if (current !== views.get("home") || !document.querySelector(href)) go("#/");
+      document.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header and mobile menu ---------- */
+  const header = document.querySelector(".site-header");
+  const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  const menu = document.getElementById("menu");
+  document.getElementById("menu-open").addEventListener("click", () => menu.showModal());
+  document.getElementById("menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+
+  /* ---------- Reveal (content stays visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -10% 0px" }) : null;
+  function observeReveals(scope) {
+    scope.querySelectorAll(".reveal:not(.is-in)").forEach((el) => (io ? io.observe(el) : el.classList.add("is-in")));
+  }
+  setTimeout(() => document.querySelectorAll(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Code tabs and copy ---------- */
+  const tabs = [...document.querySelectorAll(".code-tabs [role=tab]")];
+  tabs.forEach((tab) => tab.addEventListener("click", () => {
+    tabs.forEach((t) => { const on = t === tab; t.setAttribute("aria-selected", String(on)); document.getElementById(t.getAttribute("aria-controls")).hidden = !on; });
+  }));
+  document.querySelector("[data-copy]").addEventListener("click", async (event) => {
+    const panel = document.querySelector(".code pre:not([hidden])");
+    const button = event.currentTarget;
+    try { await navigator.clipboard.writeText(panel.textContent); button.setAttribute("aria-label", "Copied"); }
+    catch { button.setAttribute("aria-label", "Copy not allowed here"); }
+    setTimeout(() => button.setAttribute("aria-label", "Copy code"), 1500);
+  });
+
+  /* ---------- Pricing ---------- */
+  function setBilling(period) {
+    document.querySelectorAll("[data-billing]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.billing === period)));
+    document.querySelectorAll(`[data-${period}]`).forEach((el) => { el.textContent = el.dataset[period]; });
+  }
+  document.querySelectorAll("[data-billing]").forEach((b) => b.addEventListener("click", () => setBilling(b.dataset.billing)));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please add a little more detail." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  document.querySelectorAll("form[data-form]").forEach((form) => {
+    form.querySelectorAll("input, textarea").forEach((field) => field.addEventListener("blur", () => checkField(field)));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames (the live demo, AI tool previews) block native submission before the submit event fires,
+       so the submit button runs the handler; Enter in a field clicks that button (implicit submission). */
+    const send = () => {
+      const fields = [...form.querySelectorAll("input, textarea")];
+      if (!fields.map(checkField).every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      const button = form.querySelector("[type=submit]");
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => { form.hidden = true; form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`).hidden = false; }, 500);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    form.querySelector("[type=submit]").addEventListener("click", (event) => { event.preventDefault(); send(); });
+  });
+
+  /* ---------- Start ---------- */
+  const start = parse(location.hash);
+  show(start, { scroll: false });
+  if (start.anchor) document.querySelector(start.anchor)?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

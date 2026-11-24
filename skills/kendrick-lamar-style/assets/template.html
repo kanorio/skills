@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Mara Quill: songs, scores and small rooms</title>
+<meta name="description" content="Mara Quill writes songs and scores for small rooms. Records, shows, a small store and notes from the studio.">
+<meta property="og:title" content="Mara Quill: songs, scores and small rooms">
+<meta property="og:description" content="Records, shows, a small store and notes from the studio.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/dm-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font: one monospace for everything, at two weights ---------- */
+@font-face { font-family: "DM Mono"; src: url("fonts/dm-mono-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "DM Mono"; src: url("fonts/dm-mono-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: a white desk, black files (light, default) ---------- */
+:root {
+  color-scheme: light;
+  --desk: oklch(100% 0 0);          /* the desk (home) and every folder page */
+  --desk-ink: oklch(15% 0 0);
+  --desk-muted: oklch(47% 0 0);
+  --desk-line: oklch(88% 0 0);
+  --desk-fill: oklch(95.5% 0 0);    /* fields and hovered chips on the desk */
+  --file: oklch(7% 0 0);            /* every page opened from a folder */
+  --file-ink: oklch(96% 0 0);
+  --file-muted: oklch(71% 0 0);
+  --file-line: oklch(31% 0 0);
+  --file-fill: oklch(14% 0 0);
+  --accent: oklch(71% 0.17 48);     /* one folder, the "new" tag, the text selection */
+  --accent-edge: oklch(45% 0.12 45);
+  --accent-ink: oklch(15% 0 0);
+  --f-grey: oklch(78% 0 0);         /* the grey folder */
+  --f-shadow: oklch(15% 0 0);       /* the one-pixel drop under every icon */
+  --dither: oklch(0% 0 0 / 0.3);    /* the checkerboard on folder fronts */
+  --error: oklch(52% 0.2 28);
+  --file-error: oklch(76% 0.14 32);
+  --mono: "DM Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --fs-display: 1.25rem;
+  --fs-h1: 0.9375rem;
+  --fs-h2: 0.8125rem;
+  --fs-body: 0.875rem;
+  --fs-small: 0.75rem;
+  --gutter: clamp(16px, 2.2vw, 32px);
+  --bar-h: 72px;
+  --dur-fast: 120ms;
+  --dur-base: 240ms;
+  --dur-slow: 480ms;
+  --ease: steps(6, end);
+  /* What the current page draws with: the desk, or a file (a file view sets these, and so does the root while a file is open) */
+  --pg: var(--desk); --ink: var(--desk-ink); --muted: var(--desk-muted); --line: var(--desk-line); --fill: var(--desk-fill); --err: var(--error);
+}
+/* ---------- Tokens: dark. The desk turns charcoal; files stay black, one step darker ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --desk: oklch(17% 0 0);
+  --desk-ink: oklch(93% 0 0);
+  --desk-muted: oklch(71% 0 0);
+  --desk-line: oklch(32% 0 0);
+  --desk-fill: oklch(22.5% 0 0);
+  --file: oklch(5% 0 0);
+  --file-ink: oklch(91% 0 0);
+  --file-muted: oklch(68% 0 0);
+  --file-line: oklch(29% 0 0);
+  --file-fill: oklch(12.5% 0 0);
+  --accent: oklch(75% 0.15 52);
+  --accent-edge: oklch(52% 0.12 48);
+  --accent-ink: oklch(14% 0 0);
+  --f-grey: oklch(50% 0 0);
+  --f-shadow: oklch(4% 0 0);
+  --dither: oklch(0% 0 0 / 0.36);
+  --error: oklch(75% 0.15 30);
+  --file-error: oklch(75% 0.15 30);
+}
+:root.on-file, .file { --pg: var(--file); --ink: var(--file-ink); --muted: var(--file-muted); --line: var(--file-line); --fill: var(--file-fill); --err: var(--file-error); }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--pg); color: var(--ink); -webkit-text-size-adjust: 100%; }
+body { position: relative; margin: 0; min-height: 100svh; display: flex; flex-direction: column; background: var(--pg); color: var(--ink); font: 400 var(--fs-body)/1.6 var(--mono); }
+main { flex: 1; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+h1, h2, h3, p, ol, ul, dl, dd, figure, fieldset { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+fieldset { border: 0; padding: 0; min-width: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a, button, summary { -webkit-tap-highlight-color: transparent; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 8px; top: -64px; z-index: 5; padding: 8px 12px; background: var(--ink); color: var(--pg); }
+.skip:focus { top: 8px; }
+.ic { width: 16px; height: 14px; fill: currentColor; shape-rendering: crispEdges; flex: none; }
+.px { shape-rendering: crispEdges; --fs: var(--f-shadow); flex: none; }
+/* The four folder colours and the document, drawn from one symbol each */
+.fd-ink { --fb: var(--ink); --fe: var(--ink); --fd: 0.45; }
+.fd-grey { --fb: var(--f-grey); --fe: var(--muted); --fd: 1; }
+.fd-paper { --fb: var(--pg); --fe: var(--muted); --fd: 0.3; }
+.fd-accent { --fb: var(--accent); --fe: var(--accent-edge); --fd: 1; }
+.doc { --fb: var(--pg); --fe: var(--ink); }
+/* Selection: a label turns into a block of ink, the way a picked file does */
+.sel { padding: 1px 5px; }
+a:hover .sel, a:focus-visible .sel, a.sel:hover, .lk:hover, .lk[aria-current="page"] { background: var(--ink); color: var(--pg); }
+.col p a.sel { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Header: three small words at the edges ---------- */
+.bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; min-height: var(--bar-h); padding: 0 var(--gutter); font-size: var(--fs-h2); }
+.lk { padding: 3px 6px; }
+.mark { justify-self: start; margin-left: -6px; font-weight: 500; }
+.nav { display: flex; gap: clamp(12px, 2.2vw, 36px); white-space: nowrap; }
+.bar-end { justify-self: end; display: flex; align-items: center; gap: 10px; margin-right: -6px; }
+.tog, .txt-btn { display: inline-grid; place-items: center; min-width: 36px; min-height: 36px; padding: 0 6px; border: 0; background: none; }
+.tog .ic { width: 18px; height: 18px; }
+.tog:hover, .txt-btn:hover { background: var(--ink); color: var(--pg); }
+#menu-open { display: none; }
+.bar.compact .nav, .bar.compact .bar-end > a { display: none; }
+.bar.compact #menu-open { display: inline-grid; }
+@media (max-width: 640px) {
+  .bar { grid-template-columns: 1fr auto; }
+  .nav, .bar-end > a { display: none; }
+  #menu-open { display: inline-grid; }
+}
+.sheet { margin: 0; width: 100%; max-width: none; height: 100%; max-height: none; border: 0; padding: 0 var(--gutter); background: var(--pg); color: var(--ink); }
+.sheet::backdrop { background: var(--pg); }
+.sheet[open] { animation: blink var(--dur-base) steps(3, end) both; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; min-height: var(--bar-h); font-size: var(--fs-h2); }
+.sheet-links { display: grid; gap: 6px; margin-top: 24px; }
+.sheet-links a { display: flex; align-items: center; gap: 16px; padding: 8px 0; font-size: 1rem; }
+.sheet-links .px { width: 34px; height: 28px; }
+.sheet-links .doc { width: 34px; height: 32px; }
+
+/* ---------- Footer: slash-separated words, centred ---------- */
+.foot { padding: 32px var(--gutter) 36px; text-align: center; font-size: var(--fs-small); color: var(--muted); }
+.foot nav { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; row-gap: 4px; }
+.foot nav a { padding: 3px 6px; }
+.foot nav a:hover { background: var(--ink); color: var(--pg); }
+.foot nav span { padding: 0 4px; }
+.foot p { margin-top: 10px; }
+
+/* ---------- The desk: a few things left on an empty table ---------- */
+.desk { position: relative; min-height: max(560px, calc(100svh - var(--bar-h) - 110px)); margin: 0 var(--gutter); }
+.it { position: absolute; left: var(--x); top: var(--y); translate: -50% 0; display: flex; flex-direction: column; align-items: center; gap: 8px; width: max-content; max-width: 160px; text-align: center; font-size: var(--fs-small); line-height: 1.4; animation: drop var(--dur-slow) steps(4, end) both; animation-delay: calc(var(--i, 0) * 90ms); }
+.it:focus-visible { outline: none; }
+.it:focus-visible .sel { outline: 2px solid var(--ink); outline-offset: 2px; }
+.it .fd { width: 68px; height: 56px; }
+.it .doc { width: 52px; height: 64px; }
+.it img { width: 88px; height: 88px; object-fit: cover; }
+.it:hover > svg, .it:hover > img { transform: translateY(-2px); }
+.new { display: inline-block; margin-right: 6px; padding: 0 4px; background: var(--accent); color: var(--accent-ink); }
+.desk-note { position: absolute; left: var(--gutter); bottom: 8px; max-width: 22ch; font-size: var(--fs-small); color: var(--muted); }
+@keyframes drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@media (max-width: 1023px) { .desk-note { display: none; } }
+@media (max-width: 640px) {
+  .desk { min-height: 760px; }
+  .it { left: var(--mx); top: var(--my); }
+}
+
+/* ---------- Folder pages: what is inside, as icons or a list ---------- */
+.folder { padding: 4px var(--gutter) 88px; }
+.crumb { display: flex; align-items: center; gap: 10px; min-height: 36px; font-size: var(--fs-small); color: var(--muted); }
+.back { display: inline-grid; place-items: center; min-width: 36px; min-height: 36px; margin-left: -10px; color: var(--ink); }
+.back:hover { background: var(--ink); color: var(--pg); }
+.back .ic { width: 16px; height: 14px; }
+.fhead { display: flex; align-items: flex-end; gap: 14px; margin-top: 36px; }
+.fhead .px { width: 34px; height: 28px; }
+.fhead h1 { font-size: var(--fs-h1); font-weight: 500; line-height: 1; }
+.count { font-size: var(--fs-small); line-height: 1; color: var(--muted); }
+.lede { max-width: 34rem; margin-top: 14px; color: var(--muted); }
+.tools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; margin: 28px 0 40px; }
+.chips, .seg { display: flex; flex-wrap: wrap; gap: 2px; }
+.chips button, .seg button, .reset { min-height: 32px; padding: 3px 8px; border: 0; background: none; font-size: var(--fs-small); }
+.chips button:hover, .seg button:hover, .reset:hover { background: var(--fill); }
+.chips button[aria-pressed="true"], .seg button[aria-pressed="true"] { background: var(--ink); color: var(--pg); }
+.chips .n { margin-left: 6px; opacity: 0.6; }
+.reset { text-decoration: underline; text-underline-offset: 3px; }
+.empty { padding: 40px 0; color: var(--muted); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 52px 24px; }
+.grid a { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; font-size: var(--fs-small); line-height: 1.4; }
+.grid img { width: 132px; height: 132px; object-fit: cover; }
+.grid a:hover img { transform: translateY(-2px); }
+.grid .m { margin-top: -6px; color: var(--muted); }
+.grid .out { text-decoration: line-through; }
+.enter { animation: blink var(--dur-base) steps(2, end) both; animation-delay: calc(var(--i, 0) * 40ms); }
+@keyframes blink { from { opacity: 0; } to { opacity: 1; } }
+.grid.as-list { grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--line); }
+.grid.as-list a { flex-direction: row; gap: 16px; padding: 8px; margin: 0 -8px; text-align: left; border-bottom: 1px solid var(--line); }
+.grid.as-list img { width: 40px; height: 40px; }
+.grid.as-list .t { flex: 1; padding: 0; }
+.grid.as-list .m { margin: 0; }
+.grid.as-list a:hover { background: var(--ink); color: var(--pg); }
+.grid.as-list a:hover .sel { background: none; }
+.grid.as-list a:hover .m { color: inherit; }
+.rows { border-top: 1px solid var(--line); }
+.rows > li { border-bottom: 1px solid var(--line); }
+.row { display: grid; grid-template-columns: 18ch 1fr auto; gap: 4px 24px; align-items: baseline; padding: 11px 8px; margin: 0 -8px; }
+.row:hover, details[open] > .row { background: var(--ink); color: var(--pg); }
+.row .k { font-size: var(--fs-small); color: var(--muted); }
+.row:hover .k, details[open] > .row .k { color: inherit; }
+.shows .row { grid-template-columns: 12ch 13ch 1fr auto; cursor: pointer; list-style: none; }
+.shows summary::-webkit-details-marker { display: none; }
+.shows .k.out { text-decoration: line-through; }
+.more { padding: 14px 0 22px calc(25ch + 48px); color: var(--muted); }
+.more p + p { margin-top: 4px; }
+@media (max-width: 640px) {
+  .row, .shows .row { grid-template-columns: 1fr auto; }
+  .row .d { grid-column: 1 / -1; font-size: var(--fs-small); color: var(--muted); }
+  .row:hover .d, details[open] > .row .d { color: inherit; }
+  .shows .row .c { grid-column: 1; }
+  .shows .row .t { grid-column: 1; grid-row: 3; }
+  .shows .row .k { grid-row: 2 / 4; grid-column: 2; align-self: center; }
+  .more { padding-left: 0; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 16px; }
+  .grid img { width: 120px; height: 120px; }
+}
+.notify { margin-top: 64px; max-width: 46rem; }
+.notify h2 { font-size: var(--fs-h2); font-weight: 500; margin-bottom: 4px; }
+.notify > p { color: var(--muted); margin-bottom: 18px; }
+.inline { display: grid; grid-template-columns: 1fr 1.4fr auto; gap: 0 12px; align-items: start; }
+.inline .btn { margin-top: calc(1.4em + 6px); }
+@media (max-width: 640px) { .inline { grid-template-columns: 1fr; } .inline .btn { margin-top: 0; justify-self: start; } }
+
+/* ---------- File pages: black, a back arrow and a date, then a narrow column ---------- */
+.file { padding: 4px var(--gutter) 88px; background: var(--pg); color: var(--ink); }
+.js .file.is-active .col { animation: blink var(--dur-base) steps(3, end) both; }
+.fbar { display: flex; align-items: center; gap: 6px; min-height: 36px; font-size: var(--fs-small); font-weight: 500; }
+.col { max-width: 31rem; margin-top: 28px; }
+.col h1 { font-size: var(--fs-h1); font-weight: 500; line-height: 1.45; margin-bottom: 22px; }
+.col h2 { font-size: var(--fs-h2); font-weight: 500; margin: 2.2em 0 0.6em; }
+.col p + p, .prose p + p { margin-top: 1.4em; }
+.meta { margin: -14px 0 26px; font-size: var(--fs-small); color: var(--muted); }
+.cover { width: 200px; height: 200px; margin-bottom: 28px; }
+.pic { width: min(240px, 100%); margin: 36px 0 0 clamp(0px, 18%, 116px); }
+.pic img { width: 100%; height: auto; }
+.pic figcaption { margin-top: 8px; font-size: var(--fs-small); color: var(--muted); }
+.sig { margin-top: 1.4em; }
+.tracks { margin: 24px 0 28px; border-top: 1px solid var(--line); counter-reset: t; }
+.tracks li { display: grid; grid-template-columns: 3ch 1fr auto; gap: 14px; padding: 6px 0; border-bottom: 1px solid var(--line); counter-increment: t; font-variant-numeric: tabular-nums; }
+.tracks li::before { content: counter(t, decimal-leading-zero); color: var(--muted); }
+.tracks .len { color: var(--muted); }
+.small { font-size: var(--fs-small); color: var(--muted); }
+.acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.next { margin-top: 56px; font-size: var(--fs-small); }
+.next a { display: inline-flex; align-items: center; gap: 8px; padding: 3px 6px; margin-left: -6px; }
+.next a:hover { background: var(--ink); color: var(--pg); }
+.facts { display: grid; grid-template-columns: 12ch 1fr; gap: 6px 16px; margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--line); font-size: var(--fs-small); }
+.facts dt { color: var(--muted); }
+.price { font-size: var(--fs-display); margin: -10px 0 18px; }
+.col .notfound { font-size: var(--fs-display); }
+
+/* ---------- Buttons and forms ---------- */
+.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 14px; border: 1px solid var(--ink); background: var(--ink); color: var(--pg); font-size: var(--fs-small); font-weight: 500; }
+.btn:hover { background: transparent; color: var(--ink); }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn.ghost:hover { background: var(--ink); color: var(--pg); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.form { display: grid; gap: 2px; margin-top: 30px; }
+.field { display: grid; gap: 6px; }
+.field > label, legend { font-size: var(--fs-small); color: var(--muted); }
+legend { margin-bottom: 8px; }
+.input { width: 100%; min-height: 40px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 0; background: var(--fill); }
+.input:hover { border-color: var(--muted); }
+.input:focus-visible { outline: 2px solid var(--ink); outline-offset: 0; border-color: var(--ink); }
+.input[aria-invalid="true"] { border-color: var(--err); }
+textarea.input { min-height: 132px; resize: vertical; }
+.select { position: relative; }
+.select select { appearance: none; padding-right: 36px; }
+.select .ic { position: absolute; right: 12px; top: 50%; translate: 0 -50%; pointer-events: none; }
+.error { min-height: 1.75em; font-size: var(--fs-small); line-height: 1.75; color: var(--err); }
+.check { display: flex; align-items: flex-start; gap: 10px; margin: 4px 0 20px; font-size: var(--fs-small); }
+input[type="checkbox"], input[type="radio"] { width: 16px; height: 16px; margin: 2px 0 0; accent-color: var(--ink); flex: none; }
+.radios { display: grid; gap: 8px; margin-bottom: 20px; }
+.radios label { display: flex; gap: 10px; align-items: flex-start; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt { position: relative; }
+.opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.opt span { display: inline-flex; align-items: center; min-height: 40px; padding: 0 12px; border: 1px solid var(--line); font-size: var(--fs-small); }
+.opt input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--pg); }
+.opt input:focus-visible + span { outline: 2px solid var(--ink); outline-offset: 2px; }
+.opt input:disabled { cursor: not-allowed; }
+.opt input:disabled + span { color: var(--muted); text-decoration: line-through; }
+.buy { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 4px; }
+.qty { display: inline-flex; border: 1px solid var(--line); }
+.qty button { width: 40px; min-height: 40px; border: 0; background: none; }
+.qty button:hover { background: var(--fill); }
+.qty input { width: 44px; border: 0; background: none; text-align: center; -moz-appearance: textfield; }
+.qty input::-webkit-inner-spin-button { display: none; }
+.status { margin-top: 14px; font-size: var(--fs-small); }
+.done { margin-top: 30px; padding: 20px; border: 1px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); }
+.done:focus { outline: none; }
+.done p + p { margin-top: 1em; }
+.done .btn { margin-top: 18px; }
+
+/* ---------- Touch screens: every control at least 44px; with a mouse the words stay compact ---------- */
+@media (pointer: coarse) {
+  .lk, .foot nav a, .next a, .sheet-links a { display: inline-flex; align-items: center; min-height: 44px; }
+  .tog, .txt-btn, .back { min-width: 44px; min-height: 44px; }
+  .chips button, .seg button, .reset { min-height: 44px; padding: 3px 10px; }
+  .btn, .opt span, .qty button, .input, .skip { min-height: 44px; }
+  .opt span, .qty button { min-width: 44px; }
+  .check, .radios label { min-height: 44px; align-items: center; margin: 0; }
+  .check input, .radios input { margin: 0; }
+}
+
+/* ---------- The folder opening into a file (added by the script, never in a screenshot) ---------- */
+.zoom { position: fixed; inset: 0; z-index: 20; background: var(--file); pointer-events: none; }
+
+/* ---------- Routing: one view at a time once the script runs; every view in order without it ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs><pattern id="dither" width="2" height="2" patternUnits="userSpaceOnUse"><path style="fill:var(--dither)" d="M0 0h1v1H0zM1 1h1v1H1z"/></pattern></defs>
+  <symbol id="i-folder" viewBox="0 0 34 28"><path style="fill:var(--fs)" d="M2 5h31v21H2z"/><path style="fill:var(--fe)" d="M3 2h9v1h1v1h18v1h1v20H1V4h1V3h1z"/><path style="fill:var(--fb)" d="M4 3h7v1h1v1h19v19H2V5h1V4h1z"/><path fill="url(#dither)" style="opacity:var(--fd)" d="M4 3h7v1h1v1h19v19H2V5h1V4h1z"/><path style="fill:var(--fe)" d="M2 8h29v1H2z"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 26 32"><path style="fill:var(--fs)" d="M5 8h19v23H5z"/><path style="fill:var(--fe)" d="M3 1h15v1h1v1h1v1h1v1h1v1h1v1h1v23H3z"/><path style="fill:var(--fb)" d="M4 2h13v7h6v20H4z"/><path style="fill:var(--fe)" d="M17 2h1v6h5v1h-6zM7 13h12v1H7zM7 16h12v1H7zM7 19h12v1H7zM7 22h8v1H7z"/></symbol>
+  <symbol id="i-back" viewBox="0 0 8 7"><path d="M0 3h8v1H0zM1 2h1v3H1zM2 1h1v1H2zM2 5h1v1H2zM3 0h1v1H3zM3 6h1v1H3z"/></symbol>
+  <symbol id="i-go" viewBox="0 0 8 7"><path d="M0 3h8v1H0zM6 2h1v3H6zM5 1h1v1H5zM5 5h1v1H5zM4 0h1v1H4zM4 6h1v1H4z"/></symbol>
+  <symbol id="i-down" viewBox="0 0 7 4"><path d="M0 0h7v1H0zM1 1h5v1H1zM2 2h3v1H2zM3 3h1v1H3z"/></symbol>
+  <symbol id="i-theme" viewBox="0 0 9 9"><path d="M3 0h3v1H3zM1 1h2v1H1zM6 1h2v1H6zM1 2h1v1H1zM7 2h1v1H7zM0 3h1v3H0zM8 3h1v3H8zM1 6h1v1H1zM7 6h1v1H7zM1 7h2v1H1zM6 7h2v1H6zM3 8h3v1H3zM1 3h4v3H1zM2 2h3v1H2zM2 6h3v1H2zM3 1h2v1H3zM3 7h2v1H3z"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <a class="lk mark" href="#/">mara quill</a>
+  <nav class="nav" aria-label="Main">
+    <a class="lk" href="#/records">records</a>
+    <a class="lk" href="#/shows">shows</a>
+    <a class="lk" href="#/store">store</a>
+    <a class="lk" href="#/notes">notes</a>
+  </nav>
+  <div class="bar-end">
+    <a class="lk" href="#/contact">contact</a>
+    <button class="tog" id="theme-toggle" type="button" aria-label="Switch to dark colours"><svg class="ic" aria-hidden="true"><use href="#i-theme"/></svg></button>
+    <button class="txt-btn" id="menu-open" type="button" aria-controls="menu">menu</button>
+  </div>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-top">
+    <a class="lk mark" href="#/">mara quill</a>
+    <button class="txt-btn" id="menu-close" type="button">close</button>
+  </div>
+  <nav class="sheet-links" aria-label="Menu">
+    <a href="#/records"><svg class="px fd-ink" aria-hidden="true"><use href="#i-folder"/></svg>records</a>
+    <a href="#/shows"><svg class="px fd-grey" aria-hidden="true"><use href="#i-folder"/></svg>shows</a>
+    <a href="#/store"><svg class="px fd-paper" aria-hidden="true"><use href="#i-folder"/></svg>store</a>
+    <a href="#/notes"><svg class="px fd-accent" aria-hidden="true"><use href="#i-folder"/></svg>notes</a>
+    <a href="#/about"><svg class="px doc" aria-hidden="true"><use href="#i-doc"/></svg>about</a>
+    <a href="#/letter"><svg class="px doc" aria-hidden="true"><use href="#i-doc"/></svg>the letter</a>
+    <a href="#/contact"><svg class="px doc" aria-hidden="true"><use href="#i-doc"/></svg>contact</a>
+  </nav>
+</dialog>
+
+<main id="main">
+
+<!-- ================= HOME: the desk ================= -->
+<div data-view="home">
+  <h1 class="sr-only">Mara Quill: songs, scores and small rooms</h1>
+  <div class="desk">
+    <a class="it" href="#/records" style="--x:56%;--y:7%;--mx:64%;--my:2%;--i:0"><svg class="px fd fd-ink" aria-hidden="true"><use href="#i-folder"/></svg><span class="sel">records</span></a>
+    <a class="it" href="#/store" style="--x:85%;--y:21%;--mx:26%;--my:15%;--i:1"><svg class="px fd fd-paper" aria-hidden="true"><use href="#i-folder"/></svg><span class="sel">store</span></a>
+    <a class="it" href="#/shows" style="--x:19%;--y:41%;--mx:70%;--my:29%;--i:2"><svg class="px fd fd-grey" aria-hidden="true"><use href="#i-folder"/></svg><span class="sel">shows</span></a>
+    <a class="it" href="#/records/low-tide-almanac" style="--x:49%;--y:44%;--mx:30%;--my:43%;--i:3"><img src="images/cover-low-tide-almanac.svg" alt="" width="300" height="300"><span class="sel"><span class="new">new</span>low tide almanac</span></a>
+    <a class="it" href="#/notes" style="--x:66%;--y:71%;--mx:72%;--my:60%;--i:4"><svg class="px fd fd-accent" aria-hidden="true"><use href="#i-folder"/></svg><span class="sel">notes</span></a>
+    <a class="it" href="#/about" style="--x:31%;--y:76%;--mx:26%;--my:73%;--i:5"><svg class="px doc" aria-hidden="true"><use href="#i-doc"/></svg><span class="sel">about</span></a>
+    <a class="it" href="#/letter" style="--x:90%;--y:63%;--mx:66%;--my:86%;--i:6"><svg class="px doc" aria-hidden="true"><use href="#i-doc"/></svg><span class="sel">the letter</span></a>
+    <p class="desk-note">low tide almanac is out march 06. nine songs, one hall.</p>
+  </div>
+</div>
+
+<!-- ================= RECORDS: a folder of covers ================= -->
+<div data-view="records" class="folder">
+  <p class="crumb"><a class="back" href="#/" aria-label="Back to the desk"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></a>desk / records</p>
+  <div class="fhead"><svg class="px fd-ink" aria-hidden="true"><use href="#i-folder"/></svg><h1>records</h1><p class="count" data-count="records" aria-live="polite">8 items</p></div>
+  <p class="lede">Albums, eps, singles and scores for dance and film, newest first.</p>
+  <div class="tools">
+    <div class="chips" data-filter="records" data-param="kind" role="group" aria-label="Show">
+      <button type="button" data-value="all" aria-pressed="true">all</button>
+      <button type="button" data-value="album" aria-pressed="false">albums</button>
+      <button type="button" data-value="ep" aria-pressed="false">eps</button>
+      <button type="button" data-value="single" aria-pressed="false">singles</button>
+      <button type="button" data-value="score" aria-pressed="false">scores</button>
+    </div>
+    <div class="seg" role="group" aria-label="Layout">
+      <button type="button" data-mode="icons" aria-pressed="true">icons</button>
+      <button type="button" data-mode="list" aria-pressed="false">list</button>
+    </div>
+  </div>
+  <ul class="grid" id="records-list" data-group="records">
+    <li data-k="album" data-slug="low-tide-almanac"><a href="#/records/low-tide-almanac"><img src="images/cover-low-tide-almanac.svg" alt="Cover of low tide almanac: an orange sun half under a dark blue sea, on sand-coloured paper" width="300" height="300"><span class="t sel">low tide almanac</span><span class="m">album · 2026</span></a></li>
+    <li data-k="ep" data-slug="glass-hours"><a href="#/records/glass-hours"><img src="images/cover-glass-hours.svg" alt="Cover of glass hours: three pale green panes of glass overlapping on dark green" width="300" height="300"><span class="t sel">glass hours</span><span class="m">ep · 2025</span></a></li>
+    <li data-k="score" data-slug="the-quiet-floor"><a href="#/records/the-quiet-floor"><img src="images/cover-the-quiet-floor.svg" alt="Cover of the quiet floor: a black line across grey paper with a small black square resting on it" width="300" height="300"><span class="t sel">the quiet floor</span><span class="m">score · 2025</span></a></li>
+    <li data-k="single" data-slug="small-weather"><a href="#/records/small-weather"><img src="images/cover-small-weather.svg" alt="Cover of small weather: two white pixel clouds and three drops of rain on pale blue" width="300" height="300"><span class="t sel">small weather</span><span class="m">single · 2025</span></a></li>
+    <li data-k="album" data-slug="orchard-at-night"><a href="#/records/orchard-at-night"><img src="images/cover-orchard-at-night.svg" alt="Cover of orchard at night: rows of grey dots on black, three of them orange" width="300" height="300"><span class="t sel">orchard at night</span><span class="m">album · 2024</span></a></li>
+    <li data-k="ep" data-slug="hand-me-down-radio"><a href="#/records/hand-me-down-radio"><img src="images/cover-hand-me-down-radio.svg" alt="Cover of hand-me-down radio: three brown arcs rising from a small square, on ochre" width="300" height="300"><span class="t sel">hand-me-down radio</span><span class="m">ep · 2023</span></a></li>
+    <li data-k="single" data-slug="salt-and-signal"><a href="#/records/salt-and-signal"><img src="images/cover-salt-and-signal.svg" alt="Cover of salt and signal: a red diagonal stripe over white above a dotted black line" width="300" height="300"><span class="t sel">salt and signal</span><span class="m">single · 2023</span></a></li>
+    <li data-k="score" data-slug="room-tone"><a href="#/records/room-tone"><img src="images/cover-room-tone.svg" alt="Cover of room tone: a dark doorway with a thin line of light, on grey" width="300" height="300"><span class="t sel">room tone</span><span class="m">score · 2022</span></a></li>
+  </ul>
+  <p class="empty" data-empty="records" hidden>Nothing in this folder yet. <button class="reset" type="button" data-reset="records">show everything</button></p>
+</div>
+
+<!-- ================= RECORD: a file ================= -->
+<div data-view="record" class="file">
+  <p class="fbar"><a class="back" href="#/records" aria-label="Back to records"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></a><time data-r="date">march 06 2026</time></p>
+  <div class="col">
+    <img class="cover" data-r="cover" src="images/cover-low-tide-almanac.svg" alt="Cover of low tide almanac: an orange sun half under a dark blue sea, on sand-coloured paper" width="300" height="300">
+    <h1 data-r="title">low tide almanac</h1>
+    <p class="meta" data-r="meta">album · 9 tracks · 41 min</p>
+    <p data-r="note">Nine songs written over one winter in a rented house by the sea, and recorded in the church hall down the road with whatever the hall already had: an upright piano, a pump organ and the room itself.</p>
+    <ol class="tracks" data-r="tracks" aria-label="Tracks">
+      <li><span>harbour light</span><span class="len">3:48</span></li><li><span>the long way down to the water</span><span class="len">5:12</span></li><li><span>salt</span><span class="len">2:57</span></li><li><span>almanac</span><span class="len">4:31</span></li><li><span>low tide</span><span class="len">6:05</span></li><li><span>paper boats</span><span class="len">3:20</span></li><li><span>what the gulls know</span><span class="len">4:46</span></li><li><span>ebb</span><span class="len">4:02</span></li><li><span>a light left on</span><span class="len">6:31</span></li>
+    </ol>
+    <p class="small" data-r="credits">Written, played and produced by Mara Quill. Strings by the Tidewater Quartet. Recorded at St Brennan's Hall, mixed by June Okafor.</p>
+    <div class="acts" data-r="buy"><a class="btn" href="#/store/almanac-lp">2 × lp, $34 <svg class="ic" aria-hidden="true"><use href="#i-go"/></svg></a><a class="btn ghost" href="#/store/almanac-tape">cassette, $12 <svg class="ic" aria-hidden="true"><use href="#i-go"/></svg></a></div>
+    <p class="next"><a data-r="next" href="#/records/glass-hours">next: <span data-r="next-t">glass hours</span> <svg class="ic" aria-hidden="true"><use href="#i-go"/></svg></a></p>
+  </div>
+</div>
+
+<!-- ================= SHOWS: a folder of dates ================= -->
+<div data-view="shows" class="folder">
+  <p class="crumb"><a class="back" href="#/" aria-label="Back to the desk"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></a>desk / shows</p>
+  <div class="fhead"><svg class="px fd-grey" aria-hidden="true"><use href="#i-folder"/></svg><h1>shows</h1><p class="count" data-count="shows" aria-live="polite">8 dates</p></div>
+  <p class="lede">Solo, with piano and pump organ, in rooms of a few hundred people. Open a date for doors, prices and how to get tickets.</p>
+  <div class="tools">
+    <div class="chips" data-filter="shows" data-param="region" role="group" aria-label="Show">
+      <button type="button" data-value="all" aria-pressed="true">everywhere</button>
+      <button type="button" data-value="europe" aria-pressed="false">europe</button>
+      <button type="button" data-value="asia" aria-pressed="false">asia</button>
+      <button type="button" data-value="oceania" aria-pressed="false">oceania</button>
+      <button type="button" data-value="americas" aria-pressed="false">americas</button>
+    </div>
+  </div>
+  <ol class="rows shows" id="shows-list" data-group="shows">
+    <li data-k="europe"><details><summary class="row"><span class="d">dec 04 2026</span><span class="c">lisbon</span><span class="t">pier 9 hall</span><span class="k">on sale</span></summary><div class="more"><p>doors 7pm · show 8pm · 24 eur · all ages</p><p>Seated. Tickets from the venue's own box office.</p></div></details></li>
+    <li data-k="europe"><details><summary class="row"><span class="d">dec 06 2026</span><span class="c">berlin</span><span class="t">kanalhalle</span><span class="k">few left</span></summary><div class="more"><p>doors 7:30pm · show 8:30pm · 28 eur · 16 and over</p><p>Standing, with a few chairs at the back. Tickets from the venue.</p></div></details></li>
+    <li data-k="asia"><details><summary class="row"><span class="d">jan 15 2027</span><span class="c">taipei</span><span class="t">riverside annex</span><span class="k">on sale</span></summary><div class="more"><p>doors 7pm · show 7:30pm · 1,200 twd · all ages</p><p>Seated. Tickets from the venue and at the door.</p></div></details></li>
+    <li data-k="asia"><details><summary class="row"><span class="d">jan 17 2027</span><span class="c">osaka</span><span class="t">hall no. 4</span><span class="k">on sale</span></summary><div class="more"><p>doors 6:30pm · show 7pm · 5,500 jpy · all ages</p><p>Seated, numbered. Tickets from the venue.</p></div></details></li>
+    <li data-k="asia"><details><summary class="row"><span class="d">jan 20 2027</span><span class="c">seoul</span><span class="t">basement two</span><span class="k out">sold out</span></summary><div class="more"><p>doors 7pm · show 8pm · 55,000 krw · 19 and over</p><p>Sold out. Returns go back on sale at the venue on the day.</p></div></details></li>
+    <li data-k="oceania"><details><summary class="row"><span class="d">feb 08 2027</span><span class="c">melbourne</span><span class="t">the long room</span><span class="k">on sale</span></summary><div class="more"><p>doors 7pm · show 8pm · 45 aud · 18 and over</p><p>Seated at long tables. Tickets from the venue.</p></div></details></li>
+    <li data-k="americas"><details><summary class="row"><span class="d">mar 02 2027</span><span class="c">montréal</span><span class="t">salle grise</span><span class="k">on sale</span></summary><div class="more"><p>doors 7pm · show 8pm · 35 cad · all ages</p><p>Seated. Tickets from the venue.</p></div></details></li>
+    <li data-k="americas"><details><summary class="row"><span class="d">mar 05 2027</span><span class="c">mexico city</span><span class="t">foro del agua</span><span class="k">free entry</span></summary><div class="more"><p>doors 5pm · show 6pm · free · all ages</p><p>An afternoon set in a record shop. First come, first in.</p></div></details></li>
+  </ol>
+  <p class="empty" data-empty="shows" hidden>No dates there yet. <button class="reset" type="button" data-reset="shows">show every date</button></p>
+  <div class="notify">
+    <h2>not near you?</h2>
+    <p>Leave a city and an email. You get one message when a date is announced nearby, nothing else.</p>
+    <form data-form="notify" novalidate>
+      <div class="inline">
+        <div class="field"><label for="n-city">city</label><input class="input" id="n-city" name="city" required autocomplete="address-level2" aria-describedby="n-city-e"><p class="error" id="n-city-e" aria-live="polite"></p></div>
+        <div class="field"><label for="n-email">email</label><input class="input" id="n-email" name="email" type="email" required autocomplete="email" aria-describedby="n-email-e"><p class="error" id="n-email-e" aria-live="polite"></p></div>
+        <button class="btn" type="submit">tell me <svg class="ic" aria-hidden="true"><use href="#i-go"/></svg></button>
+      </div>
+    </form>
+    <div class="done" data-success="notify" hidden tabindex="-1"><p>Noted. When there is a date near <span data-echo="city"></span>, one email goes to <span data-echo="email"></span>.</p><button class="btn ghost" type="button" data-again>add another city</button></div>
+  </div>
+</div>
+
+<!-- ================= STORE: a folder of things ================= -->
+<div data-view="store" class="folder">
+  <p class="crumb"><a class="back" href="#/" aria-label="Back to the desk"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></a>desk / store</p>
+  <div class="fhead"><svg class="px fd-paper" aria-hidden="true"><use href="#i-folder"/></svg><h1>store</h1><p class="count" data-count="store" aria-live="polite">6 items</p></div>
+  <p class="lede">Records, printed scores and a few things to wear, packed by hand and posted twice a week.</p>
+  <div class="tools">
+    <div class="chips" data-filter="store" data-param="kind" role="group" aria-label="Show">
+      <button type="button" data-value="all" aria-pressed="true">all</button>
+      <button type="button" data-value="records" aria-pressed="false">records</button>
+      <button type="button" data-value="paper" aria-pressed="false">paper</button>
+      <button type="button" data-value="cloth" aria-pressed="false">cloth</button>
+    </div>
+  </div>
+  <ul class="grid" id="store-list" data-group="store">
+    <li data-k="records" data-slug="almanac-lp" data-price="34"><a href="#/store/almanac-lp"><img src="images/shop-almanac-lp.svg" alt="The low tide almanac sleeve with a black record sliding out of it" width="300" height="300"><span class="t sel">low tide almanac, 2 × lp</span><span class="m">$34</span></a></li>
+    <li data-k="records" data-slug="almanac-tape" data-price="12"><a href="#/store/almanac-tape"><img src="images/shop-almanac-tape.svg" alt="A dark blue cassette with a sand-coloured label" width="300" height="300"><span class="t sel">low tide almanac, cassette</span><span class="m">$12</span></a></li>
+    <li data-k="paper" data-slug="floor-score" data-price="28"><a href="#/store/floor-score"><img src="images/shop-floor-score.svg" alt="A grey printed score with five staff lines on the cover" width="300" height="300"><span class="t sel">the quiet floor, printed score</span><span class="m">$28</span></a></li>
+    <li data-k="paper" data-slug="tide-print" data-price="40"><a href="#/store/tide-print"><img src="images/shop-tide-print.svg" alt="A risograph print of an orange circle above a blue band" width="300" height="300"><span class="t sel">tide table, risograph print</span><span class="m">$40</span></a></li>
+    <li data-k="cloth" data-slug="tide-tee" data-price="30"><a href="#/store/tide-tee"><img src="images/shop-tee.svg" alt="A white t-shirt with a small square sea-and-sun print on the chest" width="300" height="300"><span class="t sel">tide tee</span><span class="m">$30</span></a></li>
+    <li data-k="cloth" data-slug="canvas-tote" data-price="18" data-out><a href="#/store/canvas-tote"><img src="images/shop-tote.svg" alt="A natural canvas tote bag with two short lines printed near the bottom" width="300" height="300"><span class="t sel">canvas tote</span><span class="m"><span class="out">$18</span> sold out</span></a></li>
+  </ul>
+  <p class="empty" data-empty="store" hidden>Nothing here right now. <button class="reset" type="button" data-reset="store">show everything</button></p>
+</div>
+
+<!-- ================= ITEM: a file you can add to the bag ================= -->
+<div data-view="item" class="file">
+  <p class="fbar"><a class="back" href="#/store" aria-label="Back to the store"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></a><span data-i="kind">records</span></p>
+  <div class="col">
+    <img class="cover" data-i="img" src="images/shop-almanac-lp.svg" alt="The low tide almanac sleeve with a black record sliding out of it" width="300" height="300">
+    <h1 data-i="name">low tide almanac, 2 × lp</h1>
+    <p class="price" data-i="price">$34</p>
+    <p data-i="desc">Two records in a heavy sleeve, with the lyrics and a photograph of the hall printed on the inner sleeves. A download code is inside.</p>
+    <form data-form="bag" class="form" novalidate>
+      <fieldset>
+        <legend data-i="opt-label">colour</legend>
+        <div class="opts" data-i="opts"><label class="opt"><input type="radio" name="opt" value="black vinyl" aria-describedby="opt-e"><span>black vinyl</span></label><label class="opt"><input type="radio" name="opt" value="sea-blue vinyl" disabled><span>sea-blue vinyl</span></label></div>
+        <p class="error" id="opt-e" aria-live="polite"></p>
+      </fieldset>
+      <div class="buy">
+        <div class="qty"><button type="button" data-step="-1" aria-label="One fewer">-</button><label class="sr-only" for="qty">Quantity</label><input id="qty" name="qty" type="number" inputmode="numeric" min="1" max="9" value="1"><button type="button" data-step="1" aria-label="One more">+</button></div>
+        <button class="btn" type="submit" data-i="add">add to bag</button>
+      </div>
+      <p class="status" data-added role="status" hidden></p>
+    </form>
+    <dl class="facts" data-i="facts"><dt>ships</dt><dd>within four days, from the north</dd><dt>returns</dt><dd>30 days, unopened</dd><dt>pressing</dt><dd>180 g, 45 rpm</dd></dl>
+  </div>
+</div>
+
+<!-- ================= NOTES: a folder of dated writing ================= -->
+<div data-view="notes" class="folder">
+  <p class="crumb"><a class="back" href="#/" aria-label="Back to the desk"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></a>desk / notes</p>
+  <div class="fhead"><svg class="px fd-accent" aria-hidden="true"><use href="#i-folder"/></svg><h1>notes</h1><p class="count" data-count="notes" aria-live="polite">8 notes</p></div>
+  <p class="lede">Letters, studio notes and things written on trains. Newest first.</p>
+  <div class="tools">
+    <div class="chips" data-filter="notes" data-param="kind" role="group" aria-label="Show">
+      <button type="button" data-value="all" aria-pressed="true">all</button>
+      <button type="button" data-value="letters" aria-pressed="false">letters</button>
+      <button type="button" data-value="studio" aria-pressed="false">studio</button>
+      <button type="button" data-value="road" aria-pressed="false">road</button>
+    </div>
+  </div>
+  <ol class="rows" id="notes-list" data-group="notes">
+    <li data-k="studio" data-slug="church-hall"><a class="row" href="#/notes/church-hall"><span class="d">november 02 2026</span><span class="t">on recording in a church hall</span><span class="k">studio</span></a></li>
+    <li data-k="letters" data-slug="before-the-record"><a class="row" href="#/notes/before-the-record"><span class="d">october 14 2026</span><span class="t">a letter before the record</span><span class="k">letters</span></a></li>
+    <li data-k="studio" data-slug="missing-key"><a class="row" href="#/notes/missing-key"><span class="d">september 01 2026</span><span class="t">the piano with the missing key</span><span class="k">studio</span></a></li>
+    <li data-k="road" data-slug="six-rooms"><a class="row" href="#/notes/six-rooms"><span class="d">july 19 2026</span><span class="t">six nights, six rooms</span><span class="k">road</span></a></li>
+    <li data-k="letters" data-slug="no-single"><a class="row" href="#/notes/no-single"><span class="d">may 03 2026</span><span class="t">why there is no single</span><span class="k">letters</span></a></li>
+    <li data-k="studio" data-slug="for-dancers"><a class="row" href="#/notes/for-dancers"><span class="d">december 12 2025</span><span class="t">writing for dancers</span><span class="k">studio</span></a></li>
+    <li data-k="road" data-slug="trains"><a class="row" href="#/notes/trains"><span class="d">september 28 2025</span><span class="t">trains between shows</span><span class="k">road</span></a></li>
+    <li data-k="letters" data-slug="notebook"><a class="row" href="#/notes/notebook"><span class="d">june 01 2025</span><span class="t">keeping a notebook</span><span class="k">letters</span></a></li>
+  </ol>
+  <p class="empty" data-empty="notes" hidden>Nothing filed here yet. <button class="reset" type="button" data-reset="notes">show every note</button></p>
+</div>
+
+<!-- ================= NOTE: a file ================= -->
+<div data-view="note" class="file">
+  <p class="fbar"><a class="back" href="#/notes" aria-label="Back to notes"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></a><time data-n="date">november 02 2026</time></p>
+  <div class="col">
+    <h1 data-n="title">on recording in a church hall</h1>
+    <div class="prose" data-n="body">
+      <p>The hall is cold until about eleven. We learned to start with the quiet songs, while the radiators were still ticking, and leave the loud ones for the afternoon when the room had warmed up and so had we.</p>
+      <p>Nothing in the hall was bought for us. The piano is the one the Sunday school uses. The pump organ needs a second person to keep the bellows going, so most of the organ parts are played by two people, and you can hear both of them breathing.</p>
+      <p>We put two microphones at the back of the room and one by the piano, and left them there for nine days. The record sounds like that room because it is mostly that room.</p>
+    </div>
+    <figure class="pic" data-n="fig"><img data-n="img" src="images/photo-hall.svg" alt="An upright piano in a dark hall, lit by one tall window" width="400" height="300"><figcaption data-n="cap">the hall, day three</figcaption></figure>
+    <p class="sig">-mq</p>
+    <p class="next"><a data-n="next" href="#/notes/before-the-record">older: <span data-n="next-t">a letter before the record</span> <svg class="ic" aria-hidden="true"><use href="#i-go"/></svg></a></p>
+  </div>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<div data-view="about" class="file">
+  <p class="fbar"><a class="back" href="#/" aria-label="Back to the desk"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></a><span>about</span></p>
+  <div class="col">
+    <h1>about</h1>
+    <p>I write songs, and music for rooms: theatres, rehearsal floors made of plywood, a church hall with a pump organ. I live by the sea in the north and record most things within walking distance of the house.</p>
+    <p>Since 2019 I have made two albums, two eps, two singles and two scores, one for a dance piece and one for a short film. I play alone, sometimes with a string quartet, and only in rooms where people can hear each other breathe.</p>
+    <p>To put on a show, use a song or write about the music, the <a class="sel" href="#/contact">contact</a> page is the quickest way to reach me. For everything else there is <a class="sel" href="#/letter">the letter</a>.</p>
+    <figure class="pic"><img src="images/photo-studio.svg" alt="Two speakers and a tape machine on a low table in a grey room" width="400" height="300"><figcaption>the room where most of it starts</figcaption></figure>
+    <dl class="facts"><dt>based</dt><dd>a town by the sea, in the north</dd><dt>plays</dt><dd>piano, pump organ, tape</dd><dt>works with</dt><dd>dancers, film makers, small theatres</dd><dt>bookings</dt><dd>through the contact page</dd></dl>
+    <p class="sig">-mq</p>
+  </div>
+</div>
+
+<!-- ================= CONTACT ================= -->
+<div data-view="contact" class="file">
+  <p class="fbar"><a class="back" href="#/" aria-label="Back to the desk"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></a><span>contact</span></p>
+  <div class="col">
+    <h1>contact</h1>
+    <p>Bookings, press, using a song in a film or a dance piece, or anything else. I read every message myself and reply within a week.</p>
+    <form class="form" data-form="contact" novalidate>
+      <div class="field"><label for="c-name">name</label><input class="input" id="c-name" name="name" required autocomplete="name" aria-describedby="c-name-e"><p class="error" id="c-name-e" aria-live="polite"></p></div>
+      <div class="field"><label for="c-email">email</label><input class="input" id="c-email" name="email" type="email" required autocomplete="email" aria-describedby="c-email-e"><p class="error" id="c-email-e" aria-live="polite"></p></div>
+      <div class="field"><label for="c-topic">about</label><div class="select"><select class="input" id="c-topic" name="topic" required aria-describedby="c-topic-e"><option value="">choose one</option><option value="booking">a show or a booking</option><option value="press">press or an interview</option><option value="licensing">using a song</option><option value="other">something else</option></select><svg class="ic" aria-hidden="true"><use href="#i-down"/></svg></div><p class="error" id="c-topic-e" aria-live="polite"></p></div>
+      <div class="field"><label for="c-msg">message</label><textarea class="input" id="c-msg" name="message" required minlength="20" aria-describedby="c-msg-e" data-too-short="A sentence or two more, please."></textarea><p class="error" id="c-msg-e" aria-live="polite"></p></div>
+      <label class="check"><input type="checkbox" name="letter">Also send me the letter, four times a year.</label>
+      <div><button class="btn" type="submit">send <svg class="ic" aria-hidden="true"><use href="#i-go"/></svg></button></div>
+    </form>
+    <div class="done" data-success="contact" hidden tabindex="-1"><p>Thank you, <span data-echo="name"></span>. Your note about <span data-echo="topic"></span> is in.</p><p>The reply goes to <span data-echo="email"></span>, within a week.</p><button class="btn ghost" type="button" data-again>write another</button></div>
+    <p class="small" style="margin-top:40px">Or write to hello@maraquill.example.</p>
+  </div>
+</div>
+
+<!-- ================= THE LETTER: signup ================= -->
+<div data-view="letter" class="file">
+  <p class="fbar"><a class="back" href="#/" aria-label="Back to the desk"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></a><span>the letter</span></p>
+  <div class="col">
+    <h1>the letter</h1>
+    <p>Four times a year I write a letter: what I am working on, where I am playing, and one thing I have been listening to. It comes from me, it is short, and there is no other email.</p>
+    <form class="form" data-form="letter" novalidate>
+      <div class="field"><label for="l-email">email</label><input class="input" id="l-email" name="email" type="email" required autocomplete="email" aria-describedby="l-email-e"><p class="error" id="l-email-e" aria-live="polite"></p></div>
+      <div class="field"><label for="l-name">first name (optional)</label><input class="input" id="l-name" name="first" autocomplete="given-name"><p class="error"></p></div>
+      <fieldset><legend>send me</legend><div class="radios"><label><input type="radio" name="often" value="every letter" checked>every letter</label><label><input type="radio" name="often" value="only new music">only when there is new music</label></div></fieldset>
+      <div><button class="btn" type="submit">sign up <svg class="ic" aria-hidden="true"><use href="#i-go"/></svg></button></div>
+    </form>
+    <div class="done" data-success="letter" hidden tabindex="-1"><p>You are on the list. The next letter goes to <span data-echo="email"></span> (<span data-echo="often"></span>).</p><p>Every letter has a one-click way out at the bottom.</p><button class="btn ghost" type="button" data-again>add another address</button></div>
+  </div>
+</div>
+
+<!-- ================= LEGAL ================= -->
+<div data-view="legal" class="file">
+  <p class="fbar"><a class="back" href="#/" aria-label="Back to the desk"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></a><span>privacy and terms</span></p>
+  <div class="col">
+    <h1>privacy and terms</h1>
+    <p>This page is a sample. Replace it with your own text before the site goes live.</p>
+    <h2 id="privacy">privacy</h2>
+    <p>When you sign up for the letter or send a message, your email address and what you wrote are kept so that I can reply or send the letter. They are not sold or shared, and every letter has a link to leave the list.</p>
+    <p>The site keeps one setting in your browser, light or dark colours, and nothing else. There is no tracking and no advertising.</p>
+    <h2 id="terms">terms</h2>
+    <p>Prices in the store include tax where it applies; shipping is added at checkout. Orders ship within four working days. Unopened items can be returned within 30 days for a full refund.</p>
+    <p>The music, words and pictures on this site belong to their makers. Please ask before using them.</p>
+  </div>
+</div>
+
+<!-- ================= 404 ================= -->
+<div data-view="404" class="file">
+  <p class="fbar"><a class="back" href="#/" aria-label="Back to the desk"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg></a><span>404</span></p>
+  <div class="col">
+    <h1 class="notfound">file not found</h1>
+    <p>This address may be old, or the file has moved. Everything that exists is on the desk.</p>
+    <div class="acts"><a class="btn" href="#/">back to the desk</a><a class="btn ghost" href="#/notes">read the notes</a></div>
+  </div>
+</div>
+
+</main>
+
+<footer class="foot">
+  <nav aria-label="Footer"><a href="#/letter">the letter</a><span aria-hidden="true">/</span><a href="#/about">about</a><span aria-hidden="true">/</span><a href="#/contact">contact</a><span aria-hidden="true">/</span><a href="#/legal">legal</a></nav>
+  <p>© 2026 mara quill · hello@maraquill.example</p>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+  const make = (tag, cls, text) => Object.assign(document.createElement(tag), cls ? { className: cls } : {}, text != null ? { textContent: text } : {});
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+
+  /* ---------- Records: what the folder's own markup does not say. d: release date, s: tracks [title, length], n: note, c: credits, buy: store slugs ---------- */
+  const RECORDS = {
+    "low-tide-almanac": { d: "march 06 2026", s: [["harbour light", "3:48"], ["the long way down to the water", "5:12"], ["salt", "2:57"], ["almanac", "4:31"], ["low tide", "6:05"], ["paper boats", "3:20"], ["what the gulls know", "4:46"], ["ebb", "4:02"], ["a light left on", "6:31"]], n: "Nine songs written over one winter in a rented house by the sea, and recorded in the church hall down the road with whatever the hall already had: an upright piano, a pump organ and the room itself.", c: "Written, played and produced by Mara Quill. Strings by the Tidewater Quartet. Recorded at St Brennan's Hall, mixed by June Okafor.", buy: ["almanac-lp", "almanac-tape"] },
+    "glass-hours": { d: "june 20 2025", s: [["glass hours", "4:40"], ["greenhouse", "4:12"], ["condensation", "3:58"], ["noon", "4:25"], ["the panes", "4:51"]], n: "Five songs recorded in a greenhouse over one bright week in June, with the doors open and the sprinklers switched off.", c: "Written, played and produced by Mara Quill. Recorded and mixed by June Okafor." },
+    "the-quiet-floor": { d: "march 14 2025", s: [["i. entrance", "5:10"], ["ii. weight", "6:02"], ["iii. the floor", "7:44"], ["iv. lift", "4:36"], ["v. two chairs", "5:58"], ["vi. exit", "4:30"]], n: "Music for a dance piece for four dancers and two chairs. Written in the rehearsal room, a bar at a time, while the piece was being made.", c: "Commissioned for The Quiet Floor, choreographed by Ines Hale. Piano and electronics by Mara Quill.", buy: ["floor-score"] },
+    "small-weather": { d: "january 24 2025", s: [["small weather", "3:34"], ["small weather (piano)", "3:51"]], n: "One song in two versions: with the quartet, and alone at the piano the morning after.", c: "Written and produced by Mara Quill. Strings by the Tidewater Quartet." },
+    "orchard-at-night": { d: "october 04 2024", s: [["first frost", "3:30"], ["orchard at night", "4:48"], ["lantern", "3:55"], ["windfall", "4:20"], ["the ladder", "4:02"], ["cider house", "5:10"], ["owl", "2:48"], ["pickers", "4:36"], ["late fruit", "5:22"], ["the gate", "5:41"]], n: "Ten songs about one autumn picking apples, written in the evenings in a borrowed caravan.", c: "Written, played and produced by Mara Quill. Mixed by June Okafor." },
+    "hand-me-down-radio": { d: "may 12 2023", s: [["hand-me-down radio", "3:41"], ["static", "3:12"], ["kitchen table", "4:05"], ["the dial", "4:27"]], n: "Four songs played through an old kitchen radio and recorded again off its speaker.", c: "Written, played and produced by Mara Quill." },
+    "salt-and-signal": { d: "february 03 2023", s: [["salt and signal", "4:08"], ["salt and signal (live in the hall)", "4:44"]], n: "The first song written by the sea, and the same song played live the first time the hall was full.", c: "Written and produced by Mara Quill." },
+    "room-tone": { d: "september 09 2022", s: [["opening", "3:22"], ["the corridor", "4:10"], ["room tone", "2:58"], ["letters", "4:16"], ["closing", "3:40"]], n: "Five cues for a short film about an empty house. Most of the sound is the house itself, slowed down.", c: "Score for the short film Room Tone, directed by Tomas Vey. Music by Mara Quill." },
+  };
+
+  /* ---------- Store: what each item's tile does not say. l: option label, o: options [name, in stock], x: description, f: facts [term, detail] ---------- */
+  const ITEMS = {
+    "almanac-lp": { l: "colour", o: [["black vinyl", true], ["sea-blue vinyl", false]], x: "Two records in a heavy sleeve, with the lyrics and a photograph of the hall printed on the inner sleeves. A download code is inside.", f: [["ships", "within four days, from the north"], ["returns", "30 days, unopened"], ["pressing", "180 g, 45 rpm"]] },
+    "almanac-tape": { l: "shell", o: [["clear", true], ["blue", true]], x: "The whole record on one cassette, with a folded card of lyrics and a download code.", f: [["ships", "within four days"], ["returns", "30 days, unopened"], ["length", "41 minutes, both sides"]] },
+    "floor-score": { l: "binding", o: [["softcover", true], ["spiral bound", true]], x: "The full piano part of the quiet floor, with the dancers' counts written above the music. 64 pages.", f: [["ships", "within four days"], ["size", "a4, 64 pages"], ["returns", "30 days"]] },
+    "tide-print": { l: "size", o: [["a3", true], ["a2", false]], x: "A two-colour risograph print of the tide table on the back of the record, signed and numbered in an edition of 100.", f: [["ships", "rolled, in a tube"], ["paper", "uncoated, 200 g"], ["edition", "100, signed"]] },
+    "tide-tee": { l: "size", o: [["s", true], ["m", true], ["l", true], ["xl", false]], x: "Heavy white cotton with a small square print on the chest. Cut straight, a little long.", f: [["ships", "within four days"], ["fabric", "organic cotton, 220 g"], ["returns", "30 days, unworn"]] },
+    "canvas-tote": { l: "size", o: [["one size", false]], x: "A natural canvas bag big enough for two records, with a short line from a song printed near the bottom.", f: [["ships", "back in the spring"], ["fabric", "cotton canvas"]] },
+  };
+
+  /* ---------- Notes: bodies (the first note is written in the page), and a picture where there is one ---------- */
+  const NOTES = {
+    "before-the-record": { p: ["The record is finished, the sleeves are printed, and for the first time in a year I have nothing to do in the mornings.", "It comes out on march 06. If you are on this list, you will hear the first song a week before anyone else, in the next letter.", "Thank you for waiting. It took longer than I said it would, and it is better for it."], img: "images/photo-window.svg", alt: "Light from a window falling across a bare floor", cap: "the house, the last morning" },
+    "missing-key": { p: ["The piano in the hall has one key that does not play: the D above middle C. You can press it, and nothing happens.", "Half the songs on the record are in keys that avoid it. The other half are not, and you can hear the gap if you listen for it. I have decided to keep it."] },
+    "six-rooms": { p: ["Six nights in six rooms, none bigger than a school hall. Each one sounded different, so each night the songs were a little different too.", "The best room was a library with carpet on the walls. The worst was the one with the best sound system. That happens more than you would think."], img: "images/photo-road.svg", alt: "An empty road running to the horizon between telegraph poles", cap: "between the fourth and fifth rooms" },
+    "no-single": { p: ["People have asked which song is the single. There is not one. The record is meant to be heard in order, in one sitting, ideally with the lights low.", "If you only have four minutes, start with the fifth song. If you have forty, start at the beginning."] },
+    "for-dancers": { p: ["Writing for dancers is mostly counting. A phrase that feels like four bars to me is five and a half to a body moving across a floor.", "By the second week I stopped writing at the piano and started writing in the rehearsal room, with the dancers counting out loud."] },
+    "trains": { p: ["Between shows I take trains, because you can write on a train and you cannot write while driving.", "Most of orchard at night was written between two cities four hours apart, in the same seat, going back and forth."] },
+    "notebook": { p: ["I keep one notebook a year. Lyrics, train times, the names of rooms, the shopping.", "At the end of the year I read it through once and copy out the lines that still mean something. Usually there are about twenty. That is a record."] },
+  };
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the toggle is used ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light colours" : "Switch to dark colours");
+  }
+  const saved = store.get("mq-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("mq-theme", next);
+  });
+  systemDark.addEventListener("change", (event) => { if (!store.get("mq-theme")) applyTheme(event.matches ? "dark" : "light"); });
+
+  /* ---------- Header: the menu sheet whenever the words do not fit on one line ---------- */
+  const bar = $(".bar");
+  const nav = $(".nav", bar);
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  function fitNav() {
+    bar.classList.remove("compact");
+    if (getComputedStyle(nav).display !== "none" && (bar.scrollWidth > bar.clientWidth + 1 || nav.getBoundingClientRect().right > $(".bar-end", bar).getBoundingClientRect().left)) bar.classList.add("compact");
+  }
+  window.addEventListener("resize", fitNav);
+  document.fonts.ready.then(fitNav);
+  fitNav();
+
+  /* ---------- Router: #/view and #/folder/<slug>; state first, so it works when the frame refuses URL changes ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const CHILD = { records: "record", store: "item", notes: "note" };
+  const PARENT = { record: "records", item: "store", note: "notes" };
+  const titles = {
+    home: "Mara Quill: songs, scores and small rooms",
+    records: "records · mara quill", shows: "shows · mara quill", store: "store · mara quill", notes: "notes · mara quill",
+    about: "about · mara quill", contact: "contact · mara quill", letter: "the letter · mara quill",
+    legal: "privacy and terms · mara quill", "404": "file not found · mara quill",
+  };
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", slug: "", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    const [view = "", slug = ""] = path.split("/");
+    if (PARENT[view]) return { view: "404", slug: "", params: new URLSearchParams() };
+    return { view: slug && CHILD[view] ? CHILD[view] : slug ? "404" : view || "home", slug, params: new URLSearchParams(query) };
+  }
+  const isFile = (name) => (views.get(name) || views.get("404")).classList.contains("file");
+  function show(route, { scroll = true } = {}) {
+    let name = views.has(route.view) ? route.view : "404";
+    if (name === "record" && !renderRecord(route.slug)) name = "404";
+    if (name === "item" && !renderItem(route.slug)) name = "404";
+    if (name === "note" && !renderNote(route.slug)) name = "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    root.classList.toggle("on-file", isFile(name));
+    document.title = titles[name] || titles.home;
+    const active = PARENT[name] || name;
+    $$(".nav a, .bar-end a, .sheet-links a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === active) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    const chips = $(`[data-filter="${name}"]`, current);
+    if (chips) applyFilter(name, p.get(chips.dataset.param) || "all");
+    if (name === "records") setLayout(p.get("view") || store.get("mq-layout") || "icons");
+    if (name === "contact" && p.get("topic")) $("#c-topic").value = p.get("topic");
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  /* The signature move: opening a folder or a file grows a black rectangle from the icon you clicked */
+  function zoom(from, done) {
+    if (reduced.matches || !from || !document.body.animate) return done();
+    const r = from.getBoundingClientRect();
+    const w = innerWidth, h = innerHeight, c = (n) => `${Math.max(0, Math.round(n))}px`;
+    const cover = make("div", "zoom");
+    document.body.append(cover);
+    cover.animate([{ clipPath: `inset(${c(r.top)} ${c(w - r.right)} ${c(h - r.bottom)} ${c(r.left)})` }, { clipPath: "inset(0px 0px 0px 0px)" }], { duration: 280, easing: "steps(7, end)" }).onfinish = () => {
+      done();
+      cover.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: "steps(3, end)" }).onfinish = () => cover.remove();
+    };
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      const opening = current && !current.classList.contains("file") && isFile(parse(href).view);
+      if (opening) zoom($("svg, img", link) || link, () => go(href)); else go(href);
+    } else if (href.length > 1) {
+      const target = (current && current.querySelector(href)) || document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Folders: chips filter the contents and count them; the reset shows everything ---------- */
+  function applyFilter(group, value) {
+    const bar = $(`[data-filter="${group}"]`);
+    const chips = $$("button", bar);
+    const chosen = chips.some((chip) => chip.dataset.value === value) ? value : "all";
+    chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.value === chosen)));
+    let shown = 0;
+    $$(`[data-group="${group}"] > li`).forEach((item) => {
+      const match = chosen === "all" || item.dataset.k === chosen;
+      item.hidden = !match;
+      item.classList.remove("enter");
+      if (match) {
+        item.style.setProperty("--i", String(shown % 8));
+        void item.offsetWidth;
+        item.classList.add("enter");
+        shown += 1;
+      }
+    });
+    const count = $(`[data-count="${group}"]`);
+    count.textContent = `${shown} ${count.dataset.unit}${shown === 1 ? "" : "s"}`;
+    $(`[data-empty="${group}"]`).hidden = shown > 0;
+  }
+  $$("[data-filter]").forEach((bar) => {
+    const group = bar.dataset.filter;
+    const items = $$(`[data-group="${group}"] > li`);
+    $(`[data-count="${group}"]`).dataset.unit = $(`[data-count="${group}"]`).textContent.replace(/^\d+\s*|s$/g, "");
+    $$("button", bar).forEach((chip) => {
+      const n = chip.dataset.value === "all" ? items.length : items.filter((item) => item.dataset.k === chip.dataset.value).length;
+      chip.append(make("span", "n", String(n)));
+      chip.addEventListener("click", () => applyFilter(group, chip.dataset.value));
+    });
+  });
+  $$("[data-reset]").forEach((button) => button.addEventListener("click", () => applyFilter(button.dataset.reset, "all")));
+
+  /* Records as icons or as a list (remembered) */
+  function setLayout(mode) {
+    const list = mode === "list";
+    $("#records-list").classList.toggle("as-list", list);
+    $$("[data-mode]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.mode === (list ? "list" : "icons"))));
+  }
+  $$("[data-mode]").forEach((button) => button.addEventListener("click", () => { setLayout(button.dataset.mode); store.set("mq-layout", button.dataset.mode); }));
+
+  /* ---------- Record: built from its cover in the folder and the RECORDS entry ---------- */
+  const R = (key) => $(`[data-r="${key}"]`);
+  const seconds = (len) => { const [m, s] = len.split(":").map(Number); return m * 60 + s; };
+  const goIcon = () => { const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); svg.setAttribute("class", "ic"); svg.setAttribute("aria-hidden", "true"); svg.innerHTML = '<use href="#i-go"/>'; return svg; };
+  function renderRecord(slug) {
+    const list = $$("#records-list > li");
+    const i = list.findIndex((li) => li.dataset.slug === slug);
+    const data = RECORDS[slug];
+    if (i < 0 || !data) return false;
+    const li = list[i];
+    const img = $("img", li);
+    const title = $(".t", li).textContent;
+    const minutes = Math.round(data.s.reduce((sum, [, len]) => sum + seconds(len), 0) / 60);
+    R("cover").src = img.currentSrc || img.src;
+    R("cover").alt = img.alt;
+    R("title").textContent = title;
+    R("date").textContent = data.d;
+    R("meta").textContent = `${li.dataset.k} · ${data.s.length} ${data.s.length === 1 ? "track" : "tracks"} · ${minutes} min`;
+    R("note").textContent = data.n;
+    R("tracks").replaceChildren(...data.s.map(([name, len]) => { const row = make("li"); row.append(make("span", "", name), make("span", "len", len)); return row; }));
+    R("credits").textContent = data.c;
+    R("buy").replaceChildren(...(data.buy || []).map((key, n) => {
+      const tile = $(`#store-list > li[data-slug="${key}"]`);
+      const a = make("a", n ? "btn ghost" : "btn", `${$(".t", tile).textContent.split(", ").pop()}, $${tile.dataset.price} `);
+      a.href = `#/store/${key}`;
+      a.append(goIcon());
+      return a;
+    }));
+    R("buy").hidden = !data.buy;
+    const next = list[(i + 1) % list.length];
+    R("next").setAttribute("href", `#/records/${next.dataset.slug}`);
+    R("next-t").textContent = $(".t", next).textContent;
+    titles.record = `${title} · mara quill`;
+    return true;
+  }
+
+  /* ---------- Item: built from its tile in the store and the ITEMS entry ---------- */
+  const I = (key) => $(`[data-i="${key}"]`);
+  const bagForm = $('[data-form="bag"]');
+  let item = null;
+  function renderItem(slug) {
+    const tile = $(`#store-list > li[data-slug="${CSS.escape(slug)}"]`);
+    const data = ITEMS[slug];
+    if (!tile || !data) return false;
+    const img = $("img", tile);
+    const name = $(".t", tile).textContent;
+    const soldOut = data.o.every(([, ok]) => !ok);
+    item = { slug, name };
+    I("img").src = img.currentSrc || img.src;
+    I("img").alt = img.alt;
+    I("name").textContent = name;
+    I("kind").textContent = tile.dataset.k;
+    I("price").textContent = soldOut ? `$${tile.dataset.price}, sold out` : `$${tile.dataset.price}`;
+    I("desc").textContent = data.x;
+    I("opt-label").textContent = data.l;
+    I("opts").replaceChildren(...data.o.map(([label, ok], n) => {
+      const wrap = make("label", "opt");
+      const input = Object.assign(make("input"), { type: "radio", name: "opt", value: label, disabled: !ok });
+      if (n === 0) input.setAttribute("aria-describedby", "opt-e");
+      wrap.append(input, make("span", "", ok ? label : `${label}, sold out`));
+      return wrap;
+    }));
+    I("facts").replaceChildren(...data.f.flatMap(([term, detail]) => [make("dt", "", term), make("dd", "", detail)]));
+    const open = $$("input:not(:disabled)", I("opts"));
+    if (open.length === 1) open[0].checked = true;
+    I("add").disabled = soldOut;
+    I("add").textContent = soldOut ? "sold out" : "add to bag";
+    $("#opt-e").textContent = "";
+    $("#qty").value = "1";
+    $("[data-added]", bagForm).hidden = true;
+    titles.item = `${name} · mara quill`;
+    return true;
+  }
+  $$("[data-step]", bagForm).forEach((button) => button.addEventListener("click", () => {
+    const qty = $("#qty");
+    qty.value = String(Math.min(9, Math.max(1, (Number(qty.value) || 1) + Number(button.dataset.step))));
+  }));
+
+  /* ---------- Note: built from its row in the folder and the NOTES entry ---------- */
+  const N = (key) => $(`[data-n="${key}"]`);
+  const firstNote = { body: N("body").innerHTML, img: N("img").getAttribute("src"), alt: N("img").alt, cap: N("cap").textContent };
+  function renderNote(slug) {
+    const rows = $$("#notes-list > li");
+    const i = rows.findIndex((li) => li.dataset.slug === slug);
+    if (i < 0 || (i > 0 && !NOTES[slug])) return false;
+    const row = rows[i];
+    const data = i === 0 ? null : NOTES[slug];
+    N("title").textContent = $(".t", row).textContent;
+    N("date").textContent = $(".d", row).textContent;
+    if (data) N("body").replaceChildren(...data.p.map((text) => make("p", "", text))); else N("body").innerHTML = firstNote.body;
+    const pic = data ? data : firstNote;
+    N("fig").hidden = !pic.img;
+    if (pic.img) { N("img").src = pic.img; N("img").alt = pic.alt; N("cap").textContent = pic.cap; }
+    const next = rows[(i + 1) % rows.length];
+    N("next").setAttribute("href", `#/notes/${next.dataset.slug}`);
+    N("next").firstChild.textContent = i + 1 < rows.length ? "older: " : "back to the newest: ";
+    N("next-t").textContent = $(".t", next).textContent;
+    titles.note = `${$(".t", row).textContent} · mara quill`;
+    return true;
+  }
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "That does not look like an email address.", tooShort: "A little more, please." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const tooShort = field.minLength > 0 && field.value.trim().length > 0 && field.value.trim().length < field.minLength;
+    const problem = tooShort ? "tooShort" : Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? field.dataset[problem] || messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  function readable(form, name) {
+    const field = form.elements[name];
+    if (!field) return "";
+    if (field.tagName === "SELECT") return field.selectedOptions[0]?.textContent ?? "";
+    return (field.value || "").trim();
+  }
+  $$("form[data-form]").forEach((form) => {
+    form.addEventListener("submit", (event) => event.preventDefault());
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    const button = $("[type=submit]", form);
+    if (form.dataset.form === "bag") {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        const chosen = $("input[name=opt]:checked", form);
+        const error = $("#opt-e");
+        if (!chosen) { error.textContent = "Choose one first."; $("input[name=opt]:not(:disabled)", form)?.focus(); return; }
+        error.textContent = "";
+        const qty = Math.min(9, Math.max(1, Number($("#qty").value) || 1));
+        const total = (Number(store.get("mq-bag")) || 0) + qty;
+        store.set("mq-bag", String(total));
+        const status = $("[data-added]", form);
+        status.textContent = `Added ${qty} × ${item.name} (${chosen.value}). ${total} ${total === 1 ? "thing" : "things"} in your bag; checkout opens when the shop is connected.`;
+        status.hidden = false;
+      });
+      return;
+    }
+    const fields = $$("[aria-describedby]", form);
+    fields.forEach((field) => {
+      field.addEventListener(field.tagName === "SELECT" ? "change" : "blur", () => checkField(field));
+      field.addEventListener("input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+    });
+    const label = button.innerHTML;
+    const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement.closest("div"));
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (!fields.map(checkField).every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "sending…";
+      setTimeout(() => {
+        $$("[data-echo]", success).forEach((el) => { el.textContent = readable(form, el.dataset.echo); });
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+        button.disabled = false;
+        button.innerHTML = label;
+      }, 600);
+    });
+    $("[data-again]", success)?.addEventListener("click", () => {
+      form.reset();
+      fields.forEach((field) => { field.removeAttribute("aria-invalid"); document.getElementById(field.getAttribute("aria-describedby")).textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      $("input", form).focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

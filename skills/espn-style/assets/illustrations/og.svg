@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<rect width="1200" height="630" fill="#eff1f4"/>
+<rect width="1200" height="120" fill="#2b2d31"/>
+<path d="M0 0h470l-40 120H0z" fill="#cc2027"/>
+<text x="64" y="86" fill="#ffffff" font-family="Barlow Condensed, Arial Narrow, Arial, sans-serif" font-size="78" font-weight="700" font-style="italic" letter-spacing="2">TIDELINE</text>
+<rect x="64" y="190" width="1072" height="360" rx="16" fill="#ffffff"/>
+<text x="112" y="300" fill="#1f2125" font-family="Libre Franklin, Arial, sans-serif" font-size="56" font-weight="800">Scores, standings and stories</text>
+<text x="112" y="370" fill="#5b6070" font-family="Libre Franklin, Arial, sans-serif" font-size="32">Women's basketball from eight towns on the coast</text>
+<g font-family="Barlow Condensed, Arial Narrow, Arial, sans-serif" font-weight="700" font-size="40">
+<rect x="112" y="420" width="220" height="80" rx="10" fill="#eff1f4"/><text x="132" y="474" fill="#1f2125">PAG 78</text>
+<rect x="352" y="420" width="220" height="80" rx="10" fill="#eff1f4"/><text x="372" y="474" fill="#5b6070">CHC 71</text>
+<rect x="592" y="420" width="96" height="80" rx="10" fill="#cc2027"/><text x="612" y="474" fill="#ffffff" font-size="30">FINAL</text>
+</g>
+</svg>

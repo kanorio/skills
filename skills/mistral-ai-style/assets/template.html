@@ -1,0 +1,1671 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Fieldlark: forecasts for the field you farm</title>
+<meta name="description" content="Fieldlark is an independent lab building small, open forecasting models for growers and solar sites: rain, frost and sun for your own field, on our cloud or offline.">
+<meta property="og:title" content="Fieldlark: forecasts for the field you farm">
+<meta property="og:description" content="Small, open forecasting models for growers and solar sites.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/schibsted-grotesk-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "Schibsted Grotesk"; src: url("fonts/schibsted-grotesk-latin-wght.woff2") format("woff2"); font-weight: 400 900; font-display: swap; }
+@font-face { font-family: "Azeret Mono"; src: url("fonts/azeret-mono-latin-wght.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+
+/* ---------- Tokens: light by default, following the system; each color is light-dark(light, dark) ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(98.6% 0.004 95), oklch(18.6% 0.014 282));
+  --bg-2: light-dark(oklch(96.2% 0.006 90), oklch(21.4% 0.016 282));
+  --surface: light-dark(oklch(99.7% 0.002 95), oklch(23.4% 0.017 282));
+  --soft: light-dark(oklch(93.6% 0.006 90), oklch(28.4% 0.017 282));
+  --soft-2: light-dark(oklch(90.4% 0.007 90), oklch(33% 0.017 282));
+  --text: light-dark(oklch(19.5% 0.012 282), oklch(96.6% 0.005 95));
+  --text-2: light-dark(oklch(43% 0.01 282), oklch(79% 0.01 282));
+  --text-3: light-dark(oklch(53% 0.009 282), oklch(66% 0.012 282));
+  --line: light-dark(oklch(89.8% 0.006 90), oklch(31.5% 0.017 282));
+  --line-2: light-dark(oklch(80% 0.008 90), oklch(43% 0.017 282));
+  --ink: light-dark(oklch(19.5% 0.012 282), oklch(96.6% 0.005 95));
+  --ink-2: light-dark(oklch(33% 0.014 282), oklch(86% 0.006 95));
+  --on-ink: light-dark(oklch(98.6% 0.004 95), oklch(19.5% 0.012 282));
+  --band: light-dark(oklch(20.5% 0.022 282), oklch(13.8% 0.013 282));
+  --band-2: light-dark(oklch(31% 0.022 282), oklch(25% 0.017 282));
+  --code: light-dark(oklch(20.5% 0.022 282), oklch(13.8% 0.013 282));
+  /* The warm ramp, from sun to ember: stepped blocks, stripes, the popular tab, the quote card */
+  --s1: oklch(85% 0.165 85);
+  --s2: oklch(78% 0.175 66);
+  --s3: oklch(69% 0.2 45);
+  --s4: oklch(55% 0.215 30);
+  --s5: oklch(44% 0.18 20);
+  --link: light-dark(oklch(50% 0.19 36), oklch(79% 0.15 64));
+  --focus: light-dark(oklch(56% 0.21 38), oklch(80% 0.16 70));
+  --err: light-dark(oklch(50% 0.2 28), oklch(75% 0.16 32));
+  --ok: light-dark(oklch(48% 0.13 150), oklch(78% 0.15 150));
+  /* Pixel palette: the letters in the PIX maps (see the script) */
+  --pk: oklch(22% 0.015 282); --pw: oklch(99% 0.003 95); --pl: oklch(86% 0.008 282); --ps: oklch(62% 0.012 282);
+  --pb: oklch(72% 0.13 236); --pn: oklch(50% 0.15 258); --pg: oklch(72% 0.16 145); --pd: oklch(52% 0.13 150); --pt: oklch(55% 0.075 58);
+  --shadow: 0 1px 2px oklch(20% 0.02 282 / 0.06), 0 14px 32px -14px oklch(20% 0.02 282 / 0.28);
+  --fs-display: clamp(2.75rem, 1rem + 5.4vw, 6rem);
+  --fs-h1: clamp(2.5rem, 1.1rem + 3.9vw, 4.5rem);
+  --fs-h2: clamp(2rem, 1.25rem + 2.3vw, 3.25rem);
+  --fs-h3: clamp(1.25rem, 1.05rem + 0.7vw, 1.75rem);
+  --cell: clamp(48px, 8.334vw, 120px);
+  --ps: 64px;
+  --wrap: 1200px;
+  --pad: clamp(16px, 3.4vw, 40px);
+  --sec: clamp(56px, 8vw, 112px);
+  --hh: 48px;
+  /* Pixel chevron and check as masks: they take the text color and need no markup */
+  --i-chev: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 8 8%27%3E%3Cpath d=%27M1 1h1v1h1v1h1v2h-1v1h-1v1h-1v-1h1v-1h1v-2h-1v-1h-1z%27/%3E%3C/svg%3E");
+  --i-check: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 8 8%27%3E%3Cpath d=%27M7 1h1v1h-1v1h-1v1h-1v1h-1v1h-1v1h-1v-1h-1v-1h-1v-1h1v1h1v1h1v-1h1v-1h1v-1h1z%27/%3E%3C/svg%3E");
+  --r-control: 4px; --r-card: 6px; --r-panel: 8px;
+  --fast: 120ms; --base: 240ms; --slow: 560ms; --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+[data-theme="light"] { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+@media (max-width: 899px) { :root { --ps: 48px; } }
+@media (max-width: 599px) { :root { --ps: 32px; } }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 72px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.55 "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+h1, h2, h3, p, ul, ol, dl, dd, figure, blockquote, fieldset { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+fieldset { padding: 0; border: 0; min-width: 0; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+::selection { background: var(--s1); color: var(--pk); }
+.skip { position: absolute; left: 8px; top: -64px; z-index: 60; padding: 10px 14px; background: var(--ink); color: var(--on-ink); }
+.skip:focus { top: 8px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.i { width: 16px; height: 16px; flex: none; shape-rendering: crispEdges; }
+.go::after, .ch-nav a::after, .sheet nav a::after, .feat li::before, .rows li::before, td.y::before { content: ""; flex: none; width: 16px; height: 16px; background: currentColor; -webkit-mask: var(--i-chev) center / 16px no-repeat; mask: var(--i-chev) center / 16px no-repeat; }
+.feat li::before, .rows li::before, td.y::before { -webkit-mask-image: var(--i-check); mask-image: var(--i-check); }
+.px { shape-rendering: crispEdges; flex: none; }
+
+/* ---------- Type ---------- */
+.display, .h1, .h2, .h3 { font-weight: 500; text-wrap: balance; }
+.display { font-size: var(--fs-display); line-height: 0.98; letter-spacing: -0.045em; }
+.h1 { font-size: var(--fs-h1); line-height: 1; letter-spacing: -0.04em; }
+.h2 { font-size: var(--fs-h2); line-height: 1.04; letter-spacing: -0.035em; }
+.h3 { font-size: var(--fs-h3); line-height: 1.16; letter-spacing: -0.02em; }
+.lead { max-width: 46ch; font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem); line-height: 1.5; color: var(--text-2); text-wrap: pretty; }
+.muted { color: var(--text-2); }
+.small { font-size: 0.875rem; color: var(--text-2); }
+.mono, .eyebrow, .tag, code, kbd, pre { font-family: "Azeret Mono", ui-monospace, monospace; font-variant-ligatures: none; }
+.eyebrow { font-size: 0.6875rem; font-weight: 500; line-height: 1; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); }
+.tag { display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 7px; border: 0; border-radius: 2px; background: var(--soft); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text); white-space: nowrap; }
+button.tag { cursor: pointer; }
+button.tag:hover { background: var(--soft-2); }
+button.tag[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); }
+.center { text-align: center; margin-inline: auto; }
+
+/* ---------- The ruled canvas: rails, hairlines and square nodes ---------- */
+.frame { position: relative; width: min(var(--wrap), 100% - 24px); margin-inline: auto; border-inline: 1px solid var(--line); }
+.line { border-top: 1px solid var(--line); }
+.node::before, .node::after { content: ""; position: absolute; top: -3px; width: 5px; height: 5px; background: var(--text); z-index: 2; }
+.node::before { left: -3px; }
+.node::after { right: -3px; }
+.pad { padding: var(--sec) var(--pad); }
+.pad-s { padding: clamp(32px, 4vw, 48px) var(--pad); }
+.split { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px 32px; }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 14px; height: 48px; padding: 0 16px; border: 0; border-radius: var(--r-control); font-size: 1rem; font-weight: 500; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color var(--fast) var(--ease); }
+.go::after { transition: transform var(--fast) steps(2, end); }
+.go:hover::after, .sheet nav a:hover::after { transform: translateX(2px); }
+.btn-ink { background: var(--ink); color: var(--on-ink); }
+.btn-ink:hover { background: var(--ink-2); }
+.btn-soft { background: var(--soft); color: var(--text); }
+.btn-soft:hover { background: var(--soft-2); }
+.btn-sm { height: 36px; padding: 0 12px; font-size: 0.875rem; gap: 10px; }
+.btn-wide { width: 100%; justify-content: space-between; }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---------- Header: one row of boxed cells, edge to edge ---------- */
+.hd { position: sticky; top: 0; z-index: 40; display: flex; height: var(--hh); background: var(--bg); border-bottom: 1px solid var(--line); }
+.hd-nav { display: flex; }
+.hc { display: flex; align-items: center; gap: 12px; height: 100%; padding: 0 16px; border: 0; border-right: 1px solid var(--line); background: none; font-size: 0.9375rem; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color var(--fast) var(--ease); }
+a.hc:hover, button.hc:hover, .hc[aria-current="page"] { background: var(--bg-2); }
+.hc-r { border-right: 0; border-left: 1px solid var(--line); }
+.hc-icon { justify-content: center; width: var(--hh); padding: 0; }
+.brand { gap: 8px; font-size: 1.1875rem; font-weight: 600; letter-spacing: -0.03em; }
+.mark { width: 16px; height: 16px; shape-rendering: crispEdges; }
+.hd-fill { flex: 1; }
+.hd-cta { border-left: 0; background: var(--ink); color: var(--on-ink); }
+a.hd-cta:hover { background: var(--ink-2); }
+.hd-menu, html:not(.js) #theme-toggle { display: none; }
+@media (max-width: 899px) { .hd-nav, .hd-sec { display: none; } .hd-menu { display: flex; } }
+@media (max-width: 559px) { .hd-cta { display: none; } }
+.sheet { margin: 0; padding: 0; border: 0; width: 100%; max-width: 100%; height: 100dvh; max-height: 100dvh; background: var(--bg); color: var(--text); }
+.sheet::backdrop { background: oklch(0% 0 0 / 0.4); }
+.sheet-top { display: flex; height: var(--hh); border-bottom: 1px solid var(--line); }
+.sheet nav a { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid var(--line); font-size: 1.5rem; font-weight: 500; letter-spacing: -0.02em; text-decoration: none; }
+.sheet nav a[aria-current="page"] { background: var(--bg-2); }
+.sheet-cta { padding: 24px 16px; }
+
+/* ---------- Views: all render in order without JS ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.phead .pad { padding-block: clamp(48px, 7vw, 96px) clamp(40px, 5vw, 64px); }
+.phead .frame:not(.split) { display: grid; gap: 20px; justify-items: start; }
+.phead .split .h1 { max-width: 16ch; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.6875rem; }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+.crumbs li + li::before { content: "/"; margin-right: 8px; color: var(--text-3); }
+
+/* ---------- Hero: centered headline over a floor of stepped blocks ---------- */
+.hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+.hero-in { display: grid; justify-items: center; gap: 28px; padding: clamp(64px, 10vw, 136px) var(--pad) calc(var(--cell) * 2 + clamp(40px, 5vw, 64px)); text-align: center; }
+.hero .lead { margin-inline: auto; }
+.display .px { display: inline-block; width: 0.74em; height: 0.74em; margin: 0 0.06em; vertical-align: -0.04em; }
+.terrain { position: absolute; inset: 0; pointer-events: none; }
+.b { position: absolute; bottom: calc(var(--y, 0) * var(--cell)); width: calc(var(--cell) * var(--s, 1)); aspect-ratio: 1; background: var(--c); }
+.b.l { left: calc(var(--x, 0) * var(--cell)); }
+.b.r { right: calc(var(--x, 0) * var(--cell)); }
+.dia { width: calc(var(--cell) * 0.62); rotate: 45deg; }
+.sp { position: absolute; width: var(--ps); height: var(--ps); }
+@media (max-width: 599px) { .hero-in { padding-bottom: calc(var(--cell) * 3 + 24px); } .wide { display: none; } }
+
+/* Names row: invented customers set as type, never as fake logos */
+.names { display: grid; grid-template-columns: repeat(5, 1fr); }
+.names li { display: grid; place-items: center; min-height: var(--cell); padding: 16px; border-right: 1px solid var(--line); text-align: center; color: var(--text-2); font-size: 1.125rem; letter-spacing: -0.02em; }
+.names li:last-child { border-right: 0; }
+.names .n2 { font: 600 0.8125rem "Azeret Mono", monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+.names .n3 { font-weight: 800; letter-spacing: -0.05em; }
+.names .n4 { font-weight: 400; letter-spacing: 0.12em; text-transform: lowercase; }
+.names .n5 { font-weight: 600; font-size: 1rem; }
+@media (max-width: 999px) { .names { grid-template-columns: repeat(4, 1fr); } .names li:nth-child(4) { border-right: 0; } .names li:last-child { display: none; } }
+@media (max-width: 759px) { .names { grid-template-columns: 1fr 1fr; } .names li:nth-child(2n) { border-right: 0; } .names li:nth-child(n + 3) { border-top: 1px solid var(--line); } .names li:last-child { display: none; } }
+
+/* ---------- Threads: boxed chips joined by hairlines ---------- */
+.thr { position: relative; overflow: hidden; background: var(--bg-2); }
+.threads { position: absolute; inset: 0; width: 100%; height: 100%; }
+.threads path { fill: none; stroke: var(--line-2); stroke-width: 1; }
+.thr .frame { display: grid; gap: clamp(40px, 5vw, 64px); }
+.thr .h2 { max-width: 24ch; }
+.chips { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 22px; max-width: 880px; margin-inline: auto; }
+.chip { position: relative; display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 8px 18px; border: 1px solid var(--line); background: var(--surface); font-size: clamp(1.0625rem, 0.9rem + 0.8vw, 1.625rem); letter-spacing: -0.02em; }
+.chip::before, .chip::after { content: ""; position: absolute; top: calc(50% - 2px); width: 4px; height: 4px; background: var(--text); }
+.chip::before { left: -9px; }
+.chip::after { right: -9px; }
+.chip .px { width: 32px; height: 32px; }
+.chip.dim { background: var(--bg-2); color: var(--text-3); }
+
+/* ---------- Chapters: a boxed index that follows the scroll, rows of text and mosaic panels ---------- */
+.chapters { display: grid; grid-template-columns: 300px 1fr; }
+.ch-nav { position: sticky; top: calc(var(--hh) + 32px); align-self: start; margin: 32px; border: 1px solid var(--line); border-radius: var(--r-panel); overflow: hidden; }
+.ch-nav a { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--line); color: var(--text-3); text-decoration: none; }
+.ch-nav a:last-child { border-bottom: 0; }
+.ch-nav a::after { visibility: hidden; }
+.ch-nav a.is-on { color: var(--text); background: var(--surface); }
+.ch-nav a.is-on::after { visibility: visible; }
+.ch-list { border-left: 1px solid var(--line); }
+.ch { display: grid; grid-template-columns: 1fr 1.5fr; gap: 32px 40px; align-items: start; padding: 40px; border-bottom: 1px solid var(--line); }
+.ch:last-child { border-bottom: 0; }
+.ch-t { display: grid; gap: 16px; justify-items: start; }
+.ch-t p { color: var(--text-2); font-size: 1.0625rem; }
+.ch-t .btn { margin-top: 16px; }
+@media (max-width: 1099px) { .chapters { grid-template-columns: 1fr; } .ch-nav { display: none; } .ch-list { border-left: 0; } .ch { grid-template-columns: 1fr; padding: 32px var(--pad); } }
+
+/* Mosaic panel: a field of pixel tiles in one hue, with a small interface card floating on it */
+.mosaic { position: relative; display: grid; place-items: center; min-height: 340px; padding: clamp(24px, 4vw, 48px); overflow: hidden; background: var(--m0); }
+.tiles { position: absolute; inset: 0; width: 100%; height: 100%; shape-rendering: crispEdges; }
+.tiles .t1 { fill: var(--m1); }
+.tiles .t2 { fill: var(--m2); }
+.m-leaf { --m0: light-dark(oklch(82% 0.11 162), oklch(52% 0.1 162)); --m1: light-dark(oklch(89% 0.08 162), oklch(58% 0.1 162)); --m2: light-dark(oklch(73% 0.13 158), oklch(45% 0.1 160)); }
+.m-sky { --m0: light-dark(oklch(80% 0.1 240), oklch(50% 0.12 250)); --m1: light-dark(oklch(88% 0.07 236), oklch(57% 0.12 246)); --m2: light-dark(oklch(68% 0.15 250), oklch(43% 0.13 256)); }
+.m-ember { --m0: light-dark(oklch(70% 0.19 44), oklch(56% 0.19 38)); --m1: light-dark(oklch(76% 0.17 54), oklch(62% 0.18 46)); --m2: light-dark(oklch(63% 0.2 36), oklch(49% 0.18 32)); }
+.m-sun { --m0: light-dark(oklch(85% 0.15 84), oklch(74% 0.15 74)); --m1: light-dark(oklch(91% 0.1 92), oklch(80% 0.14 82)); --m2: light-dark(oklch(79% 0.16 72), oklch(67% 0.16 62)); }
+.mspr { position: absolute; z-index: 1; width: var(--ps); height: var(--ps); }
+.mcard { position: relative; z-index: 2; display: grid; gap: 14px; width: min(100%, 360px); padding: 18px; border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow); text-align: left; }
+.mcard > * { min-width: 0; }
+.mcard-f { display: flex; justify-content: space-between; gap: 8px; font-size: 0.75rem; color: var(--text-2); }
+.bars { display: flex; align-items: end; gap: 4px; height: 96px; }
+.bars i { flex: 1; height: var(--h); background: var(--pb); }
+.bars i:nth-child(n + 6):nth-child(-n + 8) { background: var(--pn); }
+.rows li { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 0.875rem; }
+.rows li:first-child { border-top: 0; padding-top: 0; }
+.rows .mono { margin-left: auto; font-size: 0.6875rem; color: var(--text-2); }
+.rows li::before { color: var(--ok); }
+.big { font-size: 2rem; font-weight: 500; line-height: 1; letter-spacing: -0.03em; }
+
+/* Code: always a dark panel; strings in sun yellow, keys in sky blue, comments muted */
+.code { position: relative; border-radius: var(--r-card); background: var(--code); color: oklch(94% 0.006 95); overflow: hidden; }
+.code-bar { display: flex; align-items: center; border-bottom: 1px solid oklch(100% 0 0 / 0.1); }
+.code-bar [role="tab"], .code-bar .eyebrow { height: 40px; padding: 0 14px; border: 0; background: none; color: oklch(76% 0.01 282); font-size: 0.75rem; cursor: pointer; }
+.code-bar .eyebrow { display: flex; align-items: center; cursor: default; }
+.code-bar [aria-selected="true"] { color: oklch(98% 0.004 95); box-shadow: inset 0 -2px var(--s2); }
+.copy { display: grid; place-items: center; width: 40px; height: 40px; margin-left: auto; border: 0; background: none; color: oklch(80% 0.01 282); cursor: pointer; }
+.copy:hover { color: oklch(98% 0.004 95); }
+pre { margin: 0; padding: 18px; overflow-x: auto; font-size: 0.8125rem; line-height: 1.7; tab-size: 2; }
+.ky { color: oklch(80% 0.11 236); }
+.st { color: var(--s1); }
+.cm { color: oklch(64% 0.012 282); }
+.mcard.code { padding: 0; gap: 0; color: oklch(94% 0.006 95); background: var(--code); border-color: oklch(100% 0 0 / 0.12); }
+
+/* ---------- Stories: tabs on the left, a fact and a solid red quote on the right ---------- */
+.stories { display: grid; grid-template-columns: 300px 1fr; }
+.st-tabs { display: grid; align-content: start; border-right: 1px solid var(--line); }
+.st-tabs [role="tab"] { position: relative; display: grid; gap: 20px; justify-items: start; min-height: 168px; padding: 28px 32px; border: 0; border-bottom: 1px solid var(--line); background: var(--bg-2); color: var(--text-3); font-size: var(--fs-h3); letter-spacing: -0.02em; text-align: left; cursor: pointer; }
+.st-tabs [role="tab"] .px { width: 32px; height: 32px; opacity: 0.55; }
+.st-tabs [aria-selected="true"] { background: var(--bg); color: var(--text); }
+.st-tabs [aria-selected="true"] .px { opacity: 1; }
+.st-tabs [aria-selected="true"]::before { content: ""; position: absolute; left: -1px; top: -1px; width: 4px; height: 32px; background: var(--s2); }
+.st-p { display: grid; grid-template-columns: 1fr 1.35fr; gap: 20px; padding: 32px; }
+.st-fact { display: grid; align-content: space-between; gap: 48px; padding: 24px; border: 1px solid var(--line); background: var(--surface); }
+.st-fact .px { width: 48px; height: 48px; }
+.st-q { display: grid; align-content: space-between; gap: 40px; padding: clamp(24px, 3vw, 32px); background: var(--s4); color: oklch(99% 0.003 95); }
+.st-q blockquote { font-size: clamp(1.375rem, 1.1rem + 1.1vw, 2.125rem); line-height: 1.18; letter-spacing: -0.025em; text-wrap: pretty; }
+.st-q figcaption { display: grid; font-size: 0.9375rem; }
+.st-q figcaption span { opacity: 0.85; }
+@media (max-width: 1099px) { .st-p { grid-template-columns: 1fr; } }
+@media (max-width: 759px) {
+  .stories { grid-template-columns: 1fr; }
+  .st-tabs { grid-template-columns: repeat(3, 1fr); border-right: 0; border-bottom: 1px solid var(--line); }
+  .st-tabs [role="tab"] { min-height: 0; padding: 14px 12px; gap: 10px; border-bottom: 0; border-right: 1px solid var(--line); font-size: 0.9375rem; }
+  .st-tabs [role="tab"]:last-child { border-right: 0; }
+  .st-tabs [aria-selected="true"]::before { width: 100%; height: 3px; }
+  .st-p { padding: 16px; }
+}
+
+/* ---------- Deep band: the one dark band on light pages ---------- */
+.deep { background: var(--band); color: oklch(96.6% 0.005 95); }
+.deep .frame, .deep .cells3 > li { border-color: var(--band-2); }
+.cells3 { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+.deep .cells3 { border-top-color: var(--band-2); }
+.cells3 > li { border-right: 1px solid var(--line); }
+.cells3 > li:last-child { border-right: 0; }
+.cells3 a, .cells3 > li > div { display: grid; grid-template-rows: auto auto 1fr; gap: 20px; height: 100%; min-height: 300px; padding: 40px; text-decoration: none; }
+.cells3 a:hover { background: oklch(100% 0 0 / 0.04); }
+.cells3 .px { width: 32px; height: 32px; }
+.cells3 p { align-self: end; max-width: 36ch; opacity: 0.8; }
+@media (max-width: 899px) { .cells3 { grid-template-columns: 1fr; } .cells3 > li { border-right: 0; border-bottom: 1px solid var(--line); } .deep .cells3 > li { border-bottom-color: var(--band-2); } .cells3 > li:last-child { border-bottom: 0; } .cells3 a, .cells3 > li > div { min-height: 0; padding: 28px var(--pad); gap: 14px; } }
+
+/* ---------- Grids of joined cards (models, posts, team) ---------- */
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); }
+.grid3 > li { box-shadow: 1px 0 var(--line), 0 1px var(--line), 1px 1px var(--line); }
+@media (max-width: 999px) { .grid3 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 639px) { .grid3 { grid-template-columns: 1fr; } }
+.card { display: grid; align-content: start; gap: 14px; height: 100%; padding: 28px; text-decoration: none; transition: background-color var(--fast) var(--ease); }
+a.card:hover { background: var(--bg-2); }
+.card .px { width: 32px; height: 32px; }
+.card p { color: var(--text-2); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.specs { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin-top: 4px; font-size: 0.875rem; }
+.specs dt { color: var(--text-3); }
+.more { display: inline-flex; align-items: center; gap: 10px; font-weight: 500; }
+.cover { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 10; overflow: hidden; background: var(--m0); }
+.cover .px { position: relative; z-index: 1; width: var(--ps); height: var(--ps); }
+.post-card { padding: 0 0 28px; }
+.post-card > :not(.cover) { margin-inline: 28px; }
+.post-card .cover { margin-bottom: 8px; }
+
+/* Toolbar: label, live count, filter tags and a search field */
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 20px var(--pad); }
+.bar .tags { gap: 8px; }
+.count { color: var(--text-2); }
+.search { position: relative; display: flex; align-items: center; margin-left: auto; }
+.search .i { position: absolute; left: 12px; color: var(--text-2); }
+.search input { width: 240px; height: 44px; padding: 0 12px 0 38px; border: 1px solid var(--line); border-radius: var(--r-control); background: var(--surface); }
+.empty { padding: 48px var(--pad); color: var(--text-2); }
+@media (max-width: 759px) { .search { margin-left: 0; width: 100%; } .search input { width: 100%; } }
+
+/* ---------- Pricing ---------- */
+.seg { display: inline-flex; padding: 4px; border-radius: var(--r-panel); background: var(--soft); }
+.seg button { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 12px; border: 0; border-radius: var(--r-control); background: none; color: var(--text-2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px oklch(20% 0.02 282 / 0.12); }
+.plans { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 40px; background: var(--line); border-block: 1px solid var(--line); }
+.plan { position: relative; display: flex; flex-direction: column; gap: 16px; padding: 28px 24px; background: var(--bg); }
+.plan.is-pop { background: var(--surface); }
+.pop { position: absolute; left: -1px; right: -1px; bottom: 100%; display: flex; align-items: center; justify-content: space-between; height: 40px; padding: 0 12px; background: var(--s4); color: oklch(99% 0.003 95); font-size: 0.9375rem; }
+.pop .px { width: 16px; height: 16px; }
+.plan-hd { display: flex; align-items: center; gap: 12px; }
+.pi { display: grid; place-items: center; width: 36px; height: 36px; background: var(--c, var(--soft)); }
+.pi .mark { width: 16px; height: 16px; }
+.plan > p:not(.price) { color: var(--text-2); }
+@media (min-width: 1100px) { .plan-hd + p { min-height: 4.65em; } }
+.price { display: flex; align-items: baseline; gap: 4px; margin-top: 8px; }
+.price b { font-size: clamp(2.5rem, 2rem + 1.4vw, 3.25rem); font-weight: 500; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.price span { color: var(--text-2); font-size: 1.125rem; }
+.feat { display: grid; gap: 10px; margin-top: 8px; font-size: 0.9375rem; }
+.feat li { display: flex; gap: 10px; }
+.feat li::before { margin-top: 4px; }
+.plan .btn { margin-top: auto; }
+@media (max-width: 1099px) { .plans { grid-template-columns: 1fr 1fr; } .plan.is-pop { margin-top: 40px; } }
+@media (max-width: 639px) { .plans { grid-template-columns: 1fr; } }
+.tbl-wrap { position: relative; overflow-x: auto; }
+.cmp { width: 100%; min-width: 720px; border-collapse: collapse; font-size: 0.9375rem; }
+td.y { font-size: 0; }
+td.y::before { display: block; font-size: 1rem; }
+.cmp th, .cmp td { height: 60px; padding: 0 20px; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; }
+.cmp thead th { height: 72px; font-size: var(--fs-h3); font-weight: 500; letter-spacing: -0.02em; }
+.cmp td:nth-child(even), .cmp thead th:nth-child(even) { background: var(--bg-2); }
+.cmp th[scope="row"] { width: 28%; background: none; }
+.cmp .grp th { height: 88px; padding-top: 28px; font-size: var(--fs-h3); font-weight: 500; letter-spacing: -0.02em; background: none; vertical-align: bottom; }
+.no { color: var(--text-3); }
+.qa { border-top: 1px solid var(--line); }
+.qa:last-child { border-bottom: 1px solid var(--line); }
+.qa summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; font-size: 1.1875rem; font-weight: 500; letter-spacing: -0.015em; cursor: pointer; list-style: none; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary .i { transition: rotate var(--base) steps(2, end); }
+.qa[open] summary .i { rotate: 45deg; }
+.qa p { max-width: 64ch; padding-bottom: 22px; color: var(--text-2); }
+.faq { display: grid; grid-template-columns: 1fr 2fr; gap: 32px; }
+@media (max-width: 899px) { .faq { grid-template-columns: 1fr; } }
+
+/* ---------- Docs ---------- */
+.docs { display: grid; grid-template-columns: 260px minmax(0, 1fr) 220px; }
+.d-side { border-right: 1px solid var(--line); }
+.d-menu > summary { display: none; }
+.d-in { position: sticky; top: var(--hh); display: grid; gap: 24px; padding: 28px 20px; }
+.d-in .search { margin: 0; }
+.d-in .search input { width: 100%; }
+.d-grp { display: grid; gap: 2px; }
+.d-grp .eyebrow { margin-bottom: 8px; }
+.d-grp a { padding: 6px 10px; border-radius: var(--r-control); color: var(--text-2); font-size: 0.9375rem; text-decoration: none; }
+.d-grp a:hover { background: var(--bg-2); color: var(--text); }
+.d-grp a.is-on { background: var(--soft); color: var(--text); }
+kbd { padding: 1px 5px; border: 1px solid var(--line); border-radius: 3px; font-size: 0.6875rem; color: var(--text-2); }
+.doc { display: grid; gap: 22px; align-content: start; min-width: 0; padding: 40px clamp(16px, 4vw, 56px) 64px; }
+.doc h2 { margin-top: 20px; font-size: 1.625rem; font-weight: 500; letter-spacing: -0.025em; }
+.doc p, .doc li { color: var(--text-2); max-width: 68ch; }
+.doc :not(pre) > code { padding: 1px 5px; border-radius: 3px; background: var(--soft); font-size: 0.875em; color: var(--text); }
+.note { display: flex; gap: 14px; padding: 16px 18px; border: 1px solid var(--line); border-left: 4px solid var(--s2); background: var(--bg-2); }
+.note .px { width: 32px; height: 32px; }
+.note p { color: var(--text); }
+.ptbl { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.ptbl th, .ptbl td { padding: 12px 14px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+.ptbl th { font-weight: 500; background: var(--bg-2); }
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 24px; background: var(--line); border: 1px solid var(--line); }
+.pager a { display: grid; gap: 4px; padding: 18px 20px; background: var(--bg); text-decoration: none; }
+.pager a:hover { background: var(--bg-2); }
+.pager a + a { text-align: right; }
+.fb { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; color: var(--text-2); }
+.toc { padding: 40px 20px; border-left: 1px solid var(--line); }
+.toc ol { position: sticky; top: calc(var(--hh) + 40px); display: grid; gap: 8px; font-size: 0.875rem; }
+.toc .eyebrow { margin-bottom: 6px; }
+.toc a { color: var(--text-2); text-decoration: none; }
+.toc a:hover { color: var(--text); }
+@media (max-width: 1199px) { .docs { grid-template-columns: 240px minmax(0, 1fr); } .toc { display: none; } }
+@media (max-width: 899px) {
+  .docs { grid-template-columns: 1fr; }
+  .d-side { border-right: 0; border-bottom: 1px solid var(--line); }
+  .d-menu > summary { display: flex; align-items: center; justify-content: space-between; padding: 14px var(--pad); font-weight: 500; cursor: pointer; list-style: none; }
+  .d-menu > summary::-webkit-details-marker { display: none; }
+  .d-in { position: static; padding-top: 4px; }
+}
+
+/* ---------- Research ---------- */
+.feature-post { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); text-decoration: none; }
+.feature-post > div:first-child { display: grid; align-content: start; justify-items: start; gap: 18px; padding: 40px; }
+.feature-post p { color: var(--text-2); font-size: 1.125rem; }
+.feature-post .cover { aspect-ratio: auto; min-height: 360px; }
+.feature-post .cover .px { width: calc(var(--ps) * 2); height: calc(var(--ps) * 2); }
+.feature-post:hover > div:first-child { background: var(--bg-2); }
+@media (max-width: 899px) { .feature-post { grid-template-columns: 1fr; } .feature-post > div:first-child { padding: 28px var(--pad); } .feature-post .cover { min-height: 240px; } }
+
+/* Article */
+.art { display: grid; justify-items: start; gap: 24px; max-width: 760px; margin-inline: auto; padding: var(--sec) var(--pad); }
+.byline { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; color: var(--text-2); font-size: 0.9375rem; }
+.av { display: grid; place-items: center; width: 40px; height: 40px; background: var(--c, var(--s2)); color: var(--pk); font: 600 0.75rem "Azeret Mono", monospace; }
+.prose { display: grid; justify-items: stretch; gap: 20px; font-size: 1.125rem; line-height: 1.65; }
+.prose h2 { margin-top: 24px; font-size: 1.75rem; font-weight: 500; line-height: 1.15; letter-spacing: -0.025em; }
+.prose p, .prose li { color: var(--text-2); }
+.prose ul { display: grid; gap: 8px; padding-left: 0; }
+.prose ul li { position: relative; padding-left: 22px; }
+.prose ul li::before { content: ""; position: absolute; left: 2px; top: 0.62em; width: 6px; height: 6px; background: var(--s3); }
+.prose blockquote { padding: 4px 0 4px 22px; border-left: 4px solid var(--s2); font-size: 1.5rem; line-height: 1.3; letter-spacing: -0.02em; }
+.prose a { color: var(--link); }
+.fig { display: grid; gap: 12px; padding: 24px; border: 1px solid var(--line); background: var(--surface); }
+.fig figcaption { font-size: 0.875rem; color: var(--text-2); }
+.steps-chart { display: grid; grid-template-columns: repeat(6, 1fr); align-items: end; gap: 6px; height: 180px; }
+.steps-chart i { height: var(--h); background: var(--c); }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.8125rem; color: var(--text-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend span::before { content: ""; width: 10px; height: 10px; background: var(--c); }
+
+/* ---------- Company and careers ---------- */
+.stair { display: grid; grid-template-columns: repeat(4, 1fr); align-items: end; gap: 1px; background: var(--line); border-top: 1px solid var(--line); }
+.stair li { display: grid; align-content: end; gap: 12px; height: 100%; padding: 24px 24px 0; background: var(--bg); }
+.stair .yr { font-size: 0.75rem; }
+.stair p { color: var(--text-2); font-size: 0.9375rem; }
+.stair i { display: block; height: calc(var(--n) * 40px); margin-inline: -24px; background: linear-gradient(to top, var(--s4) 0 40px, var(--s3) 0 80px, var(--s2) 0 120px, var(--s1) 0); }
+@media (max-width: 759px) { .stair { grid-template-columns: 1fr 1fr; } }
+.person { display: grid; gap: 4px; padding: 24px; }
+.person .av { width: 56px; height: 56px; margin-bottom: 12px; font-size: 0.875rem; }
+.person p { color: var(--text-2); font-size: 0.9375rem; }
+.roles li a { display: grid; grid-template-columns: 1fr 140px 210px 16px; align-items: center; gap: 16px; padding: 20px var(--pad); border-bottom: 1px solid var(--line); text-decoration: none; }
+.roles li a:hover { background: var(--bg-2); }
+.roles b { font-weight: 500; font-size: 1.1875rem; letter-spacing: -0.015em; }
+.roles span + span { color: var(--text-2); }
+@media (max-width: 759px) { .roles li a { grid-template-columns: 1fr 16px; } .roles span + span { display: none; } .roles small { display: block; color: var(--text-2); } }
+@media (min-width: 760px) { .roles small { display: none; } }
+.sel { height: 44px; padding: 0 36px 0 12px; border: 1px solid var(--line); border-radius: var(--r-control); background: var(--surface); }
+
+/* ---------- Forms ---------- */
+.two { display: grid; grid-template-columns: 1fr 1.25fr; }
+.two > * { min-width: 0; padding: clamp(28px, 4vw, 48px) var(--pad); }
+.two > * + * { border-left: 1px solid var(--line); }
+@media (max-width: 899px) { .two { grid-template-columns: 1fr; } .two > * + * { border-left: 0; border-top: 1px solid var(--line); } }
+.fcard { padding: clamp(20px, 3vw, 32px); border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow); }
+.form { display: grid; gap: 6px; }
+.fld { display: grid; gap: 6px; }
+.fld label, .fld legend { font-size: 0.875rem; font-weight: 500; }
+.fld .opt { color: var(--text-3); font-weight: 400; }
+.in { width: 100%; height: 46px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: var(--r-control); background: var(--bg); }
+textarea.in { height: auto; min-height: 132px; padding: 10px 12px; resize: vertical; }
+select.in { appearance: none; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(-45deg, transparent 50%, currentColor 50%); background-position: right 18px top 20px, right 13px top 20px; background-size: 5px 5px; background-repeat: no-repeat; }
+.in:hover { border-color: var(--text-3); }
+.in[aria-invalid="true"] { border-color: var(--err); }
+.hint { font-size: 0.8125rem; color: var(--text-3); }
+.err { min-height: 1.55em; font-size: 0.8125rem; line-height: 1.55; color: var(--err); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+@media (max-width: 559px) { .row2 { grid-template-columns: 1fr; } }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9375rem; color: var(--text-2); cursor: pointer; }
+.check input { width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--ink); }
+.radios { display: flex; flex-wrap: wrap; gap: 8px; }
+.rad { position: relative; display: inline-flex; align-items: center; height: 40px; padding: 0 14px; border: 1px solid var(--line-2); border-radius: var(--r-control); cursor: pointer; }
+.rad input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.rad:has(input:checked) { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+.rad:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.rad:has(input[aria-invalid="true"]) { border-color: var(--err); }
+.form .btn { margin-top: 8px; }
+.done { display: grid; gap: 14px; justify-items: start; }
+.done .px { width: 48px; height: 48px; }
+.done p { color: var(--text-2); }
+.chan li { display: grid; grid-template-columns: 32px 1fr; gap: 4px 16px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.chan li:first-child { padding-top: 0; }
+.chan .px { grid-row: span 2; width: 32px; height: 32px; }
+.chan p { color: var(--text-2); }
+.chan a { color: var(--link); }
+.lg { display: grid; grid-template-columns: 220px 1fr; }
+.lg nav { padding: 40px 20px; border-right: 1px solid var(--line); }
+.lg nav ol { position: sticky; top: calc(var(--hh) + 40px); display: grid; gap: 8px; }
+.lg nav a { color: var(--text-2); text-decoration: none; }
+.lg nav a:hover { color: var(--text); }
+.lg .prose { max-width: 720px; padding: 40px var(--pad) var(--sec); font-size: 1rem; }
+@media (max-width: 759px) { .lg { grid-template-columns: 1fr; } .lg nav { display: none; } }
+
+/* ---------- Footer: link cells, then the mark sitting on sunset stripes ---------- */
+.ft { border-top: 1px solid var(--line); }
+.ft-cols { display: grid; grid-template-columns: repeat(3, 1fr) 1.4fr; }
+.ft-cols > div { display: grid; align-content: start; gap: 16px; padding: 32px 24px 40px; border-right: 1px solid var(--line); }
+.ft-cols > div:last-child { border-right: 0; }
+.ft-h { font-size: 1rem; font-weight: 400; color: var(--text-2); }
+.ft-cols ul { display: grid; gap: 6px; }
+.ft-cols a { text-decoration: none; }
+.ft-cols a:hover { text-decoration: underline; }
+.nl { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.nl .err { grid-column: 1 / -1; }
+.nl .btn { height: 46px; }
+.ft-bot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding: 20px 24px; border-top: 1px solid var(--line); font-size: 0.875rem; color: var(--text-2); }
+.ft-land { position: relative; display: grid; justify-items: center; padding-top: 48px; overflow: hidden; }
+.ft-mark { width: clamp(144px, 18vw, 224px); height: auto; aspect-ratio: 1; shape-rendering: crispEdges; }
+.ft-sp { position: absolute; left: 18%; bottom: 160px; width: var(--ps); height: var(--ps); }
+.stripes { width: 100%; height: 160px; background: linear-gradient(var(--s1) 0 20%, var(--s2) 0 40%, var(--s3) 0 60%, var(--s4) 0 80%, var(--s5) 0); }
+@media (max-width: 899px) { .ft-cols { grid-template-columns: repeat(3, 1fr); } .ft-cols > div { padding: 24px 16px 32px; } .ft-cols > div:nth-child(3) { border-right: 0; } .ft-cols > .ft-news { grid-column: 1 / -1; border-top: 1px solid var(--line); } }
+@media (max-width: 599px) { .stripes { height: 100px; } .ft-sp { bottom: 100px; } }
+
+/* ---------- 404 ---------- */
+.nf { position: relative; overflow: hidden; }
+.nf .frame { display: grid; justify-items: center; gap: 24px; padding: var(--sec) var(--pad) calc(var(--cell) * 2 + 48px); text-align: center; }
+
+/* ---------- Motion: things arrive in pixel steps; content stays visible without JS ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+@keyframes drop { from { transform: translateY(calc(var(--cell) * -0.5)); opacity: 0; } }
+@keyframes bob { 50% { transform: translateY(-3px); } }
+.js .reveal { opacity: 0; }
+.js .reveal.is-in { opacity: 1; animation: rise var(--slow) steps(4, end) both; }
+.js .terrain .b { animation: drop 420ms steps(3, end) both; animation-delay: calc(var(--y, 0) * 110ms + var(--x, 0) * 70ms + 80ms); }
+.js .sp, .js .mspr { animation: bob 1.6s steps(1, end) infinite; }
+.js .mspr:nth-of-type(2n) { animation-delay: -0.8s; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="mark" viewBox="0 0 8 8"><path style="fill:var(--s1)" d="M6 0h2v2H6z"/><path style="fill:var(--s2)" d="M4 2h4v2H4z"/><path style="fill:var(--s3)" d="M2 4h6v2H2z"/><path style="fill:var(--s4)" d="M0 6h8v2H0z"/></symbol>
+</svg>
+
+<header class="hd">
+  <a class="hc brand" href="#/" aria-label="Fieldlark home"><svg class="mark" viewBox="0 0 8 8" aria-hidden="true"><use href="#mark"/></svg>Fieldlark</a>
+  <nav class="hd-nav" aria-label="Main">
+    <a class="hc" href="#/models">Models</a>
+    <a class="hc" href="#/pricing">Pricing</a>
+    <a class="hc" href="#/docs">Docs</a>
+    <a class="hc" href="#/research">Research</a>
+    <a class="hc" href="#/company">Company</a>
+  </nav>
+  <span class="hd-fill"></span>
+  <button class="hc hc-r hc-icon" type="button" id="theme-toggle" aria-label="Switch to dark theme"><svg class="i" data-i="moon"></svg></button>
+  <a class="hc hc-r hd-sec" href="#/contact">Get in touch</a>
+  <a class="hc hd-cta go" href="#/signup">Start building</a>
+  <button class="hc hc-r hc-icon hd-menu" type="button" id="menu-open" aria-label="Open menu" aria-controls="menu"><svg class="i" data-i="menu"></svg></button>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-top"><span class="hc brand"><svg class="mark" viewBox="0 0 8 8" aria-hidden="true"><use href="#mark"/></svg>Fieldlark</span><span class="hd-fill"></span><button class="hc hc-r hc-icon" type="button" id="menu-close" aria-label="Close menu"><svg class="i" data-i="x"></svg></button></div>
+  <nav aria-label="Menu"><a href="#/">Home</a><a href="#/models">Models</a><a href="#/pricing">Pricing</a><a href="#/docs">Docs</a><a href="#/research">Research</a><a href="#/company">Company</a><a href="#/careers">Careers</a><a href="#/contact">Get in touch</a></nav>
+  <div class="sheet-cta"><a class="btn btn-ink btn-wide go" href="#/signup">Start building</a></div>
+</dialog>
+
+<main id="main" tabindex="-1">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="terrain" aria-hidden="true">
+      <i class="b l" style="--x:0;--y:0;--c:var(--s4)"></i>
+      <i class="b l" style="--x:0;--y:1;--c:var(--s2)"></i>
+      <i class="b l" style="--x:1;--y:0;--s:0.5;--c:var(--s1)"></i>
+      <i class="b r" style="--x:0;--y:0;--c:var(--s5)"></i>
+      <i class="b r" style="--x:0;--y:1;--c:var(--s4)"></i>
+      <i class="b r" style="--x:0;--y:2;--c:var(--s3)"></i>
+      <i class="b r" style="--x:1;--y:0;--c:var(--s3)"></i>
+      <i class="b r" style="--x:1;--y:1;--c:var(--s2)"></i>
+      <i class="b r" style="--x:2;--y:0;--c:var(--s1)"></i>
+      <i class="b r dia" style="--x:2.6;--y:1.5;--c:var(--s3)"></i>
+      <svg class="sp px" data-px="sprout" style="left:calc((var(--cell) - var(--ps)) / 2);bottom:calc(var(--cell) * 2)"></svg>
+      <svg class="sp px" data-px="barn" style="left:calc(var(--cell) * 1.8);bottom:0"></svg>
+      <svg class="sp px" data-px="panel" style="right:calc(var(--cell) + (var(--cell) - var(--ps)) / 2);bottom:calc(var(--cell) * 2)"></svg>
+      <svg class="sp px wide" data-px="cloud" style="left:7%;top:12%"></svg>
+    </div>
+    <div class="frame node hero-in">
+      <h1 class="display" id="hero-h">Know the sky <svg class="px" data-px="sun"></svg> before you plant.</h1>
+      <p class="lead">Fieldlark builds small, open forecasting models for growers and solar sites: rain, frost and sun for your own field, hour by hour, on our cloud or on a box in your shed.</p>
+      <div class="actions"><a class="btn btn-ink go" href="#/signup">Start building</a><a class="btn btn-soft go" href="#/models">Explore the models</a></div>
+    </div>
+  </section>
+  <section class="frame" aria-label="Planning with Fieldlark">
+    <ul class="names"><li>Haverlea Orchards</li><li class="n2">Bramblecote Solar</li><li class="n3">Kettlewick Growers</li><li class="n4">Sallowmere</li><li class="n5">Tarrin Vale Co-op</li></ul>
+  </section>
+
+  <section class="thr line" aria-labelledby="thr-h">
+    <svg class="threads" viewBox="0 0 1200 560" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M0 250L470 300M0 330L430 370M0 410L500 380M0 500L440 450M0 180L520 300M1200 230L760 300M1200 320L800 370M1200 420L700 380M1200 520L780 450M1200 140L700 300"/></svg>
+    <div class="frame node pad">
+      <h2 class="h2 center reveal" id="thr-h">A forecast should know your field, not just your region.</h2>
+      <ul class="chips reveal" aria-label="What the models read">
+        <li class="chip dim">Radar sweeps</li>
+        <li class="chip"><svg class="px" data-px="drop"></svg>Soil moisture</li>
+        <li class="chip dim">Elevation</li>
+        <li class="chip"><svg class="px" data-px="cloud"></svg>Your station history</li>
+        <li class="chip dim">Satellite passes</li>
+        <li class="chip dim">Frost pockets</li>
+        <li class="chip"><svg class="px" data-px="panel"></svg>Panel tilt</li>
+        <li class="chip"><svg class="px" data-px="chart"></svg>Yield logs</li>
+        <li class="chip dim">Treeline shade</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="line" aria-labelledby="ch-h">
+    <div class="frame node pad"><h2 class="h2 center reveal" id="ch-h">Small models. Your data. Your call.</h2></div>
+    <div class="line"><div class="frame chapters">
+      <nav class="ch-nav" aria-label="Ways to use Fieldlark">
+        <a href="#ch-1" class="is-on">Open models</a>
+        <a href="#ch-2">Forecast API</a>
+        <a href="#ch-3">Field app</a>
+        <a href="#ch-4">Run it offline</a>
+      </nav>
+      <div class="ch-list">
+        <article class="ch" id="ch-1">
+          <div class="ch-t"><h3 class="h3">We publish the models. You keep them.</h3><p>Download open-weight forecasting models under Apache 2.0, fine-tune them on your own station data and run them wherever you like. No account needed to try.</p><a class="btn btn-soft go" href="#/models">Browse the models</a></div>
+          <div class="mosaic m-leaf"><svg class="tiles"></svg>
+            <svg class="mspr px" data-px="cloud" style="left:8%;top:10%"></svg>
+            <svg class="mspr px" data-px="drop" style="right:8%;bottom:10%"></svg>
+            <div class="mcard"><p class="eyebrow">Nowcast-2 · rain chance, next 6 h</p><div class="bars" aria-hidden="true"><i style="--h:12%"></i><i style="--h:18%"></i><i style="--h:22%"></i><i style="--h:35%"></i><i style="--h:48%"></i><i style="--h:62%"></i><i style="--h:70%"></i><i style="--h:66%"></i><i style="--h:44%"></i><i style="--h:30%"></i><i style="--h:20%"></i><i style="--h:14%"></i></div><p class="mcard-f"><span>Now</span><span class="mono">Peak 70% at 14:00</span><span>+6 h</span></p></div>
+          </div>
+        </article>
+        <article class="ch" id="ch-2">
+          <div class="ch-t"><h3 class="h3">One call for any field on Earth.</h3><p>Send coordinates, get an hourly forecast with an honest uncertainty band. Batch a thousand fields in one request and cache what you need.</p><a class="btn btn-soft go" href="#/docs">Read the quickstart</a></div>
+          <div class="mosaic m-sky"><svg class="tiles"></svg>
+            <svg class="mspr px" data-px="key" style="left:7%;bottom:12%"></svg>
+            <div class="mcard code"><div class="code-bar"><span class="eyebrow">200 · forecast.json</span></div>
+<pre><code>{
+  <span class="ky">"field"</span>: <span class="st">"north-block"</span>,
+  <span class="ky">"model"</span>: <span class="st">"nowcast-2"</span>,
+  <span class="ky">"hours"</span>: [
+    { <span class="ky">"t"</span>: <span class="st">"14:00"</span>, <span class="ky">"rain"</span>: 0.70,
+      <span class="ky">"band"</span>: [0.58, 0.81] }
+  ]
+}</code></pre></div>
+          </div>
+        </article>
+        <article class="ch" id="ch-3">
+          <div class="ch-t"><h3 class="h3">A forecast your crew can read in the rain.</h3><p>The field app turns forecasts into plain decisions: spray, irrigate, cover, harvest. It works offline and syncs when the signal comes back.</p><a class="btn btn-soft go" href="#/pricing">See the plans</a></div>
+          <div class="mosaic m-ember"><svg class="tiles"></svg>
+            <svg class="mspr px" data-px="flake" style="right:9%;top:12%"></svg>
+            <div class="mcard"><p class="eyebrow">Tonight · north block</p><p class="big">Frost risk: low</p>
+              <ul class="rows"><li>Skip the sprinklers<span class="mono">2 °C min</span></li><li>Spray before 11:00<span class="mono">wind 6 km/h</span></li><li>Cover the seed trays<span class="mono">rain 14:00</span></li></ul></div>
+          </div>
+        </article>
+        <article class="ch" id="ch-4">
+          <div class="ch-t"><h3 class="h3">Run it in the shed, not in our cloud.</h3><p>Deploy the same models on a small box on your own network. Your field data never leaves the farm, and forecasts keep coming when the line goes down.</p><a class="btn btn-soft go" href="#/contact?topic=onsite">Talk to us</a></div>
+          <div class="mosaic m-sun"><svg class="tiles"></svg>
+            <svg class="mspr px" data-px="barn" style="left:8%;top:10%"></svg>
+            <div class="mcard"><p class="eyebrow">Running offline · 3 devices</p>
+              <ul class="rows"><li>shed-box-01<span class="mono">nowcast-2-mini</span></li><li>glasshouse-02<span class="mono">frostline-1</span></li><li>array-east<span class="mono">sunfield-1</span></li></ul></div>
+          </div>
+        </article>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="line" aria-labelledby="st-h">
+    <div class="frame node pad split"><h2 class="h2 reveal" id="st-h">Already planning with it.</h2><a class="btn btn-soft go" href="#/research?topic=field">Read the field notes</a></div>
+    <div class="line"><div class="frame stories">
+      <div class="st-tabs" role="tablist" aria-label="Customer stories">
+        <button type="button" role="tab" id="st-t0" aria-selected="true" aria-controls="st-p" data-story="0"><svg class="px" data-px="sprout"></svg>Orchards</button>
+        <button type="button" role="tab" id="st-t1" aria-selected="false" aria-controls="st-p" data-story="1" tabindex="-1"><svg class="px" data-px="panel"></svg>Solar sites</button>
+        <button type="button" role="tab" id="st-t2" aria-selected="false" aria-controls="st-p" data-story="2" tabindex="-1"><svg class="px" data-px="sun"></svg>Glasshouses</button>
+      </div>
+      <div class="st-p" id="st-p" role="tabpanel" aria-labelledby="st-t0">
+        <div class="st-fact"><svg class="px" id="st-px" data-px="flake"></svg><p class="h3" id="st-fact">Eleven frost nights warned this spring, with the sprinklers on in time every night.</p></div>
+        <figure class="st-q"><blockquote id="st-q">“We used to set an alarm for three in the morning and go out to look at the sky. Now the app wakes us only when it matters.”</blockquote><figcaption><b id="st-who">Ines Achterberg</b><span id="st-org">Haverlea Orchards</span></figcaption></figure>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="deep" aria-labelledby="deep-h">
+    <div class="frame pad-s"><h2 class="h2" id="deep-h">Go further.</h2></div>
+    <ul class="frame cells3">
+      <li><a href="#/research"><svg class="px" data-px="book"></svg><h3 class="h3">Research</h3><p>How the models are trained and measured, and where they still miss.</p></a></li>
+      <li><a href="#/docs"><svg class="px" data-px="term"></svg><h3 class="h3">Docs</h3><p>A five-minute quickstart, the API reference and guides for running offline.</p></a></li>
+      <li><a href="#/company"><svg class="px" data-px="barn"></svg><h3 class="h3">Company</h3><p>Who we are, how we work and the roles we are hiring for.</p></a></li>
+    </ul>
+  </section>
+</div>
+
+<!-- ===================== MODELS ===================== -->
+<div data-view="models">
+  <section class="phead"><div class="frame node pad"><p class="eyebrow">Models</p><h1 class="h1">Open models, sized for the field.</h1><p class="lead">Every model is open-weight under Apache 2.0. Run it on our API, on a laptop or on a small board in the shed.</p></div></section>
+  <section class="line"><div class="frame bar">
+    <b>Filter by task</b><span class="count" id="m-count" aria-live="polite"></span>
+    <div class="tags" role="group" aria-label="Task"><button class="tag" type="button" data-task="all" aria-pressed="true">All</button><button class="tag" type="button" data-task="nowcast" aria-pressed="false">Nowcast</button><button class="tag" type="button" data-task="seasonal" aria-pressed="false">Seasonal</button><button class="tag" type="button" data-task="solar" aria-pressed="false">Solar</button><button class="tag" type="button" data-task="frost" aria-pressed="false">Frost</button></div>
+    <label class="search"><span class="sr">Search models</span><svg class="i" data-i="search"></svg><input id="m-q" type="search" placeholder="Search models" autocomplete="off"></label>
+  </div></section>
+  <section class="line"><div class="frame">
+    <ul class="grid3" id="m-list" data-render="models"></ul>
+    <div class="empty" id="m-empty" hidden><p>No model matches that search.</p><button class="btn btn-soft btn-sm" type="button" data-reset="models">Clear filters</button></div>
+  </div></section>
+  <section class="line"><div class="frame two">
+    <div class="ch-t"><h2 class="h2">Run one in a minute.</h2><p>Install the command-line tool, pull a model and point it at a field. It runs on a laptop with no account and no connection after the download.</p><a class="btn btn-soft go" href="#/docs">Open the quickstart</a></div>
+    <div><div class="code"><div class="code-bar"><span class="eyebrow">Terminal</span><button class="copy" type="button" aria-label="Copy code"><svg class="i" data-i="copy"></svg></button></div>
+<pre><code>pip install fieldlark
+fieldlark pull nowcast-2
+fieldlark run nowcast-2 --lat 52.09 --lon 5.12 --hours 6</code></pre></div></div>
+  </div></section>
+</div>
+
+<!-- ===================== PRICING ===================== -->
+<div data-view="pricing">
+  <section class="phead"><div class="frame node pad split"><h1 class="h1">Pricing</h1><div class="seg" role="group" aria-label="Billing period"><button type="button" data-bill="month" aria-pressed="true">Monthly</button><button type="button" data-bill="year" aria-pressed="false">Yearly <span class="tag">-20%</span></button></div></div></section>
+  <section class="line"><div class="frame">
+    <ul class="plans">
+      <li class="plan"><div class="plan-hd"><span class="pi"><svg class="mark" viewBox="0 0 8 8" aria-hidden="true"><use href="#mark"/></svg></span><h2 class="h3">Open</h2></div><p>The weights and the command-line tool. Run everything yourself.</p><p class="price"><b>$0</b></p><p class="small">Free forever</p><ul class="feat"><li>Every open-weight model</li><li>Command-line tool</li><li>Community forum</li></ul><a class="btn btn-ink btn-wide go" href="#/models">Download</a></li>
+      <li class="plan is-pop"><span class="pop">Most chosen<svg class="px" data-px="sun"></svg></span><div class="plan-hd"><span class="pi" style="--c:var(--s2)"><svg class="mark" viewBox="0 0 8 8" aria-hidden="true"><use href="#mark"/></svg></span><h2 class="h3">Grower</h2></div><p>The field app and the API for one farm or one site.</p><p class="price"><b data-month="$24" data-year="$19">$24</b><span>/mo</span></p><p class="small" data-month="Billed monthly, excluding tax" data-year="Billed $228 yearly, excluding tax">Billed monthly, excluding tax</p><ul class="feat"><li>5 fields</li><li>50,000 API calls a month</li><li>Field app with offline sync</li><li>Frost and rain alerts</li></ul><a class="btn btn-ink btn-wide go" href="#/signup">Start building</a></li>
+      <li class="plan"><div class="plan-hd"><span class="pi" style="--c:var(--s3)"><svg class="mark" viewBox="0 0 8 8" aria-hidden="true"><use href="#mark"/></svg></span><h2 class="h3">Co-op</h2></div><p>Shared fields, crews and alerts for groups of growers.</p><p class="price"><b data-month="$89" data-year="$71">$89</b><span>/mo</span></p><p class="small" data-month="Billed monthly, excluding tax" data-year="Billed $852 yearly, excluding tax">Billed monthly, excluding tax</p><ul class="feat"><li>50 fields and 20 members</li><li>500,000 API calls a month</li><li>Alerts by text message</li><li>Fine-tune on your station data</li></ul><a class="btn btn-ink btn-wide go" href="#/signup">Start building</a></li>
+      <li class="plan"><div class="plan-hd"><span class="pi" style="--c:var(--text)"><svg class="mark" viewBox="0 0 8 8" aria-hidden="true"><use href="#mark"/></svg></span><h2 class="h3">On-site</h2></div><p>Private deployment on your own hardware, with custom models and support.</p><p class="price"><b>Custom</b></p><p class="small">Annual agreement</p><ul class="feat"><li>Runs fully offline</li><li>Models trained on your history</li><li>Named engineer</li></ul><a class="btn btn-ink btn-wide go" href="#/contact?topic=onsite">Talk to us</a></li>
+    </ul>
+  </div></section>
+  <section class="line"><div class="frame tbl-wrap">
+    <table class="cmp">
+      <caption class="sr">Compare plans</caption>
+      <thead><tr><td></td><th scope="col">Open</th><th scope="col">Grower</th><th scope="col">Co-op</th><th scope="col">On-site</th></tr></thead>
+      <tbody>
+        <tr class="grp"><th scope="colgroup" colspan="5">Forecasts</th></tr>
+        <tr><th scope="row">Open-weight models</th><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td></tr>
+        <tr><th scope="row">Fields</th><td>Self-hosted</td><td>5</td><td>50</td><td>Unlimited</td></tr>
+        <tr><th scope="row">API calls a month</th><td class="no">None</td><td>50,000</td><td>500,000</td><td>Unlimited</td></tr>
+        <tr class="grp"><th scope="colgroup" colspan="5">Field app and alerts</th></tr>
+        <tr><th scope="row">Field app with offline sync</th><td class="no">None</td><td class="y">Included</td><td class="y">Included</td><td class="y">Included</td></tr>
+        <tr><th scope="row">Alerts by text message</th><td class="no">None</td><td class="no">None</td><td class="y">Included</td><td class="y">Included</td></tr>
+        <tr><th scope="row">Fine-tuning on your data</th><td>Do it yourself</td><td class="no">None</td><td class="y">Included</td><td class="y">Included</td></tr>
+        <tr><th scope="row">Support</th><td>Forum</td><td>Email</td><td>Email and chat</td><td>Named engineer</td></tr>
+      </tbody>
+    </table>
+  </div></section>
+  <section class="line"><div class="frame node pad faq">
+    <h2 class="h2">Questions.</h2>
+    <div>
+      <details class="qa"><summary>Are the open models really free to use commercially?<svg class="i" data-i="plus"></svg></summary><p>Yes. The weights are released under Apache 2.0, so you can run, change and sell services built on them. The plans pay for our hosted API, the field app and support.</p></details>
+      <details class="qa"><summary>What counts as a field?<svg class="i" data-i="plus"></svg></summary><p>A field is one saved location with its own forecast and alerts. Any size works: a single glasshouse, an orchard block or a solar array.</p></details>
+      <details class="qa"><summary>What happens if we go over our API calls?<svg class="i" data-i="plus"></svg></summary><p>Calls keep working for the rest of the month and we email you. If it happens twice in a row, we suggest the next plan; we never switch it for you.</p></details>
+      <details class="qa"><summary>Can we change plans or cancel at any time?<svg class="i" data-i="plus"></svg></summary><p>Yes. Changes apply from the next billing period, and your saved fields and history stay available to export.</p></details>
+    </div>
+  </div></section>
+</div>
+
+<!-- ===================== DOCS ===================== -->
+<div data-view="docs">
+  <div class="frame docs">
+    <aside class="d-side">
+      <details class="d-menu" id="d-menu" open><summary>Documentation menu<svg class="i" data-i="down"></svg></summary>
+        <div class="d-in">
+          <label class="search"><span class="sr">Search the docs</span><svg class="i" data-i="search"></svg><input id="d-q" type="search" placeholder="Search" autocomplete="off" aria-keyshortcuts="/"></label>
+          <nav class="d-grp" aria-label="Get started"><p class="eyebrow">Get started</p><a class="is-on" href="#d-install">Install</a><a href="#d-auth">Authenticate</a><a href="#d-first">Your first forecast</a><a href="#d-resp">Read the response</a><a href="#d-limits">Limits</a></nav>
+          <nav class="d-grp" aria-label="Models"><p class="eyebrow">Models</p><a href="#/models?task=nowcast">Nowcast</a><a href="#/models?task=seasonal">Seasonal</a><a href="#/models?task=solar">Solar</a><a href="#/models?task=frost">Frost</a></nav>
+          <nav class="d-grp" aria-label="More"><p class="eyebrow">More</p><a href="#/pricing">Plans and limits</a><a href="#/research?topic=engineering">Engineering notes</a><a href="#/contact?topic=support">Ask for help</a></nav>
+          <p class="small" id="d-none" hidden>No page matches that search.</p>
+        </div>
+      </details>
+    </aside>
+    <article class="doc">
+      <ol class="crumbs mono"><li><a href="#/docs">Docs</a></li><li>Get started</li></ol>
+      <h1 class="h1">Quickstart</h1>
+      <p class="lead">Get a forecast for one field in about five minutes, from a terminal or from code.</p>
+      <h2 id="d-install">Install</h2>
+      <p>Install the Python client. The command-line tool comes with it.</p>
+      <div class="code"><div class="code-bar"><span class="eyebrow">Terminal</span><button class="copy" type="button" aria-label="Copy code"><svg class="i" data-i="copy"></svg></button></div>
+<pre><code>pip install fieldlark</code></pre></div>
+      <h2 id="d-auth">Authenticate</h2>
+      <p>Create a key on the <a href="#/signup">sign-up page</a> and keep it in an environment variable. Every request sends it in the <code>Authorization</code> header.</p>
+      <div class="note"><svg class="px" data-px="key"></svg><p>Keep your key on the server. Anyone with it can spend your monthly calls.</p></div>
+      <h2 id="d-first">Your first forecast</h2>
+      <p>Ask for the next six hours at one point. Coordinates are decimal degrees.</p>
+      <div class="code" data-tabs><div class="code-bar" role="tablist" aria-label="Language"><button type="button" role="tab" id="ct2-sh" aria-selected="true" aria-controls="cp2-sh">curl</button><button type="button" role="tab" id="ct2-py" aria-selected="false" aria-controls="cp2-py" tabindex="-1">Python</button><button class="copy" type="button" aria-label="Copy code"><svg class="i" data-i="copy"></svg></button></div>
+<pre id="cp2-sh" role="tabpanel" aria-labelledby="ct2-sh"><code>curl https://api.fieldlark.example/v1/forecast \
+  -H <span class="st">"Authorization: Bearer $FIELDLARK_KEY"</span> \
+  -d <span class="st">'{"lat": 52.09, "lon": 5.12, "model": "nowcast-2", "hours": 6}'</span></code></pre>
+<pre id="cp2-py" role="tabpanel" aria-labelledby="ct2-py" hidden><code><span class="ky">from</span> fieldlark <span class="ky">import</span> Client
+
+client = Client()  <span class="cm"># reads FIELDLARK_KEY</span>
+forecast = client.forecast(lat=52.09, lon=5.12, model=<span class="st">"nowcast-2"</span>, hours=6)
+print(forecast.hours[0].rain)</code></pre></div>
+      <h2 id="d-resp">Read the response</h2>
+      <p>Each hour carries the most likely value and a band that holds the true value eight times in ten.</p>
+      <table class="ptbl"><thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>t</code></td><td>string</td><td>Local time at the field</td></tr><tr><td><code>rain</code></td><td>number</td><td>Chance of rain, 0 to 1</td></tr><tr><td><code>band</code></td><td>array</td><td>Low and high values of the 80% band</td></tr></tbody></table>
+      <h2 id="d-limits">Limits</h2>
+      <p>Each plan has a monthly number of calls; a batch request counts one call per field. Limits are listed on the <a href="#/pricing">pricing page</a>.</p>
+      <div class="pager"><a href="#/models"><span class="small">Previous</span>Models</a><a href="#/pricing"><span class="small">Next</span>Plans and limits</a></div>
+      <div class="fb" id="d-fb"><span>Was this page useful?</span><button class="btn btn-soft btn-sm" type="button" data-fb>Yes</button><button class="btn btn-soft btn-sm" type="button" data-fb>No</button></div>
+      <p class="small" id="d-thanks" role="status" hidden>Thank you. We read every answer.</p>
+    </article>
+    <nav class="toc" aria-label="On this page"><ol><li class="eyebrow">On this page</li><li><a href="#d-install">Install</a></li><li><a href="#d-auth">Authenticate</a></li><li><a href="#d-first">Your first forecast</a></li><li><a href="#d-resp">Read the response</a></li><li><a href="#d-limits">Limits</a></li></ol></nav>
+  </div>
+</div>
+
+<!-- ===================== RESEARCH ===================== -->
+<div data-view="research">
+  <section class="phead"><div class="frame node pad"><p class="eyebrow">Research</p><h1 class="h1">Notes from the lab.</h1></div></section>
+  <section class="line"><div class="frame bar">
+    <b>Filter by topic</b><span class="count" id="p-count" aria-live="polite"></span>
+    <div class="tags" role="group" aria-label="Topic"><button class="tag" type="button" data-topic="all" aria-pressed="true">All</button><button class="tag" type="button" data-topic="research" aria-pressed="false">Research</button><button class="tag" type="button" data-topic="engineering" aria-pressed="false">Engineering</button><button class="tag" type="button" data-topic="field" aria-pressed="false">Field notes</button><button class="tag" type="button" data-topic="company" aria-pressed="false">Company</button></div>
+    <label class="search"><span class="sr">Search notes</span><svg class="i" data-i="search"></svg><input id="p-q" type="search" placeholder="Search" autocomplete="off"></label>
+  </div></section>
+  <section class="line"><div class="frame">
+    <a class="feature-post" id="p-feat" href="#/post" data-topic="research" data-text="why a small model beats a global one in your own field"><div><span class="tag">Research</span><h2 class="h2">Why a small model beats a global one in your own field</h2><p>We compared Nowcast-2 with global forecasts on 41 farms for a year. Local data wins where it matters most: the next six hours.</p><span class="more go">Read the note</span></div><div class="cover m-sun"><svg class="tiles"></svg><svg class="px" data-px="chart"></svg></div></a>
+    <ul class="grid3" id="p-list" data-render="posts"></ul>
+    <div class="empty" id="p-empty" hidden><p>No note matches that search.</p><button class="btn btn-soft btn-sm" type="button" data-reset="posts">Clear filters</button></div>
+  </div></section>
+</div>
+
+<!-- ===================== POST ===================== -->
+<div data-view="post">
+  <article>
+    <header class="frame node pad-s"><ol class="crumbs mono"><li><a href="#/research">Research</a></li><li>Notes</li></ol></header>
+    <div class="line"><div class="frame">
+      <div class="art">
+        <span class="tag">Research</span>
+        <h1 class="h1">Why a small model beats a global one in your own field</h1>
+        <div class="byline"><span class="av" aria-hidden="true">NH</span><span>Noor Halvorsen</span><span aria-hidden="true">·</span><time datetime="2026-11-12">12 November 2026</time><span aria-hidden="true">·</span><span>8 min read</span></div>
+      </div>
+      <div class="cover m-sun" style="aspect-ratio:21/8"><svg class="tiles"></svg><svg class="px" data-px="chart"></svg></div>
+      <div class="art prose">
+        <p>Global weather models are built for a grid cell the size of a town, and an orchard block is not a town. For a year we ran Nowcast-2 next to two global forecasts on 41 farms and compared both with what actually fell.</p>
+        <h2>What we measured</h2>
+        <p>We scored the chance of rain for each of the next six hours against station gauges, and the overnight minimum against a sensor at the lowest point of each field.</p>
+        <ul><li>41 farms in three climates, from one season of daily runs.</li><li>Rain scored hourly, frost scored nightly.</li><li>Every model given the same radar and the same stations.</li></ul>
+        <figure class="fig"><div class="steps-chart" aria-hidden="true"><i style="--h:42%;--c:var(--line-2)"></i><i style="--h:58%;--c:var(--s2)"></i><i style="--h:48%;--c:var(--line-2)"></i><i style="--h:74%;--c:var(--s3)"></i><i style="--h:55%;--c:var(--line-2)"></i><i style="--h:88%;--c:var(--s4)"></i></div><div class="legend"><span style="--c:var(--line-2)">Global forecast</span><span style="--c:var(--s3)">Nowcast-2</span></div><figcaption>Share of correct rain calls in the next hour, two hours and six hours. Higher is better.</figcaption></figure>
+        <h2>Where the small model wins</h2>
+        <p>The gap is widest in the first two hours and in fields with their own shape: a valley floor, a south slope, a treeline that holds the cold in.</p>
+        <blockquote>The forecast that matters is the one for the corner where the frost settles, not the average of the whole valley.</blockquote>
+        <h2>Where it still misses</h2>
+        <p>Past two days the global models catch up and then pull ahead. That is why our seasonal outlooks start from them and only adjust for your field. Read the <a href="#/docs">quickstart</a> to try both on your own coordinates.</p>
+      </div>
+    </div></div>
+    <section class="line" aria-labelledby="more-h"><div class="frame">
+      <div class="pad-s"><h2 class="h3" id="more-h">Keep reading</h2></div>
+      <ul class="grid3 line" data-render="more"></ul>
+    </div></section>
+  </article>
+</div>
+
+<!-- ===================== COMPANY ===================== -->
+<div data-view="company">
+  <section class="phead"><div class="frame node pad"><p class="eyebrow">Company</p><h1 class="h1">A small lab for people who work outside.</h1><p class="lead">Twenty people in two countries, building forecasts that a grower can act on before breakfast.</p></div></section>
+  <section class="line"><ul class="frame cells3">
+    <li><div><svg class="px" data-px="sprout"></svg><h2 class="h3">Small on purpose</h2><p>A model that fits in a shed can be checked, fixed and owned by the people who use it.</p></div></li>
+    <li><div><svg class="px" data-px="key"></svg><h2 class="h3">Open by default</h2><p>Weights, evaluation sets and failures are published. Customers can always leave with their data.</p></div></li>
+    <li><div><svg class="px" data-px="cloud"></svg><h2 class="h3">Honest about doubt</h2><p>Every forecast carries its uncertainty band, and we say plainly where the models still miss.</p></div></li>
+  </ul></section>
+  <section class="line" aria-labelledby="hist-h"><div class="frame">
+    <div class="pad-s"><h2 class="h2" id="hist-h">How it grew.</h2></div>
+    <ol class="stair">
+      <li><span class="yr mono">2023</span><p>Two researchers and one weather station in a borrowed orchard.</p><i style="--n:1"></i></li>
+      <li><span class="yr mono">2024</span><p>Nowcast-1 released with open weights; the first ten farms join.</p><i style="--n:2"></i></li>
+      <li><span class="yr mono">2025</span><p>The field app ships and works offline from day one.</p><i style="--n:3"></i></li>
+      <li><span class="yr mono">2026</span><p>Solar and frost models; on-site boxes in 60 sheds.</p><i style="--n:4"></i></li>
+    </ol>
+  </div></section>
+  <section class="line" aria-labelledby="team-h"><div class="frame">
+    <div class="pad-s split"><h2 class="h2" id="team-h">The people.</h2><a class="btn btn-soft go" href="#/careers">Open roles</a></div>
+    <ul class="grid3 line" data-render="team"></ul>
+  </div></section>
+</div>
+
+<!-- ===================== CAREERS ===================== -->
+<div data-view="careers">
+  <section class="phead"><div class="frame node pad"><p class="eyebrow">Careers</p><h1 class="h1">Build forecasts people act on.</h1><p class="lead">We hire people who like hard problems with muddy boots: research, engineering, design and fieldwork.</p></div></section>
+  <section class="line"><ul class="frame cells3">
+    <li><div><svg class="px" data-px="barn"></svg><h2 class="h3">Two offices, many fields</h2><p>Work from either office or remotely within three hours of them. Everyone spends a week a season on a farm.</p></div></li>
+    <li><div><svg class="px" data-px="sun"></svg><h2 class="h3">Seasons, not sprints</h2><p>We plan around planting and harvest, with quiet weeks in between to write things down.</p></div></li>
+    <li><div><svg class="px" data-px="book"></svg><h2 class="h3">Time to learn</h2><p>A yearly budget for courses and conferences, and one Friday a month for your own research.</p></div></li>
+  </ul></section>
+  <section class="line" aria-labelledby="roles-h"><div class="frame">
+    <div class="bar"><h2 class="h3" id="roles-h">Open roles</h2><span class="count" id="r-count" aria-live="polite"></span>
+      <label class="sr" for="r-team">Team</label><select class="sel" id="r-team"><option value="all">All teams</option><option>Research</option><option>Engineering</option><option>Design</option><option>Field</option></select>
+      <label class="sr" for="r-loc">Location</label><select class="sel" id="r-loc"><option value="all">All locations</option><option>Utrecht</option><option>Christchurch</option><option>Remote</option></select></div>
+    <ul class="roles line" id="r-list" data-render="roles"></ul>
+    <div class="empty" id="r-empty" hidden><p>No open role matches. Write to us anyway; we read every letter.</p><button class="btn btn-soft btn-sm" type="button" data-reset="roles">Clear filters</button></div>
+  </div></section>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div data-view="contact">
+  <section class="phead"><div class="frame node pad"><p class="eyebrow">Contact</p><h1 class="h1">Get in touch.</h1><p class="lead">Tell us about your fields. A person reads every message, usually within one working day.</p></div></section>
+  <section class="line"><div class="frame two">
+    <ul class="chan">
+      <li><svg class="px" data-px="chart"></svg><b>Plans and on-site boxes</b><p><a href="#c-form">Use the form</a>, or write to sales@fieldlark.example.</p></li>
+      <li><svg class="px" data-px="term"></svg><b>Help with the API</b><p>Start with the <a href="#/docs">quickstart</a>, then write to help@fieldlark.example.</p></li>
+      <li><svg class="px" data-px="mail"></svg><b>Press and research</b><p>press@fieldlark.example for interviews, data requests and talks.</p></li>
+    </ul>
+    <div id="c-form">
+      <div class="fcard">
+        <form class="form" data-form="contact" novalidate>
+          <div class="row2">
+            <div class="fld"><label for="c-name">Name</label><input class="in" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-e"><p class="err" id="c-name-e"></p></div>
+            <div class="fld"><label for="c-email">Email</label><input class="in" id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-e"><p class="err" id="c-email-e"></p></div>
+          </div>
+          <div class="fld"><label for="c-org">Farm or company <span class="opt">(optional)</span></label><input class="in" id="c-org" name="organisation" autocomplete="organization"><p class="err"></p></div>
+          <div class="fld"><label for="c-topic">Topic</label><select class="in" id="c-topic" name="topic" required aria-describedby="c-topic-e"><option value="">Choose a topic</option><option value="plans">Plans and pricing</option><option value="onsite">On-site deployment</option><option value="support">Help with the API</option><option value="research">Research partnership</option><option value="careers">Careers</option><option value="press">Press</option></select><p class="err" id="c-topic-e"></p></div>
+          <div class="fld"><label for="c-msg">Message</label><textarea class="in" id="c-msg" name="message" required minlength="20" aria-describedby="c-msg-e"></textarea><p class="err" id="c-msg-e"></p></div>
+          <label class="check"><input type="checkbox" name="consent" required aria-describedby="c-ok-e"><span>You may use these details to answer my message.</span></label><p class="err" id="c-ok-e"></p>
+          <button class="btn btn-ink btn-wide go" type="submit">Send message</button>
+        </form>
+        <div class="done" data-success="contact" role="status" hidden><svg class="px" data-px="mail"></svg><h2 class="h3">Message sent.</h2><p>Thank you. We will answer within one working day.</p><button class="btn btn-soft" type="button" data-again>Send another</button></div>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- ===================== SIGN UP ===================== -->
+<div data-view="signup">
+  <section class="phead"><div class="frame node pad"><p class="eyebrow">Start building</p><h1 class="h1">Get a key, ask the sky.</h1></div></section>
+  <section class="line"><div class="frame two">
+    <div>
+      <form class="form" data-form="signup" novalidate>
+        <div class="fld"><label for="s-name">Full name</label><input class="in" id="s-name" name="name" autocomplete="name" required aria-describedby="s-name-e"><p class="err" id="s-name-e"></p></div>
+        <div class="fld"><label for="s-email">Work email</label><input class="in" id="s-email" name="email" type="email" autocomplete="email" required aria-describedby="s-email-e"><p class="err" id="s-email-e"></p></div>
+        <div class="fld"><label for="s-pw">Password</label><input class="in" id="s-pw" name="password" type="password" autocomplete="new-password" required minlength="10" aria-describedby="s-pw-e s-pw-h"><p class="hint" id="s-pw-h">At least 10 characters.</p><p class="err" id="s-pw-e"></p></div>
+        <fieldset class="fld"><legend>What will you forecast?</legend><div class="radios"><label class="rad"><input type="radio" name="use" value="farm" required aria-describedby="s-use-e">A farm</label><label class="rad"><input type="radio" name="use" value="solar" aria-describedby="s-use-e">A solar site</label><label class="rad"><input type="radio" name="use" value="research" aria-describedby="s-use-e">Research</label><label class="rad"><input type="radio" name="use" value="other" aria-describedby="s-use-e">Something else</label></div><p class="err" id="s-use-e"></p></fieldset>
+        <label class="check"><input type="checkbox" name="terms" required aria-describedby="s-terms-e"><span>I accept the <a href="#terms">terms</a> and the <a href="#privacy">privacy notice</a>.</span></label><p class="err" id="s-terms-e"></p>
+        <button class="btn btn-ink btn-wide go" type="submit">Create account</button>
+      </form>
+      <div class="done" data-success="signup" role="status" hidden><svg class="px" data-px="key"></svg><h2 class="h3">Check your inbox.</h2><p>We sent a link to confirm your email. Your first key is waiting behind it.</p><button class="btn btn-soft" type="button" data-again>Use another email</button></div>
+    </div>
+    <div class="mosaic m-sun"><svg class="tiles"></svg>
+      <svg class="mspr px" data-px="sun" style="right:8%;top:8%"></svg>
+      <div class="mcard"><p class="eyebrow">Three steps</p><ul class="rows"><li>Get a key<span class="mono">1 min</span></li><li>Send your coordinates<span class="mono">1 call</span></li><li>Plan the day<span class="mono">every day</span></li></ul><p class="small">Free for 14 days on the Grower plan. No card needed.</p></div>
+    </div>
+  </div></section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="legal">
+  <section class="phead"><div class="frame node pad"><p class="eyebrow">Legal</p><h1 class="h1">Privacy and terms.</h1><p class="small">Last updated 1 November 2026</p></div></section>
+  <section class="line"><div class="frame lg">
+    <nav aria-label="Sections"><ol><li><a href="#privacy">Privacy notice</a></li><li><a href="#terms">Terms of service</a></li></ol></nav>
+    <div class="prose">
+      <h2 id="privacy">Privacy notice</h2>
+      <p>We collect what we need to run your account and your forecasts: your name, email, the locations you save and the station data you choose to send. We do not sell personal data or use it for advertising.</p>
+      <p>Field and station data stay yours. We use them for your forecasts and, only if you opt in, to improve the shared models. Write to privacy@fieldlark.example with any question.</p>
+      <h2 id="terms">Terms of service</h2>
+      <p>Forecasts are guidance, not guarantees. You remain responsible for decisions you make with them, including spraying, irrigation, harvest and grid bids.</p>
+      <p>The open-weight models are licensed under Apache 2.0. Hosted plans renew each month or year until cancelled, and cancellation takes effect at the end of the period.</p>
+      <p>We may change these terms with 30 days of notice by email. These terms are a sample: replace them with text reviewed for your business.</p>
+    </div>
+  </div></section>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="nf">
+    <div class="terrain" aria-hidden="true">
+      <i class="b l" style="--x:0;--y:0;--c:var(--s3)"></i>
+      <i class="b r" style="--x:0;--y:0;--c:var(--s4)"></i>
+      <i class="b r" style="--x:0;--y:1;--c:var(--s2)"></i>
+      <svg class="sp px" data-px="sprout" style="right:calc((var(--cell) - var(--ps)) / 2);bottom:calc(var(--cell) * 2)"></svg>
+    </div>
+    <div class="frame node">
+      <p class="eyebrow">Error 404</p>
+      <h1 class="h1">Nothing grows here.</h1>
+      <p class="lead">This page has moved or never existed. Try the home page or the models.</p>
+      <div class="actions"><a class="btn btn-ink go" href="#/">Back to home</a><a class="btn btn-soft go" href="#/models">See the models</a></div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="ft">
+  <div class="ft-cols">
+    <div><h2 class="ft-h">Product</h2><ul><li><a href="#/models">Models</a></li><li><a href="#/pricing">Pricing</a></li><li><a href="#/docs">Docs</a></li><li><a href="#/signup">Start building</a></li></ul></div>
+    <div><h2 class="ft-h">Lab</h2><ul><li><a href="#/research">Research</a></li><li><a href="#/company">Company</a></li><li><a href="#/careers">Careers</a></li><li><a href="#/contact">Get in touch</a></li></ul></div>
+    <div><h2 class="ft-h">Legal</h2><ul><li><a href="#privacy">Privacy notice</a></li><li><a href="#terms">Terms of service</a></li></ul></div>
+    <div class="ft-news"><h2 class="ft-h">Field notes, once a month</h2>
+      <form class="nl" data-form="newsletter" novalidate><label class="sr" for="n-email">Email</label><input class="in" id="n-email" name="email" type="email" autocomplete="email" placeholder="you@farm.example" required aria-describedby="n-email-e"><button class="btn btn-ink" type="submit">Subscribe</button><p class="err" id="n-email-e"></p></form>
+      <div class="done" data-success="newsletter" role="status" hidden><p>Subscribed. The next note arrives at the start of the month.</p><button class="btn btn-soft btn-sm" type="button" data-again>Add another email</button></div>
+    </div>
+  </div>
+  <div class="ft-bot"><p>© 2026 Fieldlark Labs</p><p>Forecasts are guidance, not guarantees. Look up now and then.</p></div>
+  <div class="ft-land" aria-hidden="true"><svg class="ft-mark" viewBox="0 0 8 8"><use href="#mark"/></svg><svg class="px ft-sp" data-px="sprout"></svg><div class="stripes"></div></div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Pixel art: every sprite and icon is a character map, one letter per pixel ----------
+     Letters: k ink, w white, l light gray, s gray, y sun, a amber, o orange, r red, c ember, b sky, n navy, g leaf,
+     d dark leaf, t soil; x is currentColor (icons). "." is empty. Draw new sprites on the same 16 by 16 grid. */
+  const PAL = { k: "pk", w: "pw", l: "pl", s: "ps", y: "s1", a: "s2", o: "s3", r: "s4", c: "s5", b: "pb", n: "pn", g: "pg", d: "pd", t: "pt" };
+  const PIX = {
+    sun: `
+.......aa.......
+.......aa.......
+..a..........a..
+...a..oooo..a...
+.....oyyyyo.....
+....oywyyyyo....
+....oywyyyyo....
+aa..oyyyyyyo..aa
+aa..oyyyyyyo..aa
+....oyyyyyyo....
+.....oyyyyo.....
+......oooo......
+...a........a...
+..a..........a..
+.......aa.......
+.......aa.......`,
+    cloud: `
+................
+................
+......kkkk......
+.....kwwwwk.....
+..kkkwwwwwwk....
+.kwwwwwwwwwwkk..
+.kwwwwwwwwwwwwk.
+kwwwwwwwwwwwwwwk
+kwwwwwwwwwwwwlwk
+kwllwwwwwwwwllwk
+.kkkkkkkkkkkkkk.
+................
+..b...b...b.....
+.b...b...b...b..
+................
+..b...b...b.....`,
+    drop: `
+................
+................
+.......bb.......
+......bbbb......
+.....bbbbbb.....
+....bbwbbbbb....
+...bbwbbbbbbb...
+...bwbbbbbbbb...
+..bbwbbbbbbbbb..
+..bbbbbbbbbbnb..
+..bbbbbbbbbbnb..
+...bbbbbbbbnb...
+....bbbbbbnn....
+.....nnnnnn.....
+................
+................`,
+    sprout: `
+................
+................
+..........ggg...
+...gg....ggggg..
+..gggg..gggddg..
+..gdggg.ggdgg...
+...gdggdgdgg....
+.....gddgg......
+.......dd.......
+.......dd.......
+.......dd.......
+...rrrrrrrrrr...
+...oooooooooo...
+....oooooooo....
+....oooooooo....
+.....oooooo.....`,
+    barn: `
+................
+................
+.......cc.......
+......cccc......
+.....cccccc.....
+....cccccccc....
+...cccccccccc...
+..cccccccccccc..
+...rrrrwwrrrr...
+...rrrrwwrrrr...
+...rrrrrrrrrr...
+...rrwwwwwwrr...
+...rrwkwwkwrr...
+...rrwwkkwwrr...
+...rrwkwwkwrr...
+.tttttttttttttt.`,
+    panel: `
+................
+................
+.....kkkkkkkkkk.
+....kwbnbbnbbnk.
+...kbbnbbnbbnk..
+...knnnnnnnnnk..
+..kbbnbbnbbnk...
+..kbbnbbnbbnk...
+.knnnnnnnnnk....
+.kbbnbbnbbnk....
+kkkkkkkkkkkk....
+.....ss.........
+.....ss.........
+.....ss.........
+...ssssss.......
+................`,
+    flake: `
+.......b........
+....b..b..b.....
+.....b.b.b......
+......bbb.......
+.b.....b.....b..
+..b....b....b...
+...b...b...b....
+bbbbbbbwbbbbbbb.
+...b...b...b....
+..b....b....b...
+.b.....b.....b..
+......bbb.......
+.....b.b.b......
+....b..b..b.....
+.......b........
+................`,
+    chart: `
+................
+................
+................
+................
+............cc..
+............cc..
+.........rr.cc..
+.........rr.cc..
+......oo.rr.cc..
+......oo.rr.cc..
+...aa.oo.rr.cc..
+...aa.oo.rr.cc..
+yy.aa.oo.rr.cc..
+yy.aa.oo.rr.cc..
+kkkkkkkkkkkkkkkk
+................`,
+    book: `
+................
+................
+................
+..kkkk....kkkk..
+.kwwwwk..kwwwwk.
+.kwllwwkkwwllwk.
+.kwwwwwkkwwwwwk.
+.kwllwwkkwwllwk.
+.kwwwwwkkwwwwwk.
+.kwllwwkkwwllwk.
+.kwwwwwkkwwwwwk.
+.kkkkkkrrkkkkkk.
+.......rr.......
+.......rr.......
+................
+................`,
+    term: `
+................
+................
+.kkkkkkkkkkkkkk.
+.kllllllllllllk.
+.kkkkkkkkkkkkkk.
+.kkkkkkkkkkkkkk.
+.kkykkkkkkkkkkk.
+.kkkykwwwwkkkkk.
+.kkykkkkkkkkkkk.
+.kkkkkkkkkkkkkk.
+.kkwwwkwwkkkkkk.
+.kkkkkkkkkkkkkk.
+.kkaaakkkkkkkkk.
+.kkkkkkkkkkkkkk.
+................
+................`,
+    key: `
+................
+................
+................
+...oooo.........
+..oyyyyo........
+.oyykkyyo.......
+.oyykkyyooooooo.
+.oyyyyyyyyyyyyo.
+..oyyyyoooyyoyo.
+...oooo...oo.o..
+................
+................
+................
+................
+................
+................`,
+    mail: `
+................
+................
+................
+................
+.kkkkkkkkkkkkkk.
+.kwkwwwwwwwwkwk.
+.kwwkwwwwwwkwwk.
+.kwwwkwwwwkwwwk.
+.kwwwwkwwkwwwwk.
+.kwwwwwkkwwwwwk.
+.kwwwwwwwwwwwwk.
+.kwwwwwwwwwrrwk.
+.kkkkkkkkkkkkkk.
+................
+................
+................`,
+    check: `
+........
+.......x
+......x.
+.....x..
+x...x...
+.x.x....
+..x.....
+........`,
+    plus: `
+........
+...xx...
+...xx...
+xxxxxxxx
+xxxxxxxx
+...xx...
+...xx...
+........`,
+    down: `
+........
+........
+x......x
+.x....x.
+..x..x..
+...xx...
+........
+........`,
+    x: `
+........
+.x....x.
+..x..x..
+...xx...
+...xx...
+..x..x..
+.x....x.
+........`,
+    menu: `
+........
+xxxxxxxx
+........
+........
+xxxxxxxx
+........
+........
+xxxxxxxx`,
+    search: `
+.xxxx...
+x....x..
+x....x..
+x....x..
+x....x..
+.xxxx...
+.....xx.
+......xx`,
+    copy: `
+..xxxxxx
+..x....x
+xxxxx..x
+x...x..x
+x...xxxx
+x...x...
+xxxxx...
+........`,
+    sun8: `
+...xx...
+.x....x.
+..xxxx..
+x.xxxx.x
+x.xxxx.x
+..xxxx..
+.x....x.
+...xx...`,
+    moon: `
+..xxx...
+.xx.....
+xx......
+xx......
+xx......
+xxx....x
+.xxxxxx.
+..xxxx..`,
+  };
+  const cache = new Map();
+  function pixelSvg(name) {
+    if (cache.has(name)) return cache.get(name);
+    const rows = PIX[name].trim().split("\n");
+    const runs = {};
+    rows.forEach((row, y) => {
+      for (let x = 0; x < row.length;) {
+        const c = row[x];
+        let n = 1;
+        while (row[x + n] === c) n++;
+        if (c !== ".") (runs[c] ??= []).push(`M${x} ${y}h${n}v1h-${n}z`);
+        x += n;
+      }
+    });
+    const paths = Object.entries(runs).map(([c, d]) => `<path ${c === "x" ? 'fill="currentColor"' : `style="fill:var(--${PAL[c]})"`} d="${d.join("")}"/>`).join("");
+    const out = { box: `0 0 ${rows[0].length} ${rows.length}`, paths };
+    cache.set(name, out);
+    return out;
+  }
+  function draw(svg) {
+    const name = svg.dataset.px || svg.dataset.i;
+    if (!PIX[name]) return;
+    const { box, paths } = pixelSvg(name);
+    svg.setAttribute("viewBox", box);
+    svg.setAttribute("aria-hidden", "true");
+    svg.innerHTML = paths;
+  }
+
+  /* Mosaic tiles: a seeded scatter of lighter and darker squares, different on every panel */
+  function seeded(seed) {
+    return () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  }
+  function drawTiles(svg, n) {
+    const rand = seeded(n * 97 + 11), cols = 16, rows = 10;
+    let light = "", dark = "";
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+      const v = rand() + (x / cols - 0.5) * 0.3;
+      if (v < 0.28) light += `M${x} ${y}h1v1h-1z`;
+      else if (v > 0.84) dark += `M${x} ${y}h1v1h-1z`;
+    }
+    svg.setAttribute("viewBox", `0 0 ${cols} ${rows}`);
+    svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
+    svg.setAttribute("aria-hidden", "true");
+    svg.innerHTML = `<path class="t1" d="${light}"/><path class="t2" d="${dark}"/>`;
+  }
+  let tileSeed = 0;
+  const paint = (scope = document) => {
+    $$("svg[data-px], svg[data-i]", scope).forEach(draw);
+    $$("svg.tiles:empty", scope).forEach((svg) => drawTiles(svg, tileSeed++));
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks one ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    const icon = themeButton.firstElementChild;
+    icon.dataset.i = theme === "dark" ? "sun8" : "moon";
+    draw(icon);
+  }
+  const saved = store.get("fieldlark-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("fieldlark-theme", next);
+  });
+
+  /* ---------- Data: replace with the brief's own; the lists below are drawn from it ---------- */
+  const TASK = { nowcast: "Nowcast", seasonal: "Seasonal", solar: "Solar", frost: "Frost" };
+  const MODELS = [
+    { name: "Nowcast-2", task: "nowcast", px: "cloud", size: "1.2B", horizon: "6 hours", grid: "500 m", runs: "Laptop", text: "Rain, hail and wind for the next six hours, refreshed every five minutes from radar and your own station." },
+    { name: "Nowcast-2 Mini", task: "nowcast", px: "drop", size: "300M", horizon: "3 hours", grid: "1 km", runs: "Small board", text: "The same nowcast, distilled to run on a small board in the shed with no connection." },
+    { name: "Seasonal-1", task: "seasonal", px: "sprout", size: "3B", horizon: "26 weeks", grid: "5 km", runs: "Small server", text: "Planting windows and growing-degree outlooks for the season ahead, with the spread between runs." },
+    { name: "Sunfield-1", task: "solar", px: "panel", size: "800M", horizon: "48 hours", grid: "250 m", runs: "Laptop", text: "Irradiance and yield for each row of panels, tuned for cloud edges and morning haze." },
+    { name: "Sunfield-1 Grid", task: "solar", px: "chart", size: "2B", horizon: "7 days", grid: "1 km", runs: "GPU server", text: "Week-ahead output for operators who bid into the grid and need the uncertainty band." },
+    { name: "Frostline-1", task: "frost", px: "flake", size: "600M", horizon: "18 hours", grid: "100 m", runs: "Laptop", text: "Overnight minimums down to the frost pocket at the bottom of the block." },
+  ];
+  const TOPIC = { research: "Research", engineering: "Engineering", field: "Field notes", company: "Company" };
+  const POSTS = [
+    { title: "Frostline-1: forecasting the coldest corner of the block", topic: "research", date: "2026-10-28", px: "flake", hue: "m-sky", text: "Cold air pools in the low corner. We trained on 200 nights of sensors placed exactly there." },
+    { title: "Running Nowcast-2 Mini on a board in the shed", topic: "engineering", date: "2026-10-09", px: "term", hue: "m-leaf", text: "Quantising to four bits, caching radar tiles and surviving a week without a connection." },
+    { title: "A season with three orchards in one valley", topic: "field", date: "2026-09-22", px: "sprout", hue: "m-ember", text: "What growers did with the alerts, which ones they muted, and what we changed because of it." },
+    { title: "Uncertainty bands a crew can read", topic: "research", date: "2026-09-04", px: "chart", hue: "m-sun", text: "Why we show a range instead of a single number, and how we tested it with people in the field." },
+    { title: "Batching a thousand fields in one request", topic: "engineering", date: "2026-08-19", px: "key", hue: "m-sky", text: "How the batch endpoint shares radar work between nearby fields, and what it costs you." },
+    { title: "Open weights: the licence and what you can do with it", topic: "company", date: "2026-06-11", px: "book", hue: "m-sun", text: "Apache 2.0 in plain words, and the one thing we ask in return." },
+  ];
+  const TEAM = [
+    { name: "Noor Halvorsen", role: "Co-founder, models", c: "--s2" },
+    { name: "Teodor Vasile", role: "Co-founder, engineering", c: "--s3" },
+    { name: "Amaia Etxeberria", role: "Field research lead", c: "--pg" },
+    { name: "Kofi Mensah-Hart", role: "Platform engineer", c: "--pb" },
+    { name: "Lise Brandvold", role: "Product designer", c: "--s1" },
+    { name: "Ruben Achterhof", role: "Partnerships", c: "--pl" },
+  ];
+  const ROLES = [
+    { title: "Research scientist, nowcasting", team: "Research", loc: "Utrecht", type: "Full time" },
+    { title: "Machine learning engineer, small models", team: "Engineering", loc: "Remote", type: "Full time" },
+    { title: "Platform engineer, forecast API", team: "Engineering", loc: "Christchurch", type: "Full time" },
+    { title: "Product designer, field app", team: "Design", loc: "Utrecht", type: "Full time" },
+    { title: "Field research associate", team: "Field", loc: "Utrecht", type: "Seasonal" },
+    { title: "Agronomist in residence", team: "Field", loc: "Christchurch", type: "Contract" },
+  ];
+  const STORIES = [
+    { px: "flake", fact: "Eleven frost nights warned this spring, with the sprinklers on in time every night.", quote: "We used to set an alarm for three in the morning and go out to look at the sky. Now the app wakes us only when it matters.", who: "Ines Achterberg", org: "Haverlea Orchards" },
+    { px: "chart", fact: "Day-ahead output within four percent on nine days out of ten, across two sites.", quote: "Cloud edges used to be guesswork. Now we bid tomorrow's output with a range we actually believe.", who: "Pablo Iriarte", org: "Bramblecote Solar" },
+    { px: "term", fact: "Shade screens closed on the forecast, not on the alarm, through the July heat.", quote: "It runs on a box next to the boiler. When the internet went down for two days, nothing changed for us.", who: "Maren Holt", org: "Sallowmere Glasshouses" },
+  ];
+  const initials = (name) => name.split(" ").map((w) => w[0]).join("").slice(0, 2);
+  const postCard = (p) => `<li data-topic="${p.topic}" data-text="${esc(p.title.toLowerCase())}"><a class="card post-card" href="#/post"><div class="cover ${p.hue}"><svg class="tiles"></svg><svg class="px" data-px="${p.px}"></svg></div><div class="tags"><span class="tag">${TOPIC[p.topic]}</span></div><h2 class="h3">${esc(p.title)}</h2><p>${esc(p.text)}</p><p class="small mono">${p.date}</p></a></li>`;
+  const RENDER = {
+    models: () => MODELS.map((m) => `<li data-task="${m.task}" data-text="${esc((m.name + " " + m.text).toLowerCase())}"><a class="card" href="#/docs"><svg class="px" data-px="${m.px}"></svg><h2 class="h3">${esc(m.name)}</h2><div class="tags"><span class="tag">${TASK[m.task]}</span><span class="tag">${m.size}</span><span class="tag">Apache 2.0</span></div><p>${esc(m.text)}</p><dl class="specs"><dt>Horizon</dt><dd>${m.horizon}</dd><dt>Grid</dt><dd>${m.grid}</dd><dt>Runs on</dt><dd>${m.runs}</dd></dl><span class="more go">Use it</span></a></li>`),
+    posts: () => POSTS.map(postCard),
+    more: () => POSTS.slice(0, 3).map(postCard),
+    team: () => TEAM.map((t) => `<li class="person"><span class="av" style="--c:var(${t.c})" aria-hidden="true">${initials(t.name)}</span><h3 class="h3">${esc(t.name)}</h3><p>${esc(t.role)}</p></li>`),
+    roles: () => ROLES.map((r) => `<li data-team="${r.team}" data-loc="${r.loc}"><a class="go" href="#/contact?topic=careers"><span><b>${esc(r.title)}</b><small>${r.team} · ${r.loc}</small></span><span>${r.team}</span><span>${r.loc} · ${r.type}</span></a></li>`),
+  };
+  $$("[data-render]").forEach((list) => { list.innerHTML = RENDER[list.dataset.render]().join(""); });
+  paint();
+
+  /* ---------- Filters: every list shows a live count and an empty state ---------- */
+  function filterList(list, test, countEl, noun, emptyEl, extra = 0) {
+    let shown = extra;
+    [...list.children].forEach((li) => { li.hidden = !test(li); if (!li.hidden) shown++; });
+    countEl.textContent = `${shown} ${shown === 1 ? noun[0] : noun[1]}`;
+    emptyEl.hidden = shown > 0;
+  }
+  const state = { task: "all", topic: "all" };
+  const mq = $("#m-q");
+  function filterModels() {
+    const q = mq.value.trim().toLowerCase();
+    $$("button[data-task]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.task === state.task)));
+    filterList($("#m-list"), (li) => (state.task === "all" || li.dataset.task === state.task) && (!q || li.dataset.text.includes(q)), $("#m-count"), ["model", "models"], $("#m-empty"));
+  }
+  $$("button[data-task]").forEach((b) => b.addEventListener("click", () => { state.task = b.dataset.task; filterModels(); }));
+  mq.addEventListener("input", filterModels);
+
+  const pq = $("#p-q");
+  const feat = $("#p-feat");
+  function filterPosts() {
+    const q = pq.value.trim().toLowerCase();
+    const test = (el) => (state.topic === "all" || el.dataset.topic === state.topic) && (!q || el.dataset.text.includes(q));
+    $$("button[data-topic]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.topic === state.topic)));
+    feat.hidden = !test(feat);
+    filterList($("#p-list"), test, $("#p-count"), ["note", "notes"], $("#p-empty"), feat.hidden ? 0 : 1);
+  }
+  $$("button[data-topic]").forEach((b) => b.addEventListener("click", () => { state.topic = b.dataset.topic; filterPosts(); }));
+  pq.addEventListener("input", filterPosts);
+
+  const rTeam = $("#r-team");
+  const rLoc = $("#r-loc");
+  function filterRoles() {
+    filterList($("#r-list"), (li) => (rTeam.value === "all" || li.dataset.team === rTeam.value) && (rLoc.value === "all" || li.dataset.loc === rLoc.value), $("#r-count"), ["open role", "open roles"], $("#r-empty"));
+  }
+  [rTeam, rLoc].forEach((s) => s.addEventListener("change", filterRoles));
+  $$("[data-reset]").forEach((b) => b.addEventListener("click", () => {
+    if (b.dataset.reset === "models") { state.task = "all"; mq.value = ""; filterModels(); }
+    if (b.dataset.reset === "posts") { state.topic = "all"; pq.value = ""; filterPosts(); }
+    if (b.dataset.reset === "roles") { rTeam.value = rLoc.value = "all"; filterRoles(); }
+  }));
+  filterModels();
+  filterPosts();
+  filterRoles();
+
+  /* ---------- Tabs (code samples and customer stories): arrow keys move between tabs ---------- */
+  function tabs(list, onSelect) {
+    const all = $$("[role=tab]", list);
+    const select = (tab) => {
+      all.forEach((t) => { const on = t === tab; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; });
+      onSelect(tab);
+    };
+    all.forEach((tab, i) => {
+      tab.addEventListener("click", () => select(tab));
+      tab.addEventListener("keydown", (event) => {
+        const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+        if (!step) return;
+        event.preventDefault();
+        const next = all[(i + step + all.length) % all.length];
+        select(next);
+        next.focus();
+      });
+    });
+  }
+  $$("[data-tabs]").forEach((box) => tabs($(".code-bar", box), (tab) => {
+    $$("[role=tab]", box).forEach((t) => { $("#" + t.getAttribute("aria-controls")).hidden = t !== tab; });
+  }));
+  tabs($(".st-tabs"), (tab) => {
+    const s = STORIES[tab.dataset.story];
+    const panel = $("#st-p");
+    panel.setAttribute("aria-labelledby", tab.id);
+    $("#st-px").dataset.px = s.px;
+    draw($("#st-px"));
+    $("#st-fact").textContent = s.fact;
+    $("#st-q").textContent = `“${s.quote}”`;
+    $("#st-who").textContent = s.who;
+    $("#st-org").textContent = s.org;
+    if (!reduced.matches) { panel.classList.remove("reveal", "is-in"); void panel.offsetWidth; panel.classList.add("reveal", "is-in"); }
+  });
+
+  /* ---------- Copy buttons ---------- */
+  $$(".copy").forEach((button) => button.addEventListener("click", async () => {
+    const pre = $$("pre", button.closest(".code")).find((p) => !p.hidden);
+    const icon = $("svg", button);
+    try { await navigator.clipboard.writeText(pre.textContent); } catch { /* sandboxed frame: no clipboard */ }
+    icon.dataset.i = "check";
+    draw(icon);
+    button.setAttribute("aria-label", "Copied");
+    setTimeout(() => { icon.dataset.i = "copy"; draw(icon); button.setAttribute("aria-label", "Copy code"); }, 1600);
+  }));
+
+  /* ---------- Pricing: billing switch ---------- */
+  $$("[data-bill]").forEach((b) => b.addEventListener("click", () => {
+    const period = b.dataset.bill;
+    $$("[data-bill]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    $$("[data-month]").forEach((el) => { el.textContent = el.dataset[period]; });
+  }));
+
+  /* ---------- Docs: search the sidebar, "/" focuses it, mark the section in view, feedback ---------- */
+  const dq = $("#d-q");
+  const dMenu = $("#d-menu");
+  if (innerWidth < 900) dMenu.open = false;
+  dq.addEventListener("input", () => {
+    const q = dq.value.trim().toLowerCase();
+    let shown = 0;
+    $$(".d-grp", dMenu).forEach((grp) => {
+      let inGroup = 0;
+      $$("a", grp).forEach((a) => { a.hidden = q && !a.textContent.toLowerCase().includes(q); if (!a.hidden) inGroup++; });
+      grp.hidden = inGroup === 0;
+      shown += inGroup;
+    });
+    $("#d-none").hidden = shown > 0;
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "/" || current?.dataset.view !== "docs" || event.target.closest("input, textarea, select")) return;
+    event.preventDefault();
+    dMenu.open = true;
+    dq.focus();
+  });
+  $$("[data-fb]").forEach((b) => b.addEventListener("click", () => { $("#d-fb").hidden = true; $("#d-thanks").hidden = false; }));
+
+  /* ---------- Scroll spy: the chapter index and the docs sidebar follow the section in view ---------- */
+  function spy(links, targets) {
+    if (!("IntersectionObserver" in window)) return;
+    const watch = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        links.forEach((a) => a.classList.toggle("is-on", a.getAttribute("href") === `#${entry.target.id}`));
+      }
+    }, { rootMargin: "-30% 0px -60% 0px" });
+    targets.forEach((t) => watch.observe(t));
+  }
+  spy($$(".ch-nav a"), $$(".ch"));
+  spy($$(".d-grp a[href^='#d-']"), $$(".doc h2[id]"));
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "Fieldlark: forecasts for the field you farm", models: "Models · Fieldlark", pricing: "Pricing · Fieldlark", docs: "Quickstart · Fieldlark docs", research: "Research · Fieldlark", post: "Why a small model beats a global one · Fieldlark", company: "Company · Fieldlark", careers: "Careers · Fieldlark", contact: "Get in touch · Fieldlark", signup: "Start building · Fieldlark", legal: "Privacy and terms · Fieldlark", "404": "Page not found · Fieldlark" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, q = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(q), anchor: "" };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    $$(".hd-nav a, .sheet nav a").forEach((a) => {
+      const target = parse(a.getAttribute("href")).view;
+      const on = target === name || (target === "research" && name === "post") || (target === "company" && name === "careers");
+      if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "models" && p.get("task") && TASK[p.get("task")]) { state.task = p.get("task"); filterModels(); }
+    if (name === "research" && p.get("topic") && TOPIC[p.get("topic")]) { state.topic = p.get("topic"); filterPosts(); }
+    if (name === "contact" && p.get("topic")) { const s = $("#c-topic"); if (s.querySelector(`option[value="${CSS.escape(p.get("topic"))}"]`)) s.value = p.get("topic"); }
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); if (menu.open) menu.close(); go(href); return; }
+    const target = href.length > 1 && document.getElementById(href.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    if (menu.open) menu.close();
+    /* a section ID on another view (the footer's legal links): open that view first, then scroll */
+    const view = target.closest("[data-view]");
+    if (view && view !== current) go(view.dataset.view === "home" ? "#/" : `#/${view.dataset.view}`);
+    target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    if (target.id === "main") target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Mobile menu ---------- */
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+
+  /* ---------- Reveal: keyframes on entry; content stays visible without JS; timed fallback ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in")));
+  }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please add a little more." };
+  const missing = { checkbox: "Please confirm to continue.", radio: "Please choose one.", "select-one": "Please choose one." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby").split(" ")[0]);
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (problem === "valueMissing" && missing[field.type]) || (problem === "tooShort" && field.type === "password" ? "Use at least 10 characters." : messages[problem]) : "";
+    const group = field.type === "radio" ? $$(`[name="${field.name}"]`, field.form) : [field];
+    group.forEach((f) => f.setAttribute("aria-invalid", String(Boolean(problem))));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input, select, textarea", form).filter((f) => f.hasAttribute("aria-describedby"));
+    const unique = fields.filter((f, i) => f.type !== "radio" || fields.findIndex((g) => g.name === f.name) === i);
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value && field.type !== "radio" && field.type !== "checkbox") checkField(field); });
+      field.addEventListener(field.type === "radio" || field.type === "checkbox" || field.tagName === "SELECT" ? "change" : "input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before "submit" fires, so the button's click runs it too (Enter clicks it). */
+    const button = $("[type=submit]", form);
+    const label = button.innerHTML;
+    const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+    const send = () => {
+      if (button.disabled) return;
+      if (!unique.map(checkField).every(Boolean)) { unique.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        success.hidden = false;
+        button.disabled = false;
+        button.innerHTML = label;
+      }, 600);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+    $("[data-again]", success)?.addEventListener("click", () => {
+      form.reset();
+      fields.forEach((f) => f.removeAttribute("aria-invalid"));
+      $$(".err", form).forEach((e) => { e.textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      fields[0].focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  const start = parse(location.hash);
+  show(start, { scroll: false });
+  if (start.anchor) document.getElementById(start.anchor.slice(1))?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

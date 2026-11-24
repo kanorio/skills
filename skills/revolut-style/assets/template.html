@@ -1,0 +1,1320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Tidepass: one pass for every pool, wall and studio</title>
+<meta name="description" content="One membership opens pools, climbing walls and studios across the city. Book a place in two taps and walk straight in.">
+<meta property="og:title" content="Tidepass: one pass for every pool, wall and studio">
+<meta property="og:description" content="Book a place in two taps and walk straight in.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/host-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font ---------- */
+@font-face { font-family: "Host Grotesk"; src: url("fonts/host-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 300 800; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: every page color is light-dark(light, dark); photo and ink bands are always dark ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(100% 0 0), oklch(14.5% 0.004 265));
+  --surface: light-dark(oklch(96.4% 0.003 265), oklch(20.5% 0.005 265));
+  --surface-2: light-dark(oklch(91.5% 0.004 265), oklch(27% 0.006 265));
+  --mist: light-dark(oklch(89.5% 0.004 265), oklch(22.5% 0.006 265));
+  --text: light-dark(oklch(16.5% 0.006 265), oklch(97.5% 0.002 265));
+  --text-muted: light-dark(oklch(46% 0.012 265), oklch(73% 0.01 265));
+  --border: light-dark(oklch(88% 0.005 265), oklch(32% 0.008 265));
+  --accent: light-dark(oklch(52% 0.21 266), oklch(74% 0.14 262));
+  --accent-text: light-dark(oklch(100% 0 0), oklch(16% 0.03 266));
+  --ink: oklch(8.5% 0.003 265);
+  --error: light-dark(oklch(52% 0.2 25), oklch(74% 0.16 25));
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.06), 0 16px 40px -20px oklch(0% 0 0 / 0.28);
+  --shadow-pop: 0 40px 80px -30px oklch(0% 0 0 / 0.6), 0 2px 6px oklch(0% 0 0 / 0.2);
+  --r-pill: 999px; --r-control: 14px; --r-card: 24px; --r-media: 28px; --r-panel: 40px;
+  --dur-fast: 160ms; --dur-base: 320ms; --dur-slow: 700ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --font: "Host Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-display: clamp(3.5rem, 8.2vw, 8rem); --fs-h1: clamp(2.75rem, 5.8vw, 5.5rem); --fs-h2: clamp(2.25rem, 4.4vw, 4rem);
+  --fs-h3: 1.375rem; --fs-body: 1.0625rem; --fs-small: 0.875rem;
+  --wrap: 1200px; --gut: clamp(16px, 4vw, 48px); --sec: clamp(80px, 11vw, 160px); --hdr: 72px;
+}
+[data-theme="light"] { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+.dark { color-scheme: dark; color: var(--text); }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 88px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs-body)/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+h1, h2, h3, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { list-style: none; padding: 0; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.wrap { width: min(100% - 2 * var(--gut), var(--wrap)); margin-inline: auto; }
+.i { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 50; padding: 10px 18px; border-radius: var(--r-pill); background: var(--text); color: var(--bg); }
+.skip:focus { top: 12px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.display { font-size: var(--fs-display); font-weight: 500; line-height: 0.95; letter-spacing: -0.045em; }
+.h1 { font-size: var(--fs-h1); font-weight: 500; line-height: 1; letter-spacing: -0.04em; }
+.h2 { font-size: var(--fs-h2); font-weight: 500; line-height: 1.02; letter-spacing: -0.035em; }
+.h3 { font-size: var(--fs-h3); font-weight: 600; line-height: 1.2; letter-spacing: -0.015em; }
+.lead { font-size: clamp(1.125rem, 1.5vw, 1.3125rem); line-height: 1.45; max-width: 31em; }
+.muted { color: var(--text-muted); }
+.small { font-size: var(--fs-small); }
+.center { text-align: center; }
+.center .lead, .center .h2, .center .h1 { margin-inline: auto; }
+
+/* ---------- Pills, tabs and links ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 24px; border-radius: var(--r-pill); border: 2px solid transparent; background: none; font-size: 1rem; font-weight: 500; line-height: 1; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color var(--dur-fast), color var(--dur-fast), transform var(--dur-fast) var(--ease); }
+.btn:active { transform: scale(0.97); }
+.btn .i { width: 18px; height: 18px; }
+.btn-solid { background: var(--text); color: var(--bg); }
+.btn-solid:hover { background: color-mix(in oklab, var(--text) 82%, var(--bg)); }
+.btn-ink { background: oklch(17% 0.004 265); color: oklch(100% 0 0); }
+.btn-ink:hover { background: oklch(28% 0.004 265); }
+.btn-line { border-color: currentColor; }
+.btn-line:hover { background: color-mix(in oklab, currentColor 12%, transparent); }
+.btn-sm { min-height: 40px; padding: 0 18px; font-size: 0.9375rem; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.center .btn-row { justify-content: center; }
+.more { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; text-decoration: none; }
+.more .i { width: 18px; height: 18px; transition: transform var(--dur-fast) var(--ease); }
+.more:hover .i { transform: translateX(4px); }
+.icon-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; flex: none; border: 0; border-radius: 50%; background: color-mix(in oklab, var(--text) 8%, transparent); cursor: pointer; transition: background-color var(--dur-fast); }
+.icon-btn:hover { background: color-mix(in oklab, var(--text) 15%, transparent); }
+.icon-btn .i { width: 20px; height: 20px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.tab { min-height: 46px; padding: 0 24px; border-radius: var(--r-pill); border: 2px solid var(--text); background: color-mix(in oklab, var(--bg) 45%, transparent); color: var(--text); font-size: 1.0625rem; font-weight: 500; cursor: pointer; transition: background-color var(--dur-fast), color var(--dur-fast); }
+.tab:hover:not([aria-pressed="true"]) { background: color-mix(in oklab, var(--text) 14%, transparent); }
+.tab[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+.tab-sm { min-height: 40px; padding: 0 18px; border-width: 1.5px; font-size: 0.9375rem; }
+.chip-w { display: inline-flex; align-items: center; min-height: 40px; padding: 0 20px; border-radius: var(--r-pill); background: oklch(100% 0 0); color: oklch(15% 0 0); font-size: 1rem; font-weight: 500; }
+
+/* ---------- Header: over photo and ink bands it turns transparent and white until the page scrolls ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; background: var(--bg); color: var(--text); transition: background-color var(--dur-base), box-shadow var(--dur-base); }
+.site-header.is-scrolled { box-shadow: 0 1px 0 var(--border); }
+.over .site-header:not(.is-scrolled):not(.is-open) { color-scheme: dark; background: transparent; }
+.hdr { display: flex; align-items: center; gap: clamp(24px, 3vw, 48px); height: var(--hdr); width: min(100% - 2 * var(--gut), var(--wrap)); margin-inline: auto; }
+.logo { font-size: 1.625rem; font-weight: 650; letter-spacing: -0.05em; text-decoration: none; }
+.nav { display: flex; gap: clamp(20px, 2.6vw, 40px); }
+.nav a, .hdr-link { font-weight: 500; text-decoration: none; text-underline-offset: 8px; text-decoration-thickness: 2px; }
+.nav a:hover, .hdr-link:hover, .nav a[aria-current="page"] { text-decoration-line: underline; }
+.hdr-end { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+.menu-btn { display: none; }
+.menu { display: grid; padding: 4px var(--gut) 28px; background: var(--bg); }
+.menu a:not(.btn) { padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 1.5rem; font-weight: 500; letter-spacing: -0.02em; text-decoration: none; }
+.menu a[aria-current="page"] { color: var(--accent); }
+.menu .btn { margin-top: 24px; justify-self: start; }
+@media (max-width: 1079px) { .nav, .hdr-link { display: none; } .menu-btn { display: inline-grid; } }
+@media (max-width: 560px) { :root { --hdr: 64px; } .hdr-end .btn { display: none; } .hdr-end { gap: 10px; } }
+
+/* ---------- Views, bands and scenes ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+main { min-height: 60vh; }
+.sec, .band { padding-block: var(--sec); }
+.band-ink { background: var(--ink); }
+.band-mist { background: var(--mist); }
+.band-surface { background: var(--surface); }
+.under-hdr { padding-top: calc(var(--hdr) + clamp(40px, 6vw, 88px)); }
+.over .under-hdr { margin-top: calc(-1 * var(--hdr)); }
+.page-head { padding-block: clamp(56px, 8vw, 112px) clamp(32px, 4vw, 56px); }
+.page-head .h1 { max-width: 12em; }
+.page-head .lead { margin-top: 24px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 32px; }
+.scene { position: relative; isolation: isolate; overflow: hidden; background: var(--ink); color-scheme: dark; color: oklch(100% 0 0); }
+.scene::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, oklch(0% 0 0 / 0.34), oklch(0% 0 0 / 0) 44%, oklch(0% 0 0 / 0) 62%, oklch(0% 0 0 / 0.5)); }
+.bgimg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transition: opacity var(--dur-slow) var(--ease); }
+.bgimg:not(.is-on) { opacity: 0; }
+.stack { display: grid; }
+.stack > *, .stack-inline > * { grid-area: 1 / 1; transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease), visibility var(--dur-base); }
+.stack > :not(.is-on), .stack-inline > :not(.is-on) { opacity: 0; visibility: hidden; transform: translateY(10px); }
+.stack-inline { display: inline-grid; }
+
+/* ---------- Signature: the glass frame laid over a photograph ---------- */
+.frame { position: relative; display: grid; justify-items: center; align-content: center; gap: 14px; width: min(100%, 400px); aspect-ratio: 400 / 540; padding: 32px 24px 128px; border: 2px solid oklch(100% 0 0 / 0.62); border-radius: var(--r-panel); background: oklch(22% 0.03 255 / 0.18); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); color: oklch(100% 0 0); text-align: center; text-shadow: 0 1px 12px oklch(0% 0 0 / 0.25); }
+.frame .lab { font-size: 1.0625rem; }
+.frame .fig { font-size: clamp(2.75rem, 4.4vw, 3.75rem); font-weight: 600; line-height: 1; letter-spacing: -0.045em; }
+.frame .body { display: grid; justify-items: center; gap: 14px; }
+.acts { display: flex; gap: 18px; margin-top: 22px; }
+.acts span { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: oklch(100% 0 0 / 0.22); }
+.acts span:first-child { background: oklch(100% 0 0); color: oklch(15% 0 0); }
+.acts .i { width: 20px; height: 20px; }
+.strip { position: absolute; left: 14px; right: 14px; bottom: 14px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; min-height: 80px; border-radius: 26px; background: oklch(100% 0 0); color: oklch(15% 0 0); }
+.strip span { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 10px; font-size: 0.875rem; font-weight: 600; line-height: 1.2; text-align: left; }
+.strip span + span { border-left: 1px solid oklch(88% 0 0); }
+
+/* ---------- Home hero ---------- */
+.hero { height: max(760px, min(100svh, 960px)); padding-bottom: 0; color: oklch(100% 0 0); }
+.hero-grid { display: grid; grid-template-columns: 1fr minmax(0, 400px) 1fr; column-gap: 48px; align-items: start; }
+.hero h1 { grid-column: 1 / -1; max-width: 10.5em; }
+.hero-copy { grid-column: 1; grid-row: 2; margin-top: 44px; }
+.hero-copy .lead { max-width: 19em; }
+.hero-copy .btn-row { margin-top: 34px; }
+.hero .frame { grid-column: 2; grid-row: 2; margin-top: 64px; }
+@media (max-width: 1099px) {
+  .hero { height: auto; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-copy, .hero .frame { grid-column: 1; grid-row: auto; }
+  .hero .frame { justify-self: center; margin: 56px 0 -48px; }
+}
+
+/* ---------- Trust band ---------- */
+.trust-line { max-width: 34em; margin-inline: auto; color: var(--text-muted); font-size: 1.125rem; font-weight: 400; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 56px; }
+.stats li { display: grid; justify-items: center; align-content: start; gap: 10px; }
+.stats strong { font-size: clamp(2.25rem, 3.6vw, 3.25rem); font-weight: 500; line-height: 1; letter-spacing: -0.045em; }
+.stats span { max-width: 13em; color: var(--text-muted); }
+@media (max-width: 760px) { .stats { grid-template-columns: 1fr 1fr; row-gap: 44px; } }
+
+/* ---------- Ink band, card and phone mockups ---------- */
+.band, .scene { overflow-x: clip; }
+.band .lead, .scene .lead { margin-top: 24px; }
+.band .btn-row, .scene .btn-row { margin-top: 34px; }
+.mock { display: grid; justify-items: center; gap: 44px; margin-top: 72px; }
+.mock .stack { justify-items: center; align-items: center; width: 100%; }
+.mock .phone { width: 270px; }
+.fan { display: grid; justify-items: center; width: min(100%, 560px); padding-block: 40px; }
+.fan .pass { grid-area: 1 / 1; width: min(88%, 460px); }
+.fan .pass:nth-child(1) { transform: translate(-14%, -18%) rotate(-10deg); }
+.fan .pass:nth-child(2) { transform: translate(12%, -6%) rotate(7deg); }
+.fan .pass:nth-child(3) { transform: translateY(16%); }
+@media (max-width: 600px) {
+  .fan { padding-block: 64px 32px; }
+  .fan .pass { width: 76%; }
+  .fan .pass:nth-child(1) { transform: translate(-9%, -22%) rotate(-8deg); }
+  .fan .pass:nth-child(2) { transform: translate(9%, -10%) rotate(6deg); }
+  .mock .phone { width: 240px; }
+  .mock .stack > :not(.is-on) { display: none; }
+}
+.pass { --a: oklch(60% 0.19 262); --b: oklch(40% 0.2 292); --c: oklch(80% 0.12 215);
+  position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto 1fr auto; width: min(100%, 440px); aspect-ratio: 1.6; padding: 26px 28px; border-radius: 26px; color: oklch(100% 0 0); text-align: left;
+  background: radial-gradient(120% 95% at 0% 0%, var(--c), transparent 56%), linear-gradient(135deg, var(--a), var(--b)); box-shadow: var(--shadow-pop); transition: background-color var(--dur-base); }
+.pass[data-tone="coral"] { --a: oklch(72% 0.16 40); --b: oklch(52% 0.2 12); --c: oklch(90% 0.09 75); }
+.pass[data-tone="night"] { --a: oklch(32% 0.02 265); --b: oklch(13% 0.01 265); --c: oklch(52% 0.06 250); }
+.pass-waves { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.28; }
+.pass-brand { position: relative; font-size: 1.375rem; font-weight: 650; letter-spacing: -0.05em; }
+.pass-tier { position: relative; justify-self: end; align-self: start; padding: 6px 12px; border-radius: var(--r-pill); background: oklch(100% 0 0 / 0.22); font-size: 0.8125rem; font-weight: 600; }
+.pass-name { position: relative; grid-row: 3; font-size: 1.0625rem; font-weight: 500; }
+.pass-tap { position: relative; grid-row: 3; grid-column: 2; width: 30px; height: 30px; }
+.phone { width: 300px; max-width: 100%; aspect-ratio: 300 / 610; padding: 10px; border-radius: 50px; background: oklch(12% 0 0); box-shadow: var(--shadow-pop), inset 0 0 0 2px oklch(34% 0 0); }
+.screen { position: relative; display: flex; flex-direction: column; gap: 12px; height: 100%; overflow: hidden; padding: 58px 18px 18px; border-radius: 40px; background: var(--surface); color: var(--text); text-align: left; }
+.screen::before { content: ""; position: absolute; top: 14px; left: 50%; width: 92px; height: 26px; margin-left: -46px; border-radius: 20px; background: oklch(8% 0 0); }
+.screen .time { position: absolute; top: 17px; left: 30px; font-size: 0.8125rem; font-weight: 600; }
+.scr-lab { color: var(--text-muted); font-size: 0.875rem; }
+.scr-fig { font-size: 2.5rem; font-weight: 600; line-height: 1; letter-spacing: -0.045em; }
+.screen .pass { width: 100%; padding: 16px 18px; border-radius: 18px; box-shadow: none; }
+.screen .pass-brand { font-size: 1.0625rem; }
+.screen .pass-name { font-size: 0.875rem; }
+.screen .pass-tap { width: 22px; height: 22px; }
+.rows { display: grid; }
+.rows li { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 0.9375rem; line-height: 1.25; }
+.rows li:last-child { border-bottom: 0; }
+.rows small { display: block; color: var(--text-muted); font-size: 0.8125rem; }
+.rows .end { margin-left: auto; font-weight: 600; white-space: nowrap; }
+.dot { display: grid; place-items: center; width: 38px; height: 38px; flex: none; border-radius: 50%; background: var(--surface-2); }
+.dot .i { width: 18px; height: 18px; }
+.scr-btn { display: grid; place-items: center; min-height: 46px; margin-top: auto; border-radius: var(--r-pill); background: var(--text); color: var(--bg); font-weight: 500; }
+.switch { position: relative; width: 50px; height: 30px; flex: none; margin-left: auto; border: 0; border-radius: var(--r-pill); background: var(--surface-2); cursor: pointer; transition: background-color var(--dur-fast); }
+.switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: oklch(100% 0 0); box-shadow: 0 1px 3px oklch(0% 0 0 / 0.3); transition: transform var(--dur-base) var(--ease); }
+.switch[aria-checked="true"] { background: var(--accent); }
+.switch[aria-checked="true"]::after { transform: translateX(20px); }
+
+/* ---------- Scene band with pill tabs ---------- */
+.scene-band { padding-block: var(--sec) 64px; color: oklch(100% 0 0); }
+.scene-band .frame { margin: 56px auto 48px; aspect-ratio: 400 / 420; padding-bottom: 40px; width: min(100%, 360px); }
+.closing { padding-block: clamp(140px, 18vw, 240px); color: oklch(100% 0 0); }
+.closing::before { background: radial-gradient(70% 60% at 50% 50%, oklch(0% 0 0 / 0.6), oklch(0% 0 0 / 0.12)); }
+
+/* ---------- Split rows, tiles, plan strip ---------- */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+.split-copy .lead { margin-top: 24px; }
+.split-copy .btn-row { margin-top: 36px; }
+.split > .phone, .split > .pass { justify-self: center; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px; }
+.tile { display: grid; align-content: start; gap: 10px; padding: 24px 24px 30px; border-radius: var(--r-card); background: var(--surface); }
+.tile-ui { display: grid; place-items: center; min-height: 200px; margin-bottom: 14px; padding: 20px; border-radius: 18px; background: var(--bg); }
+@media (max-width: 900px) { .tiles { grid-template-columns: 1fr; } }
+.slots { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 260px; }
+.slots span { padding: 8px 14px; border-radius: var(--r-pill); border: 1.5px solid var(--border); font-size: 0.9375rem; font-weight: 500; }
+.slots .on { border-color: var(--text); background: var(--text); color: var(--bg); }
+.faces { display: flex; align-items: center; }
+.faces span { display: grid; place-items: center; width: 64px; height: 64px; margin-left: -14px; border: 3px solid var(--bg); border-radius: 50%; background: var(--c, var(--accent)); color: oklch(100% 0 0); font-weight: 600; }
+.faces span:first-child { margin-left: 0; }
+.faces b { margin-left: 14px; white-space: nowrap; padding: 10px 16px; border-radius: var(--r-pill); background: var(--text); color: var(--bg); font-weight: 500; }
+.bars { display: flex; align-items: end; gap: 12px; height: 150px; }
+.bars span { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 8px; width: 30px; height: 100%; font-size: 0.75rem; color: var(--text-muted); }
+.bars span::before { content: ""; width: 100%; height: var(--h); border-radius: 10px; background: var(--surface-2); }
+.bars .on::before { background: var(--accent); }
+.plan-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+.plan-strip a { display: grid; gap: 4px; padding: 28px; border-radius: var(--r-card); background: var(--surface); text-decoration: none; transition: transform var(--dur-fast) var(--ease); }
+.plan-strip a:hover { transform: translateY(-3px); }
+.plan-strip strong { margin-top: 18px; font-size: 2.75rem; font-weight: 500; line-height: 1; letter-spacing: -0.045em; }
+@media (max-width: 760px) { .plan-strip { grid-template-columns: 1fr; } }
+
+/* ---------- Plans and comparison ---------- */
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+.plan { display: flex; flex-direction: column; gap: 14px; padding: 32px 28px; border-radius: var(--r-card); background: var(--surface); }
+.plan.pick { background: var(--text); color: var(--bg); }
+.plan.pick .muted { color: color-mix(in oklab, var(--bg) 68%, var(--text)); }
+.plan.pick .btn-solid { background: var(--bg); color: var(--text); }
+.plan-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.plan-top h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; }
+.badge { padding: 4px 10px; border-radius: var(--r-pill); background: var(--accent); color: var(--accent-text); font-size: 0.8125rem; font-weight: 600; }
+.price { font-size: 3.5rem; font-weight: 500; line-height: 1; letter-spacing: -0.05em; }
+.plan ul { display: grid; gap: 10px; margin: 8px 0 20px; }
+.plan li { display: flex; gap: 10px; }
+.plan li .i { width: 20px; height: 20px; margin-top: 2px; color: var(--accent); }
+.plan.pick li .i { color: inherit; }
+.plan .btn { margin-top: auto; }
+@media (max-width: 900px) { .plans { grid-template-columns: 1fr; } }
+.compare { width: 100%; margin-top: 88px; border-collapse: collapse; }
+.compare caption { margin-bottom: 20px; text-align: left; font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; letter-spacing: -0.03em; }
+.compare th, .compare td { padding: 16px 12px; border-bottom: 1px solid var(--border); text-align: center; }
+.compare th:first-child, .compare td:first-child { padding-left: 0; text-align: left; font-weight: 400; }
+.compare thead th { font-weight: 600; }
+.compare .i { width: 20px; height: 20px; margin-inline: auto; color: var(--accent); }
+@media (max-width: 560px) { .compare { font-size: 0.875rem; } .compare th, .compare td { padding: 12px 4px; } }
+
+/* ---------- Filters, sessions, journal ---------- */
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 40px; }
+.toolbar .tabs { justify-content: flex-start; gap: 8px; }
+.search { position: relative; display: flex; align-items: center; }
+.search .i { position: absolute; left: 16px; width: 18px; height: 18px; color: var(--text-muted); pointer-events: none; }
+.search input { width: min(100%, 300px); min-height: 46px; padding: 0 18px 0 46px; border: 1.5px solid var(--border); border-radius: var(--r-pill); background: var(--bg); }
+.count { margin-top: 24px; color: var(--text-muted); font-size: var(--fs-small); }
+.empty { padding: 56px 0; color: var(--text-muted); text-align: center; }
+.sessions { display: grid; gap: 12px; margin-top: 14px; }
+.session { display: grid; grid-template-columns: 80px 1fr 150px auto; align-items: center; gap: 16px 24px; padding: 18px 20px; border-radius: var(--r-card); background: var(--surface); }
+.date { display: grid; place-items: center; align-content: center; width: 80px; height: 80px; border-radius: 20px; background: var(--bg); line-height: 1.1; }
+.date b { font-size: 1.75rem; font-weight: 600; letter-spacing: -0.03em; }
+.date span { color: var(--text-muted); font-size: 0.8125rem; }
+.session h3 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.015em; }
+.meta { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 4px; color: var(--text-muted); font-size: 0.9375rem; }
+.meta span { display: inline-flex; align-items: center; gap: 6px; }
+.meta .i { width: 16px; height: 16px; }
+.left { font-size: 0.875rem; }
+.left .bar { height: 6px; margin-top: 8px; overflow: hidden; border-radius: 6px; background: var(--surface-2); }
+.left .bar i { display: block; width: var(--w); height: 100%; border-radius: inherit; background: var(--accent); }
+@media (max-width: 760px) {
+  .session { grid-template-columns: 64px 1fr; }
+  .date { width: 64px; height: 64px; }
+  .left, .session .btn { grid-column: 1 / -1; }
+}
+.posts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 24px; margin-top: 16px; }
+.post-card a { display: grid; gap: 12px; text-decoration: none; }
+.post-card .ph { overflow: hidden; border-radius: var(--r-media); }
+.post-card img { width: 100%; aspect-ratio: 16 / 11; object-fit: cover; transition: transform var(--dur-base) var(--ease); }
+.post-card a:hover img { transform: scale(1.03); }
+.post-card .topic { color: var(--text-muted); font-size: var(--fs-small); }
+.post-card h3 { font-size: 1.375rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
+@media (max-width: 960px) { .posts { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .posts { grid-template-columns: 1fr; } }
+.article { max-width: 780px; margin-inline: auto; }
+.article .h1 { margin-top: 16px; font-size: clamp(2.5rem, 5vw, 4.5rem); }
+.article figure { margin-top: 40px; overflow: hidden; border-radius: var(--r-media); }
+.article figure img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.prose { margin-top: 40px; }
+.prose p { margin-top: 20px; font-size: 1.1875rem; line-height: 1.6; }
+.prose .lead { margin-top: 0; font-size: clamp(1.25rem, 2vw, 1.5rem); line-height: 1.4; }
+.prose blockquote { margin: 44px 0; padding-left: 24px; border-left: 3px solid var(--accent); font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 500; line-height: 1.25; letter-spacing: -0.025em; }
+
+/* ---------- Help ---------- */
+.faq { max-width: 860px; margin-inline: auto; }
+.faq .search input { width: 100%; }
+.faq .search { margin-top: 32px; }
+.faq-group { margin-top: 56px; }
+.faq-group h2 { margin-bottom: 8px; font-size: 1.75rem; font-weight: 500; letter-spacing: -0.025em; }
+.qa { border-bottom: 1px solid var(--border); }
+.qa summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 0; font-size: 1.1875rem; font-weight: 500; list-style: none; cursor: pointer; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary .i { transition: transform var(--dur-base) var(--ease); }
+.qa[open] summary .i { transform: rotate(45deg); }
+.qa p { max-width: 44em; padding-bottom: 24px; color: var(--text-muted); }
+
+/* ---------- Forms ---------- */
+.form-card { padding: clamp(24px, 4vw, 44px); border-radius: var(--r-panel); background: var(--surface); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; }
+.field { position: relative; display: grid; align-content: start; gap: 8px; padding-bottom: 26px; }
+.field.full { grid-column: 1 / -1; }
+.field > span:first-child, .field legend { padding: 0; font-size: 0.9375rem; font-weight: 500; }
+:where(input:not([type="radio"], [type="checkbox"]), select, textarea) { width: 100%; min-height: 52px; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: var(--r-control); background: var(--bg); transition: border-color var(--dur-fast); }
+textarea { min-height: 140px; resize: vertical; }
+input:hover, select:hover, textarea:hover { border-color: color-mix(in oklab, var(--text) 40%, var(--border)); }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+[aria-invalid="true"] { border-color: var(--error) !important; }
+.error { position: absolute; left: 2px; bottom: 3px; color: var(--error); font-size: 0.8125rem; line-height: 1.2; }
+.hint { position: absolute; right: 2px; bottom: 3px; color: var(--text-muted); font-size: 0.8125rem; }
+.opts { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; border: 0; }
+.opts legend { margin-bottom: 8px; }
+.opt { position: relative; }
+.opt input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.opt span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border: 1.5px solid var(--border); border-radius: var(--r-pill); font-weight: 500; transition: background-color var(--dur-fast), color var(--dur-fast); }
+.opt input:checked + span { border-color: var(--text); background: var(--text); color: var(--bg); }
+.opt input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+.check { display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; }
+.check input { width: 20px; height: 20px; margin: 2px 0 0; flex: none; accent-color: var(--accent); }
+.stepper { display: flex; align-items: center; gap: 10px; }
+.stepper input { width: 76px; text-align: center; }
+.success { display: grid; justify-items: center; gap: 16px; padding: 32px 0; text-align: center; }
+.success .tick { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: var(--accent-text); }
+.success .tick .i { width: 28px; height: 28px; stroke-width: 2.4; }
+.success h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 500; letter-spacing: -0.03em; }
+@media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Join, company, contact, legal ---------- */
+.join { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100svh - var(--hdr)); }
+.join-scene { display: grid; place-items: center; padding: 48px var(--gut); }
+.join-scene .frame { padding-bottom: 32px; }
+.join-scene .pass { width: 100%; box-shadow: none; }
+.join-form { align-self: center; width: 100%; max-width: 640px; padding: clamp(40px, 6vw, 88px) var(--gut); }
+.join-form .lead { margin: 20px 0 36px; }
+@media (max-width: 960px) { .join { grid-template-columns: 1fr; } .join-scene { min-height: 560px; } }
+.story { display: grid; margin-top: 48px; }
+.story li { display: grid; grid-template-columns: 140px 1fr; gap: 24px; padding: 28px 0; border-top: 1px solid var(--border); }
+.story b { font-size: 2rem; font-weight: 500; line-height: 1; letter-spacing: -0.04em; }
+@media (max-width: 600px) { .story li { grid-template-columns: 1fr; gap: 8px; } }
+.roles { display: grid; margin-top: 40px; }
+.roles li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 24px 0; border-bottom: 1px solid var(--border); }
+.roles li:first-child { border-top: 1px solid var(--border); }
+.roles h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.02em; }
+.routes { display: grid; gap: 12px; }
+.routes li { display: flex; gap: 16px; padding: 24px; border-radius: var(--r-card); background: var(--surface); }
+.routes h2 { font-size: 1.125rem; font-weight: 600; }
+.legal-body { max-width: 760px; }
+.legal-body h2 { margin: 48px 0 12px; font-size: 1.75rem; font-weight: 500; letter-spacing: -0.025em; }
+.legal-body p { margin-top: 12px; color: var(--text-muted); }
+.notfound { display: grid; justify-items: center; gap: 24px; padding-block: clamp(96px, 14vw, 200px); text-align: center; }
+
+/* ---------- Footer ---------- */
+.site-footer { padding-block: 72px 40px; background: var(--surface); font-size: 0.9375rem; }
+.foot { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 40px; }
+.foot p { max-width: 22em; margin-top: 14px; color: var(--text-muted); }
+.foot h2 { margin-bottom: 14px; font-size: 0.9375rem; font-weight: 600; }
+.foot ul { display: grid; gap: 10px; }
+.foot ul a { color: var(--text-muted); text-decoration: none; }
+.foot ul a:hover { color: var(--text); }
+.fine { display: grid; gap: 8px; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8125rem; }
+@media (max-width: 860px) { .foot { grid-template-columns: 1fr 1fr; } .foot > :first-child { grid-column: 1 / -1; } }
+
+/* ---------- Motion: keyframes on entry, visible without JS ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes lift { from { opacity: 0; transform: translateY(80px) scale(0.97); } to { opacity: 1; transform: none; } }
+.js .rise { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
+.js .frame.rise { animation-name: lift; animation-duration: 1100ms; }
+.js .reveal:not(.is-in) { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal:not(.is-in) { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24"><path d="M5 12h.01M12 12h.01M19 12h.01" stroke-width="3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-tap" viewBox="0 0 24 24"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 15c3-3 6-3 9 0s6 3 9 0M3 9.5c3-3 6-3 9 0s6 3 9 0"/></symbol>
+  <symbol id="i-hold" viewBox="0 0 24 24"><path d="M6 15.5C4.5 11 7 5.5 12 5s8 4.5 6 9.5-9.5 6-12 1Z"/><circle cx="11.5" cy="11.5" r="1.6"/></symbol>
+  <symbol id="i-move" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2"/><path d="M5 9.5h14M12 9.5v5l-4 6M12 14.5l4 6"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="3"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="waves" viewBox="0 0 440 275" preserveAspectRatio="none"><g fill="none" stroke="#fff" stroke-width="1.2"><path d="M-10 190c60-40 120-40 180 0s120 40 180 0 90-30 100-30"/><path d="M-10 205c60-40 120-40 180 0s120 40 180 0 90-30 100-30"/><path d="M-10 220c60-40 120-40 180 0s120 40 180 0 90-30 100-30"/><path d="M-10 235c60-40 120-40 180 0s120 40 180 0 90-30 100-30"/><path d="M-10 250c60-40 120-40 180 0s120 40 180 0 90-30 100-30"/></g></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="hdr">
+    <a class="logo" href="#/" aria-label="Tidepass home">Tidepass</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/plans">Plans</a>
+      <a href="#/how">How it works</a>
+      <a href="#/sessions">Sessions</a>
+      <a href="#/journal">Journal</a>
+      <a href="#/company">Company</a>
+    </nav>
+    <div class="hdr-end">
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Switch to dark theme"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="hdr-link" href="#/help">Help</a>
+      <a class="btn btn-solid btn-sm" href="#/join">Get your pass</a>
+      <button id="menu-btn" class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+  <nav id="menu" class="menu" aria-label="Menu" hidden>
+    <a href="#/plans">Plans</a>
+    <a href="#/how">How it works</a>
+    <a href="#/sessions">Sessions</a>
+    <a href="#/journal">Journal</a>
+    <a href="#/company">Company</a>
+    <a href="#/help">Help</a>
+    <a class="btn btn-solid" href="#/join">Get your pass</a>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ===== Home ===== -->
+<div data-view="home" data-over>
+  <section class="scene hero under-hdr" aria-labelledby="home-title">
+    <img class="bgimg is-on" src="images/sky.webp" width="1600" height="1000" alt="Blue sky and soft clouds over an open-air pool with lane ropes and a steel ladder">
+    <div class="wrap hero-grid">
+      <h1 id="home-title" class="display rise">The city is your gym</h1>
+      <div class="hero-copy">
+        <p class="lead rise" style="--i:1">One membership opens 212 pools, climbing walls and studios across four cities. Book a place in two taps and walk straight in.</p>
+        <div class="btn-row rise" style="--i:2"><a class="btn btn-ink" href="#/join">Get your pass</a></div>
+      </div>
+      <div class="frame rise" style="--i:3" aria-hidden="true">
+        <span class="lab">This month</span>
+        <span class="fig">14 visits</span>
+        <span class="chip-w">Passes</span>
+        <div class="acts"><span><svg class="i"><use href="#i-plus"/></svg></span><span><svg class="i"><use href="#i-swap"/></svg></span><span><svg class="i"><use href="#i-cal"/></svg></span><span><svg class="i"><use href="#i-dots"/></svg></span></div>
+        <div class="strip"><span><svg class="i"><use href="#i-check"/></svg>No joining fee</span><span><svg class="i"><use href="#i-pause"/></svg>Pause any month</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="trust-title">
+    <div class="wrap center">
+      <h2 id="trust-title" class="trust-line reveal">Members in four cities book more than 9,000 sessions a week</h2>
+      <ul class="stats">
+        <li class="reveal"><strong>212</strong><span>venues, from lidos to bouldering walls</span></li>
+        <li class="reveal"><strong>38,000</strong><span>members across four cities</span></li>
+        <li class="reveal"><strong>4.8</strong><span>average rating in the app</span></li>
+        <li class="reveal"><strong>6am–11pm</strong><span>open every day of the year</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band-ink dark center" aria-labelledby="pass-title">
+    <div class="wrap">
+      <h2 id="pass-title" class="display reveal">One pass. Every door.</h2>
+      <p class="lead reveal">Tap your card or your phone at the front desk. No forms, no queue, no locker deposit.</p>
+      <div class="btn-row reveal"><a class="btn btn-solid" href="#/how">See how it works</a></div>
+      <div class="mock" id="pass-mock">
+        <div class="stack">
+          <div class="fan is-on" data-pane="card" aria-hidden="true">
+            <div class="pass" data-tone="coral"><svg class="pass-waves"><use href="#waves"/></svg><span class="pass-brand">Tidepass</span><span class="pass-tier">Day</span><span class="pass-name">Jo Tran</span><svg class="i pass-tap"><use href="#i-tap"/></svg></div>
+            <div class="pass" data-tone="night"><svg class="pass-waves"><use href="#waves"/></svg><span class="pass-brand">Tidepass</span><span class="pass-tier">Unlimited</span><span class="pass-name">Rae Kim</span><svg class="i pass-tap"><use href="#i-tap"/></svg></div>
+            <div class="pass"><svg class="pass-waves"><use href="#waves"/></svg><span class="pass-brand">Tidepass</span><span class="pass-tier">Plus</span><span class="pass-name">Alex Moreno</span><svg class="i pass-tap"><use href="#i-tap"/></svg></div>
+          </div>
+          <div class="phone" data-pane="phone" aria-hidden="true"><div class="screen"><span class="time">9:41</span>
+            <p class="scr-lab">Wallet</p>
+            <div class="pass"><svg class="pass-waves"><use href="#waves"/></svg><span class="pass-brand">Tidepass</span><span class="pass-tier">Plus</span><span class="pass-name">Alex Moreno</span><svg class="i pass-tap"><use href="#i-tap"/></svg></div>
+            <ul class="rows">
+              <li><span class="dot"><svg class="i"><use href="#i-wave"/></svg></span><span>Eastbank Sea Pool<small>Today, 06:30</small></span><span class="end">In</span></li>
+              <li><span class="dot"><svg class="i"><use href="#i-hold"/></svg></span><span>Lantern Bouldering<small>Yesterday, 12:15</small></span><span class="end">In</span></li>
+            </ul>
+            <span class="scr-btn">Hold near the reader</span>
+          </div></div>
+        </div>
+        <div class="tabs" data-tabs="pass-mock" role="group" aria-label="Show the pass as">
+          <button class="tab" type="button" data-show="card" aria-pressed="true">Card</button>
+          <button class="tab" type="button" data-show="phone" aria-pressed="false">Phone</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene scene-band center" id="hours" aria-labelledby="hours-title">
+    <img class="bgimg is-on" data-pane="swim" src="images/dusk.webp" width="1600" height="1000" alt="A sea pool wall at sunset with a swimmer looking out over the water">
+    <img class="bgimg" data-pane="climb" src="images/climb.webp" width="1600" height="1000" alt="A bouldering wall covered in bright holds under warm spotlights">
+    <img class="bgimg" data-pane="move" src="images/studio.webp" width="1600" height="1000" alt="A movement studio with morning light across the wooden floor">
+    <div class="wrap">
+      <h2 id="hours-title" class="h2 reveal">Make room for the good hours</h2>
+      <p class="lead reveal">Early lengths, a lunchtime climb, a stretch after work. See what is open near you and book a place before you leave.</p>
+      <div class="btn-row reveal"><a class="btn btn-solid" href="#/sessions">Browse sessions</a></div>
+      <div class="frame" aria-hidden="true">
+        <div class="stack">
+          <div class="body is-on" data-pane="swim"><span class="lab">Eastbank Sea Pool</span><span class="fig">06:30</span><span class="chip-w">3 lanes left</span></div>
+          <div class="body" data-pane="climb"><span class="lab">Lantern Bouldering</span><span class="fig">12:15</span><span class="chip-w">8 places left</span></div>
+          <div class="body" data-pane="move"><span class="lab">Cobble Yard Yoga</span><span class="fig">18:45</span><span class="chip-w">5 mats left</span></div>
+        </div>
+      </div>
+      <div class="tabs" data-tabs="hours" role="group" aria-label="Choose an activity">
+        <button class="tab" type="button" data-show="swim" aria-pressed="true">Swim</button>
+        <button class="tab" type="button" data-show="climb" aria-pressed="false">Climb</button>
+        <button class="tab" type="button" data-show="move" aria-pressed="false">Move</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-mist" aria-labelledby="pause-title">
+    <div class="wrap split">
+      <div class="split-copy">
+        <h2 id="pause-title" class="h2 reveal">Pause it when life gets busy</h2>
+        <p class="lead reveal">Away for a month or resting an injury? Pause your plan in the app and pick it back up when you are ready. No calls, no fees.</p>
+        <div class="btn-row reveal"><a class="btn btn-solid" href="#/plans">See plans</a><a class="more" href="#/help"><span>Read the help pages</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </div>
+      <div class="phone reveal"><div class="screen"><span class="time" aria-hidden="true">9:41</span>
+        <p class="scr-lab">Your plan</p>
+        <p class="scr-fig">Plus</p>
+        <p class="small muted">10 visits a month, renews on the 1st</p>
+        <ul class="rows">
+          <li><span class="dot" aria-hidden="true"><svg class="i"><use href="#i-pause"/></svg></span><span id="sw1">Pause my pass<small>Free, any month</small></span><button class="switch" type="button" role="switch" aria-checked="false" aria-labelledby="sw1"></button></li>
+          <li><span class="dot" aria-hidden="true"><svg class="i"><use href="#i-user"/></svg></span><span id="sw2">Guest pass<small>1 left this month</small></span><button class="switch" type="button" role="switch" aria-checked="true" aria-labelledby="sw2"></button></li>
+          <li><span class="dot" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span><span id="sw3">Session reminders<small>The evening before</small></span><button class="switch" type="button" role="switch" aria-checked="true" aria-labelledby="sw3"></button></li>
+          <li><span class="dot" aria-hidden="true"><svg class="i"><use href="#i-tap"/></svg></span><span id="sw4">Phone pass<small>Works without signal</small></span><button class="switch" type="button" role="switch" aria-checked="true" aria-labelledby="sw4"></button></li>
+        </ul>
+        <span class="scr-btn" aria-hidden="true">Manage plan</span>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="app-title">
+    <div class="wrap">
+      <h2 id="app-title" class="h2 center reveal">Everything lives in the app</h2>
+      <ul class="tiles">
+        <li class="tile reveal"><div class="tile-ui" aria-hidden="true"><div class="slots"><span>06:30</span><span class="on">07:00</span><span>07:30</span><span>12:15</span><span>18:45</span><span>21:00</span></div></div><h3 class="h3">Book in two taps</h3><p class="muted">Pick a time, tap book. Your place is held until ten minutes after the start.</p></li>
+        <li class="tile reveal"><div class="tile-ui" aria-hidden="true"><div class="faces"><span>AM</span><span style="--c:oklch(62% 0.17 35)">JT</span><span style="--c:oklch(55% 0.13 165)">RK</span><b>+1 guest</b></div></div><h3 class="h3">Bring a friend</h3><p class="muted">Plus and Unlimited members get guest passes every month, sent by link.</p></li>
+        <li class="tile reveal"><div class="tile-ui" aria-hidden="true"><div class="bars"><span style="--h:46px">W1</span><span style="--h:76px">W2</span><span style="--h:60px">W3</span><span class="on" style="--h:112px">W4</span></div></div><h3 class="h3">See your month</h3><p class="muted">Visits by week, your favourite venues and what is left on your plan.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0" aria-labelledby="home-plans-title">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="home-plans-title" class="h2 reveal">Plans from £9</h2><a class="more" href="#/plans"><span>Compare plans</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <ul class="plan-strip">
+        <li class="reveal"><a href="#/plans"><span class="h3">Day</span><span class="muted">Pay as you go, no monthly fee</span><strong>£9</strong><span class="muted">per visit</span></a></li>
+        <li class="reveal"><a href="#/plans"><span class="h3">Plus</span><span class="muted">Ten visits and a guest pass</span><strong>£39</strong><span class="muted">per month</span></a></li>
+        <li class="reveal"><a href="#/plans"><span class="h3">Unlimited</span><span class="muted">Every venue, every day</span><strong>£69</strong><span class="muted">per month</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="scene closing center" aria-labelledby="close-title">
+    <img class="bgimg is-on" src="images/night.webp" width="1600" height="1000" alt="A rooftop pool glowing at night in front of a lit city skyline">
+    <div class="wrap">
+      <h2 id="close-title" class="display reveal">Your city, after hours</h2>
+      <p class="lead reveal">Late swims on Thursdays, sauna nights on Sundays. Members get first pick of every place.</p>
+      <div class="btn-row reveal"><a class="btn btn-solid" href="#/join">Get your pass</a><a class="btn btn-line" href="#/sessions?kind=night">See late sessions</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Plans ===== -->
+<div data-view="plans">
+  <section class="page-head">
+    <div class="wrap">
+      <h1 class="h1 rise">Pick a plan. Change it any month.</h1>
+      <p class="lead rise" style="--i:1">Every plan opens every venue. The difference is how often you go and who you bring.</p>
+      <div class="tabs" data-tabs="plan-list" role="group" aria-label="Billing period" style="justify-content:flex-start;margin-top:36px">
+        <button class="tab tab-sm" type="button" data-show="month" aria-pressed="true">Monthly</button>
+        <button class="tab tab-sm" type="button" data-show="year" aria-pressed="false">Yearly, two months free</button>
+      </div>
+      <ul class="plans" id="plan-list">
+        <li class="plan">
+          <div class="plan-top"><h2>Day</h2></div>
+          <p><span class="price">£9</span> <span class="muted">per visit</span></p>
+          <p class="muted">For the odd swim or a climb with friends. No monthly fee.</p>
+          <ul><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Any venue, booked up to 2 days ahead</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Pay in the app when you book</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Sauna and steam for £4 more</li></ul>
+          <a class="btn btn-solid" href="#/join?plan=day">Start with a day</a>
+        </li>
+        <li class="plan pick">
+          <div class="plan-top"><h2>Plus</h2><span class="badge">Most chosen</span></div>
+          <p><span class="price stack-inline"><span class="is-on" data-pane="month">£39</span><span data-pane="year">£390</span></span> <span class="muted stack-inline"><span class="is-on" data-pane="month">per month</span><span data-pane="year">per year</span></span></p>
+          <p class="muted">Ten visits a month for people who go twice a week.</p>
+          <ul><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>10 visits, booked up to 7 days ahead</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>1 guest pass every month</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Sauna and steam included</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Pause any month</li></ul>
+          <a class="btn btn-solid" href="#/join?plan=plus">Choose Plus</a>
+        </li>
+        <li class="plan">
+          <div class="plan-top"><h2>Unlimited</h2></div>
+          <p><span class="price stack-inline"><span class="is-on" data-pane="month">£69</span><span data-pane="year">£690</span></span> <span class="muted stack-inline"><span class="is-on" data-pane="month">per month</span><span data-pane="year">per year</span></span></p>
+          <p class="muted">Every venue, every day, and the first pick of late sessions.</p>
+          <ul><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Unlimited visits, booked 14 days ahead</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>2 guest passes every month</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>A towel waiting at the desk</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Pause any month</li></ul>
+          <a class="btn btn-solid" href="#/join?plan=unlimited">Choose Unlimited</a>
+        </li>
+      </ul>
+      <table class="compare">
+        <caption>Compare plans</caption>
+        <thead><tr><th scope="col"><span class="sr-only">Feature</span></th><th scope="col">Day</th><th scope="col">Plus</th><th scope="col">Unlimited</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Visits</th><td>Per visit</td><td>10 a month</td><td>Unlimited</td></tr>
+          <tr><th scope="row">Book ahead</th><td>2 days</td><td>7 days</td><td>14 days</td></tr>
+          <tr><th scope="row">Guest passes</th><td>–</td><td>1 a month</td><td>2 a month</td></tr>
+          <tr><th scope="row">Sauna and steam</th><td>£4</td><td><svg class="i" role="img" aria-label="Included"><use href="#i-check"/></svg></td><td><svg class="i" role="img" aria-label="Included"><use href="#i-check"/></svg></td></tr>
+          <tr><th scope="row">Pause your plan</th><td>–</td><td><svg class="i" role="img" aria-label="Included"><use href="#i-check"/></svg></td><td><svg class="i" role="img" aria-label="Included"><use href="#i-check"/></svg></td></tr>
+          <tr><th scope="row">Towel at the desk</th><td>–</td><td>–</td><td><svg class="i" role="img" aria-label="Included"><use href="#i-check"/></svg></td></tr>
+        </tbody>
+      </table>
+      <p class="small muted" style="margin-top:20px">Prices include VAT. Plans renew on the 1st of each month and can be cancelled in the app before then.</p>
+    </div>
+  </section>
+  <section class="band band-ink dark center" aria-labelledby="try-title">
+    <div class="wrap">
+      <h2 id="try-title" class="h2 reveal">Not sure yet? Try a day.</h2>
+      <p class="lead reveal">Book one session on the Day plan. If you join Plus within a week, we take the £9 off your first month.</p>
+      <div class="btn-row reveal"><a class="btn btn-solid" href="#/join?plan=day">Start with a day</a><a class="btn btn-line" href="#/help">Questions about plans</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== How it works ===== -->
+<div data-view="how" data-over>
+  <section class="band band-ink dark center under-hdr" aria-labelledby="how-title">
+    <div class="wrap">
+      <h1 id="how-title" class="display rise">How it works</h1>
+      <p class="lead rise" style="--i:1">One card in your wallet or one pass on your phone. Pick a colour, book a place, tap in.</p>
+      <div class="mock">
+        <div class="pass rise" id="how-pass" data-tone="tide" style="--i:2" aria-hidden="true"><svg class="pass-waves"><use href="#waves"/></svg><span class="pass-brand">Tidepass</span><span class="pass-tier">Unlimited</span><span class="pass-name">Alex Moreno</span><svg class="i pass-tap"><use href="#i-tap"/></svg></div>
+        <div class="tabs" role="group" aria-label="Card colour">
+          <button class="tab" type="button" data-tone="tide" aria-pressed="true">Tide</button>
+          <button class="tab" type="button" data-tone="coral" aria-pressed="false">Coral</button>
+          <button class="tab" type="button" data-tone="night" aria-pressed="false">Night</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec" aria-labelledby="steps-title">
+    <div class="wrap">
+      <h2 id="steps-title" class="h2 center reveal">Three steps to the water</h2>
+      <ol class="tiles">
+        <li class="tile reveal"><b class="price">1</b><h3 class="h3">Choose a plan</h3><p class="muted">Day, Plus or Unlimited. Your card ships in two working days; the phone pass works straight away.</p></li>
+        <li class="tile reveal"><b class="price">2</b><h3 class="h3">Book a place</h3><p class="muted">Lanes, walls and classes open on a rolling window. Book, move or cancel up to an hour before.</p></li>
+        <li class="tile reveal"><b class="price">3</b><h3 class="h3">Tap in</h3><p class="muted">Hold your card or phone near the reader at the desk. Lockers and towels are on your pass too.</p></li>
+      </ol>
+    </div>
+  </section>
+  <section class="band band-mist" aria-labelledby="book-title">
+    <div class="wrap split">
+      <div class="phone reveal" aria-hidden="true"><div class="screen"><span class="time">9:41</span>
+        <p class="scr-lab">Near you, tomorrow</p>
+        <ul class="rows">
+          <li><span class="dot"><svg class="i"><use href="#i-wave"/></svg></span><span>Saltmarsh Lido<small>07:00, 10 lanes left</small></span><span class="end">Book</span></li>
+          <li><span class="dot"><svg class="i"><use href="#i-hold"/></svg></span><span>Kestrel Wall<small>19:00, 2 places left</small></span><span class="end">Book</span></li>
+          <li><span class="dot"><svg class="i"><use href="#i-move"/></svg></span><span>Mill Street Studio<small>08:00, 9 mats left</small></span><span class="end">Book</span></li>
+          <li><span class="dot"><svg class="i"><use href="#i-wave"/></svg></span><span>Northgate Baths<small>21:00, late swim</small></span><span class="end">Book</span></li>
+        </ul>
+        <span class="scr-btn">Show on the map</span>
+      </div></div>
+      <div class="split-copy">
+        <h2 id="book-title" class="h2 reveal">Book before you leave home</h2>
+        <p class="lead reveal">Every venue shows its live places, so you never arrive to a full pool. Running late? Move your booking to the next slot in one tap.</p>
+        <div class="btn-row reveal"><a class="btn btn-solid" href="#/sessions">Browse sessions</a><a class="more" href="#/plans"><span>See plans</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Sessions ===== -->
+<div data-view="sessions">
+  <section class="page-head">
+    <div class="wrap">
+      <h1 class="h1 rise">Sessions this week</h1>
+      <p class="lead rise" style="--i:1">Members book any session on their plan. Day visitors pay £9 at booking. Places update every few minutes.</p>
+      <div class="toolbar">
+        <div class="tabs" data-chips="sessions" role="group" aria-label="Filter by activity">
+          <button class="tab tab-sm" type="button" data-chip="all" aria-pressed="true">All</button>
+          <button class="tab tab-sm" type="button" data-chip="swim" aria-pressed="false">Swim</button>
+          <button class="tab tab-sm" type="button" data-chip="climb" aria-pressed="false">Climb</button>
+          <button class="tab tab-sm" type="button" data-chip="move" aria-pressed="false">Move</button>
+          <button class="tab tab-sm" type="button" data-chip="night" aria-pressed="false">After dark</button>
+        </div>
+        <label class="search"><span class="sr-only">Search sessions</span><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><input id="session-q" type="search" placeholder="Search by venue or session"></label>
+      </div>
+      <p class="count" id="session-count" aria-live="polite">8 sessions</p>
+      <ul class="sessions" id="session-list">
+        <li class="session" data-kind="swim"><span class="date"><b>24</b><span>Mon</span></span><div><h3>Sunrise lengths</h3><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Eastbank Sea Pool</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>06:30–07:30</span></p></div><div class="left">3 of 12 lanes left<div class="bar"><i style="--w:75%"></i></div></div><button class="btn btn-solid btn-sm" type="button" data-seat="s1">Book a place</button></li>
+        <li class="session" data-kind="climb"><span class="date"><b>24</b><span>Mon</span></span><div><h3>Lunchtime bouldering</h3><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Lantern Bouldering</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>12:15–13:30</span></p></div><div class="left">8 of 30 places left<div class="bar"><i style="--w:73%"></i></div></div><button class="btn btn-solid btn-sm" type="button" data-seat="s2">Book a place</button></li>
+        <li class="session" data-kind="move"><span class="date"><b>25</b><span>Tue</span></span><div><h3>Slow flow yoga</h3><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Cobble Yard Yoga</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>18:45–19:45</span></p></div><div class="left">5 of 20 mats left<div class="bar"><i style="--w:75%"></i></div></div><button class="btn btn-solid btn-sm" type="button" data-seat="s3">Book a place</button></li>
+        <li class="session" data-kind="swim"><span class="date"><b>26</b><span>Wed</span></span><div><h3>Lido lengths</h3><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Saltmarsh Lido</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>07:00–08:00</span></p></div><div class="left">10 of 16 lanes left<div class="bar"><i style="--w:38%"></i></div></div><button class="btn btn-solid btn-sm" type="button" data-seat="s4">Book a place</button></li>
+        <li class="session" data-kind="climb"><span class="date"><b>26</b><span>Wed</span></span><div><h3>Top rope basics</h3><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Kestrel Wall</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>19:00–20:30</span></p></div><div class="left">2 of 8 places left<div class="bar"><i style="--w:75%"></i></div></div><button class="btn btn-solid btn-sm" type="button" data-seat="s5">Book a place</button></li>
+        <li class="session" data-kind="swim night"><span class="date"><b>27</b><span>Thu</span></span><div><h3>Late swim and sauna</h3><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Northgate Baths</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>21:00–22:30</span></p></div><div class="left">14 of 40 places left<div class="bar"><i style="--w:65%"></i></div></div><button class="btn btn-solid btn-sm" type="button" data-seat="s6">Book a place</button></li>
+        <li class="session" data-kind="move"><span class="date"><b>28</b><span>Fri</span></span><div><h3>Mobility for climbers</h3><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Mill Street Studio</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>08:00–09:00</span></p></div><div class="left">9 of 18 mats left<div class="bar"><i style="--w:50%"></i></div></div><button class="btn btn-solid btn-sm" type="button" data-seat="s7">Book a place</button></li>
+        <li class="session" data-kind="climb night"><span class="date"><b>29</b><span>Sat</span></span><div><h3>Moonlit bouldering</h3><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Lantern Bouldering</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>20:00–23:00</span></p></div><div class="left">22 of 60 places left<div class="bar"><i style="--w:63%"></i></div></div><button class="btn btn-solid btn-sm" type="button" data-seat="s8">Book a place</button></li>
+      </ul>
+      <p class="empty" data-empty="sessions" hidden>No sessions match. Try another activity or clear the search.</p>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:24px" id="book" aria-labelledby="book-form-title">
+    <div class="wrap split" style="align-items:start">
+      <div class="split-copy">
+        <h2 id="book-form-title" class="h2">Book a place</h2>
+        <p class="lead">Pick a session, add up to two guests and we hold your places. Cancel up to an hour before at no cost.</p>
+      </div>
+      <div class="form-card">
+        <form data-form="booking" novalidate>
+          <div class="form-grid">
+            <label class="field full"><span>Session</span>
+              <select id="b-session" name="session" required aria-describedby="b-session-e">
+                <option value="">Choose a session</option>
+                <option value="s1">Mon 24, Sunrise lengths, 06:30</option>
+                <option value="s2">Mon 24, Lunchtime bouldering, 12:15</option>
+                <option value="s3">Tue 25, Slow flow yoga, 18:45</option>
+                <option value="s4">Wed 26, Lido lengths, 07:00</option>
+                <option value="s5">Wed 26, Top rope basics, 19:00</option>
+                <option value="s6">Thu 27, Late swim and sauna, 21:00</option>
+                <option value="s7">Fri 28, Mobility for climbers, 08:00</option>
+                <option value="s8">Sat 29, Moonlit bouldering, 20:00</option>
+              </select><span class="error" id="b-session-e" aria-live="polite"></span></label>
+            <label class="field"><span>Your name</span><input id="b-name" name="name" autocomplete="name" required aria-describedby="b-name-e"><span class="error" id="b-name-e" aria-live="polite"></span></label>
+            <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required aria-describedby="b-email-e"><span class="error" id="b-email-e" aria-live="polite"></span></label>
+            <div class="field full"><span>Guests</span>
+              <div class="stepper"><button class="icon-btn" type="button" data-step="-1" aria-label="One guest fewer"><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg></button><input id="b-guests" name="guests" type="number" min="0" max="2" value="0" inputmode="numeric" aria-label="Guests"><button class="icon-btn" type="button" data-step="1" aria-label="One more guest"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div></div>
+            <label class="field full check"><input type="checkbox" name="rules" required aria-describedby="b-rules-e"><span>I have read the venue rules and will bring a swim cap where asked.</span><span class="error" id="b-rules-e" aria-live="polite"></span></label>
+          </div>
+          <button class="btn btn-solid" type="submit">Hold my place</button>
+        </form>
+        <div class="success" data-success="booking" hidden tabindex="-1">
+          <span class="tick"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <h2>You are booked, <span data-echo="name">friend</span></h2>
+          <p class="muted">Your place is in the app with a reminder the evening before. This sample does not send anything yet.</p>
+          <button class="btn btn-line" type="button" data-reset>Book another</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Journal ===== -->
+<div data-view="journal">
+  <section class="page-head">
+    <div class="wrap">
+      <h1 class="h1 rise">Journal</h1>
+      <p class="lead rise" style="--i:1">Guides to the venues, notes from members and the occasional early start.</p>
+      <div class="toolbar">
+        <div class="tabs" data-chips="posts" role="group" aria-label="Filter by topic">
+          <button class="tab tab-sm" type="button" data-chip="all" aria-pressed="true">All</button>
+          <button class="tab tab-sm" type="button" data-chip="guides" aria-pressed="false">Guides</button>
+          <button class="tab tab-sm" type="button" data-chip="venues" aria-pressed="false">Venues</button>
+          <button class="tab tab-sm" type="button" data-chip="members" aria-pressed="false">Members</button>
+        </div>
+      </div>
+      <p class="count" id="post-count" aria-live="polite">6 stories</p>
+      <ul class="posts" id="post-list">
+        <li class="post-card" data-topic="guides"><a href="#/post?p=book-early"><div class="ph"><img src="images/sky.webp" width="1600" height="1000" alt="An open-air pool under a bright blue sky"></div><span class="topic">Guides</span><h3>How to book a lane before work</h3><span class="small muted">4 min read</span></a></li>
+        <li class="post-card" data-topic="venues"><a href="#/post?p=sea-pool"><div class="ph"><img src="images/dusk.webp" width="1600" height="1000" alt="A sea pool wall at sunset"></div><span class="topic">Venues</span><h3>Inside the sea pool that opens at dawn</h3><span class="small muted">6 min read</span></a></li>
+        <li class="post-card" data-topic="members"><a href="#/post?p=lunch-climb"><div class="ph"><img src="images/climb.webp" width="1600" height="1000" alt="A bouldering wall with bright holds"></div><span class="topic">Members</span><h3>Climbing at lunch: three members, one wall</h3><span class="small muted">5 min read</span></a></li>
+        <li class="post-card" data-topic="guides"><a href="#/post?p=desk-stretch"><div class="ph"><img src="images/studio.webp" width="1600" height="1000" alt="A sunlit studio with a mat on the floor"></div><span class="topic">Guides</span><h3>A ten-minute stretch for desk days</h3><span class="small muted">3 min read</span></a></li>
+        <li class="post-card" data-topic="venues"><a href="#/post?p=late-swims"><div class="ph"><img src="images/night.webp" width="1600" height="1000" alt="A rooftop pool at night"></div><span class="topic">Venues</span><h3>Late swims and sauna nights, explained</h3><span class="small muted">4 min read</span></a></li>
+        <li class="post-card" data-topic="members"><a href="#/post?p=pause"><div class="ph"><img src="images/sky.webp" width="1600" height="1000" alt="Clouds drifting over a pool deck"></div><span class="topic">Members</span><h3>Why I paused my pass for a month</h3><span class="small muted">5 min read</span></a></li>
+      </ul>
+      <p class="empty" data-empty="posts" hidden>No stories in this topic yet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Post (filled from POSTS in the script; the default text is the first story) ===== -->
+<div data-view="post">
+  <section class="sec" style="padding-top:clamp(48px,7vw,96px)">
+    <article class="wrap article">
+      <a class="more" href="#/journal"><svg class="i" aria-hidden="true" style="transform:scaleX(-1)"><use href="#i-arrow"/></svg><span>Journal</span></a>
+      <h1 class="h1" data-p="title">How to book a lane before work</h1>
+      <p class="muted" data-p="meta" style="margin-top:16px">Guides, 4 min read</p>
+      <figure><img id="post-img" src="images/sky.webp" width="1600" height="1000" alt="An open-air pool under a bright blue sky"></figure>
+      <div class="prose" data-p="body">
+        <p class="lead">Early lanes go first. Here is how members get the 06:30 slot without setting three alarms.</p>
+        <p>Plus members can book seven days ahead and Unlimited members fourteen, so the window opens at midnight a week before. Turn on reminders and the app nudges you when a lane frees up.</p>
+      </div>
+    </article>
+  </section>
+</div>
+
+<!-- ===== Help ===== -->
+<div data-view="help">
+  <section class="page-head">
+    <div class="wrap faq">
+      <h1 class="h1 rise">How can we help?</h1>
+      <label class="search"><span class="sr-only">Search help</span><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><input id="faq-q" type="search" placeholder="Search questions"></label>
+      <div class="faq-group"><h2>Membership</h2>
+        <details class="qa"><summary>Can I change my plan?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes, any month. Upgrades start straight away and we charge the difference for the days left; downgrades start on the 1st.</p></details>
+        <details class="qa"><summary>How do I pause my pass?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>In the app, open Your plan and turn on Pause. Your plan stops renewing until you turn it off, for up to three months in a row.</p></details>
+        <details class="qa"><summary>Is there a joining fee?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. You pay for the plan you choose and nothing else. The physical card is included.</p></details>
+      </div>
+      <div class="faq-group"><h2>Booking and visits</h2>
+        <details class="qa"><summary>How far ahead can I book?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Two days on Day, seven on Plus and fourteen on Unlimited. Late sessions open to Unlimited members a day earlier.</p></details>
+        <details class="qa"><summary>What if I miss a session?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Cancel up to an hour before and the visit goes back on your plan. Missed sessions count as a visit.</p></details>
+        <details class="qa"><summary>Can I bring a friend?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Plus includes one guest pass a month and Unlimited two. Send the pass by link; your friend shows it at the desk.</p></details>
+      </div>
+      <div class="faq-group"><h2>Billing</h2>
+        <details class="qa"><summary>When am I charged?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>On the 1st of each month for monthly plans, or once a year on the day you joined for yearly plans. Day visits are charged when you book.</p></details>
+        <details class="qa"><summary>How do I cancel?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Open Your plan in the app and choose Cancel. You keep access until the end of the period you paid for.</p></details>
+        <details class="qa"><summary>Do you have student prices?<svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Students with a valid card get Plus for £29 a month. Ask at any desk to check your card.</p></details>
+      </div>
+      <p class="empty" data-empty="faq" hidden>Nothing matches yet. Try another word, or <a href="#/contact">ask a person</a>.</p>
+    </div>
+  </section>
+  <section class="band band-mist center" aria-labelledby="help-more">
+    <div class="wrap">
+      <h2 id="help-more" class="h2 reveal">Still stuck?</h2>
+      <p class="lead reveal">Chat with the support team in the app from 7am to 10pm, or send us a note.</p>
+      <div class="btn-row reveal"><a class="btn btn-solid" href="#/contact">Contact us</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Join ===== -->
+<div data-view="join">
+  <section class="join" aria-labelledby="join-title">
+    <div class="scene join-scene">
+      <img class="bgimg is-on" src="images/sky.webp" width="1600" height="1000" alt="Blue sky over an open-air pool">
+      <div class="frame" aria-hidden="true">
+        <span class="lab">Your pass</span>
+        <div class="pass" id="join-pass"><svg class="pass-waves"><use href="#waves"/></svg><span class="pass-brand">Tidepass</span><span class="pass-tier" id="join-tier">Plus</span><span class="pass-name" id="join-name">Your name</span><svg class="i pass-tap"><use href="#i-tap"/></svg></div>
+        <span class="chip-w" id="join-price">£39 per month</span>
+      </div>
+    </div>
+    <div class="join-form">
+      <h1 id="join-title" class="h1 rise">Get your pass</h1>
+      <p class="lead rise" style="--i:1">Two minutes now, and your phone pass works today. The card follows in the post.</p>
+      <form data-form="signup" novalidate>
+        <div class="form-grid">
+          <label class="field"><span>Full name</span><input id="j-name" name="name" autocomplete="name" required aria-describedby="j-name-e"><span class="error" id="j-name-e" aria-live="polite"></span></label>
+          <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required aria-describedby="j-email-e"><span class="error" id="j-email-e" aria-live="polite"></span></label>
+          <label class="field"><span>Home city</span>
+            <select name="city" required aria-describedby="j-city-e"><option value="">Choose a city</option><option>Eastbank</option><option>Northgate</option><option>Old Mill</option><option>Harbour Row</option></select><span class="error" id="j-city-e" aria-live="polite"></span></label>
+          <label class="field"><span>Start date</span><input name="start" type="date" required aria-describedby="j-start-e"><span class="error" id="j-start-e" aria-live="polite"></span></label>
+          <div class="field full"><fieldset class="opts"><legend>Plan</legend>
+            <label class="opt"><input type="radio" name="plan" value="day" required aria-describedby="j-plan-e"><span>Day</span></label>
+            <label class="opt"><input type="radio" name="plan" value="plus" checked aria-describedby="j-plan-e"><span>Plus</span></label>
+            <label class="opt"><input type="radio" name="plan" value="unlimited" aria-describedby="j-plan-e"><span>Unlimited</span></label>
+          </fieldset><span class="error" id="j-plan-e" aria-live="polite"></span></div>
+          <label class="field full check"><input type="checkbox" name="terms" required aria-describedby="j-terms-e"><span>I agree to the <a href="#/legal">membership terms</a> and know I can cancel in the app.</span><span class="error" id="j-terms-e" aria-live="polite"></span></label>
+        </div>
+        <button class="btn btn-solid" type="submit">Create my pass</button>
+      </form>
+      <div class="success" data-success="signup" hidden tabindex="-1">
+        <span class="tick"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+        <h2>Welcome, <span data-echo="name">friend</span></h2>
+        <p class="muted">Your pass is ready in the app. This sample does not create an account yet.</p>
+        <a class="btn btn-solid" href="#/sessions">Book your first session</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Company: about and careers ===== -->
+<div data-view="company" data-over>
+  <section class="scene band under-hdr" style="padding-bottom:clamp(120px,16vw,220px)" aria-labelledby="company-title">
+    <img class="bgimg is-on" src="images/studio.webp" width="1600" height="1000" alt="Morning light across the floor of a movement studio" style="object-position:15% 50%">
+    <div class="wrap">
+      <h1 id="company-title" class="h1 rise" style="max-width:7.5em">We built the pass we wanted</h1>
+      <p class="lead rise" style="--i:1">Ines Calder and Tomas Okafor were paying for three memberships they half used. Tidepass is the one card that replaced them.</p>
+    </div>
+  </section>
+  <section class="sec" aria-labelledby="story-title">
+    <div class="wrap">
+      <h2 id="story-title" class="h2 reveal">Six years, four cities</h2>
+      <ol class="story">
+        <li class="reveal"><b>2020</b><p class="lead">Two lane swimmers in Eastbank sign up eleven pools to one paper card and a spreadsheet.</p></li>
+        <li class="reveal"><b>2022</b><p class="lead">The app opens booking for fourteen pools and three climbing walls. The waiting list hits 4,000.</p></li>
+        <li class="reveal"><b>2024</b><p class="lead">Studios and saunas join, and members can pause any month without a phone call.</p></li>
+        <li class="reveal"><b>2026</b><p class="lead">212 venues in four cities, still booked in two taps.</p></li>
+      </ol>
+    </div>
+  </section>
+  <section class="band band-surface" id="roles" aria-labelledby="roles-title">
+    <div class="wrap">
+      <div class="sec-head"><h2 id="roles-title" class="h2 reveal">Open roles</h2><p class="muted">Hybrid, four days a week, and a pass for everyone.</p></div>
+      <ul class="roles">
+        <li><div><h3>Senior iOS engineer</h3><p class="muted">Product, Eastbank or remote</p></div><a class="btn btn-solid btn-sm" href="#/contact?topic=careers">Apply</a></li>
+        <li><div><h3>Venue partnerships lead</h3><p class="muted">Partnerships, Northgate</p></div><a class="btn btn-solid btn-sm" href="#/contact?topic=careers">Apply</a></li>
+        <li><div><h3>Member support specialist</h3><p class="muted">Support, remote</p></div><a class="btn btn-solid btn-sm" href="#/contact?topic=careers">Apply</a></li>
+        <li><div><h3>Product designer</h3><p class="muted">Design, Eastbank</p></div><a class="btn btn-solid btn-sm" href="#/contact?topic=careers">Apply</a></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Contact ===== -->
+<div data-view="contact">
+  <section class="page-head">
+    <div class="wrap">
+      <h1 class="h1 rise">Talk to a person</h1>
+      <p class="lead rise" style="--i:1">Members get the fastest answer in the app. For everything else, write to us and someone replies within one working day.</p>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap split" style="align-items:start">
+      <ul class="routes">
+        <li><span class="dot" aria-hidden="true"><svg class="i"><use href="#i-user"/></svg></span><div><h2>Members</h2><p class="muted">Chat in the app, 7am to 10pm every day.</p></div></li>
+        <li><span class="dot" aria-hidden="true"><svg class="i"><use href="#i-pin"/></svg></span><div><h2>Venues</h2><p class="muted">Run a pool, wall or studio? venues@tidepass.example</p></div></li>
+        <li><span class="dot" aria-hidden="true"><svg class="i"><use href="#i-mail"/></svg></span><div><h2>Press</h2><p class="muted">press@tidepass.example</p></div></li>
+      </ul>
+      <div class="form-card">
+        <form data-form="contact" novalidate>
+          <div class="form-grid">
+            <label class="field"><span>Name</span><input name="name" autocomplete="name" required aria-describedby="c-name-e"><span class="error" id="c-name-e" aria-live="polite"></span></label>
+            <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required aria-describedby="c-email-e"><span class="error" id="c-email-e" aria-live="polite"></span></label>
+            <label class="field full"><span>Topic</span>
+              <select id="c-topic" name="topic" required aria-describedby="c-topic-e"><option value="">Choose a topic</option><option value="membership">My membership</option><option value="venue">Venue partnership</option><option value="careers">Careers</option><option value="press">Press</option></select><span class="error" id="c-topic-e" aria-live="polite"></span></label>
+            <label class="field full"><span>Message</span><textarea id="c-msg" name="message" maxlength="600" required aria-describedby="c-msg-e"></textarea><span class="error" id="c-msg-e" aria-live="polite"></span><span class="hint" id="c-msg-count">0 / 600</span></label>
+          </div>
+          <button class="btn btn-solid" type="submit">Send message</button>
+        </form>
+        <div class="success" data-success="contact" hidden tabindex="-1">
+          <span class="tick"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <h2>Thanks, <span data-echo="name">friend</span></h2>
+          <p class="muted">We reply within one working day. This sample does not send anything yet.</p>
+          <button class="btn btn-line" type="button" data-reset>Write another</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Legal ===== -->
+<div data-view="legal">
+  <section class="page-head" style="padding-bottom:var(--sec)">
+    <div class="wrap legal-body">
+      <h1 class="h1">Privacy and terms</h1>
+      <p class="lead" style="margin-top:24px">Plain-language summary of how membership works and what we do with your data. Last updated 1 November 2026.</p>
+      <h2>What we collect</h2>
+      <p>Your name, email, home city and plan; the sessions you book and the venues you visit; payment details, which our payment provider holds for us.</p>
+      <h2>Why we use it</h2>
+      <p>To run your membership, hold your bookings, let venues check you in and send the reminders you switch on. We never sell your data.</p>
+      <h2>Membership terms</h2>
+      <p>Plans renew on the 1st and can be paused or cancelled in the app before then. Venues set their own rules, such as swim caps or climbing inductions.</p>
+      <h2>Your rights</h2>
+      <p>Ask for a copy of your data, a correction or deletion at any time through the contact page. We reply within thirty days.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ===== 404 ===== -->
+<div data-view="404">
+  <section class="wrap notfound">
+    <h1 class="display">This page took a day off</h1>
+    <p class="lead">The link may be old, or the page moved. The rest of the city is still open.</p>
+    <a class="btn btn-solid" href="#/">Back to home</a>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="logo" href="#/">Tidepass</a><p>One membership for pools, climbing walls and studios in Eastbank, Northgate, Old Mill and Harbour Row.</p></div>
+      <div><h2>Membership</h2><ul><li><a href="#/plans">Plans</a></li><li><a href="#/how">How it works</a></li><li><a href="#/sessions">Sessions</a></li><li><a href="#/join">Get your pass</a></li></ul></div>
+      <div><h2>Company</h2><ul><li><a href="#/company">About</a></li><li><a href="#/company?at=roles">Careers</a></li><li><a href="#/journal">Journal</a></li><li><a href="#/contact?topic=venue">For venues</a></li></ul></div>
+      <div><h2>Help</h2><ul><li><a href="#/help">Help centre</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/legal">Privacy and terms</a></li></ul></div>
+    </div>
+    <div class="fine">
+      <p>Prices include VAT. Venue hours change with the seasons, so check the app before you travel.</p>
+      <p>© 2026 Tidepass Ltd, 4 Quay Street, Eastbank</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+  const smooth = () => (reduced.matches ? "auto" : "smooth");
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks one ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function syncThemeButton() {
+    const dark = currentTheme() === "dark";
+    themeButton.setAttribute("aria-label", `Switch to ${dark ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", dark ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("tidepass-theme");
+  if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+  syncThemeButton();
+  systemDark.addEventListener("change", syncThemeButton);
+  new MutationObserver(syncThemeButton).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    store.set("tidepass-theme", next);
+  });
+
+  /* ---------- Pill tabs: a group with data-tabs="<id>" shows the matching [data-pane] inside that element ---------- */
+  function selectPane(group, value) {
+    const target = document.getElementById(group.dataset.tabs);
+    $$("[data-show]", group).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.show === value)));
+    $$("[data-pane]", target).forEach((pane) => pane.classList.toggle("is-on", pane.dataset.pane === value));
+  }
+  $$("[data-tabs]").forEach((group) => group.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-show]");
+    if (button) selectPane(group, button.dataset.show);
+  }));
+
+  /* ---------- Card colour and app switches ---------- */
+  const howPass = $("#how-pass");
+  $$("button[data-tone]").forEach((button) => button.addEventListener("click", () => {
+    howPass.dataset.tone = button.dataset.tone;
+    $$("button[data-tone]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+  }));
+  $$(".switch").forEach((sw) => sw.addEventListener("click", () => sw.setAttribute("aria-checked", String(sw.getAttribute("aria-checked") !== "true"))));
+
+  /* ---------- Filters: chips plus optional search over a list ---------- */
+  function filterer({ list, attr, chips, search, count, empty, noun }) {
+    let value = "all";
+    const run = (v = value) => {
+      value = v;
+      const q = search ? search.value.trim().toLowerCase() : "";
+      let shown = 0;
+      $$(":scope > li", list).forEach((li) => {
+        const on = (v === "all" || li.dataset[attr].split(" ").includes(v)) && (!q || li.textContent.toLowerCase().includes(q));
+        li.hidden = !on;
+        if (on) shown++;
+      });
+      $$("[data-chip]", chips).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.chip === v)));
+      count.textContent = `${shown} ${shown === 1 ? noun[0] : noun[1]}`;
+      empty.hidden = shown > 0;
+    };
+    $$("[data-chip]", chips).forEach((b) => b.addEventListener("click", () => run(b.dataset.chip)));
+    search?.addEventListener("input", () => run());
+    return run;
+  }
+  const filterSessions = filterer({ list: $("#session-list"), attr: "kind", chips: $('[data-chips="sessions"]'), search: $("#session-q"), count: $("#session-count"), empty: $('[data-empty="sessions"]'), noun: ["session", "sessions"] });
+  const filterPosts = filterer({ list: $("#post-list"), attr: "topic", chips: $('[data-chips="posts"]'), count: $("#post-count"), empty: $('[data-empty="posts"]'), noun: ["story", "stories"] });
+
+  /* ---------- Sessions: a card's button fills the booking form; guests stepper ---------- */
+  const sessionSelect = $("#b-session");
+  $$("[data-seat]").forEach((button) => button.addEventListener("click", () => {
+    sessionSelect.value = button.dataset.seat;
+    sessionSelect.dispatchEvent(new Event("change"));
+    $("#book").scrollIntoView({ behavior: smooth(), block: "start" });
+    $("#b-name").focus({ preventScroll: true });
+  }));
+  const guests = $("#b-guests");
+  $$("[data-step]").forEach((button) => button.addEventListener("click", () => {
+    guests.value = Math.min(2, Math.max(0, (Number(guests.value) || 0) + Number(button.dataset.step)));
+  }));
+
+  /* ---------- Journal: one source of truth for the article view ---------- */
+  const POSTS = {
+    "book-early": { topic: "Guides", read: "4 min read", title: "How to book a lane before work", img: "images/sky.webp", alt: "An open-air pool under a bright blue sky",
+      lead: "Early lanes go first. Here is how members get the 06:30 slot without setting three alarms.",
+      body: ["Plus members can book seven days ahead and Unlimited members fourteen, so the window opens at midnight a week before. Turn on reminders and the app nudges you when a lane frees up.", "If the early lane is full, join the waiting list. Most cancellations happen the evening before, and the first person on the list gets the place automatically."],
+      quote: "Book the lane on Sunday night and the whole week feels lighter." },
+    "sea-pool": { topic: "Venues", read: "6 min read", title: "Inside the sea pool that opens at dawn", img: "images/dusk.webp", alt: "A sea pool wall at sunset",
+      lead: "Eastbank Sea Pool fills with the tide twice a day. The lifeguards open the gate at 06:30, whatever the weather.",
+      body: ["The pool is fifty metres of seawater behind an old harbour wall. In winter the water drops to nine degrees and the regulars swim two lengths, not twenty.", "Members book a lane in the app; day visitors can book from 06:00 on the day. Bring a cap and a warm layer for after."],
+      quote: "You come for the swim and stay for the sunrise over the wall." },
+    "lunch-climb": { topic: "Members", read: "5 min read", title: "Climbing at lunch: three members, one wall", img: "images/climb.webp", alt: "A bouldering wall with bright holds",
+      lead: "Lantern Bouldering is ten minutes from three office blocks. We met the people who climb there between meetings.",
+      body: ["Lunch sessions run for seventy-five minutes, which is long enough to warm up, try a problem five times and still eat at your desk.", "Shoes are on your pass. Chalk is not, so the regulars keep a bag in their drawer."],
+      quote: "It is the only hour of the day when nobody can reach me." },
+    "desk-stretch": { topic: "Guides", read: "3 min read", title: "A ten-minute stretch for desk days", img: "images/studio.webp", alt: "A sunlit studio with a mat on the floor",
+      lead: "Our teachers at Mill Street Studio put together a routine you can do on a mat or beside your chair.",
+      body: ["Start with your neck and shoulders, then open your hips, then finish lying down with your legs up the wall for two minutes.", "Do it after work and book a slow flow class at the weekend to go further."],
+      quote: "Ten minutes is enough when you do it every day." },
+    "late-swims": { topic: "Venues", read: "4 min read", title: "Late swims and sauna nights, explained", img: "images/night.webp", alt: "A rooftop pool at night",
+      lead: "Every Thursday and Sunday a few pools stay open until 22:30 with the lights down and the sauna hot.",
+      body: ["Late sessions open to Unlimited members a day early, then to everyone. Places are limited so the pool stays calm.", "Northgate Baths runs the sauna on a rota: twelve minutes in, a cold shower, then a slow length."],
+      quote: "The city is quieter at ten, and so is the water." },
+    pause: { topic: "Members", read: "5 min read", title: "Why I paused my pass for a month", img: "images/sky.webp", alt: "Clouds drifting over a pool deck",
+      lead: "A sprained ankle, a month off and no phone call to make. One member on what pausing was actually like.",
+      body: ["Pausing took two taps. The plan stopped renewing and the app kept my favourite venues and my booking history.", "When the ankle healed I turned the pause off and booked a gentle swim the same evening."],
+      quote: "I did not have to explain myself to anyone, which was the point." },
+  };
+  function renderPost(id) {
+    const post = POSTS[id] || POSTS["book-early"];
+    const view = $('[data-view="post"]');
+    $('[data-p="title"]', view).textContent = post.title;
+    $('[data-p="meta"]', view).textContent = `${post.topic}, ${post.read}`;
+    const img = $("#post-img");
+    img.src = post.img;
+    img.alt = post.alt;
+    const p = (text, cls) => Object.assign(document.createElement("p"), { textContent: text, className: cls || "" });
+    const quote = Object.assign(document.createElement("blockquote"), { textContent: post.quote });
+    $('[data-p="body"]', view).replaceChildren(p(post.lead, "lead"), p(post.body[0]), quote, p(post.body[1]));
+    document.title = `${post.title} · Tidepass`;
+  }
+
+  /* ---------- Help: search hides questions and empty groups ---------- */
+  const faqQuery = $("#faq-q");
+  faqQuery.addEventListener("input", () => {
+    const q = faqQuery.value.trim().toLowerCase();
+    let shown = 0;
+    $$(".faq-group").forEach((group) => {
+      let inGroup = 0;
+      $$(".qa", group).forEach((qa) => {
+        const on = !q || qa.textContent.toLowerCase().includes(q);
+        qa.hidden = !on;
+        if (on) { inGroup++; if (q) qa.open = true; }
+      });
+      group.hidden = inGroup === 0;
+      shown += inGroup;
+    });
+    $('[data-empty="faq"]').hidden = shown > 0;
+  });
+
+  /* ---------- Join: the pass in the frame follows the form ---------- */
+  const PRICES = { day: ["Day", "£9 per visit"], plus: ["Plus", "£39 per month"], unlimited: ["Unlimited", "£69 per month"] };
+  const joinName = $("#j-name");
+  const syncPass = () => {
+    $("#join-name").textContent = joinName.value.trim() || "Your name";
+    const plan = $('input[name="plan"]:checked')?.value || "plus";
+    $("#join-tier").textContent = PRICES[plan][0];
+    $("#join-price").textContent = PRICES[plan][1];
+  };
+  joinName.addEventListener("input", syncPass);
+  $$('input[name="plan"]').forEach((radio) => radio.addEventListener("change", syncPass));
+
+  /* ---------- Contact: character count ---------- */
+  const message = $("#c-msg");
+  message.addEventListener("input", () => { $("#c-msg-count").textContent = `${message.value.length} / ${message.maxLength}`; });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "Tidepass: one pass for every pool, wall and studio", plans: "Plans and prices · Tidepass", how: "How it works · Tidepass", sessions: "Sessions this week · Tidepass", journal: "Journal · Tidepass", post: "Journal · Tidepass", help: "Help · Tidepass", join: "Get your pass · Tidepass", company: "Company and careers · Tidepass", contact: "Contact · Tidepass", legal: "Privacy and terms · Tidepass", "404": "Page not found · Tidepass" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query), anchor: "" };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    current?.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    root.classList.toggle("over", current.hasAttribute("data-over"));
+    document.title = titles[name];
+    const section = name === "post" ? "journal" : name;
+    $$(".nav a, .menu a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === section) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "sessions") filterSessions(p.get("kind") || "all");
+    if (name === "journal") filterPosts(p.get("topic") || "all");
+    if (name === "post") renderPost(p.get("p"));
+    if (name === "join" && PRICES[p.get("plan")]) { $(`input[name="plan"][value="${p.get("plan")}"]`).checked = true; syncPass(); }
+    if (name === "contact" && p.get("topic")) $("#c-topic").value = p.get("topic");
+    const at = p.get("at") && document.getElementById(p.get("at"));
+    if (at) requestAnimationFrame(() => at.scrollIntoView());
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    onScroll();
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); closeMenu(); go(href); return; }
+    const target = href.length > 1 && document.querySelector(href);
+    if (!target) return;
+    event.preventDefault();
+    closeMenu();
+    target.scrollIntoView({ behavior: smooth(), block: "start" });
+    if (target.id === "main") target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header: solid after scrolling; the menu opens below the bar, in the flow ---------- */
+  const header = $(".site-header");
+  function onScroll() { header.classList.toggle("is-scrolled", window.scrollY > 8); }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  const menuButton = $("#menu-btn");
+  const menu = $("#menu");
+  function setMenu(open) {
+    menu.hidden = !open;
+    header.classList.toggle("is-open", open);
+    menuButton.setAttribute("aria-expanded", String(open));
+    menuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    $("use", menuButton).setAttribute("href", open ? "#i-x" : "#i-menu");
+  }
+  function closeMenu() { if (!menu.hidden) setMenu(false); }
+  menuButton.addEventListener("click", () => setMenu(menu.hidden));
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !menu.hidden) { setMenu(false); menuButton.focus(); } });
+  matchMedia("(min-width: 1080px)").addEventListener("change", closeMenu);
+
+  /* ---------- Reveal: keyframes on entry; visible without JS; timed fallback ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in")));
+  }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address." };
+  const special = { radio: "Please choose one.", checkbox: "Please tick this box to continue.", "select-one": "Please choose one.", date: "Please pick a date." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error || !error.classList.contains("error")) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (problem === "valueMissing" && special[field.type]) || messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input:not([type=hidden]), select, textarea", form);
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value && field.type !== "radio" && field.type !== "checkbox") checkField(field); });
+      field.addEventListener("input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+      field.addEventListener("change", () => { if (["radio", "checkbox", "date"].includes(field.type) || field.tagName === "SELECT") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before "submit" fires, so the button's click runs it too (Enter clicks it). */
+    const button = $("[type=submit]", form);
+    const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+    const send = () => {
+      if (button.disabled) return;
+      const results = fields.map(checkField);
+      if (!results.every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      setTimeout(() => {
+        $$("[data-echo]", success).forEach((el) => { el.textContent = form.elements[el.dataset.echo]?.value.trim().split(" ")[0] || el.textContent; });
+        form.hidden = true;
+        success.hidden = false;
+        success.focus({ preventScroll: true });
+        button.disabled = false;
+      }, 500);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+    $("[data-reset]", success)?.addEventListener("click", () => {
+      form.reset();
+      fields.forEach((f) => f.removeAttribute("aria-invalid"));
+      $$(".error", form).forEach((e) => { e.textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      fields[0].focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  const start = parse(location.hash);
+  show(start, { scroll: false });
+  if (start.anchor) document.querySelector(start.anchor)?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

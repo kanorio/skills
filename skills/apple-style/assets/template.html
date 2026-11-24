@@ -1,0 +1,1621 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Tamber: headphones, earbuds and speakers</title>
+<meta name="description" content="Tamber makes headphones, earbuds and home speakers. Shop Crest, Cove and Room, compare models, read the tech specs and get support.">
+<meta property="og:title" content="Tamber: headphones, earbuds and speakers">
+<meta property="og:description" content="Shop Crest, Cove and Room, compare models, read the tech specs and get support.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/inter-latin-opsz-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font: Inter with the optical-size axis, so big headlines get the tighter display cut ---------- */
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/inter-latin-opsz-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Tokens: light (default, follows the system setting) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);
+  --surface: oklch(97.3% 0.002 286);        /* grey tiles, cards, the footer */
+  --surface-2: oklch(93.5% 0.004 286);      /* capsules, chips, image wells */
+  --text: oklch(22% 0.004 286);             /* near black, never pure black */
+  --text-muted: oklch(52% 0.008 286);
+  --border: oklch(88% 0.004 286);
+  --border-strong: oklch(74% 0.006 286);
+  --accent: oklch(55% 0.2 257);             /* the one interactive blue: fills */
+  --accent-hover: oklch(50% 0.19 257);
+  --accent-text: oklch(100% 0 0);
+  --link: oklch(51% 0.18 256);              /* the same blue as text */
+  --ink: oklch(0% 0 0);                     /* black tiles, in both themes */
+  --ink-text: oklch(97% 0.002 286);
+  --ink-muted: oklch(72% 0.006 286);
+  --ink-link: oklch(71% 0.15 252);
+  --new: oklch(54% 0.15 48);                /* the "New" label; never interactive */
+  --danger: oklch(55% 0.21 27);
+  --focus: oklch(60% 0.19 256);
+  --glass: oklch(97.3% 0.002 286 / 0.82);   /* navigation bars over content */
+  --shadow-card: 0 6px 28px oklch(0% 0 0 / 0.09);
+  --shadow-overlay: 0 24px 64px oklch(0% 0 0 / 0.22);
+
+  --font: "Inter", system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fs-display: clamp(2.75rem, 1.4rem + 5.2vw, 5rem);
+  --fs-h1: clamp(2.25rem, 1.5rem + 3vw, 3.5rem);
+  --fs-h2: clamp(1.75rem, 1.2rem + 2.2vw, 3rem);
+  --fs-h3: clamp(1.3125rem, 1.15rem + 0.7vw, 1.75rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.75rem;
+
+  --r-control: 980px;
+  --r-card: 18px;
+  --r-media: 28px;
+
+  --dur-fast: 160ms;
+  --dur-base: 320ms;
+  --dur-slow: 700ms;
+  --ease: cubic-bezier(0.3, 0.1, 0.2, 1);
+
+  --wrap: 980px;
+  --gutter: clamp(16px, 4vw, 32px);
+  --gnav-h: 44px;
+}
+
+/* ---------- Tokens: dark, from the system setting or the toggle ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: oklch(0% 0 0);
+    --surface: oklch(19.5% 0.003 286);
+    --surface-2: oklch(27% 0.004 286);
+    --text: oklch(96% 0.002 286);
+    --text-muted: oklch(72% 0.006 286);
+    --border: oklch(32% 0.004 286);
+    --border-strong: oklch(46% 0.006 286);
+    --accent-hover: oklch(61% 0.18 255);
+    --link: oklch(71% 0.15 252);
+    --new: oklch(74% 0.14 55);
+    --danger: oklch(70% 0.17 25);
+    --focus: oklch(71% 0.15 252);
+    --glass: oklch(19.5% 0.003 286 / 0.8);
+    --ink: oklch(13% 0.003 286);              /* one step up, so black tiles still read on the black page */
+    --shadow-card: 0 6px 28px oklch(0% 0 0 / 0.5);
+    --shadow-overlay: 0 24px 64px oklch(0% 0 0 / 0.6);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0% 0 0);
+  --surface: oklch(19.5% 0.003 286);
+  --surface-2: oklch(27% 0.004 286);
+  --text: oklch(96% 0.002 286);
+  --text-muted: oklch(72% 0.006 286);
+  --border: oklch(32% 0.004 286);
+  --border-strong: oklch(46% 0.006 286);
+  --accent-hover: oklch(61% 0.18 255);
+  --link: oklch(71% 0.15 252);
+  --new: oklch(74% 0.14 55);
+  --danger: oklch(70% 0.17 25);
+  --focus: oklch(71% 0.15 252);
+  --glass: oklch(19.5% 0.003 286 / 0.8);
+  --ink: oklch(13% 0.003 286);
+  --shadow-card: 0 6px 28px oklch(0% 0 0 / 0.5);
+  --shadow-overlay: 0 24px 64px oklch(0% 0 0 / 0.6);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 64px; }
+body { display: flex; flex-direction: column; min-block-size: 100svh; margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); line-height: 1.47; letter-spacing: -0.01em; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3 { margin: 0; font-weight: 600; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; }
+sup { font-size: 0.6em; line-height: 0; }
+sup a { color: inherit; text-decoration: none; padding-inline: 1px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 18px; border-radius: var(--r-control); background: var(--accent); color: var(--accent-text); }
+.skip:focus { top: 8px; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.icon { inline-size: 18px; block-size: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.wrap { inline-size: 100%; max-inline-size: calc(var(--wrap) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
+.wrap.wide { max-inline-size: calc(1240px + 2 * var(--gutter)); }
+.section { padding-block: clamp(64px, 9vw, 120px) 0; }
+.center { text-align: center; }
+
+/* ---------- Type ---------- */
+.display { font-size: var(--fs-display); line-height: 1.05; letter-spacing: -0.028em; }
+.h1 { font-size: var(--fs-h1); line-height: 1.07; letter-spacing: -0.024em; }
+.h2 { font-size: var(--fs-h2); line-height: 1.08; letter-spacing: -0.022em; }
+.h3 { font-size: var(--fs-h3); line-height: 1.15; letter-spacing: -0.014em; }
+.mega { font-size: clamp(2.5rem, 1.2rem + 5.4vw, 5rem); line-height: 1.04; letter-spacing: -0.03em; }
+.eyebrow { margin: 0 0 8px; font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.3125rem); font-weight: 600; letter-spacing: -0.012em; }
+.lead { margin: 14px 0 0; font-size: clamp(1.1875rem, 1.05rem + 0.6vw, 1.5rem); line-height: 1.25; letter-spacing: -0.014em; }
+.copy { max-inline-size: 34em; margin: 24px auto 0; color: var(--text-muted); font-size: clamp(1.0625rem, 0.98rem + 0.4vw, 1.3125rem); font-weight: 600; line-height: 1.38; letter-spacing: -0.012em; }
+.copy b, .two-tone b { color: var(--text); font-weight: 600; }
+.two-tone { color: var(--text-muted); }
+.muted { color: var(--text-muted); }
+.small { font-size: 0.875rem; }
+.new { margin: 0 0 4px; color: var(--new); font-size: 0.875rem; font-weight: 600; }
+.more { color: var(--link); text-decoration: none; white-space: nowrap; }
+.more::after { content: "\00a0\203A"; }
+.more:hover { text-decoration: underline; }
+time { font-variant-numeric: tabular-nums; }
+
+/* ---------- Buttons and the price capsule ---------- */
+.btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center; min-block-size: 44px; padding: 0 22px;
+  border: 1px solid var(--accent); border-radius: var(--r-control); background: var(--accent); color: var(--accent-text);
+  font-size: var(--fs-body); font-weight: 400; line-height: 1.2; text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn.outline { background: transparent; border-color: var(--link); color: var(--link); }
+.btn.outline:hover { background: var(--link); color: var(--bg); }
+.btn.sm { min-block-size: 32px; padding: 0 15px; font-size: 0.875rem; }
+.btn.sm::before { content: ""; position: absolute; inset: -6px 0; }
+.btn.wide { inline-size: 100%; min-block-size: 52px; border-radius: 12px; }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-block-start: 20px; }
+.price-cap { display: inline-flex; align-items: center; gap: 14px; margin: 0; padding: 6px 6px 6px 20px; border-radius: var(--r-control); background: var(--surface-2); font-size: 0.9375rem; font-weight: 600; white-space: nowrap; }
+.icon-btn { display: inline-grid; place-items: center; inline-size: 44px; block-size: 44px; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; opacity: 0.85; text-decoration: none; position: relative; }
+.icon-btn:hover { opacity: 1; }
+.count { position: absolute; top: 8px; right: 6px; min-inline-size: 16px; block-size: 16px; padding: 0 4px; border-radius: 8px; background: var(--text); color: var(--bg); font-size: 0.625rem; font-weight: 600; line-height: 16px; text-align: center; letter-spacing: 0; }
+.count.bump { animation: pop 420ms var(--ease); }
+
+/* ---------- Global nav: a thin translucent bar with small links (signature) ---------- */
+.gnav { position: relative; z-index: 40; background: var(--glass); backdrop-filter: saturate(180%) blur(20px); }
+.gnav-inner { display: flex; align-items: center; gap: 8px; block-size: var(--gnav-h); max-inline-size: calc(1024px + 2 * var(--gutter)); }
+.gnav-mark { display: grid; place-items: center; inline-size: 44px; block-size: 44px; margin-inline-start: -12px; color: var(--text); opacity: 0.9; }
+.mark { inline-size: 20px; block-size: 20px; }
+.gnav-links { display: flex; flex: 1; justify-content: space-between; margin-inline: 12px 8px; }
+.gnav-links a { display: block; padding: 12px 8px; color: var(--text); font-size: var(--fs-small); letter-spacing: 0; opacity: 0.85; text-decoration: none; transition: opacity var(--dur-fast) var(--ease); }
+.gnav-links a:hover, .gnav-links a[aria-current="page"] { opacity: 1; }
+.gnav-actions { display: flex; align-items: center; margin-inline-end: -12px; }
+.gnav-actions .icon { inline-size: 17px; block-size: 17px; }
+#menu-open { display: none; }
+@media (max-width: 900px) {
+  .gnav-links { display: none; }
+  .gnav-actions { margin-inline-start: auto; }
+  #menu-open { display: inline-grid; }
+  html:not(.js) #menu-open { display: none; }
+}
+.ribbon { margin: 0; padding: 14px var(--gutter); background: var(--bg); font-size: 0.875rem; text-align: center; }
+
+/* ---------- Product sub-nav: sticky, product name at left, small blue Buy pill (signature) ---------- */
+.lnav { position: sticky; top: 0; z-index: 35; background: var(--glass); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--border); }
+.lnav-inner { display: flex; align-items: center; gap: 24px; block-size: 52px; }
+.lnav-title { margin-inline-end: auto; font-size: 1.3125rem; font-weight: 600; letter-spacing: -0.014em; text-decoration: none; white-space: nowrap; }
+.lnav-links { display: flex; gap: 24px; font-size: var(--fs-small); }
+.lnav-links a { padding-block: 14px; text-decoration: none; opacity: 0.85; }
+.lnav-links a:hover { color: var(--link); opacity: 1; }
+.lnav-links a[aria-current="page"] { opacity: 0.5; pointer-events: none; }
+@media (max-width: 734px) { .lnav-links { display: none; } .lnav-title { font-size: 1.0625rem; } }
+
+/* ---------- Dialogs: phone menu and search ---------- */
+.menu, .search { inline-size: 100%; max-inline-size: none; block-size: 100dvh; max-block-size: none; margin: 0; padding: 0; border: 0; background: var(--bg); color: var(--text); }
+.menu[open], .search[open] { animation: fade var(--dur-base) var(--ease); }
+.search { block-size: auto; max-block-size: 85dvh; padding-block: 8px 40px; box-shadow: var(--shadow-overlay); }
+.menu::backdrop, .search::backdrop { background: oklch(0% 0 0 / 0.3); backdrop-filter: blur(6px); }
+.menu-top { display: flex; justify-content: flex-end; padding: 4px 4px 0; }
+.menu-links { padding: 8px 36px 40px; }
+.menu-links a { display: block; padding-block: 6px; font-size: 1.75rem; font-weight: 600; letter-spacing: -0.02em; text-decoration: none; }
+.menu-links a:hover { color: var(--link); }
+.search-top { display: flex; align-items: center; gap: 8px; }
+.search-field { position: relative; flex: 1; }
+.search-field .icon { position: absolute; left: 14px; top: 50%; translate: 0 -50%; color: var(--text-muted); pointer-events: none; }
+.search-field .input { padding-inline-start: 44px; border-radius: 12px; }
+.search .search-field .input { min-block-size: 56px; border: 0; background: none; font-size: 1.5rem; font-weight: 600; }
+.search-label { margin: 20px 0 8px; color: var(--text-muted); font-size: var(--fs-small); }
+.search-links a { display: block; padding: 8px 0; font-weight: 600; text-decoration: none; }
+.search-links a:hover { color: var(--link); }
+
+/* ---------- Tiles: full-bleed product tiles that alternate grey, white and black (signature) ---------- */
+.tile { display: flex; flex-direction: column; align-items: center; margin-block-end: 12px; padding: clamp(44px, 5vw, 56px) var(--gutter) 0; overflow: hidden; background: var(--surface); text-align: center; }
+.tile.white { background: var(--bg); }
+.ink { --text: var(--ink-text); --text-muted: var(--ink-muted); --link: var(--ink-link); --surface-2: oklch(100% 0 0 / 0.14); --border: oklch(100% 0 0 / 0.18); background: var(--ink); color: var(--text); }
+.tile-name { font-size: clamp(2.5rem, 1.7rem + 3vw, 3.5rem); line-height: 1.07; letter-spacing: -0.028em; }
+.tile-sub { margin: 6px 0 0; font-size: clamp(1.1875rem, 1rem + 0.9vw, 1.75rem); line-height: 1.15; letter-spacing: -0.014em; }
+.tile-note { margin: 14px 0 0; color: var(--text-muted); font-size: 0.875rem; }
+.tile-img { inline-size: min(100%, 700px); margin-block-start: auto; padding-block-start: 8px; }
+.tile-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding-inline: 12px; margin-block-end: 12px; }
+.tile-grid .tile { min-block-size: 560px; margin: 0; }
+.tile-grid .tile-name { font-size: clamp(2rem, 1.6rem + 1.6vw, 2.5rem); }
+.tile-grid .tile-sub { font-size: clamp(1.0625rem, 1rem + 0.5vw, 1.3125rem); }
+.tile-grid .tile-img { inline-size: min(100%, 520px); }
+@media (max-width: 734px) { .tile-grid { grid-template-columns: minmax(0, 1fr); padding-inline: 0; } .tile-grid .tile { min-block-size: 0; } }
+
+/* ---------- Store perks and footnotes ---------- */
+.perks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-block-start: 32px; }
+.perk { display: flex; flex-direction: column; gap: 8px; padding: 28px 24px; border-radius: var(--r-card); background: var(--surface); text-decoration: none; transition: box-shadow var(--dur-base) var(--ease), transform var(--dur-base) var(--ease); }
+.perk:hover, .p-card:hover { box-shadow: var(--shadow-card); transform: scale(1.01); }
+.perk .icon { inline-size: 30px; block-size: 30px; margin-block-end: 8px; color: var(--link); }
+.perk strong { font-size: 1.1875rem; font-weight: 600; line-height: 1.2; }
+.perk span { color: var(--text-muted); font-size: 0.9375rem; }
+@media (max-width: 900px) { .perks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .perks { grid-template-columns: minmax(0, 1fr); } }
+.footnotes { margin-block-start: clamp(64px, 8vw, 96px); padding-block: 32px 8px; background: var(--surface); color: var(--text-muted); font-size: var(--fs-small); line-height: 1.4; letter-spacing: 0; }
+.footnotes ol { list-style: decimal; padding-inline-start: 16px; }
+.footnotes li { margin-block-end: 10px; }
+
+/* ---------- Product page: hero with the price capsule ---------- */
+.p-hero { padding-block-end: clamp(40px, 5vw, 64px); background: linear-gradient(var(--bg), var(--surface)); overflow: hidden; }
+.p-hero-img { inline-size: min(100%, 820px); margin-inline: auto; }
+.p-hero-row { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-block-start: -24px; }
+.p-hero-sub { margin: 14px 0 0; font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.3125rem); font-weight: 600; }
+.sec-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px 24px; margin-block-end: clamp(28px, 3.5vw, 48px); }
+
+/* ---------- Highlights gallery: rounded cards, dot paginator and a play button (signature) ---------- */
+.g-track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; padding-inline: max(var(--gutter), calc((100% - 1180px) / 2)); scroll-padding-inline: max(var(--gutter), calc((100% - 1180px) / 2)); }
+.g-track::-webkit-scrollbar { display: none; }
+.g-card { position: relative; flex: 0 0 min(1180px, 100% - 2 * var(--gutter)); margin: 0; overflow: hidden; border-radius: var(--r-media); background: var(--ink); scroll-snap-align: start; }
+.g-card img { inline-size: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.g-card figcaption { position: absolute; inset: clamp(24px, 4vw, 48px) 24px auto; max-inline-size: 22em; margin-inline: auto; color: oklch(98% 0 0); font-size: clamp(1.1875rem, 1rem + 0.9vw, 1.75rem); font-weight: 600; line-height: 1.18; letter-spacing: -0.016em; text-align: center; }
+.g-card.on-light figcaption { color: oklch(22% 0.004 286); }
+@media (max-width: 734px) { .g-card img { aspect-ratio: 4 / 5; } }
+.g-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-block-start: 24px; }
+html:not(.js) .g-controls { display: none; }
+.g-dots { display: flex; align-items: center; gap: 4px; min-block-size: 56px; padding: 0 14px; border-radius: var(--r-control); background: var(--surface-2); }
+.g-dots button { position: relative; inline-size: 24px; block-size: 44px; padding: 0; border: 0; background: none; cursor: pointer; }
+.g-dots button::before { content: ""; position: absolute; inset: 18px 8px; border-radius: 4px; background: var(--border-strong); transition: inset var(--dur-base) var(--ease); }
+.g-dots button[aria-pressed="true"] { inline-size: 56px; }
+.g-dots button[aria-pressed="true"]::before { inset: 18px 4px; }
+.g-dots button[aria-pressed="true"]::after { content: ""; position: absolute; inset: 18px 4px; border-radius: 4px; background: var(--text); transform-origin: left; }
+.gallery.is-playing .g-dots button[aria-pressed="true"]::after { animation: progress 6s linear both; }
+.g-play { inline-size: 56px; block-size: 56px; border-radius: 50%; background: var(--surface-2); opacity: 1; }
+.g-play .icon { inline-size: 16px; block-size: 16px; }
+
+/* ---------- Closer look: pill toggles beside one picture ---------- */
+.closer { padding-block: clamp(64px, 9vw, 120px); background: var(--surface); }
+.closer-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+.closer-list { display: grid; gap: 12px; justify-items: start; }
+.closer-pill { display: grid; grid-template-columns: 24px minmax(0, 1fr); align-items: center; gap: 4px 12px; padding: 14px 22px 14px 16px; border: 0; border-radius: 28px; background: var(--surface-2); text-align: start; cursor: pointer; transition: background-color var(--dur-fast) var(--ease); }
+.closer-pill .icon { inline-size: 24px; block-size: 24px; transition: transform var(--dur-base) var(--ease); }
+.closer-name { font-weight: 600; }
+.closer-text { grid-column: 2; color: var(--text-muted); font-size: 0.9375rem; }
+.js .closer-pill:not([aria-pressed="true"]) .closer-text { display: none; }
+.closer-pill[aria-pressed="true"] { padding-block: 20px; background: var(--bg); }
+.closer-pill[aria-pressed="true"] .icon { transform: rotate(45deg); }
+.closer-media { margin: 0; overflow: hidden; border-radius: var(--r-media); background: var(--bg); }
+.closer-media img { inline-size: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.closer-media img.swap { animation: fade var(--dur-slow) var(--ease); }
+@media (max-width: 860px) { .closer-grid { grid-template-columns: minmax(0, 1fr); } .closer-media { order: -1; } }
+
+/* ---------- Chapters: an eyebrow, one giant headline, muted copy with bold phrases (signature) ---------- */
+.chapter { padding: clamp(80px, 12vw, 160px) var(--gutter) 0; text-align: center; }
+.chapter.ink { padding-block-end: 0; overflow: hidden; }
+.chapter .chapter-img { inline-size: min(100%, 760px); margin: clamp(32px, 4vw, 56px) auto 0; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; max-inline-size: 860px; margin: clamp(48px, 6vw, 80px) auto 0; }
+.stats strong { display: block; font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4rem); font-weight: 600; line-height: 1.05; letter-spacing: -0.03em; }
+.stats span { display: block; margin-block-start: 8px; color: var(--text-muted); font-weight: 600; }
+@media (max-width: 640px) { .stats { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Color picker ---------- */
+.colors-media { margin: 0; }
+.colors-media img { inline-size: min(100%, 720px); margin-inline: auto; }
+.colors-media img.swap { animation: fade var(--dur-slow) var(--ease); }
+.swatches { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.sw { display: inline-block; inline-size: 24px; block-size: 24px; flex: none; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px oklch(0% 0 0 / 0.15); }
+.sw-btn { display: grid; place-items: center; inline-size: 44px; block-size: 44px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; }
+.sw-btn .sw { inline-size: 30px; block-size: 30px; }
+.sw-btn[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--accent); }
+.color-name { margin: 12px 0 0; font-size: 0.875rem; font-weight: 600; text-align: center; }
+
+/* ---------- Which one is right for you / store cards ---------- */
+.which { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 3vw, 40px); text-align: center; }
+.which img { inline-size: 100%; aspect-ratio: 4 / 3; object-fit: contain; }
+.which h3 { margin-block-start: 12px; font-size: 1.5rem; letter-spacing: -0.014em; }
+.which p { margin: 8px 0 0; }
+.which .ctas { margin-block-start: 16px; align-items: center; }
+@media (max-width: 734px) { .which { grid-template-columns: minmax(0, 1fr); gap: 48px; } }
+.page-head { padding-block: clamp(40px, 6vw, 80px) clamp(24px, 3vw, 40px); }
+.store-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 40px; }
+.store-head .h1 { max-inline-size: 13em; }
+.help-link { display: flex; align-items: center; gap: 12px; font-size: 0.875rem; }
+.help-link .icon { inline-size: 32px; block-size: 32px; color: var(--text-muted); }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-block-end: 24px; }
+.seg { display: flex; flex-wrap: wrap; gap: 8px; }
+.seg button { min-block-size: 40px; padding: 0 18px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: none; font-size: 0.875rem; cursor: pointer; transition: border-color var(--dur-fast) var(--ease); }
+.seg button:hover { border-color: var(--text); }
+.seg button[aria-pressed="true"] { border-color: var(--text); background: var(--text); color: var(--bg); }
+.sort { display: flex; align-items: center; gap: 10px; font-size: 0.875rem; }
+.sort .select { min-block-size: 40px; padding-block: 0; inline-size: auto; }
+.result-count { margin: 0 0 16px; color: var(--text-muted); font-size: 0.875rem; }
+.p-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 20px; }
+.p-card { display: flex; flex-direction: column; padding: 28px 28px 24px; border-radius: var(--r-card); background: var(--surface); transition: box-shadow var(--dur-base) var(--ease), transform var(--dur-base) var(--ease); }
+.p-card img { inline-size: 100%; aspect-ratio: 1; object-fit: contain; margin-block-end: 16px; }
+.p-card h2 { font-size: 1.3125rem; letter-spacing: -0.014em; }
+.p-card h2 a { text-decoration: none; }
+.p-card h2 a::after { content: ""; position: absolute; inset: 0; }
+.p-card { position: relative; }
+.p-card .sw-row { display: flex; gap: 6px; margin: 0 0 12px; }
+.p-card .sw { inline-size: 12px; block-size: 12px; }
+.p-card p { margin: 6px 0 0; }
+.p-card .p-price { margin-block-start: auto; padding-block-start: 16px; font-size: 0.9375rem; }
+.empty { padding: 48px 0; color: var(--text-muted); text-align: center; }
+
+/* ---------- Tech specs: label column and value rows ---------- */
+.spec-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 16px 40px; padding-block: 32px; border-top: 1px solid var(--border); }
+.spec-row h2 { font-size: 1.5rem; letter-spacing: -0.014em; }
+.spec-row ul li { margin-block-end: 8px; }
+.spec-row dl { display: grid; grid-template-columns: max-content 1fr; gap: 8px 24px; margin: 0; }
+.spec-row dt { color: var(--text-muted); }
+.spec-row dd { margin: 0; }
+.spec-colors { display: flex; flex-wrap: wrap; gap: 24px; }
+.spec-colors li { display: grid; justify-items: center; gap: 8px; font-size: 0.875rem; }
+.spec-colors .sw { inline-size: 36px; block-size: 36px; }
+@media (max-width: 734px) { .spec-row { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .p-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .p-card { padding: 16px 16px 18px; } .p-card h2 { font-size: 1.0625rem; } }
+
+/* ---------- Compare: model pickers and aligned rows (subgrid) ---------- */
+.cmp-pick { position: sticky; top: 0; z-index: 30; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 3vw, 40px); padding-block: 12px; background: var(--glass); backdrop-filter: blur(20px); }
+html:not(.js) .cmp-pick { display: none; }
+.cmp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(16px, 3vw, 40px); }
+.cmp-col { display: grid; grid-row: span var(--rows); grid-template-rows: subgrid; row-gap: 14px; align-items: start; justify-items: center; text-align: center; }
+.cmp-col.is-off { display: none; }
+.cmp-col img { inline-size: 100%; aspect-ratio: 4 / 3; object-fit: contain; }
+.cmp-col .sw-row { display: flex; gap: 8px; }
+.cmp-col .sw { inline-size: 14px; block-size: 14px; }
+.cmp-col h2 { font-size: 1.3125rem; letter-spacing: -0.014em; }
+.cmp-col p { margin: 0; }
+.cmp-head { margin-block: clamp(48px, 6vw, 72px) 24px; padding-block-end: 16px; border-bottom: 1px solid var(--border); font-size: var(--fs-h3); letter-spacing: -0.014em; }
+.cmp-val { font-size: 0.9375rem; }
+.cmp-val, .cmp-none, .cmp-big { padding-block: 10px; }
+.cmp-val strong { display: block; font-weight: 600; }
+.cmp-big strong { display: block; font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem); font-weight: 600; line-height: 1.05; letter-spacing: -0.028em; }
+.cmp-big span { font-size: 0.875rem; }
+.cmp-none { color: var(--text-muted); }
+@media (max-width: 734px) {
+  .cmp-pick, .cmp { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cmp-col.s3, .cmp-pick .s3 { display: none; }
+}
+
+/* ---------- Buy page ---------- */
+.buy { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 72px); align-items: start; padding-block: clamp(32px, 5vw, 64px) 0; }
+.buy-media { position: sticky; top: 24px; }
+.buy-frame { position: relative; margin: 0; border-radius: var(--r-media); background: var(--surface); overflow: hidden; }
+.buy-frame img { inline-size: 100%; aspect-ratio: 1; object-fit: contain; padding: 6%; }
+.buy-frame img.swap { animation: fade var(--dur-slow) var(--ease); }
+.engrave-preview { position: absolute; inset: auto 0 7%; color: var(--text-muted); font-size: 0.9375rem; font-weight: 600; letter-spacing: 0.08em; text-align: center; }
+.buy-price { margin: 12px 0 0; font-size: 1.1875rem; }
+.buy .form { margin-block-start: 36px; }
+.buy-sum { padding-block: 20px 0; border-top: 1px solid var(--border); }
+.buy-sum p { margin: 0 0 6px; }
+.buy-sum strong { font-size: 1.5rem; font-weight: 600; }
+@media (max-width: 860px) { .buy { grid-template-columns: minmax(0, 1fr); } .buy-media { position: static; } }
+.opt-group { display: grid; gap: 12px; margin: 0; padding: 0; border: 0; }
+.opt-group legend { margin-block-end: 14px; padding: 0; }
+.swatch-row { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.sw-opt { display: flex; align-items: center; gap: 10px; min-block-size: 44px; padding: 0 16px 0 8px; border: 1px solid var(--border-strong); border-radius: var(--r-control); cursor: pointer; }
+.sw-opt:has(input:checked), .opt:has(input:checked), .check:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.sw-opt input, .opt input { position: absolute; opacity: 0; pointer-events: none; }
+.sw-opt:has(input:focus-visible), .opt:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+.opt { position: relative; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 18px 20px; border: 1px solid var(--border-strong); border-radius: 12px; cursor: pointer; }
+.opt b { display: block; font-weight: 600; }
+.opt small { display: block; margin-block-start: 4px; color: var(--text-muted); font-size: 0.875rem; }
+
+/* ---------- Bag ---------- */
+.bag { max-inline-size: calc(860px + 2 * var(--gutter)); padding-block-start: clamp(40px, 6vw, 80px); }
+.bag-list { margin-block-start: 32px; border-top: 1px solid var(--border); }
+.bag-item { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: 8px 24px; align-items: start; padding-block: 28px; border-bottom: 1px solid var(--border); }
+.bag-item img { grid-row: span 2; inline-size: 120px; aspect-ratio: 1; object-fit: contain; border-radius: 12px; background: var(--surface); }
+.bag-item h2 { font-size: 1.3125rem; letter-spacing: -0.014em; }
+.bag-item p { margin: 4px 0 0; color: var(--text-muted); font-size: 0.875rem; }
+.bag-item .line-price { font-size: 1.1875rem; font-weight: 600; text-align: end; }
+.bag-ctrl { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; grid-column: 2 / 4; }
+.bag-ctrl .select { inline-size: auto; min-block-size: 40px; padding-block: 0; }
+.bag-ctrl button { padding: 10px 0; border: 0; background: none; color: var(--link); cursor: pointer; }
+.bag-sum { display: grid; gap: 4px; margin: 28px 0 0 auto; max-inline-size: 420px; }
+.bag-sum div { display: flex; justify-content: space-between; gap: 16px; }
+.bag-sum .total { margin-block: 12px 20px; padding-block-start: 16px; border-top: 1px solid var(--border); font-size: 1.5rem; font-weight: 600; }
+.note { margin: 12px 0 0; color: var(--text-muted); font-size: 0.875rem; }
+@media (max-width: 560px) { .bag-item { grid-template-columns: 88px minmax(0, 1fr); } .bag-item img { inline-size: 88px; } .bag-item .line-price { grid-column: 2; text-align: start; } .bag-ctrl { grid-column: 1 / -1; } }
+
+/* ---------- Support ---------- */
+.sup-hero { padding-block: clamp(48px, 7vw, 96px) 0; }
+.sup-topics { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; margin-block: 40px; }
+.sup-topics a { display: grid; justify-items: center; gap: 10px; inline-size: 104px; font-size: 0.875rem; text-decoration: none; }
+.sup-topics a:hover { color: var(--link); }
+.sup-topics .tile-ico { display: grid; place-items: center; inline-size: 88px; block-size: 88px; overflow: hidden; border-radius: 50%; background: var(--surface); }
+.sup-topics .tile-ico img { inline-size: 120%; max-inline-size: none; }
+.sup-topics .tile-ico .icon { inline-size: 36px; block-size: 36px; color: var(--text-muted); }
+.sup-search { max-inline-size: 640px; margin-inline: auto; }
+@media (max-width: 560px) { .sup-topics { gap: 16px 12px; } .sup-topics a { inline-size: 96px; } }
+.faq { max-inline-size: calc(820px + 2 * var(--gutter)); padding-block-start: 32px; }
+.faq-group { margin-block-start: 40px; }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; font-size: 1.1875rem; font-weight: 600; letter-spacing: -0.012em; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(45deg); }
+.faq summary:hover { color: var(--link); }
+.faq details p { margin: 0; padding-block-end: 20px; color: var(--text-muted); }
+.band { margin-block-start: clamp(64px, 8vw, 104px); padding-block: clamp(56px, 8vw, 96px); background: var(--surface); }
+.form-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
+.form-grid .copy { margin-inline: 0; }
+.ways { margin-block-start: 28px; }
+.ways li { display: flex; gap: 14px; padding-block: 14px; border-top: 1px solid var(--border); }
+.ways .icon { inline-size: 24px; block-size: 24px; color: var(--link); }
+.ways strong { display: block; font-weight: 600; }
+.ways span { color: var(--text-muted); font-size: 0.9375rem; }
+@media (max-width: 860px) { .form-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Forms: floating labels, errors that float under the field ---------- */
+.form { display: grid; gap: 30px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 14px; }
+@media (max-width: 560px) { .form-row { grid-template-columns: minmax(0, 1fr); } }
+.field { position: relative; }
+.input, .select, .textarea { inline-size: 100%; min-block-size: 56px; padding: 18px 16px 6px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--bg); font-size: var(--fs-body); transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+.textarea { min-block-size: 140px; padding-block-start: 28px; resize: vertical; }
+.select { appearance: none; padding-inline-end: 44px; padding-block: 18px 6px; cursor: pointer; background-image: none; }
+.select-wrap { position: relative; display: block; }
+.sort .select-wrap, .bag-ctrl .select-wrap { display: inline-block; }
+.select-wrap .icon { position: absolute; right: 16px; top: 50%; translate: 0 -50%; pointer-events: none; color: var(--text-muted); }
+.sort .select, .bag-ctrl .select, .cmp-pick .select { padding-inline: 14px 36px; border-radius: 10px; }
+.cmp-pick .select { min-block-size: 44px; padding-block: 0; font-weight: 600; }
+.field > label, .select-wrap > label:not(.sr-only) { position: absolute; left: 17px; top: 17px; color: var(--text-muted); pointer-events: none; transform-origin: left top; transition: transform var(--dur-fast) var(--ease); }
+.input:focus + label, .input:not(:placeholder-shown) + label, .textarea:focus + label, .textarea:not(:placeholder-shown) + label, .select + label { transform: translateY(-10px) scale(0.75); }
+.field .input::placeholder, .field .textarea::placeholder { color: transparent; }
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px oklch(55% 0.2 257 / 0.25); }
+.input[aria-invalid="true"], .textarea[aria-invalid="true"], .select[aria-invalid="true"] { border-color: var(--danger); background: oklch(55% 0.21 27 / 0.06); }
+.hint { margin: 6px 0 0 4px; color: var(--text-muted); font-size: var(--fs-small); }
+.field:has(.error:not(:empty)) .hint { visibility: hidden; }
+.fieldset { position: relative; margin: 0; padding: 0; border: 0; }
+.fieldset legend { margin-block-end: 10px; padding: 0; font-weight: 600; }
+.checks { display: flex; flex-wrap: wrap; gap: 8px; }
+.check { display: inline-flex; align-items: center; gap: 8px; min-block-size: 44px; padding: 0 16px; border: 1px solid var(--border-strong); border-radius: var(--r-control); font-size: 0.9375rem; cursor: pointer; }
+.check input, .consent input { inline-size: 18px; block-size: 18px; margin: 0; accent-color: var(--accent); }
+.consent { position: relative; display: flex; align-items: flex-start; gap: 12px; color: var(--text-muted); font-size: 0.875rem; }
+.consent input { flex: none; margin-block-start: 2px; }
+/* Errors float in the gap under the field, so showing or clearing one never moves the button being clicked */
+.error:empty { display: none; }
+.error { position: absolute; left: 4px; top: calc(100% + 6px); z-index: 1; display: flex; align-items: center; gap: 6px; margin: 0; color: var(--danger); font-size: var(--fs-small); line-height: 1.3; }
+.error::before { content: "!"; display: grid; place-items: center; inline-size: 14px; block-size: 14px; border-radius: 50%; background: var(--danger); color: var(--bg); font-size: 0.625rem; font-weight: 700; }
+.done { display: flex; gap: 16px; align-items: flex-start; padding: 24px; border-radius: var(--r-card); background: var(--surface); animation: rise var(--dur-slow) var(--ease) both; }
+.band .done { background: var(--bg); }
+.done .tick { display: grid; place-items: center; flex: none; inline-size: 36px; block-size: 36px; border-radius: 50%; background: var(--accent); color: var(--accent-text); }
+.done strong { display: block; font-size: 1.1875rem; font-weight: 600; }
+.done p { margin: 4px 0 0; color: var(--text-muted); }
+.done .ctas { justify-content: flex-start; align-items: center; margin-block-start: 14px; }
+
+/* ---------- Newsroom and article ---------- */
+.news-lead { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; overflow: hidden; margin-block-end: 40px; border-radius: var(--r-card); background: var(--surface); text-decoration: none; transition: box-shadow var(--dur-base) var(--ease); }
+.news-lead:hover, .news-card:hover { box-shadow: var(--shadow-card); }
+.news-lead img { inline-size: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.news-lead div { padding: 32px; }
+.cat { margin: 0 0 8px; color: var(--text-muted); font-size: var(--fs-small); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.news-lead h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.125rem); line-height: 1.12; letter-spacing: -0.02em; }
+.news-lead time, .news-card time { display: block; margin-block-start: 12px; color: var(--text-muted); font-size: 0.875rem; }
+@media (max-width: 734px) { .news-lead { grid-template-columns: minmax(0, 1fr); } .news-lead div { padding: 24px; } }
+.news-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 20px; margin-block-start: 28px; }
+.news-card { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-card); background: var(--surface); text-decoration: none; transition: box-shadow var(--dur-base) var(--ease); }
+.news-card img { inline-size: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.news-card div { padding: 20px 22px 24px; }
+.news-card h3 { font-size: 1.1875rem; line-height: 1.25; letter-spacing: -0.012em; }
+@media (max-width: 900px) { .news-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .news-grid { grid-template-columns: minmax(0, 1fr); } }
+.center-row { display: flex; justify-content: center; margin-block-start: 36px; }
+.letter { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 48px; align-items: center; margin-block-start: clamp(64px, 8vw, 104px); padding: clamp(28px, 4vw, 48px); border-radius: var(--r-card); background: var(--surface); }
+.letter p { margin: 8px 0 0; color: var(--text-muted); }
+.letter .form { grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: start; }
+.letter .btn { min-block-size: 56px; border-radius: 12px; }
+@media (max-width: 760px) { .letter { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 420px) { .letter .form { grid-template-columns: minmax(0, 1fr); } }
+.article { max-inline-size: calc(692px + 2 * var(--gutter)); padding-block-start: clamp(40px, 6vw, 72px); }
+.article time { display: block; margin-block-start: 14px; color: var(--text-muted); font-size: 0.875rem; }
+.article-figure { margin: clamp(32px, 4vw, 48px) 0; }
+.article-figure img { inline-size: 100%; aspect-ratio: 16 / 10; object-fit: contain; border-radius: var(--r-media); background: var(--surface); }
+.article-figure figcaption { margin-block-start: 12px; color: var(--text-muted); font-size: 0.875rem; }
+.prose { font-size: 1.1875rem; line-height: 1.55; letter-spacing: -0.012em; }
+.prose h2 { margin: 48px 0 12px; font-size: 1.75rem; line-height: 1.15; letter-spacing: -0.02em; }
+.prose ul { margin: 0 0 1em; padding-inline-start: 22px; list-style: disc; }
+.prose li { margin-block: 6px; }
+.prose blockquote { margin: 40px 0; font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem); font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
+.prose blockquote p { margin: 0; }
+.prose blockquote cite { display: block; margin-block-start: 14px; color: var(--text-muted); font-size: 1rem; font-style: normal; font-weight: 400; letter-spacing: -0.01em; }
+.prose a { color: var(--link); }
+.legal { max-inline-size: calc(760px + 2 * var(--gutter)); }
+.legal .prose { font-size: var(--fs-body); }
+.nf { display: grid; justify-items: center; padding-block: clamp(80px, 14vw, 180px) clamp(40px, 6vw, 80px); text-align: center; }
+.nf .lead { max-inline-size: 30em; }
+
+/* ---------- Footer: small grey type, breadcrumb, link columns (signature) ---------- */
+.site-footer { background: var(--surface); color: var(--text-muted); font-size: var(--fs-small); line-height: 1.4; letter-spacing: 0; }
+main { flex: 1; padding-block-end: clamp(64px, 8vw, 104px); }
+main:has(> .is-active > :last-child:is(.footnotes, .band)) { padding-block-end: 0; }
+.f-crumbs { display: flex; align-items: center; gap: 10px; padding-block: 16px; border-bottom: 1px solid var(--border); color: var(--text); }
+.f-crumbs a { display: grid; place-items: center; inline-size: 24px; block-size: 24px; color: var(--text); }
+.f-crumbs .mark { inline-size: 16px; block-size: 16px; }
+.f-crumbs span::before { content: "\203A"; margin-inline-end: 10px; color: var(--text-muted); }
+.f-cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; padding-block: 24px; }
+.f-cols h2 { margin-block-end: 10px; color: var(--text); font-size: var(--fs-small); }
+.f-cols li { margin-block-end: 8px; }
+.f-cols a { text-decoration: none; }
+.f-cols a:hover { color: var(--text); text-decoration: underline; }
+@media (max-width: 734px) { .f-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.f-more { margin: 0; padding-block: 0 12px; border-bottom: 1px solid var(--border); }
+.f-more a { color: var(--link); }
+.f-base { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-block: 16px 24px; }
+.f-base p { margin: 0; }
+.f-base nav { display: flex; flex-wrap: wrap; gap: 4px 0; }
+.f-base nav a { padding-inline: 10px; border-inline-start: 1px solid var(--border-strong); text-decoration: none; }
+.f-base nav a:first-child { border: 0; }
+.f-base nav a:hover { color: var(--text); text-decoration: underline; }
+.f-base .region { margin-inline-start: auto; }
+
+/* ---------- Views ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+
+/* ---------- Motion: keyframes only (they also run on first load); reduced motion removes them ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes settle { from { transform: translateY(32px) scale(0.94); } to { transform: none; } }
+@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+@keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.js .reveal:not(.is-in) { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .tile-img, .chapter-img, .p-hero-img { animation: settle linear both; animation-timeline: view(); animation-range: entry 0% cover 35%; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal:not(.is-in) { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 1a11 11 0 1 0 0 22a11 11 0 1 0 0-22ZM7.5 8.5h2v7h-2Zm3.5-2.5h2v12h-2Zm3.5 3.5h2v5h-2Z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7.5 5h3.2v14H7.5zM13.3 5h3.2v14h-3.2z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2.5 6.5h11v10h-11zM13.5 10h4l3 3.2v3.3h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16Z"/><path d="m13.5 6.5 4 4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6Z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4Z"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5Z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="gnav">
+  <nav class="wrap gnav-inner" aria-label="Global">
+    <a class="gnav-mark" href="#/" aria-label="Tamber home"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg></a>
+    <div class="gnav-links">
+      <a href="#/store">Store</a>
+      <a href="#/product">Crest</a>
+      <a href="#/store?cat=earbuds">Earbuds</a>
+      <a href="#/store?cat=speakers">Speakers</a>
+      <a href="#/store?cat=accessories">Accessories</a>
+      <a href="#/compare">Compare</a>
+      <a href="#/newsroom">Newsroom</a>
+      <a href="#/support">Support</a>
+    </div>
+    <div class="gnav-actions">
+      <button class="icon-btn" type="button" id="search-open" aria-label="Search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+      <a class="icon-btn" href="#/bag" aria-label="Bag"><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><span class="count" data-bag-count hidden>0</span></a>
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to dark colors"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button class="icon-btn" type="button" id="menu-open" aria-label="Menu" aria-controls="menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </nav>
+</header>
+
+<dialog class="menu" id="menu" aria-label="Menu">
+  <div class="menu-top"><button class="icon-btn" type="button" id="menu-close" aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <nav class="menu-links" aria-label="Menu">
+    <a href="#/">Home</a>
+    <a href="#/store">Store</a>
+    <a href="#/product">Crest</a>
+    <a href="#/store?cat=earbuds">Earbuds</a>
+    <a href="#/store?cat=speakers">Speakers</a>
+    <a href="#/store?cat=accessories">Accessories</a>
+    <a href="#/compare">Compare</a>
+    <a href="#/newsroom">Newsroom</a>
+    <a href="#/support">Support</a>
+  </nav>
+</dialog>
+
+<dialog class="search" id="search" aria-label="Search">
+  <div class="wrap">
+    <div class="search-top">
+      <div class="search-field"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input class="input" type="search" id="search-q" placeholder="Search" aria-label="Search the site" autocomplete="off"></div>
+      <button class="icon-btn" type="button" id="search-close" aria-label="Close search"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <p class="search-label">Quick links</p>
+    <ul class="search-links" id="search-links">
+      <li><a href="#/store">Shop all products</a></li>
+      <li><a href="#/product">Tamber Crest</a></li>
+      <li><a href="#/compare">Compare headphones and earbuds</a></li>
+      <li><a href="#/buy?p=cove">Buy Tamber Cove</a></li>
+      <li><a href="#/support?at=faq-orders">Track an order or start a return</a></li>
+      <li><a href="#/support?at=faq-crest">Battery and charging help</a></li>
+      <li><a href="#/support?at=get-help">Contact a specialist</a></li>
+    </ul>
+    <p class="muted" id="search-empty" hidden>No quick links match. Try "battery", "Crest" or "return".</p>
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <h1 class="sr-only">Tamber headphones, earbuds and speakers</h1>
+  <p class="ribbon">Free engraving on Crest, Cove and Room through 31 December.<sup><a href="#fn-home-2">2</a></sup> <a class="more" href="#/legal?at=offer">See the offer</a></p>
+
+  <section class="tile" aria-labelledby="t-crest">
+    <div class="reveal">
+      <h2 class="tile-name" id="t-crest">Crest</h2>
+      <p class="tile-sub">Quiet, wherever you are.</p>
+      <div class="ctas"><a class="btn" href="#/product">Learn more</a><a class="btn outline" href="#/buy?p=crest">Buy</a></div>
+    </div>
+    <img class="tile-img" src="images/crest-sand.svg" width="1200" height="900" alt="Tamber Crest headphones in Sand, seen from the side">
+  </section>
+
+  <section class="tile white" aria-labelledby="t-room">
+    <div class="reveal">
+      <p class="new">New</p>
+      <h2 class="tile-name" id="t-room">Room</h2>
+      <p class="tile-sub">Big sound. Small footprint.</p>
+      <div class="ctas"><a class="btn" href="#/post">Learn more</a><a class="btn outline" href="#/buy?p=room">Buy</a></div>
+    </div>
+    <img class="tile-img" src="images/room-chalk.svg" width="1200" height="900" alt="Tamber Room speaker in Chalk, a tall rounded cylinder">
+  </section>
+
+  <section class="tile ink" aria-labelledby="t-cove">
+    <div class="reveal">
+      <h2 class="tile-name" id="t-cove">Cove</h2>
+      <p class="tile-sub">Noise cancelling that fits in a coin pocket.</p>
+      <div class="ctas"><a class="btn" href="#/compare">Learn more</a><a class="btn outline" href="#/buy?p=cove">Buy</a></div>
+      <p class="tile-note">Up to 32 hours of listening with the case.<sup><a href="#fn-home-1">1</a></sup></p>
+    </div>
+    <img class="tile-img" src="images/cove-graphite.svg" width="1200" height="900" alt="Tamber Cove earbuds in Graphite in front of their charging case">
+  </section>
+
+  <div class="tile-grid">
+    <section class="tile" aria-labelledby="t-open">
+      <div class="reveal">
+        <h2 class="tile-name" id="t-open">Cove Open</h2>
+        <p class="tile-sub">Hear your music and the street.</p>
+        <div class="ctas"><a class="btn sm" href="#/compare">Learn more</a><a class="btn sm outline" href="#/buy?p=cove-open">Buy</a></div>
+      </div>
+      <img class="tile-img" src="images/cove-open-coral.svg" width="1200" height="900" alt="Tamber Cove Open ear hooks in Coral">
+    </section>
+    <section class="tile ink" aria-labelledby="t-dock">
+      <div class="reveal">
+        <h2 class="tile-name" id="t-dock">Dock</h2>
+        <p class="tile-sub">Everything that charges, in one place.</p>
+        <div class="ctas"><a class="btn sm" href="#/store?cat=accessories">Learn more</a><a class="btn sm outline" href="#/buy?p=dock">Buy</a></div>
+      </div>
+      <img class="tile-img" src="images/dock.svg" width="1200" height="900" alt="Tamber Dock, a round charging stand">
+    </section>
+  </div>
+
+  <section class="wrap section" aria-labelledby="perks-title">
+    <h2 class="h2 two-tone" id="perks-title"><b>Buying from Tamber.</b> What every order includes.</h2>
+    <div class="perks">
+      <a class="perk" href="#/legal?at=terms"><svg class="icon" aria-hidden="true"><use href="#i-truck"/></svg><strong>Free delivery and returns</strong><span>Delivered in two to four business days. Return anything within 30 days.</span></a>
+      <a class="perk" href="#/legal?at=offer"><svg class="icon" aria-hidden="true"><use href="#i-pen"/></svg><strong>Free engraving</strong><span>Add a name or a few words to Crest, Cove and Room.</span></a>
+      <a class="perk" href="#/legal?at=warranty"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><strong>Two-year warranty</strong><span>Every product, repaired or replaced if it fails.</span></a>
+      <a class="perk" href="#/support?at=get-help"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><strong>Help from a person</strong><span>Specialists answer by chat, phone or email.</span></a>
+    </div>
+  </section>
+
+  <section class="footnotes" aria-label="Footnotes">
+    <ol class="wrap">
+      <li id="fn-home-1">Battery life was measured by Tamber in October 2026 with pre-production units at 50 percent volume, with noise cancelling on where the product has it. Battery life varies with use, settings and environment.</li>
+      <li id="fn-home-2">Free engraving applies to Crest, Cove and Room ordered from Tamber online between 24 November and 31 December 2026. Engraved products can still be returned within 30 days.</li>
+    </ol>
+  </section>
+</div>
+
+<!-- ===================== STORE ===================== -->
+<div data-view="store">
+  <div class="wrap page-head store-head">
+    <h1 class="h1 two-tone"><b>Store.</b> Every Tamber, with free delivery and returns.</h1>
+    <p class="help-link"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><span>Not sure which one?<br><a class="more" href="#/compare">Compare models</a></span></p>
+  </div>
+  <div class="wrap">
+    <div class="toolbar">
+      <div class="seg" role="group" aria-label="Show">
+        <button type="button" data-cat-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-cat-filter="headphones" aria-pressed="false">Headphones</button>
+        <button type="button" data-cat-filter="earbuds" aria-pressed="false">Earbuds</button>
+        <button type="button" data-cat-filter="speakers" aria-pressed="false">Speakers</button>
+        <button type="button" data-cat-filter="accessories" aria-pressed="false">Accessories</button>
+      </div>
+      <label class="sort">Sort by
+        <span class="select-wrap"><select class="select" id="p-sort"><option value="featured">Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span>
+      </label>
+    </div>
+    <p class="result-count" data-product-count>7 products</p>
+    <div class="p-grid" data-product-list>
+      <article class="p-card" data-cat="headphones" data-price="349">
+        <img src="images/crest-sand.svg" width="1200" height="900" alt="">
+        <ul class="sw-row" aria-label="Colors: Sand, Graphite, Sage"><li class="sw" style="--c:#dccfbd"></li><li class="sw" style="--c:#505258"></li><li class="sw" style="--c:#b2bdaa"></li></ul>
+        <h2><a href="#/product">Tamber Crest</a></h2>
+        <p class="muted small">Over-ear, adaptive noise cancelling</p>
+        <p class="p-price">$349</p>
+      </article>
+      <article class="p-card" data-cat="headphones" data-price="179">
+        <img src="images/arc-chalk.svg" width="1200" height="900" alt="">
+        <ul class="sw-row" aria-label="Colors: Chalk, Midnight"><li class="sw" style="--c:#eeece8"></li><li class="sw" style="--c:#363c4b"></li></ul>
+        <h2><a href="#/buy?p=arc">Tamber Arc</a></h2>
+        <p class="muted small">On-ear, 50 hours of battery</p>
+        <p class="p-price">$179</p>
+      </article>
+      <article class="p-card" data-cat="earbuds" data-price="199">
+        <img src="images/cove-chalk.svg" width="1200" height="900" alt="">
+        <ul class="sw-row" aria-label="Colors: Chalk, Graphite"><li class="sw" style="--c:#eeece8"></li><li class="sw" style="--c:#505258"></li></ul>
+        <h2><a href="#/buy?p=cove">Tamber Cove</a></h2>
+        <p class="muted small">In-ear, adaptive noise cancelling</p>
+        <p class="p-price">$199</p>
+      </article>
+      <article class="p-card" data-cat="earbuds" data-price="129">
+        <img src="images/cove-open-chalk.svg" width="1200" height="900" alt="">
+        <ul class="sw-row" aria-label="Colors: Chalk, Coral"><li class="sw" style="--c:#eeece8"></li><li class="sw" style="--c:#eaa892"></li></ul>
+        <h2><a href="#/buy?p=cove-open">Tamber Cove Open</a></h2>
+        <p class="muted small">Open-fit, for running and commuting</p>
+        <p class="p-price">$129</p>
+      </article>
+      <article class="p-card" data-cat="speakers" data-price="279">
+        <img src="images/room-graphite.svg" width="1200" height="900" alt="">
+        <p class="new">New</p>
+        <h2><a href="#/buy?p=room">Tamber Room</a></h2>
+        <p class="muted small">Home speaker, 360-degree sound</p>
+        <p class="p-price">$279</p>
+      </article>
+      <article class="p-card" data-cat="accessories" data-price="59">
+        <img src="images/dock.svg" width="1200" height="900" alt="">
+        <h2><a href="#/buy?p=dock">Tamber Dock</a></h2>
+        <p class="muted small">Charges one headphone and one case</p>
+        <p class="p-price">$59</p>
+      </article>
+      <article class="p-card" data-cat="accessories" data-price="39">
+        <img src="images/case.svg" width="1200" height="900" alt="">
+        <h2><a href="#/buy?p=case">Crest Travel Case</a></h2>
+        <p class="muted small">Hard shell, fits Crest folded flat</p>
+        <p class="p-price">$39</p>
+      </article>
+    </div>
+    <p class="empty" data-empty="products" hidden>Nothing here yet. <a class="more" href="#/store">Show all products</a></p>
+  </div>
+</div>
+
+<!-- ===================== PRODUCT (overview) ===================== -->
+<div data-view="product">
+  <nav class="lnav" aria-label="Tamber Crest">
+    <div class="wrap lnav-inner">
+      <a class="lnav-title" href="#/product">Tamber Crest</a>
+      <div class="lnav-links"><a href="#/product">Overview</a><a href="#/specs">Tech Specs</a><a href="#/compare">Compare</a></div>
+      <a class="btn sm" href="#/buy?p=crest">Buy</a>
+    </div>
+  </nav>
+  <section class="p-hero">
+    <img class="p-hero-img" src="images/crest-sand.svg" width="1200" height="900" alt="Tamber Crest headphones in Sand">
+    <div class="wrap p-hero-row reveal">
+      <div>
+        <p class="eyebrow">Tamber Crest</p>
+        <h1 class="display">Quiet, on your terms.</h1>
+        <p class="p-hero-sub">Adaptive noise cancelling and up to 40 hours on a charge.<sup><a href="#fn-crest-1">1</a></sup></p>
+      </div>
+      <p class="price-cap"><span>From $349</span><a class="btn sm" href="#/buy?p=crest">Buy</a></p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="hl-title">
+    <div class="wrap wide sec-top"><h2 class="h2" id="hl-title">Get the highlights.</h2><a class="more" href="#/specs">See the tech specs</a></div>
+    <div class="gallery" id="gallery">
+      <div class="g-track" id="g-track" tabindex="0" aria-label="Highlights, use the arrow keys to move">
+        <figure class="g-card"><img src="images/scene-quiet.svg" width="1600" height="1000" alt="Crest in Graphite surrounded by soft rings of light"><figcaption>Noise cancelling that adjusts to the room as it changes.</figcaption></figure>
+        <figure class="g-card on-light"><img src="images/scene-cushion.svg" width="1600" height="1000" alt="Close view of a Crest ear cushion"><figcaption>Memory foam cushions made for long flights.</figcaption></figure>
+        <figure class="g-card"><img src="images/scene-controls.svg" width="1600" height="1000" alt="The touch panel on the outside of the right cup"><figcaption>Swipe the cup for volume. Tap to play or pause.</figcaption></figure>
+        <figure class="g-card on-light"><img src="images/scene-travel.svg" width="1600" height="1000" alt="The Crest Travel Case in Sand"><figcaption>Folds flat into a case that fits a laptop sleeve.</figcaption></figure>
+      </div>
+      <div class="g-controls">
+        <div class="g-dots" role="group" aria-label="Choose a highlight">
+          <button type="button" aria-label="Highlight 1 of 4" aria-pressed="true"></button>
+          <button type="button" aria-label="Highlight 2 of 4" aria-pressed="false"></button>
+          <button type="button" aria-label="Highlight 3 of 4" aria-pressed="false"></button>
+          <button type="button" aria-label="Highlight 4 of 4" aria-pressed="false"></button>
+        </div>
+        <button class="icon-btn g-play" type="button" id="g-play" aria-label="Pause the highlights"><svg class="icon" aria-hidden="true"><use href="#i-pause"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="closer section" aria-labelledby="closer-title">
+    <div class="wrap wide">
+      <h2 class="h2" id="closer-title">Take a closer look.</h2>
+      <div class="closer-grid" style="margin-block-start: clamp(28px, 4vw, 48px)">
+        <div class="closer-list">
+          <button class="closer-pill" type="button" aria-pressed="true" data-src="images/scene-cushion.svg" data-alt="Close view of a Crest ear cushion"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span class="closer-name">Cushions</span><span class="closer-text">Slow memory foam in a breathable knit. Magnets hold each cushion, so you can swap them in seconds.</span></button>
+          <button class="closer-pill" type="button" aria-pressed="false" data-src="images/crest-sage.svg" data-alt="Tamber Crest in Sage, showing the knit headband"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span class="closer-name">Headband</span><span class="closer-text">A knit canopy spreads the weight, and steel sliders hold their length.</span></button>
+          <button class="closer-pill" type="button" aria-pressed="false" data-src="images/scene-controls.svg" data-alt="The touch panel on the right cup"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span class="closer-name">Controls</span><span class="closer-text">Swipe for volume, tap to play, hold for your voice assistant. One button switches noise modes.</span></button>
+          <button class="closer-pill" type="button" aria-pressed="false" data-src="images/scene-travel.svg" data-alt="The Crest Travel Case"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span class="closer-name">Travel case</span><span class="closer-text">Both cups turn flat. The case is 4 cm deep and comes in the box.</span></button>
+        </div>
+        <figure class="closer-media"><img id="closer-img" src="images/scene-cushion.svg" width="1600" height="1000" alt="Close view of a Crest ear cushion"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" aria-labelledby="ch-anc">
+    <div class="reveal">
+      <p class="eyebrow">Noise cancelling</p>
+      <h2 class="mega" id="ch-anc">Hear only what you choose.</h2>
+      <p class="copy">Eight microphones measure the sound around you and inside each cup. <b>Adaptive noise cancelling</b> tunes itself to a train, an office or a quiet room, and <b>Transparency mode</b> lets voices back in with one press.</p>
+    </div>
+    <ul class="stats">
+      <li><strong>40 hrs</strong><span>of listening on one charge<sup><a href="#fn-crest-1">1</a></sup></span></li>
+      <li><strong>268 g</strong><span>light enough for all day</span></li>
+      <li><strong>5 min</strong><span>of charging adds 4 hours<sup><a href="#fn-crest-1">1</a></sup></span></li>
+    </ul>
+  </section>
+
+  <section class="chapter ink section" aria-labelledby="ch-comfort" style="margin-block-start: clamp(80px, 12vw, 160px)">
+    <div class="reveal">
+      <p class="eyebrow">Comfort</p>
+      <h2 class="mega" id="ch-comfort">Made to stay on all day.</h2>
+      <p class="copy"><b>A knit headband</b> spreads the weight across your head, and <b>cushions that close softly</b> seal out noise without pressing. Ten hours in, you still forget they are there.</p>
+    </div>
+    <img class="chapter-img" src="images/crest-graphite.svg" width="1200" height="900" alt="Tamber Crest in Graphite">
+  </section>
+
+  <section class="section wrap center" aria-labelledby="colors-title">
+    <h2 class="h2" id="colors-title">Three colors. Pick yours.</h2>
+    <figure class="colors-media"><img id="color-img" src="images/crest-sand.svg" width="1200" height="900" alt="Tamber Crest in Sand"></figure>
+    <div class="swatches" role="group" aria-label="Color">
+      <button class="sw-btn" type="button" aria-pressed="true" aria-label="Sand" data-color="sand"><span class="sw" style="--c:#dccfbd"></span></button>
+      <button class="sw-btn" type="button" aria-pressed="false" aria-label="Graphite" data-color="graphite"><span class="sw" style="--c:#505258"></span></button>
+      <button class="sw-btn" type="button" aria-pressed="false" aria-label="Sage" data-color="sage"><span class="sw" style="--c:#b2bdaa"></span></button>
+    </div>
+    <p class="color-name" id="color-name" aria-live="polite">Sand</p>
+  </section>
+
+  <section class="section wrap" aria-labelledby="which-title">
+    <div class="sec-top"><h2 class="h2" id="which-title">Which one is right for you?</h2><a class="more" href="#/compare">Compare all models</a></div>
+    <div class="which">
+      <div><img src="images/crest-graphite.svg" width="1200" height="900" alt=""><h3>Tamber Crest</h3><p class="muted">Over-ear. Adaptive noise cancelling. 40 hours.</p><p>From $349</p><div class="ctas"><a class="btn sm" href="#/buy?p=crest">Buy</a><a class="more" href="#/specs">Tech specs</a></div></div>
+      <div><img src="images/cove-chalk.svg" width="1200" height="900" alt=""><h3>Tamber Cove</h3><p class="muted">In-ear. Adaptive noise cancelling. 32 hours with case.</p><p>From $199</p><div class="ctas"><a class="btn sm" href="#/buy?p=cove">Buy</a><a class="more" href="#/compare">Compare</a></div></div>
+      <div><img src="images/cove-open-chalk.svg" width="1200" height="900" alt=""><h3>Tamber Cove Open</h3><p class="muted">Open-fit. Hears the street. 28 hours with case.</p><p>From $129</p><div class="ctas"><a class="btn sm" href="#/buy?p=cove-open">Buy</a><a class="more" href="#/compare">Compare</a></div></div>
+    </div>
+  </section>
+
+  <section class="footnotes" aria-label="Footnotes">
+    <ol class="wrap">
+      <li id="fn-crest-1">Measured by Tamber in October 2026 with pre-production Crest units playing music at 50 percent volume with noise cancelling on. Quick charge measured from an empty battery with a 20 W USB-C charger. Battery life varies with use and settings.</li>
+    </ol>
+  </section>
+</div>
+
+<!-- ===================== TECH SPECS ===================== -->
+<div data-view="specs">
+  <nav class="lnav" aria-label="Tamber Crest">
+    <div class="wrap lnav-inner">
+      <a class="lnav-title" href="#/product">Tamber Crest</a>
+      <div class="lnav-links"><a href="#/product">Overview</a><a href="#/specs">Tech Specs</a><a href="#/compare">Compare</a></div>
+      <a class="btn sm" href="#/buy?p=crest">Buy</a>
+    </div>
+  </nav>
+  <div class="wrap page-head"><h1 class="h1">Tech Specs</h1><p class="lead muted">Tamber Crest</p></div>
+  <div class="wrap">
+    <section class="spec-row"><h2>Color</h2><ul class="spec-colors"><li><span class="sw" style="--c:#dccfbd"></span>Sand</li><li><span class="sw" style="--c:#505258"></span>Graphite</li><li><span class="sw" style="--c:#b2bdaa"></span>Sage</li></ul></section>
+    <section class="spec-row"><h2>Size and weight</h2><dl><dt>Weight</dt><dd>268 g</dd><dt>Height</dt><dd>19.2 cm</dd><dt>Cushion depth</dt><dd>2.2 cm</dd><dt>Folded</dt><dd>Cups turn flat; fits the 4 cm travel case</dd></dl></section>
+    <section class="spec-row"><h2>Audio</h2><ul><li>40 mm custom dynamic drivers</li><li>Adaptive noise cancelling with eight microphones</li><li>Transparency mode</li><li>Spatial audio with head tracking</li><li>Five-band equalizer in the Tamber app</li></ul></section>
+    <section class="spec-row"><h2>Battery</h2><ul><li>Up to 40 hours with noise cancelling on<sup><a href="#fn-specs-1">1</a></sup></li><li>Up to 52 hours with noise cancelling off<sup><a href="#fn-specs-1">1</a></sup></li><li>5 minutes of charging gives up to 4 hours</li><li>Charges over USB-C</li></ul></section>
+    <section class="spec-row"><h2>Connectivity</h2><ul><li>Bluetooth 5.4</li><li>Connected to two devices at once</li><li>Wired listening over USB-C audio</li><li>Works with any phone, tablet or computer with Bluetooth</li></ul></section>
+    <section class="spec-row"><h2>Controls</h2><ul><li>Touch panel on the right cup: swipe for volume, tap to play or pause</li><li>Noise button: noise cancelling, Transparency or off</li><li>Press and hold for your voice assistant</li><li>Wear detection pauses music when you lift a cup</li></ul></section>
+    <section class="spec-row"><h2>In the box</h2><ul><li>Tamber Crest</li><li>Travel case</li><li>USB-C cable, 1 m</li><li>Printed quick start guide</li></ul></section>
+  </div>
+  <section class="footnotes" aria-label="Footnotes">
+    <ol class="wrap">
+      <li id="fn-specs-1">Measured by Tamber in October 2026 with pre-production units at 50 percent volume. Battery life varies with use and settings.</li>
+    </ol>
+  </section>
+</div>
+
+<!-- ===================== COMPARE ===================== -->
+<div data-view="compare">
+  <div class="wrap page-head center"><h1 class="h1">Compare headphones and earbuds</h1><p class="lead"><a class="more" href="#/store">Shop all</a></p></div>
+  <div class="wrap" data-compare>
+    <div class="cmp-pick">
+      <span class="select-wrap s1"><label class="sr-only" for="cmp-1">First model</label><select class="select" id="cmp-1" data-slot="0"><option value="crest">Tamber Crest</option><option value="arc">Tamber Arc</option><option value="cove">Tamber Cove</option><option value="cove-open">Tamber Cove Open</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span>
+      <span class="select-wrap s2"><label class="sr-only" for="cmp-2">Second model</label><select class="select" id="cmp-2" data-slot="1"><option value="crest">Tamber Crest</option><option value="arc">Tamber Arc</option><option value="cove" selected>Tamber Cove</option><option value="cove-open">Tamber Cove Open</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span>
+      <span class="select-wrap s3"><label class="sr-only" for="cmp-3">Third model</label><select class="select" id="cmp-3" data-slot="2"><option value="crest">Tamber Crest</option><option value="arc">Tamber Arc</option><option value="cove">Tamber Cove</option><option value="cove-open" selected>Tamber Cove Open</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span>
+    </div>
+    <div class="cmp" style="--rows: 6">
+      <div class="cmp-col s1" data-model="crest"><img src="images/crest-sand.svg" width="1200" height="900" alt=""><ul class="sw-row" aria-label="Sand, Graphite, Sage"><li class="sw" style="--c:#dccfbd"></li><li class="sw" style="--c:#505258"></li><li class="sw" style="--c:#b2bdaa"></li></ul><h2>Tamber Crest</h2><p>$349</p><p><a class="btn sm" href="#/buy?p=crest">Buy</a></p><p><a class="more" href="#/product">Learn more</a></p></div>
+      <div class="cmp-col is-off" data-model="arc"><img src="images/arc-chalk.svg" width="1200" height="900" alt=""><ul class="sw-row" aria-label="Chalk, Midnight"><li class="sw" style="--c:#eeece8"></li><li class="sw" style="--c:#363c4b"></li></ul><h2>Tamber Arc</h2><p>$179</p><p><a class="btn sm" href="#/buy?p=arc">Buy</a></p><p><a class="more" href="#/store?cat=headphones">Learn more</a></p></div>
+      <div class="cmp-col s2" data-model="cove"><img src="images/cove-chalk.svg" width="1200" height="900" alt=""><ul class="sw-row" aria-label="Chalk, Graphite"><li class="sw" style="--c:#eeece8"></li><li class="sw" style="--c:#505258"></li></ul><h2>Tamber Cove</h2><p>$199</p><p><a class="btn sm" href="#/buy?p=cove">Buy</a></p><p><a class="more" href="#/store?cat=earbuds">Learn more</a></p></div>
+      <div class="cmp-col s3" data-model="cove-open"><img src="images/cove-open-chalk.svg" width="1200" height="900" alt=""><ul class="sw-row" aria-label="Chalk, Coral"><li class="sw" style="--c:#eeece8"></li><li class="sw" style="--c:#eaa892"></li></ul><h2>Tamber Cove Open</h2><p>$129</p><p><a class="btn sm" href="#/buy?p=cove-open">Buy</a></p><p><a class="more" href="#/store?cat=earbuds">Learn more</a></p></div>
+    </div>
+    <h2 class="cmp-head">Quick look</h2>
+    <div class="cmp" style="--rows: 4">
+      <div class="cmp-col s1" data-model="crest"><p class="cmp-val"><strong>Over-ear</strong>Cushions around the ear</p><p class="cmp-val"><strong>Adaptive noise cancelling</strong>Tunes itself to the room</p><p class="cmp-val"><strong>Transparency mode</strong></p><p class="cmp-val"><strong>Spatial audio</strong>with head tracking</p></div>
+      <div class="cmp-col is-off" data-model="arc"><p class="cmp-val"><strong>On-ear</strong>Light cushions on the ear</p><p class="cmp-val"><strong>Noise cancelling</strong>One fixed level</p><p class="cmp-none" aria-label="No Transparency mode">&mdash;</p><p class="cmp-none" aria-label="No spatial audio">&mdash;</p></div>
+      <div class="cmp-col s2" data-model="cove"><p class="cmp-val"><strong>In-ear</strong>Three sizes of silicone tips</p><p class="cmp-val"><strong>Adaptive noise cancelling</strong>Tunes itself to the room</p><p class="cmp-val"><strong>Transparency mode</strong></p><p class="cmp-val"><strong>Spatial audio</strong>with head tracking</p></div>
+      <div class="cmp-col s3" data-model="cove-open"><p class="cmp-val"><strong>Open-fit</strong>Rests outside the ear canal</p><p class="cmp-none" aria-label="No noise cancelling">&mdash;</p><p class="cmp-val"><strong>Always open</strong>You hear the street</p><p class="cmp-none" aria-label="No spatial audio">&mdash;</p></div>
+    </div>
+    <h2 class="cmp-head">Battery</h2>
+    <div class="cmp" style="--rows: 2">
+      <div class="cmp-col s1" data-model="crest"><p class="cmp-big"><strong>40 hrs</strong><span>of listening on one charge</span></p><p class="cmp-val">USB-C. 5 minutes gives 4 hours</p></div>
+      <div class="cmp-col is-off" data-model="arc"><p class="cmp-big"><strong>50 hrs</strong><span>of listening on one charge</span></p><p class="cmp-val">USB-C. 10 minutes gives 5 hours</p></div>
+      <div class="cmp-col s2" data-model="cove"><p class="cmp-big"><strong>8 hrs</strong><span>per charge, 32 with the case</span></p><p class="cmp-val">Wireless or USB-C charging case</p></div>
+      <div class="cmp-col s3" data-model="cove-open"><p class="cmp-big"><strong>7 hrs</strong><span>per charge, 28 with the case</span></p><p class="cmp-val">USB-C charging case</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== BUY ===================== -->
+<div data-view="buy">
+  <div class="wrap wide buy">
+    <div class="buy-media">
+      <figure class="buy-frame"><img id="buy-img" src="images/crest-sand.svg" width="1200" height="900" alt="Tamber Crest in Sand"><figcaption class="engrave-preview" id="engrave-preview" aria-hidden="true"></figcaption></figure>
+    </div>
+    <div>
+      <p class="new" id="buy-new" hidden>New</p>
+      <h1 class="h1" id="buy-title">Buy Tamber Crest</h1>
+      <p class="buy-price">From <span id="buy-price">$349</span></p>
+      <form class="form" data-form="order" novalidate>
+        <fieldset class="opt-group">
+          <legend class="h3 two-tone"><b>Color.</b> Pick your favorite.</legend>
+          <div class="swatch-row" id="buy-colors">
+            <label class="sw-opt"><input type="radio" name="color" value="sand" checked><span class="sw" style="--c:#dccfbd"></span>Sand</label>
+            <label class="sw-opt"><input type="radio" name="color" value="graphite"><span class="sw" style="--c:#505258"></span>Graphite</label>
+            <label class="sw-opt"><input type="radio" name="color" value="sage"><span class="sw" style="--c:#b2bdaa"></span>Sage</label>
+          </div>
+        </fieldset>
+        <div class="field" id="engrave-field">
+          <input class="input" id="b-engrave" name="engraving" maxlength="20" placeholder=" " autocomplete="off" pattern="[A-Za-z0-9 .,'&amp;!?\-]*" aria-describedby="b-engrave-err b-engrave-hint"><label for="b-engrave">Engraving (optional)</label>
+          <p class="hint" id="b-engrave-hint">Free. Up to 20 letters, numbers and spaces.</p>
+          <p class="error" id="b-engrave-err" aria-live="polite"></p>
+        </div>
+        <fieldset class="opt-group" id="care-group">
+          <legend class="h3 two-tone"><b>Tamber Care.</b> Two more years of cover.</legend>
+          <label class="opt"><input type="radio" name="care" value="care"><span><b>Tamber Care</b><small>Repairs, accidental damage and one battery service for two years.</small></span><span id="care-price">$49</span></label>
+          <label class="opt"><input type="radio" name="care" value="none" checked><span><b>No extra cover</b><small>Includes the two-year Tamber warranty.</small></span></label>
+        </fieldset>
+        <div class="buy-sum"><p>Total <strong id="buy-total">$349</strong></p><p class="muted small">Free delivery in two to four business days. Free returns within 30 days.</p></div>
+        <button class="btn wide" type="submit">Add to Bag</button>
+      </form>
+      <div class="done" data-success="order" role="status" hidden style="margin-block-start: 20px">
+        <span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>
+        <div><strong>Added to your bag.</strong><p id="added-line">Tamber Crest, Sand</p><div class="ctas"><a class="btn sm" href="#/bag">Review Bag</a><a class="more" href="#/store">Keep shopping</a></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== BAG ===================== -->
+<div data-view="bag">
+  <div class="wrap bag">
+    <h1 class="h1" id="bag-title">Your bag is empty.</h1>
+    <p class="lead muted" id="bag-lead">Free delivery and free returns on every order.</p>
+    <ul class="bag-list" id="bag-list" hidden></ul>
+    <div class="bag-sum" id="bag-sum" hidden>
+      <div><span>Subtotal</span><span id="bag-sub">$0</span></div>
+      <div><span>Delivery</span><span>Free</span></div>
+      <div class="total"><span>Total</span><span id="bag-total">$0</span></div>
+      <button class="btn wide" type="button" id="checkout">Check Out</button>
+      <p class="note" id="checkout-note" role="status"></p>
+    </div>
+    <div class="ctas" id="bag-empty" style="justify-content: flex-start"><a class="btn" href="#/store">Continue shopping</a></div>
+  </div>
+</div>
+
+<!-- ===================== SUPPORT ===================== -->
+<div data-view="support">
+  <section class="wrap sup-hero center">
+    <h1 class="display">Tamber Support</h1>
+    <ul class="sup-topics">
+      <li><a href="#/support?at=faq-crest"><span class="tile-ico"><img src="images/crest-sand.svg" width="1200" height="900" alt=""></span>Headphones</a></li>
+      <li><a href="#/support?at=faq-cove"><span class="tile-ico"><img src="images/cove-chalk.svg" width="1200" height="900" alt=""></span>Earbuds</a></li>
+      <li><a href="#/support?at=faq-room"><span class="tile-ico"><img src="images/room-chalk.svg" width="1200" height="900" alt=""></span>Speakers</a></li>
+      <li><a href="#/support?at=faq-orders"><span class="tile-ico"><svg class="icon" aria-hidden="true"><use href="#i-box"/></svg></span>Orders</a></li>
+      <li><a href="#/support?at=get-help"><span class="tile-ico"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></span>Contact us</a></li>
+    </ul>
+    <div class="search-field sup-search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input class="input" type="search" id="faq-q" placeholder="Search Support" aria-label="Search Support" style="padding-block: 0"></div>
+  </section>
+  <section class="wrap faq" aria-label="Answers">
+    <div class="faq-group" id="faq-crest" data-faq-group>
+      <h2 class="h3">Headphones</h2>
+      <details><summary>How long does Crest take to charge?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>About two hours from empty with a 20 W USB-C charger. Five minutes of charging gives up to four hours of listening.</p></details>
+      <details><summary>How do I connect Crest to two devices?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Pair it with the first device, then hold the noise button for five seconds to pair the second. Crest switches to whichever device starts playing.</p></details>
+    </div>
+    <div class="faq-group" id="faq-cove" data-faq-group>
+      <h2 class="h3">Earbuds</h2>
+      <details><summary>Which ear tip size is right for me?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Open the Tamber app and run the fit test. It plays a short sound and tells you whether each tip seals well.</p></details>
+    </div>
+    <div class="faq-group" id="faq-room" data-faq-group>
+      <h2 class="h3">Speakers</h2>
+      <details><summary>Can I pair two Room speakers?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes. In the Tamber app, choose one Room, then Pair. The two speakers play as left and right.</p></details>
+      <details><summary>Does Room need Wi-Fi?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. Room plays over Bluetooth. Wi-Fi adds multi-room playback and software updates.</p></details>
+    </div>
+    <div class="faq-group" id="faq-orders" data-faq-group>
+      <h2 class="h3">Orders and returns</h2>
+      <details><summary>How do I return something?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Send us a message below within 30 days of delivery. We email a prepaid label and refund you when the parcel arrives.</p></details>
+      <details><summary>How do I start a repair?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Use the form below and include the serial number from the box or the Tamber app. Repairs under warranty are free.</p></details>
+    </div>
+    <p class="empty" data-empty="faq" hidden>No answers match. Try other words, or <a class="more" href="#/support?at=get-help">ask a specialist</a></p>
+  </section>
+  <section class="band" id="get-help" aria-labelledby="help-title">
+    <div class="wrap form-grid">
+      <div>
+        <h2 class="h2" id="help-title">Get help from a person.</h2>
+        <p class="copy">Tell us what is happening. <b>A specialist replies by email</b> within one business day.</p>
+        <ul class="ways">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><div><strong>Chat</strong><span>Every day, 8 am to 8 pm</span></div></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><div><strong>+1 555 0142</strong><span>Weekdays, 9 am to 6 pm</span></div></li>
+        </ul>
+      </div>
+      <div>
+        <form class="form" data-form="contact" novalidate>
+          <div class="form-row">
+            <div class="field"><span class="select-wrap"><select class="select" id="c-product" name="product" required aria-describedby="c-product-err"><option value="" selected disabled></option><option value="crest">Tamber Crest</option><option value="arc">Tamber Arc</option><option value="cove">Tamber Cove</option><option value="cove-open">Tamber Cove Open</option><option value="room">Tamber Room</option><option value="order">An order</option></select><label for="c-product">Product</label><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span><p class="error" id="c-product-err"></p></div>
+            <div class="field"><input class="input" id="c-serial" name="serial" placeholder=" " autocomplete="off" pattern="[A-Za-z0-9]{10}" aria-describedby="c-serial-err"><label for="c-serial">Serial number (optional)</label><p class="error" id="c-serial-err"></p></div>
+          </div>
+          <fieldset class="fieldset" data-group-required aria-describedby="c-issue-err">
+            <legend>What is happening?</legend>
+            <div class="checks">
+              <label class="check"><input type="radio" name="issue" value="battery">Battery</label>
+              <label class="check"><input type="radio" name="issue" value="sound">Sound</label>
+              <label class="check"><input type="radio" name="issue" value="connection">Connection</label>
+              <label class="check"><input type="radio" name="issue" value="order">Order or return</label>
+              <label class="check"><input type="radio" name="issue" value="other">Something else</label>
+            </div>
+            <p class="error" id="c-issue-err"></p>
+          </fieldset>
+          <div class="field"><textarea class="textarea" id="c-details" name="details" placeholder=" " required minlength="20" aria-describedby="c-details-err"></textarea><label for="c-details">Tell us more</label><p class="error" id="c-details-err"></p></div>
+          <div class="form-row">
+            <div class="field"><input class="input" id="c-name" name="name" placeholder=" " autocomplete="name" required aria-describedby="c-name-err"><label for="c-name">Name</label><p class="error" id="c-name-err"></p></div>
+            <div class="field"><input class="input" id="c-email" name="email" type="email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="c-email-err"><label for="c-email">Email</label><p class="error" id="c-email-err"></p></div>
+          </div>
+          <label class="consent"><input type="checkbox" name="consent" required aria-describedby="c-consent-err"><span>I agree that Tamber may use these details to answer my request, as described in the <a class="more" href="#/legal">Privacy Policy</a></span><span class="error" id="c-consent-err"></span></label>
+          <button class="btn wide" type="submit">Send</button>
+        </form>
+        <div class="done" data-success="contact" role="status" hidden>
+          <span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <div><strong>Thanks. We have your request.</strong><p>A specialist will reply by email within one business day. Your case number is <span id="case-no">T-00000</span>.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== NEWSROOM ===================== -->
+<div data-view="newsroom">
+  <div class="wrap page-head"><h1 class="h1">Newsroom</h1></div>
+  <div class="wrap">
+    <a class="news-lead" href="#/post"><img src="images/room-chalk.svg" width="1200" height="900" alt=""><div><p class="cat">Product news</p><h2>Meet Room, a speaker that fills the room and not the shelf</h2><time datetime="2026-11-04">November 4, 2026</time></div></a>
+    <div class="toolbar">
+      <div class="seg" role="group" aria-label="Show stories">
+        <button type="button" data-news-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-news-filter="product" aria-pressed="false">Product news</button>
+        <button type="button" data-news-filter="update" aria-pressed="false">Updates</button>
+        <button type="button" data-news-filter="company" aria-pressed="false">Company</button>
+      </div>
+    </div>
+    <div class="news-grid" data-news-list>
+      <a class="news-card" href="#/post" data-cat="update"><img src="images/scene-app.svg" width="1600" height="1000" alt=""><div><p class="cat">Update</p><h3>Tamber app 4.2 adds a fit test for Cove</h3><time datetime="2026-10-28">October 28, 2026</time></div></a>
+      <a class="news-card" href="#/post" data-cat="product"><img src="images/scene-quiet.svg" width="1600" height="1000" alt=""><div><p class="cat">Product news</p><h3>How adaptive noise cancelling in Crest listens to the room</h3><time datetime="2026-10-14">October 14, 2026</time></div></a>
+      <a class="news-card" href="#/post" data-cat="company"><img src="images/scene-travel.svg" width="1600" height="1000" alt=""><div><p class="cat">Company</p><h3>Our packaging is now paper only, down to the tape</h3><time datetime="2026-09-30">September 30, 2026</time></div></a>
+      <a class="news-card" href="#/post" data-cat="product"><img src="images/scene-cushion.svg" width="1600" height="1000" alt=""><div><p class="cat">Product news</p><h3>New Crest cushions in a cooler knit for summer</h3><time datetime="2026-09-09">September 9, 2026</time></div></a>
+      <a class="news-card" href="#/post" data-cat="update"><img src="images/scene-controls.svg" width="1600" height="1000" alt=""><div><p class="cat">Update</p><h3>Crest firmware 2.1: custom swipe gestures</h3><time datetime="2026-08-21">August 21, 2026</time></div></a>
+      <a class="news-card" href="#/post" data-cat="company"><img src="images/scene-quiet.svg" width="1600" height="1000" alt=""><div><p class="cat">Company</p><h3>Battery service is now free for two years</h3><time datetime="2026-08-02">August 2, 2026</time></div></a>
+      <a class="news-card" href="#/post" data-cat="product"><img src="images/scene-cushion.svg" width="1600" height="1000" alt=""><div><p class="cat">Product news</p><h3>Cove Open arrives in Coral</h3><time datetime="2026-07-15">July 15, 2026</time></div></a>
+    </div>
+    <p class="empty" data-empty="news" hidden>No stories in this category yet.</p>
+    <div class="center-row"><button class="btn outline" type="button" data-more>Show more</button></div>
+    <section class="letter" aria-labelledby="letter-title">
+      <div><h2 class="h3" id="letter-title">Tamber news, a few times a year.</h2><p>New products, updates and offers. Nothing else, and you can leave any time.</p></div>
+      <div>
+        <form class="form" data-form="newsletter" novalidate>
+          <div class="field"><input class="input" id="n-email" name="email" type="email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="n-email-err"><label for="n-email">Email</label><p class="error" id="n-email-err"></p></div>
+          <button class="btn" type="submit">Subscribe</button>
+        </form>
+        <div class="done" data-success="newsletter" role="status" hidden><span class="tick"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><div><strong>You are on the list.</strong><p>The next letter arrives when there is news worth sending.</p></div></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ===================== POST ===================== -->
+<div data-view="post">
+  <article class="wrap article">
+    <p class="cat">Product news</p>
+    <h1 class="h1">Meet Room, a speaker that fills the room and not the shelf</h1>
+    <time datetime="2026-11-04">November 4, 2026</time>
+    <p class="lead">Room is a 22 cm cylinder that plays in every direction. It is available to order today for $279, in Chalk and Graphite.</p>
+    <figure class="article-figure"><img src="images/room-graphite.svg" width="1200" height="900" alt="Tamber Room in Graphite"><figcaption>Room in Graphite. The fabric is knitted from recycled yarn.</figcaption></figure>
+    <div class="prose">
+      <p>Most speakers point at one seat. Room has four drivers facing out and one woofer facing down, so the sound reaches every corner and the bass uses the floor. It measures the room when you place it and tunes itself in about ten seconds.</p>
+      <h2>Simple on top</h2>
+      <p>A single ring on the top sets the volume. Press it to play or pause.</p>
+      <ul><li>Bluetooth 5.4 for anything that plays</li><li>Wi-Fi for multi-room playback and updates</li><li>Two Rooms play as a stereo pair</li></ul>
+      <blockquote><p>We wanted a speaker you place once and then forget about, except when you are listening.</p><cite>Product team, Tamber</cite></blockquote>
+      <h2>Price and availability</h2>
+      <p>Tamber Room costs $279 and ships in two to four business days. Orders before 31 December include free engraving on the base. <a href="#/buy?p=room">Buy Room</a>.</p>
+    </div>
+    <div class="ctas" style="justify-content: flex-start; margin-block-start: 40px"><a class="btn" href="#/buy?p=room">Buy Room</a><a class="btn outline" href="#/newsroom">All news</a></div>
+  </article>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="legal">
+  <div class="wrap legal">
+    <div class="page-head"><h1 class="h1">Privacy and terms</h1><p class="lead muted">Last updated November 1, 2026.</p></div>
+    <div class="prose">
+      <h2 id="privacy">Privacy Policy</h2>
+      <p>We collect what we need to deliver your order and answer your questions: your name, email, delivery address and the products you buy. We do not sell personal information.</p>
+      <h2 id="terms">Terms of sale</h2>
+      <p>Prices include sales tax where it applies. Delivery is free. You can return any product within 30 days of delivery for a full refund, including engraved products.</p>
+      <h2 id="offer">Free engraving offer</h2>
+      <p>Engraving is free on Crest, Cove and Room ordered online between 24 November and 31 December 2026. Up to 20 letters, numbers, spaces and basic punctuation.</p>
+      <h2 id="warranty">Warranty</h2>
+      <p>Every Tamber product has a two-year limited warranty against defects in materials and workmanship. Tamber Care adds two more years, accidental damage cover and one battery service.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="wrap nf">
+    <h1 class="display">We can't find that page.</h1>
+    <p class="lead muted">The link may be old, or the page may have moved. Try the store or search for what you need.</p>
+    <div class="ctas"><a class="btn" href="#/">Go to the home page</a><a class="btn outline" href="#/store">Visit the store</a></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <nav class="f-crumbs" aria-label="Breadcrumb"><a href="#/" aria-label="Tamber home"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg></a><span data-crumb>Home</span></nav>
+    <div class="f-cols">
+      <div><h2>Shop</h2><ul><li><a href="#/store">Store</a></li><li><a href="#/product">Crest</a></li><li><a href="#/store?cat=earbuds">Earbuds</a></li><li><a href="#/store?cat=speakers">Speakers</a></li><li><a href="#/store?cat=accessories">Accessories</a></li></ul></div>
+      <div><h2>Your order</h2><ul><li><a href="#/bag">Bag</a></li><li><a href="#/support?at=faq-orders">Order status</a></li><li><a href="#/legal?at=terms">Delivery and returns</a></li><li><a href="#/legal?at=offer">Engraving</a></li></ul></div>
+      <div><h2>Support</h2><ul><li><a href="#/support">Support home</a></li><li><a href="#/support?at=get-help">Contact us</a></li><li><a href="#/specs">Tech specs</a></li><li><a href="#/legal?at=warranty">Warranty</a></li></ul></div>
+      <div><h2>Tamber</h2><ul><li><a href="#/newsroom">Newsroom</a></li><li><a href="#/compare">Compare models</a></li><li><a href="#/legal">Privacy</a></li></ul></div>
+    </div>
+    <p class="f-more">More ways to shop: find a stockist near you, or call <a href="#/support?at=get-help">+1 555 0142</a>.</p>
+    <div class="f-base">
+      <p>Copyright &copy; 2026 Tamber Audio Inc. All rights reserved.</p>
+      <nav aria-label="Legal"><a href="#/legal">Privacy Policy</a><a href="#/legal?at=terms">Terms of Sale</a><a href="#/legal?at=warranty">Warranty</a></nav>
+      <p class="region">United States</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Every image path is written out in full: scripts/inline.mjs can only embed paths it can read,
+  // not ones assembled at runtime. Add new images here.
+  const IMAGES = {
+    "arc-chalk": "images/arc-chalk.svg",
+    "arc-midnight": "images/arc-midnight.svg",
+    "case": "images/case.svg",
+    "cove-chalk": "images/cove-chalk.svg",
+    "cove-graphite": "images/cove-graphite.svg",
+    "cove-open-chalk": "images/cove-open-chalk.svg",
+    "cove-open-coral": "images/cove-open-coral.svg",
+    "crest-graphite": "images/crest-graphite.svg",
+    "crest-sage": "images/crest-sage.svg",
+    "crest-sand": "images/crest-sand.svg",
+    "dock": "images/dock.svg",
+    "room-chalk": "images/room-chalk.svg",
+    "room-graphite": "images/room-graphite.svg",
+    "scene-app": "images/scene-app.svg",
+    "scene-controls": "images/scene-controls.svg",
+    "scene-cushion": "images/scene-cushion.svg",
+    "scene-quiet": "images/scene-quiet.svg",
+    "scene-travel": "images/scene-travel.svg",
+  };
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const money = (n) => "$" + n.toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0 });
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: light by default following the system setting, dark behind the toggle ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light colors" : "Switch to dark colors");
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const savedTheme = store.get("tamber-theme");
+  applyTheme(savedTheme === "light" || savedTheme === "dark" ? savedTheme : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("tamber-theme", next);
+  });
+
+  /* ---------- Products: one record per product, used by the buy page and the bag ---------- */
+  const PRODUCTS = {
+    crest: { name: "Tamber Crest", price: 349, care: 49, engrave: true, colors: [["sand", "Sand", "#dccfbd"], ["graphite", "Graphite", "#505258"], ["sage", "Sage", "#b2bdaa"]] },
+    arc: { name: "Tamber Arc", price: 179, care: 29, colors: [["chalk", "Chalk", "#eeece8"], ["midnight", "Midnight", "#363c4b"]] },
+    cove: { name: "Tamber Cove", price: 199, care: 29, engrave: true, colors: [["chalk", "Chalk", "#eeece8"], ["graphite", "Graphite", "#505258"]] },
+    "cove-open": { name: "Tamber Cove Open", price: 129, care: 19, colors: [["chalk", "Chalk", "#eeece8"], ["coral", "Coral", "#eaa892"]] },
+    room: { name: "Tamber Room", price: 279, care: 39, engrave: true, isNew: true, colors: [["chalk", "Chalk", "#eeece8"], ["graphite", "Graphite", "#505258"]] },
+    dock: { name: "Tamber Dock", price: 59, image: "images/dock.svg", colors: [["chalk", "Chalk", "#eeece8"]] },
+    case: { name: "Crest Travel Case", price: 39, image: "images/case.svg", colors: [["graphite", "Graphite", "#505258"]] },
+  };
+  const imageOf = (id, color) => PRODUCTS[id].image || IMAGES[`${id}-${color}`];
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Tamber: headphones, earbuds and speakers",
+    store: "Store · Tamber",
+    product: "Tamber Crest · Tamber",
+    specs: "Tamber Crest: Tech Specs · Tamber",
+    compare: "Compare models · Tamber",
+    buy: "Buy · Tamber",
+    bag: "Bag · Tamber",
+    support: "Support · Tamber",
+    newsroom: "Newsroom · Tamber",
+    post: "Meet Room · Tamber",
+    legal: "Privacy and terms · Tamber",
+    "404": "Page not found · Tamber",
+  };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name];
+    $("[data-crumb]").textContent = name === "home" ? "Home" : titles[name].split(" · ")[0];
+    const section = { specs: "product", post: "newsroom" }[name] || name;
+    $$(".gnav-links a, .menu-links a, .lnav-links a").forEach((a) => {
+      const target = parse(a.getAttribute("href"));
+      const here = a.closest(".lnav-links") ? target.view === name : target.view === section && !a.getAttribute("href").includes("?");
+      if (here) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (name === "store") filterProducts(route.params.get("cat") || "all");
+    if (name === "buy") setProduct(route.params.get("p"));
+    if (name === "bag") renderBag();
+    if (name === "newsroom") filterNews("all");
+    gallery.toggle(name === "product");
+    const at = route.params.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      if (search.open) search.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = document.getElementById(href.slice(1));
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "center" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Menu (phones) and search ---------- */
+  const menu = $("#menu");
+  const search = $("#search");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  $("#search-open").addEventListener("click", () => { search.showModal(); $("#search-q").focus(); });
+  $("#search-close").addEventListener("click", () => search.close());
+  [menu, search].forEach((d) => d.addEventListener("click", (event) => { if (event.target === d) d.close(); }));
+  $("#search-q").addEventListener("input", (event) => {
+    const q = event.target.value.trim().toLowerCase();
+    let shown = 0;
+    $$("#search-links li").forEach((li) => { li.hidden = Boolean(q) && !li.textContent.toLowerCase().includes(q); if (!li.hidden) shown += 1; });
+    $("#search-empty").hidden = shown > 0;
+  });
+
+  /* ---------- Reveal (content stays visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) { $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in"))); }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Highlights gallery: scroll-snap track (works without JS), dots, play and pause ---------- */
+  const gallery = (() => {
+    const box = $("#gallery");
+    const track = $("#g-track");
+    const dots = $$(".g-dots button", box);
+    const play = $("#g-play");
+    let index = 0, timer = null, playing = !reduced.matches, hovering = false, active = false;
+    const step = () => track.children[1].offsetLeft - track.children[0].offsetLeft;
+    function mark(i) { index = i; dots.forEach((d, n) => d.setAttribute("aria-pressed", String(n === i))); box.classList.remove("is-playing"); void box.offsetWidth; box.classList.toggle("is-playing", playing && active); }
+    function goTo(i) { const n = (i + dots.length) % dots.length; track.scrollTo({ left: step() * n, behavior: reduced.matches ? "auto" : "smooth" }); mark(n); }
+    function setPlaying(value) {
+      playing = value;
+      play.setAttribute("aria-label", playing ? "Pause the highlights" : "Play the highlights");
+      $("use", play).setAttribute("href", playing ? "#i-pause" : "#i-play");
+      restart();
+    }
+    function restart() { clearInterval(timer); mark(index); if (playing && active) timer = setInterval(() => { if (!hovering) goTo(index + 1); }, 6000); }
+    dots.forEach((d, i) => d.addEventListener("click", () => { setPlaying(false); goTo(i); }));
+    play.addEventListener("click", () => setPlaying(!playing));
+    track.addEventListener("pointerenter", () => { hovering = true; });
+    track.addEventListener("pointerleave", () => { hovering = false; });
+    track.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "ArrowLeft") { event.preventDefault(); setPlaying(false); goTo(index + (event.key === "ArrowRight" ? 1 : -1)); }
+    });
+    let settle;
+    track.addEventListener("scroll", () => { clearTimeout(settle); settle = setTimeout(() => { const n = Math.round(track.scrollLeft / step()); if (n !== index) mark(n); }, 140); }, { passive: true });
+    setPlaying(playing);
+    return { toggle(on) { active = on; restart(); } };
+  })();
+
+  /* ---------- Closer look and the color picker: swap one picture ---------- */
+  function swap(img, src, alt) { img.src = src; img.alt = alt; img.classList.remove("swap"); void img.offsetWidth; img.classList.add("swap"); }
+  $$(".closer-pill").forEach((pill) => pill.addEventListener("click", () => {
+    $$(".closer-pill").forEach((p) => p.setAttribute("aria-pressed", String(p === pill)));
+    swap($("#closer-img"), pill.dataset.src, pill.dataset.alt);
+  }));
+  $$(".swatches .sw-btn").forEach((button) => button.addEventListener("click", () => {
+    $$(".swatches .sw-btn").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    const label = button.getAttribute("aria-label");
+    swap($("#color-img"), imageOf("crest", button.dataset.color), `Tamber Crest in ${label}`);
+    $("#color-name").textContent = label;
+  }));
+
+  /* ---------- Store: category filter and sort ---------- */
+  const productList = $("[data-product-list]");
+  const productCards = [...productList.children];
+  function filterProducts(cat) {
+    const known = ["all", ...new Set(productCards.map((card) => card.dataset.cat))];
+    const active = known.includes(cat) ? cat : "all";
+    $$("[data-cat-filter]").forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.catFilter === active)));
+    let shown = 0;
+    productCards.forEach((card) => { card.hidden = active !== "all" && card.dataset.cat !== active; if (!card.hidden) shown += 1; });
+    $("[data-product-count]").textContent = `${shown} ${shown === 1 ? "product" : "products"}`;
+    $("[data-empty='products']").hidden = shown > 0;
+  }
+  $$("[data-cat-filter]").forEach((chip) => chip.addEventListener("click", () => filterProducts(chip.dataset.catFilter)));
+  $("#p-sort").addEventListener("change", (event) => {
+    const by = event.target.value;
+    const sorted = by === "featured" ? productCards : [...productCards].sort((a, b) => (by === "low" ? 1 : -1) * (a.dataset.price - b.dataset.price));
+    sorted.forEach((card) => productList.append(card));
+  });
+
+  /* ---------- Compare: three slots (two on phones); picking a model that is already shown swaps them ---------- */
+  const slots = ["crest", "cove", "cove-open"];
+  const pickers = $$(".cmp-pick select");
+  function renderCompare() {
+    $$(".cmp-col").forEach((col) => {
+      const i = slots.indexOf(col.dataset.model);
+      col.classList.remove("s1", "s2", "s3");
+      col.classList.toggle("is-off", i < 0);
+      if (i >= 0) { col.classList.add(`s${i + 1}`); col.style.order = String(i); }
+    });
+    pickers.forEach((select, i) => { select.value = slots[i]; });
+  }
+  pickers.forEach((select, i) => select.addEventListener("change", () => {
+    const j = slots.indexOf(select.value);
+    if (j >= 0 && j !== i) slots[j] = slots[i];
+    slots[i] = select.value;
+    renderCompare();
+  }));
+  renderCompare();
+
+  /* ---------- Buy: product, color, engraving and cover set the picture and the total ---------- */
+  const order = $("[data-form='order']");
+  let buying = "crest";
+  function selected(name) { return $(`input[name='${name}']:checked`, order)?.value; }
+  function updateBuy() {
+    const p = PRODUCTS[buying];
+    const color = p.colors.find((c) => c[0] === selected("color")) || p.colors[0];
+    const care = selected("care") === "care" && p.care ? p.care : 0;
+    const img = $("#buy-img");
+    if (!img.src.endsWith(imageOf(buying, color[0]))) swap(img, imageOf(buying, color[0]), `${p.name} in ${color[1]}`);
+    $("#buy-total").textContent = money(p.price + care);
+    $("#engrave-preview").textContent = p.engrave ? $("#b-engrave").value : "";
+  }
+  function setProduct(id) {
+    buying = PRODUCTS[id] ? id : "crest";
+    const p = PRODUCTS[buying];
+    $("#buy-title").textContent = `Buy ${p.name}`;
+    $("#buy-price").textContent = money(p.price);
+    $("#buy-new").hidden = !p.isNew;
+    $("#buy-colors").innerHTML = p.colors.map(([value, label, hex], i) =>
+      `<label class="sw-opt"><input type="radio" name="color" value="${value}"${i ? "" : " checked"}><span class="sw" style="--c:${hex}"></span>${label}</label>`).join("");
+    $("#engrave-field").hidden = !p.engrave;
+    $("#b-engrave").value = "";
+    $("#care-group").hidden = !p.care;
+    $("#care-price").textContent = money(p.care || 0);
+    $("input[name='care'][value='none']", order).checked = true;
+    order.hidden = false;
+    $("[data-success='order']").hidden = true;
+    document.title = `Buy ${p.name} · Tamber`;
+    updateBuy();
+  }
+  order.addEventListener("change", updateBuy);
+  $("#b-engrave").addEventListener("input", updateBuy);
+
+  /* ---------- Bag: kept in the store wrapper; a real store replaces it with a cart and checkout ---------- */
+  const BAG_KEY = "tamber-bag";
+  let bag = [];
+  try { bag = JSON.parse(store.get(BAG_KEY) || "[]").filter((line) => PRODUCTS[line.id]); } catch { bag = []; }
+  const lineTotal = (line) => (PRODUCTS[line.id].price + (line.care ? PRODUCTS[line.id].care : 0)) * line.qty;
+  function saveBag(bump) {
+    store.set(BAG_KEY, JSON.stringify(bag));
+    const count = bag.reduce((sum, line) => sum + line.qty, 0);
+    $$("[data-bag-count]").forEach((badge) => {
+      badge.textContent = String(count);
+      badge.hidden = count === 0;
+      if (bump) { badge.classList.remove("bump"); void badge.offsetWidth; badge.classList.add("bump"); }
+    });
+  }
+  function renderBag() {
+    const list = $("#bag-list");
+    const empty = bag.length === 0;
+    $("#bag-title").textContent = empty ? "Your bag is empty." : `Your bag total is ${money(bag.reduce((s, l) => s + lineTotal(l), 0))}.`;
+    list.hidden = $("#bag-sum").hidden = empty;
+    $("#bag-empty").hidden = !empty;
+    $("#checkout-note").textContent = "";
+    list.innerHTML = bag.map((line, i) => {
+      const p = PRODUCTS[line.id];
+      const color = p.colors.find((c) => c[0] === line.color) || p.colors[0];
+      const extras = [line.engraving && `Engraved: “${line.engraving.replace(/[<>&"]/g, "")}”`, line.care && `Tamber Care, ${money(p.care)}`].filter(Boolean);
+      const options = [1, 2, 3, 4, 5].map((n) => `<option value="${n}"${n === line.qty ? " selected" : ""}>${n}</option>`).join("");
+      return `<li class="bag-item"><img src="${imageOf(line.id, color[0])}" width="1200" height="900" alt=""><div><h2>${p.name}</h2><p>${color[1]}</p>${extras.map((e) => `<p>${e}</p>`).join("")}</div><p class="line-price">${money(lineTotal(line))}</p>` +
+        `<div class="bag-ctrl"><span class="select-wrap"><label class="sr-only" for="qty-${i}">Quantity</label><select class="select" id="qty-${i}" data-qty="${i}">${options}</select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></span><button type="button" data-remove="${i}">Remove</button></div></li>`;
+    }).join("");
+    const total = money(bag.reduce((s, l) => s + lineTotal(l), 0));
+    $("#bag-sub").textContent = $("#bag-total").textContent = total;
+  }
+  $("#bag-list").addEventListener("change", (event) => { const i = event.target.dataset.qty; if (i !== undefined) { bag[i].qty = Number(event.target.value); saveBag(false); renderBag(); } });
+  $("#bag-list").addEventListener("click", (event) => { const i = event.target.dataset.remove; if (i !== undefined) { bag.splice(Number(i), 1); saveBag(false); renderBag(); } });
+  $("#checkout").addEventListener("click", () => { $("#checkout-note").textContent = "Checkout is not connected in this preview. Connect a payment provider to take orders."; });
+  saveBag(false);
+
+  /* ---------- Newsroom: category filter and "Show more" ---------- */
+  const newsCards = $$("[data-news-list] > [data-cat]");
+  const moreButton = $("[data-more]");
+  let newsFilter = "all", newsLimit = 6;
+  function renderNews() {
+    const matches = newsCards.filter((card) => newsFilter === "all" || card.dataset.cat === newsFilter);
+    newsCards.forEach((card) => { card.hidden = true; });
+    matches.slice(0, newsLimit).forEach((card) => { card.hidden = false; });
+    $("[data-empty='news']").hidden = matches.length > 0;
+    moreButton.hidden = matches.length <= newsLimit;
+  }
+  function filterNews(cat) {
+    newsFilter = newsCards.some((card) => card.dataset.cat === cat) ? cat : "all";
+    newsLimit = 6;
+    $$("[data-news-filter]").forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.newsFilter === newsFilter)));
+    renderNews();
+  }
+  $$("[data-news-filter]").forEach((chip) => chip.addEventListener("click", () => filterNews(chip.dataset.newsFilter)));
+  moreButton.addEventListener("click", () => { newsLimit += 3; renderNews(); });
+
+  /* ---------- Support: filter answers as you type ---------- */
+  $("#faq-q").addEventListener("input", (event) => {
+    const q = event.target.value.trim().toLowerCase();
+    let shown = 0;
+    $$("[data-faq-group]").forEach((group) => {
+      let inGroup = 0;
+      $$("details", group).forEach((item) => {
+        const match = !q || item.textContent.toLowerCase().includes(q);
+        item.hidden = !match;
+        if (match) { inGroup += 1; if (q) item.open = true; }
+      });
+      group.hidden = inGroup === 0;
+      shown += inGroup;
+    });
+    $("[data-empty='faq']").hidden = shown > 0;
+  });
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Enter a valid email address.", tooShort: "Please write at least 20 characters.", patternMismatch: "Use letters, numbers and spaces only." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby").split(" ")[0]);
+    let problem = "";
+    if (field.matches("fieldset")) problem = $("input:checked", field) ? "" : "Please choose one.";
+    else if (field.closest("[hidden]")) problem = "";
+    else {
+      const key = Object.keys(messages).find((k) => field.validity[k]);
+      if (key) problem = field.type === "checkbox" ? "Please tick this box to continue." : field.tagName === "SELECT" ? "Please choose one." : field.id === "c-serial" ? "Serial numbers have 10 letters and numbers." : messages[key];
+    }
+    error.textContent = problem;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  const onValid = {
+    order() {
+      const p = PRODUCTS[buying];
+      const color = selected("color");
+      const engraving = p.engrave ? $("#b-engrave").value.trim() : "";
+      const care = selected("care") === "care" && Boolean(p.care);
+      const same = bag.find((l) => l.id === buying && l.color === color && l.engraving === engraving && l.care === care);
+      if (same) same.qty = Math.min(5, same.qty + 1); else bag.push({ id: buying, color, engraving, care, qty: 1 });
+      saveBag(true);
+      $("#added-line").textContent = `${p.name}, ${p.colors.find((c) => c[0] === color)[1]}`;
+      return false;
+    },
+    contact() { $("#case-no").textContent = `T-${String(Date.now()).slice(-5)}`; return true; },
+  };
+  $$("form[data-form]").forEach((form) => {
+    const fields = () => $$("input[aria-describedby], textarea[aria-describedby], select[aria-describedby], fieldset[data-group-required]", form);
+    fields().forEach((field) => field.addEventListener(field.matches("fieldset, [type=checkbox], select") ? "change" : "blur", () => checkField(field)));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const list = fields();
+      if (!list.map(checkField).every(Boolean)) {
+        const first = list.find((f) => f.getAttribute("aria-invalid") === "true");
+        (first?.matches("fieldset") ? $("input", first) : first)?.focus();
+        return;
+      }
+      button.disabled = true;
+      button.textContent = form.dataset.form === "order" ? "Adding…" : "Sending…";
+      setTimeout(() => {
+        button.disabled = false;
+        button.textContent = label;
+        const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+        const hideForm = onValid[form.dataset.form] ? onValid[form.dataset.form]() : true;
+        if (hideForm) form.hidden = true;
+        if (success) { success.hidden = false; success.style.animation = "none"; void success.offsetWidth; success.style.animation = ""; }
+      }, form.dataset.form === "order" ? 250 : 600);
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

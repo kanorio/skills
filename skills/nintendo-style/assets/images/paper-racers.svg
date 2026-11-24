@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<rect width="1600" height="900" fill="#a9dcff"/>
+<g fill="#fff" transform="translate(1180 150) scale(1.1)"><circle cx="0" cy="0" r="46"/><circle cx="52" cy="-22" r="58"/><circle cx="112" cy="0" r="44"/><rect x="0" y="-6" width="112" height="50" rx="25"/></g><g fill="#fff" transform="translate(260 200) scale(0.8)"><circle cx="0" cy="0" r="46"/><circle cx="52" cy="-22" r="58"/><circle cx="112" cy="0" r="44"/><rect x="0" y="-6" width="112" height="50" rx="25"/></g>
+<path d="M0 520Q400 420 820 500T1600 460V900H0Z" fill="#8fd18a"/>
+<g transform="translate(220 500) scale(0.9)"><rect x="-9" y="-10" width="18" height="70" rx="9" fill="#8a5a3b"/><circle cy="-40" r="56" fill="#5bb847"/></g><g transform="translate(1380 470) scale(1)"><rect x="-9" y="-10" width="18" height="70" rx="9" fill="#8a5a3b"/><circle cy="-40" r="56" fill="#4fa83a"/></g><g transform="translate(1480 500) scale(0.7)"><rect x="-9" y="-10" width="18" height="70" rx="9" fill="#8a5a3b"/><circle cy="-40" r="56" fill="#5bb847"/></g>
+<path d="M-60 760C300 560 620 900 980 700S1500 560 1700 600" fill="none" stroke="#59606e" stroke-width="150" stroke-linecap="round"/>
+<path d="M-60 760C300 560 620 900 980 700S1500 560 1700 600" fill="none" stroke="#fff" stroke-width="10" stroke-dasharray="44 38"/>
+<g transform="translate(430 640) rotate(-12)"><path d="M0 40L60-40H200L250 40Z" fill="#ff5a4e"/><path d="M60-40L120 40H0Z" fill="#d63b31"/><path d="M200-40L250 40H170Z" fill="#ffb3ac"/><circle cx="50" cy="48" r="26" fill="#2b2f3a"/><circle cx="200" cy="48" r="26" fill="#2b2f3a"/></g>
+<g transform="translate(980 640) rotate(-6)"><path d="M0 40L50-36H190L240 40Z" fill="#3d8bff"/><path d="M50-36L110 40H0Z" fill="#2a6fe0"/><path d="M190-36L240 40H160Z" fill="#a9c8ff"/><circle cx="48" cy="48" r="26" fill="#2b2f3a"/><circle cx="192" cy="48" r="26" fill="#2b2f3a"/></g>
+<g fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"><path d="M320 600h-90M330 650h-130M880 640h-70M890 690h-110"/></g>
+</svg>

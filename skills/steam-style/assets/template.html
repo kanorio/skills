@@ -1,0 +1,1468 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Quillpine: independent games, sold direct</title>
+<meta name="description" content="Quillpine is an independent games label with its own store: cozy sims, strategy, roguelites and puzzles from four small studios, weekly specials, and keys in your library the moment you pay.">
+<meta property="og:title" content="Quillpine: independent games, sold direct">
+<meta property="og:description" content="Cozy sims, strategy, roguelites and puzzles from four small studios. New specials every Thursday.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<style>
+@font-face { font-family: "Saira"; src: url("fonts/saira-latin-wght.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Red Hat Text"; src: url("fonts/red-hat-text-latin-wght.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+
+/* ---------- Tokens: a deep blue store lit from the top, cover art in every slot, lime for discounts, green for buying ---------- */
+:root {
+  color-scheme: dark;
+  --page: oklch(24% 0.035 248);
+  --glow: oklch(39% 0.085 240);
+  --bar: oklch(17% 0.02 255);
+  --bar-text: oklch(86% 0.02 240);
+  --bar-strong: oklch(98% 0.005 235);
+  --bar-accent: oklch(78% 0.11 232);
+  --sub: oklch(33% 0.06 240);
+  --sub-text: oklch(93% 0.02 235);
+  --panel: oklch(29% 0.04 244);
+  --raise: oklch(34% 0.05 238);
+  --well: oklch(19% 0.025 250);
+  --field: oklch(31% 0.03 245);
+  --text: oklch(85% 0.025 235);
+  --strong: oklch(97% 0.008 235);
+  --muted: oklch(71% 0.03 238);
+  --line: oklch(38% 0.04 242);
+  --link: oklch(78% 0.11 232);
+  --chip: oklch(36% 0.055 236);
+  --chip-text: oklch(85% 0.07 230);
+  --btn: oklch(37% 0.07 237);
+  --btn-text: oklch(87% 0.09 228);
+  --btn-hover: oklch(57% 0.12 238);
+  --btn-hover-text: oklch(99% 0 0);
+  --search: oklch(64% 0.15 242);
+  --sale: oklch(80% 0.19 128);
+  --sale-text: oklch(24% 0.06 140);
+  --buy: oklch(53% 0.15 134);
+  --buy-2: oklch(45% 0.13 138);
+  --buy-text: oklch(98% 0.03 125);
+  --band-a: oklch(36% 0.1 300);
+  --band-b: oklch(38% 0.09 245);
+  --pos: oklch(78% 0.11 232);
+  --mix: oklch(78% 0.12 80);
+  --neg: oklch(72% 0.14 35);
+  --err: oklch(74% 0.15 25);
+  --ok: oklch(82% 0.17 135);
+  --focus: oklch(84% 0.12 225);
+  --shadow: oklch(8% 0.03 250 / 0.55);
+
+  --f-display: "Saira", "Red Hat Text", ui-sans-serif, system-ui, sans-serif;
+  --f-body: "Red Hat Text", ui-sans-serif, system-ui, sans-serif;
+  --fs-display: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem);
+  --fs-h1: clamp(1.5rem, 1.3rem + 0.7vw, 1.875rem);
+  --fs-h2: 1.25rem;
+  --fs-h3: 1.0625rem;
+  --fs-body: 1rem;
+  --fs-small: 0.8125rem;
+  --r-control: 3px;
+  --r-card: 4px;
+  --r-media: 2px;
+  --r-block: 10px;
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --dur-slow: 420ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --page: oklch(95% 0.01 240);
+  --glow: oklch(87% 0.045 238);
+  --bar: oklch(25% 0.04 250);
+  --sub: oklch(88% 0.035 238);
+  --sub-text: oklch(28% 0.045 250);
+  --panel: oklch(99.5% 0.003 240);
+  --raise: oklch(92.5% 0.02 238);
+  --well: oklch(91.5% 0.015 240);
+  --field: oklch(99.5% 0 0);
+  --text: oklch(33% 0.03 250);
+  --strong: oklch(20% 0.035 252);
+  --muted: oklch(47% 0.025 245);
+  --line: oklch(84% 0.02 240);
+  --link: oklch(47% 0.14 245);
+  --chip: oklch(91% 0.035 236);
+  --chip-text: oklch(38% 0.11 242);
+  --btn: oklch(90% 0.045 236);
+  --btn-text: oklch(36% 0.11 242);
+  --btn-hover: oklch(50% 0.13 242);
+  --search: oklch(52% 0.15 245);
+  --band-a: oklch(86% 0.06 300);
+  --band-b: oklch(88% 0.05 240);
+  --pos: oklch(46% 0.14 245);
+  --mix: oklch(49% 0.12 65);
+  --neg: oklch(51% 0.17 30);
+  --err: oklch(51% 0.19 27);
+  --ok: oklch(45% 0.14 140);
+  --focus: oklch(52% 0.16 245);
+  --shadow: oklch(35% 0.04 250 / 0.2);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; min-height: 100vh; min-height: 100svh; background: radial-gradient(ellipse 75% 600px at 50% 0, var(--glow), transparent) no-repeat, var(--page); color: var(--text); font: 400 var(--fs-body)/1.55 var(--f-body); }
+h1, h2, h3 { margin: 0; color: var(--strong); font-family: var(--f-display); line-height: 1.15; text-wrap: balance; }
+p { margin: 0 0 0.8em; text-wrap: pretty; }
+a { color: var(--link); text-decoration: none; }
+a:hover { color: var(--strong); }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+img, svg { display: block; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 50; padding: 10px 14px; background: var(--strong); color: var(--page); }
+.skip:focus { top: 12px; }
+.wrap { width: min(100% - 32px, 1200px); margin-inline: auto; }
+.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.muted { color: var(--muted); }
+.small { font-size: var(--fs-small); }
+.h1 { font-size: var(--fs-h1); font-weight: 500; }
+.display { font-size: var(--fs-display); font-weight: 700; letter-spacing: -0.01em; }
+.sec-h { font-size: var(--fs-h2); font-weight: 600; letter-spacing: 0.01em; }
+.page { padding: 24px 0 64px; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; font-size: var(--fs-small); color: var(--muted); }
+.crumbs a { color: var(--muted); }
+.crumbs a:hover { color: var(--strong); }
+.panel { background: var(--panel); border-radius: var(--r-card); }
+.prose { max-width: 70ch; }
+.prose h2 { margin: 1.4em 0 0.5em; font-size: var(--fs-h3); font-weight: 600; }
+.prose ul { padding-left: 1.2em; list-style: disc; margin-bottom: 0.8em; }
+html:not(.js) [data-js] { display: none !important; }
+
+/* ---------- Buttons, chips, price block ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 16px; border: 0; border-radius: var(--r-control); background: var(--btn); color: var(--btn-text); font-weight: 500; font-size: 0.9375rem; line-height: 1.1; text-align: center; cursor: pointer; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.btn:hover { background: var(--btn-hover); color: var(--btn-hover-text); }
+.btn-buy { background: linear-gradient(90deg, var(--buy), var(--buy-2)); color: var(--buy-text); text-shadow: 0 1px 0 oklch(20% 0.05 140 / 0.4); }
+.btn-buy:hover { background: linear-gradient(90deg, oklch(60% 0.16 132), var(--buy)); color: var(--buy-text); }
+.btn-sm { min-height: 32px; padding: 0 12px; font-size: var(--fs-small); }
+.btn.wide { width: 100%; }
+.btn[aria-pressed="true"] { background: var(--btn-hover); color: var(--btn-hover-text); }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip { display: inline-flex; align-items: center; min-height: 26px; padding: 0 9px; border: 0; border-radius: var(--r-control); background: var(--chip); color: var(--chip-text); font-size: var(--fs-small); line-height: 1.2; cursor: pointer; }
+a.chip:hover, button.chip:hover { background: var(--btn-hover); color: var(--btn-hover-text); }
+.chip[aria-pressed="true"] { background: var(--btn-hover); color: var(--btn-hover-text); }
+.pb { display: inline-flex; align-items: stretch; flex: none; line-height: 1; }
+.pct { display: flex; align-items: center; padding: 0 6px; background: var(--sale); color: var(--sale-text); font-weight: 700; font-size: 1rem; }
+.pw { display: flex; flex-direction: column; justify-content: center; align-items: flex-end; gap: 2px; min-height: 34px; padding: 4px 8px; background: var(--well); }
+.pw s { color: var(--muted); font-size: 0.75rem; }
+.pw b { color: var(--strong); font-weight: 500; font-size: 0.9375rem; }
+.os { display: inline-flex; gap: 3px; vertical-align: middle; }
+.os i { padding: 1px 4px; border: 1px solid var(--line); border-radius: 2px; color: var(--muted); font: 600 0.625rem/1.4 var(--f-display); font-style: normal; letter-spacing: 0.06em; text-transform: uppercase; }
+.rv { font-weight: 500; }
+.rv.pos { color: var(--pos); }
+.rv.mix { color: var(--mix); }
+.rv.neg { color: var(--neg); }
+
+/* ---------- Cover art: one drawing per title, cropped for every slot ---------- */
+.cap { position: relative; display: block; overflow: hidden; aspect-ratio: 460 / 215; background: var(--well); container-type: inline-size; border-radius: var(--r-media); }
+.cap.tall { aspect-ratio: 2 / 3; }
+.art { width: 100%; height: 100%; object-fit: cover; transition: filter var(--dur-base) var(--ease); }
+.cv-t { position: absolute; left: 6%; right: 6%; bottom: 8%; color: oklch(99% 0 0); font: 800 9cqi/0.95 var(--f-display); letter-spacing: 0.02em; text-transform: uppercase; text-shadow: 0 2px 12px oklch(10% 0.03 260 / 0.7); }
+.tall .cv-t { font-size: 15cqi; bottom: 6%; }
+a:hover .art, a:focus-visible .art { filter: brightness(1.12); }
+
+/* ---------- Header and store bar ---------- */
+.top { background: var(--bar); color: var(--bar-text); }
+.top-in { display: flex; align-items: center; gap: 32px; height: 72px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; flex: none; color: var(--bar-strong); font: 700 1.25rem/1 var(--f-display); letter-spacing: 0.14em; }
+.brand:hover { color: var(--bar-strong); }
+.mark { width: 34px; height: 34px; color: var(--bar-strong); }
+.primary { display: flex; gap: 24px; }
+.primary a, .menu-panel a { color: var(--bar-text); font: 600 0.9375rem/1 var(--f-display); letter-spacing: 0.07em; text-transform: uppercase; }
+.primary a { padding: 10px 0 7px; border-bottom: 3px solid transparent; }
+.primary a:hover, .menu-panel a:hover { color: var(--bar-strong); }
+.primary a[aria-current], .menu-panel a[aria-current] { color: var(--bar-accent); border-color: var(--bar-accent); }
+.tools { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+.who { padding: 10px 6px; color: var(--bar-text); font-size: 0.875rem; white-space: nowrap; }
+.who:hover { color: var(--bar-strong); }
+.icon-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: var(--r-control); background: transparent; color: var(--bar-text); cursor: pointer; list-style: none; }
+.icon-btn:hover { background: oklch(100% 0 0 / 0.08); color: var(--bar-strong); }
+.icon-btn::-webkit-details-marker { display: none; }
+.cart-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 12px; border-radius: var(--r-control); background: linear-gradient(90deg, var(--buy), var(--buy-2)); color: var(--buy-text); font-size: 0.875rem; font-weight: 500; white-space: nowrap; }
+.cart-btn:hover { color: var(--buy-text); filter: brightness(1.1); }
+.menu { position: relative; display: none; }
+.menu-panel { position: absolute; right: 0; top: calc(100% + 10px); z-index: 30; display: grid; min-width: 220px; padding: 8px; background: var(--bar); border: 1px solid oklch(100% 0 0 / 0.1); border-radius: var(--r-card); box-shadow: 0 16px 40px var(--shadow); }
+.menu-panel a { padding: 12px; }
+.subnav { background: linear-gradient(180deg, var(--sub), color-mix(in oklch, var(--sub) 60%, transparent)); color: var(--sub-text); box-shadow: 0 1px 0 oklch(0% 0 0 / 0.18); }
+.sub-in { display: flex; align-items: center; gap: 4px; min-height: 52px; }
+.sub-in > a, .cats > summary { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 10px; color: var(--sub-text); font-size: 0.875rem; font-weight: 500; white-space: nowrap; cursor: pointer; list-style: none; border-radius: var(--r-control); }
+.sub-in > a:hover, .cats > summary:hover { background: oklch(100% 0 0 / 0.08); }
+.cats { position: relative; }
+.cats > summary::-webkit-details-marker { display: none; }
+.cats > summary .i { width: 16px; height: 16px; }
+.cats-panel { position: absolute; left: 0; top: calc(100% + 4px); z-index: 30; display: grid; grid-template-columns: repeat(2, minmax(150px, 1fr)); gap: 2px; padding: 10px; background: var(--panel); border-radius: var(--r-card); box-shadow: 0 16px 40px var(--shadow); }
+.cats-panel a { padding: 10px; color: var(--text); font-size: 0.875rem; border-radius: var(--r-control); }
+.cats-panel a:hover { background: var(--raise); color: var(--strong); }
+.search { display: flex; flex: 1 1 260px; min-width: 0; max-width: 480px; margin-left: auto; }
+.search input { flex: 1; min-width: 0; height: 36px; padding: 0 12px; border: 1px solid var(--line); border-right: 0; border-radius: var(--r-control) 0 0 var(--r-control); background: var(--field); color: var(--strong); }
+.search input::placeholder { color: var(--muted); font-style: italic; }
+.search button { display: grid; place-items: center; width: 40px; height: 36px; border: 0; border-radius: 0 var(--r-control) var(--r-control) 0; background: var(--search); color: oklch(99% 0 0); cursor: pointer; }
+@media (max-width: 1099px) {
+  .primary { display: none; }
+  .menu { display: block; }
+}
+@media (max-width: 760px) {
+  .top-in { height: 60px; gap: 12px; }
+  .sub-in > a { display: none; }
+  .search { margin-left: 4px; }
+}
+@media (max-width: 520px) {
+  .top .brand span, .who { display: none; }
+  .cart-btn b { display: none; }
+}
+
+/* ---------- Views ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.js [data-view].is-active { animation: fade var(--dur-base) var(--ease) both; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+html:not(.js) [data-view] + [data-view] { border-top: 1px solid var(--line); }
+
+/* ---------- Home: featured carousel ---------- */
+.block { padding: 28px 0 8px; }
+.head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.head .btn { min-height: 32px; }
+.car { position: relative; }
+.slide { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); background: var(--panel); color: var(--text); box-shadow: 0 0 24px var(--shadow); }
+.slide:hover { color: var(--text); }
+.js .slide:not(.is-current) { display: none; }
+.js .slide.is-current { animation: fade var(--dur-slow) var(--ease) both; }
+.slide > .cap { height: 100%; min-height: 330px; aspect-ratio: auto; border-radius: 0; }
+.slide > .cap .cv-t { font-size: 7cqi; }
+.slide-info { display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 18px; background: linear-gradient(160deg, var(--raise), var(--panel)); }
+.slide-t { color: var(--strong); font: 500 1.5rem/1.2 var(--f-display); }
+.shots { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.shots .art { aspect-ratio: 16 / 9; height: auto; border-radius: var(--r-media); }
+.why { display: grid; gap: 2px; color: var(--strong); font-weight: 500; }
+.why small { display: block; color: var(--muted); font-weight: 400; font-size: var(--fs-small); }
+.slide-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; }
+.slide-foot .chips span { pointer-events: none; }
+.car-arrow { position: absolute; top: 50%; z-index: 2; display: grid; place-items: center; width: 44px; height: 88px; margin-top: -60px; padding: 0; border: 0; border-radius: var(--r-control); background: oklch(15% 0.02 250 / 0.55); color: oklch(98% 0 0); cursor: pointer; }
+.car-arrow:hover { background: oklch(15% 0.02 250 / 0.8); }
+.car-arrow .i { width: 30px; height: 30px; }
+.car-arrow.prev { left: 0; }
+.car-arrow.next { right: 0; }
+@media (min-width: 1340px) {
+  .car-arrow { background: transparent; color: var(--muted); }
+  .car-arrow:hover { background: transparent; color: var(--strong); }
+  .car-arrow.prev { left: -64px; }
+  .car-arrow.next { right: -64px; }
+}
+.dots { display: flex; justify-content: center; gap: 2px; margin-top: 8px; }
+.dots button { width: 28px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; }
+.dots button::before { content: ""; display: block; height: 9px; margin: 0 5px; border-radius: 2px; background: var(--line); }
+.dots button[aria-current="true"]::before { background: var(--strong); }
+@media (max-width: 900px) {
+  .slide { grid-template-columns: minmax(0, 1fr); }
+  .slide > .cap { min-height: 0; aspect-ratio: 460 / 215; }
+  .shots { display: none; }
+  .car-arrow { display: none; }
+}
+
+/* ---------- Rails (deals, under $10, more like this) ---------- */
+.rail { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 3 * 16px) / 4); gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+.rail::-webkit-scrollbar { display: none; }
+.rail > li { scroll-snap-align: start; min-width: 0; }
+.steps { display: flex; gap: 4px; }
+.steps .btn { min-height: 32px; }
+.steps button.btn { width: 44px; padding: 0; }
+.steps .i { width: 18px; height: 18px; }
+.deal { position: relative; display: flex; flex-direction: column; height: 100%; background: var(--panel); color: var(--text); border-radius: var(--r-card); overflow: hidden; }
+.deal:hover { background: var(--raise); color: var(--text); }
+.deal .cap { border-radius: 0; }
+.ribbon { position: absolute; top: 10px; left: 10px; z-index: 1; padding: 4px 8px; background: linear-gradient(90deg, var(--ra, oklch(55% 0.2 350)), var(--rb, oklch(45% 0.18 300))); color: oklch(99% 0 0); font: 700 0.75rem/1.2 var(--f-display); letter-spacing: 0.06em; text-transform: uppercase; box-shadow: 0 2px 8px oklch(0% 0 0 / 0.35); }
+.ribbon.r1 { --ra: oklch(55% 0.17 300); --rb: oklch(45% 0.15 265); }
+.ribbon.r2 { --ra: oklch(55% 0.12 200); --rb: oklch(45% 0.13 245); }
+.deal-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; margin-top: auto; padding: 10px 12px 12px; }
+.deal-t { min-width: 0; overflow: hidden; color: var(--strong); font-weight: 500; line-height: 1.3; white-space: nowrap; text-overflow: ellipsis; }
+.deal-t small { display: block; overflow: hidden; text-overflow: ellipsis; color: var(--muted); font-weight: 400; font-size: var(--fs-small); }
+.mini { display: grid; gap: 8px; color: var(--text); }
+.mini:hover { color: var(--strong); }
+.mini .pb { justify-self: start; }
+.mini-t { font-size: 0.9375rem; line-height: 1.3; }
+@media (max-width: 1000px) { .rail { grid-auto-columns: calc((100% - 2 * 16px) / 2.6); } }
+@media (max-width: 560px) { .rail { grid-auto-columns: 78%; gap: 12px; } }
+
+/* ---------- Category tiles ---------- */
+.tiles { grid-auto-columns: calc((100% - 5 * 16px) / 6); }
+.tile { display: grid; place-items: center; aspect-ratio: 16 / 9; border-radius: var(--r-block); background: radial-gradient(circle at 20% 15%, oklch(100% 0 0 / 0.22), transparent 55%), linear-gradient(135deg, var(--a), var(--b)); box-shadow: inset 0 0 0 1px oklch(100% 0 0 / 0.1); transition: transform var(--dur-base) var(--ease); }
+.tile span { padding: 9px 14px; border-radius: var(--r-control); background: oklch(99% 0 0); color: oklch(22% 0.03 255); font: 700 0.9375rem/1 var(--f-display); letter-spacing: 0.12em; text-transform: uppercase; }
+.tile:hover { transform: translateY(-3px); }
+@media (max-width: 1000px) { .tiles { grid-auto-columns: calc((100% - 2 * 16px) / 2.6); } }
+@media (max-width: 560px) { .tiles { grid-auto-columns: 62%; } }
+
+/* ---------- Tabbed list with hover preview ---------- */
+.tabs { display: flex; gap: 28px; overflow-x: auto; scrollbar-width: none; margin-bottom: 14px; }
+.tab { flex: none; padding: 6px 0; border: 0; border-bottom: 3px solid transparent; background: none; color: var(--muted); font: 500 1.25rem/1.2 var(--f-display); cursor: pointer; }
+.tab:hover { color: var(--strong); }
+.tab[aria-selected="true"] { color: var(--strong); border-color: var(--link); }
+.tl { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start; }
+.list { display: grid; gap: 5px; }
+.row { display: grid; grid-template-columns: 184px minmax(0, 1fr) auto; align-items: center; gap: 14px; padding-right: 10px; background: var(--panel); color: var(--text); border-radius: var(--r-media); transition: background-color var(--dur-fast) var(--ease); }
+.row:hover, .row.is-on { background: var(--raise); color: var(--text); }
+.row > .cap { border-radius: var(--r-media) 0 0 var(--r-media); }
+.row-main { min-width: 0; padding: 8px 0; }
+.row-t { display: block; overflow: hidden; color: var(--strong); font-size: 1rem; font-weight: 500; white-space: nowrap; text-overflow: ellipsis; }
+.row-sub { display: flex; align-items: center; gap: 8px; overflow: hidden; color: var(--muted); font-size: var(--fs-small); white-space: nowrap; text-overflow: ellipsis; }
+.pv { position: relative; display: grid; gap: 10px; padding: 16px; background: var(--raise); border-radius: var(--r-card); }
+.pv-t { color: var(--strong); font: 500 1.25rem/1.2 var(--f-display); }
+.pv .art { aspect-ratio: 16 / 9; height: auto; border-radius: var(--r-media); }
+.pv.is-new { animation: fade var(--dur-base) var(--ease) both; }
+@media (max-width: 900px) { .tl { grid-template-columns: minmax(0, 1fr); } .pv { display: none; } }
+.row.compact { grid-template-columns: 120px minmax(0, 1fr); gap: 10px; padding-right: 0; }
+.row.compact .row-sub { display: none; }
+@media (max-width: 560px) { .row { grid-template-columns: 112px minmax(0, 1fr); gap: 10px; padding-right: 0; } }
+@media (max-width: 560px) { .row-main { padding-bottom: 0; } }
+.row.compact > .cap { grid-row: span 2; align-self: stretch; aspect-ratio: auto; }
+.row.compact .pb { grid-column: 2; justify-self: start; margin-bottom: 8px; }
+.row.compact .row-main { padding-bottom: 0; }
+@media (max-width: 560px) {
+  .row > .cap { grid-row: span 2; align-self: stretch; aspect-ratio: auto; }
+  .row .pb { grid-column: 2; justify-self: start; margin-bottom: 8px; }
+}
+
+/* ---------- Bands and empty states ---------- */
+.band { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); align-items: center; gap: 24px; padding: 28px 36px; border-radius: var(--r-card); background: linear-gradient(100deg, var(--band-a), var(--band-b)); }
+.band .display { margin-bottom: 6px; }
+.band p { margin: 0; }
+@media (max-width: 760px) { .band { grid-template-columns: minmax(0, 1fr); padding: 22px 18px; } }
+.empty { padding: 28px; border: 1px dashed var(--line); border-radius: var(--r-card); color: var(--muted); text-align: center; }
+.fallback { padding: 14px 0; }
+.js .fallback { display: none; }
+.toast { position: fixed; top: 84px; right: 16px; z-index: 40; display: flex; align-items: center; gap: 14px; max-width: min(420px, calc(100% - 32px)); padding: 12px 12px 12px 16px; background: var(--panel); border-left: 4px solid var(--ok); border-radius: var(--r-card); box-shadow: 0 16px 40px var(--shadow); animation: rise var(--dur-base) var(--ease) both; }
+.toast p { margin: 0; color: var(--strong); font-size: 0.9375rem; }
+
+/* ---------- Forms ---------- */
+.form { display: grid; gap: 2px; }
+.field { position: relative; display: grid; gap: 6px; padding-bottom: 22px; }
+.field label { color: var(--strong); font-size: 0.875rem; font-weight: 500; }
+.input { width: 100%; min-height: 42px; padding: 0 12px; border: 1px solid var(--line); border-radius: var(--r-control); background: var(--field); color: var(--strong); }
+textarea.input { min-height: 120px; padding: 10px 12px; resize: vertical; }
+.input:focus { border-color: var(--link); outline: 0; box-shadow: 0 0 0 2px color-mix(in oklch, var(--link) 40%, transparent); }
+.input[aria-invalid="true"] { border-color: var(--err); }
+.err { position: absolute; left: 0; bottom: 2px; margin: 0; color: var(--err); font-size: var(--fs-small); line-height: 1.3; }
+.check { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9375rem; cursor: pointer; }
+.check input { width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--link); flex: none; }
+.pass { position: relative; }
+.pass .input { padding-right: 48px; }
+.pass button { position: absolute; right: 0; top: 0; width: 44px; height: 42px; border: 0; background: none; color: var(--muted); cursor: pointer; }
+.ok-box { padding: 20px; border-left: 4px solid var(--ok); background: var(--raise); border-radius: var(--r-card); animation: rise var(--dur-base) var(--ease) both; }
+.ok-box h2, .ok-box h3 { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: var(--fs-h3); font-weight: 600; }
+.ok-box .i { color: var(--ok); }
+.ok-box p { margin: 0; }
+.seg { display: flex; gap: 4px; margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+.seg button { min-height: 44px; padding: 0 14px; border: 0; border-bottom: 3px solid transparent; background: none; color: var(--muted); font: 500 1rem/1 var(--f-display); cursor: pointer; }
+.seg button[aria-selected="true"] { color: var(--strong); border-color: var(--link); }
+
+/* ---------- Browse ---------- */
+.browse { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 20px; align-items: start; margin-top: 16px; }
+.results-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 10px; padding: 10px 12px; background: var(--panel); border-radius: var(--r-card); }
+.results-bar .input { width: auto; min-height: 36px; }
+.brow { grid-template-columns: 120px minmax(0, 1fr) 104px 150px auto; }
+.brow-date { color: var(--muted); font-size: var(--fs-small); }
+.brow .rv { font-size: var(--fs-small); }
+.filters { display: grid; gap: 10px; }
+.filters fieldset { margin: 0; padding: 12px 14px; border: 0; background: var(--panel); border-radius: var(--r-card); }
+.filters legend { float: left; width: 100%; margin-bottom: 8px; padding: 0; color: var(--strong); font: 600 0.875rem/1.2 var(--f-display); letter-spacing: 0.06em; text-transform: uppercase; }
+.filters legend + *, .tagbox { clear: both; }
+.filters .check { min-height: 32px; align-items: center; font-size: 0.875rem; }
+.filters .check input { margin: 0; }
+.range { display: block; width: 100%; accent-color: var(--link); }
+.filter-toggle { display: none; }
+.catalog-fallback li { padding: 8px 0; border-bottom: 1px solid var(--line); }
+@media (max-width: 1000px) { .brow { grid-template-columns: 120px minmax(0, 1fr) 140px auto; } .brow-date { display: none; } }
+@media (max-width: 900px) {
+  .browse { grid-template-columns: minmax(0, 1fr); }
+  .filters { order: -1; }
+  .js .filters:not(.is-open) { display: none; }
+  .filter-toggle { display: inline-flex; }
+}
+@media (max-width: 560px) { .brow { grid-template-columns: 112px minmax(0, 1fr); } .brow-rv { display: none; } }
+
+/* ---------- Game page ---------- */
+.game-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.gp { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; padding: 16px; background: color-mix(in oklch, var(--well) 75%, transparent); border-radius: var(--r-card); }
+.stage { position: relative; overflow: hidden; aspect-ratio: 16 / 9; background: oklch(10% 0.02 250); border-radius: var(--r-media); }
+.thumbs { display: flex; gap: 6px; margin-top: 6px; overflow-x: auto; scrollbar-width: thin; }
+.thumbs button { flex: 0 0 116px; aspect-ratio: 16 / 9; padding: 0; border: 2px solid transparent; border-radius: var(--r-media); background: none; overflow: hidden; opacity: 0.7; cursor: pointer; }
+.thumbs button[aria-pressed="true"] { border-color: var(--strong); opacity: 1; }
+.hud { position: absolute; inset: 0; pointer-events: none; }
+.hud[data-h="1"]::before { content: ""; position: absolute; left: 4%; top: 6%; width: 26%; height: 4%; border-radius: 2px; background: linear-gradient(90deg, oklch(70% 0.18 30) 68%, oklch(100% 0 0 / 0.25) 0); }
+.hud[data-h="1"]::after { content: ""; position: absolute; right: 4%; bottom: 7%; width: 16%; aspect-ratio: 1; border: 3px solid oklch(100% 0 0 / 0.8); border-radius: 50%; background: oklch(20% 0.04 250 / 0.6); }
+.hud[data-h="2"]::before { content: ""; position: absolute; left: 6%; right: 6%; bottom: 6%; height: 24%; border: 2px solid oklch(100% 0 0 / 0.7); border-radius: 6px; background: oklch(15% 0.03 260 / 0.78); }
+.side { display: grid; align-content: start; gap: 12px; font-size: 0.875rem; }
+.side .blurb { color: var(--text); font-size: 0.9375rem; line-height: 1.5; }
+.facts { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 0; }
+.facts dt { color: var(--muted); font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.9; }
+.facts dd { margin: 0; }
+.wishbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 12px 0 0; padding: 10px 14px; background: var(--panel); border-radius: var(--r-card); }
+.wishbar p { margin: 0 auto 0 0; color: var(--muted); font-size: 0.875rem; }
+.gcols { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; margin-top: 28px; }
+.purchase { position: relative; margin-bottom: 44px; padding: 16px 20px 34px; background: linear-gradient(-60deg, color-mix(in oklch, var(--raise) 70%, var(--link) 12%), var(--panel)); border-radius: var(--r-card); }
+.purchase h2 { padding-right: 90px; font: 500 1.375rem/1.2 var(--f-body); }
+.purchase .os { position: absolute; top: 18px; right: 18px; }
+.buy { position: absolute; right: 16px; bottom: -20px; display: flex; align-items: stretch; padding: 2px; background: var(--well); border-radius: var(--r-control); box-shadow: 0 4px 12px var(--shadow); }
+.buy .pb .pw { background: transparent; padding: 4px 14px; }
+.buy .btn { min-height: 40px; }
+.sh { margin: 0 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--line); color: var(--strong); font: 600 0.9375rem/1.2 var(--f-display); letter-spacing: 0.06em; text-transform: uppercase; }
+.dlc li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 10px; background: var(--panel); }
+.dlc li + li { margin-top: 2px; }
+.gcols > div > section + section { margin-top: 32px; }
+.about { position: relative; max-height: 300px; overflow: hidden; }
+.about.is-open { max-height: none; }
+.about:not(.is-open)::after { content: ""; position: absolute; inset: auto 0 0; height: 90px; background: linear-gradient(transparent, var(--page)); }
+.more-btn { width: 100%; margin-top: 4px; }
+.req { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 0.875rem; }
+.req dt { color: var(--muted); }
+.req dd { margin: 0; }
+.feats li { display: flex; align-items: center; gap: 10px; min-height: 34px; padding: 0 10px; background: var(--panel); color: var(--link); font-size: 0.875rem; }
+.feats li + li { margin-top: 2px; }
+.feats .i { color: var(--strong); width: 18px; height: 18px; }
+.score { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.meter { flex: 1; height: 8px; border-radius: 4px; background: var(--neg); overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--pos); }
+.review { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 16px; padding: 14px; background: var(--panel); border-radius: var(--r-card); }
+.review + .review { margin-top: 8px; }
+.verdict { display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: var(--raise); color: var(--strong); font: 500 1.0625rem/1.2 var(--f-display); }
+.verdict .i { width: 28px; height: 28px; color: var(--pos); }
+.verdict.no .i { color: var(--neg); transform: rotate(180deg); }
+.review p { margin: 8px 0; }
+@media (max-width: 1000px) { .gp, .gcols { grid-template-columns: minmax(0, 1fr); } .side > .cap { display: none; } }
+@media (max-width: 560px) { .gp { padding: 0; background: none; } .review { grid-template-columns: minmax(0, 1fr); } .purchase h2 { font-size: 1.125rem; } }
+
+/* ---------- Cart, library, news, support, about ---------- */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start; margin-top: 18px; }
+.line { display: grid; grid-template-columns: 184px minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 12px; background: var(--panel); border-radius: var(--r-card); }
+.line + .line { margin-top: 6px; }
+.line-t { color: var(--strong); font-weight: 500; }
+.line-act { display: grid; justify-items: end; gap: 6px; }
+.link-btn { min-height: 32px; padding: 0 4px; border: 0; background: none; color: var(--link); font-size: var(--fs-small); text-decoration: underline; cursor: pointer; }
+.sum { padding: 18px; }
+.sum-row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 6px; color: var(--strong); font-size: 1.125rem; }
+.lib { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 18px 16px; }
+.lib li { display: grid; gap: 8px; align-content: start; }
+.lib .cap { box-shadow: 0 8px 20px var(--shadow); }
+.key { font: 500 0.875rem/1.4 ui-monospace, Menlo, monospace; color: var(--strong); letter-spacing: 0.06em; }
+.news { display: grid; gap: 10px; margin-top: 14px; }
+.news a { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 18px; padding: 12px; background: var(--panel); color: var(--text); border-radius: var(--r-card); }
+.news a:hover { background: var(--raise); color: var(--text); }
+.news-t { display: block; margin: 4px 0 6px; color: var(--strong); font: 500 1.25rem/1.25 var(--f-display); }
+.kind { color: var(--link); font: 600 0.75rem/1 var(--f-display); letter-spacing: 0.08em; text-transform: uppercase; }
+.post { max-width: 820px; }
+.post-cap { margin: 18px 0 22px; }
+.post-buy { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px; padding: 14px; background: var(--panel); border-radius: var(--r-card); }
+ul.boxes { padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 16px 0 28px; }
+.box { display: grid; gap: 4px; height: 100%; padding: 16px; background: var(--panel); color: var(--text); border-radius: var(--r-card); }
+a.box:hover { background: var(--raise); color: var(--text); }
+.box b { color: var(--strong); font: 600 1.0625rem/1.2 var(--f-display); }
+.faq details { background: var(--panel); border-radius: var(--r-card); }
+.faq details + details { margin-top: 4px; }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 10px 16px; color: var(--strong); font-weight: 500; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .i { transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .i { transform: rotate(180deg); }
+.faq details > div { padding: 0 16px 14px; }
+.auth { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr); gap: 32px; align-items: start; margin-top: 18px; }
+.auth-card { padding: 22px; }
+@media (max-width: 900px) { .two, .auth { grid-template-columns: minmax(0, 1fr); } .news a { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .line { grid-template-columns: 112px minmax(0, 1fr); } .line-act { grid-column: 1 / -1; grid-auto-flow: column; justify-content: space-between; align-items: center; } }
+
+/* ---------- Footer ---------- */
+.foot { margin-top: 48px; padding: 36px 0 48px; background: var(--bar); color: var(--bar-text); font-size: 0.875rem; }
+.foot-in { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr); gap: 32px; }
+.foot p { max-width: 46ch; margin-top: 14px; }
+.foot-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.foot h2 { margin-bottom: 8px; color: var(--bar-strong); font: 600 0.8125rem/1.2 var(--f-display); letter-spacing: 0.1em; text-transform: uppercase; }
+.foot-cols a { display: block; padding: 5px 0; color: var(--bar-text); }
+.foot-cols a:hover { color: var(--bar-strong); }
+@media (max-width: 760px) { .foot-in { grid-template-columns: minmax(0, 1fr); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .tile:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <!-- Mark and icons: 24px grid, 2px round strokes -->
+  <symbol id="mark" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M16 6.5 9.5 17h3.8L9 24h14l-4.3-7h3.8z" fill="currentColor"/><path d="M16 24v3" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M2.5 4h2.6l2.2 10.3a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.1L21 8H6"/><circle cx="9.5" cy="19.6" r="1.3"/><circle cx="17" cy="19.6" r="1.3"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7.6 4.2 4.2 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+  <symbol id="i-thumb" viewBox="0 0 24 24"><path d="M7.5 11v9h-3v-9zM7.5 11l4-7c1.6 0 2.6 1.2 2.2 2.8L13 10h5.3a2 2 0 0 1 2 2.4l-1.3 6A2 2 0 0 1 17 20H7.5"/></symbol>
+  <symbol id="i-solo" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-4 3.6-5.6 7-5.6s6 1.6 7 5.6"/></symbol>
+  <symbol id="i-coop" viewBox="0 0 24 24"><circle cx="8.5" cy="8.5" r="3"/><circle cx="16" cy="8.5" r="3"/><path d="M2.5 19.5c.8-3.4 3-4.8 6-4.8s5.2 1.4 6 4.8M15 14.7c3 0 5 1.3 6.3 4.8"/></symbol>
+  <symbol id="i-online" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.5 3.8 5.4 3.8 8.5S14.6 18 12 20.5C9.4 18 8.2 15.1 8.2 12S9.4 6 12 3.5z"/></symbol>
+  <symbol id="i-pad" viewBox="0 0 24 24"><path d="M7.5 8h9a4.5 4.5 0 0 1 4.3 5.8l-1 3.4a2.2 2.2 0 0 1-3.8.8L14.4 16H9.6L8 18a2.2 2.2 0 0 1-3.8-.8l-1-3.4A4.5 4.5 0 0 1 7.5 8z"/><path d="M8 11v3M6.5 12.5h3M15.5 12h.01M17.5 13.5h.01"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5a4.5 4.5 0 0 1-.6-9 6 6 0 0 1 11.5 1.6A3.8 3.8 0 0 1 17.5 18.5z"/></symbol>
+
+  <!-- Cover art: one 460 x 215 drawing per title, no lettering. Every slot crops the same drawing (wide, tall, screenshots). -->
+  <symbol id="cv-ember" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice"><rect width="460" height="215" fill="#2a2550"/><rect y="64" width="460" height="86" fill="#7a3f6e" opacity=".55"/><circle cx="330" cy="150" r="74" fill="#f29e5c"/><rect y="148" width="460" height="67" fill="#18304f"/><path d="M0 170h460M30 186h140M260 196h170" stroke="#f29e5c" stroke-width="3" opacity=".45"/><path d="M160 58 460 8v104z" fill="#ffd36e" opacity=".2"/><path d="M60 215c10-40 40-60 90-58s70 30 80 58z" fill="#121a2c"/><path d="M128 160l8-96h20l8 96z" fill="#f3ede2"/><path d="M131 128h30l1.6 18h-33.2zM134 92h24l1.3 16h-26.6z" fill="#c0413b"/><rect x="132" y="50" width="28" height="16" rx="2" fill="#ffd36e"/><path d="M126 50h40l-20-16z" fill="#c0413b"/><circle cx="146" cy="58" r="28" fill="#ffd36e" opacity=".25"/></symbol>
+  <symbol id="cv-caravan" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice"><rect width="460" height="215" fill="#160e30"/><g fill="#fff"><circle cx="40" cy="30" r="1.6"/><circle cx="120" cy="70" r="1.2"/><circle cx="210" cy="24" r="1.8"/><circle cx="420" cy="30" r="1.4"/><circle cx="300" cy="200" r="1.2"/><circle cx="70" cy="120" r="1.5"/><circle cx="250" cy="150" r="1"/><circle cx="170" cy="190" r="1.3"/></g><circle cx="350" cy="118" r="70" fill="#e4572e"/><path d="M282 104a70 70 0 0 1 132-14c-44-14-92-10-132 14z" fill="#ff9b71" opacity=".7"/><ellipse cx="350" cy="122" rx="122" ry="20" fill="none" stroke="#f6c28b" stroke-width="5" transform="rotate(-12 350 122)"/><path d="M10 196C110 170 170 130 250 64" fill="none" stroke="#8ecae6" stroke-width="2" stroke-dasharray="4 8"/><g fill="#f1faee"><path d="M58 176l30-4-22 16z"/><path d="M128 146l28-8-18 20z"/><path d="M194 106l26-12-14 22z"/></g></symbol>
+  <symbol id="cv-moss" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice"><rect width="460" height="215" fill="#0f2119"/><path d="M140 215V100a90 90 0 0 1 180 0v115z" fill="#1d3b2c"/><path d="M175 215V108a55 55 0 0 1 110 0v107z" fill="#06100b"/><path d="M186 215h88l-8-14h-72zM200 201h60l-6-12h-48z" fill="#2d5a40"/><g fill="#52b788"><ellipse cx="150" cy="96" rx="28" ry="12"/><ellipse cx="310" cy="118" rx="24" ry="10"/><ellipse cx="230" cy="16" rx="44" ry="12"/><ellipse cx="140" cy="204" rx="34" ry="10"/><ellipse cx="330" cy="206" rx="28" ry="9"/></g><path d="M100 122h12v40h-12zM348 122h12v40h-12z" fill="#3b2a1f"/><g fill="#f4a261"><path d="M106 120c-9-14 6-24 0-38 15 10 17 27 0 38z"/><path d="M354 120c-9-14 6-24 0-38 15 10 17 27 0 38z"/></g><circle cx="222" cy="150" r="5" fill="#b7e4c7"/><circle cx="240" cy="150" r="5" fill="#b7e4c7"/></symbol>
+  <symbol id="cv-paper" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice"><rect width="460" height="215" fill="#efe3c8"/><circle cx="392" cy="46" r="20" fill="#e9c46a"/><path d="M0 215 90 82l70 88 80-120 110 165z" fill="#c44536"/><path d="M90 82l20 133H0zM240 50l-22 165h132z" fill="#8f2d23" opacity=".5"/><path d="M226 215l124-128 110 128z" fill="#283d3b"/><path d="M350 87l-28 128h138z" fill="#1b2a29" opacity=".6"/><path d="M220 54V36h8v6h8v-6h8v6h8v-6h8v18z" fill="#283d3b"/><path d="M244 36V12l20 6-20 6" fill="#e9c46a"/><path d="M30 40h60M44 52h40" stroke="#c9b58e" stroke-width="3" stroke-linecap="round"/></symbol>
+  <symbol id="cv-tidal" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice"><rect width="460" height="215" fill="#0b2545"/><circle cx="90" cy="54" r="22" fill="#eef4ed"/><circle cx="99" cy="47" r="20" fill="#0b2545"/><path d="M300 172 330 42l30 130" fill="none" stroke="#8da9c4" stroke-width="5"/><path d="M309 132h42M315 104h30M321 76h18" stroke="#8da9c4" stroke-width="4"/><circle cx="330" cy="38" r="6" fill="#ff6b6b"/><g fill="none" stroke="#eef4ed" stroke-width="3" opacity=".7"><path d="M352 22a30 30 0 0 1 0 32M362 10a46 46 0 0 1 0 56M308 22a30 30 0 0 0 0 32M298 10a46 46 0 0 0 0 56"/></g><path d="M0 160c40-14 70 14 115 0s75 14 115 0 75 14 115 0 75 14 115 0v55H0z" fill="#13315c"/><path d="M0 186c40-14 70 14 115 0s75 14 115 0 75 14 115 0 75 14 115 0v29H0z" fill="#1d4e89"/></symbol>
+  <symbol id="cv-orchard" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice"><rect width="460" height="215" fill="#f6bd60"/><circle cx="372" cy="58" r="30" fill="#fff3d6"/><path d="M0 150c80-40 160-40 240 0s160 30 220 10v55H0z" fill="#84a59d"/><path d="M0 182c90-30 200-20 280 10s130 10 180-10v33H0z" fill="#5f7f74"/><g fill="#6b4226"><rect x="86" y="116" width="8" height="42"/><rect x="176" y="108" width="8" height="42"/><rect x="266" y="120" width="8" height="38"/></g><g fill="#c8553d"><circle cx="90" cy="106" r="26"/><circle cx="180" cy="98" r="28"/><circle cx="270" cy="112" r="22"/></g><g fill="#f7d08a"><circle cx="80" cy="100" r="4"/><circle cx="100" cy="112" r="4"/><circle cx="172" cy="90" r="4"/><circle cx="190" cy="106" r="4"/><circle cx="264" cy="108" r="4"/></g></symbol>
+  <symbol id="cv-rail" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice"><rect width="460" height="215" fill="#24103a"/><circle cx="230" cy="112" r="72" fill="#ff6f91"/><circle cx="230" cy="112" r="72" fill="#ffc75f" opacity=".5" clip-path="inset(0 0 50% 0)"/><path d="M150 118h160M154 132h152M162 146h136" stroke="#24103a" stroke-width="6"/><rect y="132" width="460" height="83" fill="#12081f"/><g stroke="#d13cff" stroke-width="2" opacity=".8"><path d="M230 132 30 215M230 132 130 215M230 132 330 215M230 132 430 215M0 150h460M0 172h460M0 200h460"/></g><path d="M194 198h72l-6-16h-60z" fill="#00f5d4"/><path d="M206 182l8-11h32l8 11z" fill="#00bbf9"/><circle cx="202" cy="196" r="3.5" fill="#ff6f91"/><circle cx="258" cy="196" r="3.5" fill="#ff6f91"/></symbol>
+  <symbol id="cv-glacier" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice"><rect width="460" height="215" fill="#d7f0fa"/><path d="M40 150 110 40l50 60 40-30 70 80z" fill="#fff"/><path d="M110 40l-10 110h60zM200 70l-6 80h76z" fill="#a9def9"/><path d="M270 150l70-90 40 40 40-20 40 70z" fill="#eaf8ff"/><path d="M340 60l-14 90h54z" fill="#a9def9"/><rect y="148" width="460" height="67" fill="#4ea8de"/><path d="M0 168h460M40 186h180M260 200h160" stroke="#d7f0fa" stroke-width="3" opacity=".6"/><rect x="222" y="112" width="6" height="40" fill="#5c4033"/><path d="M206 98h38v18h-38z" fill="#e63946"/><path d="M206 98a19 10 0 0 1 38 0z" fill="#c1121f"/><rect x="244" y="96" width="3" height="14" fill="#ffb703"/></symbol>
+  <symbol id="cv-crown" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice"><rect width="460" height="215" fill="#3a0d14"/><path d="M0 215 230 122l230 93z" fill="#5a1620"/><path d="M60 215 230 146l170 69M120 215l110-69 110 69M180 215l50-69 50 69" stroke="#7b2230" stroke-width="2" fill="none"/><path d="M60 18h26v72l-13-10-13 10zM374 18h26v72l-13-10-13 10z" fill="#9d0208"/><path d="M170 110V50l30 30 30-40 30 40 30-30v60z" fill="none" stroke="#e9c46a" stroke-width="9" stroke-linejoin="round"/><g fill="#e9c46a"><circle cx="170" cy="46" r="7"/><circle cx="230" cy="36" r="7"/><circle cx="290" cy="46" r="7"/></g></symbol>
+  <symbol id="cv-kite" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice"><rect width="460" height="215" fill="#8ecae6"/><g fill="#fff" opacity=".9"><ellipse cx="80" cy="50" rx="50" ry="16"/><ellipse cx="380" cy="34" rx="40" ry="12"/><ellipse cx="330" cy="150" rx="60" ry="14"/></g><path d="M40 190c20-30 90-30 110 0z" fill="#219ebc"/><path d="M50 190l30 24 30-24z" fill="#126782"/><path d="M320 200c20-26 80-26 100 0z" fill="#219ebc"/><path d="M332 200l38 15 38-15z" fill="#126782"/><path d="M240 140c-10 20 14 30 0 46s10 24 0 30" fill="none" stroke="#023047" stroke-width="2.5"/><g fill="#ffb703"><path d="M234 158h12l-6 6z"/><path d="M234 182h12l-6 6z"/></g><path d="M240 40l40 40-40 60-40-60z" fill="#fb8500"/><path d="M240 40v100M200 80h80" stroke="#ffb703" stroke-width="4"/></symbol>
+  <symbol id="cv-foundry" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice"><rect width="460" height="215" fill="#2f3e46"/><rect x="300" y="34" width="84" height="98" fill="#354f52"/><path d="M318 34V8h14v26M352 34V0h14v34" fill="#354f52"/><g fill="#fcbf49" opacity=".85"><rect x="314" y="54" width="18" height="14"/><rect x="352" y="54" width="18" height="14"/></g><circle cx="120" cy="90" r="46" fill="none" stroke="#f77f00" stroke-width="18" stroke-dasharray="12 9"/><circle cx="120" cy="90" r="30" fill="#f77f00"/><circle cx="120" cy="90" r="10" fill="#2f3e46"/><circle cx="198" cy="52" r="26" fill="none" stroke="#fcbf49" stroke-width="12" stroke-dasharray="8 6"/><circle cx="198" cy="52" r="16" fill="#fcbf49"/><rect y="160" width="460" height="16" fill="#52796f"/><g fill="#cad2c5"><rect x="240" y="132" width="28" height="28"/><rect x="300" y="132" width="28" height="28"/><rect x="360" y="132" width="28" height="28"/></g><rect y="176" width="460" height="39" fill="#1f2a30"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#/" aria-label="Quillpine store home"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg><span>QUILLPINE</span></a>
+    <nav class="primary" aria-label="Main">
+      <a href="#/">Store</a>
+      <a href="#/browse">Browse</a>
+      <a href="#/news">News</a>
+      <a href="#/library">Library</a>
+      <a href="#/support">Support</a>
+    </nav>
+    <div class="tools">
+      <a class="who" href="#/signin" data-who>Sign in</a>
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to light theme"><svg class="i" aria-hidden="true"><use href="#i-sun"/></svg></button>
+      <a class="cart-btn" href="#/cart" data-cart aria-label="Cart, empty"><svg class="i" aria-hidden="true"><use href="#i-cart"/></svg><b>Cart</b><span>(<span data-cart-count>0</span>)</span></a>
+      <details class="menu" data-pop>
+        <summary class="icon-btn" aria-label="Menu"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></summary>
+        <nav class="menu-panel" aria-label="Menu">
+          <a href="#/">Store</a><a href="#/browse">Browse</a><a href="#/news">News</a><a href="#/library">Library</a><a href="#/support">Support</a><a href="#/signin">Sign in</a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+<nav class="subnav" aria-label="Store">
+  <div class="wrap sub-in">
+    <details class="cats" data-pop>
+      <summary>Categories <svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary>
+      <div class="cats-panel">
+        <a href="#/browse?tag=Cozy">Cozy</a><a href="#/browse?tag=Strategy">Strategy</a><a href="#/browse?tag=Roguelite">Roguelite</a><a href="#/browse?tag=Puzzle">Puzzle</a><a href="#/browse?tag=Co-op">Co-op</a><a href="#/browse?tag=Narrative">Narrative</a><a href="#/browse?tag=Soundtrack">Soundtracks</a><a href="#/browse">All games</a>
+      </div>
+    </details>
+    <a href="#/browse?specials=1">Specials</a>
+    <a href="#/browse?sort=new">New releases</a>
+    <a href="#/browse?max=0">Free to play</a>
+    <a href="#/news">News</a>
+    <form class="search" role="search" data-search>
+      <label class="sr-only" for="q">Search the store</label>
+      <input id="q" type="search" placeholder="Search the store" autocomplete="off" enterkeyhint="search">
+      <button type="submit" aria-label="Search"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg></button>
+    </form>
+  </div>
+</nav>
+
+<!-- Real screenshots: one image element per screenshot with data-shot set to the game id, src, width, height and an empty alt, in order. Without them the gallery crops the cover drawing. -->
+<div id="shots" hidden></div>
+
+<div class="toast" role="status" data-toast hidden><p data-toast-text></p><a class="btn btn-buy btn-sm" href="#/cart">View cart</a></div>
+
+<main id="main" tabindex="-1">
+
+<!-- ===== Home ===== -->
+<div data-view="home">
+  <h1 class="sr-only">Quillpine: independent games, sold direct</h1>
+  <section class="block" aria-labelledby="feat-h">
+    <div class="wrap">
+      <div class="head"><h2 class="sec-h" id="feat-h">Featured &amp; recommended</h2></div>
+      <div class="car" data-car>
+        <div data-slides>
+          <a class="slide is-current" href="#/game?id=ember">
+            <span class="cap"><svg class="art" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-ember" width="460" height="215"/></svg><span class="cv-t">Ember Lighthouse</span></span>
+            <span class="slide-info"><span class="slide-t">Ember Lighthouse</span><span class="why">Now available</span><span class="slide-foot"><span class="pb"><span class="pct">-40%</span><span class="pw"><s>$24.99</s><b>$14.99</b></span></span></span></span>
+          </a>
+        </div>
+        <button class="car-arrow prev" type="button" data-car-step="-1" aria-label="Previous featured game" data-js><svg class="i" aria-hidden="true"><use href="#i-left"/></svg></button>
+        <button class="car-arrow next" type="button" data-car-step="1" aria-label="Next featured game" data-js><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></button>
+        <div class="dots" data-dots data-js></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="deals-h" data-js>
+    <div class="wrap">
+      <div class="head"><h2 class="sec-h" id="deals-h">Special offers</h2><div class="steps"><a class="btn btn-sm" href="#/browse?specials=1">See all</a><button class="btn" type="button" data-step="-1" aria-controls="rail-deals" aria-label="Scroll back"><svg class="i" aria-hidden="true"><use href="#i-left"/></svg></button><button class="btn" type="button" data-step="1" aria-controls="rail-deals" aria-label="Scroll forward"><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></button></div></div>
+      <ul class="rail" id="rail-deals" data-rail="deals" data-card="deal"></ul>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="cat-h">
+    <div class="wrap">
+      <div class="head"><h2 class="sec-h" id="cat-h">Browse by category</h2></div>
+      <ul class="rail tiles">
+        <li><a class="tile" href="#/browse?tag=Cozy" style="--a:#c0573f;--b:#4b1d33"><span>Cozy</span></a></li>
+        <li><a class="tile" href="#/browse?tag=Strategy" style="--a:#3d6fd1;--b:#1f2a63"><span>Strategy</span></a></li>
+        <li><a class="tile" href="#/browse?tag=Roguelite" style="--a:#8a4fd8;--b:#2d175c"><span>Roguelite</span></a></li>
+        <li><a class="tile" href="#/browse?tag=Puzzle" style="--a:#2aa39a;--b:#123f4f"><span>Puzzle</span></a></li>
+        <li><a class="tile" href="#/browse?tag=Co-op" style="--a:#b8962e;--b:#4a3612"><span>Co-op</span></a></li>
+        <li><a class="tile" href="#/browse?tag=Narrative" style="--a:#c2407a;--b:#3e1230"><span>Narrative</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" aria-label="Games by list" data-js>
+    <div class="wrap">
+      <div class="tabs" role="tablist" aria-label="Game lists" data-tabs>
+        <button class="tab" type="button" role="tab" aria-selected="true" aria-controls="tab-panel" data-tab="new">New &amp; trending</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="tab-panel" data-tab="top" tabindex="-1">Top sellers</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="tab-panel" data-tab="specials" tabindex="-1">Specials</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="tab-panel" data-tab="under" tabindex="-1">Under $15</button>
+      </div>
+      <div class="tl">
+        <ul class="list" id="tab-panel" role="tabpanel" data-tab-list></ul>
+        <aside class="pv" data-pv aria-label="Preview"></aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="cheap-h" data-js>
+    <div class="wrap">
+      <div class="head"><h2 class="sec-h" id="cheap-h">Made by Quillpine</h2><div class="steps"><button class="btn" type="button" data-step="-1" aria-controls="rail-own" aria-label="Scroll back"><svg class="i" aria-hidden="true"><use href="#i-left"/></svg></button><button class="btn" type="button" data-step="1" aria-controls="rail-own" aria-label="Scroll forward"><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></button></div></div>
+      <ul class="rail" id="rail-own" data-rail="own" data-card="mini"></ul>
+    </div>
+  </section>
+
+  <p class="wrap fallback"><a class="btn" href="#/browse">Browse every game</a></p>
+
+  <section class="block">
+    <div class="wrap band">
+      <div><h2 class="display">Hear about sales first</h2><p>One short email when a game on your wishlist is discounted, plus our Thursday specials. Nothing else.</p></div>
+      <form class="form" data-form="newsletter" novalidate>
+        <div class="field"><label for="nl-email">Email</label><input class="input" id="nl-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" data-req="Enter your email address." aria-describedby="nl-email-err"><p class="err" id="nl-email-err" aria-live="polite"></p></div>
+        <button class="btn btn-buy" type="submit">Sign me up</button>
+      </form>
+      <div class="ok-box" data-ok="newsletter" tabindex="-1" hidden><h3><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>You're on the list</h3><p>Check your inbox to confirm. You can leave with one click from any email.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Browse: the catalog rows below are the data for every card, list and page ===== -->
+<div data-view="browse">
+  <div class="wrap page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Store</a><span aria-hidden="true">›</span><span>Browse</span></nav>
+    <h1 class="h1" data-browse-h>All games</h1>
+    <div class="browse">
+      <div>
+        <div class="results-bar">
+          <p class="muted small" data-count aria-live="polite" style="margin:0 auto 0 0">12 results</p>
+          <label class="sr-only" for="sort">Sort by</label>
+          <select class="input" id="sort" data-js><option value="rel">Sort by: Relevance</option><option value="new">Release date</option><option value="name">Name</option><option value="low">Lowest price</option><option value="high">Highest price</option><option value="top">User reviews</option></select>
+          <button class="btn btn-sm filter-toggle" type="button" data-filter-toggle aria-expanded="false" data-js>Filters</button>
+        </div>
+        <ul class="list" data-results hidden></ul>
+        <div class="empty" data-results-empty hidden>No games match these filters. <button class="link-btn" type="button" data-clear>Clear filters</button></div>
+        <!-- One li[data-game] per title. data-price="" means coming soon, "0" means free. data-for links an add-on to its game. Real cover art: an image element with src, width, height and an empty alt inside the li. -->
+        <ol class="catalog-fallback" id="catalog">
+          <li data-game="ember" data-dev="Quillpine" data-tags="Cozy|Simulation|Building" data-price="14.99" data-was="24.99" data-date="2026-03-12" data-score="96" data-reviews="3204" data-os="win mac linux" data-feat="solo cloud pad" data-blurb="Keep a lamp burning on a rock at the edge of the map. Trade with passing ships, weather the storms and bring the coast back to life one cottage at a time." data-about="Every night the lamp needs oil, every morning the nets need mending, and every week a new ship asks for something you do not have yet.|Trade, build and restore the old harbor at your own pace. There is no timer and no way to lose, only the next storm to get ready for."><a class="r-t" href="#/game?id=ember">Ember Lighthouse</a> <span class="muted">$14.99</span></li>
+          <li data-game="caravan" data-dev="Two Kettle Games" data-tags="Roguelite|Space|Trading" data-price="19.99" data-date="2025-10-02" data-score="88" data-reviews="1870" data-os="win linux" data-feat="solo pad" data-blurb="Lead a caravan of patched-up freighters across a map that changes every run, buying low at one moon and selling high at the next." data-about="Every run starts with three ships, a little fuel and a rumor. Pick routes, haggle at markets and decide which ship to scrap when the pirates catch up.|Runs last about forty minutes, and what you learn about each moon carries over to the next."><a class="r-t" href="#/game?id=caravan">Starward Caravan</a> <span class="muted">$19.99</span></li>
+          <li data-game="moss" data-dev="Harbor Owl Studio" data-tags="Dungeon crawler|Roguelite|Co-op" data-price="11.99" data-was="19.99" data-date="2025-06-18" data-score="91" data-reviews="4410" data-os="win mac" data-feat="solo coop pad" data-blurb="A short-run dungeon crawler for one or two players, with rooms that grow moss back between visits and a cook who turns what you find into upgrades." data-about="Go down, fight, forage and come back up before the torches burn out. The cook at the top of the stairs turns mushrooms, bones and odd stones into meals that change how you play.|Play alone or with a friend on the same couch."><a class="r-t" href="#/game?id=moss">Moss &amp; Marrow</a> <span class="muted">$11.99</span></li>
+          <li data-game="paper" data-dev="Quillpine" data-tags="Strategy|Card game|Turn-based" data-price="16.99" data-date="2026-01-22" data-score="84" data-reviews="960" data-os="win mac linux" data-feat="solo online" data-blurb="Fold a kingdom out of a deck of cards. Every card is a province, a quarrel or a favor, and every season you choose which ones to play." data-about="Build a deck of provinces and people, then play it out season by season against rival courts.|A campaign of twelve kingdoms, a daily puzzle and online matches against friends."><a class="r-t" href="#/game?id=paper">Paper Kingdoms</a> <span class="muted">$16.99</span></li>
+          <li data-game="tidal" data-dev="Moth &amp; Meter" data-tags="Mystery|Narrative|Puzzle" data-price="9.99" data-was="14.99" data-date="2024-11-05" data-score="93" data-reviews="2315" data-os="win mac" data-feat="solo" data-blurb="A radio operator on a tidal island hears a station that should not exist. Tune, decode and piece together who keeps calling at low tide." data-about="Work the dials, write down what you hear and connect the voices on a corkboard that fills up as the tides turn.|About six hours long, with no combat and no fail states."><a class="r-t" href="#/game?id=tidal">Tidal Signal</a> <span class="muted">$9.99</span></li>
+          <li data-game="orchard" data-dev="Quillpine" data-tags="Farming|Cozy|Relaxing" data-price="21.99" data-date="2026-10-30" data-score="79" data-reviews="412" data-os="win mac linux" data-feat="solo coop cloud" data-blurb="Plant an orchard on an old mining hill, graft strange copper-leafed trees and sell the fruit at a market that remembers what you brought last week." data-about="Clear the slag, plant, graft and wait for the seasons. Every tree you cross gives fruit nobody has tasted before.|Share the hill with a friend online, and pick up where you left off on any computer."><a class="r-t" href="#/game?id=orchard">Copper Orchard</a> <span class="muted">$21.99</span></li>
+          <li data-game="rail" data-dev="Two Kettle Games" data-tags="Racing|Arcade|Co-op" data-price="7.49" data-was="14.99" data-date="2024-04-19" data-score="86" data-reviews="5120" data-os="win" data-feat="solo coop pad" data-blurb="Arcade racing on a neon rail line at midnight. Split-screen for two, a ghost of your best run, and a soundtrack you will hum for a week." data-about="Twenty tracks along one long night line, each with a ghost of your best time to chase.|Two players can race split-screen on one screen with two controllers."><a class="r-t" href="#/game?id=rail">Night Rail 88</a> <span class="muted">$7.49</span></li>
+          <li data-game="glacier" data-dev="Harbor Owl Studio" data-tags="Puzzle|Cozy|Exploration" data-price="12.99" data-date="2026-11-14" data-score="92" data-reviews="188" data-os="win mac" data-feat="solo pad cloud" data-blurb="Deliver letters across a slowly melting archipelago. Every route is a small puzzle of ice, tides and a postbox that will not stay put." data-about="Read the tide table, plan a route and get the post through before the ice moves again.|Sixty islands, each with a household waiting for something."><a class="r-t" href="#/game?id=glacier">Glacier Post</a> <span class="muted">$12.99</span></li>
+          <li data-game="crown" data-dev="Moth &amp; Meter" data-tags="Tactics|Strategy|RPG" data-price="24.99" data-was="29.99" data-date="2025-02-27" data-score="74" data-reviews="1034" data-os="win linux" data-feat="solo online pad" data-blurb="A turn-based tactics campaign about a throne nobody wants. Small squads, permanent scars and maps that crumble as you fight on them." data-about="Lead a squad of six through a forty-mission campaign where every wound stays and every map changes under your feet.|Challenge a friend online with the squads you built."><a class="r-t" href="#/game?id=crown">Hollow Crown Tactics</a> <span class="muted">$24.99</span></li>
+          <li data-game="kite" data-dev="Quillpine" data-tags="Platformer|Exploration|Narrative" data-price="0" data-date="2026-08-08" data-score="89" data-reviews="7300" data-os="win mac linux" data-feat="solo pad" data-blurb="The free first chapter of a platformer about riding the wind between floating islands. About ninety minutes long, and your save carries over." data-about="Catch the wind, find the shortcuts and chase a kite that knows the way.|Your save carries over to the full game when it comes out."><a class="r-t" href="#/game?id=kite">Kiteborne: Prologue</a> <span class="muted">Free</span></li>
+          <li data-game="foundry" data-dev="Harbor Owl Studio" data-tags="Automation|Puzzle|Sandbox" data-price="" data-date="2027-02-18" data-os="win mac linux" data-feat="solo cloud" data-blurb="Build a tiny factory on a tabletop, then make it smaller. Add it to your wishlist to hear the day it comes out." data-about="Belts, gears and a tabletop that is never quite big enough. Every level asks for the same output in less space.|Planned for February 2027 on all three platforms."><a class="r-t" href="#/game?id=foundry">Little Foundry</a> <span class="muted">Coming soon</span></li>
+          <li data-game="ost" data-art="ember" data-for="ember" data-dev="Quillpine" data-tags="Soundtrack|Cozy" data-price="6.99" data-was="9.99" data-date="2026-03-12" data-score="98" data-reviews="214" data-os="mp3 flac" data-blurb="Twenty-four tracks of accordion, tape hiss and sea, in MP3 and lossless FLAC, with a printable sleeve." data-about="The full score from the game, mastered again for headphones.|Downloads as MP3 and FLAC with a printable sleeve."><a class="r-t" href="#/game?id=ost">Ember Lighthouse Original Soundtrack</a> <span class="muted">$6.99</span></li>
+        </ol>
+      </div>
+      <aside class="filters" aria-label="Filters" data-filters data-js>
+        <fieldset><legend>Search</legend><label class="sr-only" for="f-q">Search by name or tag</label><input class="input" id="f-q" type="search" placeholder="Name or tag" autocomplete="off"></fieldset>
+        <fieldset><legend>Price</legend><label class="sr-only" for="f-max">Highest price</label><input class="range" id="f-max" type="range" min="0" max="30" step="5" value="30"><p class="small muted" data-max-label style="margin:4px 0 6px">Any price</p>
+          <label class="check"><input type="checkbox" name="specials">Specials only</label><label class="check"><input type="checkbox" name="soon">Hide coming soon</label></fieldset>
+        <fieldset><legend>Tags</legend><div class="tagbox" data-tag-boxes></div></fieldset>
+        <button class="btn btn-sm" type="button" data-clear data-js>Clear filters</button>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Game page: static markup is the first title, for pages without JavaScript ===== -->
+<div data-view="game">
+  <div class="wrap page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#/browse">All games</a><span aria-hidden="true">›</span><a href="#/browse?tag=Cozy" data-g="crumb">Cozy</a><span aria-hidden="true">›</span><span data-g="crumb-t">Ember Lighthouse</span></nav>
+    <div class="game-head"><h1 class="h1" data-g="title">Ember Lighthouse</h1></div>
+    <div class="gp">
+      <div>
+        <div class="stage" data-g="stage"><svg class="art" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-ember" width="460" height="215"/></svg></div>
+        <div class="thumbs" data-g="thumbs" data-js></div>
+      </div>
+      <div class="side">
+        <span class="cap" data-g="cap"><svg class="art" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-ember" width="460" height="215"/></svg><span class="cv-t">Ember Lighthouse</span></span>
+        <p class="blurb" data-g="blurb">Keep a lamp burning on a rock at the edge of the map. Trade with passing ships, weather the storms and bring the coast back to life one cottage at a time.</p>
+        <dl class="facts">
+          <dt>All reviews</dt><dd data-g="reviews"><span class="rv pos">Overwhelmingly positive</span> <span class="muted">(3,204)</span></dd>
+          <dt>Release date</dt><dd data-g="date">12 Mar 2026</dd>
+          <dt>Developer</dt><dd><a href="#/browse?q=Quillpine" data-g="dev">Quillpine</a></dd>
+          <dt>Publisher</dt><dd><a href="#/about">Quillpine</a></dd>
+        </dl>
+        <div><p class="small muted" style="margin-bottom:6px">Tags</p><div class="chips" data-g="tags"><a class="chip" href="#/browse?tag=Cozy">Cozy</a><a class="chip" href="#/browse?tag=Simulation">Simulation</a><a class="chip" href="#/browse?tag=Building">Building</a></div></div>
+      </div>
+    </div>
+    <div class="wishbar" data-js><p>Add it to your wishlist and we will email you when it goes on sale.</p><button class="btn" type="button" data-g="wish" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg><span>Add to wishlist</span></button></div>
+
+    <div class="gcols">
+      <div>
+        <section class="purchase" aria-labelledby="buy-h">
+          <h2 id="buy-h" data-g="buy-h">Buy Ember Lighthouse</h2>
+          <span data-g="os"><span class="os"><i>Win</i><i>Mac</i><i>Linux</i></span></span>
+          <div class="buy" data-g="buy"><span class="pb"><span class="pct">-40%</span><span class="pw"><s>$24.99</s><b>$14.99</b></span></span><button class="btn btn-buy" type="button" data-add="ember">Add to cart</button></div>
+        </section>
+        <section data-g="dlc-wrap" aria-labelledby="dlc-h">
+          <h2 class="sh" id="dlc-h">Content for this game</h2>
+          <ul class="dlc" data-g="dlc"><li><a href="#/game?id=ost">Ember Lighthouse Original Soundtrack</a><span class="pb"><span class="pct">-30%</span><span class="pw"><s>$9.99</s><b>$6.99</b></span></span></li></ul>
+        </section>
+        <section aria-labelledby="about-h">
+          <h2 class="sh" id="about-h">About this game</h2>
+          <div class="about prose" data-g="about-wrap">
+            <div data-g="about"><p>Every night the lamp needs oil, every morning the nets need mending, and every week a new ship asks for something you do not have yet.</p><p>Trade, build and restore the old harbor at your own pace. There is no timer and no way to lose, only the next storm to get ready for.</p></div>
+          </div>
+          <button class="btn more-btn" type="button" data-g="readmore" aria-expanded="false" data-js>Read more</button>
+        </section>
+        <section aria-labelledby="req-h">
+          <h2 class="sh" id="req-h">System requirements</h2>
+          <dl class="req" data-g="req">
+            <dt>OS</dt><dd data-g="req-os">Windows 10 or later, macOS 12 or later, Ubuntu 22.04 or similar</dd><dt>Processor</dt><dd>Dual core, 2 GHz</dd><dt>Memory</dt><dd>4 GB RAM</dd><dt>Graphics</dt><dd>Integrated graphics with 1 GB shared memory</dd><dt>Storage</dt><dd>2 GB available space</dd>
+          </dl>
+        </section>
+        <section aria-labelledby="rev-h">
+          <h2 class="sh" id="rev-h">Player reviews</h2>
+          <div class="score" data-g="score"><span class="rv pos">Overwhelmingly positive</span><span class="meter" aria-hidden="true"><i style="width:96%"></i></span><span class="small muted">96% of 3,204</span></div>
+          <article class="review"><div><b class="small">saltwater_sam</b><p class="small muted">41 hours on record</p></div><div><p class="verdict"><svg class="i" aria-hidden="true"><use href="#i-thumb"/></svg>Recommended</p><p>Short sessions that add up. I play a bit on the train and keep thinking about it after.</p><button class="link-btn" type="button" data-helpful>Helpful</button></div></article>
+          <article class="review"><div><b class="small">Rook 7</b><p class="small muted">6 hours on record</p></div><div><p class="verdict no"><svg class="i" aria-hidden="true"><use href="#i-thumb"/></svg>Not recommended</p><p>Good for an evening, not for a month. I wanted more of it, which I suppose is a compliment.</p><button class="link-btn" type="button" data-helpful>Helpful</button></div></article>
+        </section>
+      </div>
+      <aside>
+        <h2 class="sh">Features</h2>
+        <ul class="feats" data-g="feats"><li><svg class="i" aria-hidden="true"><use href="#i-solo"/></svg>Single-player</li><li><svg class="i" aria-hidden="true"><use href="#i-cloud"/></svg>Cloud saves</li><li><svg class="i" aria-hidden="true"><use href="#i-pad"/></svg>Full controller support</li></ul>
+        <h2 class="sh" style="margin-top:24px">More like this</h2>
+        <ul class="list" data-g="more"></ul>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Cart ===== -->
+<div data-view="cart">
+  <div class="wrap page">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Store</a><span aria-hidden="true">›</span><span>Cart</span></nav>
+    <h1 class="h1">Your shopping cart</h1>
+    <div class="two">
+      <div>
+        <ul data-lines></ul>
+        <div class="empty" data-cart-empty>Your cart is empty. <a href="#/browse">Find something to play</a></div>
+        <p style="margin-top:14px"><a class="btn" href="#/browse">Continue shopping</a></p>
+      </div>
+      <aside class="panel sum" aria-label="Order summary">
+        <p class="sum-row"><span>Estimated total</span><b data-total>$0.00</b></p>
+        <p class="small muted">Prices include VAT where it applies. Games arrive in your library as soon as payment clears.</p>
+        <form class="form" data-form="checkout" novalidate>
+          <div class="field"><label for="ck-email">Email for your receipt</label><input class="input" id="ck-email" name="email" type="email" autocomplete="email" inputmode="email" data-req="Enter the email for your receipt." aria-describedby="ck-email-err"><p class="err" id="ck-email-err" aria-live="polite"></p></div>
+          <div class="field"><label class="check"><input id="ck-terms" name="terms" type="checkbox" data-req="Please accept the terms to continue." aria-describedby="ck-terms-err"><span>I agree to the <a href="#/legal?section=terms">terms of sale</a> and the <a href="#/support?section=refunds">refund policy</a>.</span></label><p class="err" id="ck-terms-err" aria-live="polite"></p></div>
+          <button class="btn btn-buy wide" type="submit">Place order</button>
+        </form>
+        <div class="ok-box" data-ok="checkout" tabindex="-1" hidden><h2><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Order <span data-order-no>QP-000000</span> confirmed</h2><p>Your games are in <a href="#/library">your library</a>. A receipt is on its way to <b data-order-mail></b>.</p></div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- ===== News list and article ===== -->
+<div data-view="news">
+  <div class="wrap page">
+    <h1 class="h1">News</h1>
+    <div class="chips" role="group" aria-label="Filter news" data-news-chips data-js style="margin-top:14px">
+      <button class="chip" type="button" data-kind="all" aria-pressed="true">All</button><button class="chip" type="button" data-kind="patch" aria-pressed="false">Patch notes</button><button class="chip" type="button" data-kind="devlog" aria-pressed="false">Devlogs</button><button class="chip" type="button" data-kind="event" aria-pressed="false">Sales &amp; events</button>
+    </div>
+    <ul class="news" data-news>
+      <li data-kind="patch" data-post="winter-storms" data-game="ember"><a href="#/post?id=winter-storms"><span class="cap"><svg class="art" viewBox="40 0 380 178" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-ember" width="460" height="215"/></svg></span><span><span class="kind">Patch notes</span><b class="news-t">Ember Lighthouse 1.2 brings winter storms and a second keeper</b><time class="small muted" datetime="2026-11-18">18 Nov 2026</time><p class="small" style="margin-top:6px">Storms now build over three nights, a friend can share the rock in co-op, and the lamp remembers your oil settings.</p></span></a></li>
+      <li data-kind="devlog" data-post="smaller-factory" data-game="foundry"><a href="#/post?id=smaller-factory"><span class="cap"><svg class="art" viewBox="40 10 300 140" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-foundry" width="460" height="215"/></svg></span><span><span class="kind">Devlog</span><b class="news-t">Little Foundry devlog 6: making the factory smaller</b><time class="small muted" datetime="2026-11-10">10 Nov 2026</time><p class="small" style="margin-top:6px">Why every level now asks for the same output in less space, and what that did to our belts.</p></span></a></li>
+      <li data-kind="event" data-post="thursday-specials" data-game="rail"><a href="#/post?id=thursday-specials"><span class="cap"><svg class="art" viewBox="60 40 340 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-rail" width="460" height="215"/></svg></span><span><span class="kind">Sales &amp; events</span><b class="news-t">Thursday specials now run for a full week</b><time class="small muted" datetime="2026-11-06">6 Nov 2026</time><p class="small" style="margin-top:6px">Specials start every Thursday and end the next Thursday, so nobody misses one over a weekend.</p></span></a></li>
+      <li data-kind="patch" data-post="second-cook" data-game="moss"><a href="#/post?id=second-cook"><span class="cap"><svg class="art" viewBox="80 0 300 140" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-moss" width="460" height="215"/></svg></span><span><span class="kind">Patch notes</span><b class="news-t">Moss &amp; Marrow 2.0 adds a second cook and online co-op</b><time class="small muted" datetime="2026-10-28">28 Oct 2026</time><p class="small" style="margin-top:6px">A rival cook moves in upstairs, and you can now go down with a friend over the internet.</p></span></a></li>
+    </ul>
+  </div>
+</div>
+
+<div data-view="post">
+  <div class="wrap page">
+    <article class="post">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/news">News</a><span aria-hidden="true">›</span><span data-post="kind">Patch notes</span></nav>
+      <h1 class="h1" data-post="title">Ember Lighthouse 1.2 brings winter storms and a second keeper</h1>
+      <p class="small muted" style="margin-top:8px"><time data-post="date" datetime="2026-11-18">18 Nov 2026</time> · Quillpine</p>
+      <span class="cap post-cap" data-post="art"><svg class="art" viewBox="0 0 460 215" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-ember" width="460" height="215"/></svg></span>
+      <div class="prose" data-post="body">
+        <p>Winter has reached the rock. Storms now build over three nights instead of arriving all at once, so you can see them coming in the clouds and get the shutters up in time.</p>
+        <p>A second keeper can now share the lighthouse in online co-op. One of you trims the lamp while the other trades on the pier; your progress saves to the host's world.</p>
+        <h2>Smaller fixes</h2>
+        <ul><li>The lamp remembers your oil setting between nights.</li><li>Ships no longer queue behind the pier at high tide.</li><li>Controller prompts match the controller you are holding.</li></ul>
+      </div>
+      <div class="post-buy" data-post="buy" data-js></div>
+    </article>
+    <template data-body="smaller-factory"><p>When we started, a level was a big table and you filled it. Players filled it fast, so the fun ended early. Now every level asks for the same output twice: once on the full table, then again on a table half the size.</p><p>That one change made us redesign belts. They now turn on a single tile, and splitters can stack. Little Foundry is planned for February 2027; the wishlist button on its page will email you the day it is out.</p></template>
+    <template data-body="thursday-specials"><p>Our specials used to start on Thursday and end on Monday, which meant a lot of people found out about a sale after it was over. From this week, every special runs Thursday to Thursday.</p><p>Nothing else changes: prices drop at 17:00 UTC, the green tag shows the discount, and your wishlist email goes out the same hour.</p></template>
+    <template data-body="second-cook"><p>A second cook has moved in upstairs. She only cooks with what you bring from the deeper floors, and her meals change how the moss grows back behind you.</p><p>Online co-op is here too. Couch co-op still works the way it always did, and you can mix the two: one friend on your couch and one over the internet.</p></template>
+  </div>
+</div>
+
+<!-- ===== Library: owned games and wishlist ===== -->
+<div data-view="library">
+  <div class="wrap page">
+    <h1 class="h1">Your library</h1>
+    <p class="muted" data-lib-who>Sign in to keep your library and wishlist on every device.</p>
+    <div class="seg" role="tablist" aria-label="Library" data-lib-tabs data-js>
+      <button type="button" role="tab" aria-selected="true" data-lib-tab="owned">Games <span data-n-owned>(0)</span></button>
+      <button type="button" role="tab" aria-selected="false" data-lib-tab="wish" tabindex="-1">Wishlist <span data-n-wish>(0)</span></button>
+    </div>
+    <ul class="lib" data-lib></ul>
+    <div class="empty" data-lib-empty>Nothing here yet. <a href="#/browse">Browse the store</a> or try <a href="#/game?id=kite">Kiteborne: Prologue</a>, which is free.</div>
+  </div>
+</div>
+
+<!-- ===== Sign in and create account ===== -->
+<div data-view="signin">
+  <div class="wrap page">
+    <h1 class="h1" data-auth-h>Sign in</h1>
+    <div class="auth">
+      <div class="panel auth-card">
+        <div class="seg" role="tablist" aria-label="Account" data-auth-tabs data-js>
+          <button type="button" role="tab" aria-selected="true" data-auth="login">Sign in</button>
+          <button type="button" role="tab" aria-selected="false" data-auth="signup" tabindex="-1">Create account</button>
+        </div>
+        <form class="form" data-form="login" novalidate>
+          <div class="field"><label for="li-email">Email</label><input class="input" id="li-email" name="email" type="email" autocomplete="username" inputmode="email" data-req="Enter the email you signed up with." aria-describedby="li-email-err"><p class="err" id="li-email-err" aria-live="polite"></p></div>
+          <div class="field"><label for="li-pass">Password</label><div class="pass"><input class="input" id="li-pass" name="password" type="password" autocomplete="current-password" data-req="Enter your password." aria-describedby="li-pass-err"><button type="button" data-reveal aria-label="Show password" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-eye"/></svg></button></div><p class="err" id="li-pass-err" aria-live="polite"></p></div>
+          <label class="check" style="margin-bottom:16px"><input type="checkbox" name="remember" checked>Remember me on this device</label>
+          <button class="btn btn-buy wide" type="submit">Sign in</button>
+          <p class="small" style="margin-top:12px"><a href="#/support?section=account">Forgot your password?</a></p>
+        </form>
+        <form class="form" data-form="signup" novalidate hidden>
+          <div class="field"><label for="su-email">Email</label><input class="input" id="su-email" name="email" type="email" autocomplete="email" inputmode="email" data-req="Enter your email address." aria-describedby="su-email-err"><p class="err" id="su-email-err" aria-live="polite"></p></div>
+          <div class="field"><label for="su-name">Display name</label><input class="input" id="su-name" name="name" type="text" autocomplete="nickname" maxlength="32" data-req="Choose a display name." aria-describedby="su-name-err"><p class="err" id="su-name-err" aria-live="polite"></p></div>
+          <div class="field"><label for="su-pass">Password</label><div class="pass"><input class="input" id="su-pass" name="password" type="password" autocomplete="new-password" minlength="8" data-req="Choose a password." aria-describedby="su-pass-err"><button type="button" data-reveal aria-label="Show password" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-eye"/></svg></button></div><p class="err" id="su-pass-err" aria-live="polite"></p></div>
+          <div class="field"><label class="check"><input id="su-terms" name="terms" type="checkbox" data-req="Please accept the terms to create an account." aria-describedby="su-terms-err"><span>I am 13 or older and agree to the <a href="#/legal?section=terms">terms</a> and <a href="#/legal?section=privacy">privacy policy</a>.</span></label><p class="err" id="su-terms-err" aria-live="polite"></p></div>
+          <button class="btn btn-buy wide" type="submit">Create account</button>
+        </form>
+        <div class="ok-box" data-ok="login" tabindex="-1" hidden><h2><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Signed in</h2><p>Welcome back. <a href="#/library">Go to your library</a>.</p></div>
+        <div class="ok-box" data-ok="signup" tabindex="-1" hidden><h2><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Account created</h2><p>We sent a confirmation link to your email. <a href="#/browse">Start browsing</a>.</p></div>
+      </div>
+      <div class="prose">
+        <h2 class="sec-h" style="margin:0 0 8px">One account, every game</h2>
+        <p>Games you buy stay in your library for good. Download them on any of your computers, as often as you like, with no launcher required.</p>
+        <p class="muted">Bought from us before you made an account? Use the same email and your past orders appear automatically.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Support: help topics, FAQ and contact ===== -->
+<div data-view="support">
+  <div class="wrap page">
+    <h1 class="h1">Support</h1>
+    <ul class="boxes">
+      <li><a class="box" href="#/support?section=refunds"><b>Purchases and refunds</b><span class="small muted">Refunds and receipts</span></a></li>
+      <li><a class="box" href="#/support?section=keys"><b>Downloads and keys</b><span class="small muted">Where your games are</span></a></li>
+      <li><a class="box" href="#/support?section=account"><b>Account and sign-in</b><span class="small muted">Passwords and email</span></a></li>
+      <li><a class="box" href="#/support?section=tech"><b>Game problems</b><span class="small muted">Crashes, saves, controllers</span></a></li>
+      <li><a class="box" href="#/support?section=contact"><b>Contact us</b><span class="small muted">A person replies</span></a></li>
+    </ul>
+    <div class="two" style="margin-top:0">
+      <div class="faq">
+        <h2 class="sec-h" style="margin-bottom:10px">Common questions</h2>
+        <details id="refunds"><summary>Can I get a refund?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><div><p>Yes. Ask within 14 days of buying and before you have played for two hours, and we refund the full price to the card you paid with. Soundtracks are refundable within 14 days if not downloaded.</p></div></details>
+        <details id="keys"><summary>Where do my games go after I pay?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><div><p>Straight into your library. Each game has a download for every platform it supports, and a key you can use where a game offers one.</p></div></details>
+        <details id="account"><summary>I forgot my password<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><div><p>Use the contact form with the email on your account and we will send a reset link to that address.</p></div></details>
+        <details id="tech"><summary>A game crashes or will not start<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><div><p>Check the system requirements on the game's page and update your graphics driver. If it still fails, send us the game name and your computer's specs through the form.</p></div></details>
+      </div>
+      <section class="panel sum" id="contact" aria-labelledby="contact-h">
+        <h2 class="sec-h" id="contact-h" style="margin-bottom:12px">Contact us</h2>
+        <form class="form" data-form="contact" novalidate>
+          <div class="field"><label for="ct-name">Name</label><input class="input" id="ct-name" name="name" type="text" autocomplete="name" data-req="Enter your name." aria-describedby="ct-name-err"><p class="err" id="ct-name-err" aria-live="polite"></p></div>
+          <div class="field"><label for="ct-email">Email</label><input class="input" id="ct-email" name="email" type="email" autocomplete="email" inputmode="email" data-req="Enter an email we can reply to." aria-describedby="ct-email-err"><p class="err" id="ct-email-err" aria-live="polite"></p></div>
+          <div class="field"><label for="ct-topic">Topic</label><select class="input" id="ct-topic" name="topic"><option>Purchase or refund</option><option>Download or key</option><option>Account</option><option>Game problem</option><option>Something else</option></select></div>
+          <div class="field"><label for="ct-msg">Message</label><textarea class="input" id="ct-msg" name="message" data-req="Tell us what happened." aria-describedby="ct-msg-err"></textarea><p class="err" id="ct-msg-err" aria-live="polite"></p></div>
+          <button class="btn btn-buy wide" type="submit">Send message</button>
+        </form>
+        <div class="ok-box" data-ok="contact" tabindex="-1" hidden><h3><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Message sent</h3><p>Thanks. A person on our team replies within two working days.</p></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- ===== About ===== -->
+<div data-view="about">
+  <div class="wrap page prose" style="max-width:820px">
+    <h1 class="display">Small games, sold by the people who make them</h1>
+    <p style="margin-top:14px">Quillpine started as two developers and a shared office above a bike shop. We now publish games from four small studios and sell them here, directly, so more of every sale goes to the people who made the game.</p>
+    <h2 class="sec-h" style="margin-top:28px">Studios we publish</h2>
+    <ul class="boxes">
+      <li class="box"><b>Quillpine</b><span class="muted small">Cozy sims and strategy. Our own team.</span></li>
+      <li class="box"><b>Two Kettle Games</b><span class="muted small">Fast arcade games with a lot of heart.</span></li>
+      <li class="box"><b>Harbor Owl Studio</b><span class="muted small">Puzzles and crawlers from the coast.</span></li>
+      <li class="box"><b>Moth &amp; Meter</b><span class="muted small">Mysteries and tactics, made slowly.</span></li>
+    </ul>
+    <h2 class="sec-h">How we sell</h2>
+    <ul><li>No launcher and no copy protection on the downloads.</li><li>Refunds within 14 days and under two hours played.</li><li>Specials every Thursday, never countdown timers.</li></ul>
+    <p><a class="btn" href="#/support?section=contact">Get in touch</a></p>
+  </div>
+</div>
+
+<!-- ===== Privacy and terms ===== -->
+<div data-view="legal">
+  <div class="wrap page prose">
+    <h1 class="h1">Privacy and terms</h1>
+    <p class="muted">Last updated 1 November 2026.</p>
+    <h2 id="privacy">Privacy</h2>
+    <p>We collect your email, display name, country and order history to run your account and deliver your games. Payment details go straight to our payment provider; we never see or store your card number.</p>
+    <p>We send email only for receipts, account messages and, if you sign up, sale notes. You can delete your account and data at any time through the contact form.</p>
+    <h2 id="terms">Terms of sale</h2>
+    <p>A purchase gives you a personal licence to download and play the game on your own computers. Prices include VAT where it applies. Refunds follow the policy on the support page.</p>
+  </div>
+</div>
+
+<!-- ===== 404 ===== -->
+<div data-view="404">
+  <div class="wrap page" style="text-align:center;padding:96px 0">
+    <h1 class="display">This page wandered off the map</h1>
+    <p class="muted" style="margin-top:10px">The link may be old, or the game may have moved.</p>
+    <p style="display:flex;gap:8px;justify-content:center;margin-top:20px"><a class="btn btn-buy" href="#/">Back to the store</a><a class="btn" href="#/browse">Browse games</a></p>
+  </div>
+</div>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div><a class="brand" href="#/" aria-label="Quillpine store home"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg><span>QUILLPINE</span></a><p>© 2026 Quillpine Games Ltd. Prices include VAT where it applies. Game names and art belong to their studios.</p></div>
+    <nav class="foot-cols" aria-label="Footer">
+      <div><h2>Store</h2><a href="#/browse">Browse</a><a href="#/browse?specials=1">Specials</a><a href="#/news">News</a></div>
+      <div><h2>Help</h2><a href="#/support">Support</a><a href="#/support?section=refunds">Refunds</a><a href="#/support?section=contact">Contact</a></div>
+      <div><h2>Company</h2><a href="#/about">About</a><a href="#/legal?section=privacy">Privacy</a><a href="#/legal?section=terms">Terms</a></div>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const still = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const STORE_NAME = "Quillpine";
+
+  /* ---------- Storage (sandbox-safe: falls back to memory) ---------- */
+  const memory = new Map();
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch { return memory.get(k) ?? null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch { memory.set(k, v); } },
+  };
+  const KEY = "quillpine-";
+  const read = (k, empty = []) => { try { return JSON.parse(store.get(KEY + k)) ?? empty; } catch { return empty; } };
+  const save = (k, v) => store.set(KEY + k, JSON.stringify(v));
+
+  /* ---------- Theme: dark first, light only after the visitor switches ---------- */
+  const themeBtn = $("#theme-toggle");
+  function applyTheme(t) {
+    root.dataset.theme = t;
+    themeBtn.setAttribute("aria-label", `Switch to ${t === "dark" ? "light" : "dark"} theme`);
+    $("use", themeBtn).setAttribute("href", t === "dark" ? "#i-sun" : "#i-moon");
+  }
+  applyTheme(store.get(KEY + "theme") === "light" ? "light" : "dark");
+  themeBtn.addEventListener("click", () => { const t = root.dataset.theme === "dark" ? "light" : "dark"; applyTheme(t); store.set(KEY + "theme", t); });
+
+  /* ---------- Catalog: read once from the rows in #catalog ---------- */
+  const GAMES = $$("#catalog [data-game]").map((li) => {
+    const d = li.dataset;
+    const img = $("img", li);
+    return {
+      id: d.game, title: $(".r-t", li).textContent.trim(), dev: d.dev, tags: d.tags.split("|"),
+      price: d.price === "" ? null : Number(d.price), was: Number(d.was || 0), date: d.date,
+      score: Number(d.score || 0), reviews: Number(d.reviews || 0), os: (d.os || "").split(" ").filter(Boolean),
+      feat: (d.feat || "").split(" ").filter(Boolean), art: d.art || d.game, of: d.for || "", blurb: d.blurb, about: (d.about || d.blurb).split("|"),
+      img: img ? { src: img.getAttribute("src"), w: img.getAttribute("width"), h: img.getAttribute("height") } : null,
+    };
+  });
+  $("#catalog").hidden = true;
+  $("[data-results]").hidden = false;
+  const byId = new Map(GAMES.map((g) => [g.id, g]));
+  const FEATURED = [["ember", "Now available"], ["glacier", "New release"], ["caravan", "Top seller"], ["crown", "Weekend deal"]];
+  const OS = { win: ["Win", "Windows"], mac: ["Mac", "macOS"], linux: ["Linux", "Linux"], mp3: ["MP3", "MP3"], flac: ["FLAC", "FLAC"] };
+  const FEATS = { solo: ["i-solo", "Single-player"], coop: ["i-coop", "Local co-op"], online: ["i-online", "Online play"], pad: ["i-pad", "Full controller support"], cloud: ["i-cloud", "Cloud saves"] };
+  // Crops of one 460 x 215 drawing: the cover, then four "screenshots"
+  const VIEWS = ["0 0 460 215", "115 30 230 108", "0 100 230 108", "230 10 230 108", "70 20 320 150"];
+
+  /* ---------- Pieces every card shares ---------- */
+  const money = (n) => `$${n.toFixed(2)}`;
+  const count = (n) => n.toLocaleString("en-US");
+  const soon = (g) => g.price === null;
+  const off = (g) => (g.was && g.price !== null ? Math.round((1 - g.price / g.was) * 100) : 0);
+  const day = (s) => new Date(`${s}T12:00:00`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  function verdict(g) {
+    if (!g.reviews) return ["No reviews yet", ""];
+    if (g.score >= 95 && g.reviews >= 500) return ["Overwhelmingly positive", "pos"];
+    if (g.score >= 80) return ["Very positive", "pos"];
+    if (g.score >= 70) return ["Mostly positive", "pos"];
+    if (g.score >= 40) return ["Mixed", "mix"];
+    return ["Mostly negative", "neg"];
+  }
+  const rv = (g) => { const [t, c] = verdict(g); return `<span class="rv ${c}">${t}</span>`; };
+  function art(g, i = 0) {
+    const shot = i ? $$(`#shots [data-shot="${g.id}"]`)[i - 1] : null;
+    const pic = shot ? { src: shot.getAttribute("src"), w: shot.getAttribute("width"), h: shot.getAttribute("height") } : g.img;
+    if (pic) return `<img class="art" src="${pic.src}" alt="" width="${pic.w}" height="${pic.h}">`;
+    return `<svg class="art" viewBox="${VIEWS[i]}" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-${g.art}" width="460" height="215"/></svg>`;
+  }
+  const cap = (g, cls = "") => `<span class="cap ${cls}">${art(g)}${g.img ? "" : `<span class="cv-t">${esc(g.title)}</span>`}</span>`;
+  const os = (g) => `<span class="os"><span class="sr-only">Available for ${g.os.map((o) => OS[o][1]).join(", ")}</span>${g.os.map((o) => `<i aria-hidden="true">${OS[o][0]}</i>`).join("")}</span>`;
+  function price(g, cls = "") {
+    if (soon(g)) return `<span class="pb ${cls}"><span class="pw"><b>Coming soon</b></span></span>`;
+    if (!g.price) return `<span class="pb ${cls}"><span class="pw"><b>Free</b></span></span>`;
+    const o = off(g);
+    return `<span class="pb ${cls}">${o ? `<span class="pct" aria-hidden="true">-${o}%</span>` : ""}<span class="pw">${o ? `<s aria-hidden="true">${money(g.was)}</s>` : ""}<b>${money(g.price)}</b>${o ? `<span class="sr-only">, ${o}% off, was ${money(g.was)}</span>` : ""}</span></span>`;
+  }
+  const row = (g, cls = "row", extra = "") => `<li><a class="${cls}" href="#/game?id=${g.id}" data-id="${g.id}">${cap(g)}<span class="row-main"><b class="row-t">${esc(g.title)}</b><span class="row-sub">${os(g)}${esc(g.tags.join(", "))}</span></span>${extra}${price(g)}</a></li>`;
+  const RIBBONS = [["Midweek deal", ""], ["Weekend deal", "r1"], ["Daily deal", "r2"]];
+  const CARDS = {
+    deal: (g, i) => `<li><a class="deal" href="#/game?id=${g.id}"><span class="ribbon ${RIBBONS[i % 3][1]}">${RIBBONS[i % 3][0]}</span>${cap(g)}<span class="deal-foot"><span class="deal-t">${esc(g.title)}<small>${esc(g.dev)}</small></span>${price(g)}</span></a></li>`,
+    mini: (g) => `<li><a class="mini" href="#/game?id=${g.id}">${cap(g)}<span class="mini-t">${esc(g.title)}</span>${price(g)}</a></li>`,
+  };
+
+  /* ---------- Lists: each rail, tab and "more like this" names a function here ---------- */
+  let viewing = GAMES[0];
+  const forSale = GAMES.filter((g) => !soon(g));
+  const LISTS = {
+    deals: () => GAMES.filter(off).sort((a, b) => off(b) - off(a)),
+    own: () => GAMES.filter((g) => g.dev === STORE_NAME),
+    new: () => forSale.filter((g) => !g.of).sort((a, b) => b.date.localeCompare(a.date)),
+    top: () => [...forSale].sort((a, b) => b.reviews - a.reviews),
+    specials: () => LISTS.deals(),
+    under: () => forSale.filter((g) => g.price < 15).sort((a, b) => a.price - b.price),
+    more: () => GAMES.filter((g) => g !== viewing && g.tags.some((t) => viewing.tags.includes(t))).slice(0, 4),
+  };
+  $$("[data-rail]").forEach((el) => (el.innerHTML = LISTS[el.dataset.rail]().map(CARDS[el.dataset.card]).join("")));
+  $$("[data-step]").forEach((b) => b.addEventListener("click", () => {
+    const rail = document.getElementById(b.getAttribute("aria-controls"));
+    rail.scrollBy({ left: Number(b.dataset.step) * rail.clientWidth * 0.9, behavior: still() ? "auto" : "smooth" });
+  }));
+
+  /* ---------- Featured carousel: changes every 6 s, pauses on hover and focus, never with reduced motion ---------- */
+  const slides = $("[data-slides]");
+  slides.innerHTML = FEATURED.map(([id, why], i) => {
+    const g = byId.get(id);
+    return `<a class="slide${i ? "" : " is-current"}" href="#/game?id=${g.id}">${cap(g)}<span class="slide-info"><span class="slide-t">${esc(g.title)}</span><span class="shots">${[1, 2, 3, 4].map((n) => art(g, n)).join("")}</span><span class="why">${why}<small>${rv(g)} <span class="muted">(${count(g.reviews)} reviews)</span></small></span><span class="slide-foot"><span class="chips">${g.tags.slice(0, 2).map((t) => `<span class="chip">${esc(t)}</span>`).join("")}</span>${price(g)}</span></span></a>`;
+  }).join("");
+  const dots = $("[data-dots]");
+  dots.innerHTML = FEATURED.map((f, i) => `<button type="button" data-dot="${i}" aria-label="Show featured game ${i + 1} of ${FEATURED.length}" aria-current="${i === 0}"></button>`).join("");
+  let slide = 0;
+  function showSlide(i) {
+    slide = (i + FEATURED.length) % FEATURED.length;
+    $$(".slide", slides).forEach((s, n) => s.classList.toggle("is-current", n === slide));
+    $$("[data-dot]", dots).forEach((d, n) => d.setAttribute("aria-current", String(n === slide)));
+  }
+  dots.addEventListener("click", (e) => { const d = e.target.closest("[data-dot]"); if (d) showSlide(Number(d.dataset.dot)); });
+  $$("[data-car-step]").forEach((b) => b.addEventListener("click", () => showSlide(slide + Number(b.dataset.carStep))));
+  const car = $("[data-car]");
+  let paused = false;
+  ["mouseenter", "focusin"].forEach((t) => car.addEventListener(t, () => (paused = true)));
+  ["mouseleave", "focusout"].forEach((t) => car.addEventListener(t, () => (paused = false)));
+  setInterval(() => { if (!paused && !still() && !document.hidden && current?.dataset.view === "home") showSlide(slide + 1); }, 6000);
+
+  /* ---------- Tabbed list with a preview of the row under the pointer ---------- */
+  const tabList = $("[data-tab-list]");
+  const pv = $("[data-pv]");
+  function preview(g) {
+    $$(".row", tabList).forEach((r) => r.classList.toggle("is-on", r.dataset.id === g.id));
+    pv.classList.remove("is-new");
+    void pv.offsetWidth;
+    pv.classList.add("is-new");
+    pv.innerHTML = `<p class="pv-t">${esc(g.title)}</p><p class="small" style="margin:0">${rv(g)} <span class="muted">(${count(g.reviews)})</span></p><div class="chips">${g.tags.map((t) => `<span class="chip">${esc(t)}</span>`).join("")}</div>${[1, 2, 3].map((n) => art(g, n)).join("")}`;
+  }
+  function showTab(btn) {
+    $$("[data-tab]").forEach((b) => { const on = b === btn; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
+    const list = LISTS[btn.dataset.tab]().slice(0, 8);
+    tabList.innerHTML = list.map((g) => row(g)).join("");
+    tabList.setAttribute("aria-label", btn.textContent);
+    if (list[0]) preview(list[0]);
+  }
+  const tabs = $$("[data-tab]");
+  tabs.forEach((b) => b.addEventListener("click", () => showTab(b)));
+  $("[data-tabs]").addEventListener("keydown", (e) => {
+    const i = tabs.indexOf(document.activeElement);
+    if (i < 0 || !["ArrowLeft", "ArrowRight"].includes(e.key)) return;
+    const next = tabs[(i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length];
+    next.focus();
+    showTab(next);
+  });
+  ["mouseover", "focusin"].forEach((t) => tabList.addEventListener(t, (e) => { const r = e.target.closest(".row"); if (r && !r.classList.contains("is-on")) preview(byId.get(r.dataset.id)); }));
+  showTab(tabs[0]);
+
+  /* ---------- Browse: search, price, specials, tags and sort, all from the route ---------- */
+  const results = $("[data-results]");
+  const filtersEl = $("[data-filters]");
+  const fq = $("#f-q");
+  const fmax = $("#f-max");
+  const sortSel = $("#sort");
+  const tagCount = {};
+  GAMES.forEach((g) => g.tags.forEach((t) => (tagCount[t] = (tagCount[t] || 0) + 1)));
+  const TAGS = Object.keys(tagCount).filter((t) => tagCount[t] > 1).sort();
+  $("[data-tag-boxes]").innerHTML = TAGS.map((t) => `<label class="check"><input type="checkbox" name="tag" value="${esc(t)}"><span>${esc(t)} <span class="muted small">(${tagCount[t]})</span></span></label>`).join("");
+  const browseRow = (g) => row(g, "row brow", `<span class="brow-date">${soon(g) ? "Coming " : ""}${day(g.date)}</span><span class="small brow-rv">${g.reviews ? `${rv(g)} <span class="muted">${g.score}%</span>` : ""}</span>`);
+  function applyBrowse() {
+    const q = fq.value.trim().toLowerCase();
+    const max = Number(fmax.value);
+    const tagsOn = $$("input[name=tag]:checked", filtersEl).map((i) => i.value);
+    const specials = $("input[name=specials]", filtersEl).checked;
+    const hideSoon = $("input[name=soon]", filtersEl).checked;
+    const list = GAMES.filter((g) => (!q || `${g.title} ${g.dev} ${g.tags.join(" ")}`.toLowerCase().includes(q))
+      && (max >= 30 || (!soon(g) && g.price <= max))
+      && (!specials || off(g)) && (!hideSoon || !soon(g))
+      && tagsOn.every((t) => g.tags.includes(t)));
+    const SORTS = { new: (a, b) => b.date.localeCompare(a.date), name: (a, b) => a.title.localeCompare(b.title), low: (a, b) => (a.price ?? 999) - (b.price ?? 999), high: (a, b) => (b.price ?? -1) - (a.price ?? -1), top: (a, b) => b.reviews - a.reviews };
+    if (SORTS[sortSel.value]) list.sort(SORTS[sortSel.value]);
+    results.innerHTML = list.map(browseRow).join("");
+    $("[data-results-empty]").hidden = list.length > 0;
+    $("[data-count]").textContent = `${list.length} result${list.length === 1 ? "" : "s"}${q ? ` for "${fq.value.trim()}"` : ""}`;
+    $("[data-max-label]").textContent = max >= 30 ? "Any price" : max === 0 ? "Free" : `Under ${money(max)}`;
+    $("[data-browse-h]").textContent = specials ? "Specials" : tagsOn.length === 1 && !q ? `${tagsOn[0]} games` : "All games";
+  }
+  function browseRoute(p) {
+    fq.value = p.get("q") || "";
+    $("#q").value = fq.value;
+    fmax.value = p.has("max") ? p.get("max") : 30;
+    $("input[name=specials]", filtersEl).checked = p.get("specials") === "1";
+    $("input[name=soon]", filtersEl).checked = false;
+    $$("input[name=tag]", filtersEl).forEach((i) => (i.checked = i.value === p.get("tag")));
+    sortSel.value = [...sortSel.options].some((o) => o.value === p.get("sort")) ? p.get("sort") : "rel";
+    applyBrowse();
+  }
+  filtersEl.addEventListener("input", applyBrowse);
+  sortSel.addEventListener("change", applyBrowse);
+  $$("[data-clear]").forEach((b) => b.addEventListener("click", () => go("#/browse")));
+  $("[data-filter-toggle]").addEventListener("click", (e) => { const open = !filtersEl.classList.contains("is-open"); filtersEl.classList.toggle("is-open", open); e.currentTarget.setAttribute("aria-expanded", String(open)); });
+
+  /* ---------- Game page: every slot is a [data-g] hook filled from the catalog row. A new row field (data-x) gets its own
+     data-g slot here; never look a row attribute up with a global selector, it finds the first catalog row instead. ---------- */
+  const gameView = $('[data-view="game"]');
+  const G = (k) => $(`[data-g="${k}"]`, gameView);
+  let shotIndex = 0;
+  function showShot(i) {
+    shotIndex = i;
+    G("stage").innerHTML = `${art(viewing, i)}${i && !viewing.img ? `<span class="hud" data-h="${i % 3}"></span>` : ""}`;
+    $$("button", G("thumbs")).forEach((b, n) => b.setAttribute("aria-pressed", String(n === i)));
+  }
+  function buyHtml(g) {
+    if (soon(g)) return `<span class="pb"><span class="pw"><b>${day(g.date)}</b></span></span><button class="btn" type="button" data-wish="${g.id}">Add to wishlist</button>`;
+    if (!g.price) return `${price(g)}<button class="btn btn-buy" type="button" data-add="${g.id}">Add to library</button>`;
+    return `${price(g)}<button class="btn btn-buy" type="button" data-add="${g.id}">Add to cart</button>`;
+  }
+  const REQ = { win: "Windows 10 or later", mac: "macOS 12 or later", linux: "Ubuntu 22.04 or similar" };
+  function renderGame(p) {
+    const g = byId.get(p.get("id")) || GAMES[0];
+    viewing = g;
+    G("crumb").textContent = g.tags[0];
+    G("crumb").setAttribute("href", `#/browse?tag=${encodeURIComponent(g.tags[0])}`);
+    G("crumb-t").textContent = g.title;
+    G("title").textContent = g.title;
+    G("cap").outerHTML = cap(g).replace("<span class=\"cap ", "<span data-g=\"cap\" class=\"cap ");
+    G("blurb").textContent = g.blurb;
+    G("reviews").innerHTML = g.reviews ? `${rv(g)} <span class="muted">(${count(g.reviews)})</span>` : '<span class="muted">No reviews yet</span>';
+    G("date").textContent = soon(g) ? `Planned for ${day(g.date)}` : day(g.date);
+    G("dev").textContent = g.dev;
+    G("dev").setAttribute("href", `#/browse?q=${encodeURIComponent(g.dev)}`);
+    G("tags").innerHTML = g.tags.map((t) => `<a class="chip" href="#/browse?tag=${encodeURIComponent(t)}">${esc(t)}</a>`).join("");
+    G("thumbs").innerHTML = [0, 1, 2, 3, 4].map((i) => `<button type="button" data-shot-i="${i}" aria-label="Screenshot ${i + 1} of 5" aria-pressed="false">${art(g, i)}</button>`).join("");
+    showShot(0);
+    G("buy-h").textContent = soon(g) ? `${g.title} is coming soon` : !g.price ? `Play ${g.title}` : `Buy ${g.title}`;
+    G("os").innerHTML = os(g);
+    G("buy").innerHTML = buyHtml(g);
+    const dlc = GAMES.filter((d) => d.of === g.id);
+    G("dlc-wrap").hidden = dlc.length === 0;
+    G("dlc").innerHTML = dlc.map((d) => `<li><a href="#/game?id=${d.id}">${esc(d.title)}</a>${price(d)}</li>`).join("");
+    G("about").innerHTML = g.about.map((t) => `<p>${esc(t)}</p>`).join("");
+    const about = G("about-wrap");
+    about.classList.remove("is-open");
+    const fits = about.scrollHeight <= about.clientHeight + 4;
+    about.classList.toggle("is-open", fits);
+    G("readmore").hidden = fits;
+    G("readmore").setAttribute("aria-expanded", "false");
+    G("readmore").textContent = "Read more";
+    G("req").closest("section").hidden = !g.os.some((o) => REQ[o]);
+    G("req-os").textContent = g.os.filter((o) => REQ[o]).map((o) => REQ[o]).join(", ");
+    const [label, cls] = verdict(g);
+    G("score").hidden = !g.reviews;
+    G("score").innerHTML = `<span class="rv ${cls}">${label}</span><span class="meter" aria-hidden="true"><i style="width:${g.score}%"></i></span><span class="small muted">${g.score}% of ${count(g.reviews)}</span>`;
+    G("feats").innerHTML = g.feat.map((f) => `<li><svg class="i" aria-hidden="true"><use href="#${FEATS[f][0]}"/></svg>${FEATS[f][1]}</li>`).join("") || "<li>Digital download</li>";
+    G("more").innerHTML = LISTS.more().map((g) => row(g, "row compact")).join("");
+    $$("[data-helpful]").forEach((b) => { b.disabled = false; b.textContent = "Helpful"; });
+    paintWish();
+  }
+  G("thumbs").addEventListener("click", (e) => { const b = e.target.closest("[data-shot-i]"); if (b) showShot(Number(b.dataset.shotI)); });
+  G("readmore").addEventListener("click", (e) => {
+    const open = G("about-wrap").classList.toggle("is-open");
+    e.currentTarget.setAttribute("aria-expanded", String(open));
+    e.currentTarget.textContent = open ? "Show less" : "Read more";
+  });
+
+  /* ---------- Cart, wishlist and library live in storage ---------- */
+  let cart = read("cart").filter((id) => byId.has(id));
+  let wish = read("wish").filter((id) => byId.has(id));
+  let owned = read("owned").filter((id) => byId.has(id));
+  let user = read("user", null);
+  const toast = $("[data-toast]");
+  let toastTimer = 0;
+  function say(text, withCart) {
+    $("[data-toast-text]").textContent = text;
+    $("a", toast).hidden = !withCart;
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => (toast.hidden = true), 5000);
+  }
+  function paintCart() {
+    save("cart", cart);
+    $("[data-cart-count]").textContent = String(cart.length);
+    $("[data-cart]").setAttribute("aria-label", cart.length ? `Cart, ${cart.length} item${cart.length === 1 ? "" : "s"}` : "Cart, empty");
+  }
+  function paintWish() {
+    save("wish", wish);
+    const b = G("wish");
+    const on = wish.includes(viewing.id);
+    b.setAttribute("aria-pressed", String(on));
+    $("span", b).textContent = on ? "On your wishlist" : "Add to wishlist";
+  }
+  function add(id) {
+    const g = byId.get(id);
+    if (!g) return;
+    if (owned.includes(id)) return say(`${g.title} is already in your library.`);
+    if (!g.price) { owned.push(id); save("owned", owned); return say(`${g.title} is in your library.`); }
+    if (!cart.includes(id)) cart.push(id);
+    paintCart();
+    if (current?.dataset.view === "cart") renderCart();
+    say(`Added to your cart: ${g.title}`, true);
+  }
+  function toggleWish(id) {
+    wish = wish.includes(id) ? wish.filter((w) => w !== id) : [...wish, id];
+    paintWish();
+    if (wish.includes(id)) say(`${byId.get(id).title} is on your wishlist.`);
+    if (current?.dataset.view === "library") renderLibrary();
+  }
+  G("wish").addEventListener("click", () => toggleWish(viewing.id));
+  function renderCart() {
+    const lines = cart.map((id) => byId.get(id));
+    $("[data-lines]").innerHTML = lines.map((g) => `<li class="line"><a href="#/game?id=${g.id}">${cap(g)}</a><div><a class="line-t" href="#/game?id=${g.id}">${esc(g.title)}</a><p class="small muted" style="margin:4px 0 0">${os(g)}</p></div><div class="line-act">${price(g)}<button class="link-btn" type="button" data-remove="${g.id}">Remove</button></div></li>`).join("");
+    $("[data-cart-empty]").hidden = lines.length > 0;
+    $("[data-total]").textContent = money(lines.reduce((t, g) => t + g.price, 0));
+    $('[data-form="checkout"]').hidden = lines.length === 0;
+    if (lines.length) $('[data-ok="checkout"]').hidden = true;
+  }
+
+  const LIB_CROP = "150 0 144 215";
+  let libTab = "owned";
+  function renderLibrary() {
+    const ids = libTab === "owned" ? owned : wish;
+    $("[data-n-owned]").textContent = `(${owned.length})`;
+    $("[data-n-wish]").textContent = `(${wish.length})`;
+    $("[data-lib-who]").textContent = user ? `Signed in as ${user.name}. Your games download on any computer you sign in on.` : "Sign in to keep your library and wishlist on every device.";
+    $("[data-lib]").innerHTML = ids.map((id) => {
+      const g = byId.get(id);
+      const tall = g.img ? art(g) : `<svg class="art" viewBox="${LIB_CROP}" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#cv-${g.art}" width="460" height="215"/></svg><span class="cv-t">${esc(g.title)}</span>`;
+      const act = libTab === "owned"
+        ? `<button class="btn btn-sm" type="button" data-key="${g.id}">Show download key</button><span class="key" data-key-out="${g.id}" hidden></span>`
+        : `${price(g)}<span style="display:flex;gap:6px">${soon(g) ? "" : `<button class="btn btn-buy btn-sm" type="button" data-add="${g.id}">Add to cart</button>`}<button class="btn btn-sm" type="button" data-unwish="${g.id}">Remove</button></span>`;
+      return `<li><a class="cap tall" href="#/game?id=${g.id}" aria-label="${esc(g.title)}">${tall}</a>${act}</li>`;
+    }).join("");
+    $("[data-lib-empty]").hidden = ids.length > 0;
+  }
+  $$("[data-lib-tab]").forEach((b) => b.addEventListener("click", () => {
+    libTab = b.dataset.libTab;
+    $$("[data-lib-tab]").forEach((x) => { x.setAttribute("aria-selected", String(x === b)); x.tabIndex = x === b ? 0 : -1; });
+    renderLibrary();
+  }));
+  function paintWho() {
+    const who = $("[data-who]");
+    who.textContent = user ? user.name : "Sign in";
+    who.setAttribute("href", user ? "#/library" : "#/signin");
+  }
+
+  /* ---------- News: kind chips, and the article view reads the list item ---------- */
+  const newsItems = $$("[data-news] li");
+  $("[data-news-chips]").addEventListener("click", (e) => {
+    const c = e.target.closest("[data-kind]");
+    if (!c) return;
+    $$("[data-kind]", e.currentTarget).forEach((x) => x.setAttribute("aria-pressed", String(x === c)));
+    newsItems.forEach((li) => (li.hidden = c.dataset.kind !== "all" && li.dataset.kind !== c.dataset.kind));
+  });
+  const P = (k) => $(`[data-post="${k}"]`, views.get("post"));
+  const firstBody = $("[data-post='body']").innerHTML;
+  function renderPost(p) {
+    const li = newsItems.find((n) => n.dataset.post === p.get("id")) || newsItems[0];
+    const g = byId.get(li.dataset.game);
+    P("kind").textContent = $(".kind", li).textContent;
+    P("title").textContent = $(".news-t", li).textContent;
+    P("date").textContent = $("time", li).textContent;
+    P("date").setAttribute("datetime", $("time", li).getAttribute("datetime"));
+    P("art").innerHTML = g ? art(g) : "";
+    const tpl = $(`template[data-body="${li.dataset.post}"]`);
+    P("body").innerHTML = tpl ? tpl.innerHTML : firstBody;
+    P("buy").hidden = !g;
+    if (g) P("buy").innerHTML = `<span><b class="line-t">${esc(g.title)}</b><span class="small muted" style="display:block">${esc(g.dev)}</span></span><span class="buy" style="position:static">${buyHtml(g)}</span>`;
+  }
+
+  /* ---------- Router: hash routes, kept in state so it works when the frame refuses URL changes ---------- */
+  const views = new Map($$("[data-view]").map((v) => [v.dataset.view, v]));
+  const TITLES = { browse: "Browse games", cart: "Your cart", news: "News", library: "Your library", signin: "Sign in", support: "Support", about: "About us", legal: "Privacy and terms", 404: "Page not found" };
+  const NAV_OF = { game: "browse", post: "news", cart: "", signin: "" };
+  const RENDER = { browse: browseRoute, game: renderGame, cart: renderCart, library: renderLibrary, post: renderPost };
+  let current = null;
+  function parse(h) {
+    if (!h || !h.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = h.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(r, scroll = true) {
+    const name = views.has(r.view) ? r.view : "404";
+    current?.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    const navName = name in NAV_OF ? NAV_OF[name] : name;
+    $$(".primary a, .menu-panel a").forEach((a) => (parse(a.getAttribute("href")).view === navName ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current")));
+    RENDER[name]?.(r.params);
+    document.title = name === "home" ? `${STORE_NAME}: independent games, sold direct` : `${name === "game" ? viewing.title : name === "post" ? P("title").textContent : TITLES[name]} · ${STORE_NAME}`;
+    $$("details[data-pop]").forEach((d) => (d.open = false));
+    const id = r.params.get("section");
+    const target = id && document.getElementById(id);
+    if (target) { if (target.tagName === "DETAILS") target.open = true; setTimeout(() => target.scrollIntoView({ block: "start" }), 30); }
+    else if (scroll) window.scrollTo(0, 0);
+  }
+  function go(h) {
+    show(parse(h));
+    try { if (location.hash !== h) history.pushState(null, "", h); } catch { /* sandboxed frame: state only */ }
+  }
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- One click handler: actions first, then in-page links ---------- */
+  document.addEventListener("click", (e) => {
+    const t = e.target;
+    $$("details[data-pop][open]").forEach((d) => { if (!d.contains(t)) d.open = false; });
+    const act = t.closest("[data-add], [data-wish], [data-unwish], [data-remove], [data-key], [data-helpful], [data-reveal]");
+    if (act) {
+      const d = act.dataset;
+      if (d.add) add(d.add);
+      else if (d.wish) toggleWish(d.wish);
+      else if (d.unwish) toggleWish(d.unwish);
+      else if (d.remove) { cart = cart.filter((id) => id !== d.remove); paintCart(); renderCart(); }
+      else if (d.key) { const out = $(`[data-key-out="${d.key}"]`); out.textContent = `QP-${d.key.slice(0, 4).toUpperCase()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`; out.hidden = false; act.hidden = true; }
+      else if ("helpful" in d) { act.textContent = "Thanks for your feedback"; act.disabled = true; }
+      else if ("reveal" in d) { const input = $("input", act.parentElement); const showIt = input.type === "password"; input.type = showIt ? "text" : "password"; act.setAttribute("aria-pressed", String(showIt)); act.setAttribute("aria-label", showIt ? "Hide password" : "Show password"); }
+      return;
+    }
+    const a = t.closest("a[href^='#']");
+    if (!a) return;
+    const h = a.getAttribute("href");
+    if (h.startsWith("#/")) { e.preventDefault(); toast.hidden = true; go(h); }
+    else if (h.length > 1) { const el = $(h); if (el) { e.preventDefault(); el.scrollIntoView({ block: "start" }); if (h === "#main") el.focus({ preventScroll: true }); } }
+  });
+
+  /* ---------- Forms: sandboxed frames block native submission, so they run from the submit button's click ---------- */
+  function onSubmit(form, handler) {
+    form.addEventListener("submit", (e) => { e.preventDefault(); handler(); });
+    form.addEventListener("click", (e) => { if (e.target.closest("[type=submit]")) { e.preventDefault(); handler(); } });
+  }
+  function problem(f) {
+    if (f.closest("[hidden]")) return "";
+    if (f.type === "checkbox") return f.checked ? "" : f.dataset.req;
+    const v = f.value.trim();
+    if (!v) return f.dataset.req;
+    if (f.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return "Enter an email address like name@example.com.";
+    if (f.minLength > 0 && v.length < f.minLength) return `Use at least ${f.minLength} characters.`;
+    return "";
+  }
+  function mark(f) {
+    const msg = problem(f);
+    f.setAttribute("aria-invalid", String(Boolean(msg)));
+    $(`#${f.id}-err`).textContent = msg;
+    return msg;
+  }
+  function wire(name, done) {
+    const form = $(`[data-form="${name}"]`);
+    const ok = $(`[data-ok="${name}"]`);
+    const fields = $$("[data-req]", form);
+    fields.forEach((f) => {
+      f.addEventListener("blur", () => { if (f.value.trim() || f.getAttribute("aria-invalid") === "true") mark(f); });
+      f.addEventListener(f.type === "checkbox" ? "change" : "input", () => { if (f.getAttribute("aria-invalid") === "true") mark(f); });
+    });
+    onSubmit(form, () => {
+      const bad = fields.filter(mark);
+      if (bad.length) { bad[0].focus(); return; }
+      const btn = $("[type=submit]", form);
+      const label = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Working…";
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = label;
+        done?.(new FormData(form), form);
+        form.reset();
+        form.hidden = true;
+        ok.hidden = false;
+        ok.focus();
+      }, 600);
+    });
+  }
+  wire("newsletter");
+  wire("contact");
+  wire("login", (data) => { user = { name: String(data.get("email")).split("@")[0] }; save("user", user); paintWho(); });
+  wire("signup", (data) => { user = { name: String(data.get("name")).trim() }; save("user", user); paintWho(); });
+  wire("checkout", (data) => {
+    owned = [...new Set([...owned, ...cart])];
+    save("owned", owned);
+    $("[data-order-mail]").textContent = String(data.get("email"));
+    $("[data-order-no]").textContent = `QP-${String(Date.now()).slice(-6)}`;
+    cart = [];
+    paintCart();
+    renderCart();
+  });
+  $$("[data-auth]").forEach((b) => b.addEventListener("click", () => {
+    $$("[data-auth]").forEach((x) => { x.setAttribute("aria-selected", String(x === b)); x.tabIndex = x === b ? 0 : -1; });
+    $('[data-form="login"]').hidden = b.dataset.auth !== "login";
+    $('[data-form="signup"]').hidden = b.dataset.auth !== "signup";
+    $$("[data-ok='login'], [data-ok='signup']").forEach((o) => (o.hidden = true));
+    $("[data-auth-h]").textContent = b.textContent;
+  }));
+
+  /* ---------- Header search: words into the browse view ---------- */
+  onSubmit($("[data-search]"), () => { const q = $("#q").value.trim(); go(q ? `#/browse?q=${encodeURIComponent(q)}` : "#/browse"); });
+
+  paintCart();
+  paintWho();
+  show(parse(location.hash), false);
+})();
+</script>
+</body>
+</html>

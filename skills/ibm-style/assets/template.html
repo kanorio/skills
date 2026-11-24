@@ -1,0 +1,1172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Varrow Systems: plant data your team can act on</title>
+<meta name="description" content="Varrow Systems connects the machines you already own, builds monitoring and maintenance models, and stays until your own team runs them.">
+<meta property="og:title" content="Varrow Systems: plant data your team can act on">
+<meta property="og:description" content="Industrial data engineering, from sensor to shift report.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/public-sans-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "Public Sans"; src: url("fonts/public-sans-latin-wght.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "DM Mono"; src: url("fonts/dm-mono-latin-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+
+/* ---------- Tokens: light by default, following the system; each color is light-dark(light, dark) ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(100% 0 0), oklch(20.5% 0 0));
+  --layer: light-dark(oklch(96.7% 0 0), oklch(26.8% 0 0));
+  --layer-hover: light-dark(oklch(92.9% 0 0), oklch(31.8% 0 0));
+  --layer-on: light-dark(oklch(100% 0 0), oklch(33.5% 0 0));
+  --text: light-dark(oklch(20.5% 0 0), oklch(96.7% 0 0));
+  --text-2: light-dark(oklch(43.5% 0 0), oklch(83.5% 0 0));
+  --border: light-dark(oklch(91% 0 0), oklch(37% 0 0));
+  --border-strong: light-dark(oklch(62% 0 0), oklch(58% 0 0));
+  --accent: oklch(52.5% 0.235 263);
+  --accent-hover: oklch(46.5% 0.215 263);
+  --accent-text: oklch(100% 0 0);
+  --link: light-dark(oklch(52.5% 0.235 263), oklch(73% 0.14 262));
+  --focus: light-dark(oklch(52.5% 0.235 263), oklch(100% 0 0));
+  --tint: light-dark(oklch(93.5% 0.035 262), oklch(32% 0.1 263));
+  --band: light-dark(oklch(20.5% 0 0), oklch(15% 0 0));
+  --band-layer: light-dark(oklch(26.8% 0 0), oklch(22% 0 0));
+  --band-line: light-dark(oklch(37% 0 0), oklch(31% 0 0));
+  --danger: light-dark(oklch(52% 0.2 27), oklch(71% 0.17 22));
+  --success: light-dark(oklch(52% 0.14 148), oklch(74% 0.16 150));
+  /* the geometric art: one blue in three strengths, a grey and ink */
+  --m1: oklch(52.5% 0.235 263);
+  --m2: light-dark(oklch(82% 0.085 262), oklch(40% 0.17 264));
+  --m3: light-dark(oklch(28% 0.13 266), oklch(81% 0.09 262));
+  --m4: light-dark(oklch(92.9% 0 0), oklch(31.8% 0 0));
+  --m5: light-dark(oklch(20.5% 0 0), oklch(96.7% 0 0));
+  --shadow-overlay: 0 2px 6px light-dark(oklch(0% 0 0 / 0.2), oklch(0% 0 0 / 0.6));
+
+  --font: "Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --fs-display: clamp(2.625rem, 1.5rem + 3.6vw, 4.5rem);
+  --fs-h1: clamp(2.25rem, 1.55rem + 2.2vw, 3.5rem);
+  --fs-h2: clamp(1.75rem, 1.35rem + 1.4vw, 2.625rem);
+  --fs-h3: 1.25rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --r-control: 0px;
+  --r-card: 0px;
+  --r-media: 0px;
+  --dur-fast: 110ms;
+  --dur-base: 240ms;
+  --dur-slow: 400ms;
+  --ease: cubic-bezier(0.2, 0, 0.38, 0.9);
+
+  --page: 1312px;
+  --gutter: clamp(16px, 3vw, 32px);
+  --gap: 32px;
+  --sec: clamp(64px, 8vw, 128px);
+  --hh: 48px;
+}
+/* The toggle (and the preview tool) pin one theme with data-theme on <html> */
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+/* Dark bands re-map the tokens, so every component works on them unchanged */
+.band, .ft { --bg: var(--band); --layer: var(--band-layer); --layer-hover: oklch(32% 0 0); --layer-on: oklch(33.5% 0 0); --text: oklch(96.7% 0 0); --text-2: oklch(78% 0 0); --border: var(--band-line); --border-strong: oklch(58% 0 0); --link: oklch(73% 0.14 262); --focus: oklch(100% 0 0); --m4: var(--band-layer); --m5: oklch(96.7% 0 0); background: var(--bg); color: var(--text); }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--hh) + 16px); }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3, h4 { margin: 0; font-weight: 400; line-height: 1.25; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+::selection { background: var(--tint); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.skip { position: absolute; left: 0; top: -60px; padding: 14px 16px; background: var(--accent); color: var(--accent-text); z-index: 100; }
+.skip:focus { top: 0; }
+.wrap { position: relative; width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.picto { width: 48px; height: 48px; fill: none; stroke: var(--link); stroke-width: 1.5; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.muted { color: var(--text-2); }
+.meta, .count { font-family: var(--mono); font-size: 0.8125rem; color: var(--text-2); }
+
+/* ---------- Type: light headlines, regular body ---------- */
+.display, .h1, .h2 { font-weight: 300; letter-spacing: -0.01em; }
+.display { font-size: var(--fs-display); line-height: 1.12; color: var(--link); max-width: 15em; }
+.h1 { font-size: var(--fs-h1); line-height: 1.16; max-width: 17em; }
+.h2 { font-size: var(--fs-h2); line-height: 1.2; }
+.h3 { font-size: var(--fs-h3); line-height: 1.35; }
+.lead { font-size: clamp(1.125rem, 1rem + 0.4vw, 1.375rem); font-weight: 300; line-height: 1.45; max-width: 36em; }
+.eyebrow { display: block; margin-bottom: 12px; font-size: 0.875rem; color: var(--text-2); }
+.label { margin-bottom: 16px; font-size: 0.875rem; font-weight: 600; }
+.link { display: inline-flex; align-items: center; gap: 8px; color: var(--link); text-decoration: none; font-size: 0.875rem; }
+.link:hover { text-decoration: underline; }
+.link .icon { width: 16px; height: 16px; }
+
+/* ---------- Buttons: square, label left, arrow right ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: space-between; gap: 32px; min-height: 48px; min-width: 13rem; padding: 0 16px; border: 1px solid transparent; border-radius: var(--r-control); background: none; font-size: 0.875rem; line-height: 1.3; text-align: left; text-decoration: none; cursor: pointer; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
+.btn .icon { width: 16px; height: 16px; }
+.btn-primary { background: var(--accent); color: var(--accent-text); }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-tertiary { border-color: var(--link); color: var(--link); }
+.btn-tertiary:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.btn-ghost { min-width: 0; color: var(--link); }
+.btn-ghost:hover { background: var(--layer-hover); }
+.btn:focus-visible { outline-offset: -4px; outline-color: var(--accent-text); box-shadow: 0 0 0 2px var(--focus); }
+.btn-ghost:focus-visible, .btn-tertiary:focus-visible { outline-color: var(--focus); box-shadow: none; }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 16px; }
+
+/* ---------- Header: one 48px bar, flush blue action at the right edge ---------- */
+.hd { position: sticky; top: 0; z-index: 30; background: var(--bg); border-bottom: 1px solid var(--border); }
+.hd-in { display: flex; align-items: stretch; height: var(--hh); }
+.brand { display: inline-flex; align-items: center; gap: 10px; padding: 0 24px 0 16px; font-weight: 600; font-size: 1.0625rem; letter-spacing: 0.01em; text-decoration: none; white-space: nowrap; }
+.brand svg { width: 20px; height: 20px; }
+.nav { display: flex; }
+.nav a { position: relative; display: flex; align-items: center; padding: 0 16px; font-size: 0.875rem; color: var(--text-2); text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.nav a:hover { background: var(--layer-hover); color: var(--text); }
+.nav a[aria-current="page"] { color: var(--text); }
+.nav a[aria-current="page"]::after { content: ""; position: absolute; inset: auto 0 -1px; height: 2px; background: var(--accent); }
+.hd-act { display: flex; align-items: stretch; margin-left: auto; }
+.icon-btn { display: inline-grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 0; background: none; color: var(--text); cursor: pointer; transition: background-color var(--dur-fast) var(--ease); }
+.icon-btn:hover { background: var(--layer-hover); }
+.hd-cta { display: flex; align-items: center; gap: 32px; padding: 0 16px; background: var(--accent); color: var(--accent-text); font-size: 0.875rem; text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease); }
+.hd-cta:hover { background: var(--accent-hover); }
+.hd-cta .icon { width: 16px; height: 16px; }
+.menu-btn { display: none; }
+.sheet { margin: 0; padding: 0; border: 0; border-right: 1px solid var(--border); inline-size: min(320px, 100%); block-size: 100dvh; max-block-size: 100dvh; background: var(--bg); color: var(--text); }
+.sheet::backdrop { background: oklch(0% 0 0 / 0.5); }
+.sheet-top { display: flex; align-items: center; justify-content: space-between; height: var(--hh); border-bottom: 1px solid var(--border); }
+.sheet-top .brand { padding-left: 16px; }
+.sheet nav a { display: block; padding: 14px 16px; border-bottom: 1px solid var(--border); text-decoration: none; }
+.sheet nav a:hover, .sheet nav a[aria-current="page"] { background: var(--layer); }
+.sheet .btn { margin: 24px 16px; width: calc(100% - 32px); }
+@media (max-width: 1055px) { .nav { display: none; } .menu-btn { display: inline-grid; } .brand { padding-left: 4px; } }
+@media (max-width: 599px) { .hd-cta { display: none; } }
+
+/* ---------- Views: all render in order without JS ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.sec { padding-block: var(--sec); }
+.sec-b { padding-bottom: var(--sec); }
+.phead { padding-block: clamp(32px, 5vw, 64px) clamp(40px, 6vw, 80px); }
+.phead .lead { margin-top: 24px; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; font-size: 0.875rem; }
+.crumbs li + li::before { content: "/"; margin-right: 8px; color: var(--text-2); }
+.crumbs a { color: var(--link); text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+/* Split head: the heading on the left half, the intro on the right half */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px var(--gap); align-items: start; margin-bottom: 48px; }
+.split > div > p { margin: 0 0 24px; font-size: 1.25rem; font-weight: 300; line-height: 1.45; }
+.g { display: grid; gap: var(--gap); }
+.g2 { grid-template-columns: repeat(2, 1fr); }
+.g3 { grid-template-columns: repeat(3, 1fr); }
+.g4 { grid-template-columns: repeat(4, 1fr); }
+.gt { gap: 16px; }
+@media (max-width: 1055px) { .g3, .g4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 799px) { .split { grid-template-columns: 1fr; } }
+@media (max-width: 671px) { .g2, .g3, .g4 { grid-template-columns: 1fr; } }
+
+/* ---------- Tiles: flat grey, square, the arrow pinned bottom right (signature) ---------- */
+.tile { position: relative; display: flex; flex-direction: column; min-height: 13rem; padding: 16px 16px 64px; background: var(--layer); color: var(--text); text-decoration: none; transition: background-color var(--dur-fast) var(--ease); }
+a.tile:hover { background: var(--layer-hover); }
+.g > li > .tile { height: 100%; }
+@media (max-width: 671px) { .tile { min-height: 0; } .tile .picto { margin-bottom: 24px; } }
+.tile .go { position: absolute; right: 16px; bottom: 16px; color: var(--link); }
+.tile .eyebrow { margin-bottom: 8px; font-size: 0.75rem; }
+.tile p { margin: 8px 0 0; font-size: 0.875rem; color: var(--text-2); }
+.tile .picto { margin-bottom: 40px; }
+.tile-lg h2, .tile-lg h3 { font-size: clamp(1.5rem, 1.2rem + 1vw, 2.25rem); font-weight: 300; line-height: 1.2; }
+.card { padding-bottom: 16px; min-height: 16rem; }
+.card .fig { display: flex; flex-direction: column; margin-top: auto; padding: 32px 40px 0 0; font-size: 0.875rem; color: var(--text-2); }
+.card .fig b { font-size: 2.5rem; font-weight: 300; line-height: 1.1; color: var(--text); font-variant-numeric: tabular-nums; }
+.tag { display: inline-block; padding: 2px 8px; background: var(--tint); font-size: 0.75rem; }
+
+/* Hairline lists: one rule above every row */
+.rl > li { border-top: 1px solid var(--border); }
+.rl a { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding: 12px 0 16px; text-decoration: none; }
+.rl a .icon { align-self: end; width: 16px; height: 16px; color: var(--link); }
+.rl a:hover span:first-child { color: var(--link); text-decoration: underline; }
+.rl small { display: block; margin-bottom: 4px; font-size: 0.75rem; color: var(--text-2); }
+.rl .plain { display: block; padding: 12px 0 16px; }
+
+/* ---------- Geometric mosaic: square tiles drawn from a few SVG symbols ---------- */
+.mosaic { display: grid; grid-template-columns: repeat(var(--cols, 8), 1fr); overflow: hidden; }
+/* each tile overlaps its neighbours by 1px, so no hairline seams show at fractional widths */
+.mosaic svg { width: calc(100% + 1px); max-width: none; height: auto; aspect-ratio: 1; margin: 0 -1px -1px 0; }
+.r1 { transform: rotate(90deg); }
+.r2 { transform: rotate(180deg); }
+.r3 { transform: rotate(270deg); }
+.k1 { --p: var(--m1); --q: var(--m4); }
+.k2 { --p: var(--m3); --q: var(--m2); }
+.k3 { --p: var(--m2); --q: var(--m1); }
+.k4 { --p: var(--m5); --q: var(--m4); }
+.k5 { --p: var(--m1); --q: var(--bg); }
+.k6 { --p: var(--m2); --q: var(--m3); }
+@media (max-width: 671px) { .m8 { --cols: 4; } .m8 svg:nth-child(n+5) { display: none; } }
+
+/* ---------- Home ---------- */
+.hero { display: grid; grid-template-columns: 2fr 1fr; gap: var(--gap); padding-block: clamp(40px, 6vw, 80px) clamp(40px, 5vw, 64px); }
+.hero-main { display: flex; flex-direction: column; gap: 48px; }
+.hero-main .lead { margin: 0; }
+.hero-side { padding-top: 6px; }
+@media (max-width: 1055px) { .hero { grid-template-columns: 1fr; } .hero-side { max-width: 36rem; } }
+.feature { display: grid; grid-template-columns: 2fr 1fr; gap: var(--gap); align-items: start; }
+.feature-main { position: relative; }
+.feature-main .mosaic { --cols: 3; }
+.feature-card { position: absolute; right: 0; bottom: 0; width: 50%; height: 50%; }
+@media (max-width: 1055px) { .feature { grid-template-columns: 1fr; } }
+@media (max-width: 671px) { .feature-card { position: static; width: 100%; } }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin: 0; }
+.stats div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 8px; padding-top: 16px; border-top: 1px solid var(--border); }
+.stats dd { margin: 0; font-size: clamp(2.5rem, 1.8rem + 2.4vw, 4rem); font-weight: 300; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.stats dt { font-size: 0.875rem; color: var(--text-2); }
+@media (max-width: 1055px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+.steps li { padding-top: 16px; border-top: 1px solid var(--border-strong); }
+.steps .meta { display: block; margin-bottom: 40px; color: var(--link); }
+.steps p { margin: 8px 0 0; font-size: 0.875rem; color: var(--text-2); }
+.strip { display: block; background: var(--accent); color: var(--accent-text); text-decoration: none; transition: background-color var(--dur-fast) var(--ease); }
+.strip:hover { background: var(--accent-hover); }
+.strip-in { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 64px; padding-block: 16px; font-size: 1.125rem; font-weight: 300; }
+.strip-in b { font-weight: 600; }
+
+/* ---------- Tabs, filters, accordion ---------- */
+.tabs { position: relative; display: flex; overflow-x: auto; border-bottom: 1px solid var(--border); scrollbar-width: none; }
+.tab { flex: none; padding: 12px 16px; margin-bottom: -1px; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--text-2); font-size: 0.875rem; white-space: nowrap; cursor: pointer; transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
+.tab:hover { color: var(--text); border-bottom-color: var(--border-strong); }
+.tab[aria-selected="true"], .tab[aria-pressed="true"] { color: var(--text); border-bottom-color: var(--accent); }
+.panel { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); padding-top: 48px; }
+.panel .picto { margin-bottom: 24px; }
+.panel h2 { margin-bottom: 16px; }
+.panel .fig { margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border); }
+.panel .fig b { display: block; font-size: 3rem; font-weight: 300; line-height: 1.1; }
+@media (max-width: 799px) { .panel { grid-template-columns: 1fr; } }
+.seg { position: relative; display: inline-flex; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.seg button { flex: none; height: 40px; padding: 0 16px; margin-left: -1px; border: 1px solid var(--border-strong); background: var(--bg); color: var(--text-2); font-size: 0.875rem; white-space: nowrap; cursor: pointer; transition: background-color var(--dur-fast) var(--ease); }
+.seg button:first-child { margin-left: 0; }
+.seg button:hover { background: var(--layer-hover); color: var(--text); }
+.seg button[aria-pressed="true"] { position: relative; z-index: 1; background: var(--text); border-color: var(--text); color: var(--bg); }
+.toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: 16px 24px; margin-bottom: 32px; }
+.toolbar .count { margin-left: auto; padding-bottom: 10px; }
+.empty { padding: 48px 16px; background: var(--layer); text-align: center; }
+.empty p { margin-bottom: 8px; }
+.acc details { border-top: 1px solid var(--border); }
+.acc details:last-child { border-bottom: 1px solid var(--border); }
+.acc summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; padding: 12px 16px; list-style: none; cursor: pointer; transition: background-color var(--dur-fast) var(--ease); }
+.acc summary::-webkit-details-marker { display: none; }
+.acc summary:hover { background: var(--layer-hover); }
+.acc summary .icon { transition: transform var(--dur-base) var(--ease); }
+.acc details[open] summary .icon { transform: rotate(180deg); }
+.acc details p { margin: 0; padding: 4px 64px 24px 16px; max-width: 46em; color: var(--text-2); }
+
+/* ---------- Plans ---------- */
+.plan { display: flex; flex-direction: column; padding: 24px 16px 16px; border-top: 4px solid transparent; background: var(--layer); }
+.plan.featured { border-top-color: var(--accent); }
+.plan-top { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+.price { margin-top: 32px; font-size: 2.625rem; font-weight: 300; line-height: 1.1; }
+.plan > p { margin: 16px 0 0; font-size: 0.875rem; color: var(--text-2); }
+.plan ul { margin: 24px 0 32px; }
+.plan li { display: flex; gap: 8px; padding: 8px 0; border-top: 1px solid var(--border); font-size: 0.875rem; }
+.plan li .icon { width: 16px; height: 16px; margin-top: 2px; color: var(--link); }
+.plan .btn { width: 100%; margin-top: auto; }
+
+/* ---------- Lists: roles, events, people ---------- */
+.rows > li { border-top: 1px solid var(--border); }
+.rows > li:last-child { border-bottom: 1px solid var(--border); }
+.row { display: grid; grid-template-columns: 1fr 9rem 7rem 20px; gap: 16px; align-items: center; padding: 16px; text-decoration: none; transition: background-color var(--dur-fast) var(--ease); }
+.row:hover { background: var(--layer-hover); }
+.row small { display: block; font-size: 0.75rem; color: var(--text-2); }
+.row > span:not(:first-child) { font-size: 0.875rem; color: var(--text-2); }
+.row .icon { color: var(--link); }
+@media (max-width: 799px) { .row { grid-template-columns: 1fr 20px; } .row > span:nth-child(2), .row > span:nth-child(3) { display: none; } }
+.ev { display: grid; grid-template-columns: 6rem 1fr auto; gap: 8px 24px; align-items: start; padding: 24px 0; border-top: 1px solid var(--border); }
+.ev time { display: flex; flex-direction: column; font-family: var(--mono); font-size: 0.8125rem; color: var(--text-2); }
+.ev time b { font-family: var(--font); font-size: 2.625rem; font-weight: 300; line-height: 1; color: var(--text); }
+.ev p { margin: 6px 0 0; font-size: 0.875rem; color: var(--text-2); }
+.ev .btn { min-width: 0; }
+@media (max-width: 671px) { .ev { grid-template-columns: 4.5rem 1fr; } .ev .btn { grid-column: 2; justify-self: start; } }
+.avatar { display: flex; align-items: flex-end; height: 10rem; margin-bottom: 12px; padding: 16px; background: var(--m1); color: var(--accent-text); font-size: 2.625rem; font-weight: 300; line-height: 1; }
+.a2 { background: var(--m3); color: var(--bg); }
+.a3 { background: var(--m2); color: var(--m3); }
+.a4 { background: var(--m5); color: var(--bg); }
+.person p { margin: 0; font-size: 0.875rem; color: var(--text-2); }
+.timeline li { display: grid; grid-template-columns: 8rem 1fr; gap: var(--gap); padding: 16px 0 24px; border-top: 1px solid var(--border); }
+.timeline .meta { color: var(--link); font-size: 1rem; }
+@media (max-width: 671px) { .timeline li { grid-template-columns: 1fr; gap: 4px; } }
+
+/* ---------- Article and legal ---------- */
+.byline { display: flex; align-items: center; gap: 12px; margin-top: 32px; font-size: 0.875rem; }
+.byline .avatar { width: 48px; height: 48px; margin: 0; padding: 6px; font-size: 1rem; }
+.doc { display: grid; grid-template-columns: 1fr 3fr; gap: var(--gap); align-items: start; }
+.doc > * { min-width: 0; }
+.toc { position: sticky; top: calc(var(--hh) + 32px); }
+.toc a { display: block; padding: 8px 12px; border-left: 2px solid var(--border); font-size: 0.875rem; color: var(--text-2); text-decoration: none; }
+.toc a:hover { border-left-color: var(--accent); color: var(--text); }
+@media (max-width: 1055px) { .doc { grid-template-columns: 1fr; } .toc { position: static; } }
+.prose { max-width: 42rem; font-size: 1.0625rem; line-height: 1.65; }
+.prose h2 { margin: 56px 0 16px; font-size: 1.75rem; font-weight: 300; }
+.prose h2:first-child { margin-top: 0; }
+.prose a:not(.btn) { color: var(--link); }
+.prose ul { margin: 0 0 1em; padding-left: 1.25em; list-style: square; }
+.prose li { margin: 6px 0; }
+.prose blockquote { margin: 40px 0; padding-left: 24px; border-left: 2px solid var(--accent); font-size: 1.5rem; font-weight: 300; line-height: 1.35; }
+.prose blockquote p { margin-bottom: 12px; }
+.prose cite { font-style: normal; font-size: 0.875rem; color: var(--text-2); }
+.prose figure { margin: 40px 0; }
+.prose figure .mosaic { --cols: 4; }
+figcaption { margin-top: 8px; font-size: 0.8125rem; color: var(--text-2); }
+.tbl-wrap { position: relative; overflow-x: auto; margin: 32px 0; }
+.tbl { width: 100%; min-width: 34rem; border-collapse: collapse; font-size: 0.875rem; }
+.tbl th { padding: 12px 16px; background: var(--layer-hover); font-weight: 600; text-align: left; }
+.tbl td { padding: 12px 16px; border-top: 1px solid var(--border); }
+.facts { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0 var(--gap); margin: 0 0 64px; }
+.facts div { padding: 12px 0 16px; border-top: 1px solid var(--border); }
+.facts dt { font-size: 0.75rem; color: var(--text-2); }
+.facts dd { margin: 4px 0 0; font-size: 0.875rem; }
+@media (max-width: 1055px) { .facts { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------- Forms: grey fields with a bottom rule, errors in a reserved line ---------- */
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; }
+.fld { display: grid; gap: 8px; align-content: start; min-width: 0; margin: 0; padding: 0; border: 0; }
+.fld.full { grid-column: 1 / -1; }
+.fld > label:not(.check), .fld > legend, .fld > span { padding: 0; font-size: 0.75rem; color: var(--text-2); letter-spacing: 0.02em; }
+.in { width: 100%; height: 40px; padding: 0 16px; border: 0; border-bottom: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--layer); font-size: 0.875rem; }
+.fcard .in { background: var(--layer-on); }
+textarea.in { height: auto; min-height: 140px; padding: 12px 16px; resize: vertical; }
+.pick { position: relative; }
+select.in { appearance: none; padding-right: 40px; cursor: pointer; }
+.pick .icon { position: absolute; right: 12px; top: 10px; width: 18px; height: 18px; pointer-events: none; }
+.in:focus { outline: 2px solid var(--focus); outline-offset: -2px; }
+.in[aria-invalid="true"] { outline: 2px solid var(--danger); outline-offset: -2px; }
+.err { min-height: 1.25rem; font-size: 0.75rem; color: var(--danger); }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: 0.875rem; cursor: pointer; }
+.check input { width: 18px; height: 18px; margin: 2px 0 0; flex: none; accent-color: var(--accent); }
+.radios { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.form .btn { justify-self: start; margin-top: 8px; }
+.fcard { padding: 24px 16px 32px; background: var(--layer); }
+.search { position: relative; width: min(100%, 20rem); }
+.search .icon { position: absolute; left: 12px; top: 10px; width: 18px; height: 18px; color: var(--text-2); }
+.search .in { padding-left: 40px; }
+.ok { display: flex; gap: 16px; padding: 16px; border-left: 3px solid var(--success); background: var(--layer); }
+.ok .icon { color: var(--success); }
+.ok h2, .ok h3 { font-size: 1rem; font-weight: 600; }
+.ok p { margin: 4px 0 12px; font-size: 0.875rem; color: var(--text-2); }
+@media (max-width: 671px) { .form { grid-template-columns: 1fr; } }
+
+/* ---------- Footer: a dark band ---------- */
+.ft { padding-top: 48px; }
+.ft a { color: var(--text-2); text-decoration: none; }
+.ft a:hover { color: var(--text); text-decoration: underline; }
+.ft-top { display: grid; grid-template-columns: 1fr 1fr; gap: 24px var(--gap); padding-bottom: 48px; border-bottom: 1px solid var(--border); }
+.ft-top .brand { padding-left: 0; color: var(--text); }
+.ft-intro { max-width: 26rem; margin: 12px 0 0; font-size: 0.875rem; color: var(--text-2); }
+.news-row { display: flex; }
+.news-row .in { flex: 1; min-width: 0; }
+.news-row .btn { min-width: 0; min-height: 40px; }
+.ft-cols { padding-block: 32px 48px; }
+.ft h2 { margin-bottom: 12px; font-size: 0.875rem; font-weight: 600; }
+.ft li { margin-bottom: 8px; font-size: 0.875rem; }
+.ft address { font-style: normal; font-size: 0.875rem; color: var(--text-2); }
+.ft-bot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 16px 32px; border-top: 1px solid var(--border); font-size: 0.8125rem; color: var(--text-2); }
+.ft-bot ul { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+@media (max-width: 799px) { .ft-top { grid-template-columns: 1fr; } }
+
+/* ---------- Motion: keyframes only; the hero art wipes in left to right ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+@keyframes wipe { from { clip-path: inset(0 100% 0 0); } }
+.js .enter { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 80ms); }
+.js .mosaic.enter { animation: wipe 900ms var(--ease) 240ms both; }
+.js .reveal:not(.is-in) { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal:not(.is-in) { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="hd">
+  <div class="hd-in">
+    <button class="icon-btn menu-btn" type="button" id="menu-open" aria-label="Open menu" aria-controls="menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    <a class="brand" href="#/" aria-label="Varrow Systems home"><svg aria-hidden="true"><use href="#mark"/></svg>Varrow</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/services">Services</a>
+      <a href="#/work">Client results</a>
+      <a href="#/insights">Insights</a>
+      <a href="#/about">About</a>
+      <a href="#/careers">Careers</a>
+      <a href="#/events">Events</a>
+    </nav>
+    <div class="hd-act">
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to dark theme"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="hd-cta" href="#/contact">Book an assessment<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-top"><span class="brand"><svg aria-hidden="true"><use href="#mark"/></svg>Varrow</span><button class="icon-btn" type="button" id="menu-close" aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <nav aria-label="Menu"><a href="#/">Home</a><a href="#/services">Services</a><a href="#/work">Client results</a><a href="#/insights">Insights</a><a href="#/about">About</a><a href="#/careers">Careers</a><a href="#/events">Events</a><a href="#/contact">Contact</a></nav>
+  <a class="btn btn-primary" href="#/contact">Book an assessment<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+</dialog>
+
+<main id="main" tabindex="-1">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="wrap hero">
+    <div class="hero-main">
+      <div>
+        <span class="eyebrow enter">Industrial data engineering</span>
+        <h1 class="display enter" style="--i:1">Plant data your team can act on, from sensor to shift report</h1>
+      </div>
+      <p class="lead enter" style="--i:2">We connect the machines you already own, build the monitoring and maintenance models that matter, and stay until your own people run them.</p>
+      <div class="btn-row enter" style="--i:3">
+        <a class="btn btn-primary" href="#/contact">Book a site assessment<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-tertiary" href="#/work">See client results<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+    <aside class="hero-side enter" style="--i:4" aria-labelledby="latest-h">
+      <h2 class="label" id="latest-h">Latest</h2>
+      <ul class="rl">
+        <li><a href="#/article"><span><small>Guide</small>Vibration monitoring on older lines, a practical start</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="#/events"><span><small>Briefing · 14 January 2027</small>Plant data in a morning, for operations managers in Leeds</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="#/careers"><span><small>Careers</small>We are hiring controls and data engineers</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      </ul>
+    </aside>
+  </section>
+  <div class="wrap mosaic m8 enter" aria-hidden="true">
+    <svg class="k1" viewBox="0 0 80 80"><use href="#t-q"/></svg><svg class="k2" viewBox="0 0 80 80"><use href="#t-c"/></svg><svg class="k3 r1" viewBox="0 0 80 80"><use href="#t-t"/></svg><svg class="k4" viewBox="0 0 80 80"><use href="#t-a"/></svg><svg class="k6 r2" viewBox="0 0 80 80"><use href="#t-h"/></svg><svg class="k5" viewBox="0 0 80 80"><use href="#t-d"/></svg><svg class="k3 r3" viewBox="0 0 80 80"><use href="#t-q"/></svg><svg class="k2" viewBox="0 0 80 80"><use href="#t-s"/></svg>
+  </div>
+
+  <section class="wrap sec reveal" aria-labelledby="do-h">
+    <div class="split">
+      <h2 class="h2" id="do-h">Four kinds of work, one engineering team</h2>
+      <div><p>Most plants already have the data. It sits in controllers, meters and paper logs nobody has time to read. We make it useful, one line at a time.</p><a class="link" href="#/services">All services and prices<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    </div>
+    <ul class="g g4 gt">
+      <li><a class="tile" href="#/services?tab=connect"><svg class="picto" aria-hidden="true"><use href="#p-connect"/></svg><h3 class="h3">Connect</h3><p>Read the controllers, meters and sensors you already own; retrofit the blind spots.</p><svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><a class="tile" href="#/services?tab=monitor"><svg class="picto" aria-hidden="true"><use href="#p-monitor"/></svg><h3 class="h3">Monitor</h3><p>Shift dashboards and alerts that reach the right technician, not everyone.</p><svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><a class="tile" href="#/services?tab=predict"><svg class="picto" aria-hidden="true"><use href="#p-predict"/></svg><h3 class="h3">Predict</h3><p>Maintenance models trained on your own failure history, checked against every repair.</p><svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><a class="tile" href="#/services?tab=automate"><svg class="picto" aria-hidden="true"><use href="#p-automate"/></svg><h3 class="h3">Automate</h3><p>Recipes, quality checks and reports moved out of spreadsheets, with a rollback plan.</p><svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+    </ul>
+  </section>
+
+  <section class="wrap sec-b reveal" aria-labelledby="case-h">
+    <h2 class="sr-only" id="case-h">Featured client result</h2>
+    <div class="feature">
+      <div class="feature-main">
+        <div class="mosaic" aria-hidden="true">
+          <svg class="k3" viewBox="0 0 80 80"><use href="#t-h"/></svg><svg class="k4 r1" viewBox="0 0 80 80"><use href="#t-q"/></svg><svg class="k2" viewBox="0 0 80 80"><use href="#t-a"/></svg><svg class="k5 r2" viewBox="0 0 80 80"><use href="#t-t"/></svg><svg class="k6" viewBox="0 0 80 80"><use href="#t-c"/></svg><svg class="k1 r3" viewBox="0 0 80 80"><use href="#t-q"/></svg>
+        </div>
+        <a class="tile tile-lg feature-card" href="#/case"><span class="eyebrow">Case study · Food and beverage</span><h3>Hollin Foods cut unplanned line stops by 31% across three bakeries</h3><svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div>
+        <h3 class="label">More results</h3>
+        <ul class="rl">
+          <li><a href="#/case"><span><small>Metals · Predict</small>Nine days of warning before furnace fan failures</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#/case"><span><small>Pharma · Automate</small>Batch records signed at the line, not a week later</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#/case"><span><small>Logistics · Connect</small>One live view of 214 conveyors in four depots</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a href="#/case"><span><small>Water · Predict</small>Pump failures caught before the alarm</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        </ul>
+        <p style="margin-top:24px"><a class="link" href="#/work">All client results<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="num-h">
+    <div class="wrap sec reveal">
+      <div class="split">
+        <h2 class="h2" id="num-h">Measured on the shop floor, not in a slide deck</h2>
+        <div><p>Every engagement starts with a baseline and ends with the same measurement, signed off by your plant manager.</p></div>
+      </div>
+      <dl class="stats">
+        <div><dt>plants connected since 2014</dt><dd>140</dd></div>
+        <div><dt>median drop in unplanned stops</dt><dd>27%</dd></div>
+        <div><dt>weeks to first live data</dt><dd>3</dd></div>
+        <div><dt>of pilots kept in production</dt><dd>9 of 10</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="wrap sec reveal" aria-labelledby="how-h">
+    <div class="split">
+      <h2 class="h2" id="how-h">How an engagement runs</h2>
+      <div><p>Small steps with a decision after each one. You can stop after the assessment and still keep a plan you can use.</p></div>
+    </div>
+    <ol class="g g4 steps">
+      <li><span class="meta">01 · 2 days</span><h3 class="h3">Assess</h3><p>We walk every line with your team and rank the losses by what they cost.</p></li>
+      <li><span class="meta">02 · 3 weeks</span><h3 class="h3">Connect</h3><p>One line goes live: controllers read, sensors fitted, data in one place.</p></li>
+      <li><span class="meta">03 · 10 weeks</span><h3 class="h3">Prove</h3><p>Dashboards and alerts run on real shifts; we measure against the baseline.</p></li>
+      <li><span class="meta">04 · ongoing</span><h3 class="h3">Hand over</h3><p>Your team takes over with training and documentation, or we keep running it.</p></li>
+    </ol>
+  </section>
+
+  <section class="wrap sec-b reveal" aria-labelledby="ins-h">
+    <div class="split">
+      <h2 class="h2" id="ins-h">Insights</h2>
+      <div><p>Field notes from the plants we work in, written by the engineers who did the work.</p><a class="link" href="#/insights">All insights<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    </div>
+    <ul class="g g3 gt">
+      <li><a class="tile" href="#/article"><span class="eyebrow">Guide · Maintenance</span><h3 class="h3">A practical guide to vibration monitoring on older lines</h3><p class="meta">2026-11-04 · 12 min</p><svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><a class="tile" href="#/insights"><span class="eyebrow">Article · Data</span><h3 class="h3">What OEE hides, and the three numbers we track instead</h3><p class="meta">2026-10-21 · 7 min</p><svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      <li><a class="tile" href="#/insights"><span class="eyebrow">Guide · Maintenance</span><h3 class="h3">Retrofit sensors: what to buy, what to skip</h3><p class="meta">2026-10-02 · 9 min</p><svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+    </ul>
+  </section>
+
+  <a class="strip" href="#/contact"><span class="wrap strip-in"><span><b>Two days on site, a written plan in ten.</b> Book a site assessment</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+</div>
+
+<!-- ===================== SERVICES (prices and FAQ) ===================== -->
+<div data-view="services">
+  <section class="wrap phead">
+    <ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Services</li></ol>
+    <h1 class="h1">Services and ways to work with us</h1>
+    <p class="lead">Four kinds of work, three ways to buy them. Every price below is a starting point we confirm in writing after the site assessment.</p>
+  </section>
+  <section class="wrap sec-b" aria-label="Service areas">
+    <div class="tabs" role="tablist" aria-label="Service areas">
+      <button class="tab" type="button" role="tab" id="tab-connect" aria-controls="pn-connect" aria-selected="true">Connect</button>
+      <button class="tab" type="button" role="tab" id="tab-monitor" aria-controls="pn-monitor" aria-selected="false" tabindex="-1">Monitor</button>
+      <button class="tab" type="button" role="tab" id="tab-predict" aria-controls="pn-predict" aria-selected="false" tabindex="-1">Predict</button>
+      <button class="tab" type="button" role="tab" id="tab-automate" aria-controls="pn-automate" aria-selected="false" tabindex="-1">Automate</button>
+    </div>
+    <div class="panel" role="tabpanel" id="pn-connect" aria-labelledby="tab-connect">
+      <div><svg class="picto" aria-hidden="true"><use href="#p-connect"/></svg><h2 class="h2">Machine connectivity</h2><p>We read data from the controllers, meters and sensors you already own, add retrofit sensors where a line is blind, and land it all in one historian your IT team approves.</p><div class="fig"><b>3 weeks</b><span class="muted">typical time to first live data</span></div></div>
+      <div><h3 class="label">What you get</h3><ul class="rl"><li><span class="plain">A survey of every line, controller and network segment</span></li><li><span class="plain">Retrofit vibration, power and temperature sensors</span></li><li><span class="plain">One historian, on site or in your own cloud</span></li><li><span class="plain">A network design signed off by your IT team</span></li></ul></div>
+    </div>
+    <div class="panel" role="tabpanel" id="pn-monitor" aria-labelledby="tab-monitor">
+      <div><svg class="picto" aria-hidden="true"><use href="#p-monitor"/></svg><h2 class="h2">Dashboards and alerts</h2><p>Shift-level dashboards that show stops, speed losses and scrap as they happen, with alerts that reach the right technician instead of everyone.</p><div class="fig"><b>31%</b><span class="muted">fewer unplanned stops at a three-site bakery group</span></div></div>
+      <div><h3 class="label">What you get</h3><ul class="rl"><li><span class="plain">Downtime reasons captured at the machine</span></li><li><span class="plain">OEE and scrap by line, shift and product</span></li><li><span class="plain">Alert rules tuned with your technicians</span></li><li><span class="plain">A weekly report your plant manager signs</span></li></ul></div>
+    </div>
+    <div class="panel" role="tabpanel" id="pn-predict" aria-labelledby="tab-predict">
+      <div><svg class="picto" aria-hidden="true"><use href="#p-predict"/></svg><h2 class="h2">Maintenance models</h2><p>Models that warn days before a bearing, pump or motor fails, trained on your own history and checked against every repair your team logs.</p><div class="fig"><b>9 days</b><span class="muted">average warning before a fan bearing failure</span></div></div>
+      <div><h3 class="label">What you get</h3><ul class="rl"><li><span class="plain">Failure history cleaned and labelled</span></li><li><span class="plain">Models for your ten most critical assets</span></li><li><span class="plain">Work orders raised in your maintenance system</span></li><li><span class="plain">A monthly accuracy review</span></li></ul></div>
+    </div>
+    <div class="panel" role="tabpanel" id="pn-automate" aria-labelledby="tab-automate">
+      <div><svg class="picto" aria-hidden="true"><use href="#p-automate"/></svg><h2 class="h2">Control and integration</h2><p>Recipe changes, quality checks and reports moved out of spreadsheets and into the systems that run the line, with a rollback plan for every change.</p><div class="fig"><b>40 min</b><span class="muted">saved on every product changeover</span></div></div>
+      <div><h3 class="label">What you get</h3><ul class="rl"><li><span class="plain">Recipe and setpoint management</span></li><li><span class="plain">Quality checks at the machine</span></li><li><span class="plain">Connections to ERP and maintenance systems</span></li><li><span class="plain">Change control and a rollback plan</span></li></ul></div>
+    </div>
+  </section>
+  <section class="wrap sec-b" aria-labelledby="plans-h">
+    <div class="split"><h2 class="h2" id="plans-h">Three ways to start</h2><div><p>Prices exclude travel outside the UK and the Netherlands, and hardware we buy on your behalf at cost.</p></div></div>
+    <div class="g g3 gt">
+      <article class="plan"><div class="plan-top"><h3 class="h3">Site assessment</h3></div><div class="price">$9,800</div><span class="meta">fixed fee</span><p>Two days on site, a written report in ten working days and a 90-day plan you can run with or without us.</p><ul><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>A walk of every line with your team</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Data and network survey</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Losses ranked by what they cost</li></ul><a class="btn btn-tertiary" href="#/contact?topic=assessment">Book an assessment<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></article>
+      <article class="plan featured"><div class="plan-top"><h3 class="h3">Pilot</h3><span class="tag">Most chosen</span></div><div class="price">from $48,000</div><span class="meta">per line</span><p>One line connected, monitored and measured over ten to twelve weeks, with a before and after your finance team can check.</p><ul><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Connectivity and retrofit sensors</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Dashboards and alert rules</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Training for two shifts</li></ul><a class="btn btn-primary" href="#/contact?topic=pilot">Plan a pilot<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></article>
+      <article class="plan"><div class="plan-top"><h3 class="h3">Operate</h3></div><div class="price">from $6,500</div><span class="meta">per month</span><p>We run, tune and extend what we built, with a named engineer and a response time written into the contract.</p><ul><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>A named engineer and a backup</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Four-hour response on critical alerts</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>A quarterly roadmap with your team</li></ul><a class="btn btn-tertiary" href="#/contact?topic=support">Talk to us<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></article>
+    </div>
+  </section>
+  <section class="wrap sec-b" aria-labelledby="faq-h">
+    <div class="split">
+      <h2 class="h2" id="faq-h">Questions we hear first</h2>
+      <div class="acc">
+        <details><summary>Do you work with older machines?<svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>Yes. Most lines we connect are ten to thirty years old. Where a controller cannot share data, we fit sensors on the outside instead of opening the machine.</p></details>
+        <details><summary>Where does our data live?<svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>On a server in your plant or in your own cloud account. We never keep your production data on ours, and you keep every login when we leave.</p></details>
+        <details><summary>Which systems do you connect to?<svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>Common controllers, historians, ERP and maintenance systems. We confirm the list for your plant during the site assessment.</p></details>
+        <details><summary>How long until we see results?<svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>First live data usually arrives in three weeks. A pilot runs ten to twelve weeks, so the measurement covers normal production and a changeover or two.</p></details>
+        <details><summary>Can our own team take over?<svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>That is the goal. Every engagement ends with documentation, training for two shifts and a handover checklist your maintenance lead signs.</p></details>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CLIENT RESULTS (filterable) ===================== -->
+<div data-view="work">
+  <section class="wrap phead">
+    <ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Client results</li></ol>
+    <h1 class="h1">Client results</h1>
+    <p class="lead">Each result was measured against a baseline taken before we changed anything, and confirmed by the client's own team.</p>
+  </section>
+  <section class="wrap sec-b" aria-label="Case studies">
+    <div class="toolbar">
+      <div class="seg" role="group" aria-label="Industry">
+        <button type="button" data-ind="all" aria-pressed="true">All industries</button><button type="button" data-ind="food" aria-pressed="false">Food and beverage</button><button type="button" data-ind="metals" aria-pressed="false">Metals</button><button type="button" data-ind="pharma" aria-pressed="false">Pharma</button><button type="button" data-ind="logistics" aria-pressed="false">Logistics</button><button type="button" data-ind="water" aria-pressed="false">Water</button>
+      </div>
+      <div class="fld"><label for="w-svc">Service</label><div class="pick"><select class="in" id="w-svc"><option value="all">All services</option><option value="connect">Connect</option><option value="monitor">Monitor</option><option value="predict">Predict</option><option value="automate">Automate</option></select><svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></div></div>
+      <p class="count" id="w-count" aria-live="polite">8 results</p>
+    </div>
+    <ul class="g g3 gt" id="w-list" data-render="cases"><li class="nojs"><a class="tile card" href="#/case"><span class="eyebrow">Food and beverage · Monitor</span><h2 class="h3">Hollin Foods</h2><p>31% fewer unplanned stops across three bakeries, and seven more results in metals, pharma, logistics and water.</p><span class="fig"><b>−31%</b>unplanned stops</span><svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li></ul>
+    <div class="empty" id="w-empty" hidden><p>No result matches both filters yet.</p><button class="btn btn-ghost" type="button" data-reset="work">Clear filters</button></div>
+  </section>
+</div>
+
+<!-- ===================== CASE STUDY ===================== -->
+<div data-view="case">
+  <article>
+    <header class="wrap phead">
+      <ol class="crumbs"><li><a href="#/">Home</a></li><li><a href="#/work">Client results</a></li><li aria-current="page">Hollin Foods</li></ol>
+      <span class="eyebrow">Case study · Food and beverage</span>
+      <h1 class="h1">Hollin Foods cut unplanned line stops by 31% across three bakeries</h1>
+      <p class="lead">A family bakery group with eleven lines, three sites and a maintenance team of nine wanted to know why output dropped every Tuesday.</p>
+    </header>
+    <div class="wrap">
+      <dl class="facts"><div><dt>Client</dt><dd>Hollin Foods</dd></div><div><dt>Industry</dt><dd>Food and beverage</dd></div><div><dt>Sites</dt><dd>3 bakeries, 11 lines</dd></div><div><dt>Duration</dt><dd>14 weeks, then Operate</dd></div><div><dt>Services</dt><dd>Connect, Monitor</dd></div></dl>
+      <dl class="stats" style="margin-bottom:64px"><div><dt>unplanned stops per week</dt><dd>−31%</dd></div><div><dt>more output on the worst line</dt><dd>+8%</dd></div><div><dt>to first live data</dt><dd>19 days</dd></div><div><dt>sensors retrofitted</dt><dd>64</dd></div></dl>
+      <div class="doc">
+        <nav class="toc" aria-label="On this page"><h2 class="label">On this page</h2><a href="#c-challenge">The challenge</a><a href="#c-approach">What we did</a><a href="#c-result">The result</a></nav>
+        <div class="prose">
+          <h2 id="c-challenge">The challenge</h2>
+          <p>Stops were logged on paper at the end of each shift, so the reasons blurred into "mechanical" and "other". The weekly meeting argued about numbers instead of fixing machines.</p>
+          <h2 id="c-approach">What we did</h2>
+          <ul><li>Read the existing controllers on all eleven lines and fitted 64 sensors to the ovens, proofers and wrappers they could not see.</li><li>Put a reason picker on a tablet at each line, so operators log a stop in two taps while it happens.</li><li>Built one dashboard per shift and one per site, and tuned alerts with the technicians over four weeks.</li></ul>
+          <figure><div class="mosaic" aria-hidden="true"><svg class="k1" viewBox="0 0 80 80"><use href="#t-a"/></svg><svg class="k2 r1" viewBox="0 0 80 80"><use href="#t-q"/></svg><svg class="k4" viewBox="0 0 80 80"><use href="#t-d"/></svg><svg class="k3" viewBox="0 0 80 80"><use href="#t-c"/></svg></div><figcaption>Placeholder for a line photo: wrappers on line 4 at the main bakery.</figcaption></figure>
+          <h2 id="c-result">The result</h2>
+          <p>Tuesday turned out to be the day the main proofer was cleaned with a rushed restart. A changed procedure and one sensor alert removed most of the stops. Across all sites, unplanned stops fell by 31% in fourteen weeks.</p>
+          <blockquote><p>For the first time the weekly meeting starts with the same numbers on every screen.</p><cite>Operations director, Hollin Foods (placeholder quote)</cite></blockquote>
+          <p><a class="btn btn-primary" href="#/contact?topic=pilot">Plan a pilot like this<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+        </div>
+      </div>
+    </div>
+  </article>
+  <section class="wrap sec" aria-labelledby="next-h"><h2 class="label" id="next-h">Next result</h2><a class="tile tile-lg" href="#/work"><span class="eyebrow">Metals · Predict</span><h3>Brask Metals: nine days of warning before furnace fan failures</h3><svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg></a></section>
+</div>
+
+<!-- ===================== INSIGHTS (filter and search) ===================== -->
+<div data-view="insights">
+  <section class="wrap phead">
+    <ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Insights</li></ol>
+    <h1 class="h1">Insights</h1>
+    <p class="lead">Guides, articles and one yearly report, written by the engineers who did the work.</p>
+  </section>
+  <section class="wrap" aria-label="Featured">
+    <a class="feature tile" href="#/article" style="padding:0"><div class="mosaic" style="--cols:3" aria-hidden="true"><svg class="k2" viewBox="0 0 80 80"><use href="#t-c"/></svg><svg class="k1 r2" viewBox="0 0 80 80"><use href="#t-q"/></svg><svg class="k4 r1" viewBox="0 0 80 80"><use href="#t-a"/></svg></div><div class="tile-lg" style="padding:24px 16px 64px"><span class="eyebrow">Guide · Maintenance</span><h2>A practical guide to vibration monitoring on older lines</h2><p class="meta" style="margin-top:16px">2026-11-04 · 12 min</p></div><svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </section>
+  <section class="wrap sec" aria-label="All insights">
+    <div class="toolbar">
+      <div class="tabs" role="group" aria-label="Topic">
+        <button class="tab" type="button" data-topic="all" aria-pressed="true">All</button><button class="tab" type="button" data-topic="maintenance" aria-pressed="false">Maintenance</button><button class="tab" type="button" data-topic="data" aria-pressed="false">Data</button><button class="tab" type="button" data-topic="automation" aria-pressed="false">Automation</button><button class="tab" type="button" data-topic="energy" aria-pressed="false">Energy</button>
+      </div>
+      <div class="search"><label class="sr-only" for="p-q">Search insights</label><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input class="in" id="p-q" type="search" placeholder="Search insights" autocomplete="off"></div>
+      <p class="count" id="p-count" aria-live="polite">9 insights</p>
+    </div>
+    <ul class="g g3 gt" id="p-list" data-render="posts"><li class="nojs"><a class="tile" href="#/article"><span class="eyebrow">Guide · Maintenance</span><h2 class="h3">A practical guide to vibration monitoring on older lines</h2><p>Plus eight more on maintenance, data, automation and energy.</p><svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li></ul>
+    <div class="empty" id="p-empty" hidden><p>Nothing matches that search.</p><button class="btn btn-ghost" type="button" data-reset="insights">Show all insights</button></div>
+  </section>
+</div>
+
+<!-- ===================== ARTICLE ===================== -->
+<div data-view="article">
+  <article>
+    <header class="wrap phead">
+      <ol class="crumbs"><li><a href="#/">Home</a></li><li><a href="#/insights">Insights</a></li><li aria-current="page">Guide</li></ol>
+      <span class="eyebrow">Guide · Maintenance</span>
+      <h1 class="h1">A practical guide to vibration monitoring on older lines</h1>
+      <div class="byline"><span class="avatar a2" aria-hidden="true">DO</span><span><b>Dev Okafor</b>, principal engineer<br><span class="meta">2026-11-04 · 12 min read</span></span></div>
+    </header>
+    <div class="wrap sec-b doc">
+      <nav class="toc" aria-label="On this page"><h2 class="label">On this page</h2><a href="#a-why">Why vibration first</a><a href="#a-sensors">Choosing sensors</a><a href="#a-baseline">Setting a baseline</a><a href="#a-alerts">Alerts people trust</a></nav>
+      <div class="prose">
+        <p class="lead">Most rotating equipment tells you it is about to fail. On older lines nobody is listening, because the machines were built before anyone thought to ask.</p>
+        <h2 id="a-why">Why vibration first</h2>
+        <p>Bearings, gearboxes, fans and pumps cause a large share of unplanned stops on the lines we see, and almost all of them change how they vibrate long before they stop. A small sensor on the outside of the housing hears that change without touching the controller.</p>
+        <h2 id="a-sensors">Choosing sensors</h2>
+        <p>Start with the ten assets whose failure stops a whole line. For each one, pick the simplest sensor that can hear the fault you fear most.</p>
+        <div class="tbl-wrap"><table class="tbl"><thead><tr><th scope="col">Asset</th><th scope="col">Sensor</th><th scope="col">Typical warning</th></tr></thead><tbody><tr><td>Motor bearing</td><td>Triaxial accelerometer</td><td>7 to 14 days</td></tr><tr><td>Gearbox</td><td>Accelerometer and oil temperature</td><td>5 to 10 days</td></tr><tr><td>Fan</td><td>Accelerometer and current clamp</td><td>10 to 20 days</td></tr><tr><td>Pump</td><td>Accelerometer and pressure</td><td>3 to 7 days</td></tr></tbody></table></div>
+        <h2 id="a-baseline">Setting a baseline</h2>
+        <p>Record two weeks of normal running before you set a single alert. Include a cleaning cycle, a changeover and a cold start, or the first of each will look like a fault.</p>
+        <figure><div class="mosaic" aria-hidden="true"><svg class="k4" viewBox="0 0 80 80"><use href="#t-h"/></svg><svg class="k1" viewBox="0 0 80 80"><use href="#t-a"/></svg><svg class="k2 r3" viewBox="0 0 80 80"><use href="#t-q"/></svg><svg class="k6" viewBox="0 0 80 80"><use href="#t-d"/></svg></div><figcaption>Placeholder for a chart: two weeks of bearing vibration on a fan, with the cleaning cycles marked.</figcaption></figure>
+        <h2 id="a-alerts">Alerts people trust</h2>
+        <ul><li>Send each alert to one named person, never to a shared inbox.</li><li>Say what to check and how urgent it is, in the words your technicians use.</li><li>Review every alert at the weekly meeting for the first two months, and delete the ones nobody acted on.</li></ul>
+        <blockquote><p>An alert that fires twice for nothing gets ignored the third time, when it matters.</p><cite>Dev Okafor</cite></blockquote>
+        <p>Want help choosing your first ten assets? <a href="#/contact?topic=assessment">Book a site assessment</a>.</p>
+      </div>
+    </div>
+  </article>
+</div>
+
+<!-- ===================== ABOUT (with team) ===================== -->
+<div data-view="about">
+  <section class="wrap phead">
+    <ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">About</li></ol>
+    <h1 class="h1">Engineers who stay until it runs</h1>
+    <p class="lead">Varrow Systems is an engineering firm of 38 people in Leeds and Rotterdam. We started in 2014 because too many plant data projects ended with a report and no change on the floor.</p>
+  </section>
+  <section class="wrap sec-b" aria-labelledby="val-h">
+    <h2 class="sr-only" id="val-h">What we hold to</h2>
+    <ul class="g g3 steps">
+      <li><svg class="picto" aria-hidden="true" style="margin-bottom:32px"><use href="#p-measure"/></svg><h3 class="h3">Measure before and after</h3><p>Every project starts with a baseline and ends with the same measurement, signed off by your plant.</p></li>
+      <li><svg class="picto" aria-hidden="true" style="margin-bottom:32px"><use href="#p-team"/></svg><h3 class="h3">Build with the people who run it</h3><p>Technicians and operators shape the alerts and dashboards; nobody inherits a black box.</p></li>
+      <li><svg class="picto" aria-hidden="true" style="margin-bottom:32px"><use href="#p-clock"/></svg><h3 class="h3">Leave it running</h3><p>Documentation, training and a handover checklist come with every engagement.</p></li>
+    </ul>
+  </section>
+  <section class="band" aria-labelledby="hist-h">
+    <div class="wrap sec">
+      <div class="split"><h2 class="h2" id="hist-h">Twelve years, one line at a time</h2><div><p>From a two-person controls shop to a team that has connected 140 plants.</p></div></div>
+      <ol class="timeline">
+        <li><span class="meta">2014</span><span>Founded in Leeds by two controls engineers who were tired of reports nobody read.</span></li>
+        <li><span class="meta">2018</span><span>First maintenance model in production, on a foundry's furnace fans.</span></li>
+        <li><span class="meta">2021</span><span>Opened in Rotterdam to work with food and logistics clients across the North Sea.</span></li>
+        <li><span class="meta">2024</span><span>The hundredth plant connected.</span></li>
+        <li><span class="meta">2026</span><span>Started Operate for clients who want us to run what we built.</span></li>
+      </ol>
+    </div>
+  </section>
+  <section class="wrap sec" aria-labelledby="team-h">
+    <div class="split"><h2 class="h2" id="team-h">Leadership</h2><div><p>Each of us still spends at least one week a month on a client site.</p><a class="link" href="#/careers">Join the team<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></div>
+    <ul class="g g3" id="team" data-render="team"><li class="nojs person"><span class="avatar">EM</span><h3 class="h3">Elin Marsh</h3><p>Managing partner, Leeds, with five more engineers who lead connectivity, data, automation, delivery and operations.</p></li></ul>
+  </section>
+  <section class="wrap sec-b" aria-labelledby="off-h">
+    <h2 class="label" id="off-h">Offices</h2>
+    <div class="g g2 gt">
+      <div class="tile"><span class="eyebrow">United Kingdom</span><h3 class="h3">Leeds</h3><p>4 Canal Wharf, Leeds LS11 5PS</p><p><a class="link" href="#/contact">Visit or write to us</a></p></div>
+      <div class="tile"><span class="eyebrow">Netherlands</span><h3 class="h3">Rotterdam</h3><p>Lloydkade 12, 3024 Rotterdam</p><p><a class="link" href="#/contact">Visit or write to us</a></p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CAREERS (filterable roles) ===================== -->
+<div data-view="careers">
+  <section class="wrap phead">
+    <ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Careers</li></ol>
+    <h1 class="h1">Work on real plants with a small team</h1>
+    <p class="lead">We hire engineers who like being on the shop floor as much as at a keyboard. Every role below is open now.</p>
+  </section>
+  <section class="wrap sec-b" aria-labelledby="perk-h">
+    <h2 class="sr-only" id="perk-h">Working here</h2>
+    <ul class="g g4 steps">
+      <li><svg class="picto" aria-hidden="true" style="margin-bottom:32px"><use href="#p-team"/></svg><h3 class="h3">Small teams</h3><p>Projects run with three to five people, so your work is visible.</p></li>
+      <li><svg class="picto" aria-hidden="true" style="margin-bottom:32px"><use href="#p-book"/></svg><h3 class="h3">Time to learn</h3><p>A yearly learning budget and one Friday a month for training.</p></li>
+      <li><svg class="picto" aria-hidden="true" style="margin-bottom:32px"><use href="#p-route"/></svg><h3 class="h3">Planned travel</h3><p>Site visits are planned weeks ahead, two nights away a week at most.</p></li>
+      <li><svg class="picto" aria-hidden="true" style="margin-bottom:32px"><use href="#p-clock"/></svg><h3 class="h3">Flexible hours</h3><p>Office days in Leeds or Rotterdam, the rest wherever suits you.</p></li>
+    </ul>
+  </section>
+  <section class="wrap sec-b" aria-labelledby="roles-h">
+    <h2 class="h2" id="roles-h" style="margin-bottom:32px">Open roles</h2>
+    <div class="toolbar">
+      <div class="fld"><label for="r-dis">Discipline</label><div class="pick"><select class="in" id="r-dis"><option value="all">All disciplines</option><option value="Engineering">Engineering</option><option value="Data">Data</option><option value="Field service">Field service</option><option value="Delivery">Delivery</option></select><svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></div></div>
+      <div class="fld"><label for="r-loc">Location</label><div class="pick"><select class="in" id="r-loc"><option value="all">All locations</option><option value="Leeds">Leeds</option><option value="Rotterdam">Rotterdam</option><option value="Remote">Remote</option></select><svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></div></div>
+      <p class="count" id="r-count" aria-live="polite">7 roles</p>
+    </div>
+    <ul class="rows" id="r-list" data-render="roles"><li class="nojs"><a class="row" href="#/contact?topic=careers"><span>Controls engineer<small>Engineering · Leeds · Full time, and six more roles in data, field service and delivery</small></span><span>Leeds</span><span>Full time</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li></ul>
+    <div class="empty" id="r-empty" hidden><p>No open role matches. We still read every open application.</p><button class="btn btn-ghost" type="button" data-reset="careers">Clear filters</button></div>
+    <p style="margin-top:24px"><a class="link" href="#/contact?topic=careers">Send an open application<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+  </section>
+</div>
+
+<!-- ===================== EVENTS (with registration) ===================== -->
+<div data-view="events">
+  <section class="wrap phead">
+    <ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Events</li></ol>
+    <h1 class="h1">Briefings, demos and site visits</h1>
+    <p class="lead">Small sessions for operations and maintenance managers. Free to attend; places are limited so everyone can ask questions.</p>
+  </section>
+  <section class="wrap sec-b feature" aria-label="Upcoming events">
+    <ul>
+      <li class="ev"><time datetime="2027-01-14"><b>14</b>Jan 2027</time><div><h2 class="h3">Plant data in a morning: a briefing for operations managers</h2><p>Leeds, in person · 09:00 to 12:00</p></div><button class="btn btn-ghost" type="button" data-ev="leeds-briefing">Register<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></li>
+      <li class="ev"><time datetime="2027-01-28"><b>28</b>Jan 2027</time><div><h2 class="h3">Live demo: from vibration sensor to work order</h2><p>Online · 15:00 CET, 45 minutes</p></div><button class="btn btn-ghost" type="button" data-ev="online-demo">Register<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></li>
+      <li class="ev"><time datetime="2027-02-11"><b>11</b>Feb 2027</time><div><h2 class="h3">Site visit: a connected bakery line</h2><p>Near Leeds, in person · twelve places</p></div><button class="btn btn-ghost" type="button" data-ev="site-visit">Register<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></li>
+      <li class="ev"><time datetime="2027-03-04"><b>4</b>Mar 2027</time><div><h2 class="h3">Round table: energy per unit in food and drink</h2><p>Rotterdam, in person · 14:00 to 17:00</p></div><button class="btn btn-ghost" type="button" data-ev="round-table">Register<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></li>
+    </ul>
+    <div class="fcard" id="register">
+      <h2 class="h3" style="margin-bottom:24px">Reserve a place</h2>
+      <form class="form" data-form="register" novalidate>
+        <div class="fld full"><label for="e-name">Full name</label><input class="in" id="e-name" name="name" autocomplete="name" required aria-describedby="e-name-err"><span class="err" id="e-name-err"></span></div>
+        <div class="fld full"><label for="e-email">Work email</label><input class="in" id="e-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email-err"><span class="err" id="e-email-err"></span></div>
+        <div class="fld full"><label for="e-event">Event</label><div class="pick"><select class="in" id="e-event" name="event" required aria-describedby="e-event-err"><option value="">Choose an event</option><option value="leeds-briefing">14 Jan · Briefing, Leeds</option><option value="online-demo">28 Jan · Live demo, online</option><option value="site-visit">11 Feb · Site visit, near Leeds</option><option value="round-table">4 Mar · Round table, Rotterdam</option></select><svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></div><span class="err" id="e-event-err"></span></div>
+        <fieldset class="fld full"><legend>Your role</legend><div class="radios"><label class="check"><input type="radio" name="role" value="operations" required aria-describedby="e-role-err">Operations</label><label class="check"><input type="radio" name="role" value="maintenance" required aria-describedby="e-role-err">Maintenance</label><label class="check"><input type="radio" name="role" value="other" required aria-describedby="e-role-err">Other</label></div><span class="err" id="e-role-err"></span></fieldset>
+        <button class="btn btn-primary" type="submit">Reserve my place<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </form>
+      <div class="ok" data-success="register" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-ok"/></svg><div><h3>Your place is reserved</h3><p>A confirmation with the address or the join link is on its way to your inbox.</p><button class="btn btn-ghost" type="button" data-again>Reserve another place</button></div></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div data-view="contact">
+  <section class="wrap phead">
+    <ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Contact</li></ol>
+    <h1 class="h1">Tell us about your plant</h1>
+    <p class="lead">An engineer, not a salesperson, replies within one working day. A short note is enough to start.</p>
+  </section>
+  <section class="wrap sec-b feature" aria-label="Contact">
+    <div>
+      <form class="form" data-form="contact" novalidate>
+        <div class="fld"><label for="c-name">Full name</label><input class="in" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-err"><span class="err" id="c-name-err"></span></div>
+        <div class="fld"><label for="c-email">Work email</label><input class="in" id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-err"><span class="err" id="c-email-err"></span></div>
+        <div class="fld"><label for="c-company">Company</label><input class="in" id="c-company" name="company" autocomplete="organization" required aria-describedby="c-company-err"><span class="err" id="c-company-err"></span></div>
+        <div class="fld"><label for="c-topic">Topic</label><div class="pick"><select class="in" id="c-topic" name="topic"><option value="assessment">A site assessment</option><option value="pilot">A pilot project</option><option value="support">Support for a system we built</option><option value="careers">Careers</option><option value="other">Something else</option></select><svg class="icon" aria-hidden="true"><use href="#i-chev"/></svg></div><span class="err"></span></div>
+        <div class="fld full"><label for="c-msg">What is happening on your lines?</label><textarea class="in" id="c-msg" name="message" rows="5" minlength="20" required aria-describedby="c-msg-err"></textarea><span class="err" id="c-msg-err"></span></div>
+        <div class="fld full"><label class="check"><input type="checkbox" name="consent" required aria-describedby="c-consent-err">I agree that Varrow Systems may store my details to reply to this message.</label><span class="err" id="c-consent-err"></span></div>
+        <button class="btn btn-primary" type="submit">Send message<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </form>
+      <div class="ok" data-success="contact" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-ok"/></svg><div><h2>Message received</h2><p>An engineer will reply within one working day, usually with two or three questions about your lines.</p><button class="btn btn-ghost" type="button" data-again>Send another message</button></div></div>
+    </div>
+    <aside aria-label="Other ways to reach us">
+      <ul class="rl">
+        <li><span class="plain"><small>Email</small><a class="link" href="mailto:hello@varrow.example">hello@varrow.example</a></span></li>
+        <li><span class="plain"><small>Phone, weekdays 08:00 to 17:00</small>+44 113 000 0000</span></li>
+        <li><span class="plain"><small>Leeds</small>4 Canal Wharf, Leeds LS11 5PS</span></li>
+        <li><span class="plain"><small>Rotterdam</small>Lloydkade 12, 3024 Rotterdam</span></li>
+      </ul>
+    </aside>
+  </section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="legal">
+  <section class="wrap phead">
+    <ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Privacy and terms</li></ol>
+    <h1 class="h1">Privacy and terms</h1>
+    <p class="lead">Placeholder text. Replace it with policies reviewed for your company and the countries you work in.</p>
+  </section>
+  <div class="wrap sec-b doc">
+    <nav class="toc" aria-label="On this page"><h2 class="label">On this page</h2><a href="#privacy">Privacy policy</a><a href="#terms">Terms of use</a></nav>
+    <div class="prose">
+      <h2 id="privacy">Privacy policy</h2>
+      <p>We collect the details you send through our forms and use them only to reply, to run an event you registered for, or to send the newsletter you asked for.</p>
+      <p>Client production data stays on the client's own systems. We do not sell personal data or share it with advertisers.</p>
+      <p>You can ask to see, correct or delete your details at any time by writing to privacy@varrow.example.</p>
+      <h2 id="terms">Terms of use</h2>
+      <p>The content on this website is for general information. It is not engineering advice for a specific plant; that comes after a site assessment and a written agreement.</p>
+      <p>Client names and results appear with each client's permission.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="wrap sec feature">
+    <div>
+      <span class="meta">Error 404</span>
+      <h1 class="h1" style="margin-top:16px">This page is not on the line</h1>
+      <p class="lead" style="margin-top:24px">The link may be old, or the page has moved. These are the pages people look for most.</p>
+      <div class="btn-row" style="margin-top:40px"><a class="btn btn-primary" href="#/">Go to the home page<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="btn btn-tertiary" href="#/services">See services<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    </div>
+    <div class="mosaic" style="--cols:2" aria-hidden="true"><svg class="k4" viewBox="0 0 80 80"><use href="#t-s"/></svg><svg class="k1 r1" viewBox="0 0 80 80"><use href="#t-q"/></svg><svg class="k3" viewBox="0 0 80 80"><use href="#t-h"/></svg><svg class="k2" viewBox="0 0 80 80"><use href="#t-d"/></svg></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-top">
+      <div><a class="brand" href="#/" aria-label="Varrow Systems home"><svg aria-hidden="true"><use href="#mark"/></svg>Varrow</a><p class="ft-intro">Industrial data engineering for mid-sized manufacturers in the UK and the Netherlands.</p></div>
+      <div>
+        <form data-form="newsletter" novalidate>
+          <div class="fld"><label for="n-email">Field notes, four times a year</label><div class="news-row"><input class="in" id="n-email" name="email" type="email" autocomplete="email" placeholder="Work email" required aria-describedby="n-email-err"><button class="btn btn-primary" type="submit">Subscribe</button></div><span class="err" id="n-email-err"></span></div>
+        </form>
+        <div class="ok" data-success="newsletter" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-ok"/></svg><div><h3>You are subscribed</h3><p>The next issue arrives in the first week of the quarter.</p></div></div>
+      </div>
+    </div>
+    <div class="g g4 ft-cols">
+      <div><h2>Services</h2><ul><li><a href="#/services?tab=connect">Connect</a></li><li><a href="#/services?tab=monitor">Monitor</a></li><li><a href="#/services?tab=predict">Predict</a></li><li><a href="#/services?tab=automate">Automate</a></li></ul></div>
+      <div><h2>Company</h2><ul><li><a href="#/about">About</a></li><li><a href="#/careers">Careers</a></li><li><a href="#/events">Events</a></li><li><a href="#/contact">Contact</a></li></ul></div>
+      <div><h2>Learn</h2><ul><li><a href="#/work">Client results</a></li><li><a href="#/insights">Insights</a></li><li><a href="#/article">Vibration guide</a></li></ul></div>
+      <div><h2>Offices</h2><address>4 Canal Wharf, Leeds<br>Lloydkade 12, Rotterdam<br><a href="mailto:hello@varrow.example">hello@varrow.example</a></address></div>
+    </div>
+    <div class="ft-bot"><span>© 2026 Varrow Systems Ltd</span><ul><li><a href="#/legal">Privacy</a></li><li><a href="#terms">Terms</a></li><li><a href="#/contact">Contact</a></li></ul></div>
+  </div>
+</footer>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mark" viewBox="0 0 24 24"><path d="M2 2h20v20H2z" style="fill:var(--accent)"/><path d="M2 22A20 20 0 0 1 22 2v20z" style="fill:var(--m3)"/><path d="M12 22a10 10 0 0 1 10-10v10z" style="fill:var(--bg)"/></symbol>
+    <symbol id="t-q" viewBox="0 0 80 80"><rect width="80" height="80" style="fill:var(--q)"/><path d="M-2 82V0h2a80 80 0 0 1 80 80h2v2z" style="fill:var(--p)"/></symbol>
+    <symbol id="t-h" viewBox="0 0 80 80"><rect width="80" height="80" style="fill:var(--q)"/><path d="M-2 82v-2h2a40 40 0 0 1 80 0h2v2z" style="fill:var(--p)"/></symbol>
+    <symbol id="t-c" viewBox="0 0 80 80"><rect width="80" height="80" style="fill:var(--q)"/><circle cx="40" cy="40" r="30" style="fill:var(--p)"/><circle cx="40" cy="40" r="11" style="fill:var(--q)"/></symbol>
+    <symbol id="t-t" viewBox="0 0 80 80"><rect width="80" height="80" style="fill:var(--q)"/><path d="M-2-2h84v84z" style="fill:var(--p)"/></symbol>
+    <symbol id="t-a" viewBox="0 0 80 80"><rect width="80" height="80" style="fill:var(--q)"/><path d="M-2 14h2a66 66 0 0 1 66 66v2M-2 34h2a46 46 0 0 1 46 46v2M-2 54h2a26 26 0 0 1 26 26v2" style="fill:none;stroke:var(--p);stroke-width:8"/></symbol>
+    <symbol id="t-d" viewBox="0 0 80 80"><rect width="80" height="80" style="fill:var(--q)"/><path d="M8 10H80M8 30H80M8 50H80M8 70H80" style="stroke:var(--p);stroke-width:4;stroke-dasharray:4 16"/></symbol>
+    <symbol id="t-s" viewBox="0 0 80 80"><rect width="80" height="80" style="fill:var(--q)"/><path d="M40 8l32 32-32 32L8 40z" style="fill:var(--p)"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></symbol>
+    <symbol id="p-connect" viewBox="0 0 48 48"><circle cx="10" cy="24" r="5"/><circle cx="38" cy="10" r="5"/><circle cx="38" cy="38" r="5"/><path d="M15 24h8l10-11M23 24l10 11"/></symbol>
+    <symbol id="p-monitor" viewBox="0 0 48 48"><path d="M5 8h38v26H5zM18 42h12M24 34v8M10 28l8-8 6 5 8-11 6 6"/></symbol>
+    <symbol id="p-predict" viewBox="0 0 48 48"><path d="M6 34a18 18 0 0 1 36 0M24 34l9-12M24 16v3M11 21l2 2M37 21l-2 2"/><circle cx="24" cy="34" r="2.5"/></symbol>
+    <symbol id="p-automate" viewBox="0 0 48 48"><circle cx="24" cy="24" r="7"/><path d="M24 5v7M24 36v7M5 24h7M36 24h7M10.6 10.6l5 5M32.4 32.4l5 5M10.6 37.4l5-5M32.4 15.6l5-5"/></symbol>
+    <symbol id="p-measure" viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><circle cx="24" cy="24" r="8"/><path d="M24 3v13M24 32v13M3 24h13M32 24h13"/></symbol>
+    <symbol id="p-team" viewBox="0 0 48 48"><circle cx="17" cy="16" r="6"/><circle cx="33" cy="18" r="5"/><path d="M6 40c0-7 5-12 11-12s11 5 11 12M28 30c1.5-1.3 3.2-2 5-2 5 0 9 4.5 9 11"/></symbol>
+    <symbol id="p-clock" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M24 13v11l8 6"/></symbol>
+    <symbol id="p-book" viewBox="0 0 48 48"><path d="M6 10c6-2 12-2 18 2 6-4 12-4 18-2v28c-6-2-12-2-18 2-6-4-12-4-18-2zM24 12v28"/></symbol>
+    <symbol id="p-route" viewBox="0 0 48 48"><circle cx="12" cy="36" r="4"/><circle cx="36" cy="12" r="4"/><path d="M16 36h14a6 6 0 0 0 0-12H18a6 6 0 0 1 0-12h14"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const arrow = '<svg class="icon go" aria-hidden="true"><use href="#i-arrow"/></svg>';
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks one ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("varrow-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("varrow-theme", next);
+  });
+
+  /* ---------- Data: replace with the brief's own; the lists below are drawn from it ---------- */
+  const INDUSTRY = { food: "Food and beverage", metals: "Metals", pharma: "Pharma", logistics: "Logistics", water: "Water" };
+  const SERVICE = { connect: "Connect", monitor: "Monitor", predict: "Predict", automate: "Automate" };
+  const CASES = [
+    { client: "Hollin Foods", ind: "food", svc: "monitor", title: "31% fewer unplanned stops across three bakeries", figure: "−31%", unit: "unplanned stops" },
+    { client: "Brask Metals", ind: "metals", svc: "predict", title: "Nine days of warning before furnace fan failures", figure: "9 days", unit: "average warning" },
+    { client: "Okeby Pharma", ind: "pharma", svc: "automate", title: "Batch records signed at the line, not a week later", figure: "−6 days", unit: "to release a batch" },
+    { client: "Lantern Freight", ind: "logistics", svc: "connect", title: "One live view of 214 conveyors in four depots", figure: "214", unit: "conveyors connected" },
+    { client: "Tidewell Water", ind: "water", svc: "predict", title: "Pump failures caught before the alarm", figure: "−42%", unit: "emergency call-outs" },
+    { client: "Fennick Bottling", ind: "food", svc: "automate", title: "Changeovers 40 minutes shorter on two lines", figure: "−40 min", unit: "per changeover" },
+    { client: "Ashgrove Castings", ind: "metals", svc: "monitor", title: "Scrap tracked by mould, shift and alloy", figure: "−18%", unit: "scrap rate" },
+    { client: "Quayside Cold Store", ind: "logistics", svc: "monitor", title: "Energy use per pallet down by a fifth", figure: "−21%", unit: "energy per pallet" },
+  ];
+  const TOPIC = { maintenance: "Maintenance", data: "Data", automation: "Automation", energy: "Energy" };
+  const POSTS = [
+    { title: "A practical guide to vibration monitoring on older lines", topic: "maintenance", kind: "Guide", date: "2026-11-04", read: 12 },
+    { title: "What OEE hides, and the three numbers we track instead", topic: "data", kind: "Article", date: "2026-10-21", read: 7 },
+    { title: "Retrofit sensors: what to buy, what to skip", topic: "maintenance", kind: "Guide", date: "2026-10-02", read: 9 },
+    { title: "Moving recipes out of spreadsheets without stopping the line", topic: "automation", kind: "Article", date: "2026-09-18", read: 6 },
+    { title: "Energy per unit: a measure your finance team will trust", topic: "energy", kind: "Article", date: "2026-09-03", read: 5 },
+    { title: "Plant data in mid-sized manufacturing, 2026 survey", topic: "data", kind: "Report", date: "2026-08-12", read: 18 },
+    { title: "Alert fatigue on the shop floor, and how to tune it out", topic: "maintenance", kind: "Article", date: "2026-07-29", read: 6 },
+    { title: "A rollback plan for every control change", topic: "automation", kind: "Guide", date: "2026-07-08", read: 8 },
+    { title: "Compressed air: the leak you pay for every shift", topic: "energy", kind: "Article", date: "2026-06-17", read: 4 },
+  ];
+  const TEAM = [
+    { name: "Elin Marsh", role: "Managing partner", city: "Leeds" },
+    { name: "Dev Okafor", role: "Principal engineer, connectivity", city: "Leeds" },
+    { name: "Saoirse Klein", role: "Data science lead", city: "Rotterdam" },
+    { name: "Tomasz Brandt", role: "Automation lead", city: "Rotterdam" },
+    { name: "Mira Haddad", role: "Delivery lead", city: "Leeds" },
+    { name: "Joon Park", role: "Operations engineer", city: "Rotterdam" },
+  ];
+  const ROLES = [
+    { title: "Controls engineer", dis: "Engineering", loc: "Leeds", type: "Full time" },
+    { title: "Senior data engineer", dis: "Data", loc: "Rotterdam", type: "Full time" },
+    { title: "Field service technician", dis: "Field service", loc: "Leeds", type: "Full time" },
+    { title: "Machine learning engineer, maintenance models", dis: "Data", loc: "Remote", type: "Full time" },
+    { title: "Project manager, pilots", dis: "Delivery", loc: "Rotterdam", type: "Full time" },
+    { title: "Graduate engineer, 2027 intake", dis: "Engineering", loc: "Leeds", type: "Graduate" },
+    { title: "Network engineer, plant security", dis: "Engineering", loc: "Remote", type: "Contract" },
+  ];
+  const initials = (name) => name.split(" ").map((w) => w[0]).join("").slice(0, 2);
+  const RENDER = {
+    cases: () => CASES.map((c) => `<li data-ind="${c.ind}" data-svc="${c.svc}"><a class="tile card" href="#/case"><span class="eyebrow">${INDUSTRY[c.ind]} · ${SERVICE[c.svc]}</span><h2 class="h3">${esc(c.client)}</h2><p>${esc(c.title)}</p><span class="fig"><b>${esc(c.figure)}</b>${esc(c.unit)}</span>${arrow}</a></li>`),
+    posts: () => POSTS.map((p) => `<li data-topic="${p.topic}" data-text="${esc(p.title.toLowerCase())}"><a class="tile" href="#/article"><span class="eyebrow">${p.kind} · ${TOPIC[p.topic]}</span><h2 class="h3">${esc(p.title)}</h2><p class="meta">${p.date} · ${p.read} min</p>${arrow}</a></li>`),
+    team: () => TEAM.map((t, i) => `<li class="person"><span class="avatar a${(i % 4) + 1}" aria-hidden="true">${initials(t.name)}</span><h3 class="h3">${esc(t.name)}</h3><p>${esc(t.role)}, ${esc(t.city)}</p></li>`),
+    roles: () => ROLES.map((r) => `<li data-dis="${r.dis}" data-loc="${r.loc}"><a class="row" href="#/contact?topic=careers"><span>${esc(r.title)}<small>${r.dis}</small></span><span>${r.loc}</span><span>${r.type}</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>`),
+  };
+  $$("[data-render]").forEach((list) => { list.innerHTML = RENDER[list.dataset.render]().join(""); });
+
+  /* ---------- Filters: every list shows a live count and an empty state ---------- */
+  function filterList(list, test, countEl, noun, emptyEl) {
+    let shown = 0;
+    [...list.children].forEach((li) => { li.hidden = !test(li); if (!li.hidden) shown++; });
+    countEl.textContent = `${shown} ${shown === 1 ? noun[0] : noun[1]}`;
+    emptyEl.hidden = shown > 0;
+  }
+  const work = { ind: "all", svc: "all" };
+  const svcSelect = $("#w-svc");
+  function filterWork() {
+    $$("[data-ind]", $(".seg")).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.ind === work.ind)));
+    filterList($("#w-list"), (li) => (work.ind === "all" || li.dataset.ind === work.ind) && (work.svc === "all" || li.dataset.svc === work.svc), $("#w-count"), ["result", "results"], $("#w-empty"));
+  }
+  $$(".seg [data-ind]").forEach((b) => b.addEventListener("click", () => { work.ind = b.dataset.ind; filterWork(); }));
+  svcSelect.addEventListener("change", () => { work.svc = svcSelect.value; filterWork(); });
+
+  const insights = { topic: "all" };
+  const query = $("#p-q");
+  function filterPosts() {
+    const q = query.value.trim().toLowerCase();
+    $$("button[data-topic]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.topic === insights.topic)));
+    filterList($("#p-list"), (li) => (insights.topic === "all" || li.dataset.topic === insights.topic) && (!q || li.dataset.text.includes(q)), $("#p-count"), ["insight", "insights"], $("#p-empty"));
+  }
+  $$("button[data-topic]").forEach((b) => b.addEventListener("click", () => { insights.topic = b.dataset.topic; filterPosts(); }));
+  query.addEventListener("input", filterPosts);
+
+  const disSelect = $("#r-dis");
+  const locSelect = $("#r-loc");
+  function filterRoles() {
+    filterList($("#r-list"), (li) => (disSelect.value === "all" || li.dataset.dis === disSelect.value) && (locSelect.value === "all" || li.dataset.loc === locSelect.value), $("#r-count"), ["role", "roles"], $("#r-empty"));
+  }
+  [disSelect, locSelect].forEach((s) => s.addEventListener("change", filterRoles));
+
+  $$("[data-reset]").forEach((b) => b.addEventListener("click", () => {
+    if (b.dataset.reset === "work") { work.ind = "all"; work.svc = svcSelect.value = "all"; filterWork(); }
+    if (b.dataset.reset === "insights") { insights.topic = "all"; query.value = ""; filterPosts(); }
+    if (b.dataset.reset === "careers") { disSelect.value = locSelect.value = "all"; filterRoles(); }
+  }));
+  filterWork();
+  filterPosts();
+  filterRoles();
+
+  /* ---------- Tabs (service areas): arrow keys move between tabs ---------- */
+  const tabs = $$("[role=tab]");
+  function selectTab(tab) {
+    tabs.forEach((t) => { const on = t === tab; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; $("#" + t.getAttribute("aria-controls")).hidden = !on; });
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => selectTab(tab));
+    tab.addEventListener("keydown", (event) => {
+      const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+      if (!step) return;
+      const next = tabs[(i + step + tabs.length) % tabs.length];
+      selectTab(next);
+      next.focus();
+    });
+  });
+  selectTab(tabs[0]);
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "Varrow Systems: plant data your team can act on", services: "Services and prices · Varrow Systems", work: "Client results · Varrow Systems", case: "Hollin Foods case study · Varrow Systems", insights: "Insights · Varrow Systems", article: "Vibration monitoring on older lines · Varrow Systems", about: "About · Varrow Systems", careers: "Careers · Varrow Systems", events: "Events · Varrow Systems", contact: "Contact · Varrow Systems", legal: "Privacy and terms · Varrow Systems", "404": "Page not found · Varrow Systems" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, q = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(q), anchor: "" };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    $$(".nav a, .sheet nav a").forEach((a) => {
+      const target = parse(a.getAttribute("href")).view;
+      const on = target === name || (target === "work" && name === "case") || (target === "insights" && name === "article");
+      if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    const tab = p.get("tab") && $(`#tab-${CSS.escape(p.get("tab"))}`);
+    if (name === "services") selectTab(tab || tabs[0]);
+    if (name === "contact" && p.get("topic")) { const s = $("#c-topic"); if (s.querySelector(`option[value="${CSS.escape(p.get("topic"))}"]`)) s.value = p.get("topic"); }
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); if (menu.open) menu.close(); go(href); return; }
+    const target = href.length > 1 && document.getElementById(href.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    if (menu.open) menu.close();
+    /* a section ID on another view (the footer's Terms link): open that view first, then scroll */
+    const view = target.closest("[data-view]");
+    if (view && view !== current) go(view.dataset.view === "home" ? "#/" : `#/${view.dataset.view}`);
+    target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    if (target.id === "main") target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Mobile menu ---------- */
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+
+  /* ---------- Reveal: keyframes on entry; content stays visible without JS; timed fallback ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in")));
+  }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Events: Register picks the event in the form and moves there ---------- */
+  $$("[data-ev]").forEach((b) => b.addEventListener("click", () => {
+    $("#e-event").value = b.dataset.ev;
+    $("#register").scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    $("#e-name").focus({ preventScroll: true });
+  }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please add a little more detail." };
+  const missing = { checkbox: "Please confirm to continue.", radio: "Please choose one.", "select-one": "Please choose one." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (problem === "valueMissing" && missing[field.type]) || messages[problem] : "";
+    const group = field.type === "radio" ? $$(`[name="${field.name}"]`, field.form) : [field];
+    group.forEach((f) => f.setAttribute("aria-invalid", String(Boolean(problem))));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input, select, textarea", form).filter((f) => f.hasAttribute("aria-describedby"));
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value && field.type !== "radio" && field.type !== "checkbox") checkField(field); });
+      field.addEventListener(field.type === "radio" || field.type === "checkbox" || field.tagName === "SELECT" ? "change" : "input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before "submit" fires, so the button's click runs it too (Enter clicks it). */
+    const button = $("[type=submit]", form);
+    const label = button.innerHTML;
+    const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+    const send = () => {
+      if (button.disabled) return;
+      if (!fields.map(checkField).every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        success.hidden = false;
+        button.disabled = false;
+        button.innerHTML = label;
+      }, 600);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+    $("[data-again]", success)?.addEventListener("click", () => {
+      form.reset();
+      fields.forEach((f) => f.removeAttribute("aria-invalid"));
+      $$(".err", form).forEach((e) => { e.textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      fields[0].focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  const start = parse(location.hash);
+  show(start, { scroll: false });
+  if (start.anchor) document.getElementById(start.anchor.slice(1))?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

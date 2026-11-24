@@ -1,0 +1,1442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Cinderwall: World Tour 2027, the new album and the official store</title>
+<meta name="description" content="Tour dates, news, the store and the fan club of Cinderwall. Static Cathedral is out now; the 2027 world tour plays forty-one nights on five continents.">
+<meta property="og:title" content="Cinderwall: World Tour 2027">
+<meta property="og:description" content="Tour dates, news, the store and the fan club. Static Cathedral is out now.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/jost-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/space-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "Jost"; src: url("fonts/jost-latin-wght.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Space Mono"; src: url("fonts/space-mono-latin-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Space Mono"; src: url("fonts/space-mono-latin-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens (light: paper sections, black stage sections) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(96.8% 0.004 85);
+  --surface: oklch(99% 0.002 85);
+  --surface-2: oklch(92.5% 0.005 85);
+  --text: oklch(16% 0 0);
+  --text-muted: oklch(42% 0.005 85);
+  --border: oklch(84% 0.005 85);
+  --border-strong: oklch(16% 0 0);
+  --accent: oklch(16% 0 0);
+  --accent-text: oklch(96.8% 0.004 85);
+  --signal: oklch(52% 0.2 27);
+  --stage: oklch(14% 0 0);
+  --stage-text: oklch(96.8% 0.004 85);
+  --stage-muted: oklch(74% 0.004 85);
+  --stage-border: oklch(100% 0 0 / 0.2);
+  --stage-signal: oklch(66% 0.2 27);
+  --signal-fill: oklch(50% 0.2 27);
+  --grain-opacity: 0.075;
+  --grain-blend: multiply;
+  --grain-filter: none;
+
+  --font-display: "Jost", "Futura", "Century Gothic", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Jost", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --fs-display: clamp(3rem, 1.5rem + 5.6vw, 7.25rem);
+  --fs-h1: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+  --fs-h2: clamp(2rem, 1.4rem + 2.4vw, 3.5rem);
+  --fs-h3: 1.375rem;
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.8125rem;
+
+  --shadow-overlay: 0 28px 70px oklch(0% 0 0 / 0.5);
+  --dur-fast: 120ms;
+  --dur-base: 240ms;
+  --dur-slow: 620ms;
+  --ease: cubic-bezier(0.12, 0.9, 0.2, 1);
+
+  --page: 1280px;
+  --prose: 720px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --pad: clamp(72px, 9vw, 136px);
+  --cut: clamp(44px, 7vw, 120px);
+}
+
+/* ---------- Tokens (dark: charcoal paper, deeper black stage) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: oklch(20% 0.003 85);
+    --surface: oklch(23.5% 0.003 85);
+    --surface-2: oklch(27% 0.004 85);
+    --text: oklch(95% 0.004 85);
+    --text-muted: oklch(73% 0.005 85);
+    --border: oklch(34% 0.004 85);
+    --border-strong: oklch(95% 0.004 85);
+    --accent: oklch(95% 0.004 85);
+    --accent-text: oklch(14% 0 0);
+    --signal: oklch(72% 0.17 27);
+    --stage: oklch(10.5% 0 0);
+    --stage-text: oklch(95% 0.004 85);
+    --stage-muted: oklch(72% 0.004 85);
+    --stage-border: oklch(100% 0 0 / 0.18);
+    --stage-signal: oklch(72% 0.17 27);
+    --grain-opacity: 0.05;
+    --grain-blend: screen;
+    --grain-filter: invert(1);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(20% 0.003 85);
+  --surface: oklch(23.5% 0.003 85);
+  --surface-2: oklch(27% 0.004 85);
+  --text: oklch(95% 0.004 85);
+  --text-muted: oklch(73% 0.005 85);
+  --border: oklch(34% 0.004 85);
+  --border-strong: oklch(95% 0.004 85);
+  --accent: oklch(95% 0.004 85);
+  --accent-text: oklch(14% 0 0);
+  --signal: oklch(72% 0.17 27);
+  --stage: oklch(10.5% 0 0);
+  --stage-text: oklch(95% 0.004 85);
+  --stage-muted: oklch(72% 0.004 85);
+  --stage-border: oklch(100% 0 0 / 0.18);
+  --stage-signal: oklch(72% 0.17 27);
+  --grain-opacity: 0.05;
+  --grain-blend: screen;
+  --grain-filter: invert(1);
+}
+
+/* ---------- Surfaces: every component reads --on, --hair, --fill…, so it works on paper and on stage ---------- */
+:root {
+  --on: var(--text);
+  --on-muted: var(--text-muted);
+  --hair: var(--border);
+  --rule: var(--border-strong);
+  --fill: var(--accent);
+  --fill-text: var(--accent-text);
+  --sig: var(--signal);
+  --ground: var(--bg);
+  --field: var(--surface);
+}
+.stage {
+  --on: var(--stage-text);
+  --on-muted: var(--stage-muted);
+  --hair: var(--stage-border);
+  --rule: var(--stage-text);
+  --fill: var(--stage-text);
+  --fill-text: var(--stage);
+  --sig: var(--stage-signal);
+  --ground: var(--stage);
+  --field: transparent;
+  background-color: var(--stage);
+  color: var(--on);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; }
+body { position: relative; margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+/* Paper grain over the whole page: black specks multiplied on paper (invisible on black); white specks screened in dark */
+body::after { content: ""; position: absolute; inset: 0; z-index: 60; pointer-events: none; background: url("illustrations/grain.svg") 0 0 / 320px 320px; opacity: var(--grain-opacity); mix-blend-mode: var(--grain-blend); filter: var(--grain-filter); }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3, h4 { margin: 0; line-height: 1; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+:focus-visible { outline: 2px solid var(--on); outline-offset: 3px; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 14px; background: var(--stage-text); color: var(--stage); font-weight: 700; }
+.skip:focus { top: 12px; }
+.wrap { width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; position: relative; z-index: 1; }
+.prose { width: min(100% - 2 * var(--gutter), var(--prose)); margin-inline: auto; position: relative; z-index: 1; }
+[hidden] { display: none !important; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: square; stroke-linejoin: miter; }
+.icon-sm { width: 16px; height: 16px; }
+
+/* ---------- Type: heavy geometric capitals, spaced labels, mono lines ---------- */
+.display, .h1, .h2, .h3, .caps { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: -0.005em; }
+.display { font-size: var(--fs-display); line-height: 0.9; }
+.h1 { font-size: var(--fs-h1); line-height: 0.92; }
+.h2 { font-size: var(--fs-h2); line-height: 0.95; }
+.h3 { font-size: var(--fs-h3); line-height: 1.08; letter-spacing: 0.005em; }
+.label { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: var(--fs-label); line-height: 1.3; text-transform: uppercase; letter-spacing: 0.24em; margin: 0 0 16px; }
+.mono { font-family: var(--font-mono); }
+.mono-line { font-family: var(--font-mono); font-size: clamp(0.9375rem, 0.88rem + 0.25vw, 1.0625rem); line-height: 1.55; max-width: 38em; }
+.meta { font-family: var(--font-mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--on-muted); }
+.muted { color: var(--on-muted); }
+
+/* ---------- Buttons: square, outlined or solid, spaced capitals ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-block-size: 50px; padding: 0 24px; border: 2px solid var(--on); border-radius: 0;
+  font-family: var(--font-display); font-size: 0.875rem; font-weight: 700; line-height: 1; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: background-color var(--dur-fast) linear, color var(--dur-fast) linear, border-color var(--dur-fast) linear;
+}
+.btn-solid { background: var(--fill); border-color: var(--fill); color: var(--fill-text); }
+.btn-solid:hover { background: transparent; color: var(--on); border-color: var(--on); }
+.btn-ghost { background: transparent; color: var(--on); }
+.btn-ghost:hover { background: var(--on); color: var(--ground); }
+.btn-sm { min-block-size: 40px; padding: 0 16px; font-size: 0.75rem; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.more { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 700; font-size: var(--fs-label); letter-spacing: 0.24em; text-transform: uppercase; text-decoration: none; white-space: nowrap; padding-block: 8px; }
+.more .icon { transition: transform var(--dur-base) var(--ease); }
+.more:hover .icon { transform: translateX(6px); }
+.text-link { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; font-weight: 600; }
+.icon-btn { inline-size: 44px; block-size: 44px; display: inline-grid; place-items: center; position: relative; border: 0; background: transparent; color: var(--on); cursor: pointer; text-decoration: none; }
+.icon-btn:hover { color: var(--on-muted); }
+
+/* ---------- Tags and status ---------- */
+.tag { display: inline-block; padding: 5px 9px 4px; background: var(--fill); color: var(--fill-text); font-family: var(--font-display); font-size: 0.6875rem; font-weight: 700; line-height: 1; letter-spacing: 0.2em; text-transform: uppercase; }
+.tag.sale { background: var(--signal-fill); color: oklch(99% 0 0); }
+.status { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 8px; border: 1px solid var(--hair); white-space: nowrap; }
+.status.hot { color: var(--sig); border-color: var(--sig); }
+.status.out { color: var(--on-muted); text-decoration: line-through; }
+.status.soon { border-style: dashed; }
+
+/* ---------- Header: split navigation around the mark, always on stage black ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; border-bottom: 1px solid transparent; transition: border-color var(--dur-base) linear; }
+.site-header.is-scrolled { border-bottom-color: var(--stage-border); }
+.header-inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; min-block-size: 76px; }
+.nav { display: flex; gap: clamp(16px, 2.2vw, 32px); }
+.nav a { position: relative; padding: 10px 0; font-family: var(--font-display); font-weight: 700; font-size: var(--fs-label); letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; }
+.nav a::after { content: ""; position: absolute; left: 0; right: 0.2em; bottom: 2px; height: 2px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform var(--dur-base) var(--ease); }
+.nav a:hover::after, .nav a[aria-current="page"]::after { transform: scaleX(1); }
+.nav-left { justify-self: start; }
+.header-right { justify-self: end; display: flex; align-items: center; gap: clamp(8px, 1.6vw, 24px); }
+.brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand-mark { width: 34px; height: 34px; }
+.brand-name { font-family: var(--font-display); font-weight: 800; font-size: 1.0625rem; letter-spacing: 0.26em; text-transform: uppercase; margin-right: -0.26em; }
+.bag-count { position: absolute; top: 4px; right: 2px; min-inline-size: 18px; block-size: 18px; padding: 0 4px; display: grid; place-items: center; background: var(--signal-fill); color: oklch(99% 0 0); font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 700; line-height: 1; }
+.bag-count[hidden] { display: none; }
+.menu-btn { display: none; }
+@media (max-width: 960px) {
+  .nav { display: none; }
+  .menu-btn { display: inline-grid; justify-self: start; }
+  .header-inner { gap: 8px; min-block-size: 64px; }
+  .header-right { gap: 0; }
+}
+@media (max-width: 420px) { .brand-name { font-size: 0.9375rem; letter-spacing: 0.18em; margin-right: -0.18em; } .brand { gap: 10px; } }
+@media (max-width: 340px) { .brand-name { display: none; } }
+.sheet { border: 0; padding: 0; margin: 0; inline-size: 100%; max-inline-size: 100%; block-size: 100dvh; max-block-size: 100dvh; }
+.sheet::backdrop { background: oklch(0% 0 0 / 0.6); }
+.sheet-inner { display: flex; flex-direction: column; min-block-size: 100%; padding: 12px var(--gutter) 40px; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; min-block-size: 64px; margin-bottom: 24px; }
+.sheet nav { display: grid; }
+.sheet nav a { padding: 14px 0; border-bottom: 1px solid var(--hair); font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 8vw, 3rem); line-height: 1; text-transform: uppercase; text-decoration: none; }
+.sheet .btn { margin-top: 32px; align-self: flex-start; }
+
+/* ---------- Sections, watermark words and diagonal cuts ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+main { min-block-size: 70vh; }
+.section { position: relative; padding-block: var(--pad); overflow-x: clip; }
+.section.paper { background: var(--bg); }
+.has-cut { padding-bottom: calc(var(--pad) * 0.7 + var(--cut)); }
+.head-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px 32px; margin-bottom: clamp(32px, 4vw, 56px); }
+.head-row .h2 { max-width: 14em; }
+/* Giant outlined word behind a section: decorative, aria-hidden, clipped by the section */
+.wm {
+  position: absolute; z-index: 0; top: var(--wm-top, 0.06em); left: 50%; transform: translateX(-50%);
+  font-family: var(--font-display); font-weight: 800; font-size: var(--wm-size, clamp(7rem, 24vw, 22rem)); line-height: 0.8;
+  letter-spacing: 0.3em; text-indent: 0.3em; text-transform: uppercase; white-space: nowrap;
+  color: transparent; -webkit-text-stroke: 1.5px color-mix(in oklch, var(--on) 18%, transparent);
+  pointer-events: none; user-select: none;
+}
+.wm.right { left: auto; right: -0.3em; transform: none; }
+.wm.bottom { top: auto; bottom: var(--wm-bottom, 0.1em); }
+/* The cut: a band at the bottom of a section, filled with the next section's color, with one shard piercing back */
+.cut { position: absolute; left: 0; right: 0; bottom: -1px; z-index: 2; height: calc(var(--cut) + 1px); background: var(--next, var(--bg)); pointer-events: none;
+  clip-path: polygon(0 100%, 40% 60%, 20% 70%, 58% 42%, 100% 0, 100% 100%); }
+.cut.fall { clip-path: polygon(0 0, 42% 42%, 80% 70%, 60% 60%, 100% 100%, 0 100%); }
+.cut.to-paper { --next: var(--bg); }
+.cut.to-stage { --next: var(--stage); }
+/* CSS halftone: dots of one size, faded by a mask (for small surfaces; the large art uses SVG with real dot sizes) */
+.halftone { background-image: radial-gradient(circle, color-mix(in oklch, var(--on) 42%, transparent) 1.3px, transparent 1.8px); background-size: 9px 9px; }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; display: grid; align-items: end; min-block-size: clamp(640px, calc(100vh - 76px), 940px); overflow: clip; }
+.hero-art { position: absolute; inset: 0 0 12% 0; background: url("illustrations/stage.svg") 50% 30% / cover no-repeat; }
+.hero-wedge { position: absolute; inset: 0; background: var(--stage); pointer-events: none;
+  clip-path: polygon(0 100%, 0 86%, 50% 62%, 27% 66.5%, 73% 51%, 100% 38%, 100% 100%); }
+.hero-copy { padding-bottom: clamp(48px, 6vw, 88px); text-align: right; display: grid; justify-items: end; }
+.hero-copy .display { max-width: 9em; margin: 0 0 22px; }
+.hero-copy .mono-line { margin-bottom: 28px; }
+@media (max-width: 760px) {
+  .hero { min-block-size: 760px; }
+  .hero-art { inset: 0 0 44% 0; background-position: 30% 30%; }
+  .hero-wedge { clip-path: polygon(0 100%, 0 49%, 48% 41.3%, 18% 43.8%, 70% 37.8%, 100% 33%, 100% 100%); }
+  .hero-copy { text-align: left; justify-items: start; }
+}
+
+/* ---------- Album feature ---------- */
+.album { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.cover { position: relative; }
+.cover img { inline-size: 100%; box-shadow: 0 0 0 1px var(--hair); }
+.tracklist { list-style: none; counter-reset: track; margin: 28px 0 32px; padding: 0; columns: 2; column-gap: 32px; font-family: var(--font-mono); font-size: 0.875rem; }
+.tracklist li { counter-increment: track; display: flex; gap: 12px; padding: 8px 0; border-top: 1px solid var(--hair); break-inside: avoid; }
+.tracklist li::before { content: counter(track, decimal-leading-zero); color: var(--on-muted); }
+.tracklist li span:last-child { margin-left: auto; color: var(--on-muted); }
+@media (max-width: 860px) { .album { grid-template-columns: 1fr; } .cover { max-width: 520px; } }
+@media (max-width: 520px) { .tracklist { columns: 1; } }
+
+/* ---------- News cards ---------- */
+.news-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 40px); }
+@media (max-width: 900px) { .news-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .news-grid > :first-child:nth-last-child(3) { grid-column: span 2; } }
+@media (max-width: 600px) { .news-grid { grid-template-columns: 1fr; } }
+.news-card { display: grid; gap: 12px; align-content: start; text-decoration: none; }
+.media { overflow: hidden; background: var(--stage); }
+.media img { inline-size: 100%; transition: transform var(--dur-slow) var(--ease); }
+a:hover .media img { transform: scale(1.04); }
+.news-card .media { aspect-ratio: 3 / 2; margin-bottom: 8px; clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%); }
+.news-card .meta { margin: 0; }
+.news-card:hover .h3 { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 5px; }
+.feature-post { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: center; margin-bottom: clamp(48px, 6vw, 80px); text-decoration: none; }
+.feature-post .media { aspect-ratio: 3 / 2; clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%); }
+.feature-post .h2 { margin: 12px 0 20px; }
+@media (max-width: 860px) { .feature-post { grid-template-columns: 1fr; } }
+
+/* ---------- Tour dates ---------- */
+.dates { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--rule); }
+.date-row { display: grid; grid-template-columns: 112px minmax(0, 1fr) auto auto; align-items: center; gap: 16px clamp(16px, 3vw, 40px); padding: 22px 0; border-bottom: 1px solid var(--hair); }
+.when { display: grid; grid-template-columns: auto auto; column-gap: 10px; align-items: end; font-family: var(--font-mono); line-height: 1; text-transform: uppercase; }
+.when .d { grid-row: span 2; font-size: 2.75rem; font-weight: 700; letter-spacing: -0.04em; }
+.when .m { font-size: 0.875rem; font-weight: 700; padding-top: 6px; }
+.when .w { font-size: 0.75rem; color: var(--on-muted); padding-bottom: 6px; }
+.where .h3 { margin: 0 0 6px; }
+.where p { margin: 0; font-family: var(--font-mono); font-size: 0.875rem; color: var(--on-muted); }
+.date-row .btn .icon { transition: transform var(--dur-base) var(--ease); }
+.date-row .btn:hover .icon { transform: translateX(4px); }
+@media (max-width: 720px) {
+  .date-row { grid-template-columns: 76px minmax(0, 1fr); padding: 18px 0; }
+  .when .d { font-size: 2rem; }
+  .date-row .status { grid-column: 2; justify-self: start; }
+  .date-row .btn { grid-column: 2; justify-self: start; }
+}
+
+/* ---------- Products ---------- */
+.products { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); }
+@media (max-width: 1000px) { .products { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.product { display: grid; gap: 10px; align-content: start; text-decoration: none; }
+.product .media { position: relative; aspect-ratio: 1; background: var(--surface-2); }
+.product .tag { position: absolute; top: 12px; left: 12px; }
+.product-name { margin: 6px 0 0; font-family: var(--font-display); font-size: 0.9375rem; font-weight: 700; line-height: 1.3; letter-spacing: 0.1em; text-transform: uppercase; }
+.price { margin: 0; font-family: var(--font-mono); font-size: 0.9375rem; font-weight: 700; }
+.price s { color: var(--on-muted); font-weight: 400; margin-right: 8px; }
+.price .now { color: var(--sig); }
+.product:hover .product-name { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+
+/* ---------- Chips (filters, sizes) ---------- */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+.chip { min-block-size: 40px; padding: 0 16px; border: 2px solid var(--on); background: transparent; color: var(--on); font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--on); color: var(--ground); }
+.chip:hover:not([aria-pressed="true"]) { background: color-mix(in oklch, var(--on) 10%, transparent); }
+.empty { font-family: var(--font-mono); padding: 32px 0; border-bottom: 1px solid var(--hair); }
+
+/* ---------- Watch (tabs on stage) ---------- */
+.tabs { display: flex; gap: clamp(20px, 3vw, 40px); }
+.tab { padding: 0; border: 0; background: none; color: color-mix(in oklch, var(--on) 42%, transparent); font-family: var(--font-display); font-size: var(--fs-h2); font-weight: 800; line-height: 0.95; text-transform: uppercase; cursor: pointer; }
+.tab[aria-selected="true"], .tab:hover { color: var(--on); }
+.videos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); }
+.video { display: grid; gap: 12px; text-decoration: none; }
+.video .media { position: relative; aspect-ratio: 16 / 10; box-shadow: inset 0 0 0 1px var(--hair); }
+.play { position: absolute; left: 16px; bottom: 16px; inline-size: 52px; block-size: 52px; display: grid; place-items: center; background: var(--stage-text); color: var(--stage); }
+.play .icon { fill: currentColor; stroke: none; }
+.video p { margin: 0; font-family: var(--font-mono); font-size: 0.875rem; }
+.photos { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-auto-rows: clamp(140px, 16vw, 230px); gap: clamp(8px, 1.2vw, 16px); }
+.photos figure { margin: 0; overflow: hidden; background: var(--stage); }
+.photos figure:first-child { grid-row: span 2; }
+.photos img { inline-size: 100%; block-size: 100%; object-fit: cover; }
+@media (max-width: 760px) { .videos { grid-template-columns: 1fr; } .photos { grid-template-columns: 1fr 1fr; } .photos figure:first-child { grid-column: span 2; grid-row: auto; } }
+
+/* ---------- Fan club band and member card ---------- */
+.club { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.perks { list-style: none; margin: 28px 0 32px; padding: 0; display: grid; gap: 14px; }
+.perks li { display: flex; gap: 14px; align-items: flex-start; font-family: var(--font-mono); font-size: 0.9375rem; line-height: 1.5; }
+.perks .icon { margin-top: 2px; }
+.member-card { --on: var(--stage-text); --hair: var(--stage-border); position: relative; aspect-ratio: 1.586; padding: clamp(20px, 3vw, 32px); background: var(--stage); color: var(--stage-text); overflow: hidden; display: grid; align-content: space-between; clip-path: polygon(0 0, 100% 0, 100% 84%, 92% 100%, 0 100%); }
+.member-card .halftone { position: absolute; inset: 0; -webkit-mask-image: radial-gradient(circle at 85% 15%, #000 0, transparent 62%); mask-image: radial-gradient(circle at 85% 15%, #000 0, transparent 62%); }
+.member-card > * { position: relative; }
+.member-card .brand-mark { width: 44px; height: 44px; }
+.member-card .h3 { font-size: clamp(1.5rem, 1rem + 2vw, 2.25rem); }
+.member-card .mono { font-size: 0.8125rem; letter-spacing: 0.08em; display: flex; justify-content: space-between; gap: 12px; }
+@media (max-width: 860px) { .club { grid-template-columns: 1fr; } .member-card { max-width: 460px; } }
+
+/* ---------- Page heads (stage band with a cut) ---------- */
+.page-head { position: relative; padding-block: clamp(56px, 8vw, 112px) calc(clamp(40px, 5vw, 72px) + var(--cut)); overflow-x: clip; }
+.page-head .mono-line { margin-top: 20px; }
+.page-head.compact { padding-block: 28px calc(16px + var(--cut)); }
+.crumbs { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; font-family: var(--font-mono); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--on-muted); }
+.crumbs li + li::before { content: "/"; margin-right: 10px; }
+.crumbs a { text-decoration: none; color: var(--on); }
+.crumbs a:hover { text-decoration: underline; }
+
+/* ---------- Product page ---------- */
+.product-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+.gallery .main { aspect-ratio: 1; background: var(--surface-2); }
+.gallery .main img { inline-size: 100%; }
+.thumbs { display: flex; gap: 10px; margin-top: 10px; }
+.thumbs button { inline-size: 84px; block-size: 84px; padding: 0; border: 2px solid transparent; background: var(--surface-2); cursor: pointer; }
+.thumbs button[aria-pressed="true"] { border-color: var(--on); }
+.buy { position: sticky; top: 100px; }
+.buy .h1 { font-size: clamp(2.25rem, 1.5rem + 2.6vw, 3.75rem); margin: 16px 0 18px; }
+.buy .price { font-size: 1.25rem; margin-bottom: 20px; }
+fieldset { border: 0; margin: 0; padding: 0; min-inline-size: 0; }
+legend { padding: 0; }
+.sizes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.size { position: relative; }
+.size input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.size span { display: grid; place-items: center; min-inline-size: 56px; min-block-size: 48px; padding: 0 12px; border: 2px solid var(--hair); font-family: var(--font-mono); font-weight: 700; font-size: 0.875rem; }
+.size input:checked + span { border-color: var(--on); background: var(--on); color: var(--ground); }
+.size input:focus-visible + span { outline: 2px solid var(--on); outline-offset: 3px; }
+.size input:disabled + span { color: var(--on-muted); text-decoration: line-through; border-style: dashed; }
+.size:hover input:not(:disabled):not(:checked) + span { border-color: var(--on); }
+.qty-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; margin: 24px 0 12px; }
+.stepper { display: inline-flex; min-block-size: 50px; border: 2px solid var(--on); }
+.stepper button { inline-size: 46px; border: 0; background: transparent; color: var(--on); cursor: pointer; display: grid; place-items: center; }
+.stepper button:hover { background: color-mix(in oklch, var(--on) 10%, transparent); }
+.stepper input { inline-size: 48px; border: 0; background: transparent; color: var(--on); text-align: center; font-family: var(--font-mono); font-weight: 700; font-size: 1rem; -moz-appearance: textfield; appearance: textfield; }
+.stepper input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.qty-row .btn { flex: 1 1 180px; }
+.added { display: flex; gap: 10px; align-items: center; font-family: var(--font-mono); font-size: 0.875rem; min-block-size: 1.6em; }
+.added[hidden] { display: none; }
+.details { margin-top: 28px; border-top: 2px solid var(--rule); }
+@media (max-width: 900px) { .product-grid { grid-template-columns: 1fr; } .buy { position: static; } }
+
+/* ---------- Toggles (details) ---------- */
+.toggles details { border-bottom: 1px solid var(--hair); }
+.toggles summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; cursor: pointer; list-style: none; font-family: var(--font-display); font-weight: 700; font-size: 0.9375rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.toggles summary::-webkit-details-marker { display: none; }
+.toggles summary .icon { transition: transform var(--dur-base) var(--ease); }
+.toggles details[open] summary .icon { transform: rotate(45deg); }
+.toggles details > :not(summary) { margin: 0 0 20px; color: var(--on-muted); }
+
+/* ---------- Tables ---------- */
+.table-scroll { overflow-x: auto; }
+table { inline-size: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+th, td { text-align: left; padding: 12px 14px 12px 0; border-bottom: 1px solid var(--hair); vertical-align: top; }
+th { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; border-bottom: 2px solid var(--rule); }
+td { font-family: var(--font-mono); font-size: 0.875rem; }
+
+/* ---------- Band page ---------- */
+.band-art { margin-top: clamp(32px, 5vw, 56px); clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%); }
+.band-art img { inline-size: 100%; }
+.story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(32px, 6vw, 96px); }
+.story .cols { columns: 2 280px; column-gap: 40px; }
+@media (max-width: 860px) { .story { grid-template-columns: 1fr; } }
+.members { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); }
+.member { margin: 0; }
+.member .media { aspect-ratio: 4 / 5; margin-bottom: 14px; }
+.member p { margin: 6px 0 0; font-family: var(--font-mono); font-size: 0.875rem; color: var(--on-muted); }
+@media (max-width: 900px) { .members { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.disco { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--rule); }
+.disco li { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 16px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--hair); }
+.disco .year { font-family: var(--font-mono); font-weight: 700; }
+.disco .h3 { font-size: clamp(1.375rem, 1rem + 1.4vw, 2.25rem); }
+@media (max-width: 600px) { .disco li { grid-template-columns: 64px minmax(0, 1fr); } .disco li .meta { grid-column: 2; } }
+
+/* ---------- Forms ---------- */
+.form-grid { display: grid; gap: 20px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 600px) { .two { grid-template-columns: 1fr; } }
+.field { display: grid; gap: 8px; align-content: start; }
+.field > label, .field > .label-text { font-family: var(--font-display); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; }
+.input, .select, .textarea {
+  inline-size: 100%; min-block-size: 50px; padding: 12px 14px; border: 2px solid var(--on); border-radius: 0;
+  background: var(--field); color: var(--on); font: inherit; font-size: 1rem;
+}
+.select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 44px; }
+.textarea { min-block-size: 160px; resize: vertical; }
+.input::placeholder, .textarea::placeholder { color: var(--on-muted); }
+.input:focus, .select:focus, .textarea:focus { outline: 2px solid var(--on); outline-offset: 3px; }
+.input:user-invalid, .textarea:user-invalid, .input[aria-invalid="true"], .textarea[aria-invalid="true"] { border-color: var(--sig); }
+.error { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--sig); min-block-size: 1.2em; }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: 0.9375rem; cursor: pointer; }
+.check input { inline-size: 20px; block-size: 20px; margin: 2px 0 0; accent-color: var(--on); flex: none; }
+.inline-form { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; max-width: 520px; }
+.inline-form .field { flex: 1 1 220px; }
+.success { display: flex; gap: 14px; align-items: flex-start; padding: 20px; border: 2px solid var(--on); }
+.success[hidden] { display: none; }
+.success p { margin: 4px 0 0; font-family: var(--font-mono); font-size: 0.875rem; color: var(--on-muted); }
+
+/* ---------- Fan club tiers ---------- */
+.join-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+@media (max-width: 900px) { .join-grid { grid-template-columns: 1fr; } }
+.tiers { display: grid; gap: 16px; }
+.tier { position: relative; display: block; padding: 24px; border: 2px solid var(--hair); cursor: pointer; }
+.tier input { position: absolute; opacity: 0; }
+.tier:has(input:checked) { border-color: var(--on); box-shadow: 8px 8px 0 var(--on); }
+.tier:has(input:focus-visible) { outline: 2px solid var(--on); outline-offset: 3px; }
+.tier-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.tier .amount { font-family: var(--font-mono); font-weight: 700; font-size: 1.25rem; white-space: nowrap; }
+.tier ul { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; font-family: var(--font-mono); font-size: 0.875rem; }
+.tier li { display: flex; gap: 10px; }
+.tier li .icon { margin-top: 2px; }
+
+/* ---------- Contact ---------- */
+.contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+@media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; } }
+.desks { margin: 0; border-top: 2px solid var(--rule); }
+.desks div { padding: 18px 0; border-bottom: 1px solid var(--hair); }
+.desks dt { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 1.125rem; }
+.desks dd { margin: 4px 0 0; font-family: var(--font-mono); font-size: 0.875rem; color: var(--on-muted); }
+
+/* ---------- Article ---------- */
+.article { font-size: 1.125rem; line-height: 1.7; }
+.article > p:first-of-type::first-letter { float: left; font-family: var(--font-display); font-weight: 800; font-size: 4.6em; line-height: 0.82; margin: 0.06em 0.1em 0 0; }
+.article h2 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(1.625rem, 1.2rem + 1.4vw, 2.25rem); line-height: 1; margin: 56px 0 18px; }
+.article blockquote { margin: 40px 0; padding: 4px 0 4px 24px; border-left: 6px solid var(--sig); font-family: var(--font-display); font-weight: 800; font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.125rem); line-height: 1.1; text-transform: uppercase; }
+.article blockquote p { margin: 0 0 12px; }
+.article blockquote footer { font-family: var(--font-mono); font-size: 0.875rem; font-weight: 400; text-transform: none; color: var(--on-muted); }
+.article figure { margin: 40px 0; }
+.article .table-scroll { margin: 8px 0 28px; }
+.article figcaption { margin-top: 10px; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--on-muted); }
+.article ul { padding-left: 1.2em; }
+.article li { margin-bottom: 8px; }
+.article li::marker { content: "/  "; font-family: var(--font-mono); color: var(--sig); }
+.article-figure { clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
+.byline { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 24px; }
+
+/* ---------- Footer ---------- */
+.site-footer { position: relative; padding-block: clamp(64px, 8vw, 112px) 40px; overflow-x: clip; }
+.footer-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)); gap: 40px 32px; }
+.footer-grid h2 { margin-bottom: 18px; }
+.footer-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.footer-grid a { text-decoration: none; color: var(--on-muted); }
+.footer-grid a:hover { color: var(--on); text-decoration: underline; }
+.footer-brand .brand { color: var(--on); margin-bottom: 20px; }
+.footer-brand .mono-line { color: var(--on-muted); margin-bottom: 24px; }
+.footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: clamp(48px, 7vw, 96px); padding-top: 24px; border-top: 1px solid var(--hair); font-family: var(--font-mono); font-size: 0.8125rem; color: var(--on-muted); }
+@media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+
+/* ---------- Legal and 404 ---------- */
+.legal h2 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 1.375rem; margin: 40px 0 12px; }
+.notfound { position: relative; min-block-size: calc(100vh - 76px); display: grid; align-items: center; overflow-x: clip; padding-block: 96px; }
+.notfound .wm { --wm-size: clamp(12rem, 40vw, 36rem); top: 50%; transform: translate(-50%, -50%); letter-spacing: 0.08em; text-indent: 0.08em; }
+
+/* ---------- Motion: hard wipes, no floating ---------- */
+.js .reveal { clip-path: inset(0 0 100% 0); transform: translateY(28px); transition: clip-path var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease); }
+.js .reveal.is-in { clip-path: inset(0 0 -10% 0); transform: none; }
+.js .wipe { clip-path: polygon(0 0, 0 0, -30% 100%, -30% 100%); transition: clip-path 900ms var(--ease); }
+.js .wipe.is-in { clip-path: polygon(0 0, 130% 0, 100% 100%, -30% 100%); }
+@supports (animation-timeline: view()) {
+  .wm { animation: drift linear both; animation-timeline: view(); }
+  @keyframes drift { from { translate: 4% 0; } to { translate: -4% 0; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .js .reveal, .js .wipe { clip-path: none; transform: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header stage" id="top">
+  <div class="wrap header-inner">
+    <button class="icon-btn menu-btn" type="button" id="menu-open" aria-label="Open menu" aria-controls="menu">
+      <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+    </button>
+    <nav class="nav nav-left" aria-label="Main">
+      <a href="#/tour">Tour</a>
+      <a href="#/news">News</a>
+      <a href="#/shop">Store</a>
+    </nav>
+    <a class="brand" href="#/" aria-label="Cinderwall home">
+      <svg class="brand-mark" aria-hidden="true"><use href="#mark"/></svg>
+      <span class="brand-name">Cinderwall</span>
+    </a>
+    <div class="header-right">
+      <nav class="nav" aria-label="Band and fan club">
+        <a href="#/band">Band</a>
+        <a href="#/join">Fan club</a>
+      </nav>
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to dark theme">
+        <svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>
+      </button>
+      <a class="icon-btn" href="#/shop" data-bag aria-label="Bag, empty">
+        <svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg>
+        <span class="bag-count" data-bag-count hidden>0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<dialog class="sheet stage" id="menu" aria-label="Menu">
+  <div class="sheet-inner">
+    <div class="sheet-top">
+      <span class="brand"><svg class="brand-mark" aria-hidden="true"><use href="#mark"/></svg><span class="brand-name">Cinderwall</span></span>
+      <button class="icon-btn" type="button" id="menu-close" aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <nav aria-label="Menu">
+      <a href="#/tour">Tour</a>
+      <a href="#/news">News</a>
+      <a href="#/shop">Store</a>
+      <a href="#/band">Band</a>
+      <a href="#/join">Fan club</a>
+      <a href="#/contact">Contact</a>
+    </nav>
+    <a class="btn btn-solid" href="#/tour">Tour dates</a>
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="hero stage" aria-labelledby="hero-title">
+    <div class="hero-art" aria-hidden="true"></div>
+    <div class="hero-wedge" aria-hidden="true"></div>
+    <div class="wrap hero-copy">
+      <p class="label">Static Cathedral</p>
+      <h1 class="display" id="hero-title">World Tour 2027</h1>
+      <p class="mono-line">Forty-one nights on five continents. The member presale opens December 3.</p>
+      <div class="btn-row">
+        <a class="btn btn-solid" href="#/tour">Tour dates</a>
+        <a class="btn btn-ghost" href="#/join?tier=furnace">Join for presale</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section stage has-cut" aria-labelledby="album-title" style="padding-top:clamp(24px,4vw,64px)">
+    <div class="wrap album">
+      <div class="cover wipe">
+        <img src="illustrations/cover.svg" alt="Static Cathedral album cover: a pointed arch drawn in white lines over static, with a red rose window" width="1000" height="1000">
+      </div>
+      <div class="reveal">
+        <p class="label">New album. Out now</p>
+        <h2 class="h2" id="album-title">Static Cathedral</h2>
+        <p class="mono-line" style="margin-top:20px">Eleven songs recorded live to tape in nine days, inside a church that had been empty for thirty years.</p>
+        <ol class="tracklist">
+          <li><span>Bell Tower</span><span>4:12</span></li>
+          <li><span>Nave</span><span>5:40</span></li>
+          <li><span>Glass in the Choir</span><span>3:58</span></li>
+          <li><span>Feedback Hymn</span><span>6:21</span></li>
+          <li><span>Low Mass</span><span>4:47</span></li>
+          <li><span>Ashfall</span><span>3:35</span></li>
+          <li><span>Rose Window</span><span>5:02</span></li>
+          <li><span>Ninth Day</span><span>4:19</span></li>
+          <li><span>Undertow Bells</span><span>4:55</span></li>
+          <li><span>Pilot Light</span><span>3:44</span></li>
+          <li><span>Last Candle</span><span>7:10</span></li>
+        </ol>
+        <div class="btn-row">
+          <a class="btn btn-solid" href="#/shop?category=music">Buy the vinyl</a>
+          <a class="btn btn-ghost" href="#/post">Album notes</a>
+        </div>
+      </div>
+    </div>
+    <div class="cut to-paper" aria-hidden="true"></div>
+  </section>
+
+  <section class="section paper" aria-labelledby="news-title">
+    <div class="wm right" aria-hidden="true">News</div>
+    <div class="wrap">
+      <div class="head-row">
+        <h2 class="h2" id="news-title">Latest news</h2>
+        <a class="more" href="#/news">All the news <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="news-grid">
+        <a class="news-card reveal" href="#/post">
+          <div class="media"><img src="illustrations/news-route.svg" alt="" width="1200" height="800"></div>
+          <p class="meta">Nov 18, 2026 · Tour</p>
+          <h3 class="h3">World Tour 2027: forty-one dates on five continents</h3>
+        </a>
+        <a class="news-card reveal" href="#/post">
+          <div class="media"><img src="illustrations/news-vinyl.svg" alt="" width="1200" height="800"></div>
+          <p class="meta">Nov 6, 2026 · Music</p>
+          <h3 class="h3">Static Cathedral, pressed on smoke-gray vinyl</h3>
+        </a>
+        <a class="news-card reveal" href="#/post">
+          <div class="media"><img src="illustrations/news-film.svg" alt="" width="1200" height="800"></div>
+          <p class="meta">Oct 24, 2026 · Video</p>
+          <h3 class="h3">Watch Rose Window, filmed in one take</h3>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section paper" aria-labelledby="tour-title" style="padding-top:0">
+    <div class="wm" aria-hidden="true" style="--wm-top:0.3em">Tour</div>
+    <div class="wrap">
+      <div class="head-row">
+        <h2 class="h2" id="tour-title">World Tour 2027</h2>
+        <a class="more" href="#/tour">All tour dates <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <ul class="dates">
+        <li class="date-row"><time class="when" datetime="2027-03-12"><span class="d">12</span><span class="m">Mar</span><span class="w">Fri</span></time><div class="where"><h3 class="h3">Lisbon</h3><p>Tagus Arena · Portugal</p></div><span class="status">On sale</span><a class="btn btn-ghost btn-sm" href="#/tour?date=lisbon">Tickets <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row"><time class="when" datetime="2027-03-15"><span class="d">15</span><span class="m">Mar</span><span class="w">Mon</span></time><div class="where"><h3 class="h3">Madrid</h3><p>Palacio Norte · Spain</p></div><span class="status hot">Few left</span><a class="btn btn-ghost btn-sm" href="#/tour?date=madrid">Tickets <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row"><time class="when" datetime="2027-03-19"><span class="d">19</span><span class="m">Mar</span><span class="w">Fri</span></time><div class="where"><h3 class="h3">Berlin</h3><p>Spreehalle · Germany</p></div><span class="status out">Sold out</span><a class="btn btn-ghost btn-sm" href="#/join?tier=furnace">Waitlist <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row"><time class="when" datetime="2027-03-23"><span class="d">23</span><span class="m">Mar</span><span class="w">Tue</span></time><div class="where"><h3 class="h3">Manchester</h3><p>Northgate Arena · United Kingdom</p></div><span class="status">On sale</span><a class="btn btn-ghost btn-sm" href="#/tour?date=manchester">Tickets <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row"><time class="when" datetime="2027-04-09"><span class="d">09</span><span class="m">Apr</span><span class="w">Fri</span></time><div class="where"><h3 class="h3">Taipei</h3><p>Riverside Dome · Taiwan</p></div><span class="status soon">Presale Dec 3</span><a class="btn btn-ghost btn-sm" href="#/join?tier=furnace">Presale <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section paper has-cut" aria-labelledby="store-title" style="padding-top:0">
+    <div class="wm bottom" aria-hidden="true" style="--wm-bottom:0.45em">Merch</div>
+    <div class="wrap">
+      <div class="head-row">
+        <h2 class="h2" id="store-title">The store</h2>
+        <a class="more" href="#/shop">Shop all <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="products">
+        <a class="product reveal" href="#/product"><div class="media"><img src="illustrations/p-tee.svg" alt="Black T-shirt with a white rose window print" width="800" height="800"><span class="tag">New</span></div><h3 class="product-name">Rose Window T-shirt</h3><p class="price">$32</p></a>
+        <a class="product reveal" href="#/product"><div class="media"><img src="illustrations/p-vinyl.svg" alt="Static Cathedral double vinyl with its black sleeve" width="800" height="800"></div><h3 class="product-name">Static Cathedral 2LP, smoke gray</h3><p class="price">$36</p></a>
+        <a class="product reveal" href="#/product"><div class="media"><img src="illustrations/p-hoodie.svg" alt="Black hoodie with a white and red shard print" width="800" height="800"><span class="tag sale">Sale</span></div><h3 class="product-name">Ashfall Hoodie</h3><p class="price"><s>$68</s><span class="now">$54</span></p></a>
+        <a class="product reveal" href="#/product"><div class="media"><img src="illustrations/p-poster.svg" alt="Halftone tour poster with a black diagonal band" width="800" height="800"><span class="tag">Numbered</span></div><h3 class="product-name">World Tour 2027 Poster</h3><p class="price">$25</p></a>
+      </div>
+    </div>
+    <div class="cut to-stage" aria-hidden="true"></div>
+  </section>
+
+  <section class="section stage has-cut" aria-labelledby="watch-title">
+    <div class="wrap">
+      <h2 class="sr-only" id="watch-title">Watch and look</h2>
+      <div class="head-row">
+        <div class="tabs" role="tablist" aria-label="Media">
+          <button class="tab" type="button" role="tab" id="tab-video" aria-selected="true" aria-controls="panel-video">Video</button>
+          <button class="tab" type="button" role="tab" id="tab-photo" aria-selected="false" aria-controls="panel-photo" tabindex="-1">Photo</button>
+        </div>
+        <a class="more" href="#/news">More from the road <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div role="tabpanel" id="panel-video" aria-labelledby="tab-video">
+        <div class="videos">
+          <a class="video reveal" href="#/post"><div class="media"><img src="illustrations/news-amp.svg" alt="" width="1200" height="800"><span class="play" aria-hidden="true"><svg class="icon"><use href="#i-play"/></svg></span></div><p>Rose Window (official video)</p></a>
+          <a class="video reveal" href="#/post"><div class="media"><img src="illustrations/news-crowd.svg" alt="" width="1200" height="800"><span class="play" aria-hidden="true"><svg class="icon"><use href="#i-play"/></svg></span></div><p>Feedback Hymn (live at Harbour Field)</p></a>
+          <a class="video reveal" href="#/post"><div class="media"><img src="illustrations/news-studio.svg" alt="" width="1200" height="800"><span class="play" aria-hidden="true"><svg class="icon"><use href="#i-play"/></svg></span></div><p>Nine days in a church (making of)</p></a>
+        </div>
+      </div>
+      <div role="tabpanel" id="panel-photo" aria-labelledby="tab-photo">
+        <div class="photos">
+          <figure><img src="illustrations/band.svg" alt="Four band members in silhouette on a lit stage" width="1600" height="700"></figure>
+          <figure><img src="illustrations/news-amp.svg" alt="A speaker cabinet against a halftone backlight" width="1200" height="800"></figure>
+          <figure><img src="illustrations/news-crowd.svg" alt="Raised hands under stage beams" width="1200" height="800"></figure>
+          <figure><img src="illustrations/news-vinyl.svg" alt="The new record and its sleeve" width="1200" height="800"></figure>
+          <figure><img src="illustrations/news-route.svg" alt="A halftone globe crossed by tour routes" width="1200" height="800"></figure>
+        </div>
+      </div>
+    </div>
+    <div class="cut fall to-paper" aria-hidden="true"></div>
+  </section>
+
+  <section class="section paper has-cut" aria-labelledby="club-title">
+    <div class="wrap club">
+      <div class="reveal">
+        <p class="label">Fan club</p>
+        <h2 class="h2" id="club-title">The Furnace</h2>
+        <ul class="perks">
+          <li><svg class="icon" aria-hidden="true"><use href="#i-ticket"/></svg><span>A presale code for every show, two days before general sale.</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-disc"/></svg><span>One members-only pressing every year, numbered by hand.</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-bolt"/></svg><span>A draw for soundcheck entry at every stop of the tour.</span></li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn btn-solid" href="#/join?tier=furnace">Join the Furnace</a>
+          <a class="btn btn-ghost" href="#/join">Compare plans</a>
+        </div>
+      </div>
+      <div class="reveal"><div class="member-card" aria-hidden="true">
+        <div class="halftone"></div>
+        <svg class="brand-mark"><use href="#mark"/></svg>
+        <div>
+          <p class="label" style="margin-bottom:6px">Member</p>
+          <p class="h3" style="margin:0 0 14px">The Furnace</p>
+          <p class="mono" style="margin:0"><span>No. 004127</span><span>Since 2027</span></p>
+        </div>
+      </div></div>
+    </div>
+    <div class="cut to-stage" aria-hidden="true"></div>
+  </section>
+</div>
+
+<!-- ===================== TOUR (events) ===================== -->
+<div data-view="tour">
+  <section class="page-head stage">
+    <div class="wm bottom" aria-hidden="true" style="--wm-bottom:0.35em">Dates</div>
+    <div class="wrap">
+      <p class="label">Static Cathedral</p>
+      <h1 class="h1">World Tour 2027</h1>
+      <p class="mono-line">Forty-one nights, five continents. Members get a presale code two days before every general sale.</p>
+    </div>
+    <div class="cut to-paper" aria-hidden="true"></div>
+  </section>
+  <section class="section paper has-cut" style="padding-top:clamp(32px,4vw,56px)">
+    <div class="wrap">
+      <div class="chips" role="group" aria-label="Filter by region">
+        <button class="chip" type="button" aria-pressed="true" data-region-filter="all">All dates</button>
+        <button class="chip" type="button" aria-pressed="false" data-region-filter="europe">Europe</button>
+        <button class="chip" type="button" aria-pressed="false" data-region-filter="asia">Asia</button>
+        <button class="chip" type="button" aria-pressed="false" data-region-filter="oceania">Oceania</button>
+        <button class="chip" type="button" aria-pressed="false" data-region-filter="americas">Americas</button>
+      </div>
+      <ul class="dates" data-filter-list="region">
+        <li class="date-row" data-region="europe" id="lisbon"><time class="when" datetime="2027-03-12"><span class="d">12</span><span class="m">Mar</span><span class="w">Fri</span></time><div class="where"><h2 class="h3">Lisbon</h2><p>Tagus Arena · Portugal</p></div><span class="status">On sale</span><a class="btn btn-ghost btn-sm" href="#ticket-info">Tickets <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row" data-region="europe" id="madrid"><time class="when" datetime="2027-03-15"><span class="d">15</span><span class="m">Mar</span><span class="w">Mon</span></time><div class="where"><h2 class="h3">Madrid</h2><p>Palacio Norte · Spain</p></div><span class="status hot">Few left</span><a class="btn btn-ghost btn-sm" href="#ticket-info">Tickets <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row" data-region="europe" id="berlin"><time class="when" datetime="2027-03-19"><span class="d">19</span><span class="m">Mar</span><span class="w">Fri</span></time><div class="where"><h2 class="h3">Berlin</h2><p>Spreehalle · Germany</p></div><span class="status out">Sold out</span><a class="btn btn-ghost btn-sm" href="#/join?tier=furnace">Waitlist <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row" data-region="europe" id="manchester"><time class="when" datetime="2027-03-23"><span class="d">23</span><span class="m">Mar</span><span class="w">Tue</span></time><div class="where"><h2 class="h3">Manchester</h2><p>Northgate Arena · United Kingdom</p></div><span class="status">On sale</span><a class="btn btn-ghost btn-sm" href="#ticket-info">Tickets <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row" data-region="asia" id="taipei"><time class="when" datetime="2027-04-09"><span class="d">09</span><span class="m">Apr</span><span class="w">Fri</span></time><div class="where"><h2 class="h3">Taipei</h2><p>Riverside Dome · Taiwan</p></div><span class="status soon">Presale Dec 3</span><a class="btn btn-ghost btn-sm" href="#/join?tier=furnace">Presale <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row" data-region="asia" id="hong-kong"><time class="when" datetime="2027-04-12"><span class="d">12</span><span class="m">Apr</span><span class="w">Mon</span></time><div class="where"><h2 class="h3">Hong Kong</h2><p>Harbourfront Hall · Hong Kong</p></div><span class="status soon">Presale Dec 3</span><a class="btn btn-ghost btn-sm" href="#/join?tier=furnace">Presale <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row" data-region="asia" id="singapore"><time class="when" datetime="2027-04-16"><span class="d">16</span><span class="m">Apr</span><span class="w">Fri</span></time><div class="where"><h2 class="h3">Singapore</h2><p>Bayline Stadium · Singapore</p></div><span class="status hot">Few left</span><a class="btn btn-ghost btn-sm" href="#ticket-info">Tickets <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row" data-region="asia" id="tokyo"><time class="when" datetime="2027-04-20"><span class="d">20</span><span class="m">Apr</span><span class="w">Tue</span></time><div class="where"><h2 class="h3">Tokyo</h2><p>Shiokaze Hall · Japan</p></div><span class="status">On sale</span><a class="btn btn-ghost btn-sm" href="#ticket-info">Tickets <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row" data-region="asia" id="seoul"><time class="when" datetime="2027-04-23"><span class="d">23</span><span class="m">Apr</span><span class="w">Fri</span></time><div class="where"><h2 class="h3">Seoul</h2><p>Riverbank Dome · South Korea</p></div><span class="status">On sale</span><a class="btn btn-ghost btn-sm" href="#ticket-info">Tickets <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row" data-region="oceania" id="sydney"><time class="when" datetime="2027-05-14"><span class="d">14</span><span class="m">May</span><span class="w">Fri</span></time><div class="where"><h2 class="h3">Sydney</h2><p>Harbour Field · Australia</p></div><span class="status">On sale</span><a class="btn btn-ghost btn-sm" href="#ticket-info">Tickets <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row" data-region="americas" id="mexico-city"><time class="when" datetime="2027-06-04"><span class="d">04</span><span class="m">Jun</span><span class="w">Fri</span></time><div class="where"><h2 class="h3">Mexico City</h2><p>Foro Sur · Mexico</p></div><span class="status soon">On sale Jan 20</span><a class="btn btn-ghost btn-sm" href="#/join?tier=furnace">Presale <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li class="date-row" data-region="americas" id="chicago"><time class="when" datetime="2027-06-18"><span class="d">18</span><span class="m">Jun</span><span class="w">Fri</span></time><div class="where"><h2 class="h3">Chicago</h2><p>Lakeshore Pavilion · United States</p></div><span class="status">On sale</span><a class="btn btn-ghost btn-sm" href="#ticket-info">Tickets <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      </ul>
+      <p class="empty" data-empty="region" hidden>No dates in this region yet. Join the fan club to hear first.</p>
+
+      <div class="contact-grid" id="ticket-info" style="margin-top:clamp(56px,7vw,96px)">
+        <div>
+          <p class="label">Before you buy</p>
+          <h2 class="h2">Tickets</h2>
+        </div>
+        <div class="toggles">
+          <details open><summary>Where to buy <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Each date links to the one official seller for that venue. Resale prices above face value are not honored at the door.</p></details>
+          <details><summary>Member presale <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Furnace members get a code by email two days before general sale. One code per member, up to four tickets per show.</p></details>
+          <details><summary>Accessible seating <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Every venue holds accessible platforms and companion seats. <a class="text-link" href="#/contact?topic=tickets">Write to the ticket desk</a> and we will sort it with the venue.</p></details>
+        </div>
+      </div>
+    </div>
+    <div class="cut to-stage" aria-hidden="true"></div>
+  </section>
+</div>
+
+<!-- ===================== SHOP (products) ===================== -->
+<div data-view="shop">
+  <section class="page-head stage">
+    <div class="wm bottom right" aria-hidden="true" style="--wm-bottom:0.35em">Merch</div>
+    <div class="wrap">
+      <p class="label">Official store</p>
+      <h1 class="h1">The store</h1>
+      <p class="mono-line">Shirts printed in small runs, records pressed once. Orders ship within four working days.</p>
+    </div>
+    <div class="cut to-paper" aria-hidden="true"></div>
+  </section>
+  <section class="section paper has-cut" style="padding-top:clamp(32px,4vw,56px)">
+    <div class="wrap">
+      <div class="chips" role="group" aria-label="Filter by category">
+        <button class="chip" type="button" aria-pressed="true" data-category-filter="all">Everything</button>
+        <button class="chip" type="button" aria-pressed="false" data-category-filter="apparel">Apparel</button>
+        <button class="chip" type="button" aria-pressed="false" data-category-filter="music">Music</button>
+        <button class="chip" type="button" aria-pressed="false" data-category-filter="accessories">Accessories</button>
+      </div>
+      <div class="products" data-filter-list="category">
+        <a class="product" href="#/product" data-category="apparel"><div class="media"><img src="illustrations/p-tee.svg" alt="Black T-shirt with a white rose window print" width="800" height="800"><span class="tag">New</span></div><h2 class="product-name">Rose Window T-shirt</h2><p class="price">$32</p></a>
+        <a class="product" href="#/product" data-category="music"><div class="media"><img src="illustrations/p-vinyl.svg" alt="Static Cathedral double vinyl with its black sleeve" width="800" height="800"></div><h2 class="product-name">Static Cathedral 2LP, smoke gray</h2><p class="price">$36</p></a>
+        <a class="product" href="#/product" data-category="apparel"><div class="media"><img src="illustrations/p-hoodie.svg" alt="Black hoodie with a white and red shard print" width="800" height="800"><span class="tag sale">Sale</span></div><h2 class="product-name">Ashfall Hoodie</h2><p class="price"><s>$68</s><span class="now">$54</span></p></a>
+        <a class="product" href="#/product" data-category="accessories"><div class="media"><img src="illustrations/p-poster.svg" alt="Halftone tour poster with a black diagonal band" width="800" height="800"><span class="tag">Numbered</span></div><h2 class="product-name">World Tour 2027 Poster</h2><p class="price">$25</p></a>
+        <a class="product" href="#/product" data-category="music"><div class="media"><img src="illustrations/p-cassette.svg" alt="Black cassette with a cream and red label" width="800" height="800"></div><h2 class="product-name">Static Cathedral Cassette</h2><p class="price">$14</p></a>
+        <a class="product" href="#/product" data-category="apparel"><div class="media"><img src="illustrations/p-cap.svg" alt="Black cap with a small white shard" width="800" height="800"></div><h2 class="product-name">Shard Cap</h2><p class="price">$28</p></a>
+        <a class="product" href="#/product" data-category="accessories"><div class="media"><img src="illustrations/p-pins.svg" alt="Three enamel pins: a rose window, a red shard and a white arch" width="800" height="800"><span class="tag sale">Sale</span></div><h2 class="product-name">Enamel Pin Set</h2><p class="price"><s>$18</s><span class="now">$12</span></p></a>
+        <a class="product" href="#/product" data-category="accessories"><div class="media"><img src="illustrations/p-tote.svg" alt="Cream tote bag with a black arch print" width="800" height="800"></div><h2 class="product-name">Cathedral Tote</h2><p class="price">$20</p></a>
+      </div>
+      <p class="empty" data-empty="category" hidden>Nothing here yet. New pieces land with every tour leg.</p>
+    </div>
+    <div class="cut to-stage" aria-hidden="true"></div>
+  </section>
+</div>
+
+<!-- ===================== PRODUCT ===================== -->
+<div data-view="product">
+  <section class="page-head compact stage">
+    <div class="wrap">
+      <ol class="crumbs"><li><a href="#/shop">Store</a></li><li><a href="#/shop?category=apparel">Apparel</a></li><li aria-current="page">Rose Window T-shirt</li></ol>
+    </div>
+    <div class="cut fall to-paper" aria-hidden="true"></div>
+  </section>
+  <section class="section paper" style="padding-top:clamp(24px,3vw,40px)">
+    <div class="wrap product-grid">
+      <div class="gallery">
+        <div class="main"><img id="product-image" src="illustrations/p-tee.svg" alt="Rose Window T-shirt, front" width="800" height="800"></div>
+        <div class="thumbs" role="group" aria-label="Product images">
+          <button type="button" aria-pressed="true" data-image="illustrations/p-tee.svg" data-alt="Rose Window T-shirt, front"><img src="illustrations/p-tee.svg" alt="Front" width="800" height="800"></button>
+          <button type="button" aria-pressed="false" data-image="illustrations/p-tee-back.svg" data-alt="Rose Window T-shirt, back with the tour dates"><img src="illustrations/p-tee-back.svg" alt="Back" width="800" height="800"></button>
+          <button type="button" aria-pressed="false" data-image="illustrations/p-tee-detail.svg" data-alt="Close-up of the rose window print"><img src="illustrations/p-tee-detail.svg" alt="Print detail" width="800" height="800"></button>
+        </div>
+      </div>
+      <div class="buy">
+        <span class="tag">New</span>
+        <h1 class="h1">Rose Window T-shirt</h1>
+        <p class="price">$32</p>
+        <p class="mono-line muted">Heavyweight black cotton, the rose window from the album cover on the front, every 2027 date on the back.</p>
+        <form data-form="add-to-bag" novalidate>
+          <fieldset>
+            <legend class="field"><span class="label-text">Size</span></legend>
+            <div class="sizes">
+              <label class="size"><input type="radio" name="size" value="XS" aria-describedby="size-error"><span>XS</span></label>
+              <label class="size"><input type="radio" name="size" value="S" aria-describedby="size-error"><span>S</span></label>
+              <label class="size"><input type="radio" name="size" value="M" aria-describedby="size-error"><span>M</span></label>
+              <label class="size"><input type="radio" name="size" value="L" aria-describedby="size-error"><span>L</span></label>
+              <label class="size"><input type="radio" name="size" value="XL" aria-describedby="size-error"><span>XL</span></label>
+              <label class="size"><input type="radio" name="size" value="XXL" disabled><span>XXL</span></label>
+            </div>
+            <p class="error" id="size-error" aria-live="polite" style="margin:10px 0 0"></p>
+          </fieldset>
+          <div class="qty-row">
+            <div class="stepper">
+              <button type="button" data-step="-1" aria-label="One fewer"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-minus"/></svg></button>
+              <label class="sr-only" for="qty">Quantity</label>
+              <input id="qty" name="qty" type="number" inputmode="numeric" min="1" max="6" value="1">
+              <button type="button" data-step="1" aria-label="One more"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-plus"/></svg></button>
+            </div>
+            <button class="btn btn-solid" type="submit">Add to bag</button>
+          </div>
+          <p class="added" data-added hidden role="status"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span></span></p>
+        </form>
+        <div class="toggles details">
+          <details open><summary>Details <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>240 gsm cotton, boxy fit, true to size. Water-based white and red print that stays soft after washing.</p></details>
+          <details><summary>Shipping and returns <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Ships within four working days. Returns are free within thirty days if the shirt is unworn.</p></details>
+          <details><summary>Size guide <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+            <div class="table-scroll"><table><thead><tr><th>Size</th><th>Chest</th><th>Length</th></tr></thead><tbody><tr><td>S</td><td>52 cm</td><td>70 cm</td></tr><tr><td>M</td><td>55 cm</td><td>72 cm</td></tr><tr><td>L</td><td>58 cm</td><td>74 cm</td></tr><tr><td>XL</td><td>61 cm</td><td>76 cm</td></tr></tbody></table></div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section paper has-cut" style="padding-top:0" aria-labelledby="also-title">
+    <div class="wrap">
+      <div class="head-row"><h2 class="h2" id="also-title">Also from the tour</h2><a class="more" href="#/shop">Shop all <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div class="products">
+        <a class="product" href="#/product"><div class="media"><img src="illustrations/p-hoodie.svg" alt="Black hoodie with a white and red shard print" width="800" height="800"><span class="tag sale">Sale</span></div><h3 class="product-name">Ashfall Hoodie</h3><p class="price"><s>$68</s><span class="now">$54</span></p></a>
+        <a class="product" href="#/product"><div class="media"><img src="illustrations/p-poster.svg" alt="Halftone tour poster with a black diagonal band" width="800" height="800"></div><h3 class="product-name">World Tour 2027 Poster</h3><p class="price">$25</p></a>
+        <a class="product" href="#/product"><div class="media"><img src="illustrations/p-vinyl.svg" alt="Static Cathedral double vinyl with its black sleeve" width="800" height="800"></div><h3 class="product-name">Static Cathedral 2LP, smoke gray</h3><p class="price">$36</p></a>
+        <a class="product" href="#/product"><div class="media"><img src="illustrations/p-cap.svg" alt="Black cap with a small white shard" width="800" height="800"></div><h3 class="product-name">Shard Cap</h3><p class="price">$28</p></a>
+      </div>
+    </div>
+    <div class="cut to-stage" aria-hidden="true"></div>
+  </section>
+</div>
+
+<!-- ===================== NEWS (blog) ===================== -->
+<div data-view="news">
+  <section class="page-head stage">
+    <div class="wm bottom right" aria-hidden="true" style="--wm-bottom:0.35em">News</div>
+    <div class="wrap">
+      <p class="label">From the band</p>
+      <h1 class="h1">News</h1>
+      <p class="mono-line">Tour announcements, records, videos and notes from the road.</p>
+    </div>
+    <div class="cut to-paper" aria-hidden="true"></div>
+  </section>
+  <section class="section paper has-cut" style="padding-top:clamp(32px,4vw,56px)">
+    <div class="wrap">
+      <a class="feature-post" href="#/post">
+        <div class="media"><img src="illustrations/news-studio.svg" alt="" width="1200" height="800"></div>
+        <div>
+          <p class="meta">Oct 9, 2026 · Music</p>
+          <h2 class="h2">Nine days in a church</h2>
+          <p class="mono-line muted">How Static Cathedral was recorded live to tape, one room, no click track, every mistake kept.</p>
+          <span class="more">Read the story <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </div>
+      </a>
+      <div class="news-grid">
+        <a class="news-card" href="#/post"><div class="media"><img src="illustrations/news-route.svg" alt="" width="1200" height="800"></div><p class="meta">Nov 18, 2026 · Tour</p><h2 class="h3">World Tour 2027: forty-one dates on five continents</h2></a>
+        <a class="news-card" href="#/post"><div class="media"><img src="illustrations/news-vinyl.svg" alt="" width="1200" height="800"></div><p class="meta">Nov 6, 2026 · Music</p><h2 class="h3">Static Cathedral, pressed on smoke-gray vinyl</h2></a>
+        <a class="news-card" href="#/post"><div class="media"><img src="illustrations/news-film.svg" alt="" width="1200" height="800"></div><p class="meta">Oct 24, 2026 · Video</p><h2 class="h3">Watch Rose Window, filmed in one take</h2></a>
+        <a class="news-card" href="#/post"><div class="media"><img src="illustrations/news-crowd.svg" alt="" width="1200" height="800"></div><p class="meta">Sep 22, 2026 · Fan club</p><h2 class="h3">How the presale codes work this time</h2></a>
+        <a class="news-card" href="#/post"><div class="media"><img src="illustrations/news-amp.svg" alt="" width="1200" height="800"></div><p class="meta">Sep 5, 2026 · Band</p><h2 class="h3">Back in the rehearsal room</h2></a>
+        <a class="news-card" href="#/post"><div class="media"><img src="illustrations/band.svg" alt="" width="1600" height="700" style="block-size:100%;object-fit:cover"></div><p class="meta">Aug 14, 2026 · Live</p><h2 class="h3">Harbour Field, in your photos</h2></a>
+      </div>
+    </div>
+    <div class="cut to-stage" aria-hidden="true"></div>
+  </section>
+</div>
+
+<!-- ===================== POST ===================== -->
+<div data-view="post">
+  <article>
+    <header class="page-head stage">
+      <div class="prose">
+        <p class="label"><a href="#/news" style="text-decoration:none">News</a> / Music</p>
+        <h1 class="h1">Nine days in a church</h1>
+        <p class="mono-line">How Static Cathedral was recorded live to tape, one room, no click track, every mistake kept.</p>
+        <p class="byline meta"><span>Oct 9, 2026</span><span>Words by Juno Varga</span><span>6 min read</span></p>
+      </div>
+      <div class="cut fall to-paper" aria-hidden="true"></div>
+    </header>
+    <div class="section paper has-cut" style="padding-top:clamp(24px,3vw,48px)">
+      <div class="prose article">
+        <figure class="article-figure" style="margin-top:0"><img src="illustrations/news-studio.svg" alt="A waveform of the first take, drawn as white bars over a red line" width="1200" height="800"></figure>
+        <p>We booked the church for ten days and used nine. The tenth was for packing the van and sleeping on the floor of the vestry, which nobody admits to doing.</p>
+        <p>The rule was simple: the four of us in one room, no headphones, no click, and the first take that made the hair on Teo's arms stand up is the take on the record.</p>
+        <h2>One room, four people</h2>
+        <p>Stone walls give you about three seconds of reverb for free. That sounds like a gift until the snare comes back at you from the ceiling. We moved the kit four times before it sat right under the rose window.</p>
+        <blockquote><p>The building played the twelfth instrument.</p><footer>Rhys Calder, vocals</footer></blockquote>
+        <h2>What we kept</h2>
+        <ul>
+          <li>The amp hum at the start of Nave. It was there every time, so it stayed.</li>
+          <li>A bell from the street on Ninth Day, two bars before the last chorus.</li>
+          <li>Every count-in, cut to one bar.</li>
+        </ul>
+        <h2>Where to hear it first</h2>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Date</th><th>City</th><th>Venue</th></tr></thead>
+            <tbody>
+              <tr><td>Mar 12</td><td>Lisbon</td><td>Tagus Arena</td></tr>
+              <tr><td>Mar 15</td><td>Madrid</td><td>Palacio Norte</td></tr>
+              <tr><td>Mar 19</td><td>Berlin</td><td>Spreehalle</td></tr>
+              <tr><td>Apr 9</td><td>Taipei</td><td>Riverside Dome</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The whole record plays in order on the first night of every leg. After that, the setlist is anyone's guess, including ours.</p>
+        <div class="btn-row" style="margin-top:40px"><a class="btn btn-solid" href="#/shop?category=music">Buy the record</a><a class="btn btn-ghost" href="#/tour">Tour dates</a></div>
+      </div>
+      <div class="cut to-stage" aria-hidden="true"></div>
+    </div>
+  </article>
+</div>
+
+<!-- ===================== BAND (about) ===================== -->
+<div data-view="band">
+  <section class="page-head stage">
+    <div class="wrap">
+      <p class="label">Since 1998</p>
+      <h1 class="h1">The band</h1>
+      <p class="mono-line">Four people, one rehearsal room above a tire shop, five records and a lot of borrowed vans.</p>
+      <div class="band-art"><img src="illustrations/band.svg" alt="The four members in silhouette on a stage lit from behind" width="1600" height="700"></div>
+    </div>
+    <div class="cut to-paper" aria-hidden="true"></div>
+  </section>
+  <section class="section paper" style="padding-top:clamp(32px,4vw,64px)">
+    <div class="wrap story">
+      <h2 class="h2">Loud on purpose</h2>
+      <div class="cols">
+        <p>Cinderwall started as a dare between two school friends and a drum kit nobody could afford. The first shows were in a laundromat; the second year, they had a van.</p>
+        <p>Five records later the rule has not changed: everything is played live, in one room, by the four people on stage. If a song cannot survive that, it does not make the record.</p>
+        <p>The band plays about a hundred nights a year and answers its own mail. Booking, press and licensing go through the contact page.</p>
+      </div>
+    </div>
+  </section>
+  <section class="section paper" style="padding-top:0" aria-labelledby="members-title">
+    <div class="wm right" aria-hidden="true">Four</div>
+    <div class="wrap">
+      <div class="head-row"><h2 class="h2" id="members-title">Members</h2></div>
+      <div class="members">
+        <figure class="member reveal"><div class="media"><img src="illustrations/member-1.svg" alt="Silhouette portrait of Rhys Calder, lit from the left" width="600" height="750"></div><figcaption><h3 class="h3">Rhys Calder</h3><p>Vocals, rhythm guitar</p></figcaption></figure>
+        <figure class="member reveal"><div class="media"><img src="illustrations/member-2.svg" alt="Silhouette portrait of Juno Varga, lit from the right" width="600" height="750"></div><figcaption><h3 class="h3">Juno Varga</h3><p>Lead guitar</p></figcaption></figure>
+        <figure class="member reveal"><div class="media"><img src="illustrations/member-3.svg" alt="Silhouette portrait of Mika Oyelaran in a cap, lit from above" width="600" height="750"></div><figcaption><h3 class="h3">Mika Oyelaran</h3><p>Bass</p></figcaption></figure>
+        <figure class="member reveal"><div class="media"><img src="illustrations/member-4.svg" alt="Silhouette portrait of Teo Brandvold, lit from the right" width="600" height="750"></div><figcaption><h3 class="h3">Teo Brandvold</h3><p>Drums</p></figcaption></figure>
+      </div>
+    </div>
+  </section>
+  <section class="section paper has-cut" style="padding-top:0" aria-labelledby="disco-title">
+    <div class="wrap">
+      <div class="head-row"><h2 class="h2" id="disco-title">Records</h2><a class="more" href="#/shop?category=music">In the store <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <ol class="disco" reversed>
+        <li><span class="year">2026</span><h3 class="h3">Static Cathedral</h3><span class="meta">Album</span></li>
+        <li><span class="year">2022</span><h3 class="h3">Iron Weather</h3><span class="meta">Album</span></li>
+        <li><span class="year">2019</span><h3 class="h3">Live at Harbour Field</h3><span class="meta">Live</span></li>
+        <li><span class="year">2016</span><h3 class="h3">Night Shift Hymns</h3><span class="meta">Album</span></li>
+        <li><span class="year">2011</span><h3 class="h3">Laundromat Tapes</h3><span class="meta">EP</span></li>
+      </ol>
+      <div class="btn-row" style="margin-top:48px"><a class="btn btn-solid" href="#/contact?topic=booking">Booking and press</a></div>
+    </div>
+    <div class="cut to-stage" aria-hidden="true"></div>
+  </section>
+</div>
+
+<!-- ===================== JOIN (signup) ===================== -->
+<div data-view="join">
+  <section class="page-head stage">
+    <div class="wm bottom right" aria-hidden="true" style="--wm-bottom:0.35em">Join</div>
+    <div class="wrap">
+      <p class="label">Fan club</p>
+      <h1 class="h1">The Furnace</h1>
+      <p class="mono-line">Presale codes, a pressing nobody else gets, and the best seats in the room. Pick a plan and join in a minute.</p>
+    </div>
+    <div class="cut to-paper" aria-hidden="true"></div>
+  </section>
+  <section class="section paper has-cut" style="padding-top:clamp(32px,4vw,56px)">
+    <div class="wrap">
+      <form class="join-grid" data-form="signup" novalidate>
+        <fieldset class="tiers">
+          <legend class="label">Choose a plan</legend>
+          <label class="tier">
+            <input type="radio" name="tier" value="ember">
+            <span class="tier-top"><span class="h3">Ember</span><span class="amount">Free</span></span>
+            <ul><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>Tour alerts for your city</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>News a day before everyone else</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>A digital member card</li></ul>
+          </label>
+          <label class="tier">
+            <input type="radio" name="tier" value="furnace" checked>
+            <span class="tier-top"><span class="h3">Furnace</span><span class="amount">$45 / year</span></span>
+            <ul><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>Everything in Ember</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>A presale code for every show</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>The yearly members-only pressing</li><li><svg class="icon icon-sm" aria-hidden="true"><use href="#i-check"/></svg>A draw for soundcheck entry</li></ul>
+          </label>
+        </fieldset>
+        <div>
+          <div class="form-grid" data-fields>
+            <h2 class="h3">Your details</h2>
+            <div class="two">
+              <div class="field"><label for="j-name">Name</label><input class="input" id="j-name" name="name" autocomplete="name" required aria-describedby="j-name-error"><span class="error" id="j-name-error" aria-live="polite"></span></div>
+              <div class="field"><label for="j-email">Email</label><input class="input" id="j-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="j-email-error"><span class="error" id="j-email-error" aria-live="polite"></span></div>
+            </div>
+            <div class="two">
+              <div class="field"><label for="j-country">Country</label>
+                <select class="select" id="j-country" name="country" autocomplete="country-name"><option>Australia</option><option>Germany</option><option>Hong Kong</option><option>Japan</option><option>Malaysia</option><option>Mexico</option><option>Portugal</option><option>Singapore</option><option>South Korea</option><option>Spain</option><option selected>Taiwan</option><option>United Kingdom</option><option>United States</option><option>Somewhere else</option></select>
+              </div>
+              <div class="field"><label for="j-password">Password</label><input class="input" id="j-password" name="password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="j-password-error"><span class="error" id="j-password-error" aria-live="polite"></span></div>
+            </div>
+            <label class="check"><input type="checkbox" name="alerts" checked> Email me when the band plays near me.</label>
+            <div><button class="btn btn-solid" type="submit">Join the Furnace</button></div>
+            <p class="meta" style="margin:0">Already a member? <a class="text-link" href="#/contact?topic=fanclub">Get help signing in</a></p>
+          </div>
+          <div class="success" data-success="signup" hidden role="status"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong class="caps">You are in.</strong><p>Your member card and first presale code are on their way to your inbox.</p></div></div>
+        </div>
+      </form>
+    </div>
+    <div class="cut to-stage" aria-hidden="true"></div>
+  </section>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div data-view="contact">
+  <section class="page-head stage">
+    <div class="wrap">
+      <p class="label">Booking, press, help</p>
+      <h1 class="h1">Contact</h1>
+      <p class="mono-line">Real people read every message. Pick the right desk and you will hear back faster.</p>
+    </div>
+    <div class="cut to-paper" aria-hidden="true"></div>
+  </section>
+  <section class="section paper has-cut" style="padding-top:clamp(32px,4vw,56px)">
+    <div class="wrap contact-grid">
+      <dl class="desks">
+        <div><dt>Booking</dt><dd>booking@cinderwall.example</dd></div>
+        <div><dt>Press</dt><dd>press@cinderwall.example</dd></div>
+        <div><dt>Licensing</dt><dd>licensing@cinderwall.example</dd></div>
+        <div><dt>Fan club and orders</dt><dd>hello@cinderwall.example</dd></div>
+      </dl>
+      <div>
+        <form class="form-grid" data-form="contact" novalidate>
+          <div class="two">
+            <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-error"><span class="error" id="c-name-error" aria-live="polite"></span></div>
+            <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="c-email-error"><span class="error" id="c-email-error" aria-live="polite"></span></div>
+          </div>
+          <div class="field"><label for="c-topic">Desk</label>
+            <select class="select" id="c-topic" name="topic"><option value="booking">Booking</option><option value="press">Press</option><option value="licensing">Licensing</option><option value="tickets">Tickets and access</option><option value="order">An order</option><option value="fanclub">Fan club</option><option value="other">Something else</option></select>
+          </div>
+          <div class="field"><label for="c-message">Message</label><textarea class="textarea" id="c-message" name="message" required minlength="10" aria-describedby="c-message-error"></textarea><span class="error" id="c-message-error" aria-live="polite"></span></div>
+          <div><button class="btn btn-solid" type="submit">Send message</button></div>
+        </form>
+        <div class="success" data-success="contact" hidden role="status"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong class="caps">Message received.</strong><p>The desk you picked will reply to the address you gave.</p></div></div>
+      </div>
+    </div>
+    <div class="cut to-stage" aria-hidden="true"></div>
+  </section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="privacy">
+  <section class="page-head stage">
+    <div class="prose"><h1 class="h1">Privacy</h1><p class="mono-line">What we keep about you and why, in plain words.</p></div>
+    <div class="cut to-paper" aria-hidden="true"></div>
+  </section>
+  <section class="section paper has-cut legal" style="padding-top:clamp(24px,3vw,48px)">
+    <div class="prose">
+      <h2>What we keep</h2><p>Your name, email, country and orders, and the plan you chose if you joined the fan club.</p>
+      <h2>Why</h2><p>To send presale codes and tour alerts you asked for, ship your orders and run your membership.</p>
+      <h2>Questions</h2><p>Write to hello@cinderwall.example and a person will answer.</p>
+    </div>
+    <div class="cut to-stage" aria-hidden="true"></div>
+  </section>
+</div>
+<div data-view="terms">
+  <section class="page-head stage">
+    <div class="prose"><h1 class="h1">Terms</h1><p class="mono-line">The short version of how the store and the fan club work.</p></div>
+    <div class="cut to-paper" aria-hidden="true"></div>
+  </section>
+  <section class="section paper has-cut legal" style="padding-top:clamp(24px,3vw,48px)">
+    <div class="prose">
+      <h2>Orders</h2><p>Prices include tax where the law asks for it. Unworn items can come back within thirty days.</p>
+      <h2>Membership</h2><p>Plans renew each year until you cancel. Presale codes are personal and cannot be resold.</p>
+    </div>
+    <div class="cut to-stage" aria-hidden="true"></div>
+  </section>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="notfound stage">
+    <div class="wm" aria-hidden="true">404</div>
+    <div class="wrap" style="text-align:center">
+      <p class="label">Page not found</p>
+      <h1 class="h1">Wrong turn</h1>
+      <p class="mono-line" style="margin:20px auto 32px">The page moved or never existed. The tour, the records and the store are where you left them.</p>
+      <div class="btn-row" style="justify-content:center"><a class="btn btn-solid" href="#/">Go home</a><a class="btn btn-ghost" href="#/tour">Tour dates</a></div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer stage">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="#/"><svg class="brand-mark" aria-hidden="true"><use href="#mark"/></svg><span class="brand-name">Cinderwall</span></a>
+      <p class="mono-line">Tour alerts for your city, and nothing else.</p>
+      <form class="inline-form" data-form="newsletter" novalidate>
+        <div class="field">
+          <label class="sr-only" for="nl-email">Email address</label>
+          <input class="input" id="nl-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required aria-describedby="nl-email-error">
+          <span class="error" id="nl-email-error" aria-live="polite"></span>
+        </div>
+        <button class="btn btn-solid" type="submit">Get alerts</button>
+      </form>
+      <div class="success" data-success="newsletter" hidden role="status"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong class="caps">You are on the list.</strong><p>The next alert arrives when a date near you goes on sale.</p></div></div>
+    </div>
+    <div><h2 class="label">Band</h2><ul><li><a href="#/tour">Tour</a></li><li><a href="#/news">News</a></li><li><a href="#/band">The band</a></li></ul></div>
+    <div><h2 class="label">Store</h2><ul><li><a href="#/shop">Everything</a></li><li><a href="#/shop?category=music">Records</a></li><li><a href="#/shop?category=apparel">Apparel</a></li></ul></div>
+    <div><h2 class="label">Help</h2><ul><li><a href="#/join">Fan club</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/privacy">Privacy</a></li><li><a href="#/terms">Terms</a></li></ul></div>
+  </div>
+  <div class="wrap footer-bottom"><span>© 2026 Cinderwall Touring LLC</span><span>Played loud, printed small.</span></div>
+</footer>
+
+<!-- ===================== SVG SPRITE: brand mark and icons ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- The mark: a pointed arch cut by one diagonal, with a red shard. It reads --ground and --sig, so it follows the surface. -->
+    <symbol id="mark" viewBox="0 0 32 32">
+      <path d="M7 29V14A9 10 0 0 1 16 3.5A9 10 0 0 1 25 14V29Z" fill="currentColor"/>
+      <polygon points="3,25.5 29,15.5 29,19.5 3,29.5" style="fill:var(--ground)"/>
+      <polygon points="11,23.4 20,19.9 8.5,22.2" style="fill:var(--sig)"/>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M3 12h17M14 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h12"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M4 12h16"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><rect x="8" y="8" width="8" height="8"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M4 8h16l-1 13H5zM8.5 8V6a3.5 3.5 0 0 1 7 0v2"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4zM14 7v10"/></symbol>
+    <symbol id="i-disc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L5 14h6l-1 8 8-12h-6z"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme (light first, follows the system until the visitor chooses) ---------- */
+  const themeButton = document.getElementById("theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    themeButton.querySelector("use").setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("cinderwall-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("cinderwall-theme", next);
+  });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map([...document.querySelectorAll("[data-view]")].map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Cinderwall: World Tour 2027, the new album and the official store",
+    tour: "Tour dates · Cinderwall", shop: "Store · Cinderwall", product: "Rose Window T-shirt · Cinderwall",
+    news: "News · Cinderwall", post: "Nine days in a church · Cinderwall", band: "The band · Cinderwall",
+    join: "The Furnace fan club · Cinderwall", contact: "Contact · Cinderwall", privacy: "Privacy · Cinderwall",
+    terms: "Terms · Cinderwall", "404": "Page not found · Cinderwall",
+  };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    document.querySelectorAll(".nav a, .sheet nav a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (name === "tour") filter("region", route.params.get("region") || "all");
+    if (name === "shop") filter("category", route.params.get("category") || "all");
+    if (name === "join") { const tier = route.params.get("tier"); const input = tier && document.querySelector(`input[name="tier"][value="${tier}"]`); if (input) input.checked = true; }
+    if (name === "contact") { const topic = route.params.get("topic"); const select = document.getElementById("c-topic"); if (topic && select.querySelector(`option[value="${topic}"]`)) select.value = topic; }
+    const target = name === "tour" && route.params.get("date") && document.getElementById(route.params.get("date"));
+    if (target) setTimeout(() => target.scrollIntoView({ block: "center" }), 30);
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = current && current.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header and mobile menu ---------- */
+  const header = document.querySelector(".site-header");
+  const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  const menu = document.getElementById("menu");
+  document.getElementById("menu-open").addEventListener("click", () => menu.showModal());
+  document.getElementById("menu-close").addEventListener("click", () => menu.close());
+
+  /* ---------- Reveal (content stays visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    scope.querySelectorAll(".reveal:not(.is-in), .wipe:not(.is-in)").forEach((el) => (io ? io.observe(el) : el.classList.add("is-in")));
+  }
+  setTimeout(() => document.querySelectorAll(".reveal, .wipe").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Filters (tour regions, store categories) ---------- */
+  function filter(kind, value) {
+    const buttons = document.querySelectorAll(`[data-${kind}-filter]`);
+    const known = [...buttons].some((b) => b.dataset[`${kind}Filter`] === value);
+    const active = known ? value : "all";
+    buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset[`${kind}Filter`] === active)));
+    let shown = 0;
+    document.querySelectorAll(`[data-filter-list="${kind}"] [data-${kind}]`).forEach((item) => {
+      const match = active === "all" || item.dataset[kind] === active;
+      item.hidden = !match;
+      if (match) shown += 1;
+    });
+    document.querySelector(`[data-empty="${kind}"]`).hidden = shown > 0;
+  }
+  document.querySelectorAll("[data-region-filter]").forEach((b) => b.addEventListener("click", () => filter("region", b.dataset.regionFilter)));
+  document.querySelectorAll("[data-category-filter]").forEach((b) => b.addEventListener("click", () => filter("category", b.dataset.categoryFilter)));
+
+  /* ---------- Tabs (video and photo) ---------- */
+  const tabs = [...document.querySelectorAll("[role=tab]")];
+  function selectTab(tab, focus = false) {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) tab.focus();
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => selectTab(tab));
+    tab.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+      selectTab(tabs[(i + (event.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length], true);
+    });
+  });
+  if (tabs.length) selectTab(tabs[0]);
+
+  /* ---------- Product: gallery, quantity, bag ---------- */
+  const mainImage = document.getElementById("product-image");
+  document.querySelectorAll("[data-image]").forEach((thumb) => thumb.addEventListener("click", () => {
+    document.querySelectorAll("[data-image]").forEach((t) => t.setAttribute("aria-pressed", String(t === thumb)));
+    mainImage.src = thumb.dataset.image;
+    mainImage.alt = thumb.dataset.alt;
+  }));
+  const qty = document.getElementById("qty");
+  document.querySelectorAll("[data-step]").forEach((b) => b.addEventListener("click", () => {
+    qty.value = String(Math.min(6, Math.max(1, (Number(qty.value) || 1) + Number(b.dataset.step))));
+  }));
+  const bagLink = document.querySelector("[data-bag]");
+  const bagCount = document.querySelector("[data-bag-count]");
+  function renderBag(count) {
+    bagCount.textContent = String(count);
+    bagCount.hidden = count === 0;
+    bagLink.setAttribute("aria-label", count ? `Bag, ${count} item${count === 1 ? "" : "s"}` : "Bag, empty");
+  }
+  renderBag(Number(store.get("cinderwall-bag")) || 0);
+  /* Sandboxed frames (the live demo) block native form submission before the submit event fires,
+     so forms run their handler from the submit button and the Enter key as well. */
+  function onSubmit(form, handler) {
+    form.addEventListener("submit", (event) => { event.preventDefault(); handler(); });
+    form.addEventListener("click", (event) => { if (event.target.closest("[type=submit]")) { event.preventDefault(); handler(); } });
+    form.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" || !event.target.matches("input:not([type=checkbox]):not([type=radio])")) return;
+      event.preventDefault();
+      if (!event.isComposing) handler();
+    });
+  }
+  const bagForm = document.querySelector('[data-form="add-to-bag"]');
+  onSubmit(bagForm, () => {
+    const size = bagForm.querySelector('input[name="size"]:checked');
+    const error = document.getElementById("size-error");
+    if (!size) { error.textContent = "Pick a size first."; bagForm.querySelector('input[name="size"]:not(:disabled)').focus(); return; }
+    error.textContent = "";
+    const count = (Number(store.get("cinderwall-bag")) || 0) + (Number(qty.value) || 1);
+    store.set("cinderwall-bag", String(count));
+    renderBag(count);
+    const added = bagForm.querySelector("[data-added]");
+    added.querySelector("span").textContent = `Added: ${qty.value} × size ${size.value}. ${count} in your bag.`;
+    added.hidden = false;
+  });
+  bagForm.querySelectorAll('input[name="size"]').forEach((input) => input.addEventListener("change", () => { document.getElementById("size-error").textContent = ""; }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Fill this in.", typeMismatch: "Enter a valid email address.", tooShort: "A little longer, please." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  document.querySelectorAll("form[data-form]:not([data-form='add-to-bag'])").forEach((form) => {
+    const fields = [...form.querySelectorAll("input[aria-describedby], textarea[aria-describedby]")];
+    fields.forEach((field) => field.addEventListener("blur", () => checkField(field)));
+    onSubmit(form, () => {
+      const button = form.querySelector("[type=submit]");
+      if (button.disabled) return;
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        const success = (form.closest("[data-view], footer") || document).querySelector(`[data-success="${form.dataset.form}"]`);
+        const fieldsBlock = form.querySelector("[data-fields]");
+        if (fieldsBlock) fieldsBlock.hidden = true; else form.hidden = true;
+        if (success) success.hidden = false;
+      }, 500);
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

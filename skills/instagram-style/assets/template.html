@@ -1,0 +1,1495 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Tidewell: portraits, prints and photo walks from Merrow Bay</title>
+<meta name="description" content="A two-person photo studio on the quay at Merrow Bay. Portrait sessions by the north window, harbour prints on cotton paper, and Saturday photo walks.">
+<meta property="og:title" content="Tidewell: harbour light, kept for the people you love">
+<meta property="og:description" content="Portrait sessions, harbour prints and Saturday photo walks from a small studio on the quay.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/albert-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font: one open geometric sans, medium for headlines, regular for reading ---------- */
+@font-face { font-family: "Albert Sans"; src: url("fonts/albert-sans-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: light (default) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);                  /* white: the photographs carry the colour */
+  --surface: oklch(95.5% 0.003 270);      /* grey buttons and chips */
+  --surface-hover: oklch(91.5% 0.004 270);
+  --surface-2: oklch(98% 0.002 270);      /* quiet bands */
+  --raised: oklch(100% 0 0);              /* fields, cards, the post panel */
+  --text: oklch(17% 0.01 265);
+  --text-muted: oklch(49% 0.012 265);
+  --border: oklch(89.5% 0.004 270);       /* hairlines: the divider, tabs, post panel */
+  --field: oklch(82% 0.006 270);          /* field outlines */
+  --accent: oklch(52% 0.21 268);          /* the action blue: one filled button per screen */
+  --accent-hover: oklch(46% 0.2 268);
+  --accent-text: oklch(100% 0 0);
+  --link: oklch(48% 0.2 266);
+  --heart: oklch(58% 0.235 22);           /* liked hearts and the heart sticker */
+  --star: oklch(64% 0.17 150);            /* the green star sticker */
+  --clock: oklch(56% 0.19 285);           /* the time sticker */
+  --g1: oklch(84% 0.16 82); --g2: oklch(72% 0.19 48); --g3: oklch(63% 0.23 22); --g4: oklch(55% 0.24 350);
+  --grad: linear-gradient(35deg, var(--g1) 4%, var(--g2) 32%, var(--g3) 62%, var(--g4) 96%);   /* rings, the mark, the success tick */
+  --grad-text: linear-gradient(90deg, oklch(62% 0.2 45), oklch(57% 0.23 20) 50%, oklch(51% 0.24 352));  /* one phrase per headline */
+  --scrim: oklch(0% 0 0 / 0.4);
+  --error: oklch(52% 0.2 25);
+  --focus: oklch(55% 0.2 264);
+  --photo: oklch(93% 0.004 270);
+  --paper: oklch(98.6% 0.006 85);
+  --shadow-card: 0 22px 44px -16px oklch(22% 0.03 280 / 0.38);
+  --shadow-overlay: 0 16px 48px oklch(0% 0 0 / 0.2);
+  --sans: "Albert Sans", "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
+  --fs-display: clamp(2.375rem, 1.5rem + 3.3vw, 4.25rem);
+  --fs-h1: clamp(1.875rem, 1.45rem + 1.8vw, 3rem);
+  --fs-h2: clamp(1.375rem, 1.2rem + 0.7vw, 1.875rem);
+  --fs-h3: 1.0625rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --r-control: 14px; --r-card: 20px; --r-media: 0px; --r-pill: 999px; --r-panel: 24px;
+  --page: 975px;
+  --wide: 1240px;
+  --edge: clamp(16px, 3vw, 40px);
+  --sec: clamp(48px, 7vw, 96px);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 600ms;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* ---------- Tokens: dark. Chosen by the toggle, or by the system without JavaScript ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(13% 0.004 270); --surface: oklch(24.5% 0.006 270); --surface-hover: oklch(30% 0.007 270); --surface-2: oklch(17% 0.005 270); --raised: oklch(17.5% 0.005 270);
+  --text: oklch(96% 0.003 270); --text-muted: oklch(73% 0.01 270); --border: oklch(29% 0.006 270); --field: oklch(40% 0.008 270);
+  --accent-hover: oklch(58% 0.2 268); --link: oklch(76% 0.12 264); --heart: oklch(66% 0.22 22); --scrim: oklch(0% 0 0 / 0.5);
+  --error: oklch(73% 0.15 25); --focus: oklch(74% 0.13 264); --photo: oklch(22% 0.005 270); --paper: oklch(95% 0.008 85);
+  --grad-text: linear-gradient(90deg, oklch(78% 0.16 60), oklch(70% 0.2 25) 50%, oklch(68% 0.2 355));
+  --shadow-card: 0 22px 44px -16px oklch(0% 0 0 / 0.7); --shadow-overlay: 0 16px 48px oklch(0% 0 0 / 0.6);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: oklch(13% 0.004 270); --surface: oklch(24.5% 0.006 270); --surface-hover: oklch(30% 0.007 270); --surface-2: oklch(17% 0.005 270); --raised: oklch(17.5% 0.005 270);
+    --text: oklch(96% 0.003 270); --text-muted: oklch(73% 0.01 270); --border: oklch(29% 0.006 270); --field: oklch(40% 0.008 270);
+    --accent-hover: oklch(58% 0.2 268); --link: oklch(76% 0.12 264); --heart: oklch(66% 0.22 22); --scrim: oklch(0% 0 0 / 0.5);
+    --error: oklch(73% 0.15 25); --focus: oklch(74% 0.13 264); --photo: oklch(22% 0.005 270); --paper: oklch(95% 0.008 85);
+    --grad-text: linear-gradient(90deg, oklch(78% 0.16 60), oklch(70% 0.2 25) 50%, oklch(68% 0.2 355));
+    --shadow-card: 0 22px 44px -16px oklch(0% 0 0 / 0.7); --shadow-overlay: 0 16px 48px oklch(0% 0 0 / 0.6);
+  }
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 88px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs-body)/1.5 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-underline-offset: 0.2em; }
+h1, h2, h3 { margin: 0; font-weight: 600; line-height: 1.15; letter-spacing: -0.015em; text-wrap: balance; }
+p { margin: 0 0 1em; text-wrap: pretty; }
+ul, ol, figure, dl, dd { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 60; padding: 12px 18px; border-radius: var(--r-pill); background: var(--text); color: var(--bg); font-weight: 600; }
+.skip:focus { top: 12px; }
+.wrap { max-width: var(--page); margin-inline: auto; padding-inline: var(--edge); box-sizing: content-box; }
+.wide { max-width: var(--wide); margin-inline: auto; padding-inline: var(--edge); }
+.sec { padding-block: var(--sec); }
+.center { text-align: center; }
+.muted { color: var(--text-muted); }
+.small { font-size: var(--fs-small); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.js [data-view]:not(.is-active) { display: none; }
+:root:not(.js) .needs-js { display: none; }
+.i { width: 24px; height: 24px; flex: none; }
+
+/* ---------- Type: medium, tight headlines with one gradient phrase; plain reading text ---------- */
+.display { font-size: var(--fs-display); font-weight: 500; line-height: 1.06; letter-spacing: -0.035em; }
+.h1 { font-size: var(--fs-h1); font-weight: 500; line-height: 1.1; letter-spacing: -0.03em; }
+.h2 { font-size: var(--fs-h2); letter-spacing: -0.02em; }
+.h3 { font-size: var(--fs-h3); letter-spacing: 0; }
+.lead { font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); color: var(--text-muted); }
+:is(.display, .h1, .h2) + :is(p, .lead) { margin-top: 14px; }
+.grad { color: var(--g3); background: var(--grad-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.label { margin: 0 0 10px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+
+/* ---------- Buttons: pills. One blue per screen, grey for the rest, an outlined pill for the second way in ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 20px; border: 0; border-radius: var(--r-pill); background: var(--surface); color: var(--text); font-weight: 600; font-size: 0.9375rem; line-height: 1; text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.btn:hover { background: var(--surface-hover); }
+.btn:active { transform: scale(0.97); }
+.btn.primary { background: var(--accent); color: var(--accent-text); }
+.btn.primary:hover { background: var(--accent-hover); }
+.btn.outline { background: transparent; box-shadow: inset 0 0 0 1px var(--accent); color: var(--link); }
+.btn.outline:hover { background: color-mix(in oklch, var(--accent) 8%, transparent); }
+.btn.block { display: flex; width: 100%; }
+.btn.sm { min-height: 36px; padding: 0 16px; font-size: var(--fs-small); }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+.btn .i { width: 18px; height: 18px; }
+.icon-btn { position: relative; display: inline-grid; place-items: center; flex: none; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--text); text-decoration: none; transition: background-color var(--dur-fast) var(--ease); }
+.icon-btn:hover { background: var(--surface); }
+.icon-btn[aria-pressed="true"] .i-like { color: var(--heart); }
+.count { position: absolute; top: 3px; right: 1px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--heart); color: #fff; font-size: 11px; font-weight: 700; line-height: 18px; text-align: center; }
+.text-link { color: var(--link); font-weight: 600; text-decoration: none; }
+.text-link:hover { text-decoration: underline; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.center .actions { justify-content: center; }
+.pop { animation: pop 450ms var(--ease-pop); }
+@keyframes pop { 0% { scale: 1; } 35% { scale: 1.28; } 70% { scale: 0.92; } 100% { scale: 1; } }
+
+/* ---------- Header: hairline bar; links fold into the menu whenever they do not fit ---------- */
+.site-header { position: sticky; top: 0; z-index: 40; background: color-mix(in oklch, var(--bg) 92%, transparent); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+.header-inner { display: flex; align-items: center; gap: 16px; height: 64px; max-width: var(--wide); margin-inline: auto; padding-inline: var(--edge); }
+.brand { display: flex; align-items: center; gap: 10px; flex: none; font-size: 1.375rem; font-weight: 600; letter-spacing: -0.045em; text-decoration: none; }
+.brand svg { width: 32px; height: 32px; }
+.nav { display: flex; gap: 2px; margin-inline: auto; }
+.nav a { padding: 10px 14px; border-radius: var(--r-pill); color: var(--text-muted); font-weight: 500; text-decoration: none; white-space: nowrap; }
+.nav a:hover { color: var(--text); background: var(--surface); }
+.nav a[aria-current] { color: var(--text); box-shadow: inset 0 -2px 0 -0px transparent; }
+.nav a[aria-current]::after { content: ""; display: block; width: 4px; height: 4px; margin: 3px auto -7px; border-radius: 50%; background: var(--grad); }
+.header-end { display: flex; align-items: center; gap: 2px; flex: none; }
+.header-end .btn { margin-left: 8px; }
+#menu-open { display: none; }
+.compact .nav, .compact .wide-only { display: none; }
+.compact #menu-open { display: inline-grid; }
+.compact .header-end { margin-left: auto; }
+@media (max-width: 860px) {
+  .nav, .wide-only { display: none; }
+  #menu-open { display: inline-grid; }
+  .header-end { margin-left: auto; }
+}
+@media (max-width: 340px) { .brand span { display: none; } }
+.menu { inset: 0 0 0 auto; width: min(360px, 88vw); height: 100%; max-height: none; margin: 0; padding: 16px 20px 24px; border: 0; border-left: 1px solid var(--border); background: var(--bg); color: var(--text); }
+.menu:popover-open { display: flex; flex-direction: column; gap: 16px; animation: slide var(--dur-base) var(--ease); }
+.menu::backdrop { background: var(--scrim); }
+@keyframes slide { from { translate: 40px 0; opacity: 0; } }
+.menu-top { display: flex; align-items: center; justify-content: space-between; }
+.menu-links a { display: block; padding: 12px 4px; border-bottom: 1px solid var(--border); font-size: 1.25rem; font-weight: 500; text-decoration: none; }
+.menu-links a[aria-current] { font-weight: 700; }
+
+/* ---------- Avatars and the gradient ring ---------- */
+.av { display: grid; place-items: center; width: 36px; aspect-ratio: 1; flex: none; overflow: hidden; border-radius: 50%; background: var(--surface); color: var(--text); font-weight: 600; font-size: 0.8125rem; }
+.av img { width: 100%; height: 100%; object-fit: cover; }
+.av.ini { background: var(--av, var(--surface)); color: #fff; }
+.ring { display: inline-grid; flex: none; padding: 2px; border-radius: 50%; background: var(--grad); }
+.ring > .av { border: 2px solid var(--ring-gap, var(--bg)); }
+.ring.seen { background: var(--border); }
+.ring.xs > .av { width: 30px; border-width: 1.5px; }
+.ring.xl { padding: 3px; }
+.ring.xl > .av { width: clamp(86px, 15vw, 150px); border-width: 4px; }
+
+/* ---------- Highlights: ringed circles that open a series as stories ---------- */
+.highlights { position: relative; display: flex; justify-content: safe center; gap: clamp(14px, 3vw, 32px); overflow-x: auto; padding: 8px var(--edge) 14px; scrollbar-width: none; }
+.hl { display: grid; justify-items: center; gap: 8px; width: 84px; flex: none; font-size: 0.8125rem; font-weight: 600; text-align: center; text-decoration: none; }
+.hl .ring { padding: 3px; transition: scale var(--dur-fast) var(--ease); }
+.hl .av { width: 78px; border-width: 3px; }
+.hl:hover .ring { scale: 1.05; }
+.hl:active .ring { scale: 0.95; }
+
+/* ---------- Hero: the split screen. Headline and a fan of stories on one side, a form on the other ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 40%); min-height: min(840px, calc(100svh - 65px)); border-bottom: 1px solid var(--border); }
+.hero-main { display: flex; flex-direction: column; justify-content: center; gap: clamp(20px, 3vw, 36px); padding: clamp(32px, 5vw, 64px) var(--edge) clamp(32px, 4vw, 48px); }
+.hero-main h1 { max-width: 13em; margin-inline: auto; text-align: center; }
+.hero-side { display: flex; align-items: center; justify-content: center; padding: 40px clamp(20px, 4vw, 56px); border-left: 1px solid var(--border); }
+.panel { width: 100%; max-width: 440px; }
+.panel h2 { margin-bottom: 18px; font-size: 1rem; }
+.or { display: flex; align-items: center; gap: 14px; margin: 26px 0; color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; }
+.or::before, .or::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+.panel .text-link { display: block; margin-top: 18px; text-align: center; color: var(--text); }
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; min-height: 0; }
+  .hero-side { border-left: 0; border-top: 1px solid var(--border); }
+}
+
+/* ---------- Stories: tall 9:16 cards with progress bars, used in the fan, on Walks and in the viewer ---------- */
+.story { position: relative; display: block; aspect-ratio: 9 / 16; overflow: hidden; isolation: isolate; border-radius: var(--r-card); background: var(--photo); color: #fff; text-decoration: none; --ring-gap: transparent; }
+.story > img { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; }
+.story::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(oklch(0% 0 0 / 0.42), transparent 20%, transparent 52%, oklch(0% 0 0 / 0.66)); }
+.bars { position: absolute; top: 8px; left: 8px; right: 8px; display: flex; gap: 3px; }
+.bars i { flex: 1; height: 2.5px; overflow: hidden; border-radius: 2px; background: oklch(100% 0 0 / 0.4); }
+.bars i.on { background: #fff; }
+.bars i.run::before { content: ""; display: block; height: 100%; background: #fff; transform-origin: 0 50%; animation: bar 6s linear infinite; }
+@keyframes bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.story-head { position: absolute; top: 18px; left: 10px; right: 10px; display: flex; align-items: center; gap: 8px; font-size: 0.8125rem; font-weight: 600; text-shadow: 0 1px 2px oklch(0% 0 0 / 0.4); }
+.story-head time, .story-head .muted { color: oklch(100% 0 0 / 0.78); font-weight: 500; }
+.story-foot { position: absolute; left: 12px; right: 12px; bottom: 12px; display: grid; gap: 6px; }
+.story-foot h3 { font-size: 1.125rem; font-weight: 600; text-shadow: 0 1px 3px oklch(0% 0 0 / 0.5); }
+.story-foot p { margin: 0; font-size: 0.8125rem; color: oklch(100% 0 0 / 0.85); }
+.reply { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.reply span { flex: 1; padding: 9px 14px; border: 1px solid oklch(100% 0 0 / 0.7); border-radius: var(--r-pill); font-size: 0.8125rem; }
+.reply .i { width: 22px; height: 22px; }
+
+.fan { position: relative; width: min(100%, 560px); aspect-ratio: 1.12; margin-inline: auto; }
+.fan .story { position: absolute; width: 39%; box-shadow: var(--shadow-card); animation: fan-in var(--dur-slow) var(--ease) both; }
+.fan .story:nth-child(1) { left: 5%; top: 15%; rotate: -9deg; animation-delay: 80ms; }
+.fan .story:nth-child(2) { left: 30.5%; top: 1%; z-index: 2; width: 43%; rotate: -1.5deg; }
+.fan .story:nth-child(3) { left: 59%; top: 13%; rotate: 8deg; animation-delay: 160ms; }
+@keyframes fan-in { from { opacity: 0; translate: 0 28px; rotate: 0deg; } }
+.sticker { position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: 6px; color: #fff; font-weight: 700; animation: stick 520ms var(--ease-pop) both; animation-delay: 420ms; box-shadow: var(--shadow-card); }
+@keyframes stick { from { opacity: 0; scale: 0.4; } }
+.st-heart { left: 0; top: 56%; padding: 12px 16px; border-radius: 22px; background: var(--heart); rotate: -8deg; }
+.st-heart::after { content: ""; position: absolute; left: 50%; bottom: -7px; width: 14px; height: 14px; margin-left: -7px; background: inherit; rotate: 45deg; border-radius: 2px; }
+.st-heart .i { width: 26px; height: 26px; }
+.st-star { right: 2%; top: 31%; padding: 7px 12px 7px 9px; border-radius: var(--r-pill); background: var(--star); rotate: 6deg; }
+.st-star .i { width: 20px; height: 20px; }
+.st-time { left: 68%; top: 3%;padding: 7px 12px; border-radius: 12px; background: var(--clock); font-size: 0.9375rem; rotate: 4deg; }
+.st-time .i { width: 18px; height: 18px; }
+.st-av { right: 24%; bottom: 0; padding: 4px; border-radius: 50%; background: var(--grad); box-shadow: var(--shadow-card); }
+.st-av .av { width: clamp(64px, 9vw, 92px); border: 4px solid var(--bg); }
+@media (max-width: 600px) { .fan .story-head, .fan .reply { display: none; } .sticker { scale: 0.8; } }
+
+/* ---------- Grid: three columns of 4:5 photographs, nearly touching ---------- */
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+.tile { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--r-media); background: var(--photo); }
+.tile img { width: 100%; height: 100%; object-fit: cover; transition: scale var(--dur-slow) var(--ease); }
+.tile-over { position: absolute; inset: 0; display: grid; place-content: center; gap: 4px; padding: 12px; background: var(--scrim); color: #fff; text-align: center; opacity: 0; transition: opacity var(--dur-fast) var(--ease); }
+.tile-over b { font-weight: 600; line-height: 1.25; }
+.tile-over span { font-size: 0.8125rem; opacity: 0.85; }
+.tile:hover .tile-over, .tile:focus-visible .tile-over { opacity: 1; }
+.tile:hover img { scale: 1.03; }
+.tile-flag { position: absolute; top: 9px; right: 9px; width: 20px; height: 20px; color: #fff; filter: drop-shadow(0 1px 2px oklch(0% 0 0 / 0.5)); }
+.enter { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 35ms); }
+@keyframes rise { from { opacity: 0; translate: 0 14px; } }
+@media (max-width: 600px) { .grid { gap: 2px; } .tile-over { display: none; } }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.sec-head .text-link { white-space: nowrap; }
+
+/* ---------- Profile header, tabs and chips ---------- */
+.profile { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: clamp(20px, 7vw, 96px); padding-block: clamp(24px, 4vw, 44px) 24px; }
+.pf-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }
+.pf-top h1 { margin-right: 12px; font-size: 1.25rem; font-weight: 500; letter-spacing: 0; }
+.pf-stats { display: flex; flex-wrap: wrap; gap: 4px clamp(16px, 3vw, 36px); margin-bottom: 14px; }
+.pf-stats b { font-weight: 600; }
+.pf-name { margin: 0; font-weight: 600; }
+.pf-bio p { margin: 0; }
+@media (max-width: 640px) { .pf-bio { grid-column: 1 / -1; } .profile { align-items: start; } }
+.tabs { display: flex; justify-content: center; gap: clamp(28px, 7vw, 60px); border-top: 1px solid var(--border); }
+.tab { display: flex; align-items: center; gap: 6px; margin-top: -1px; padding: 16px 2px; border: 0; border-top: 1px solid transparent; background: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.tab .i { width: 14px; height: 14px; }
+.tab[aria-selected="true"] { border-top-color: var(--text); color: var(--text); }
+.chips { position: relative; display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 16px; scrollbar-width: none; }
+.chip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 14px; border: 0; border-radius: 10px; background: var(--surface); color: var(--text); font-size: var(--fs-small); font-weight: 600; white-space: nowrap; text-decoration: none; }
+.chip:hover { background: var(--surface-hover); }
+.chip small { font-size: inherit; font-weight: 500; opacity: 0.65; }
+.chip[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+.series-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px; padding-top: 8px; }
+.series-card { display: grid; gap: 10px; text-decoration: none; }
+.series-card .story { aspect-ratio: 4 / 5; }
+.series-card p { margin: 0; color: var(--text-muted); font-size: var(--fs-small); }
+.empty { padding: 48px 16px; text-align: center; }
+.empty .ring { margin: 0 auto 16px; }
+.empty .av { width: 72px; }
+
+/* ---------- Post: the photograph beside a hairline panel ---------- */
+.post { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 380px); overflow: hidden; border: 1px solid var(--border); border-radius: 6px; background: var(--raised); }
+.post-media { position: relative; background: oklch(8% 0 0); user-select: none; }
+.post-media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.post-side { display: flex; flex-direction: column; min-width: 0; border-left: 1px solid var(--border); }
+.post-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: var(--fs-small); }
+.post-head b { font-weight: 600; }
+.post-body { position: relative; flex: 1; overflow: auto; padding: 16px; font-size: 0.9375rem; }
+.post-body h1 { margin-bottom: 8px; font-size: 1.25rem; font-weight: 600; }
+.facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 16px 0; font-size: var(--fs-small); }
+.facts dt { color: var(--text-muted); }
+.post-actions { display: flex; align-items: center; gap: 2px; padding: 6px 6px 2px; border-top: 1px solid var(--border); }
+.post-actions .end { margin-left: auto; }
+.post-date { margin: 0; padding: 0 14px 12px; }
+.ask { display: flex; align-items: center; gap: 10px; padding: 14px; border-top: 1px solid var(--border); color: var(--text-muted); text-decoration: none; font-size: var(--fs-small); }
+.ask b { margin-left: auto; color: var(--link); }
+.step-btn { position: absolute; top: 50%; z-index: 2; display: grid; place-items: center; width: 34px; height: 34px; margin-top: -17px; border: 0; border-radius: 50%; background: oklch(100% 0 0 / 0.86); color: oklch(17% 0.01 265); box-shadow: 0 2px 8px oklch(0% 0 0 / 0.25); text-decoration: none; }
+.step-btn .i { width: 18px; height: 18px; }
+.step-btn.prev { left: 12px; }
+.step-btn.next { right: 12px; }
+.burst { position: absolute; left: 50%; top: 50%; width: 108px; height: 108px; margin: -54px 0 0 -54px; color: #fff; filter: drop-shadow(0 4px 14px oklch(0% 0 0 / 0.45)); pointer-events: none; animation: burst 1000ms var(--ease) forwards; }
+@keyframes burst { 0% { opacity: 0; scale: 0.2; } 15% { opacity: 1; scale: 1.18; } 30% { scale: 0.94; } 45% { scale: 1; } 80% { opacity: 1; } 100% { opacity: 0; scale: 1; } }
+@media (max-width: 820px) {
+  .post { display: flex; flex-direction: column; border-inline: 0; border-radius: 0; }
+  .post-side { display: contents; }
+  .post-head { order: -1; }
+  .post-actions { order: 1; border-top: 0; }
+  .post-date { order: 2; }
+  .post-body { order: 3; padding-top: 4px; }
+  .ask { order: 4; }
+}
+
+/* ---------- Prints: photographs on a paper mat ---------- */
+.prints { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr)); gap: 36px 24px; }
+.print { display: grid; gap: 12px; align-content: start; text-decoration: none; }
+.mat { display: block; padding: 10%; background: var(--paper); box-shadow: 0 1px 2px oklch(0% 0 0 / 0.08), 0 14px 28px -14px oklch(0% 0 0 / 0.3); transition: translate var(--dur-base) var(--ease); }
+.mat img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.print:hover .mat { translate: 0 -4px; }
+.print h3 { font-size: 1rem; }
+.print p { margin: 2px 0 0; color: var(--text-muted); font-size: var(--fs-small); }
+.pd { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 400px); gap: clamp(24px, 6vw, 72px); align-items: start; }
+.pd .mat { padding: 9%; }
+.pd h1 { margin-bottom: 6px; }
+.price { margin-bottom: 20px; font-size: 1.25rem; font-weight: 600; }
+.sizes { display: grid; gap: 8px; margin: 0 0 20px; padding: 0; border: 0; }
+.sizes legend { margin-bottom: 8px; font-weight: 600; }
+.size { position: relative; display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; border: 1px solid var(--field); border-radius: var(--r-control); cursor: pointer; }
+.size input { position: absolute; opacity: 0; pointer-events: none; }
+.size:has(input:checked) { border-color: var(--text); box-shadow: inset 0 0 0 1px var(--text); }
+.size:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.size small { color: var(--text-muted); font-size: inherit; }
+.buy { display: flex; gap: 10px; align-items: center; margin-bottom: 24px; }
+.buy .btn.primary { flex: 1; }
+.qty { display: inline-flex; align-items: center; flex: none; border: 1px solid var(--field); border-radius: var(--r-pill); }
+.qty button { width: 40px; height: 42px; border: 0; background: none; border-radius: 50%; }
+.qty output { min-width: 22px; text-align: center; font-weight: 600; }
+.qty .i { width: 16px; height: 16px; margin: auto; }
+.qa { border-bottom: 1px solid var(--border); }
+.qa summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 0; font-weight: 600; cursor: pointer; list-style: none; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary .i { width: 18px; height: 18px; transition: rotate var(--dur-base) var(--ease); }
+.qa[open] summary .i { rotate: 180deg; }
+.qa p { color: var(--text-muted); }
+.bag { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 360px); gap: clamp(24px, 5vw, 56px); align-items: start; }
+.bag-list li { display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--border); }
+.bag-list .mat { padding: 7px; }
+.bag-list h3 { font-size: 1rem; }
+.bag-list p { margin: 2px 0 8px; color: var(--text-muted); font-size: var(--fs-small); }
+.line-end { display: grid; justify-items: end; gap: 6px; font-weight: 600; }
+.summary { padding: 24px; border: 1px solid var(--border); border-radius: var(--r-card); }
+.sum-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.sum-row.total { margin: 16px 0 20px; padding-top: 16px; border-top: 1px solid var(--border); font-weight: 600; font-size: 1.125rem; }
+@media (max-width: 760px) { .pd, .bag { grid-template-columns: 1fr; } }
+
+/* ---------- Walks: a row of stories ---------- */
+.walks { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 2vw, 24px); }
+.walks .story { box-shadow: var(--shadow-card); }
+.walks .btn { margin-top: 8px; background: #fff; color: oklch(17% 0.01 265); justify-self: start; }
+@media (max-width: 700px) { .walks { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 16px; scrollbar-width: none; } .walks .story { flex: 0 0 72%; scroll-snap-align: center; } }
+
+/* ---------- Journal ---------- */
+.posts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 32px 20px; }
+.post-card { display: grid; gap: 12px; align-content: start; text-decoration: none; }
+.post-card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; }
+.post-card h3 { font-size: 1.125rem; }
+.post-card p { margin: 0; color: var(--text-muted); font-size: 0.9375rem; }
+.byline { display: flex; align-items: center; gap: 10px; font-size: var(--fs-small); }
+.byline b { font-weight: 600; }
+.article { max-width: 680px; margin-inline: auto; }
+.article .hero-img { width: 100%; aspect-ratio: 4 / 5; max-height: 72svh; object-fit: cover; margin: 24px 0; border-radius: 4px; }
+.article .body p { font-size: 1.0625rem; line-height: 1.7; }
+
+/* ---------- Bands, splits, steps, people ---------- */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 6vw, 80px); align-items: center; }
+@media (max-width: 760px) { .split { grid-template-columns: 1fr; } }
+.band { padding: clamp(28px, 5vw, 56px); border-radius: var(--r-panel); background: var(--surface-2); border: 1px solid var(--border); }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; counter-reset: s; }
+.steps li { counter-increment: s; }
+.steps li::before { content: counter(s); display: grid; place-items: center; width: 44px; height: 44px; margin-bottom: 14px; border-radius: 50%; background: var(--grad); color: #fff; font-weight: 700; }
+.steps h3 { margin-bottom: 6px; }
+.steps p { color: var(--text-muted); margin: 0; }
+.people { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.person { display: flex; gap: 16px; align-items: center; padding: 18px; border: 1px solid var(--border); border-radius: var(--r-card); }
+.person .av { width: 64px; font-size: 1.125rem; }
+.person p { margin: 0; color: var(--text-muted); font-size: var(--fs-small); }
+.page-head { padding-block: clamp(28px, 5vw, 56px) clamp(16px, 2vw, 24px); }
+.page-head .lead { max-width: 36em; margin-top: 10px; }
+
+/* ---------- Forms: tall fields with the label inside, errors floating under the field ---------- */
+.fl { position: relative; margin-bottom: 22px; }
+.fl input, .fl select, .fl textarea { display: block; width: 100%; height: 58px; padding: 22px 15px 6px; border: 1px solid var(--field); border-radius: var(--r-control); background: var(--raised); font-size: 1rem; appearance: none; transition: border-color var(--dur-fast) var(--ease); }
+.fl textarea { height: auto; min-height: 136px; padding-top: 28px; resize: vertical; }
+.fl select { padding-right: 44px; cursor: pointer; }
+.fl.select::after { content: ""; position: absolute; right: 20px; top: 24px; width: 8px; height: 8px; border: solid var(--text-muted); border-width: 0 2px 2px 0; rotate: 45deg; pointer-events: none; }
+.fl label { position: absolute; left: 16px; top: 18px; color: var(--text-muted); pointer-events: none; transform-origin: 0 0; transition: transform var(--dur-fast) var(--ease); white-space: nowrap; }
+.fl :is(input:focus, input:not(:placeholder-shown), select, textarea) + label { transform: translateY(-10px) scale(0.78); }
+.fl :is(input, select, textarea):hover { border-color: var(--text-muted); }
+.fl :is(input, select, textarea):focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-color: var(--focus); }
+.fl [aria-invalid="true"] { border-color: var(--error); }
+.err { position: absolute; left: 4px; top: 100%; margin: 3px 0 0; color: var(--error); font-size: 0.78rem; line-height: 1.3; }
+.err:empty { display: none; }
+.opts { position: relative; display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 26px; padding: 0; border: 0; }
+.opts legend { width: 100%; margin-bottom: 8px; font-weight: 600; font-size: var(--fs-small); }
+.opt { position: relative; }
+.opt input { position: absolute; opacity: 0; pointer-events: none; }
+.opt span { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: var(--r-pill); background: var(--surface); font-weight: 600; font-size: var(--fs-small); cursor: pointer; }
+.opt input:checked + span { background: var(--text); color: var(--bg); }
+.opt input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.check { position: relative; display: flex; gap: 10px; align-items: flex-start; margin-bottom: 28px; font-size: var(--fs-small); }
+.check input { width: 20px; height: 20px; margin: 1px 0 0; flex: none; accent-color: var(--accent); }
+.form-card { padding: clamp(24px, 4vw, 40px); border: 1px solid var(--border); border-radius: var(--r-panel); background: var(--raised); }
+.success { padding: 16px 0; text-align: center; }
+.success:focus { outline: none; }
+.tick { display: grid; place-items: center; width: 72px; height: 72px; margin: 0 auto 18px; padding: 3px; border-radius: 50%; background: var(--grad); animation: stick 520ms var(--ease-pop) both; }
+.tick span { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: var(--bg); color: var(--g3); }
+.tick .i { width: 30px; height: 30px; }
+.success h2, .success h3 { margin-bottom: 8px; }
+
+/* ---------- FAQ, legal, 404 ---------- */
+.legal { max-width: 680px; }
+.legal h2 { margin: 28px 0 8px; font-size: 1.125rem; }
+.legal p { color: var(--text-muted); }
+.notfound { display: grid; justify-items: center; gap: 16px; padding-block: clamp(64px, 12vw, 140px); text-align: center; }
+.notfound .ring.seen .av { width: 96px; }
+
+/* ---------- Footer ---------- */
+.site-footer { margin-top: var(--sec); padding: 40px var(--edge) 36px; border-top: 1px solid var(--border); text-align: center; }
+.f-letter { max-width: 460px; margin: 0 auto 36px; }
+.f-letter h2 { margin-bottom: 4px; font-size: 1.125rem; }
+.f-letter p { color: var(--text-muted); font-size: var(--fs-small); }
+.inline-form { display: flex; gap: 8px; align-items: flex-start; text-align: left; }
+.inline-form .fl { flex: 1; margin-bottom: 0; }
+.inline-form .btn { min-height: 58px; }
+.f-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; color: var(--text-muted); font-size: 0.8125rem; }
+.f-links a { text-decoration: none; }
+.f-links a:hover { color: var(--text); text-decoration: underline; }
+.f-legal { margin: 14px 0 0; color: var(--text-muted); font-size: 0.8125rem; }
+
+/* ---------- Toast and the story viewer (both only appear after a tap) ---------- */
+.toast { position: fixed; left: 50%; bottom: 24px; z-index: 70; display: flex; align-items: center; gap: 14px; max-width: calc(100vw - 32px); padding: 12px 18px; translate: -50% 0; border-radius: var(--r-control); background: var(--text); color: var(--bg); font-weight: 500; box-shadow: var(--shadow-overlay); animation: rise var(--dur-base) var(--ease) both; }
+.toast a { color: inherit; font-weight: 700; }
+.viewer { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; color: #fff; }
+.viewer::backdrop { background: oklch(10% 0.01 270 / 0.94); }
+.viewer[open] { display: grid; place-items: center; }
+.viewer .story { width: min(92vw, calc(min(88svh, 860px) * 9 / 16)); animation: rise var(--dur-base) var(--ease) both; }
+.viewer .bars i.run::before { animation-duration: 5s; animation-iteration-count: 1; }
+.viewer.paused .bars i.run::before { animation-play-state: paused; }
+.v-close { position: absolute; top: 16px; right: 16px; color: #fff; }
+.v-close:hover, .v-tool:hover { background: oklch(100% 0 0 / 0.12); }
+.v-tool { color: #fff; width: 36px; height: 36px; margin-left: auto; }
+.v-tool .i { width: 20px; height: 20px; }
+.v-zone { position: absolute; top: 60px; bottom: 90px; width: 40%; border: 0; background: transparent; }
+.v-zone.prev { left: 0; } .v-zone.next { right: 0; }
+.v-zone:focus-visible { outline-offset: -4px; }
+
+/* ---------- Motion preferences ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs><linearGradient id="mk" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#f6b93b"/><stop offset=".4" stop-color="#f0702c"/><stop offset=".7" stop-color="#e0334c"/><stop offset="1" stop-color="#c41f7a"/></linearGradient></defs>
+  <symbol id="i-mark" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="url(#mk)"/><circle cx="16" cy="12.5" r="5" fill="#fff"/><path d="M5.5 21c3.5-2.6 7-2.6 10.5 0s7 2.6 10.5 0" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5s-8.5-5-8.5-11A4.7 4.7 0 0 1 12 6.6a4.7 4.7 0 0 1 8.5 2.9c0 6-8.5 11-8.5 11Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-heart-fill" viewBox="0 0 24 24"><path d="M12 20.5s-8.5-5-8.5-11A4.7 4.7 0 0 1 12 6.6a4.7 4.7 0 0 1 8.5 2.9c0 6-8.5 11-8.5 11Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-comment" viewBox="0 0 24 24"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.4 7.5L3.5 20.5l1.4-4.4a8.5 8.5 0 1 1 15.6-4.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 10 13.5M21 3l-6.5 18-4.5-7.5L2.5 9.5 21 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+  <symbol id="i-mark-save" viewBox="0 0 24 24"><path d="M19 21.5 12 15l-7 6.5V3.5h14v18Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mark-saved" viewBox="0 0 24 24"><path d="M19 21.5 12 15l-7 6.5V3.5h14v18Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></g></symbol>
+  <symbol id="i-stack" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="7" y="7" width="14" height="14" rx="2"/><path d="M17 3H5a2 2 0 0 0-2 2v12"/></g></symbol>
+  <symbol id="i-frame" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3.5" y="2.5" width="17" height="19" rx="1.5"/><rect x="7" y="6" width="10" height="12"/></g></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M4.5 7.5h15l-1 13h-13l-1-13Z"/><path d="M8.5 9.5V6a3.5 3.5 0 0 1 7 0v3.5"/></g></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></g></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></g></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8L12 3Z" fill="currentColor"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></g></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5-12-7.5Z" fill="currentColor"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#/" aria-label="Tidewell, home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>tidewell</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/work">Work</a>
+      <a href="#/prints">Prints</a>
+      <a href="#/walks">Walks</a>
+      <a href="#/journal">Journal</a>
+      <a href="#/about">About</a>
+    </nav>
+    <div class="header-end">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark colours"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="icon-btn wide-only" href="#/saved" aria-label="Saved photographs"><svg class="i" aria-hidden="true"><use href="#i-mark-save"/></svg></a>
+      <a class="icon-btn" href="#/bag" aria-label="Your bag"><svg class="i" aria-hidden="true"><use href="#i-bag"/></svg><span class="count" id="bag-count" hidden>0</span></a>
+      <a class="btn primary sm wide-only" href="#/contact?topic=session">Book a session</a>
+      <button class="icon-btn" id="menu-open" type="button" popovertarget="menu" aria-label="Open the menu"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu" popover aria-label="Menu">
+  <div class="menu-top">
+    <a class="brand" href="#/"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>tidewell</span></a>
+    <button class="icon-btn" type="button" popovertarget="menu" popovertargetaction="hide" aria-label="Close the menu"><svg class="i" aria-hidden="true"><use href="#i-close"/></svg></button>
+  </div>
+  <nav class="menu-links" aria-label="Menu">
+    <a href="#/work">Work</a>
+    <a href="#/prints">Prints</a>
+    <a href="#/walks">Walks</a>
+    <a href="#/journal">Journal</a>
+    <a href="#/about">About</a>
+    <a href="#/saved">Saved</a>
+    <a href="#/faq">Questions</a>
+  </nav>
+  <a class="btn primary block" href="#/contact?topic=session">Book a session</a>
+</div>
+
+<main id="main">
+
+<!-- ======================= HOME ======================= -->
+<div data-view="home">
+  <section class="hero" aria-labelledby="home-h">
+    <div class="hero-main">
+      <h1 class="display" id="home-h">Harbour light, kept for <span class="grad">the people you love.</span></h1>
+      <div class="fan" aria-hidden="true">
+        <div class="story"><img src="images/kite.webp" alt="" width="720" height="900"><div class="bars"><i class="on"></i><i></i></div></div>
+        <div class="story"><img src="images/bench.webp" alt="" width="720" height="900"><div class="bars"><i class="on"></i><i class="run"></i><i></i></div>
+          <div class="story-head"><span class="ring xs"><span class="av"><img src="images/lighthouse.webp" alt="" width="720" height="900"></span></span>tidewell.studio <span class="muted">2h</span></div>
+          <div class="story-foot"><div class="reply"><span>Send a note</span><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg><svg class="i" aria-hidden="true"><use href="#i-send"/></svg></div></div></div>
+        <div class="story"><img src="images/beach-huts.webp" alt="" width="720" height="900"><div class="bars"><i class="on"></i><i class="on"></i><i></i></div></div>
+        <span class="sticker st-heart"><svg class="i" aria-hidden="true"><use href="#i-heart-fill"/></svg></span>
+        <span class="sticker st-time"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>06:42</span>
+        <span class="sticker st-star"><svg class="i" aria-hidden="true"><use href="#i-star"/></svg><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+        <span class="sticker st-av"><span class="av"><img src="images/window-portrait.webp" alt="" width="720" height="900"></span></span>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="panel">
+        <form data-form="booking" novalidate>
+          <h2>Book a portrait session</h2>
+          <div class="fl"><input id="b-name" name="name" type="text" placeholder=" " autocomplete="name" required aria-describedby="b-name-e"><label for="b-name">Your name</label><p class="err" id="b-name-e"></p></div>
+          <div class="fl"><input id="b-email" name="email" type="email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="b-email-e"><label for="b-email">Email</label><p class="err" id="b-email-e"></p></div>
+          <div class="fl select"><select id="b-when" name="when" required aria-describedby="b-when-e"><option value="">Choose a month</option><option>This month</option><option>Next month</option><option>In two or three months</option><option>Not sure yet</option></select><label for="b-when">When</label><p class="err" id="b-when-e"></p></div>
+          <button class="btn primary block" type="submit">Request a date</button>
+          <a class="text-link" href="#/faq">How a session works</a>
+          <p class="or">or</p>
+          <a class="btn outline block" href="#/prints">Browse the prints</a>
+        </form>
+        <div class="success" data-success="booking" tabindex="-1" hidden>
+          <div class="tick"><span><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></div>
+          <h3 class="h2">Thank you, <span data-echo="name"></span></h3>
+          <p class="muted">We will write to <b data-echo="email"></b> within two days with dates that suit the light.</p>
+          <button class="btn" type="button" data-again>Send another request</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="highlights wrap" aria-label="Series" style="padding-top:28px">
+    <a class="hl" href="#/work?s=harbour" data-story="harbour"><span class="ring"><span class="av"><img src="images/dawn-harbour.webp" alt="" width="720" height="900"></span></span>Harbour</a>
+    <a class="hl" href="#/work?s=portraits" data-story="portraits"><span class="ring"><span class="av"><img src="images/window-portrait.webp" alt="" width="720" height="900"></span></span>Portraits</a>
+    <a class="hl" href="#/work?s=shore" data-story="shore"><span class="ring"><span class="av"><img src="images/beach-huts.webp" alt="" width="720" height="900"></span></span>Shore</a>
+    <a class="hl" href="#/work?s=evenings" data-story="evenings"><span class="ring"><span class="av"><img src="images/pier-sunset.webp" alt="" width="720" height="900"></span></span>Evenings</a>
+    <a class="hl" href="#/work?s=walks" data-story="walks"><span class="ring"><span class="av"><img src="images/cliff-path.webp" alt="" width="720" height="900"></span></span>Walks</a>
+  </nav>
+
+  <section class="wrap sec" style="padding-top:24px" aria-labelledby="latest-h">
+    <div class="sec-head"><h2 class="h2" id="latest-h">Latest from the quay</h2><a class="text-link" href="#/work">See all work</a></div>
+    <div class="grid" id="home-grid">
+      <a class="tile" href="#/photo?id=dawn-harbour"><img src="images/dawn-harbour.webp" alt="Moorings at first light" width="720" height="900"><span class="tile-over" aria-hidden="true"><b>Moorings at first light</b><span>Harbour</span></span></a>
+      <a class="tile" href="#/photo?id=window-portrait"><img src="images/window-portrait.webp" alt="Morning sitting, north window" width="720" height="900"><span class="tile-over" aria-hidden="true"><b>Morning sitting, north window</b><span>Portraits</span></span></a>
+      <a class="tile" href="#/photo?id=beach-huts"><img src="images/beach-huts.webp" alt="Six huts, freshly painted" width="720" height="900"><span class="tile-over" aria-hidden="true"><b>Six huts, freshly painted</b><span>Shore</span></span><svg class="tile-flag" aria-hidden="true"><use href="#i-frame"/></svg></a>
+      <a class="tile" href="#/photo?id=lighthouse"><img src="images/lighthouse.webp" alt="The light on Gull Point" width="720" height="900"><span class="tile-over" aria-hidden="true"><b>The light on Gull Point</b><span>Harbour</span></span><svg class="tile-flag" aria-hidden="true"><use href="#i-frame"/></svg></a>
+      <a class="tile" href="#/photo?id=kite"><img src="images/kite.webp" alt="First kite of the summer" width="720" height="900"><span class="tile-over" aria-hidden="true"><b>First kite of the summer</b><span>Portraits</span></span></a>
+      <a class="tile" href="#/photo?id=pier-sunset"><img src="images/pier-sunset.webp" alt="Last light off the pier" width="720" height="900"><span class="tile-over" aria-hidden="true"><b>Last light off the pier</b><span>Evenings</span></span><svg class="tile-flag" aria-hidden="true"><use href="#i-frame"/></svg></a>
+      <a class="tile" href="#/photo?id=buoys"><img src="images/buoys.webp" alt="Floats drying on the net shed" width="720" height="900"><span class="tile-over" aria-hidden="true"><b>Floats drying on the net shed</b><span>Harbour</span></span><svg class="tile-flag" aria-hidden="true"><use href="#i-frame"/></svg></a>
+      <a class="tile" href="#/photo?id=bench"><img src="images/bench.webp" alt="The same bench, fifty summers on" width="720" height="900"><span class="tile-over" aria-hidden="true"><b>The same bench, fifty summers on</b><span>Portraits</span></span></a>
+      <a class="tile" href="#/photo?id=quay-lamps"><img src="images/quay-lamps.webp" alt="Quay lamps at nine" width="720" height="900"><span class="tile-over" aria-hidden="true"><b>Quay lamps at nine</b><span>Evenings</span></span><svg class="tile-flag" aria-hidden="true"><use href="#i-frame"/></svg></a>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="walks-h">
+    <div class="sec-head"><h2 class="h2" id="walks-h">Saturday photo walks</h2><a class="text-link" href="#/walks">All walks</a></div>
+    <p class="muted" style="max-width:34em">Two hours on foot with one of us, any camera welcome. We stop where the light is good and talk about why.</p>
+    <div class="walks" data-walks></div>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="studio-h">
+    <div class="band split">
+      <div>
+        <p class="label">The studio</p>
+        <h2 class="h1" id="studio-h">One north window, <span class="grad">no backdrops.</span></h2>
+      </div>
+      <div>
+        <p class="lead">We are two photographers in a net loft on the quay. Sessions happen by the window or on the harbour wall, prints are made in the back room, and the kettle is always on.</p>
+        <div class="actions"><a class="btn primary" href="#/contact?topic=session">Book a session</a><a class="btn" href="#/about">About us</a></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= WORK (profile and grid) ======================= -->
+<div data-view="work">
+  <section class="wrap profile">
+    <span class="ring xl"><span class="av"><img src="images/lighthouse.webp" alt="" width="720" height="900"></span></span>
+    <div>
+      <div class="pf-top"><h1>tidewell.studio</h1><a class="btn primary sm" href="#/contact?topic=session">Book a session</a><a class="btn sm" href="#/contact">Message</a></div>
+      <ul class="pf-stats needs-js"><li><b data-stat="photos">0</b> photographs</li><li><b data-stat="series">0</b> series</li><li><b data-stat="prints">0</b> prints</li></ul>
+      <div class="pf-bio"><p class="pf-name">Tidewell Studio</p><p>Portraits, harbour prints and Saturday walks.</p><p>Net loft 4, the quay, Merrow Bay. Thursday to Sunday.</p></div>
+    </div>
+  </section>
+  <nav class="highlights wrap" aria-label="Series stories" data-highlights></nav>
+  <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="Show">
+      <button class="tab" role="tab" id="t-grid" aria-controls="pane-grid" aria-selected="true" data-tab="grid"><svg class="i" aria-hidden="true"><use href="#i-grid"/></svg>Photographs</button>
+      <button class="tab" role="tab" id="t-series" aria-controls="pane-series" aria-selected="false" tabindex="-1" data-tab="series"><svg class="i" aria-hidden="true"><use href="#i-stack"/></svg>Series</button>
+      <button class="tab" role="tab" id="t-prints" aria-controls="pane-prints" aria-selected="false" tabindex="-1" data-tab="prints"><svg class="i" aria-hidden="true"><use href="#i-frame"/></svg>Prints</button>
+    </div>
+    <section id="pane-grid" role="tabpanel" aria-labelledby="t-grid" class="needs-js">
+      <div class="chips" data-filter="series" aria-label="Filter by series"></div>
+      <div class="grid" id="work-grid"></div>
+    </section>
+    <section id="pane-series" role="tabpanel" aria-labelledby="t-series" hidden><div class="series-list" id="series-list"></div></section>
+    <section id="pane-prints" role="tabpanel" aria-labelledby="t-prints" hidden><div class="grid" id="print-grid"></div></section>
+  </div>
+</div>
+
+<!-- ======================= PHOTO (one post) ======================= -->
+<div data-view="photo">
+  <section class="wrap" style="padding-top:clamp(0px, 3vw, 32px)">
+    <article class="post needs-js">
+      <div class="post-media" id="p-media">
+        <img id="p-img" src="images/dawn-harbour.webp" alt="" width="720" height="900">
+        <a class="step-btn prev" id="p-prev" href="#/photo?id=dawn-harbour" aria-label="Previous photograph"><svg class="i" aria-hidden="true"><use href="#i-left"/></svg></a>
+        <a class="step-btn next" id="p-next" href="#/photo?id=dawn-harbour" aria-label="Next photograph"><svg class="i" aria-hidden="true"><use href="#i-right"/></svg></a>
+      </div>
+      <div class="post-side">
+        <div class="post-head"><span class="ring xs"><span class="av"><img src="images/lighthouse.webp" alt="" width="720" height="900"></span></span><b>tidewell.studio</b><span class="muted">·</span><a class="text-link" id="p-set" href="#/work">Harbour</a></div>
+        <div class="post-body">
+          <h1 id="p-title">Photograph</h1>
+          <p id="p-caption"></p>
+          <dl class="facts"><dt>Place</dt><dd id="p-place"></dd><dt>Light</dt><dd id="p-light"></dd><dt>Lens</dt><dd id="p-lens"></dd><dt>Print</dt><dd id="p-print"></dd></dl>
+        </div>
+        <div class="post-actions">
+          <button class="icon-btn" type="button" id="p-like" aria-pressed="false" aria-label="Like"><svg class="i i-like" aria-hidden="true"><use href="#i-heart"/></svg></button>
+          <a class="icon-btn" id="p-ask-icon" href="#/contact" aria-label="Ask about this photograph"><svg class="i" aria-hidden="true"><use href="#i-comment"/></svg></a>
+          <button class="icon-btn" type="button" data-share aria-label="Copy a link to this photograph"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg></button>
+          <button class="icon-btn end" type="button" id="p-save" aria-pressed="false" aria-label="Save"><svg class="i" aria-hidden="true"><use href="#i-mark-save"/></svg></button>
+        </div>
+        <p class="post-date label" id="p-date"></p>
+        <a class="ask" id="p-ask" href="#/contact"><svg class="i" aria-hidden="true"><use href="#i-comment"/></svg>Ask about this photograph<b>Write</b></a>
+      </div>
+    </article>
+  </section>
+  <section class="wrap sec needs-js" aria-labelledby="more-h">
+    <div class="sec-head"><h2 class="h3 label" id="more-h">More from this series</h2><a class="text-link" id="more-link" href="#/work">See the series</a></div>
+    <div class="grid" id="more-grid"></div>
+  </section>
+</div>
+
+<!-- ======================= PRINTS ======================= -->
+<div data-view="prints">
+  <section class="wrap page-head">
+    <p class="label">Prints</p>
+    <h1 class="h1">The harbour, <span class="grad">on your wall.</span></h1>
+    <p class="lead">Archival pigment prints on matt cotton paper, made in the back of the studio and posted flat.</p>
+  </section>
+  <section class="wrap needs-js">
+    <div class="chips" data-filter="prints" aria-label="Filter prints by series"></div>
+    <p class="muted small" id="prints-count" aria-live="polite"></p>
+    <div class="prints" id="prints-list"></div>
+  </section>
+</div>
+
+<!-- ======================= PRINT (one product) ======================= -->
+<div data-view="print">
+  <section class="wrap sec needs-js" style="padding-top:clamp(24px, 4vw, 48px)">
+    <div class="pd">
+      <a class="mat" id="pd-photo-link" href="#/photo?id=dawn-harbour"><img id="pd-img" src="images/dawn-harbour.webp" alt="" width="720" height="900"></a>
+      <div>
+        <p class="label" id="pd-series">Harbour</p>
+        <h1 class="h1" id="pd-title">Print</h1>
+        <p class="price" id="pd-price"></p>
+        <fieldset class="sizes" id="pd-sizes"><legend>Size</legend></fieldset>
+        <div class="buy">
+          <div class="qty" aria-label="Quantity"><button type="button" data-step="-1" aria-label="One fewer"><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg></button><output id="pd-qty" aria-live="polite">1</output><button type="button" data-step="1" aria-label="One more"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+          <button class="btn primary" type="button" id="pd-add">Add to bag</button>
+          <button class="icon-btn" type="button" id="pd-save" aria-pressed="false" aria-label="Save"><svg class="i" aria-hidden="true"><use href="#i-mark-save"/></svg></button>
+        </div>
+        <details class="qa" open><summary>Paper and printing<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Pigment inks on 310 gsm matt cotton rag, with a 3 cm white border for framing. Each print is signed on the back and numbered in an edition of 50.</p></details>
+        <details class="qa"><summary>Delivery<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Printed to order within five working days and posted flat between boards. Tracking comes by email.</p></details>
+        <details class="qa"><summary>Returns<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>If a print arrives damaged, send us a picture of it within 14 days and we will print it again.</p></details>
+      </div>
+    </div>
+  </section>
+  <section class="wrap needs-js" aria-labelledby="pd-more-h">
+    <div class="sec-head"><h2 class="h2" id="pd-more-h">More prints</h2><a class="text-link" href="#/prints">All prints</a></div>
+    <div class="prints" id="pd-more"></div>
+  </section>
+</div>
+
+<!-- ======================= BAG ======================= -->
+<div data-view="bag">
+  <section class="wrap page-head"><h1 class="h1">Your bag</h1></section>
+  <section class="wrap needs-js">
+    <div class="empty" id="bag-empty" hidden><span class="ring seen"><span class="av"><svg class="i" aria-hidden="true"><use href="#i-bag"/></svg></span></span><h2 class="h2">Nothing here yet</h2><p class="muted">Pick a print and a size, and it waits here.</p><a class="btn primary" href="#/prints">Browse the prints</a></div>
+    <div class="bag" id="bag-full">
+      <ul class="bag-list" id="bag-list"></ul>
+      <div class="summary">
+        <div class="sum-row"><span>Prints</span><span id="bag-sub">$0</span></div>
+        <div class="sum-row muted small"><span>Delivery</span><span>Added to the invoice</span></div>
+        <div class="sum-row total"><span>Total before delivery</span><span id="bag-total">$0</span></div>
+        <form data-form="order" novalidate>
+          <div class="fl"><input id="o-email" name="email" type="email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="o-email-e"><label for="o-email">Email for the invoice</label><p class="err" id="o-email-e"></p></div>
+          <div class="fl select"><select id="o-country" name="country" required aria-describedby="o-country-e" autocomplete="country-name"><option value="">Choose a country</option><option>United Kingdom</option><option>Ireland</option><option>Elsewhere in Europe</option><option>Somewhere else</option></select><label for="o-country">Deliver to</label><p class="err" id="o-country-e"></p></div>
+          <button class="btn primary block" type="submit">Request an invoice</button>
+        </form>
+        <div class="success" data-success="order" tabindex="-1" hidden>
+          <div class="tick"><span><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></div>
+          <h2 class="h3">Your order is held</h2>
+          <p class="muted small">The invoice with delivery goes to <b data-echo="email"></b> within one working day. Pay it and we start printing.</p>
+          <button class="btn sm" type="button" data-again>Change the email</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= WALKS ======================= -->
+<div data-view="walks">
+  <section class="wrap page-head">
+    <p class="label">Photo walks</p>
+    <h1 class="h1">Two hours, <span class="grad">any camera.</span></h1>
+    <p class="lead">Small groups of eight. We meet at the harbour steps, walk at an easy pace and stop wherever the light asks us to.</p>
+  </section>
+  <section class="wrap">
+    <div class="walks" id="walk-cards" data-walks>
+      <a class="story" href="#/walks?w=gull-point&amp;at=walk-form"><img src="images/cliff-path.webp" alt="" width="720" height="900"><div class="bars"><i class="on"></i><i></i><i></i></div><div class="story-head"><span class="ring xs"><span class="av ini" style="--av:oklch(55% 0.12 30)">OV</span></span>Oren <time>Sat 5 Dec · 07:30</time></div><div class="story-foot"><h3>Gull Point at sunrise</h3><p>5 km on the cliff path. Boots, not trainers.</p><span class="btn sm">Save a place</span></div></a>
+      <a class="story" href="#/walks?w=sea-fret&amp;at=walk-form"><img src="images/fog-field.webp" alt="" width="720" height="900"><div class="bars"><i class="on"></i><i class="on"></i><i></i></div><div class="story-head"><span class="ring xs"><span class="av ini" style="--av:oklch(48% 0.1 250)">MQ</span></span>Mara <time>Sat 12 Dec · 09:00</time></div><div class="story-foot"><h3>Fields in the sea fret</h3><p>4 km inland. Fog days are the best days.</p><span class="btn sm">Save a place</span></div></a>
+      <a class="story" href="#/walks?w=lamps&amp;at=walk-form"><img src="images/quay-lamps.webp" alt="" width="720" height="900"><div class="bars"><i class="on"></i><i class="on"></i><i class="on"></i></div><div class="story-head"><span class="ring xs"><span class="av ini" style="--av:oklch(55% 0.12 30)">OV</span></span>Oren <time>Sat 19 Dec · 16:00</time></div><div class="story-foot"><h3>Quay lamps after dark</h3><p>3 km along the water. Bring something to lean on.</p><span class="btn sm">Save a place</span></div></a>
+    </div>
+  </section>
+  <section class="wrap sec" id="walk-form" aria-labelledby="walk-form-h">
+    <div class="split" style="align-items:start">
+      <div>
+        <h2 class="h2" id="walk-form-h">Save a place</h2>
+        <p class="muted">Walks cost $25 and are paid on the day. If the weather turns, we move the walk and tell you the evening before.</p>
+      </div>
+      <div class="form-card">
+        <form data-form="signup" novalidate>
+          <div class="fl select"><select id="w-walk" name="walk" required aria-describedby="w-walk-e"><option value="">Choose a walk</option><option value="gull-point">Gull Point at sunrise · Sat 5 Dec</option><option value="sea-fret">Fields in the sea fret · Sat 12 Dec</option><option value="lamps">Quay lamps after dark · Sat 19 Dec</option></select><label for="w-walk">Walk</label><p class="err" id="w-walk-e"></p></div>
+          <div class="fl"><input id="w-name" name="name" type="text" placeholder=" " autocomplete="name" required aria-describedby="w-name-e"><label for="w-name">Your name</label><p class="err" id="w-name-e"></p></div>
+          <div class="fl"><input id="w-email" name="email" type="email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="w-email-e"><label for="w-email">Email</label><p class="err" id="w-email-e"></p></div>
+          <fieldset class="opts" id="w-camera" aria-describedby="w-camera-e" data-min="1"><legend>What will you bring?</legend>
+            <label class="opt"><input type="radio" name="camera" value="A phone"><span>A phone</span></label>
+            <label class="opt"><input type="radio" name="camera" value="A digital camera"><span>A digital camera</span></label>
+            <label class="opt"><input type="radio" name="camera" value="A film camera"><span>A film camera</span></label>
+            <p class="err" id="w-camera-e"></p>
+          </fieldset>
+          <label class="check"><input type="checkbox" name="pace" required aria-describedby="w-pace-e">I can walk the distance on uneven paths.<span class="err" id="w-pace-e"></span></label>
+          <button class="btn primary block" type="submit">Save my place</button>
+        </form>
+        <div class="success" data-success="signup" tabindex="-1" hidden>
+          <div class="tick"><span><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></div>
+          <h3 class="h2">See you at the steps</h3>
+          <p class="muted">A place is held for <b data-echo="name"></b>. Directions and a kit list go to <b data-echo="email"></b>.</p>
+          <button class="btn" type="button" data-again>Save another place</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= JOURNAL ======================= -->
+<div data-view="journal">
+  <section class="wrap page-head">
+    <p class="label">Journal</p>
+    <h1 class="h1">Notes from <span class="grad">the back room.</span></h1>
+    <p class="lead">How we light, print and walk, written down so we stop explaining it twice.</p>
+  </section>
+  <section class="wrap needs-js"><div class="posts" id="posts-list"></div></section>
+</div>
+
+<!-- ======================= POST (one article) ======================= -->
+<div data-view="post">
+  <article class="wrap sec article needs-js" style="padding-top:clamp(24px, 4vw, 48px)">
+    <div class="byline" id="a-by"></div>
+    <h1 class="h1" id="a-title" style="margin-top:20px">Article</h1>
+    <img class="hero-img" id="a-img" src="images/dawn-harbour.webp" alt="" width="720" height="900">
+    <div class="body" id="a-body"></div>
+    <div class="post-actions" style="border:0;padding:0">
+      <button class="icon-btn" type="button" id="a-like" aria-pressed="false" aria-label="Like"><svg class="i i-like" aria-hidden="true"><use href="#i-heart"/></svg></button>
+      <button class="icon-btn" type="button" data-share aria-label="Copy a link to this note"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg></button>
+      <a class="text-link end" href="#/journal">All notes</a>
+    </div>
+  </article>
+</div>
+
+<!-- ======================= ABOUT ======================= -->
+<div data-view="about">
+  <section class="wrap sec split">
+    <div>
+      <p class="label">About</p>
+      <h1 class="display">Two people, <span class="grad">one window</span> and the tide table.</h1>
+    </div>
+    <div>
+      <p class="lead">Tidewell started in a net loft on the quay at Merrow Bay. Mara makes the portraits; Oren prints them and runs the walks.</p>
+      <p>We photograph people where they already feel at home: on the harbour wall, by the north window, on the bench they have used for years. We plan sessions around the tide and the weather, not the clock.</p>
+    </div>
+  </section>
+  <section class="wrap" aria-labelledby="people-h">
+    <h2 class="sr" id="people-h">The people</h2>
+    <div class="people">
+      <div class="person"><span class="ring"><span class="av ini" style="--av:oklch(48% 0.1 250)">MQ</span></span><div><h3 class="h3">Mara Quist</h3><p>Portraits and family sessions</p></div></div>
+      <div class="person"><span class="ring"><span class="av ini" style="--av:oklch(55% 0.12 30)">OV</span></span><div><h3 class="h3">Oren Vale</h3><p>Prints and Saturday walks</p></div></div>
+    </div>
+  </section>
+  <section class="wrap sec" aria-labelledby="how-h">
+    <h2 class="h2" id="how-h" style="margin-bottom:28px">How a session works</h2>
+    <ol class="steps">
+      <li><h3 class="h3">We talk first</h3><p>A short call about who will be in the pictures and where they feel easy.</p></li>
+      <li><h3 class="h3">We pick the light</h3><p>Morning by the window, or the hour before sunset on the wall. We check the tide.</p></li>
+      <li><h3 class="h3">You choose the frames</h3><p>A private gallery within a week, and prints made here if you want them.</p></li>
+    </ol>
+  </section>
+  <section class="wrap">
+    <div class="band center"><h2 class="h1" style="margin-bottom:12px">Come and see the loft</h2><p class="muted">Thursday to Sunday, 10:00 to 17:00. Net loft 4, the quay.</p><div class="actions"><a class="btn primary" href="#/contact?topic=session">Book a session</a><a class="btn" href="#/contact">Write to us</a></div></div>
+  </section>
+</div>
+
+<!-- ======================= CONTACT ======================= -->
+<div data-view="contact">
+  <section class="wrap sec split" style="align-items:start;padding-top:clamp(28px, 5vw, 56px)">
+    <div>
+      <p class="label">Contact</p>
+      <h1 class="h1">Write to <span class="grad">the studio.</span></h1>
+      <p class="lead">Usually within two days. For a session, tell us who will be in it and roughly when.</p>
+      <ul class="small" style="display:grid;gap:10px;margin-top:24px">
+        <li class="byline"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Net loft 4, the quay, Merrow Bay</li>
+        <li class="byline"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg><a class="text-link" href="mailto:hello@tidewell.example">hello@tidewell.example</a></li>
+        <li class="byline"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Thursday to Sunday, 10:00 to 17:00</li>
+      </ul>
+    </div>
+    <div class="form-card">
+      <form data-form="contact" novalidate>
+        <div class="fl select"><select id="c-topic" name="topic" required aria-describedby="c-topic-e"><option value="">Choose a topic</option><option value="session">A portrait session</option><option value="print">A print</option><option value="walk">A photo walk</option><option value="other">Something else</option></select><label for="c-topic">About</label><p class="err" id="c-topic-e"></p></div>
+        <div class="fl"><input id="c-name" name="name" type="text" placeholder=" " autocomplete="name" required aria-describedby="c-name-e"><label for="c-name">Your name</label><p class="err" id="c-name-e"></p></div>
+        <div class="fl"><input id="c-email" name="email" type="email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="c-email-e"><label for="c-email">Email</label><p class="err" id="c-email-e"></p></div>
+        <div class="fl" data-show-when="session" hidden><input id="c-people" name="people" type="number" min="1" max="12" placeholder=" " inputmode="numeric" aria-describedby="c-people-e"><label for="c-people">How many people</label><p class="err" id="c-people-e"></p></div>
+        <div class="fl"><textarea id="c-msg" name="message" placeholder=" " required data-min="20" aria-describedby="c-msg-e"></textarea><label for="c-msg">Message</label><p class="err" id="c-msg-e"></p></div>
+        <button class="btn primary block" type="submit">Send</button>
+      </form>
+      <div class="success" data-success="contact" tabindex="-1" hidden>
+        <div class="tick"><span><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></div>
+        <h2 class="h2">Message sent</h2>
+        <p class="muted">Thank you, <b data-echo="name"></b>. We will reply to <b data-echo="email"></b> within two days.</p>
+        <button class="btn" type="button" data-again>Write another</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= SAVED ======================= -->
+<div data-view="saved">
+  <section class="wrap page-head"><h1 class="h1">Saved</h1><p class="lead">Photographs and prints you marked, kept in this browser only.</p></section>
+  <section class="wrap needs-js">
+    <div class="empty" id="saved-empty" hidden><span class="ring seen"><span class="av"><svg class="i" aria-hidden="true"><use href="#i-mark-save"/></svg></span></span><h2 class="h2">Nothing saved yet</h2><p class="muted">Tap the bookmark under any photograph to keep it here.</p><a class="btn primary" href="#/work">See the work</a></div>
+    <div class="grid" id="saved-grid"></div>
+  </section>
+</div>
+
+<!-- ======================= FAQ ======================= -->
+<div data-view="faq">
+  <section class="wrap page-head"><p class="label">Questions</p><h1 class="h1">Before you book</h1></section>
+  <section class="wrap" style="max-width:720px;margin-left:max(var(--edge), calc((100% - var(--page)) / 2))">
+    <details class="qa" open><summary>How long is a portrait session?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>About an hour, most of it talking. Families with small children get ninety minutes, because someone always needs a snack.</p></details>
+    <details class="qa"><summary>What does a session cost?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>$180, which includes a private gallery of about thirty pictures. Prints are extra and made here.</p></details>
+    <details class="qa"><summary>What if it rains?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>We move indoors to the window, or pick another day. Rain on the harbour wall can be lovely, so we may ask you to come anyway.</p></details>
+    <details class="qa"><summary>Can we post the pictures online?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Yes. Share them wherever you like; a mention is kind but never required.</p></details>
+    <details class="qa"><summary>How are prints posted?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Flat, between two boards, with tracking. Larger sizes go by courier.</p></details>
+    <details class="qa"><summary>Do I need a good camera for a walk?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>No. Half the group usually brings a phone. The walk is about where to stand and when to wait.</p></details>
+  </section>
+</div>
+
+<!-- ======================= LEGAL ======================= -->
+<div data-view="privacy">
+  <section class="wrap sec legal">
+    <h1 class="h1">Privacy</h1>
+    <p class="muted">Last updated 1 November.</p>
+    <h2>What we keep</h2><p>Your name and email when you book, order or write to us, and the pictures from your session. Saved photographs and your bag stay in your own browser.</p>
+    <h2>What we do with it</h2><p>We use it to answer you, deliver your gallery and prints, and send the tide letter if you ask for it. We never sell it or share it for advertising.</p>
+    <h2>Your pictures</h2><p>We only show a session in our work with written permission, and we take it down when you ask.</p>
+  </section>
+</div>
+<div data-view="terms">
+  <section class="wrap sec legal">
+    <h1 class="h1">Terms</h1>
+    <p class="muted">Last updated 1 November.</p>
+    <h2>Sessions</h2><p>Move a session up to 48 hours before at no cost. After that, the deposit covers the time we kept for you.</p>
+    <h2>Prints</h2><p>Prints are made to order. We replace any print that arrives damaged.</p>
+    <h2>Copyright</h2><p>We keep the copyright in our photographs. Your session pictures come with a licence for personal use, including posting online.</p>
+  </section>
+</div>
+
+<!-- ======================= 404 ======================= -->
+<div data-view="404">
+  <section class="wrap notfound">
+    <span class="ring seen"><span class="av"><img src="images/footprints.webp" alt="" width="720" height="900"></span></span>
+    <h1 class="h1">This page went out with the tide</h1>
+    <p class="muted">The link may be old, or the page may have moved.</p>
+    <a class="btn primary" href="#/">Back to the quay</a>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="f-letter">
+    <h2>The tide letter</h2>
+    <p>One email a month: new prints, walk dates and a picture we liked.</p>
+    <form class="inline-form" data-form="newsletter" novalidate>
+      <div class="fl"><input id="n-email" name="email" type="email" placeholder=" " autocomplete="email" inputmode="email" required aria-describedby="n-email-e"><label for="n-email">Email</label><p class="err" id="n-email-e"></p></div>
+      <button class="btn primary" type="submit">Subscribe</button>
+    </form>
+    <div class="success" data-success="newsletter" tabindex="-1" hidden><p><b>You are on the list.</b> The next letter goes to <span data-echo="email"></span>.</p><button class="btn sm" type="button" data-again>Use another email</button></div>
+  </div>
+  <nav class="f-links" aria-label="Footer">
+    <a href="#/work">Work</a><a href="#/prints">Prints</a><a href="#/walks">Walks</a><a href="#/journal">Journal</a><a href="#/about">About</a><a href="#/faq">Questions</a><a href="#/contact">Contact</a><a href="#/privacy">Privacy</a><a href="#/terms">Terms</a>
+  </nav>
+  <p class="f-legal">© 2026 Tidewell Studio · Merrow Bay</p>
+</footer>
+
+<dialog class="viewer" id="viewer" aria-label="Series stories">
+  <button class="icon-btn v-close" type="button" id="v-close" aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-close"/></svg></button>
+  <div class="story" id="v-card">
+    <img id="v-img" src="images/dawn-harbour.webp" alt="" width="720" height="900">
+    <div class="bars" id="v-bars"></div>
+    <div class="story-head"><span class="ring xs"><span class="av"><img src="images/lighthouse.webp" alt="" width="720" height="900"></span></span><span id="v-series">Harbour</span><button class="icon-btn v-tool" type="button" id="v-pause" aria-label="Pause"><svg class="i" aria-hidden="true"><use href="#i-pause"/></svg></button></div>
+    <button class="v-zone prev" type="button" id="v-prev" aria-label="Previous photograph"></button>
+    <button class="v-zone next" type="button" id="v-next" aria-label="Next photograph"></button>
+    <div class="story-foot"><h3 id="v-title">Photograph</h3><p id="v-place"></p><a class="btn sm" id="v-open" href="#/work" style="background:#fff;color:oklch(17% 0.01 265);justify-self:start">Open the photograph</a></div>
+  </div>
+</dialog>
+<div id="toast-slot" aria-live="polite"></div>
+
+<script>
+  // Every image path is written out in full: scripts/inline.mjs can only embed paths it can read,
+  // not ones assembled at runtime. Add new images here.
+  const IMAGES = {
+    "beach-huts": "images/beach-huts.webp",
+    "bench": "images/bench.webp",
+    "buoys": "images/buoys.webp",
+    "cliff-path": "images/cliff-path.webp",
+    "dawn-harbour": "images/dawn-harbour.webp",
+    "dunes": "images/dunes.webp",
+    "ferry-fog": "images/ferry-fog.webp",
+    "fisherman": "images/fisherman.webp",
+    "fog-field": "images/fog-field.webp",
+    "footprints": "images/footprints.webp",
+    "kite": "images/kite.webp",
+    "lighthouse": "images/lighthouse.webp",
+    "night-ferry": "images/night-ferry.webp",
+    "pier-sunset": "images/pier-sunset.webp",
+    "quay-lamps": "images/quay-lamps.webp",
+    "rock-pool": "images/rock-pool.webp",
+    "waves": "images/waves.webp",
+    "window-portrait": "images/window-portrait.webp",
+  };
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const money = (n) => `$${n}`;
+
+  /* ---------- Data: replace with the user's own. Every list on the site renders from these. ---------- */
+  const SERIES = {
+    harbour: ["Harbour", "Boats, ropes and the quay before the cafés open."],
+    portraits: ["Portraits", "People where they already feel at home."],
+    shore: ["Shore", "Low water, sand and painted huts."],
+    evenings: ["Evenings", "The hour after the light goes amber."],
+    walks: ["Walks", "Pictures from the Saturday walks."],
+  };
+  // [id, series, title, place, light, lens, date, alt, caption]
+  const PHOTOS = [
+    ["dawn-harbour", "harbour", "Moorings at first light", "Inner harbour", "06:10, mist lifting", "35 mm", "14 March", "Three boats moored on still water under a pink dawn sky", "The tide was full and nothing moved for twenty minutes. Then the first engine started and the mirror broke."],
+    ["window-portrait", "portraits", "Morning sitting, north window", "The studio", "Window light, overcast", "50 mm", "2 April", "A woman sits in profile beside a tall bright window in a dark room", "One window, no reflector. We turn the chair until the light falls across the cheek and stop there."],
+    ["beach-huts", "shore", "Six huts, freshly painted", "East beach", "Late morning, clear", "35 mm", "21 May", "A row of six beach huts in teal, yellow, red, white, green and pink", "The council repaints them every May. We go the week after, before the first sand storm."],
+    ["lighthouse", "harbour", "The light on Gull Point", "Gull Point", "Blue hour", "85 mm", "9 January", "A red and white lighthouse on dark rocks at dusk, its beam crossing the sky", "Shot from the end of the breakwater. The beam only shows in the ten minutes after sunset."],
+    ["kite", "portraits", "First kite of the summer", "West sands", "Midday, high cloud", "35 mm", "30 June", "A child in a blue jumper flies a red kite on a wide beach", "She ran the whole length of the beach twice before it caught. This was the third try."],
+    ["pier-sunset", "evenings", "Last light off the pier", "The old pier", "Sunset", "85 mm", "17 August", "A pier runs into the sea under a red and violet sunset", "One fisherman stayed after everyone else went home for tea."],
+    ["buoys", "harbour", "Floats drying on the net shed", "Net loft 2", "Open shade", "50 mm", "3 March", "Orange, yellow, teal and white fishing floats against a blue wooden wall", "Borrowed from the loft next door. They are back on the boat now."],
+    ["bench", "portraits", "The same bench, fifty summers on", "Harbour wall", "Golden hour", "50 mm", "12 July", "An older couple sits on a bench looking out at the sea at sunset", "They asked for a picture on their bench, facing the water, the way they always sit."],
+    ["quay-lamps", "evenings", "Quay lamps at nine", "The quay", "Lamplight", "35 mm", "28 October", "Three lamps glowing along a dark quay with lit windows behind", "A tripod, four seconds, and a lot of patience with passing cars."],
+    ["fisherman", "portraits", "Yellow coat, east wall", "East wall", "Bright overcast", "50 mm", "19 February", "A person in a yellow hooded coat stands on a sea wall facing grey water", "He has fished from this spot every Sunday since the wall was rebuilt."],
+    ["waves", "shore", "Spring tide at the bar", "The bar", "Low sun, wind", "85 mm", "5 November", "Rows of green waves breaking into white foam", "Spring tides and an onshore wind. Shot from the dunes, well back."],
+    ["ferry-fog", "harbour", "The 7:40 in fog", "Harbour mouth", "Sea fret", "85 mm", "11 September", "A ferry fades into thick grey fog", "You hear it before you see it. We waited at the mouth with the foghorn."],
+    ["rock-pool", "shore", "Rock pool, low water", "Gull Point rocks", "Overcast", "35 mm", "8 June", "A clear rock pool among brown stones, with weed and a red anemone", "Ten minutes before the tide turned. The anemone closed as the water rose."],
+    ["night-ferry", "evenings", "The late ferry home", "From the breakwater", "Dusk", "85 mm", "23 September", "A lit ferry crossing dark water under a violet dusk", "Every window lit, every seat facing the town."],
+    ["dunes", "shore", "Marram grass in the wind", "North dunes", "Soft afternoon", "50 mm", "14 August", "Tall grass bending over pale sand dunes", "The grass holds the dunes together. We stay on the boardwalk."],
+    ["cliff-path", "walks", "Saturday walk, cliff path", "Gull Point path", "Early morning", "35 mm", "6 May", "Four walkers in bright coats on a green cliff path above the sea", "The May walk group, stopped where the path bends."],
+    ["fog-field", "walks", "Fence posts in the sea fret", "Top fields", "Fog", "50 mm", "18 October", "A person with a camera stands by a fence line disappearing into fog", "Fog shortens everything. Five posts are enough."],
+    ["footprints", "shore", "Tracks to the water", "West sands", "Morning", "35 mm", "1 August", "Footprints in wet sand leading towards the sea", "Someone got there first."],
+  ].map(([id, s, t, place, light, lens, date, alt, cap]) => ({ id, s, t, place, light, lens, date, alt, cap }));
+  const byId = new Map(PHOTOS.map((p) => [p.id, p]));
+  // Photographs sold as prints, and the sizes on offer: [key, name, dimensions, price]
+  const PRINTS = ["dawn-harbour", "lighthouse", "buoys", "beach-huts", "pier-sunset", "quay-lamps", "waves", "dunes"];
+  const SIZES = [["a4", "A4", "21 × 30 cm", 38], ["a3", "A3", "30 × 42 cm", 58], ["a2", "A2", "42 × 59 cm", 92]];
+  const PEOPLE = { mara: ["Mara Quist", "MQ", "oklch(48% 0.1 250)"], oren: ["Oren Vale", "OV", "oklch(55% 0.12 30)"] };
+  // [id, title, person, date, photo, excerpt, paragraphs]
+  const POSTS = [
+    ["one-window", "How we light a portrait with one window", "mara", "18 November", "window-portrait", "No flash, no reflector, and a chair we keep turning.", ["The studio has one tall window facing north. North light never changes direction during a session, so we can talk for an hour and the pictures from the start still match the ones from the end.", "We place the chair a step back from the glass and turn it until the light falls across one side of the face. The other side goes soft, not black, because the white wall opposite fills it in.", "That is the whole setup. The rest is waiting until people forget the camera, which usually takes about twenty minutes and one cup of tea."]],
+    ["paper", "Choosing paper for the harbour prints", "oren", "4 November", "buoys", "Why we print on matt cotton and leave a white border.", ["Glossy paper makes harbour blues look electric. Matt cotton keeps them closer to what the eye saw: a little chalky, a little grey.", "We leave a 3 cm border so the print can go straight into a frame without a mount, and so the edges never get handled.", "Every print is checked by daylight at the window before it is packed. If the sky has a cast, it goes back to the printer."]],
+    ["fog", "What to photograph when the fog comes in", "oren", "21 October", "fog-field", "Fog removes the background. Use it.", ["Fog days empty the harbour and flatten every distance into layers. Pick something close with a clear edge, a post or a boat, and let the rest fade.", "Expose for the fog, not the subject. If the fog looks grey in your picture, add light until it looks white again.", "Walk slowly. Things appear in fog in the order you reach them, and the best picture is usually the third post, not the first."]],
+    ["families", "What happens at a family session", "mara", "7 October", "bench", "An hour, a walk along the wall, and a snack break.", ["We start inside with the kettle on, so the children can look at the cameras and decide we are fine.", "Then we walk along the harbour wall. Most of the pictures happen on the way, not where we planned to stop.", "A week later you get a private gallery. Choose the frames you love; we print the ones you want on the wall."]],
+  ].map(([id, t, by, date, photo, ex, body]) => ({ id, t, by, date, photo, ex, body }));
+  const postById = new Map(POSTS.map((p) => [p.id, p]));
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+  const readJSON = (key, fallback) => { try { return JSON.parse(store.get(key)) ?? fallback; } catch { return fallback; } };
+  const liked = new Set(readJSON("tidewell-liked", []));
+  const saved = new Set(readJSON("tidewell-saved", []));
+  const seen = new Set(readJSON("tidewell-seen", []));
+  const bag = new Map(readJSON("tidewell-bag", []));
+  const persist = () => {
+    store.set("tidewell-liked", JSON.stringify([...liked]));
+    store.set("tidewell-saved", JSON.stringify([...saved]));
+    store.set("tidewell-seen", JSON.stringify([...seen]));
+    store.set("tidewell-bag", JSON.stringify([...bag]));
+  };
+
+  /* ---------- Theme: light by default following the system, dark behind the toggle ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light colours" : "Switch to dark colours");
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const savedTheme = store.get("tidewell-theme");
+  applyTheme(savedTheme === "light" || savedTheme === "dark" ? savedTheme : systemDark.matches ? "dark" : "light");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("tidewell-theme", next);
+  });
+  systemDark.addEventListener("change", (event) => { if (!store.get("tidewell-theme")) applyTheme(event.matches ? "dark" : "light"); });
+
+  /* ---------- Building blocks: one tile, one print card, one story, one highlight ---------- */
+  const img = (id, alt = "") => `<img src="${IMAGES[id]}" alt="${esc(alt)}" width="720" height="900">`;
+  const isPrint = (id) => PRINTS.includes(id);
+  const tile = (p, i) => `<a class="tile enter" style="--i:${i % 12}" href="#/photo?id=${p.id}">${img(p.id, p.t)}<span class="tile-over" aria-hidden="true"><b>${esc(p.t)}</b><span>${SERIES[p.s][0]}</span></span>${isPrint(p.id) ? '<svg class="tile-flag" aria-hidden="true"><use href="#i-frame"/></svg>' : ""}</a>`;
+  const printCard = (id) => { const p = byId.get(id); return `<a class="print enter" href="#/print?id=${id}"><span class="mat">${img(id)}</span><span><h3>${esc(p.t)}</h3><p>${SERIES[p.s][0]} · from ${money(SIZES[0][3])}</p></span></a>`; };
+  const person = (key) => PEOPLE[key];
+  const avatar = (key) => { const [name, ini, colour] = person(key); return `<span class="ring xs"><span class="av ini" style="--av:${colour}">${ini}</span></span>`; };
+  const highlight = (s) => { const first = PHOTOS.find((p) => p.s === s); return `<a class="hl" href="#/work?s=${s}" data-story="${s}"><span class="ring${seen.has(s) ? " seen" : ""}"><span class="av">${img(first.id)}</span></span>${SERIES[s][0]}</a>`; };
+  const setIcon = (button, on, onIcon, offIcon) => { button.setAttribute("aria-pressed", String(on)); $("use", button).setAttribute("href", on ? onIcon : offIcon); };
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Tidewell: portraits, prints and photo walks from Merrow Bay",
+    work: "Work · Tidewell", photo: "Photograph · Tidewell", prints: "Prints · Tidewell", print: "Print · Tidewell", bag: "Your bag · Tidewell",
+    walks: "Photo walks · Tidewell", journal: "Journal · Tidewell", post: "Journal · Tidewell", about: "About · Tidewell", contact: "Contact · Tidewell",
+    saved: "Saved · Tidewell", faq: "Questions · Tidewell", privacy: "Privacy · Tidewell", terms: "Terms · Tidewell", "404": "Not found · Tidewell",
+  };
+  /* Which header link stays highlighted on child views */
+  const section = { photo: "work", print: "prints", bag: "prints", post: "journal" };
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  const renderers = { work: renderWork, photo: renderPhoto, prints: renderPrints, print: renderPrint, bag: renderBag, walks: renderWalks, journal: renderJournal, post: renderPost, contact: renderContact, saved: renderSaved };
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    const active = section[name] || name;
+    $$(".nav a, .menu-links a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === active) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    renderers[name]?.(route.params);
+    const at = route.params.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  const menu = $("#menu");
+  document.addEventListener("click", (event) => {
+    if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey) return;
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (link.dataset.story) { event.preventDefault(); openStories(link.dataset.story); return; }
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      try { if (menu.matches(":popover-open")) menu.hidePopover(); } catch { /* no popover support */ }
+      if ($("#viewer").open) $("#viewer").close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = (current && current.querySelector(href)) || document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Work: profile counts, highlights, tabs, the series filter ---------- */
+  $$("[data-stat]").forEach((el) => { el.textContent = { photos: PHOTOS.length, series: Object.keys(SERIES).length, prints: PRINTS.length }[el.dataset.stat]; });
+  $("[data-highlights]").innerHTML = Object.keys(SERIES).map(highlight).join("");
+  function chipsHTML(list, chosen, base) {
+    const counts = Object.keys(SERIES).map((s) => [s, list.filter((id) => byId.get(id).s === s).length]).filter(([, n]) => n);
+    return `<button class="chip" type="button" data-value="all" aria-pressed="${chosen === "all"}">All <small>${list.length}</small></button>` +
+      counts.map(([s, n]) => `<button class="chip" type="button" data-value="${s}" aria-pressed="${chosen === s}">${SERIES[s][0]} <small>${n}</small></button>`).join("");
+  }
+  function renderWork(p) {
+    const s = SERIES[p.get("s")] ? p.get("s") : "all";
+    const bar = $('[data-filter="series"]');
+    bar.innerHTML = chipsHTML(PHOTOS.map((x) => x.id), s);
+    $("#work-grid").innerHTML = PHOTOS.filter((x) => s === "all" || x.s === s).map(tile).join("");
+    $("#series-list").innerHTML = Object.entries(SERIES).map(([key, [name, line]]) => {
+      const list = PHOTOS.filter((x) => x.s === key);
+      return `<a class="series-card" href="#/work?s=${key}" data-story="${key}"><span class="story">${img(list[0].id)}<span class="bars">${list.map((_, i) => `<i class="${i ? "" : "on"}"></i>`).join("")}</span></span><span><h3 class="h3">${name}</h3><p>${list.length} photographs · ${esc(line)}</p></span></a>`;
+    }).join("");
+    $("#print-grid").innerHTML = PRINTS.map((id, i) => tile(byId.get(id), i)).join("");
+    selectTab(p.get("tab") || "grid");
+  }
+  $('[data-filter="series"]').addEventListener("click", (event) => {
+    const chip = event.target.closest("[data-value]");
+    if (chip) go(chip.dataset.value === "all" ? "#/work" : `#/work?s=${chip.dataset.value}`);
+  });
+  const tabs = $$("[role='tab']");
+  function selectTab(id, focus) {
+    const chosen = tabs.find((tab) => tab.dataset.tab === id) || tabs[0];
+    tabs.forEach((tab) => {
+      const on = tab === chosen;
+      tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+      document.getElementById(tab.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) chosen.focus();
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => selectTab(tab.dataset.tab));
+    tab.addEventListener("keydown", (event) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      selectTab(tabs[(i + step + tabs.length) % tabs.length].dataset.tab, true);
+    });
+  });
+
+  /* ---------- Photo: one post, likes (double-tap too), save, previous and next ---------- */
+  let photoId = PHOTOS[0].id;
+  function renderPhoto(p) {
+    const photo = byId.get(p.get("id")) || PHOTOS[0];
+    photoId = photo.id;
+    const i = PHOTOS.indexOf(photo);
+    const image = $("#p-img");
+    image.src = IMAGES[photo.id];
+    image.alt = photo.alt;
+    $("#p-title").textContent = photo.t;
+    $("#p-caption").textContent = photo.cap;
+    $("#p-place").textContent = photo.place;
+    $("#p-light").textContent = photo.light;
+    $("#p-lens").textContent = photo.lens;
+    $("#p-print").innerHTML = isPrint(photo.id) ? `<a class="text-link" href="#/print?id=${photo.id}">Available from ${money(SIZES[0][3])}</a>` : "Not printed yet";
+    $("#p-date").textContent = photo.date;
+    $("#p-set").textContent = SERIES[photo.s][0];
+    $("#p-set").href = `#/work?s=${photo.s}`;
+    $("#p-prev").href = `#/photo?id=${PHOTOS[(i - 1 + PHOTOS.length) % PHOTOS.length].id}`;
+    $("#p-next").href = `#/photo?id=${PHOTOS[(i + 1) % PHOTOS.length].id}`;
+    const ask = `#/contact?topic=${isPrint(photo.id) ? "print" : "other"}&about=${photo.id}`;
+    $("#p-ask").href = ask;
+    $("#p-ask-icon").href = ask;
+    setIcon($("#p-like"), liked.has(photo.id), "#i-heart-fill", "#i-heart");
+    setIcon($("#p-save"), saved.has(photo.id), "#i-mark-saved", "#i-mark-save");
+    document.title = `${photo.t} · Tidewell`;
+    $("#more-h").textContent = `More from ${SERIES[photo.s][0]}`;
+    $("#more-link").href = `#/work?s=${photo.s}`;
+    $("#more-grid").innerHTML = PHOTOS.filter((x) => x.s === photo.s && x.id !== photo.id).concat(PHOTOS.filter((x) => x.s !== photo.s)).slice(0, 3).map(tile).join("");
+  }
+  function toggle(set, id, button, onIcon, offIcon) {
+    if (set.has(id)) set.delete(id); else set.add(id);
+    persist();
+    setIcon(button, set.has(id), onIcon, offIcon);
+    button.classList.remove("pop"); void button.offsetWidth; button.classList.add("pop");
+    return set.has(id);
+  }
+  $("#p-like").addEventListener("click", (e) => toggle(liked, photoId, e.currentTarget, "#i-heart-fill", "#i-heart"));
+  $("#p-save").addEventListener("click", (e) => {
+    const on = toggle(saved, photoId, e.currentTarget, "#i-mark-saved", "#i-mark-save");
+    toast(on ? `Saved. <a href="#/saved">See saved</a>` : "Removed from saved");
+  });
+  $("#p-media").addEventListener("dblclick", (event) => {
+    if (event.target.closest(".step-btn")) return;
+    if (!liked.has(photoId)) toggle(liked, photoId, $("#p-like"), "#i-heart-fill", "#i-heart");
+    const heart = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    heart.setAttribute("class", "burst");
+    heart.setAttribute("aria-hidden", "true");
+    heart.innerHTML = '<use href="#i-heart-fill"/>';
+    $("#p-media").append(heart);
+    heart.addEventListener("animationend", () => heart.remove());
+  });
+  document.addEventListener("keydown", (event) => {
+    if (!current || current.dataset.view !== "photo" || event.target.closest("input, textarea, select") || $("#viewer").open) return;
+    if (event.key === "ArrowLeft") go($("#p-prev").getAttribute("href"));
+    if (event.key === "ArrowRight") go($("#p-next").getAttribute("href"));
+  });
+
+  /* ---------- Prints, one print, the bag ---------- */
+  function renderPrints(p) {
+    const s = SERIES[p.get("s")] ? p.get("s") : "all";
+    $('[data-filter="prints"]').innerHTML = chipsHTML(PRINTS, s);
+    const list = PRINTS.filter((id) => s === "all" || byId.get(id).s === s);
+    $("#prints-list").innerHTML = list.map(printCard).join("");
+    $("#prints-count").textContent = `${list.length} ${list.length === 1 ? "print" : "prints"}`;
+  }
+  $('[data-filter="prints"]').addEventListener("click", (event) => {
+    const chip = event.target.closest("[data-value]");
+    if (chip) go(chip.dataset.value === "all" ? "#/prints" : `#/prints?s=${chip.dataset.value}`);
+  });
+  let printId = PRINTS[0];
+  let qty = 1;
+  function renderPrint(p) {
+    printId = isPrint(p.get("id")) ? p.get("id") : PRINTS[0];
+    const photo = byId.get(printId);
+    $("#pd-img").src = IMAGES[printId];
+    $("#pd-img").alt = photo.alt;
+    $("#pd-photo-link").href = `#/photo?id=${printId}`;
+    $("#pd-series").textContent = SERIES[photo.s][0];
+    $("#pd-title").textContent = photo.t;
+    document.title = `${photo.t}, print · Tidewell`;
+    $("#pd-sizes").innerHTML = "<legend>Size</legend>" + SIZES.map(([key, name, dim, price], i) => `<label class="size"><input type="radio" name="size" value="${key}"${i ? "" : " checked"}><span><b>${name}</b> <small>${dim}</small></span><span>${money(price)}</span></label>`).join("");
+    qty = 1;
+    $("#pd-qty").textContent = "1";
+    updatePrice();
+    setIcon($("#pd-save"), saved.has(printId), "#i-mark-saved", "#i-mark-save");
+    $("#pd-more").innerHTML = PRINTS.filter((id) => id !== printId).slice(0, 4).map(printCard).join("");
+  }
+  const chosenSize = () => SIZES.find(([key]) => key === ($("#pd-sizes input:checked")?.value)) || SIZES[0];
+  function updatePrice() { $("#pd-price").textContent = money(chosenSize()[3] * qty); }
+  $("#pd-sizes").addEventListener("change", updatePrice);
+  $$(".qty [data-step]").forEach((b) => b.addEventListener("click", () => { qty = Math.min(9, Math.max(1, qty + Number(b.dataset.step))); $("#pd-qty").textContent = String(qty); updatePrice(); }));
+  $("#pd-save").addEventListener("click", (e) => { const on = toggle(saved, printId, e.currentTarget, "#i-mark-saved", "#i-mark-save"); toast(on ? `Saved. <a href="#/saved">See saved</a>` : "Removed from saved"); });
+  $("#pd-add").addEventListener("click", () => {
+    const key = `${printId}:${chosenSize()[0]}`;
+    bag.set(key, Math.min(9, (bag.get(key) || 0) + qty));
+    persist();
+    updateBagCount(true);
+    toast(`${esc(byId.get(printId).t)}, ${chosenSize()[1]}, is in your bag. <a href="#/bag">View bag</a>`);
+  });
+  function updateBagCount(bump) {
+    const n = [...bag.values()].reduce((a, b) => a + b, 0);
+    const badge = $("#bag-count");
+    badge.textContent = String(n);
+    badge.hidden = n === 0;
+    if (bump) { badge.classList.remove("pop"); void badge.offsetWidth; badge.classList.add("pop"); }
+  }
+  function renderBag() {
+    const items = [...bag.entries()].filter(([key]) => isPrint(key.split(":")[0]));
+    $("#bag-empty").hidden = items.length > 0;
+    $("#bag-full").hidden = items.length === 0;
+    let total = 0;
+    $("#bag-list").innerHTML = items.map(([key, n]) => {
+      const [id, sizeKey] = key.split(":");
+      const size = SIZES.find(([k]) => k === sizeKey) || SIZES[0];
+      total += size[3] * n;
+      return `<li><a class="mat" href="#/print?id=${id}">${img(id)}</a><div><h3>${esc(byId.get(id).t)}</h3><p>${size[1]} · ${size[2]}</p><div class="qty" aria-label="Quantity"><button type="button" data-line="${key}" data-step="-1" aria-label="One fewer"><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg></button><output>${n}</output><button type="button" data-line="${key}" data-step="1" aria-label="One more"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div></div><div class="line-end">${money(size[3] * n)}<button class="text-link" style="background:none;border:0;padding:0;font-size:var(--fs-small)" type="button" data-remove="${key}">Remove</button></div></li>`;
+    }).join("");
+    $("#bag-sub").textContent = money(total);
+    $("#bag-total").textContent = money(total);
+  }
+  $("#bag-list").addEventListener("click", (event) => {
+    const step = event.target.closest("[data-line]");
+    const remove = event.target.closest("[data-remove]");
+    if (step) { const n = (bag.get(step.dataset.line) || 0) + Number(step.dataset.step); if (n <= 0) bag.delete(step.dataset.line); else bag.set(step.dataset.line, Math.min(9, n)); }
+    else if (remove) bag.delete(remove.dataset.remove);
+    else return;
+    persist();
+    updateBagCount();
+    renderBag();
+  });
+
+  /* ---------- Walks, journal, saved, contact ---------- */
+  function renderWalks(p) {
+    const w = p.get("w");
+    if (w && $(`#w-walk option[value="${CSS.escape(w)}"]`)) $("#w-walk").value = w;
+  }
+  $$("[data-walks]").forEach((slot) => { if (!slot.children.length) slot.innerHTML = $("#walk-cards").innerHTML; });
+  function renderJournal() {
+    $("#posts-list").innerHTML = POSTS.map((post, i) => { const [name] = person(post.by); return `<a class="post-card enter" style="--i:${i}" href="#/post?id=${post.id}">${img(post.photo)}<span class="byline">${avatar(post.by)}<b>${name}</b><span class="muted">${post.date}</span></span><h3>${esc(post.t)}</h3><p>${esc(post.ex)}</p></a>`; }).join("");
+  }
+  let postId = POSTS[0].id;
+  function renderPost(p) {
+    const post = postById.get(p.get("id")) || POSTS[0];
+    postId = post.id;
+    $("#a-by").innerHTML = `${avatar(post.by)}<b>${person(post.by)[0]}</b><span class="muted">${post.date}</span>`;
+    $("#a-title").textContent = post.t;
+    $("#a-img").src = IMAGES[post.photo];
+    $("#a-img").alt = byId.get(post.photo).alt;
+    $("#a-body").innerHTML = `<p class="lead">${esc(post.ex)}</p>` + post.body.map((para) => `<p>${esc(para)}</p>`).join("");
+    setIcon($("#a-like"), liked.has(`post:${post.id}`), "#i-heart-fill", "#i-heart");
+    document.title = `${post.t} · Tidewell`;
+  }
+  $("#a-like").addEventListener("click", (e) => toggle(liked, `post:${postId}`, e.currentTarget, "#i-heart-fill", "#i-heart"));
+  function renderSaved() {
+    const list = [...saved].filter((id) => byId.has(id));
+    $("#saved-empty").hidden = list.length > 0;
+    $("#saved-grid").innerHTML = list.map((id, i) => tile(byId.get(id), i)).join("");
+  }
+  const topic = $("#c-topic");
+  const showWhen = () => $$("[data-show-when]").forEach((el) => { const on = topic.value === el.dataset.showWhen; const input = $("input", el); el.hidden = !on; input.disabled = !on; input.required = on; });
+  topic.addEventListener("change", showWhen);
+  function renderContact(p) {
+    const t = p.get("topic");
+    if (t && $(`option[value="${CSS.escape(t)}"]`, topic)) topic.value = t;
+    const about = byId.get(p.get("about"));
+    const msg = $("#c-msg");
+    if (about && !msg.value) msg.value = `About "${about.t}": `;
+    showWhen();
+  }
+  showWhen();
+
+  /* ---------- Stories viewer: a series as full-height cards, auto-advancing with a pause button ---------- */
+  const viewer = $("#viewer");
+  const still = matchMedia("(prefers-reduced-motion: reduce)");
+  let story = { list: [], i: 0, s: "" };
+  function openStories(s) {
+    story = { list: PHOTOS.filter((p) => p.s === s), i: 0, s };
+    $("#v-series").textContent = SERIES[s][0];
+    viewer.showModal();
+    setPause(still.matches);
+    showStory();
+    seen.add(s);
+    persist();
+    $$(`[data-story="${s}"] .ring`).forEach((ring) => ring.classList.add("seen"));
+  }
+  function showStory() {
+    const p = story.list[story.i];
+    $("#v-img").src = IMAGES[p.id];
+    $("#v-img").alt = p.alt;
+    $("#v-title").textContent = p.t;
+    $("#v-place").textContent = `${p.place} · ${p.date}`;
+    $("#v-open").href = `#/photo?id=${p.id}`;
+    $("#v-bars").innerHTML = story.list.map((_, i) => `<i class="${i < story.i ? "on" : i === story.i ? "run" : ""}"></i>`).join("");
+    // The bar's animation times each card; with reduced motion the bar is static and a timer advances instead
+    if (still.matches) restartTimer();
+    else $("#v-bars .run").addEventListener("animationend", () => { if (!viewer.classList.contains("paused")) step(1); });
+  }
+  let storyTimer = 0;
+  function restartTimer() {
+    clearTimeout(storyTimer);
+    if (still.matches && viewer.open && !viewer.classList.contains("paused")) storyTimer = setTimeout(() => step(1), 5000);
+  }
+  function step(d) {
+    const next = story.i + d;
+    if (next >= story.list.length) { viewer.close(); return; }
+    story.i = Math.max(0, next);
+    showStory();
+  }
+  function setPause(on) {
+    viewer.classList.toggle("paused", on);
+    $("#v-pause").setAttribute("aria-label", on ? "Play" : "Pause");
+    $("#v-pause use").setAttribute("href", on ? "#i-play" : "#i-pause");
+    restartTimer();
+  }
+  $("#v-pause").addEventListener("click", () => setPause(!viewer.classList.contains("paused")));
+  $("#v-prev").addEventListener("click", () => step(-1));
+  $("#v-next").addEventListener("click", () => step(1));
+  $("#v-close").addEventListener("click", () => viewer.close());
+  viewer.addEventListener("close", () => clearTimeout(storyTimer));
+  viewer.addEventListener("click", (event) => { if (event.target === viewer) viewer.close(); });
+  viewer.addEventListener("keydown", (event) => { if (event.key === "ArrowLeft") step(-1); if (event.key === "ArrowRight") step(1); });
+
+  /* ---------- Toast and share ---------- */
+  let toastTimer = 0;
+  function toast(html) {
+    $("#toast-slot").innerHTML = `<div class="toast">${html}</div>`;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { $("#toast-slot").innerHTML = ""; }, 3600);
+  }
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest("[data-share]")) return;
+    const fail = () => toast("Copy the address from your browser to share");
+    try { navigator.clipboard.writeText(location.href).then(() => toast("Link copied"), fail); } catch { fail(); }
+  });
+
+  /* ---------- Header: the menu whenever the links do not fit on one line ---------- */
+  const header = $(".site-header");
+  const inner = $(".header-inner");
+  function fitNav() {
+    header.classList.remove("compact");
+    if (inner.scrollWidth > inner.clientWidth + 1) header.classList.add("compact");
+  }
+  document.fonts.ready.then(fitNav);
+  window.addEventListener("resize", () => requestAnimationFrame(fitNav));
+  fitNav();
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", rangeUnderflow: "At least one person.", rangeOverflow: "For more than 12 people, write to us.", tooShort: "Please write a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error || field.disabled) return true;
+    let problem = "";
+    if (field.matches("fieldset")) {
+      if ($$("input:checked", field).length < Number(field.dataset.min || 1)) problem = "Choose one.";
+    } else if (field.type === "checkbox") {
+      if (field.required && !field.checked) problem = "Please confirm this.";
+    } else {
+      const key = Object.keys(messages).find((k) => field.validity[k]) || (field.dataset.min && field.value.trim().length < Number(field.dataset.min) && field.value.trim() ? "tooShort" : "");
+      if (key) problem = messages[key];
+    }
+    error.textContent = problem;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("[aria-describedby]", form);
+    fields.forEach((field) => field.addEventListener(field.matches("fieldset, select, [type=checkbox]") ? "change" : "blur", () => checkField(field)));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) { const bad = fields.find((f) => f.getAttribute("aria-invalid") === "true"); (bad.matches("fieldset") ? $("input", bad) : bad).focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        $$("[data-echo]", success).forEach((el) => { el.textContent = form.elements[el.dataset.echo]?.value || ""; });
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+        button.disabled = false;
+        button.textContent = label;
+      }, 700);
+    });
+    $("[data-again]", success)?.addEventListener("click", () => {
+      success.hidden = true;
+      form.hidden = false;
+      $("input, select", form).focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  updateBagCount();
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

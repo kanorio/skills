@@ -1,0 +1,1366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Wobblebox: hand-drawn cartoons, Saturday screenings and Cartoon Camp</title>
+<meta name="description" content="Wobblebox is a small animation studio making cartoons for kids aged 3 to 12, with weekend screenings in its Picture House and a Cartoon Camp every week in July.">
+<meta property="og:title" content="Wobblebox: hand-drawn cartoons, Saturday screenings and Cartoon Camp">
+<meta property="og:description" content="Cartoons for kids aged 3 to 12, weekend screenings and a summer Cartoon Camp.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/bricolage-grotesque-latin-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/sora-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "Bricolage Grotesque"; src: url("fonts/bricolage-grotesque-latin-800.woff2") format("woff2"); font-weight: 800; font-display: swap; }
+@font-face { font-family: "Sora"; src: url("fonts/sora-latin-wght.woff2") format("woff2"); font-weight: 100 800; font-display: swap; }
+
+/* ---------- Tokens: light-dark(light, dark); data-theme on <html> pins one ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(97% 0.012 70), oklch(15% 0.035 300));
+  --band: light-dark(oklch(70.5% 0.195 48), oklch(37% 0.11 40));
+  --goo-hi: light-dark(oklch(77% 0.17 62), oklch(43% 0.12 46));
+  --goo-lo: light-dark(oklch(64% 0.205 40), oklch(31% 0.095 34));
+  --band-ink: light-dark(oklch(19% 0.08 283), oklch(97% 0.012 80));
+  --surface: light-dark(oklch(100% 0 0), oklch(23% 0.055 295));
+  --surface-2: light-dark(oklch(96% 0.014 70), oklch(28% 0.06 295));
+  --field: light-dark(oklch(100% 0 0), oklch(19% 0.045 295));
+  --text: light-dark(oklch(19% 0.08 283), oklch(96% 0.01 290));
+  --text-muted: light-dark(oklch(42% 0.05 283), oklch(80% 0.03 290));
+  --border: light-dark(oklch(88% 0.015 283), oklch(36% 0.05 295));
+  --border-strong: light-dark(oklch(52% 0.05 283), oklch(66% 0.04 290));
+  --edge: light-dark(oklch(57% 0.215 33), oklch(68% 0.18 48));
+  --accent: light-dark(oklch(86% 0.22 135), oklch(84% 0.21 135));
+  --accent-text: oklch(19% 0.08 283);
+  --night: oklch(13% 0.02 300);
+  --grape: light-dark(oklch(40% 0.19 298), oklch(27% 0.12 298));
+  --plum: light-dark(oklch(29% 0.13 330), oklch(19% 0.07 320));
+  --head-a: light-dark(oklch(40% 0.19 298 / 0.86), oklch(24% 0.11 298 / 0.9));
+  --head-b: light-dark(oklch(29% 0.13 330 / 0.86), oklch(18% 0.07 320 / 0.9));
+  --on-dark: oklch(98% 0.005 80);
+  --on-dark-muted: oklch(88% 0.02 300);
+  --focus: light-dark(oklch(19% 0.08 283), oklch(86% 0.22 135));
+  --error: light-dark(oklch(48% 0.2 27), oklch(80% 0.13 27));
+  --display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --body: "Sora", system-ui, sans-serif;
+  --r-card: 4px; --r-media: 4px; --r-panel: 8px; --r-control: 999px;
+  --shadow-card: 0 4px 0 0 var(--edge);
+  --shadow-overlay: 0 30px 70px -20px oklch(10% 0.05 300 / 0.6);
+  --fast: 150ms; --base: 260ms; --slow: 600ms;
+  --ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --gut: clamp(16px, 5vw, 72px);
+  --head: 64px;
+}
+[data-theme="light"] { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+[hidden] { display: none !important; }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--head) + 16px); }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.6 var(--body); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.dark :focus-visible, .site-head :focus-visible, .stage :focus-visible, .hero :focus-visible, .lost :focus-visible, .site-foot :focus-visible, .trailer :focus-visible { outline-color: var(--accent); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 16px; top: -60px; z-index: 50; background: var(--accent); color: var(--accent-text); padding: 10px 16px; border-radius: var(--r-card); font-weight: 700; }
+.skip:focus { top: 12px; }
+.wrap { width: min(100% - 2 * var(--gut), 1296px); margin-inline: auto; }
+.ic { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.dark { background: var(--night); color: var(--on-dark); }
+.kicker { display: inline-block; background: var(--accent); color: var(--accent-text); font: 800 .75rem/1 var(--body); text-transform: uppercase; letter-spacing: .08em; padding: 7px 10px; border-radius: var(--r-card); }
+.caps { font: 700 clamp(.95rem, .9rem + .3vw, 1.125rem)/1.35 var(--body); text-transform: uppercase; letter-spacing: .02em; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---------- Buttons, chips, round buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 0 26px; border: 2px solid transparent; border-radius: var(--r-control); font: 800 .875rem/1 var(--body); text-transform: uppercase; letter-spacing: .06em; text-decoration: none; white-space: nowrap; transition: scale var(--fast) var(--ease), background-color var(--fast); }
+.btn:hover { animation: wobble 520ms var(--ease-out); }
+.btn:active { scale: .96; }
+.btn .ic { width: 18px; height: 18px; }
+.btn-goo { background: var(--accent); color: var(--accent-text); }
+.btn-ink { background: var(--text); color: var(--surface); }
+.btn-line { border-color: currentColor; background: transparent; }
+.btn-sm { min-height: 40px; padding: 0 18px; font-size: .8rem; }
+.btn-block { width: 100%; }
+.round { display: inline-grid; place-items: center; width: 42px; height: 42px; padding: 0; border: 2px solid oklch(100% 0 0 / 0.35); border-radius: 50%; background: oklch(100% 0 0 / 0.08); color: inherit; transition: scale var(--fast) var(--ease), background-color var(--fast); }
+.round:hover { scale: 1.08; background: oklch(100% 0 0 / 0.18); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-height: 40px; padding: 0 16px; border: 2px solid var(--band-ink); border-radius: var(--r-control); background: transparent; color: var(--band-ink); font: 700 .8rem/1 var(--body); text-transform: uppercase; letter-spacing: .05em; transition: background-color var(--fast), color var(--fast); }
+.chip:hover { background: var(--surface-2); color: var(--text); }
+.chip[aria-pressed="true"] { background: var(--band-ink); color: var(--band); }
+@keyframes wobble { 0% { scale: 1; } 30% { scale: 1.08 .92; } 55% { scale: .96 1.05; } 80% { scale: 1.02 .99; } 100% { scale: 1; } }
+
+/* ---------- Header: translucent grape bar over the art ---------- */
+.site-head { position: sticky; top: 0; z-index: 30; margin-bottom: calc(var(--head) * -1); color: var(--on-dark); background: linear-gradient(90deg, var(--head-a), var(--head-b)); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.head-in { display: flex; align-items: center; gap: 28px; min-height: var(--head); }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; flex: none; }
+.logo { width: 44px; height: 44px; transition: rotate var(--base) var(--ease); }
+.brand:hover .logo { rotate: -8deg; }
+.word { font: 800 1.6rem/1 var(--display); letter-spacing: -.02em; }
+.nav { flex: 1; min-width: 0; }
+.nav ul { display: flex; gap: 26px; overflow-x: auto; scrollbar-width: none; }
+.nav a { display: block; padding: 22px 0 19px; font: 700 .8125rem/1 var(--body); text-transform: uppercase; letter-spacing: .06em; text-decoration: none; white-space: nowrap; border-bottom: 3px solid transparent; transition: border-color var(--fast), color var(--fast); }
+.nav a:hover { border-color: oklch(100% 0 0 / 0.5); }
+.nav a[aria-current="page"] { color: var(--accent); border-color: var(--accent); }
+.tools { display: flex; align-items: center; gap: 12px; margin-left: auto; flex: none; }
+.menu-panel { border-top: 1px solid oklch(100% 0 0 / 0.16); padding: 12px 0 28px; }
+.menu-panel ul { display: grid; gap: 2px; }
+.menu-panel ul a { display: block; padding: 10px 0; font: 800 clamp(1.6rem, 1.2rem + 2vw, 2.2rem)/1.1 var(--display); text-decoration: none; text-transform: uppercase; letter-spacing: -.01em; }
+.menu-panel ul a[aria-current="page"] { color: var(--accent); }
+.menu-panel .btn { margin-top: 16px; }
+@media (min-width: 1160px) { .menu-btn, .menu-panel { display: none !important; } }
+@media (max-width: 1159px) { .js .nav, .js .head-cta { display: none; } }
+@media (max-width: 1159px) { html:not(.js) .head-in { flex-wrap: wrap; row-gap: 0; } html:not(.js) .nav { order: 3; flex-basis: 100%; } }
+@media (max-width: 420px) { .word { font-size: 1.35rem; } .logo { width: 38px; height: 38px; } }
+
+/* ---------- Stage: full-bleed cartoon, heavy white title at the lower left ---------- */
+.stage { position: relative; isolation: isolate; display: flex; align-items: flex-end; min-height: clamp(540px, 82vh, 760px); overflow: hidden; background: var(--night); color: var(--on-dark); }
+.stage-sm { min-height: clamp(380px, 52vh, 500px); }
+.stage-art { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.stage::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, oklch(12% 0.05 300 / 0.45), transparent 20%, transparent 42%, oklch(12% 0.05 300 / 0.9) 92%); }
+.stage-copy { display: grid; justify-items: start; gap: 14px; padding: calc(var(--head) + 40px) 0 clamp(64px, 8vw, 104px); }
+.stage-sm .stage-copy { padding-bottom: clamp(36px, 5vw, 64px); }
+.stage-title { max-width: 16ch; font: 800 clamp(2.5rem, 1.5rem + 4vw, 4.5rem)/.98 var(--display); letter-spacing: -.02em; text-wrap: balance; text-shadow: 0 2px 0 oklch(10% 0.05 300 / 0.35); }
+.stage-lead { max-width: 46ch; font-size: clamp(1rem, .95rem + .3vw, 1.1875rem); line-height: 1.55; color: var(--on-dark); }
+.stage .actions { margin-top: 6px; }
+.stage.plain { background: radial-gradient(60% 90% at 85% 0%, oklch(55% 0.2 330 / 0.55), transparent 60%), linear-gradient(135deg, var(--grape), var(--plum)); }
+.stage.plain::after { display: none; }
+.back { display: inline-flex; align-items: center; gap: 6px; font: 700 .8125rem/1 var(--body); text-transform: uppercase; letter-spacing: .06em; text-decoration: none; opacity: .9; }
+.back:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+.meta-line { font: 700 .875rem/1.4 var(--body); text-transform: uppercase; letter-spacing: .06em; color: var(--on-dark-muted); }
+@media (max-width: 700px) {
+  .stage { min-height: clamp(560px, 88vh, 760px); }
+  .stage-sm { min-height: clamp(400px, 56vh, 520px); }
+  .stage-art { height: 66%; object-position: 50% 40%; }
+  .stage::after { background: linear-gradient(180deg, oklch(12% 0.05 300 / 0.45), transparent 16%, transparent 38%, var(--night) 66%); }
+  .stage-copy { justify-items: center; text-align: center; }
+  .stage .actions { justify-content: center; }
+}
+
+/* ---------- Hero carousel ---------- */
+.slides { display: grid; }
+.slide { grid-area: 1 / 1; }
+.js .slide { visibility: hidden; opacity: 0; transition: opacity var(--slow) var(--ease-out), visibility 0s var(--slow); }
+.js .slide.is-current { visibility: visible; opacity: 1; transition: opacity var(--slow) var(--ease-out), visibility 0s; }
+html:not(.js) .slide + .slide { display: none; }
+.hero { position: relative; color: var(--on-dark); }
+.hero-ctrl { position: absolute; left: 0; right: 0; bottom: 24px; z-index: 2; display: flex; justify-content: flex-end; align-items: center; gap: 10px; pointer-events: none; }
+.hero-ctrl > * { pointer-events: auto; }
+.dots { display: flex; gap: 8px; padding: 0 4px; }
+.dot { width: 12px; height: 12px; padding: 0; border: 0; border-radius: var(--r-control); background: oklch(100% 0 0 / 0.5); transition: width var(--base) var(--ease), background-color var(--base); }
+.dot[aria-current="true"] { width: 34px; background: var(--accent); }
+@media (max-width: 700px) { .hero-ctrl { justify-content: center; bottom: 18px; } }
+
+/* ---------- Band: orange goo with rows of white cards ---------- */
+.band {
+  position: relative; isolation: isolate; overflow: clip; padding-block: clamp(44px, 6vw, 84px); color: var(--band-ink);
+  background:
+    radial-gradient(40% 70% at 6% 106%, var(--goo-hi) 0 56%, transparent 57%),
+    radial-gradient(30% 50% at 97% 2%, var(--goo-lo) 0 55%, transparent 56%),
+    radial-gradient(24% 40% at 64% 104%, var(--goo-lo) 0 50%, transparent 51%),
+    radial-gradient(16% 28% at 40% -8%, var(--goo-hi) 0 50%, transparent 51%),
+    radial-gradient(30% 60% at 8% 100%, oklch(100% 0 0 / 0.16), transparent 70%),
+    var(--band);
+}
+.band.alt {
+  background:
+    radial-gradient(34% 60% at 96% 104%, var(--goo-hi) 0 56%, transparent 57%),
+    radial-gradient(28% 46% at 3% -4%, var(--goo-lo) 0 55%, transparent 56%),
+    radial-gradient(20% 34% at 30% 106%, var(--goo-lo) 0 50%, transparent 51%),
+    radial-gradient(14% 24% at 72% -6%, var(--goo-hi) 0 50%, transparent 51%),
+    var(--band);
+}
+.band > .wrap { position: relative; z-index: 1; }
+.band > .wrap + .wrap { margin-top: clamp(48px, 6vw, 72px); }
+.drip { position: absolute; left: 0; top: 0; z-index: 0; width: clamp(44px, 6vw, 92px); height: auto; aspect-ratio: 120 / 420; max-height: 92%; }
+.drip.right { left: auto; right: 0; scale: -1 1; }
+@media (max-width: 700px) { .drip { display: none; } }
+.band-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-bottom: 18px; }
+.band-title { font: 800 clamp(1.5rem, 1.15rem + 1.3vw, 2.125rem)/1.05 var(--display); text-transform: uppercase; letter-spacing: -.01em; }
+.more { display: inline-flex; align-items: center; gap: 8px; font: 800 .8125rem/1 var(--body); text-transform: uppercase; letter-spacing: .06em; text-decoration: none; }
+.more:hover { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 2px; }
+.band-lead { max-width: 60ch; margin: -6px 0 22px; font-size: 1.0625rem; }
+.goo-strip { height: 40px; background: radial-gradient(26% 160% at 18% 110%, var(--goo-hi) 0 50%, transparent 51%), radial-gradient(20% 140% at 74% -20%, var(--goo-lo) 0 50%, transparent 51%), var(--band); }
+
+/* ---------- Cards: white, 4px corners, a hard orange underline ---------- */
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.cards.four { grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); row-gap: 16px; }
+@media (max-width: 960px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .cards { grid-template-columns: minmax(0, 1fr); gap: 14px; } }
+.card { position: relative; display: flex; flex-direction: column; background: var(--surface); color: var(--text); border-radius: var(--r-card); box-shadow: var(--shadow-card); outline: 2px solid transparent; text-decoration: none; transition: translate var(--base) var(--ease), box-shadow var(--base) var(--ease-out), outline-color var(--fast); }
+a.card:hover { translate: 0 -3px; box-shadow: 0 7px 0 0 var(--edge); outline-color: var(--text); }
+a.card:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.card > img, .card-art img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--r-card) var(--r-card) 0 0; background: var(--surface-2); }
+.card-art { position: relative; }
+.card-body { display: grid; align-content: start; gap: 6px; padding: 12px 14px 18px; flex: 1; }
+.card h3 { font: 700 1.0625rem/1.3 var(--body); letter-spacing: -.005em; }
+.card p { font-size: .9375rem; line-height: 1.5; }
+.card .meta { font: 700 .75rem/1.3 var(--body); text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+.card .price { margin-top: 4px; font: 800 2rem/1 var(--display); letter-spacing: -.02em; }
+.tag { justify-self: start; margin-top: 4px; padding: 5px 9px; border-radius: var(--r-card); background: var(--surface-2); font: 700 .6875rem/1 var(--body); text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); }
+.card.wide { grid-column: span 2; display: grid; grid-template-columns: 1.25fr 1fr; }
+.card.wide > img { height: 100%; aspect-ratio: auto; min-height: 260px; border-radius: var(--r-card) 0 0 var(--r-card); }
+.card.wide .card-body { align-content: center; padding: 26px 28px; }
+.card.wide h3 { font: 800 clamp(1.5rem, 1.1rem + 1.2vw, 2rem)/1.05 var(--display); letter-spacing: -.01em; }
+@media (max-width: 960px) { .card.wide { grid-column: 1 / -1; } }
+@media (max-width: 620px) { .card.wide { grid-template-columns: 1fr; } .card.wide > img { aspect-ratio: 16 / 9; min-height: 0; border-radius: var(--r-card) var(--r-card) 0 0; } }
+.date { position: absolute; left: 10px; top: 10px; display: grid; justify-items: center; min-width: 58px; padding: 7px 8px 8px; border-radius: var(--r-card); background: var(--accent); color: var(--accent-text); font: 800 .6875rem/1 var(--body); text-transform: uppercase; letter-spacing: .08em; box-shadow: 0 3px 0 0 oklch(19% 0.08 283); }
+.date strong { font: 800 1.75rem/1 var(--display); letter-spacing: -.02em; margin: 2px 0 1px; }
+.event-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
+.seats { font: 700 .8125rem/1.3 var(--body); color: var(--text-muted); }
+.seats.low { color: var(--edge); }
+.js [data-view].is-active .card { animation: rise var(--slow) var(--ease) backwards; animation-delay: calc(var(--i, 0) * 60ms); }
+@keyframes rise { from { opacity: 0; translate: 0 22px; } }
+
+/* ---------- Split: art fading into black, heavy headline on the black side ---------- */
+.split { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); min-height: clamp(420px, 40vw, 560px); }
+.split-art { position: relative; min-height: 260px; }
+.split-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; -webkit-mask-image: linear-gradient(90deg, #000 58%, transparent 99%); mask-image: linear-gradient(90deg, #000 58%, transparent 99%); }
+.split-copy { display: grid; align-content: center; justify-items: center; gap: 16px; padding: 48px var(--gut) 56px 24px; text-align: center; }
+.split-title, .promo-title { font: 800 clamp(2.1rem, 1.3rem + 2.8vw, 3.4rem)/1 var(--display); letter-spacing: -.02em; text-wrap: balance; }
+.split-copy p:not(.kicker) { max-width: 40ch; }
+.split.flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+.split.flip .split-art { order: 2; }
+.split.flip .split-art img { -webkit-mask-image: linear-gradient(270deg, #000 58%, transparent 99%); mask-image: linear-gradient(270deg, #000 58%, transparent 99%); }
+.split.flip .split-copy { padding: 48px 24px 56px var(--gut); }
+@media (max-width: 820px) {
+  .split, .split.flip { grid-template-columns: minmax(0, 1fr); }
+  .split-art, .split.flip .split-art { order: 0; aspect-ratio: 16 / 10; min-height: 0; }
+  .split-art img, .split.flip .split-art img { -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent); mask-image: linear-gradient(180deg, #000 60%, transparent); }
+  .split-copy, .split.flip .split-copy { padding: 8px var(--gut) 52px; }
+}
+
+/* ---------- Promo: goo blobs on a hypnotic swirl ---------- */
+.promo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); min-height: clamp(440px, 36vw, 560px); }
+.promo-copy { display: grid; align-content: center; justify-items: center; gap: 14px; padding: 56px 24px 56px var(--gut); text-align: center; }
+.promo-copy p:not(.caps) { max-width: 42ch; color: var(--on-dark-muted); }
+.promo-copy .actions { justify-content: center; margin-top: 8px; }
+.promo-art { position: relative; min-height: 300px; }
+.promo-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; -webkit-mask-image: linear-gradient(90deg, transparent, #000 26%); mask-image: linear-gradient(90deg, transparent, #000 26%); }
+.js .is-active .promo-art img { animation: bob 7s ease-in-out infinite alternate; }
+@keyframes bob { to { scale: 1.05; translate: -1% -1.5%; } }
+@media (max-width: 820px) {
+  .promo { grid-template-columns: 1fr; }
+  .promo-art { order: -1; aspect-ratio: 3 / 2; min-height: 0; }
+  .promo-art img { -webkit-mask-image: linear-gradient(0deg, transparent, #000 30%); mask-image: linear-gradient(0deg, transparent, #000 30%); }
+  .promo-copy { padding: 8px var(--gut) 56px; }
+}
+
+/* ---------- Panels, lists, prose ---------- */
+.panel { position: relative; background: var(--surface); color: var(--text); border-radius: var(--r-panel); box-shadow: 0 6px 0 0 var(--edge); padding: clamp(22px, 3.2vw, 40px); }
+.panel-title, .prose .panel-title { margin-top: 0; font: 800 clamp(1.4rem, 1.1rem + 1vw, 1.875rem)/1.08 var(--display); letter-spacing: -.01em; margin-bottom: 14px; }
+.two { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.two.even { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 900px) { .two, .two.even { grid-template-columns: 1fr; } }
+.prose { max-width: 70ch; }
+.prose p + p, .prose p + h3, .prose ul + p, .prose p + ul { margin-top: 14px; }
+.prose h2 { font: 800 1.5rem/1.15 var(--display); margin: 28px 0 10px; }
+.prose h3 { font: 700 1.125rem/1.3 var(--body); margin-bottom: 6px; }
+.prose ul { list-style: disc; padding-left: 1.3em; }
+.prose .lead { font-size: 1.1875rem; line-height: 1.55; }
+.prose a { text-decoration-thickness: 2px; text-underline-offset: 3px; }
+blockquote { margin: 22px 0; padding: 4px 0 4px 18px; border-left: 6px solid var(--accent); font: 800 1.375rem/1.25 var(--display); }
+.facts { display: grid; gap: 0; margin-top: 18px; }
+.facts div { display: grid; grid-template-columns: 9.5rem 1fr; gap: 12px; padding: 12px 0; border-top: 2px solid var(--border); }
+.facts dt { font: 700 .75rem/1.6 var(--body); text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); }
+.ticks { display: grid; gap: 10px; }
+.ticks li { display: flex; gap: 10px; }
+.ticks .ic { margin-top: 2px; color: var(--edge); }
+.episodes li { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; padding: 12px 0; border-top: 2px solid var(--border); }
+.episodes li:first-child { border-top: 0; }
+.ep-no { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--text); color: var(--surface); font: 800 .9375rem/1 var(--display); }
+.ep-len { font-size: .8125rem; color: var(--text-muted); }
+.empty { display: grid; justify-items: center; gap: 12px; padding: 40px 24px; text-align: center; }
+.search { position: relative; flex: 1 1 260px; max-width: 360px; }
+.search input { width: 100%; min-height: 44px; padding: 0 16px 0 44px; border: 2px solid var(--band-ink); border-radius: var(--r-control); background: var(--field); color: var(--text); }
+.search .ic { position: absolute; left: 15px; top: 50%; translate: 0 -50%; color: var(--text-muted); pointer-events: none; }
+.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-bottom: 20px; }
+.count { font: 800 clamp(1.25rem, 1rem + .9vw, 1.6rem)/1.1 var(--display); text-transform: uppercase; }
+.steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; counter-reset: step; }
+.steps li { counter-increment: step; }
+.steps .card-body { padding: 18px 16px 20px; }
+.steps .card-body::before { content: counter(step); font: 800 2.75rem/1 var(--display); color: var(--edge); }
+@media (max-width: 1000px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .steps li:last-child { grid-column: 1 / -1; } }
+@media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+.crew-art { display: grid; place-items: center; aspect-ratio: 4 / 3; border-radius: var(--r-card) var(--r-card) 0 0; }
+.crew-art svg { width: 46%; }
+.c-lime { background: oklch(90% 0.16 135); color: oklch(84% 0.22 135); }
+.c-pink { background: oklch(88% 0.08 350); color: oklch(70% 0.2 355); }
+.c-sky { background: oklch(88% 0.07 230); color: oklch(72% 0.14 235); }
+.c-sun { background: oklch(92% 0.1 90); color: oklch(84% 0.16 85); }
+
+/* ---------- FAQ ---------- */
+.faq details { border-top: 2px solid var(--border); }
+.faq details:first-of-type { border-top: 0; }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; font: 700 1.0625rem/1.4 var(--body); cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .ic { width: 28px; height: 28px; padding: 4px; border-radius: 50%; background: var(--accent); color: var(--accent-text); transition: rotate var(--base) var(--ease); }
+.faq details[open] summary .ic { rotate: 45deg; }
+.faq details p { padding: 0 0 20px; max-width: 64ch; }
+
+/* ---------- Forms ---------- */
+.form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 18px; }
+.field { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.full { grid-column: 1 / -1; }
+@media (max-width: 620px) { .form { grid-template-columns: 1fr; } }
+.label, .field > label { font: 700 .875rem/1.3 var(--body); }
+.hint { font-weight: 400; color: var(--text-muted); }
+:where(input:not([type="checkbox"]):not([type="radio"]), select, textarea) { width: 100%; min-height: 52px; padding: 12px 14px; border: 2px solid var(--border-strong); border-radius: var(--r-card); background: var(--field); color: var(--text); font-size: 1rem; }
+textarea { min-height: 136px; resize: vertical; line-height: 1.5; }
+input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: .8; }
+[aria-invalid="true"] { border-color: var(--error) !important; }
+.err { min-height: 1.5em; margin: 0; padding-top: 1px; color: var(--error); font: 600 .8125rem/1.4 var(--body); }
+fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+legend { padding: 0; margin-bottom: 8px; }
+.opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 8px; }
+.opt { position: relative; display: grid; gap: 2px; padding: 12px 14px 12px 44px; border: 2px solid var(--border-strong); border-radius: var(--r-card); cursor: pointer; font-size: .9375rem; transition: border-color var(--fast), background-color var(--fast); }
+.opt input { position: absolute; left: 14px; top: 15px; width: 20px; height: 20px; margin: 0; accent-color: var(--text); }
+.opt strong { font-weight: 700; }
+.opt small { color: var(--text-muted); font-size: .8125rem; }
+.opt:has(input:checked) { border-color: var(--text); background: var(--surface-2); box-shadow: inset 0 -4px 0 0 var(--accent); }
+.opt:has(input:disabled) { opacity: .55; cursor: not-allowed; }
+.opt:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+.opts.pills { display: flex; flex-wrap: wrap; }
+.opts.pills .opt { padding: 10px 16px 10px 40px; border-radius: var(--r-control); }
+.opts.pills .opt input { top: 50%; translate: 0 -50%; left: 14px; }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: .9375rem; cursor: pointer; }
+.check input { width: 22px; height: 22px; margin: 1px 0 0; flex: none; accent-color: var(--text); }
+.form-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-top: 10px; }
+.form-foot small { color: var(--text-muted); }
+.shake { animation: shake 360ms var(--ease-out); }
+@keyframes shake { 20%, 60% { translate: -6px 0; } 40%, 80% { translate: 6px 0; } }
+.success { display: grid; justify-items: start; gap: 12px; }
+.success .blob { width: 72px; height: 72px; }
+.summary { display: grid; gap: 8px; }
+.summary div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 2px solid var(--border); }
+.summary .total { font: 800 1.5rem/1.2 var(--display); border-top-width: 4px; border-top-color: var(--text); }
+.side h3 { font: 700 1.0625rem/1.3 var(--body); margin-bottom: 8px; }
+.side * + h3 { margin-top: 22px; }
+.contact-list li { display: flex; gap: 12px; padding: 10px 0; border-top: 2px solid var(--border); }
+.contact-list li:first-child { border-top: 0; }
+
+/* ---------- Trailer dialog ---------- */
+.trailer { width: min(960px, 100% - 32px); max-height: calc(100% - 32px); padding: 0; border: 0; border-radius: var(--r-panel); background: var(--night); color: var(--on-dark); box-shadow: var(--shadow-overlay); overflow: hidden; }
+.trailer::backdrop { background: oklch(18% 0.1 300 / 0.8); }
+.t-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px 14px 22px; }
+.t-head h2 { font: 800 1.5rem/1.1 var(--display); }
+.t-stage { position: relative; overflow: hidden; aspect-ratio: 16 / 9; }
+.t-stage img { width: 100%; height: 100%; object-fit: cover; }
+.trailer[open] .t-stage img { animation: pan 14s ease-in-out infinite alternate; }
+@keyframes pan { from { scale: 1; translate: 0 0; } to { scale: 1.14; translate: -3% -2%; } }
+.t-cap { min-height: 3.6em; padding: 14px 22px 20px; font: 700 1.0625rem/1.5 var(--body); text-align: center; }
+
+/* ---------- 404: art cut into splats ---------- */
+.lost { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: center; gap: 24px; min-height: clamp(560px, 86vh, 800px); padding: calc(var(--head) + 32px) var(--gut) 64px; background: radial-gradient(50% 70% at 0% 100%, oklch(82% 0.17 95) 0 38%, transparent 39%), radial-gradient(40% 60% at 100% 100%, oklch(82% 0.17 95) 0 30%, transparent 31%), linear-gradient(160deg, var(--grape), var(--plum)); color: var(--on-dark); }
+.lost-copy { display: grid; justify-items: start; gap: 14px; position: relative; z-index: 1; }
+.lost-title { font: 800 clamp(3rem, 2rem + 5vw, 6rem)/.95 var(--display); text-transform: uppercase; letter-spacing: -.02em; }
+.splats { position: relative; aspect-ratio: 1; max-width: 560px; width: 100%; justify-self: center; }
+.splats img { position: absolute; object-fit: cover; }
+.splats img:nth-child(1) { left: 0; top: 4%; width: 54%; aspect-ratio: 1; clip-path: url(#splat-a); }
+.splats img:nth-child(2) { right: 0; top: 0; width: 50%; aspect-ratio: 1; clip-path: url(#splat-b); }
+.splats img:nth-child(3) { left: 22%; bottom: 0; width: 56%; aspect-ratio: 1; clip-path: url(#splat-a); }
+@media (max-width: 820px) { .lost { grid-template-columns: 1fr; } .splats { max-width: 380px; order: -1; } .lost-copy { justify-items: center; text-align: center; } }
+
+/* ---------- Footer ---------- */
+.site-foot { padding: 56px 0 40px; background: linear-gradient(180deg, var(--grape), var(--plum)); color: var(--on-dark); text-align: center; }
+.foot-in { display: grid; justify-items: center; gap: 28px; }
+.letter { display: grid; justify-items: center; gap: 10px; width: min(100%, 560px); }
+.foot-title { font: 800 clamp(1.4rem, 1.1rem + 1.2vw, 2rem)/1.1 var(--display); }
+.letter-row { display: flex; gap: 8px; width: 100%; }
+.letter-row input { flex: 1; min-width: 0; border-color: transparent; border-radius: var(--r-control); padding-inline: 20px; }
+.letter .err { color: oklch(88% 0.1 27); }
+.letter-ok { font-weight: 700; color: var(--accent); }
+.foot-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 26px; }
+.foot-links a { font: 600 .875rem/1.6 var(--body); text-decoration: none; }
+.foot-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.foot-logo { display: grid; justify-items: center; gap: 6px; text-decoration: none; }
+.foot-logo svg { width: 64px; height: 64px; }
+.foot-logo span { font: 800 1.75rem/1 var(--display); letter-spacing: -.02em; }
+.foot-small { max-width: 70ch; font-size: .8125rem; color: var(--on-dark-muted); }
+@media (max-width: 520px) { .letter-row { flex-direction: column; } }
+
+/* ---------- Views ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.js [data-view].is-active .stage-copy > * { animation: pop var(--slow) var(--ease) backwards; }
+.js [data-view].is-active .stage-copy > :nth-child(2) { animation-delay: 70ms; }
+.js [data-view].is-active .stage-copy > :nth-child(3) { animation-delay: 140ms; }
+.js [data-view].is-active .stage-copy > :nth-child(4) { animation-delay: 210ms; }
+@keyframes pop { from { opacity: 0; translate: 0 18px; scale: .97; } }
+html:not(.js) [data-view] + [data-view] { border-top: 8px solid var(--edge); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  a.card:hover { translate: none; }
+}
+</style>
+</head>
+<body data-page="home">
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Sprite: logo, goo drip, crew drawing, splat masks and the icon set (round caps, 2.4 stroke) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-goo" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5fc51f"/><stop offset=".45" stop-color="#9af24c"/><stop offset="1" stop-color="#6fd12a"/></linearGradient>
+    <clipPath id="splat-a" clipPathUnits="objectBoundingBox"><path d="M.5.05C.6.03.64.14.72.15S.9.08.95.22C1 .36.86.42.9.55S1 .8.88.9C.77 1 .66.86.54.92S.3 1.02.19.9C.08.78.2.68.1.58S-.03.34.1.24C.2.15.32.22.38.13S.42.06.5.05Z"/></clipPath>
+    <clipPath id="splat-b" clipPathUnits="objectBoundingBox"><path d="M.46.03C.58.01.62.12.7.1S.9.12.92.27C.94.4.84.45.92.56S.98.82.84.88C.72.94.68.84.56.94S.32.98.24.86C.16.74.24.66.12.6S0 .4.08.3C.16.2.26.26.32.14S.36.05.46.03Z"/></clipPath>
+  </defs>
+  <symbol id="logo" viewBox="0 0 64 64"><g stroke="#1d1340" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"><path d="M22 15l8 7M42 12l-8 10" fill="none"/><circle cx="20" cy="13" r="4.5" fill="#ff5fa2"/><circle cx="44" cy="10" r="4.5" fill="#ffd23f"/><path d="M9 28c0-4 3-7 7-7h32c4 0 7 2 7 6l2 22c0 5-3 8-8 8H15c-5 0-8-3-8-8z" fill="#8ce03c"/><path d="M15 31c0-2 1.5-3.5 3.5-3.5h27c2 0 3.5 1.5 3.5 3.5l1 14c0 2-1.5 4-4 4H18.5c-2.5 0-4-2-4-4z" fill="#fff6e0"/><path d="M21 41c3-5 6-5 9 0s6 5 9 0 5-4 7-2" fill="none" stroke="#ff7a1a"/></g></symbol>
+  <symbol id="drip" viewBox="0 0 120 420"><path d="M0 0h120c-4 34-28 44-30 76-2 30 14 48 8 80-4 22-24 24-26 4-2-24 6-44-8-56-14-10-26 6-24 44 2 54 10 140-8 186-10 26-32 22-32-6 0-40 10-104-4-140C2 186 0 190 0 196z" fill="url(#g-goo)"/><path d="M14 18c-4 46 0 104 8 162M60 50c-6 10-8 22-6 34" fill="none" stroke="#e4ffb8" stroke-width="7" stroke-linecap="round" opacity=".7"/><circle cx="34" cy="352" r="11" fill="url(#g-goo)"/></symbol>
+  <symbol id="crew" viewBox="0 0 120 120"><g stroke="#1d1340" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><path d="M60 12c28 0 46 20 47 46 2 32-18 54-47 54S12 90 13 58c1-28 19-46 47-46z" fill="currentColor"/><path d="M44 96v14M76 96v14" fill="none"/><circle cx="45" cy="54" r="10" fill="#fff"/><circle cx="75" cy="54" r="10" fill="#fff"/><path d="M48 76c8 8 16 8 24 0" fill="none"/></g><circle cx="47" cy="56" r="4.5" fill="#1d1340"/><circle cx="77" cy="56" r="4.5" fill="#1d1340"/></symbol>
+  <symbol id="yay" viewBox="0 0 120 120"><path d="M60 6c12 0 14 14 24 14s20-8 26 4-6 18-2 28 14 14 8 26-18 6-24 14-2 22-16 24-14-10-24-10-16 14-28 8-4-18-10-26S0 80 2 68s14-10 16-20-8-22 2-30 18 2 26-4 4-8 14-8z" fill="#8ce03c" stroke="#1d1340" stroke-width="4" stroke-linejoin="round"/><path d="M38 62l15 15 30-32" fill="none" stroke="#1d1340" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="m14.5 6-6 6 6 6"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="m9.5 6 6 6-6 6"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 7 8.5-7"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+</svg>
+
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="brand" href="#/" aria-label="Wobblebox home"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg><span class="word" aria-hidden="true">wobblebox</span></a>
+    <nav class="nav" aria-label="Main">
+      <ul><li><a href="#/shows">Shows</a></li><li><a href="#/screenings">Screenings</a></li><li><a href="#/camp">Camp</a></li><li><a href="#/news">News</a></li><li><a href="#/about">About</a></li><li><a href="#/grown-ups">Grown-ups</a></li></ul>
+    </nav>
+    <div class="tools">
+      <button class="round" id="theme-toggle" type="button" aria-label="Switch to dark theme"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="btn btn-goo btn-sm head-cta" href="#/camp?at=book">Book camp</a>
+      <button class="round menu-btn" type="button" aria-expanded="false" aria-controls="menu" hidden><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg><span class="sr-only">Menu</span></button>
+    </div>
+  </div>
+  <nav class="menu-panel" id="menu" aria-label="Menu" hidden>
+    <div class="wrap">
+      <ul><li><a href="#/shows">Shows</a></li><li><a href="#/screenings">Screenings</a></li><li><a href="#/camp">Camp</a></li><li><a href="#/news">News</a></li><li><a href="#/about">About</a></li><li><a href="#/grown-ups">Grown-ups</a></li><li><a href="#/contact">Contact</a></li></ul>
+      <a class="btn btn-goo" href="#/camp?at=book">Book camp</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<!-- ================= Home ================= -->
+<div data-view="home">
+  <section class="hero" aria-roledescription="carousel" aria-label="Featured shows">
+    <h1 class="sr-only">Wobblebox, a small animation studio: cartoons, weekend screenings and Cartoon Camp</h1>
+    <div class="slides">
+      <article class="stage slide is-current" aria-roledescription="slide" aria-label="1 of 3" data-slide>
+        <img class="stage-art" src="images/rocket-radish.svg" alt="A radish in flying goggles points at a cardboard rocket in a vegetable patch at sunset" width="640" height="360">
+        <div class="wrap stage-copy">
+          <p class="kicker">New season · Saturdays 10:00</p>
+          <h2 class="stage-title">Rocket Radish</h2>
+          <p class="stage-lead">A radish with a cardboard rocket and a very big plan. Season two starts on 5 December.</p>
+          <div class="actions"><a class="btn btn-goo" href="#/show?id=rocket-radish" data-trailer="rocket-radish"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>Watch the trailer</a><a class="btn btn-line" href="#/show?id=rocket-radish">About the show</a></div>
+        </div>
+      </article>
+      <article class="stage slide" aria-roledescription="slide" aria-label="2 of 3" data-slide>
+        <img class="stage-art" src="images/puddle-club.svg" alt="Three raindrops in rain boots jump into a puddle on a rainy street" width="640" height="360">
+        <div class="wrap stage-copy">
+          <p class="kicker">For ages 3 to 6</p>
+          <h2 class="stage-title">The Puddle Club</h2>
+          <p class="stage-lead">Three raindrops, one pair of boots each, and every puddle on Kettle Street.</p>
+          <div class="actions"><a class="btn btn-goo" href="#/show?id=puddle-club" data-trailer="puddle-club"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>Watch the trailer</a><a class="btn btn-line" href="#/show?id=puddle-club">About the show</a></div>
+        </div>
+      </article>
+      <article class="stage slide" aria-roledescription="slide" aria-label="3 of 3" data-slide>
+        <img class="stage-art" src="images/moth-meets-moon.svg" alt="A pink and purple moth flies towards a smiling crescent moon over a night garden" width="640" height="360">
+        <div class="wrap stage-copy">
+          <p class="kicker">Night-light screening</p>
+          <h2 class="stage-title">Moth Meets Moon</h2>
+          <p class="stage-lead">A moth who thinks the moon is the biggest lamp in the world. Tonight she goes to find out.</p>
+          <div class="actions"><a class="btn btn-goo" href="#/show?id=moth-meets-moon" data-trailer="moth-meets-moon"><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>Watch the trailer</a><a class="btn btn-line" href="#/show?id=moth-meets-moon">About the show</a></div>
+        </div>
+      </article>
+    </div>
+    <div class="wrap hero-ctrl" data-hero-ctrl hidden>
+      <button class="round" type="button" data-step="-1" aria-label="Previous show"><svg class="ic" aria-hidden="true"><use href="#i-prev"/></svg></button>
+      <div class="dots" role="group" aria-label="Choose a show"><button class="dot" type="button" aria-label="Rocket Radish" aria-current="true"></button><button class="dot" type="button" aria-label="The Puddle Club" aria-current="false"></button><button class="dot" type="button" aria-label="Moth Meets Moon" aria-current="false"></button></div>
+      <button class="round" type="button" data-step="1" aria-label="Next show"><svg class="ic" aria-hidden="true"><use href="#i-next"/></svg></button>
+      <button class="round" type="button" data-pause aria-label="Pause the slideshow"><svg class="ic" aria-hidden="true"><use href="#i-pause"/></svg></button>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="h-new">
+    <svg class="drip" aria-hidden="true"><use href="#drip"/></svg>
+    <div class="wrap">
+      <div class="band-head"><h2 class="band-title" id="h-new">New this season</h2><a class="more" href="#/shows">All shows<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div class="cards">
+        <a class="card" style="--i:0" href="#/show?id=rocket-radish"><img src="images/rocket-radish.svg" alt="" width="640" height="360"><div class="card-body"><h3>Rocket Radish</h3><p>A radish builds a rocket out of cereal boxes and very strong tape.</p></div></a>
+        <a class="card" style="--i:1" href="#/show?id=sock-detectives"><img src="images/sock-detectives.svg" alt="" width="640" height="360"><div class="card-body"><h3>Sock Drawer Detectives</h3><p>Two odd socks solve the mysteries nobody else in the house has noticed.</p></div></a>
+        <a class="card" style="--i:2" href="#/show?id=weather-machine"><img src="images/weather-machine.svg" alt="" width="640" height="360"><div class="card-body"><h3>The Weather Machine</h3><p>A cloud with buttons can make any weather. It just can't make up its mind.</p></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="split dark" aria-labelledby="h-house">
+    <div class="split-art"><img src="images/breakfast-band.svg" alt="" width="640" height="360"></div>
+    <div class="split-copy">
+      <p class="kicker">Every weekend in December</p>
+      <h2 class="split-title" id="h-house">The Saturday Picture House</h2>
+      <p>Our cartoons on a big screen in the 60-seat cinema above the studio, with a sing-along at two o'clock.</p>
+      <a class="btn btn-goo" href="#/screenings">See screenings</a>
+    </div>
+  </section>
+
+  <section class="band alt" aria-labelledby="h-soon">
+    <div class="wrap">
+      <div class="band-head"><h2 class="band-title" id="h-soon">Coming up</h2><a class="more" href="#/screenings">All screenings<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div class="cards">
+        <article class="card" style="--i:0"><div class="card-art"><img src="images/rocket-radish.svg" alt="" width="640" height="360"><p class="date"><span>Sat</span><strong>5</strong><span>Dec</span></p></div><div class="card-body"><p class="meta">10:00 · 45 min · Ages 4+</p><h3>Rocket Radish: season two premiere</h3><div class="event-foot"><span class="seats low">6 seats left</span><a class="btn btn-ink btn-sm" href="#/contact?topic=screenings&amp;event=Rocket%20Radish%20premiere%2C%20Sat%205%20Dec%2C%2010%3A00">Book seats</a></div></div></article>
+        <article class="card" style="--i:1"><div class="card-art"><img src="images/breakfast-band.svg" alt="" width="640" height="360"><p class="date"><span>Sat</span><strong>5</strong><span>Dec</span></p></div><div class="card-body"><p class="meta">14:00 · 40 min · All ages</p><h3>Sing-along with The Breakfast Band</h3><div class="event-foot"><span class="seats">22 seats left</span><a class="btn btn-ink btn-sm" href="#/contact?topic=screenings&amp;event=Breakfast%20Band%20sing-along%2C%20Sat%205%20Dec%2C%2014%3A00">Book seats</a></div></div></article>
+        <article class="card" style="--i:2"><div class="card-art"><img src="images/sock-detectives.svg" alt="" width="640" height="360"><p class="date"><span>Sun</span><strong>6</strong><span>Dec</span></p></div><div class="card-body"><p class="meta">11:00 · 90 min · Ages 7+</p><h3>Flipbook workshop with the crew</h3><div class="event-foot"><span class="seats">10 places left</span><a class="btn btn-ink btn-sm" href="#/contact?topic=screenings&amp;event=Flipbook%20workshop%2C%20Sun%206%20Dec%2C%2011%3A00">Book places</a></div></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="promo dark" aria-labelledby="h-camp">
+    <div class="promo-copy">
+      <h2 class="promo-title" id="h-camp">Cartoon Camp is back!</h2>
+      <p class="caps">Five days. One finished cartoon.</p>
+      <p>Ages 7 to 12, Monday to Friday, every week in July. Bring a pencil; we have everything else.</p>
+      <div class="actions"><a class="btn btn-goo" href="#/camp?at=book">Book a week</a><a class="btn btn-line" href="#/camp">How camp works</a></div>
+    </div>
+    <div class="promo-art"><img src="images/goo.svg" alt="" width="900" height="600"></div>
+  </section>
+</div>
+
+<!-- ================= Shows ================= -->
+<div data-view="shows">
+  <section class="stage stage-sm">
+    <img class="stage-art" src="images/volcano-bus.svg" alt="A yellow bus drives along a winding road past two smiling volcanoes" width="640" height="360">
+    <div class="wrap stage-copy"><h1 class="stage-title">Our shows</h1><p class="stage-lead">Eight cartoons, drawn by hand in our studio on Kettle Street. Pick an age, or search for a favourite.</p></div>
+  </section>
+  <section class="band" aria-labelledby="shows-count">
+    <svg class="drip" aria-hidden="true"><use href="#drip"/></svg>
+    <div class="wrap">
+      <div class="filters">
+        <h2 class="count" id="shows-count" data-shows-count aria-live="polite">All shows (8)</h2>
+        <div class="chips" role="group" aria-label="Filter by age"><button class="chip" type="button" data-age="all" aria-pressed="true">All ages</button><button class="chip" type="button" data-age="little" aria-pressed="false">Ages 3–6</button><button class="chip" type="button" data-age="big" aria-pressed="false">Ages 6–9</button><button class="chip" type="button" data-age="older" aria-pressed="false">Ages 9–12</button></div>
+        <label class="search"><span class="sr-only">Search shows</span><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input type="search" placeholder="Search shows" data-shows-search></label>
+      </div>
+      <div class="cards four" data-shows>
+        <a class="card" href="#/show?id=rocket-radish"><img src="images/rocket-radish.svg" alt="" width="640" height="360"><div class="card-body"><h3>Rocket Radish</h3><p>A radish builds a rocket out of cereal boxes and very strong tape.</p><p class="tag">Ages 3–6</p></div></a>
+        <a class="card" href="#/show?id=puddle-club"><img src="images/puddle-club.svg" alt="" width="640" height="360"><div class="card-body"><h3>The Puddle Club</h3><p>Three raindrops in boots, and every puddle on Kettle Street.</p><p class="tag">Ages 3–6</p></div></a>
+        <a class="card" href="#/show?id=breakfast-band"><img src="images/breakfast-band.svg" alt="" width="640" height="360"><div class="card-body"><h3>The Breakfast Band</h3><p>Toast, an egg and a milk carton start a band on the kitchen table.</p><p class="tag">Ages 3–6</p></div></a>
+      </div>
+      <div class="panel empty" data-shows-empty hidden><svg class="blob" width="72" height="72" aria-hidden="true"><use href="#crew"/></svg><p>No shows match that. Try another word or age.</p><button class="btn btn-ink btn-sm" type="button" data-shows-reset>Show all shows</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= Show ================= -->
+<div data-view="show">
+  <section class="stage stage-sm">
+    <img class="stage-art" data-s="img" src="images/rocket-radish.svg" alt="A radish in flying goggles points at a cardboard rocket in a vegetable patch at sunset" width="640" height="360">
+    <div class="wrap stage-copy">
+      <a class="back" href="#/shows"><svg class="ic" aria-hidden="true"><use href="#i-prev"/></svg>All shows</a>
+      <h1 class="stage-title" data-s="title">Rocket Radish</h1>
+      <p class="meta-line" data-s="meta">Ages 4 to 7 · 12 episodes · 11 minutes each</p>
+      <div class="actions"><button class="btn btn-goo" type="button" data-trailer="rocket-radish" data-s-trailer><svg class="ic" aria-hidden="true"><use href="#i-play"/></svg>Watch the trailer</button><a class="btn btn-line" href="#/screenings">See it on the big screen</a></div>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap two">
+      <div class="panel">
+        <h2 class="panel-title">About the show</h2>
+        <p class="prose" data-s="about">Rocket Radish lives at the end of a vegetable patch and wants to see the top of the sky. Every episode she builds something new, it goes wrong in a new way, and the carrots help her try again.</p>
+        <dl class="facts">
+          <div><dt>Ages</dt><dd data-s="ages">4 to 7</dd></div>
+          <div><dt>Episodes</dt><dd data-s="eps">12 episodes, 11 minutes each</dd></div>
+          <div><dt>Made with</dt><dd data-s="made">Pencil on paper, coloured on screen</dd></div>
+          <div><dt>On screen</dt><dd>Weekends in the Picture House</dd></div>
+        </dl>
+      </div>
+      <div class="panel">
+        <h2 class="panel-title">Episodes</h2>
+        <ol class="episodes" data-s="episodes">
+          <li><span class="ep-no">1</span><span>Countdown to Lunch</span><span class="ep-len">11 min</span></li>
+          <li><span class="ep-no">2</span><span>The Tape Problem</span><span class="ep-len">11 min</span></li>
+          <li><span class="ep-no">3</span><span>Carrots in Space</span><span class="ep-len">11 min</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="wrap" data-s-more-wrap hidden>
+      <div class="band-head"><h2 class="band-title">More shows</h2><a class="more" href="#/shows">All shows<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div class="cards" data-s-more></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= Screenings ================= -->
+<div data-view="screenings">
+  <section class="stage stage-sm">
+    <img class="stage-art" src="images/breakfast-band.svg" alt="A slice of toast, a fried egg and a milk carton play music on a kitchen table" width="640" height="360">
+    <div class="wrap stage-copy"><h1 class="stage-title">Screenings</h1><p class="stage-lead">Cartoons on a big screen in the 60-seat Picture House above the studio. Every weekend in December.</p></div>
+  </section>
+  <section class="band alt" aria-labelledby="events-count">
+    <div class="wrap">
+      <div class="filters">
+        <h2 class="count" id="events-count" data-events-count aria-live="polite">Coming up (6)</h2>
+        <div class="chips" role="group" aria-label="Filter screenings"><button class="chip" type="button" data-kind="all" aria-pressed="true">Everything</button><button class="chip" type="button" data-kind="screening" aria-pressed="false">Screenings</button><button class="chip" type="button" data-kind="sing" aria-pressed="false">Sing-alongs</button><button class="chip" type="button" data-kind="workshop" aria-pressed="false">Workshops</button></div>
+      </div>
+      <div class="cards" data-events>
+        <article class="card" style="--i:0" data-kind="screening"><div class="card-art"><img src="images/rocket-radish.svg" alt="" width="640" height="360"><p class="date"><span>Sat</span><strong>5</strong><span>Dec</span></p></div><div class="card-body"><p class="meta">10:00 · 45 min · Ages 4+</p><h3>Rocket Radish: season two premiere</h3><p>Three new episodes back to back, then the crew answers questions.</p><div class="event-foot"><span class="seats low">6 seats left</span><a class="btn btn-ink btn-sm" href="#/contact?topic=screenings&amp;event=Rocket%20Radish%20premiere%2C%20Sat%205%20Dec%2C%2010%3A00">Book seats</a></div></div></article>
+        <article class="card" style="--i:1" data-kind="sing"><div class="card-art"><img src="images/breakfast-band.svg" alt="" width="640" height="360"><p class="date"><span>Sat</span><strong>5</strong><span>Dec</span></p></div><div class="card-body"><p class="meta">14:00 · 40 min · All ages</p><h3>Sing-along with The Breakfast Band</h3><p>Words on screen, lights half up, and dancing in the aisles is allowed.</p><div class="event-foot"><span class="seats">22 seats left</span><a class="btn btn-ink btn-sm" href="#/contact?topic=screenings&amp;event=Breakfast%20Band%20sing-along%2C%20Sat%205%20Dec%2C%2014%3A00">Book seats</a></div></div></article>
+        <article class="card" style="--i:2" data-kind="workshop"><div class="card-art"><img src="images/sock-detectives.svg" alt="" width="640" height="360"><p class="date"><span>Sun</span><strong>6</strong><span>Dec</span></p></div><div class="card-body"><p class="meta">11:00 · 90 min · Ages 7+</p><h3>Flipbook workshop with the crew</h3><p>Draw twelve frames, staple them, flip. Everyone leaves with a moving picture.</p><div class="event-foot"><span class="seats">10 places left</span><a class="btn btn-ink btn-sm" href="#/contact?topic=screenings&amp;event=Flipbook%20workshop%2C%20Sun%206%20Dec%2C%2011%3A00">Book places</a></div></div></article>
+        <article class="card" style="--i:3" data-kind="screening"><div class="card-art"><img src="images/puddle-club.svg" alt="" width="640" height="360"><p class="date"><span>Sat</span><strong>12</strong><span>Dec</span></p></div><div class="card-body"><p class="meta">10:00 · 35 min · Ages 3+</p><h3>The Puddle Club double bill</h3><p>Two rainy-day episodes for the smallest viewers. Buggies welcome at the back.</p><div class="event-foot"><span class="seats">31 seats left</span><a class="btn btn-ink btn-sm" href="#/contact?topic=screenings&amp;event=Puddle%20Club%20double%20bill%2C%20Sat%2012%20Dec%2C%2010%3A00">Book seats</a></div></div></article>
+        <article class="card" style="--i:4" data-kind="screening"><div class="card-art"><img src="images/moth-meets-moon.svg" alt="" width="640" height="360"><p class="date"><span>Sat</span><strong>12</strong><span>Dec</span></p></div><div class="card-body"><p class="meta">16:30 · 50 min · Ages 8+</p><h3>Moth Meets Moon: night-light screening</h3><p>Bring a torch. We switch the lights off for the last five minutes.</p><div class="event-foot"><span class="seats">18 seats left</span><a class="btn btn-ink btn-sm" href="#/contact?topic=screenings&amp;event=Moth%20Meets%20Moon%20night-light%2C%20Sat%2012%20Dec%2C%2016%3A30">Book seats</a></div></div></article>
+        <article class="card" style="--i:5" data-kind="workshop"><div class="card-art"><img src="images/weather-machine.svg" alt="" width="640" height="360"><p class="date"><span>Sun</span><strong>13</strong><span>Dec</span></p></div><div class="card-body"><p class="meta">11:00 · 60 min · Ages 6+</p><h3>Draw-along: make your own weather</h3><p>Our lead animator draws live on the big screen and everyone copies along.</p><div class="event-foot"><span class="seats">Full, waiting list</span><a class="btn btn-ink btn-sm" href="#/contact?topic=screenings&amp;event=Draw-along%20waiting%20list%2C%20Sun%2013%20Dec%2C%2011%3A00">Join the list</a></div></div></article>
+      </div>
+      <div class="panel empty" data-events-empty hidden><p>Nothing of that kind this month.</p><button class="btn btn-ink btn-sm" type="button" data-events-reset>Show everything</button></div>
+    </div>
+    <div class="wrap two even">
+      <div class="panel side">
+        <h2 class="panel-title">Good to know</h2>
+        <ul class="ticks">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Tickets are $6 for everyone over two. Under twos sit on a lap for free.</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Doors open 15 minutes before. Screenings start on time.</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Sound is kept low and the lights never go fully dark, except at the night-light show.</span></li>
+        </ul>
+      </div>
+      <div class="panel side">
+        <h2 class="panel-title">Finding us</h2>
+        <ul class="contact-list">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span>The Picture House, 14 Kettle Street, Brightwater. Up the yellow stairs, or the lift on the left.</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><span>Box office opens one hour before the first screening.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= Camp ================= -->
+<div data-view="camp">
+  <section class="stage stage-sm">
+    <img class="stage-art" src="images/weather-machine.svg" alt="A cloud-shaped machine with dials makes a rainbow, sunshine and snow at once" width="640" height="360">
+    <div class="wrap stage-copy"><p class="kicker">Ages 7 to 12 · July</p><h1 class="stage-title">Cartoon Camp</h1><p class="stage-lead">Five days in a real studio, one finished cartoon to take home, and a premiere for families on Friday.</p><div class="actions"><a class="btn btn-goo" href="#book">Book a week</a></div></div>
+  </section>
+  <section class="band" aria-labelledby="h-week">
+    <svg class="drip" aria-hidden="true"><use href="#drip"/></svg>
+    <div class="wrap">
+      <div class="band-head"><h2 class="band-title" id="h-week">How a week works</h2></div>
+      <ol class="steps">
+        <li class="card" style="--i:0"><div class="card-body"><h3>Monday: ideas</h3><p>Everyone invents a character and gives it one big problem.</p></div></li>
+        <li class="card" style="--i:1"><div class="card-body"><h3>Tuesday: storyboards</h3><p>Twelve boxes, one story. We pin them on the wall and act them out.</p></div></li>
+        <li class="card" style="--i:2"><div class="card-body"><h3>Wednesday: drawing</h3><p>Frame by frame on light boxes. It's slow, and it's the best day.</p></div></li>
+        <li class="card" style="--i:3"><div class="card-body"><h3>Thursday: sound</h3><p>Voices, footsteps and silly noises recorded in the booth.</p></div></li>
+        <li class="card" style="--i:4"><div class="card-body"><h3>Friday: premiere</h3><p>Families come at 15:00 to watch every film on the big screen.</p></div></li>
+      </ol>
+    </div>
+    <div class="wrap">
+      <div class="band-head"><h2 class="band-title">Pick your week</h2><p class="caps">9:30 to 15:30 · 16 campers a week</p></div>
+      <div class="cards four">
+        <article class="card" style="--i:0"><div class="card-body"><p class="meta">Week 1 · 5 to 9 July</p><h3>Flipbooks and first frames</h3><p class="price">$240</p><div class="event-foot"><span class="seats">9 places left</span><a class="btn btn-ink btn-sm" href="#/camp?week=w1&amp;at=book">Choose</a></div></div></article>
+        <article class="card" style="--i:1"><div class="card-body"><p class="meta">Week 2 · 12 to 16 July</p><h3>Clay and stop-motion</h3><p class="price">$240</p><div class="event-foot"><span class="seats low">3 places left</span><a class="btn btn-ink btn-sm" href="#/camp?week=w2&amp;at=book">Choose</a></div></div></article>
+        <article class="card" style="--i:2"><div class="card-body"><p class="meta">Week 3 · 19 to 23 July</p><h3>Draw your own character</h3><p class="price">$240</p><div class="event-foot"><span class="seats">Full</span><a class="btn btn-line btn-sm" href="#/contact?topic=camp&amp;event=Camp%20week%203%20waiting%20list">Waiting list</a></div></div></article>
+        <article class="card" style="--i:3"><div class="card-body"><p class="meta">Week 4 · 26 to 30 July</p><h3>A one-minute cartoon</h3><p class="price">$260</p><div class="event-foot"><span class="seats">12 places left</span><a class="btn btn-ink btn-sm" href="#/camp?week=w4&amp;at=book">Choose</a></div></div></article>
+      </div>
+    </div>
+    <div class="wrap two" id="book">
+      <div class="panel">
+        <h2 class="panel-title">Book a camp week</h2>
+        <form class="form" data-form="camp" novalidate>
+          <fieldset class="field full">
+            <legend class="label">Which week?</legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="week" value="w1" data-price="240" data-label="Week 1 · 5 to 9 July" required aria-describedby="cw-err"><strong>Week 1</strong><small>5 to 9 July · $240</small></label>
+              <label class="opt"><input type="radio" name="week" value="w2" data-price="240" data-label="Week 2 · 12 to 16 July"><strong>Week 2</strong><small>12 to 16 July · $240</small></label>
+              <label class="opt"><input type="radio" name="week" value="w3" disabled><strong>Week 3</strong><small>19 to 23 July · full</small></label>
+              <label class="opt"><input type="radio" name="week" value="w4" data-price="260" data-label="Week 4 · 26 to 30 July"><strong>Week 4</strong><small>26 to 30 July · $260</small></label>
+            </div>
+            <p class="err" id="cw-err"></p>
+          </fieldset>
+          <div class="field"><label for="c-child">Camper's first name</label><input id="c-child" name="child" autocomplete="off" required aria-describedby="c-child-err"><p class="err" id="c-child-err"></p></div>
+          <div class="field"><label for="c-age">Camper's age</label><input id="c-age" name="age" type="number" inputmode="numeric" min="7" max="12" required aria-describedby="c-age-err"><p class="err" id="c-age-err"></p></div>
+          <div class="field"><label for="c-name">Grown-up's name</label><input id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-err"><p class="err" id="c-name-err"></p></div>
+          <div class="field"><label for="c-email">Grown-up's email</label><input id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-err"><p class="err" id="c-email-err"></p></div>
+          <div class="field full"><label for="c-notes">Anything we should know? <span class="hint">(optional: allergies, help needed, a friend's name)</span></label><textarea id="c-notes" name="notes" rows="3"></textarea><p class="err"></p></div>
+          <div class="field full"><label class="check"><input type="checkbox" name="early" data-early="50"><span>Add early drop-off from 8:30 <span class="hint">(+$50 for the week)</span></span></label><p class="err"></p></div>
+          <div class="field full"><label class="check"><input type="checkbox" name="rules" required aria-describedby="c-rules-err"><span>I've read the camp rules and the <a href="#/privacy">privacy notice</a>.</span></label><p class="err" id="c-rules-err"></p></div>
+          <div class="form-foot full"><button class="btn btn-ink" type="submit">Request a place</button><small>No payment yet. We confirm by email within two days.</small></div>
+        </form>
+        <div class="success" data-success="camp" tabindex="-1" hidden>
+          <svg class="blob" aria-hidden="true"><use href="#yay"/></svg>
+          <h2 class="panel-title">Place requested for <span data-echo="child">your camper</span>!</h2>
+          <p>We'll email <span data-echo="email">you</span> within two days to confirm the week and send the kit list.</p>
+          <button class="btn btn-line btn-sm" type="button" data-again>Book another camper</button>
+        </div>
+      </div>
+      <aside class="panel side" aria-labelledby="h-sum">
+        <h2 class="panel-title" id="h-sum">Your week</h2>
+        <div class="summary">
+          <div><span data-sum-week>No week chosen yet</span><span data-sum-price>$0</span></div>
+          <div><span>Early drop-off</span><span data-sum-early>$0</span></div>
+          <div class="total"><span>Total</span><span data-sum-total>$0</span></div>
+        </div>
+        <h3>Included</h3>
+        <ul class="ticks"><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>All materials, a sketchbook to keep and a copy of the finished film.</span></li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Fruit and drinks. Campers bring their own lunch.</span></li></ul>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<!-- ================= News ================= -->
+<div data-view="news">
+  <section class="stage stage-sm">
+    <img class="stage-art" src="images/planet-pocket.svg" alt="A tiny pink planet with a yellow ring peeks out of a denim pocket" width="640" height="360">
+    <div class="wrap stage-copy"><h1 class="stage-title">News from the studio</h1><p class="stage-lead">Behind the scenes, new episodes and things to make at home.</p></div>
+  </section>
+  <section class="band alt" aria-labelledby="news-count">
+    <div class="wrap">
+      <div class="filters">
+        <h2 class="count" id="news-count" data-news-count aria-live="polite">All posts (5)</h2>
+        <div class="chips" role="group" aria-label="Filter posts"><button class="chip" type="button" data-cat="all" aria-pressed="true">All</button><button class="chip" type="button" data-cat="behind" aria-pressed="false">Behind the scenes</button><button class="chip" type="button" data-cat="news" aria-pressed="false">Studio news</button><button class="chip" type="button" data-cat="make" aria-pressed="false">Make at home</button></div>
+      </div>
+      <div class="cards" data-posts>
+        <a class="card wide" href="#/post?id=twelve-radishes"><img src="images/rocket-radish.svg" alt="" width="640" height="360"><div class="card-body"><p class="meta">Behind the scenes · 28 November</p><h3>Twelve ways to draw a radish</h3><p>Before season two, the crew drew our hero a dozen ways. Here is how we picked one.</p></div></a>
+        <a class="card" href="#/post?id=bathtub-rain"><img src="images/puddle-club.svg" alt="" width="640" height="360"><div class="card-body"><p class="meta">Behind the scenes · 21 November</p><h3>The Puddle Club's rain comes from a bathtub</h3></div></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= Post ================= -->
+<div data-view="post">
+  <section class="stage stage-sm">
+    <img class="stage-art" data-p="img" src="images/rocket-radish.svg" alt="" width="640" height="360">
+    <div class="wrap stage-copy"><a class="back" href="#/news"><svg class="ic" aria-hidden="true"><use href="#i-prev"/></svg>All news</a><h1 class="stage-title" data-p="title">Twelve ways to draw a radish</h1><p class="meta-line" data-p="meta">Behind the scenes · 28 November · 4 min read</p></div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <article class="panel prose" data-p="body">
+        <p class="lead">Before season two, the crew drew our hero a dozen ways. Here is how we picked one.</p>
+        <p>Every season starts with a wall of drawings. This time the wall had twelve radishes on it: tall ones, round ones, one with eyebrows and one that looked a lot like a beetroot.</p>
+        <p>We showed the wall to a class of seven-year-olds and asked one question: which radish would you trust with a rocket? They chose number eight, the one with goggles.</p>
+      </article>
+    </div>
+    <div class="wrap" data-p-more-wrap hidden>
+      <div class="band-head"><h2 class="band-title">More from the studio</h2><a class="more" href="#/news">All news<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div class="cards" data-p-more></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= About ================= -->
+<div data-view="about">
+  <section class="stage stage-sm">
+    <img class="stage-art" src="images/sock-detectives.svg" alt="Two sock characters, one with a magnifying glass, search a drawer for clues" width="640" height="360">
+    <div class="wrap stage-copy"><h1 class="stage-title">About the studio</h1><p class="stage-lead">Nine people, two light boxes per desk, and one small cinema upstairs.</p></div>
+  </section>
+  <section class="band" aria-labelledby="h-story">
+    <svg class="drip right" aria-hidden="true"><use href="#drip"/></svg>
+    <div class="wrap two">
+      <div class="panel prose">
+        <h2 class="panel-title" id="h-story">Cartoons made by hand</h2>
+        <p class="lead">Wobblebox started in 2014 in a spare room above a laundrette, with one pencil test and a lot of tea.</p>
+        <p>We still draw every frame by hand before it goes on screen. It takes longer, and the wobble in the lines is how you can tell a person made it.</p>
+        <p>Our shows are short, funny and kind, for kids from three to twelve. We test every episode with children before it is finished, and we change it when they are bored.</p>
+        <blockquote>If a joke needs explaining to a six-year-old, we cut it.</blockquote>
+      </div>
+      <div class="panel side">
+        <h2 class="panel-title">The studio in numbers</h2>
+        <dl class="facts">
+          <div><dt>Shows</dt><dd>8 series, 74 episodes</dd></div>
+          <div><dt>Drawings</dt><dd>About 12 for every second on screen</dd></div>
+          <div><dt>Picture House</dt><dd>60 seats, open at weekends</dd></div>
+          <div><dt>Cartoon Camp</dt><dd>4 weeks every July, ages 7 to 12</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="band-head"><h2 class="band-title">The crew</h2></div>
+      <ul class="cards four">
+        <li class="card" style="--i:0"><div class="crew-art c-lime"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#crew"/></svg></div><div class="card-body"><h3>Ada Okafor</h3><p class="meta">Director</p><p>Writes every first draft on the bus home.</p></div></li>
+        <li class="card" style="--i:1"><div class="crew-art c-pink"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#crew"/></svg></div><div class="card-body"><h3>Benji Marsh</h3><p class="meta">Lead animator</p><p>Has drawn the radish about nine thousand times.</p></div></li>
+        <li class="card" style="--i:2"><div class="crew-art c-sky"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#crew"/></svg></div><div class="card-body"><h3>Lin Qiao</h3><p class="meta">Sound and music</p><p>Makes the rain, the rockets and the burps.</p></div></li>
+        <li class="card" style="--i:3"><div class="crew-art c-sun"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#crew"/></svg></div><div class="card-body"><h3>Rosa Delgado</h3><p class="meta">Camp lead</p><p>Runs Cartoon Camp and the Saturday workshops.</p></div></li>
+      </ul>
+    </div>
+  </section>
+  <section class="split flip dark" aria-labelledby="h-visit">
+    <div class="split-art"><img src="images/planet-pocket.svg" alt="" width="640" height="360"></div>
+    <div class="split-copy"><h2 class="split-title" id="h-visit">Come and see us draw</h2><p>School groups can visit the studio on Wednesday mornings during term. One class at a time, ages 6 and up.</p><a class="btn btn-goo" href="#/contact?topic=visit">Ask about a visit</a></div>
+  </section>
+</div>
+
+<!-- ================= Grown-ups (FAQ) ================= -->
+<div data-view="grown-ups">
+  <section class="stage stage-sm">
+    <img class="stage-art" src="images/puddle-club.svg" alt="" width="640" height="360">
+    <div class="wrap stage-copy"><h1 class="stage-title">For grown-ups</h1><p class="stage-lead">The questions parents, carers and teachers ask us most.</p></div>
+  </section>
+  <section class="band alt" aria-label="Questions and answers">
+    <div class="wrap two">
+      <div class="panel faq">
+        <details open><summary>What ages are your shows for?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Each show has an age on its page: three to six, six to nine, or nine to twelve. They're a guide, not a rule. Plenty of grown-ups watch the radish.</p></details>
+        <details><summary>Are the screenings loud or dark?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. Sound is kept low, the lights stay half up and you can come and go. The only exception is the night-light screening, which says so on its card.</p></details>
+        <details><summary>Do I stay with my child at a screening?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes. Children under twelve need a grown-up in the room at screenings. At workshops and Cartoon Camp you drop off and collect.</p></details>
+        <details><summary>What happens at Cartoon Camp if it rains?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Nothing changes. Camp happens indoors in the studio, with a walk to the park at lunch when the weather allows.</p></details>
+        <details><summary>Can my child's school visit the studio?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes, on Wednesday mornings during term, one class at a time. <a href="#/contact?topic=visit">Ask us about a date</a>.</p></details>
+        <details><summary>Where can we watch the shows at home?<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Each show page says where its episodes are available. New episodes always play in the Picture House first.</p></details>
+      </div>
+      <aside class="panel side">
+        <h2 class="panel-title">Still wondering?</h2>
+        <p>Send us a note and a real person from the studio answers, usually the same day.</p>
+        <p style="margin-top:16px"><a class="btn btn-ink" href="#/contact">Contact us</a></p>
+        <h3>Accessibility</h3>
+        <p>The Picture House has step-free access, a lift and four wheelchair spaces. Relaxed screenings are marked on each card.</p>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<!-- ================= Contact ================= -->
+<div data-view="contact">
+  <section class="stage stage-sm plain">
+    <div class="wrap stage-copy"><h1 class="stage-title">Say hello</h1><p class="stage-lead">Seats, camp, school visits or a question about a show. We answer every message.</p></div>
+  </section>
+  <section class="band" aria-label="Contact form and details">
+    <div class="wrap two">
+      <div class="panel">
+        <form class="form" data-form="contact" novalidate>
+          <fieldset class="field full">
+            <legend class="label">What's it about?</legend>
+            <div class="opts pills">
+              <label class="opt"><input type="radio" name="topic" value="hello" checked>Just saying hello</label>
+              <label class="opt"><input type="radio" name="topic" value="screenings">Screenings</label>
+              <label class="opt"><input type="radio" name="topic" value="camp">Cartoon Camp</label>
+              <label class="opt"><input type="radio" name="topic" value="visit">School visit</label>
+              <label class="opt"><input type="radio" name="topic" value="press">Press</label>
+            </div>
+            <p class="err"></p>
+          </fieldset>
+          <div class="field"><label for="m-name">Your name</label><input id="m-name" name="name" autocomplete="name" required aria-describedby="m-name-err"><p class="err" id="m-name-err"></p></div>
+          <div class="field"><label for="m-email">Email</label><input id="m-email" name="email" type="email" autocomplete="email" required aria-describedby="m-email-err"><p class="err" id="m-email-err"></p></div>
+          <div class="field full"><label for="m-msg">Message</label><textarea id="m-msg" name="message" rows="5" minlength="10" required aria-describedby="m-msg-err"></textarea><p class="err" id="m-msg-err"></p></div>
+          <div class="form-foot full"><button class="btn btn-ink" type="submit">Send message</button><small>We reply within one working day.</small></div>
+        </form>
+        <div class="success" data-success="contact" tabindex="-1" hidden>
+          <svg class="blob" aria-hidden="true"><use href="#yay"/></svg>
+          <h2 class="panel-title">Thanks, <span data-echo="name">friend</span>!</h2>
+          <p>Your message is with the studio. We'll write back to <span data-echo="email">you</span> soon.</p>
+          <button class="btn btn-line btn-sm" type="button" data-again>Send another</button>
+        </div>
+      </div>
+      <aside class="panel side" aria-label="Studio details">
+        <h2 class="panel-title">The studio</h2>
+        <ul class="contact-list">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span>14 Kettle Street, Brightwater</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><span>Office: Monday to Friday, 9:30 to 17:30<br>Picture House: weekends, 9:30 to 18:00</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg><span>hello@wobblebox.example</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><span>(555) 014 2290</span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<!-- ================= Privacy and terms ================= -->
+<div data-view="privacy">
+  <section class="stage stage-sm plain">
+    <div class="wrap stage-copy"><h1 class="stage-title">Privacy and terms</h1><p class="stage-lead">Sample text, last updated 1 November. Replace it with your own.</p></div>
+  </section>
+  <section class="band alt">
+    <div class="wrap">
+      <article class="panel prose">
+        <h2>What we collect</h2>
+        <p>When you book a seat, a camp place or send a message, we keep the names, email address and notes you give us. We use them to answer you and run the booking, and for nothing else.</p>
+        <h2>Children</h2>
+        <p>Children don't create accounts on this site. Bookings for children are always made by a grown-up, and we only ask for a camper's first name and age.</p>
+        <h2>How long we keep it</h2>
+        <p>Booking details are deleted twelve months after the event. Newsletter addresses stay until you unsubscribe, which you can do from any email.</p>
+        <h2>Tickets and refunds</h2>
+        <p>Screening tickets can be moved to another date up to a day before. Camp places are refunded in full until 1 June.</p>
+        <h2>Questions</h2>
+        <p>Write to hello@wobblebox.example or use the <a href="#/contact">contact form</a>.</p>
+      </article>
+    </div>
+  </section>
+</div>
+
+<!-- ================= 404 ================= -->
+<div data-view="404">
+  <section class="lost">
+    <div class="lost-copy">
+      <h1 class="lost-title">Uh-oh!</h1>
+      <p class="caps">That page wobbled off somewhere.</p>
+      <p>Try one of these instead, or head back to the start.</p>
+      <div class="actions"><a class="btn btn-goo" href="#/">Back home</a><a class="btn btn-line" href="#/shows">All shows</a></div>
+    </div>
+    <div class="splats" aria-hidden="true"><img src="images/puddle-club.svg" alt="" width="640" height="360"><img src="images/rocket-radish.svg" alt="" width="640" height="360"><img src="images/moth-meets-moon.svg" alt="" width="640" height="360"></div>
+  </section>
+</div>
+</main>
+
+<div class="goo-strip" aria-hidden="true"></div>
+<footer class="site-foot">
+  <div class="wrap foot-in">
+    <form class="letter" data-form="newsletter" novalidate>
+      <h2 class="foot-title">The weekend line-up, every Thursday</h2>
+      <div class="letter-row"><label class="sr-only" for="n-email">Email</label><input id="n-email" name="email" type="email" autocomplete="email" placeholder="A grown-up's email" required aria-describedby="n-email-err"><button class="btn btn-goo" type="submit">Sign up</button></div>
+      <p class="err" id="n-email-err"></p>
+    </form>
+    <p class="letter-ok" data-success="newsletter" tabindex="-1" role="status" hidden>You're on the list. See you on Thursday.</p>
+    <nav aria-label="Footer"><ul class="foot-links"><li><a href="#/shows">Shows</a></li><li><a href="#/screenings">Screenings</a></li><li><a href="#/camp">Cartoon Camp</a></li><li><a href="#/news">News</a></li><li><a href="#/about">About</a></li><li><a href="#/grown-ups">For grown-ups</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/privacy">Privacy and terms</a></li></ul></nav>
+    <a class="foot-logo" href="#/" aria-label="Wobblebox home"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg><span aria-hidden="true">wobblebox</span></a>
+    <p class="foot-small">© Wobblebox Studio, 14 Kettle Street, Brightwater. All shows and characters are drawn by the studio.</p>
+  </div>
+</footer>
+
+<dialog class="trailer" aria-labelledby="t-title">
+  <div class="t-head"><h2 id="t-title" data-t="title">Rocket Radish</h2><button class="round" type="button" data-close aria-label="Close the trailer"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+  <div class="t-stage"><img data-t="img" src="images/rocket-radish.svg" alt="" width="640" height="360"></div>
+  <p class="t-cap" data-t="cap" aria-live="polite"></p>
+</dialog>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  /* Fail open: if anything below throws before the first view is shown, drop the js class so every view stays readable */
+  let started = false;
+  addEventListener("error", () => { if (!started) root.classList.remove("js"); });
+  const one = (sel, el = document) => el.querySelector(sel); /* one element, or null */
+  const all = (sel, el = document) => [...el.querySelectorAll(sel)]; /* always an array: loop over this one */
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const behavior = () => (reduced.matches ? "auto" : "smooth");
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  /* ---------- Data: replace with the real shows and posts (keep the static cards in the HTML in step) ---------- */
+  // Every image path is written out in full so scripts/inline.mjs can embed it.
+  const IMAGES = {
+    "rocket-radish": "images/rocket-radish.svg",
+    "puddle-club": "images/puddle-club.svg",
+    "breakfast-band": "images/breakfast-band.svg",
+    "volcano-bus": "images/volcano-bus.svg",
+    "weather-machine": "images/weather-machine.svg",
+    "moth-meets-moon": "images/moth-meets-moon.svg",
+    "sock-detectives": "images/sock-detectives.svg",
+    "planet-pocket": "images/planet-pocket.svg",
+  };
+  const GROUPS = { little: "Ages 3–6", big: "Ages 6–9", older: "Ages 9–12" };
+  // img: an IMAGES key; group: a GROUPS key; alt describes the picture for the show page
+  const SHOWS = [
+    { id: "rocket-radish", title: "Rocket Radish", group: "little", ages: "4 to 7", eps: 12, mins: 11, img: "rocket-radish", made: "Pencil on paper, coloured on screen",
+      alt: "A radish in flying goggles points at a cardboard rocket in a vegetable patch at sunset",
+      blurb: "A radish builds a rocket out of cereal boxes and very strong tape.",
+      about: "Rocket Radish lives at the end of a vegetable patch and wants to see the top of the sky. Every episode she builds something new, it goes wrong in a new way, and the carrots help her try again.",
+      episodes: ["Countdown to Lunch", "The Tape Problem", "Carrots in Space", "Too Much Wind", "The Moon Is Busy"] },
+    { id: "puddle-club", title: "The Puddle Club", group: "little", ages: "3 to 6", eps: 20, mins: 7, img: "puddle-club", made: "Watercolour backgrounds, hand-drawn characters",
+      alt: "Three raindrops in rain boots jump into a puddle on a rainy street",
+      blurb: "Three raindrops in boots, and every puddle on Kettle Street.",
+      about: "Pip, Plink and Mo are raindrops who never want the rain to stop. Each short episode is one puddle, one splash and one small thing they learn about the street.",
+      episodes: ["The Deepest Puddle", "Boots on the Wrong Feet", "A Rainbow Ate Our Puddle", "Splash Quietly", "The Drain Is a Slide"] },
+    { id: "breakfast-band", title: "The Breakfast Band", group: "little", ages: "3 to 6", eps: 15, mins: 5, img: "breakfast-band", made: "Cut paper and pencil",
+      alt: "A slice of toast, a fried egg and a milk carton play music on a kitchen table",
+      blurb: "Toast, an egg and a milk carton start a band on the kitchen table.",
+      about: "Every morning before the family wakes up, the Breakfast Band plays one song. Each episode is a sing-along about something small: brushing teeth, sharing, or a very loud spoon.",
+      episodes: ["The Spoon Song", "Too Much Butter", "Sunny Side Up", "Crumbs on the Floor", "The Kettle Solo"] },
+    { id: "volcano-bus", title: "Volcano Valley Bus", group: "big", ages: "6 to 9", eps: 13, mins: 11, img: "volcano-bus", made: "Pencil on paper, painted backgrounds",
+      alt: "A yellow bus drives along a winding road past two smiling volcanoes",
+      blurb: "One yellow bus, one winding road, and volcanoes who only puff out hearts.",
+      about: "The bus to school goes through a valley of sleepy volcanoes. Each episode one of them wakes up with a problem, and the bus is always a little bit late.",
+      episodes: ["Late Again", "The Grumpy Volcano", "Heart-Shaped Smoke", "Detour", "Last Stop"] },
+    { id: "weather-machine", title: "The Weather Machine", group: "big", ages: "6 to 9", eps: 10, mins: 11, img: "weather-machine", made: "Hand-drawn, coloured on screen",
+      alt: "A cloud-shaped machine with dials makes a rainbow, sunshine and snow at once",
+      blurb: "A cloud with buttons can make any weather. It just can't make up its mind.",
+      about: "Nimbus is a weather machine shaped like a cloud. The town asks for sun, snow and wind all on the same day, and Nimbus tries to please everybody at once.",
+      episodes: ["Snow in July", "The Wrong Button", "Rainbow Overload", "A Very Small Storm", "Fog Day"] },
+    { id: "moth-meets-moon", title: "Moth Meets Moon", group: "older", ages: "8 to 12", eps: 8, mins: 22, img: "moth-meets-moon", made: "Pencil and pastel on paper",
+      alt: "A pink and purple moth flies towards a smiling crescent moon over a night garden",
+      blurb: "A moth sets off to visit the biggest lamp she has ever seen.",
+      about: "Dusk is a moth who thinks the moon is a lamp, and she wants to see it close up. A slow, funny journey through one night in a garden, for bedtime and for big kids who still like a night light.",
+      episodes: ["The Biggest Lamp", "Porch Lights", "The Owl Who Wouldn't Talk", "Clouds", "Almost Morning"] },
+    { id: "sock-detectives", title: "Sock Drawer Detectives", group: "older", ages: "8 to 12", eps: 12, mins: 11, img: "sock-detectives", made: "Pencil on paper, coloured on screen",
+      alt: "Two sock characters, one with a magnifying glass, search a drawer for clues",
+      blurb: "Two odd socks solve the mysteries nobody else in the house has noticed.",
+      about: "Stripe and Dot lost their other halves years ago. Now they investigate everything that goes missing in the house, from the TV remote to Grandad's glasses.",
+      episodes: ["The Case of the Missing Remote", "Lint", "The Washing Machine Files", "Odd One Out", "Under the Bed"] },
+    { id: "planet-pocket", title: "Planet Pocket", group: "older", ages: "9 to 12", eps: 10, mins: 22, img: "planet-pocket", made: "Hand-drawn, with painted space backgrounds",
+      alt: "A tiny pink planet with a yellow ring peeks out of a denim pocket",
+      blurb: "A tiny planet lives in a girl's jeans pocket. School has never been stranger.",
+      about: "When a planet the size of a plum falls into Juno's pocket, she has to keep it secret, keep it warm and keep its moons from escaping during maths.",
+      episodes: ["Something in My Pocket", "Gravity Problems", "Moon Escape", "Show and Tell", "Laundry Day"] },
+  ];
+  const CATS = { behind: "Behind the scenes", news: "Studio news", make: "Make at home" };
+  const POSTS = [
+    { id: "twelve-radishes", title: "Twelve ways to draw a radish", cat: "behind", date: "28 November", mins: 4, img: "rocket-radish",
+      lead: "Before season two, the crew drew our hero a dozen ways. Here is how we picked one.",
+      body: ["Every season starts with a wall of drawings. This time the wall had twelve radishes on it: tall ones, round ones, one with eyebrows and one that looked a lot like a beetroot.", "We showed the wall to a class of seven-year-olds and asked one question: which radish would you trust with a rocket? They chose number eight, the one with goggles.", "The goggles stayed, the eyebrows went, and the beetroot is now a character of its own in episode four."] },
+    { id: "bathtub-rain", title: "The Puddle Club's rain comes from a bathtub", cat: "behind", date: "21 November", mins: 3, img: "puddle-club",
+      lead: "Our sound designer recorded every splash in the show at home.",
+      body: ["Real rain is too quiet on a microphone, so every drop in The Puddle Club is a bathtub, a watering can or a wet sponge.", "The big splash at the end of each episode is a full bucket tipped into the bath from a chair. It took eleven tries and one very wet floor."] },
+    { id: "season-two", title: "Rocket Radish season two starts 5 December", cat: "news", date: "14 November", mins: 2, img: "volcano-bus",
+      lead: "Twelve new episodes, a premiere in the Picture House and a question-and-answer with the crew.",
+      body: ["The first three episodes play back to back at 10:00 on Saturday 5 December. After that, a new episode plays every Saturday morning.", "Seats for the premiere go quickly, so book early on the screenings page."] },
+    { id: "flipbook", title: "Make a flipbook from an old notebook", cat: "make", date: "7 November", mins: 5, img: "breakfast-band",
+      lead: "All you need is a small notebook, a pencil and twenty minutes.",
+      body: ["Start at the back of the notebook and draw a ball at the bottom of the last page.", "On the page before, trace the ball a little higher. Keep going for twelve pages, then flip from the back with your thumb.", "When the ball works, try a jumping frog. Then try a radish."] },
+    { id: "never-scary", title: "Why our night-time show is never scary", cat: "behind", date: "30 October", mins: 4, img: "moth-meets-moon",
+      lead: "Moth Meets Moon happens in the dark, but nothing in it is frightening. That took a lot of work.",
+      body: ["We tested every scene with children aged eight to twelve and changed anything that made them hold a grown-up's hand.", "Shadows are purple, never black. The owl talks slowly. And the night always ends with the sun coming up."] },
+  ];
+
+  const showCard = (s, i = 0) => `<a class="card" style="--i:${i % 8}" href="#/show?id=${s.id}"><img src="${IMAGES[s.img]}" alt="" width="640" height="360"><div class="card-body"><h3>${esc(s.title)}</h3><p>${esc(s.blurb)}</p><p class="tag">${GROUPS[s.group]}</p></div></a>`;
+  const postCard = (p, i = 0, wide = false) => `<a class="card${wide ? " wide" : ""}" style="--i:${i % 8}" href="#/post?id=${p.id}"><img src="${IMAGES[p.img]}" alt="" width="640" height="360"><div class="card-body"><p class="meta">${CATS[p.cat]} · ${esc(p.date)}</p><h3>${esc(p.title)}</h3>${wide ? `<p>${esc(p.lead)}</p>` : ""}</div></a>`;
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme ---------- */
+  const themeButton = one("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function paintToggle() {
+    const dark = currentTheme() === "dark";
+    themeButton.setAttribute("aria-label", `Switch to ${dark ? "light" : "dark"} theme`);
+    one("use", themeButton).setAttribute("href", dark ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("wobblebox-theme");
+  if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+  paintToggle();
+  themeButton.addEventListener("click", () => {
+    root.dataset.theme = currentTheme() === "dark" ? "light" : "dark";
+    store.set("wobblebox-theme", root.dataset.theme);
+    paintToggle();
+  });
+  /* Screenshots and other scripts may set data-theme directly: keep the icon in step */
+  new MutationObserver(paintToggle).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+
+  /* ---------- Menu (below 1160px) ---------- */
+  const menuButton = one(".menu-btn");
+  const menu = one("#menu");
+  menuButton.hidden = false;
+  function setMenu(open) {
+    menu.hidden = !open;
+    menuButton.setAttribute("aria-expanded", String(open));
+    one("use", menuButton).setAttribute("href", open ? "#i-close" : "#i-menu");
+  }
+  menuButton.addEventListener("click", () => setMenu(menu.hidden));
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !menu.hidden) { setMenu(false); menuButton.focus(); } });
+
+  /* ---------- Hero carousel: manual, plus a slow autoplay that pauses on hover, focus and reduced motion ---------- */
+  const hero = (() => {
+    const slides = all("[data-slide]");
+    const dots = all(".dot");
+    const ctrl = one("[data-hero-ctrl]");
+    const pause = one("[data-pause]");
+    let index = 0, timer = 0, paused = reduced.matches, held = false;
+    ctrl.hidden = false;
+    function go(next) {
+      index = (next + slides.length) % slides.length;
+      slides.forEach((slide, n) => { const on = n === index; slide.classList.toggle("is-current", on); slide.inert = !on; slide.setAttribute("aria-hidden", String(!on)); });
+      dots.forEach((dot, n) => dot.setAttribute("aria-current", String(n === index)));
+    }
+    function tick() {
+      clearTimeout(timer);
+      if (!paused && !held && document.body.dataset.page === "home") timer = setTimeout(() => { go(index + 1); tick(); }, 7000);
+    }
+    function setPaused(value) {
+      paused = value;
+      pause.setAttribute("aria-label", value ? "Play the slideshow" : "Pause the slideshow");
+      one("use", pause).setAttribute("href", value ? "#i-play" : "#i-pause");
+      tick();
+    }
+    dots.forEach((dot, n) => dot.addEventListener("click", () => { go(n); tick(); }));
+    all("[data-step]", ctrl).forEach((b) => b.addEventListener("click", () => { go(index + Number(b.dataset.step)); tick(); }));
+    pause.addEventListener("click", () => setPaused(!paused));
+    const area = one(".hero");
+    area.addEventListener("pointerenter", () => { held = true; tick(); });
+    area.addEventListener("pointerleave", () => { held = false; tick(); });
+    area.addEventListener("focusin", () => { held = true; tick(); });
+    area.addEventListener("focusout", () => { held = false; tick(); });
+    go(0);
+    setPaused(paused);
+    return { tick };
+  })();
+
+  /* ---------- Shows: age chips and search ---------- */
+  const shows = (() => {
+    const grid = one("[data-shows]");
+    const count = one("[data-shows-count]");
+    const search = one("[data-shows-search]");
+    const empty = one("[data-shows-empty]");
+    let group = "all";
+    function render(next = group) {
+      group = GROUPS[next] ? next : "all";
+      const q = search.value.trim().toLowerCase();
+      const list = SHOWS.filter((s) => (group === "all" || s.group === group) && (!q || `${s.title} ${s.blurb}`.toLowerCase().includes(q)));
+      grid.innerHTML = list.map(showCard).join("");
+      empty.hidden = list.length > 0;
+      count.textContent = `${group === "all" ? "All shows" : GROUPS[group]} (${list.length})`;
+      all("[data-age]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.age === group)));
+    }
+    all("[data-age]").forEach((b) => b.addEventListener("click", () => render(b.dataset.age)));
+    search.addEventListener("input", () => render());
+    one("[data-shows-reset]").addEventListener("click", () => { search.value = ""; render("all"); search.focus(); });
+    return { render, search };
+  })();
+
+  /* ---------- Show page ---------- */
+  function openShow(id) {
+    const s = SHOWS.find((x) => x.id === id) || SHOWS[0];
+    const set = (key, value) => { one(`[data-view="show"] [data-s="${key}"]`).textContent = value; };
+    const img = one('[data-view="show"] [data-s="img"]');
+    img.src = IMAGES[s.img];
+    img.alt = s.alt;
+    set("title", s.title);
+    set("meta", `Ages ${s.ages} · ${s.eps} episodes · ${s.mins} minutes each`);
+    set("about", s.about);
+    set("ages", s.ages);
+    set("eps", `${s.eps} episodes, ${s.mins} minutes each`);
+    set("made", s.made);
+    one("[data-s-trailer]").dataset.trailer = s.id;
+    one('[data-s="episodes"]').innerHTML = s.episodes.map((t, n) => `<li><span class="ep-no">${n + 1}</span><span>${esc(t)}</span><span class="ep-len">${s.mins} min</span></li>`).join("");
+    const more = SHOWS.filter((x) => x.id !== s.id).sort((a, b) => (b.group === s.group) - (a.group === s.group)).slice(0, 3);
+    one("[data-s-more]").innerHTML = more.map(showCard).join("");
+    one("[data-s-more-wrap]").hidden = false;
+    return s.title;
+  }
+
+  /* ---------- Trailer dialog: the show's art with a slow pan and caption lines ---------- */
+  const trailer = (() => {
+    const dialog = one(".trailer");
+    let timer = 0;
+    function open(id, opener) {
+      const s = SHOWS.find((x) => x.id === id);
+      if (!s || typeof dialog.showModal !== "function") return false;
+      const lines = [s.blurb, ...s.about.split(/(?<=\.)\s+/)];
+      one('[data-t="title"]', dialog).textContent = s.title;
+      const img = one('[data-t="img"]', dialog);
+      img.src = IMAGES[s.img];
+      img.alt = s.alt;
+      const cap = one('[data-t="cap"]', dialog);
+      let n = 0;
+      cap.textContent = lines[0];
+      clearInterval(timer);
+      timer = setInterval(() => { n = (n + 1) % lines.length; cap.textContent = lines[n]; }, 3200);
+      dialog.returnFocus = opener;
+      dialog.showModal();
+      return true;
+    }
+    dialog.addEventListener("close", () => { clearInterval(timer); dialog.returnFocus?.focus(); });
+    one("[data-close]", dialog).addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+    return { open };
+  })();
+
+  /* ---------- Screenings: kind chips ---------- */
+  function filterEvents(next) {
+    const kind = one(`[data-kind="${CSS.escape(next)}"].chip`) ? next : "all";
+    let shown = 0;
+    all("[data-events] > .card").forEach((card) => { const on = kind === "all" || card.dataset.kind === kind; card.hidden = !on; shown += on; });
+    all(".chip[data-kind]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.kind === kind)));
+    one("[data-events-count]").textContent = `${kind === "all" ? "Coming up" : one(`.chip[data-kind="${kind}"]`).textContent} (${shown})`;
+    one("[data-events-empty]").hidden = shown > 0;
+  }
+  all(".chip[data-kind]").forEach((b) => b.addEventListener("click", () => filterEvents(b.dataset.kind)));
+  one("[data-events-reset]").addEventListener("click", () => filterEvents("all"));
+
+  /* ---------- News: category chips and the post page ---------- */
+  function filterPosts(next) {
+    const cat = CATS[next] ? next : "all";
+    const list = POSTS.filter((p) => cat === "all" || p.cat === cat);
+    one("[data-posts]").innerHTML = list.map((p, i) => postCard(p, i, i === 0)).join("");
+    one("[data-news-count]").textContent = `${cat === "all" ? "All posts" : CATS[cat]} (${list.length})`;
+    all(".chip[data-cat]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cat === cat)));
+  }
+  all(".chip[data-cat]").forEach((b) => b.addEventListener("click", () => filterPosts(b.dataset.cat)));
+  function openPost(id) {
+    const p = POSTS.find((x) => x.id === id) || POSTS[0];
+    one('[data-p="img"]').src = IMAGES[p.img];
+    one('[data-p="title"]').textContent = p.title;
+    one('[data-p="meta"]').textContent = `${CATS[p.cat]} · ${p.date} · ${p.mins} min read`;
+    one('[data-p="body"]').innerHTML = `<p class="lead">${esc(p.lead)}</p>${p.body.map((t) => `<p>${esc(t)}</p>`).join("")}`;
+    const more = POSTS.filter((x) => x.id !== p.id).sort((a, b) => (b.cat === p.cat) - (a.cat === p.cat)).slice(0, 3);
+    one("[data-p-more]").innerHTML = more.map((x, i) => postCard(x, i)).join("");
+    one("[data-p-more-wrap]").hidden = false;
+    return p.title;
+  }
+
+  /* ---------- Camp: week choice and the live total ---------- */
+  const campForm = one('form[data-form="camp"]');
+  function updateSummary() {
+    const week = one('input[name="week"]:checked', campForm);
+    const early = one('input[name="early"]', campForm);
+    const price = week ? Number(week.dataset.price) : 0;
+    const extra = early.checked ? Number(early.dataset.early) : 0;
+    one("[data-sum-week]").textContent = week ? week.dataset.label : "No week chosen yet";
+    one("[data-sum-price]").textContent = `$${price}`;
+    one("[data-sum-early]").textContent = `$${extra}`;
+    one("[data-sum-total]").textContent = `$${price + extra}`;
+  }
+  campForm.addEventListener("change", updateSummary);
+  function chooseWeek(value) {
+    const radio = one(`input[name="week"][value="${CSS.escape(value)}"]`, campForm);
+    if (radio && !radio.disabled) { radio.checked = true; updateSummary(); check(radio); }
+  }
+
+  /* ---------- Forms: inline validation, handled on the submit button's click (sandboxed frames never fire submit) ---------- */
+  const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  function errorFor(field) {
+    const ids = (field.getAttribute("aria-describedby") || "").split(" ");
+    return ids.map((id) => document.getElementById(id)).find(Boolean) || field.closest(".field")?.querySelector(".err");
+  }
+  function check(field) {
+    const form = field.form;
+    let message = "";
+    if (field.type === "radio") {
+      if (field.required && !one(`input[name="${field.name}"]:checked`, form)) message = "Please choose one.";
+    } else if (field.type === "checkbox") {
+      if (field.required && !field.checked) message = "Please tick this box to continue.";
+    } else {
+      const value = field.value.trim();
+      if (field.required && !value) message = "Please fill this in.";
+      else if (field.type === "email" && value && !EMAIL.test(value)) message = "That email doesn't look right. Check the @ and the dot.";
+      else if (field.minLength > 0 && value.length < field.minLength) message = `A little more, please: at least ${field.minLength} characters.`;
+      else if (field.type === "number" && value) {
+        const n = Number(value);
+        if (!Number.isInteger(n) || n < Number(field.min) || n > Number(field.max)) message = `Camp is for ages ${field.min} to ${field.max}.`;
+      }
+    }
+    const group = field.type === "radio" ? all(`input[name="${field.name}"]`, form) : [field];
+    group.forEach((el) => el.setAttribute("aria-invalid", String(Boolean(message))));
+    const err = errorFor(field);
+    if (err) err.textContent = message;
+    return !message;
+  }
+  all("form[data-form]").forEach((form) => {
+    const kind = form.dataset.form;
+    const seen = new Set();
+    const fields = all("input, select, textarea", form).filter((el) => {
+      if (!(el.required || el.type === "email" || el.minLength > 0 || el.type === "number")) return false;
+      if (el.type === "radio") { if (seen.has(el.name)) return false; seen.add(el.name); }
+      return true;
+    });
+    fields.forEach((el) => {
+      el.addEventListener("blur", () => { if (el.value || el.dataset.touched) { el.dataset.touched = "1"; check(el); } });
+      el.addEventListener("input", () => { if (el.getAttribute("aria-invalid") === "true") check(el); });
+      el.addEventListener("change", () => { if (el.getAttribute("aria-invalid") === "true") check(el); });
+    });
+    const success = one(`[data-success="${kind}"]`);
+    const button = one('[type="submit"]', form);
+    form.addEventListener("submit", (event) => event.preventDefault());
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const bad = fields.filter((el) => !check(el));
+      if (bad.length) {
+        bad[0].focus();
+        button.classList.remove("shake");
+        void button.offsetWidth;
+        button.classList.add("shake");
+        return;
+      }
+      // Nothing is sent: connect a real endpoint here before launch.
+      const data = new FormData(form);
+      all("[data-echo]", success).forEach((el) => { const v = String(data.get(el.dataset.echo) || "").trim(); if (v) el.textContent = el.dataset.echo === "email" ? v : v.split(/\s+/)[0]; });
+      form.hidden = true;
+      success.hidden = false;
+      success.focus();
+    });
+    one("[data-again]", success)?.addEventListener("click", () => {
+      form.reset();
+      all("[aria-invalid]", form).forEach((el) => el.removeAttribute("aria-invalid"));
+      all(".err", form).forEach((el) => { el.textContent = ""; });
+      if (kind === "camp") updateSummary();
+      success.hidden = true;
+      form.hidden = false;
+      one("input:not([type=radio]), textarea", form)?.focus();
+    });
+  });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map(all("[data-view]").map((el) => [el.dataset.view, el]));
+  const SITE = "Wobblebox";
+  const titles = { home: "Wobblebox: hand-drawn cartoons, Saturday screenings and Cartoon Camp", shows: "Shows", screenings: "Screenings", camp: "Cartoon Camp", news: "News", about: "About the studio", "grown-ups": "For grown-ups", contact: "Contact", privacy: "Privacy and terms", "404": "Page not found" };
+  const sectionOf = { show: "shows", post: "news", contact: "", privacy: "", "404": "" };
+  let current = null;
+  let lastHash = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route) {
+    const name = views.has(route.view) ? route.view : "404";
+    const p = route.params;
+    views.forEach((el) => el.classList.remove("is-active"));
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.body.dataset.page = name;
+    setMenu(false);
+    let title = titles[name];
+    if (name === "shows") { shows.search.value = p.get("q") || ""; shows.render(p.get("age") || "all"); }
+    if (name === "show") title = openShow(p.get("id"));
+    if (name === "screenings") filterEvents(p.get("kind") || "all");
+    if (name === "news") filterPosts(p.get("cat") || "all");
+    if (name === "post") title = openPost(p.get("id"));
+    if (name === "camp" && p.get("week")) chooseWeek(p.get("week"));
+    if (name === "contact") {
+      const topic = p.get("topic");
+      const radio = topic && one(`input[name="topic"][value="${CSS.escape(topic)}"]`);
+      if (radio) radio.checked = true;
+      const box = one("#m-msg");
+      if (p.get("event") && !box.value) box.value = `Hello! We'd like to book for: ${p.get("event")}.\nGrown-ups: \nChildren (and ages): `;
+    }
+    document.title = name === "home" ? titles.home : `${title} · ${SITE}`;
+    const section = name in sectionOf ? sectionOf[name] : name;
+    all(".nav a, .menu-panel a").forEach((a) => { if (parse(a.getAttribute("href")).view === section) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    hero.tick();
+    const target = p.get("at") && document.getElementById(p.get("at"));
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: behavior(), block: "start" }));
+    else window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function go(hash) {
+    lastHash = hash;
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const trailerLink = event.target.closest("[data-trailer]");
+    if (trailerLink && trailer.open(trailerLink.dataset.trailer, trailerLink)) { event.preventDefault(); return; }
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); go(href); return; }
+    const target = href.length > 1 && document.getElementById(href.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    if (href === "#main") { target.setAttribute("tabindex", "-1"); target.focus(); return; }
+    target.scrollIntoView({ behavior: behavior(), block: "start" });
+  });
+  const fromLocation = () => { if (location.hash !== lastHash) { lastHash = location.hash; show(parse(location.hash)); } };
+  addEventListener("popstate", fromLocation);
+  addEventListener("hashchange", fromLocation);
+
+  lastHash = location.hash;
+  show(parse(location.hash));
+  started = true;
+})();
+</script>
+</body>
+</html>

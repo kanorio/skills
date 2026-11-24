@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" width="320" height="180">
+<defs>
+<pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0v16" fill="none" stroke="#3567b8" stroke-width=".7"/></pattern>
+<linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".45"/><stop offset="1" stop-color="#ffffff" stop-opacity=".05"/></linearGradient>
+</defs>
+<rect width="320" height="180" fill="#0a2a5e"/>
+<rect width="320" height="180" fill="url(#grid)" opacity=".7"/>
+<g stroke="#9cc3ff" stroke-width="1.2" fill="none" opacity=".8"><circle cx="70" cy="60" r="34"/><path d="M36 60h68M70 26v68"/><path d="M230 30h70M230 26v8M300 26v8"/><rect x="240" y="110" width="50" height="40"/></g>
+<path d="M146 0h28l50 150H96z" fill="url(#beam)"/>
+<ellipse cx="160" cy="150" rx="70" ry="10" fill="#ffffff" opacity=".18"/>
+<g fill="#051634"><circle cx="160" cy="92" r="7"/><path d="M150 101h20l4 26h-28z"/><path d="M142 116h36l-4 34h-28z"/></g>
+<path d="M150 116h20" stroke="#9cc3ff" stroke-width="1.5"/>
+</svg>

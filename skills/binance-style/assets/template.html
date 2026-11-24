@@ -1,0 +1,1583 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Spinrank: the independent music chart, counted every hour</title>
+<meta name="description" content="Spinrank counts plays from 1,400 community and college radio stations every hour and publishes the independent music chart for free.">
+<meta property="og:title" content="Spinrank: the independent music chart, counted every hour">
+<meta property="og:description" content="Plays from 1,400 stations in 38 countries, counted every hour.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/sora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font ---------- */
+@font-face { font-family: "Sora"; src: url("fonts/sora-latin-wght-normal.woff2") format("woff2"); font-weight: 100 800; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: dark first; light only after the toggle ---------- */
+:root {
+  color-scheme: dark;
+  --bg: oklch(20.5% 0.009 262);
+  --surface: oklch(25% 0.011 258);
+  --surface-2: oklch(31% 0.013 258);
+  --text: oklch(94.5% 0.004 255);
+  --text-muted: oklch(69% 0.018 255);
+  --border: oklch(32% 0.013 258);
+  --line: transparent;
+  --accent: oklch(86.5% 0.165 93);
+  --accent-hover: oklch(81.5% 0.16 89);
+  --accent-text: oklch(20.5% 0.009 262);
+  --figure: oklch(86.5% 0.165 93);
+  --hover: oklch(86.5% 0.165 93);
+  --up: oklch(71% 0.15 162);
+  --down: oklch(67% 0.2 17);
+  --cover: oklch(15.5% 0.008 262);
+  --gold: oklch(86.5% 0.165 93);
+  --shadow-card: none;
+  --shadow-pop: 0 24px 60px -24px oklch(0% 0 0 / 0.7);
+  --r-control: 8px; --r-card: 20px; --r-media: 14px; --r-swatch: 999px;
+  --dur-fast: 150ms; --dur-base: 260ms; --dur-slow: 600ms;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --font: "Sora", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-display: clamp(2.5rem, 5.6vw, 5rem); --fs-h1: clamp(2rem, 4vw, 3.5rem); --fs-h2: clamp(1.625rem, 2.9vw, 2.625rem);
+  --fs-h3: 1.1875rem; --fs-body: 1rem; --fs-small: 0.8125rem;
+  --wrap: 1200px; --gut: clamp(16px, 4vw, 48px); --sec: clamp(64px, 9vw, 120px); --hdr: 64px;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);
+  --surface: oklch(97.6% 0.002 255);
+  --surface-2: oklch(94.5% 0.004 255);
+  --text: oklch(24% 0.012 258);
+  --text-muted: oklch(52% 0.018 255);
+  --border: oklch(91.5% 0.005 255);
+  --line: oklch(93% 0.004 255);
+  --accent-text: oklch(21% 0.01 262);
+  --figure: oklch(63% 0.135 83);
+  --hover: oklch(56.5% 0.12 78);
+  --up: oklch(53% 0.13 162);
+  --down: oklch(55% 0.2 22);
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.04), 0 10px 30px -18px oklch(0% 0 0 / 0.18);
+  --shadow-pop: 0 24px 60px -24px oklch(0% 0 0 / 0.3);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs-body)/1.6 var(--font); -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+h1, h2, h3, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { list-style: none; padding: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.wrap { width: min(100% - 2 * var(--gut), var(--wrap)); margin-inline: auto; }
+.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 50; padding: 10px 16px; border-radius: var(--r-control); background: var(--accent); color: var(--accent-text); font-weight: 600; }
+.skip:focus { top: 12px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.num { font-variant-numeric: tabular-nums; }
+.fig { color: var(--figure); }
+.up { color: var(--up); }
+.down { color: var(--down); }
+.muted { color: var(--text-muted); }
+.display { font-size: var(--fs-display); font-weight: 800; line-height: 1.04; letter-spacing: -0.02em; text-transform: uppercase; }
+.display span { display: block; }
+.h1 { font-size: var(--fs-h1); font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; }
+.h2 { font-size: var(--fs-h2); font-weight: 700; line-height: 1.16; letter-spacing: -0.015em; }
+.h3 { font-size: var(--fs-h3); font-weight: 600; line-height: 1.35; }
+.lead { font-size: clamp(1.0625rem, 1.4vw, 1.25rem); line-height: 1.55; max-width: 34em; }
+.small { font-size: var(--fs-small); }
+.center { text-align: center; }
+.center .lead { margin-inline: auto; }
+.sec { padding-block: var(--sec); }
+
+/* ---------- Buttons and links: square yellow is the one primary ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 28px; border: 0; border-radius: var(--r-control); background: none; font-size: 1rem; font-weight: 600; line-height: 1; white-space: nowrap; cursor: pointer; transition: background-color var(--dur-fast), transform var(--dur-fast) var(--ease); }
+.btn:active { transform: translateY(1px); }
+.btn .i { width: 18px; height: 18px; }
+.btn-accent { background: var(--accent); color: var(--accent-text); }
+.btn-accent:hover { background: var(--accent-hover); }
+.btn-quiet { background: var(--surface-2); color: var(--text); }
+.btn-quiet:hover { background: color-mix(in oklab, var(--surface-2) 85%, var(--text)); }
+.btn-sm { min-height: 34px; padding: 0 14px; border-radius: 6px; font-size: 0.875rem; }
+.btn-block { width: 100%; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.center .btn-row { justify-content: center; }
+.icon-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: var(--r-control); background: none; color: var(--text); cursor: pointer; }
+.icon-btn:hover { background: var(--surface-2); }
+.more { display: inline-flex; align-items: center; gap: 2px; color: var(--text-muted); font-size: 0.875rem; white-space: nowrap; }
+.more:hover { color: var(--text); }
+.more .i { width: 16px; height: 16px; }
+.link { color: var(--hover); font-weight: 600; }
+.link:hover { text-decoration: underline; }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; background: var(--bg); }
+.hdr { display: flex; align-items: center; gap: 32px; height: var(--hdr); padding-inline: 24px; }
+.logo { display: inline-flex; align-items: center; gap: 10px; color: var(--figure); font-size: 1.25rem; font-weight: 800; letter-spacing: 0.03em; text-transform: uppercase; }
+.logo svg { width: 28px; height: 28px; }
+.nav { display: flex; gap: 26px; font-size: 0.9375rem; font-weight: 500; }
+.nav a:hover, .nav a[aria-current="page"] { color: var(--hover); }
+.hdr-end { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.menu-btn { display: none; }
+.menu { display: grid; padding: 4px 24px 24px; border-top: 1px solid var(--border); background: var(--bg); }
+.menu a:not(.btn) { padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 1.0625rem; font-weight: 600; }
+.menu a[aria-current="page"] { color: var(--hover); }
+.menu .btn-row { margin-top: 20px; }
+@media (max-width: 1079px) { .nav { display: none; } .menu-btn { display: inline-grid; } }
+@media (max-width: 560px) { .hdr { padding-inline: 16px; gap: 16px; } .hdr-end .btn, .hdr-end .hdr-search { display: none; } .menu { padding-inline: 16px; } }
+
+/* ---------- Views: every view shows in order without JS ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.page-top { padding-top: clamp(28px, 4vw, 56px); }
+
+/* ---------- Home hero: counter headline beside the data panels ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 510px); gap: clamp(32px, 5vw, 80px); align-items: start; padding-block: clamp(32px, 4.5vw, 64px) clamp(40px, 5vw, 64px); }
+.hero-copy { padding-top: clamp(0px, 2vw, 28px); }
+.hero-sub { margin-top: 20px; font-size: clamp(1.0625rem, 1.5vw, 1.375rem); font-weight: 600; line-height: 1.35; }
+.laurels { display: flex; flex-wrap: wrap; gap: 20px 44px; margin-top: 36px; }
+.laurels li { display: flex; align-items: center; gap: 8px; color: var(--figure); }
+.laurels svg { width: 20px; height: 52px; fill: currentColor; }
+.laurels svg:last-child { transform: scaleX(-1); }
+.laurels b { display: block; font-size: 1.5rem; font-weight: 700; line-height: 1.1; text-align: center; }
+.laurels small { display: block; font-size: 0.875rem; font-weight: 600; text-align: center; }
+.join-row { display: flex; align-items: flex-start; gap: 12px; max-width: 480px; margin-top: 40px; }
+.join-row .field { flex: 1; }
+.inline-ok { display: flex; align-items: center; gap: 12px; max-width: 480px; margin-top: 40px; padding: 14px 16px; border-radius: var(--r-control); background: var(--surface); font-weight: 500; }
+.inline-ok .i { color: var(--up); }
+.quick { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+.sq { display: inline-grid; place-items: center; width: 48px; height: 48px; flex: none; border: 1px solid var(--border); border-radius: var(--r-control); color: var(--text); transition: border-color var(--dur-fast); }
+a.sq:hover { border-color: var(--text-muted); }
+.quick .sep { width: 1px; height: 32px; margin-inline: 12px; background: var(--border); }
+
+/* ---------- Panels and rows ---------- */
+.panel { padding: 24px; border: 1px solid var(--line); border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow-card); }
+.panel + .panel { margin-top: 16px; }
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.panel-head h2, .panel-head h3 { font-size: 1rem; font-weight: 600; }
+.dot { display: inline-grid; place-items: center; width: 28px; height: 28px; flex: none; border-radius: var(--r-swatch); background: linear-gradient(135deg, oklch(86% 0.14 var(--h)), oklch(56% 0.18 calc(var(--h) + 50))); color: oklch(18% 0.03 var(--h)); font-size: 0.75rem; font-weight: 800; }
+.t-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.t-name b { font-weight: 600; }
+.t-name span { margin-left: 6px; color: var(--text-muted); font-size: 0.8125rem; }
+.rows a, .rows .r { display: grid; grid-template-columns: auto minmax(0, 1fr) auto 72px; align-items: center; gap: 12px; padding: 11px 0; }
+.rows a:hover b, .news a:hover { color: var(--hover); }
+.rows .num { font-weight: 600; text-align: right; }
+.chg { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.new { display: inline-block; padding: 2px 7px; border-radius: 4px; background: var(--accent); color: var(--accent-text); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.02em; line-height: 1.5; }
+.news a { display: block; padding: 10px 0; font-weight: 500; line-height: 1.5; }
+.strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 64px; padding-block: 8px 24px; }
+.strip li { display: flex; align-items: center; gap: 18px; max-width: 380px; justify-self: center; color: var(--text-muted); font-size: 0.875rem; line-height: 1.6; }
+
+/* ---------- Two-tone statement with counters ---------- */
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.duo .lead { margin-top: 20px; font-size: 1rem; color: var(--text-muted); }
+.big-fig { display: block; margin-block: 4px; color: var(--figure); font-size: clamp(2rem, 3.4vw, 2.75rem); font-weight: 700; line-height: 1.15; }
+.stats { display: flex; flex-wrap: wrap; gap: 24px 56px; margin-top: 36px; }
+.stats b { display: block; color: var(--figure); font-size: clamp(1.75rem, 2.6vw, 2.25rem); font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stats span { display: block; margin-top: 6px; font-size: 1.125rem; font-weight: 600; }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: clamp(48px, 6vw, 72px); }
+.scene { position: relative; display: block; overflow: hidden; border-radius: var(--r-media); background: var(--cover); }
+.scene img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; transition: transform var(--dur-slow) var(--ease); }
+.scene:hover img { transform: scale(1.04); }
+.scene .cap { position: absolute; inset: auto 0 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 40px 18px 16px; background: linear-gradient(transparent, oklch(10% 0.01 262 / 0.85)); color: oklch(97% 0 0); font-weight: 600; line-height: 1.35; }
+.scene .cap .i { width: 34px; height: 34px; padding: 7px; border-radius: var(--r-swatch); background: var(--gold); color: oklch(20.5% 0.009 262); }
+
+/* ---------- App: device tabs, phone, desktop window, code card ---------- */
+.app { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.device { display: grid; justify-items: center; gap: 28px; }
+.device-stage { display: grid; place-items: center; min-height: 520px; }
+[data-pane]:not(.is-on) { display: none; }
+.u-tabs { display: flex; gap: 28px; border-bottom: 1px solid var(--border); }
+.u-tabs button { margin-bottom: -1px; padding: 10px 0; border: 0; border-bottom: 3px solid transparent; background: none; color: var(--text-muted); font-size: 1rem; font-weight: 600; cursor: pointer; }
+.u-tabs button[aria-pressed="true"] { border-color: var(--accent); color: var(--text); }
+.phone { width: 264px; padding: 10px; border-radius: 40px; background: var(--surface-2); box-shadow: var(--shadow-pop); }
+.ph { display: grid; gap: 10px; padding: 12px 12px 8px; border-radius: 31px; background: var(--bg); font-size: 0.6875rem; line-height: 1.35; }
+.ph-bar { display: flex; justify-content: space-between; padding-inline: 8px; font-weight: 600; }
+.ph-bar i { width: 34px; height: 8px; border-radius: 4px; background: var(--text-muted); opacity: 0.5; }
+.ph-search { padding: 7px 10px; border-radius: 8px; background: var(--surface); color: var(--text-muted); }
+.ph-total { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 8px; }
+.ph-total small { grid-column: 1; color: var(--text-muted); font-size: 0.625rem; }
+.ph-total b { grid-column: 1; font-size: 1.375rem; font-weight: 700; }
+.ph-total .up { color: var(--up); }
+.ph-btn { grid-column: 2; grid-row: 1 / span 3; padding: 6px 10px; border-radius: 5px; background: var(--accent); color: var(--accent-text); font-weight: 700; }
+.ph-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ph-card { padding: 9px; border-radius: 10px; background: var(--surface); }
+.ph-card small { display: block; color: var(--text-muted); font-size: 0.625rem; }
+.ph-card b { display: block; font-size: 0.875rem; font-weight: 700; }
+.ph-card svg { width: 100%; height: 30px; margin-top: 6px; }
+.ph-card.gauge { text-align: center; }
+.ph-list { padding: 9px; border-radius: 10px; background: var(--surface); }
+.ph-seg { display: flex; gap: 10px; margin-bottom: 4px; color: var(--text-muted); font-size: 0.625rem; }
+.ph-seg b { color: var(--text); }
+.ph-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 6px; padding: 6px 0; }
+.ph-row .dot { width: 18px; height: 18px; font-size: 0.5rem; }
+.ph-row b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.ph-chip { min-width: 46px; padding: 3px 5px; border-radius: 4px; background: var(--up); color: oklch(98% 0 0); font-weight: 700; text-align: center; }
+.ph-chip.dn { background: var(--down); }
+.ph-chip.nw { background: var(--accent); color: var(--accent-text); }
+.ph-nav { display: flex; justify-content: space-around; padding-top: 6px; border-top: 1px solid var(--border); color: var(--text-muted); }
+.ph-nav .i { width: 16px; height: 16px; }
+.ph-nav .on { color: var(--figure); }
+.desk { width: min(100%, 520px); overflow: hidden; border: 1px solid var(--border); border-radius: 14px; background: var(--bg); box-shadow: var(--shadow-pop); font-size: 0.8125rem; }
+.desk-bar { display: flex; gap: 6px; padding: 10px 12px; background: var(--surface-2); }
+.desk-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted); opacity: 0.6; }
+.desk-body { padding: 16px; }
+.desk-body .rows .r { grid-template-columns: auto minmax(0, 1fr) auto 64px; padding: 8px 0; }
+.qr-row { display: flex; align-items: center; gap: 24px; margin-top: 32px; }
+.qr { flex: none; padding: 14px; border: 1px solid var(--border); border-radius: var(--r-card); }
+.qr svg { width: 148px; height: 148px; padding: 10px; border-radius: 10px; background: oklch(100% 0 0); }
+.platforms { display: flex; flex-wrap: wrap; gap: 28px 48px; margin-top: 36px; }
+.platforms li { display: grid; justify-items: center; gap: 10px; font-weight: 600; }
+.platforms .i { width: 36px; height: 36px; stroke-width: 1.5; }
+
+/* ---------- Numbered questions ---------- */
+.faq { max-width: 1104px; margin-inline: auto; }
+.qa summary { display: flex; align-items: center; gap: 16px; padding: 22px 0; font-size: clamp(1rem, 1.4vw, 1.1875rem); font-weight: 600; line-height: 1.4; list-style: none; cursor: pointer; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary:hover { color: var(--hover); }
+.n { display: inline-grid; place-items: center; min-width: 32px; height: 32px; padding-inline: 6px; border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 0.875rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.qa summary::after { content: ""; flex: none; width: 16px; height: 16px; margin-left: auto; background: linear-gradient(currentColor 0 0) center / 100% 1.8px no-repeat, linear-gradient(currentColor 0 0) center / 1.8px 100% no-repeat; transition: rotate var(--dur-base) var(--ease); }
+.qa[open] summary::after { rotate: 45deg; }
+.qa .a { max-width: 60em; padding: 0 0 22px 48px; color: var(--text-muted); }
+
+/* ---------- Bands ---------- */
+.band { padding-block: clamp(56px, 7vw, 88px); background: var(--surface); text-align: center; }
+.band .h2 { margin-bottom: 28px; }
+.band .btn-row { justify-content: center; }
+
+/* ---------- Charts page ---------- */
+.big-tabs { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 28px; }
+.big-tabs h1, .big-tabs a { font-size: clamp(1.375rem, 2.1vw, 1.75rem); font-weight: 700; }
+.big-tabs a { color: var(--text-muted); }
+.big-tabs a:hover { color: var(--text); }
+.minis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+.mini { padding: 16px; border: 1px solid var(--border); border-radius: var(--r-card); }
+.mini-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; color: var(--text-muted); font-size: 0.8125rem; }
+.mini-head h2 { font-size: inherit; font-weight: 500; }
+.mini-head button { display: inline-flex; align-items: center; padding: 0; border: 0; background: none; color: inherit; font-size: inherit; cursor: pointer; }
+.mini-head button:hover { color: var(--text); }
+.mini-head .i { width: 14px; height: 14px; }
+.mini a { display: grid; grid-template-columns: auto minmax(0, 1fr) auto 58px; align-items: center; gap: 8px; padding: 7px 0; font-size: 0.875rem; }
+.mini .dot { width: 20px; height: 20px; font-size: 0.5625rem; }
+.mini b { overflow: hidden; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.mini a:hover b { color: var(--hover); }
+.toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 44px; border-bottom: 1px solid var(--border); }
+.cat-tabs { display: flex; gap: 28px; }
+.cat-tabs button { position: relative; padding: 12px 0; border: 0; background: none; color: var(--text-muted); font-size: 1.0625rem; font-weight: 500; white-space: nowrap; cursor: pointer; }
+.cat-tabs button:hover { color: var(--text); }
+.cat-tabs button[aria-pressed="true"] { color: var(--text); font-weight: 600; }
+.cat-tabs button[aria-pressed="true"]::after { content: ""; position: absolute; left: 50%; bottom: -1px; width: 18px; height: 3px; margin-left: -9px; border-radius: 2px; background: var(--accent); }
+.search { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--bg); color: var(--text-muted); }
+.search:focus-within { border-color: var(--accent); }
+.search input { width: 100%; min-width: 0; border: 0; outline: 0; background: none; color: var(--text); }
+.toolbar .search { width: 240px; margin-bottom: 8px; }
+.chips { position: relative; display: flex; gap: 6px; padding-block: 16px; overflow-x: auto; scrollbar-width: none; }
+.chip { padding: 6px 14px; border: 0; border-radius: 6px; background: none; color: var(--text-muted); font-size: 0.875rem; font-weight: 500; white-space: nowrap; cursor: pointer; }
+.chip:hover { color: var(--text); }
+.chip[aria-pressed="true"] { background: var(--surface-2); color: var(--text); }
+.tbl-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; margin-top: 8px; }
+.tbl-head h2 { font-size: 1.125rem; font-weight: 700; }
+.tbl-wrap { position: relative; margin-top: 16px; overflow-x: auto; }
+.tbl { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.tbl th { padding: 10px 12px; color: var(--text-muted); font-size: 0.8125rem; font-weight: 500; text-align: right; white-space: nowrap; }
+.tbl td { padding: 14px 12px; text-align: right; white-space: nowrap; }
+.tbl .l { text-align: left; }
+.tbl tbody tr { transition: background-color var(--dur-fast); }
+.tbl tbody tr:hover { background: var(--surface); }
+.tbl td:first-child { width: 44px; color: var(--text-muted); }
+.t-cell { display: flex; align-items: center; gap: 12px; max-width: 360px; }
+.t-cell:hover b { color: var(--hover); }
+.sort { display: inline-flex; align-items: center; gap: 4px; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.sort:hover { color: var(--text); }
+.sort .i { width: 14px; height: 14px; opacity: 0.4; }
+th[aria-sort] .sort { color: var(--text); }
+th[aria-sort] .sort .i { opacity: 1; }
+th[aria-sort="ascending"] .sort .i { transform: rotate(180deg); }
+.spark { width: 96px; height: 32px; margin-left: auto; }
+.c-act { width: 52px; }
+.star { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 0; border-radius: var(--r-control); background: none; color: var(--text-muted); cursor: pointer; }
+.star:hover { background: var(--surface-2); color: var(--text); }
+.star[aria-pressed="true"], .star-btn[aria-pressed="true"] { color: var(--figure); }
+.star[aria-pressed="true"] .i, .star-btn[aria-pressed="true"] .i { fill: currentColor; }
+.empty { padding: 56px 16px; color: var(--text-muted); text-align: center; }
+.empty .btn { margin-top: 16px; }
+
+/* ---------- Track page ---------- */
+.crumbs { display: flex; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.875rem; }
+.crumbs a:hover { color: var(--text); }
+.crumbs .i { width: 14px; height: 14px; }
+.t-head { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 20px; margin-top: 20px; }
+.t-head .dot { width: 64px; height: 64px; font-size: 1.5rem; }
+.t-head .btn { margin-left: auto; }
+.t-figs { display: flex; flex-wrap: wrap; align-items: end; gap: 20px 56px; margin-top: 32px; }
+.t-figs dt { color: var(--text-muted); font-size: 0.875rem; }
+.t-figs dd { font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.t-figs dd.big { color: var(--figure); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.05; }
+.t-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 16px; margin-top: 32px; padding-bottom: var(--sec); }
+.t-grid .panel + .panel { margin-top: 0; }
+.range { display: flex; gap: 4px; }
+.chart { width: 100%; height: auto; margin-top: 16px; }
+.axis { display: flex; justify-content: space-between; margin-top: 8px; color: var(--text-muted); font-size: 0.8125rem; }
+.bars li { display: grid; grid-template-columns: 96px minmax(0, 1fr) 44px; align-items: center; gap: 12px; padding: 9px 0; font-size: 0.875rem; }
+.bars li span:last-child { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.bar { height: 6px; overflow: hidden; border-radius: 3px; background: var(--surface-2); }
+.bar i { display: block; width: var(--w); height: 100%; border-radius: 3px; background: var(--accent); }
+
+/* ---------- News: typographic covers ---------- */
+.news-top .search { max-width: 456px; height: 48px; margin-top: 32px; }
+.feat { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 5vw, 64px); align-items: center; margin-top: 48px; }
+.feat .h2 { margin-top: 14px; }
+.feat .h2 a:hover { color: var(--hover); }
+.feat p { margin-top: 16px; }
+.feat time, .card time, .post-meta { display: block; margin-top: 14px; color: var(--text-muted); font-size: 0.875rem; }
+.tag { display: inline-block; padding: 3px 8px; border-radius: 4px; background: var(--surface-2); font-size: 0.75rem; font-weight: 600; }
+.cover { position: relative; isolation: isolate; display: grid; align-content: center; aspect-ratio: 16 / 9; overflow: hidden; padding: clamp(18px, 3vw, 32px); border-radius: var(--r-media); background: var(--cover); color: oklch(97% 0 0); }
+.cover small { position: absolute; top: 14px; left: 0; right: 0; display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--gold); font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.06em; }
+.cover small svg { width: 14px; height: 14px; }
+.cover b { max-width: 8.5em; font-size: clamp(1.25rem, 2.4vw, 1.875rem); font-weight: 800; line-height: 1.05; text-transform: uppercase; }
+.cover em { display: block; margin-top: 4px; color: var(--gold); font-size: 1.5em; font-style: normal; }
+.cover::after { content: ""; position: absolute; z-index: -1; top: 50%; right: -8%; width: 50%; aspect-ratio: 1; border-radius: 50%; translate: 0 -50%; background: repeating-radial-gradient(circle, transparent 0 7px, oklch(86.5% 0.165 93 / 0.28) 7px 8px); box-shadow: 0 0 0 2px oklch(86.5% 0.165 93 / 0.5); }
+.cover[data-tone="b"]::after { right: -4%; width: 38%; background: radial-gradient(circle, oklch(20% 0.01 262) 0 26%, var(--gold) 27% 58%, oklch(72% 0.15 85) 59% 66%, var(--gold) 67%); box-shadow: 0 0 40px oklch(86.5% 0.165 93 / 0.35); }
+.cover[data-tone="c"]::after { top: auto; bottom: -34%; right: -18%; width: 54%; border-radius: 0; rotate: -18deg; translate: none; background: repeating-linear-gradient(90deg, var(--gold) 0 10px, transparent 10px 22px); box-shadow: none; opacity: 0.4; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 24px; }
+.card h3 { margin-top: 16px; font-size: 1.0625rem; font-weight: 600; line-height: 1.45; }
+.card a:hover h3 { color: var(--hover); }
+.card .tag { margin-top: 16px; }
+.count { color: var(--text-muted); font-size: 0.875rem; }
+.post { max-width: 760px; margin-inline: auto; padding-bottom: var(--sec); }
+.post .cover { margin-top: 28px; }
+.post-body { display: grid; gap: 20px; margin-top: 32px; }
+.post-body p { font-size: 1.0625rem; line-height: 1.75; }
+.post-body .lead { font-size: 1.25rem; font-weight: 500; }
+.post-body blockquote { padding-left: 20px; border-left: 3px solid var(--accent); font-size: 1.375rem; font-weight: 600; line-height: 1.4; }
+
+/* ---------- Plans ---------- */
+.billing { display: inline-flex; gap: 4px; margin-top: 28px; padding: 4px; border-radius: var(--r-control); background: var(--surface); }
+.billing button { padding: 8px 16px; border: 0; border-radius: 6px; background: none; color: var(--text-muted); font-size: 0.9375rem; font-weight: 600; cursor: pointer; }
+.billing button[aria-pressed="true"] { background: var(--surface-2); color: var(--text); }
+.billing small { color: var(--up); }
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
+.plan { display: flex; flex-direction: column; padding: 28px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--surface); }
+.plan.is-pick { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.plan-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.price { margin-top: 20px; font-size: 2.75rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.plan .muted { margin-top: 8px; }
+.ticks { display: grid; gap: 10px; margin-block: 24px 28px; }
+.ticks li { display: flex; gap: 10px; }
+.ticks .i { width: 18px; height: 18px; margin-top: 3px; color: var(--up); }
+.plan .btn { margin-top: auto; }
+.compare { margin-top: 56px; }
+.compare td, .compare th { text-align: center; }
+.compare th:first-child, .compare td:first-child { width: auto; color: var(--text); text-align: left; }
+.compare tbody tr + tr td { border-top: 1px solid var(--border); }
+.compare .i { margin-inline: auto; color: var(--up); }
+
+/* ---------- Forms: errors float under the field and never move the button ---------- */
+.field { position: relative; display: grid; gap: 8px; padding-bottom: 22px; }
+.field label, .field legend { font-size: 0.875rem; font-weight: 500; }
+.input { width: 100%; height: 48px; padding: 0 14px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--bg); color: var(--text); transition: border-color var(--dur-fast); }
+.input::placeholder { color: var(--text-muted); }
+.input:hover { border-color: var(--text-muted); }
+.input:focus { border-color: var(--accent); outline: 0; }
+.input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.input[aria-invalid="true"] { border-color: var(--down); }
+select.input { appearance: none; padding-right: 40px; background: var(--bg) url("illustrations/chevron.svg") no-repeat right 14px center / 16px; }
+textarea.input { height: auto; min-height: 140px; padding: 12px 14px; resize: vertical; }
+.error { position: absolute; left: 0; bottom: 2px; color: var(--down); font-size: 0.75rem; line-height: 1.3; }
+.hint { color: var(--text-muted); font-size: 0.75rem; }
+.pw { position: relative; }
+.pw .icon-btn { position: absolute; top: 4px; right: 4px; color: var(--text-muted); }
+.check { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; line-height: 1.5; cursor: pointer; }
+.check input { width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: var(--accent); }
+fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.picks { display: flex; flex-wrap: wrap; gap: 8px; }
+.pick { position: relative; }
+.pick input { position: absolute; opacity: 0; pointer-events: none; }
+.pick span { display: inline-block; padding: 8px 14px; border: 1px solid var(--border); border-radius: var(--r-control); font-size: 0.875rem; font-weight: 500; cursor: pointer; }
+.pick input:checked + span { border-color: var(--accent); background: color-mix(in oklab, var(--accent) 14%, transparent); }
+.pick input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+.ok { display: grid; justify-items: start; gap: 14px; padding: 32px; border-radius: var(--r-card); background: var(--surface); }
+.ok-mark { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: var(--accent-text); }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; padding-bottom: var(--sec); }
+.split form, .split .ok { margin-top: 32px; }
+.preview { display: grid; justify-items: center; gap: 16px; padding: 40px 24px; border-radius: var(--r-card); background: var(--surface); }
+.login { max-width: 440px; margin-inline: auto; padding-block: clamp(40px, 6vw, 80px) var(--sec); }
+.login .panel { margin-top: 28px; padding: 28px; }
+
+/* ---------- About ---------- */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.steps .panel { margin: 0; }
+.steps .n { margin-bottom: 20px; border-color: var(--accent); color: var(--figure); }
+.steps p { margin-top: 8px; color: var(--text-muted); }
+.timeline li { display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 20px 0; border-top: 1px solid var(--border); }
+.timeline b { color: var(--figure); font-size: 1.25rem; font-weight: 700; }
+.team { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.team .panel { margin: 0; }
+.team .dot { width: 56px; height: 56px; margin-bottom: 16px; font-size: 1.125rem; }
+
+/* ---------- Contact, legal, 404 ---------- */
+.contact-side { display: grid; gap: 16px; }
+.contact-side .panel { margin: 0; }
+.contact-side p { margin-top: 6px; color: var(--text-muted); font-size: 0.9375rem; }
+.legal { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; padding-bottom: var(--sec); }
+.toc { position: sticky; top: 88px; display: grid; gap: 10px; align-self: start; color: var(--text-muted); font-size: 0.9375rem; }
+.toc a:hover { color: var(--text); }
+.prose { display: grid; gap: 14px; max-width: 720px; color: var(--text-muted); }
+.prose h2 { margin-top: 20px; color: var(--text); font-size: 1.25rem; font-weight: 700; }
+.lost { padding-block: clamp(64px, 10vw, 140px); text-align: center; }
+.lost .display { font-size: clamp(5rem, 16vw, 10rem); color: var(--figure); }
+.lost .btn-row { justify-content: center; margin-top: 32px; }
+
+/* ---------- Footer ---------- */
+.site-footer { padding-block: 72px 40px; border-top: 1px solid var(--border); }
+.f-grid { display: grid; grid-template-columns: 1.3fr repeat(4, 1fr); gap: 40px; }
+.f-grid h2 { margin-bottom: 18px; font-size: 1.0625rem; font-weight: 600; }
+.f-grid li + li { margin-top: 10px; }
+.f-grid a, .f-pref button { color: var(--text-muted); font-size: 0.875rem; }
+.f-grid a:hover, .f-pref button:hover { color: var(--text); }
+.f-pref li { display: flex; align-items: center; gap: 10px; color: var(--text-muted); font-size: 0.875rem; }
+.f-pref button { display: inline-flex; align-items: center; gap: 10px; padding: 0; border: 0; background: none; cursor: pointer; }
+.f-brand .logo { color: var(--figure); font-size: 1.25rem; }
+.fine { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.75rem; line-height: 1.7; }
+.fine b { color: var(--text); }
+
+/* ---------- Motion: keyframes on entry, nothing moves without JS or with reduced motion ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes flash { 0% { background: color-mix(in oklab, var(--accent) 22%, transparent); } 100% { background: transparent; } }
+.js .rise { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 80ms); }
+.js .reveal:not(.is-in) { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+.tbl tr.is-flash td { animation: flash 900ms var(--ease); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal:not(.is-in) { opacity: 1; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1079px) {
+  .hero, .duo, .app, .split { grid-template-columns: minmax(0, 1fr); }
+  .minis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .t-grid { grid-template-columns: minmax(0, 1fr); }
+  .f-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .f-brand { grid-column: 1 / -1; }
+  .team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .device-stage { min-height: 0; }
+}
+@media (max-width: 900px) {
+  .c-spark { display: none; }
+  .scenes, .cards, .plans, .steps { grid-template-columns: minmax(0, 1fr); }
+  .feat { grid-template-columns: minmax(0, 1fr); }
+  .legal { grid-template-columns: minmax(0, 1fr); }
+  .toc { position: static; }
+  .toolbar { flex-wrap: wrap; }
+  .toolbar .search { width: 100%; }
+  .compare { overflow-x: auto; }
+}
+@media (max-width: 640px) {
+  .hero-copy { text-align: center; }
+  .laurels, .quick { justify-content: center; }
+  .laurels { gap: 12px 20px; }
+  .laurels svg { width: 15px; height: 40px; }
+  .laurels b { font-size: 1.125rem; }
+  .laurels small { font-size: 0.6875rem; }
+  .join-row { flex-direction: column; align-items: stretch; gap: 0; margin-inline: auto; }
+  .quick { margin-top: 12px; }
+  .join-row .btn { width: 100%; }
+  .strip, .minis, .grid2 { grid-template-columns: minmax(0, 1fr); }
+  .stats { gap: 24px 40px; }
+  .qr-row { flex-direction: column; align-items: flex-start; }
+  .tbl th, .tbl td { padding-inline: 6px; font-size: 0.875rem; }
+  #chart-table tr > :first-child { display: none; }
+  #chart-table .t-name { white-space: normal; }
+  .t-cell { gap: 8px; }
+  .t-name span { display: block; margin-left: 0; }
+  .c-act { width: 40px; }
+  .f-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .timeline li { grid-template-columns: 72px 1fr; gap: 16px; }
+  .qa .a { padding-left: 0; }
+  .rows a { grid-template-columns: auto minmax(0, 1fr) auto 64px; gap: 10px; }
+  .phone { width: 248px; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#f8cf32"/><path d="M9 23v-5M14 23v-9M19 23V9M24 23v-6" fill="none" stroke="#15171b" stroke-width="3.2" stroke-linecap="round"/></symbol>
+  <symbol id="laurel" viewBox="0 0 20 52"><path d="M16 3C7 11 3 21 4 31s5 15 11 19" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><ellipse cx="11.5" cy="6.5" rx="2.6" ry="5.2" transform="rotate(40 11.5 6.5)"/><ellipse cx="6.6" cy="13.5" rx="2.6" ry="5.2" transform="rotate(24 6.6 13.5)"/><ellipse cx="3.9" cy="21.8" rx="2.6" ry="5.2" transform="rotate(7 3.9 21.8)"/><ellipse cx="3.6" cy="30.4" rx="2.6" ry="5.2" transform="rotate(-10 3.6 30.4)"/><ellipse cx="5.4" cy="38.8" rx="2.6" ry="5.2" transform="rotate(-28 5.4 38.8)"/><ellipse cx="9.6" cy="45.6" rx="2.6" ry="5.2" transform="rotate(-48 9.6 45.6)"/><ellipse cx="11.4" cy="16.5" rx="1.8" ry="3.8" transform="rotate(58 11.4 16.5)"/><ellipse cx="9.4" cy="25.5" rx="1.8" ry="3.8" transform="rotate(82 9.4 25.5)"/><ellipse cx="9.8" cy="34.5" rx="1.8" ry="3.8" transform="rotate(106 9.8 34.5)"/><ellipse cx="12.6" cy="42" rx="1.8" ry="3.8" transform="rotate(128 12.6 42)"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></symbol>
+  <symbol id="i-sort" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8Z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19h16M7 16v-4M11 16V8M15 16v-6M19 16V5"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V20.5H7Z"/><path d="M14 3.5v4h4M10 12h5M10 16h5"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2v2h-2zM18 18h2v2h-2zM14 18v2M18 14h2"/></symbol>
+  <symbol id="i-radio" viewBox="0 0 24 24"><circle cx="12" cy="10" r="2"/><path d="M12 12v9M8.5 6.5a5 5 0 0 0 0 7M15.5 6.5a5 5 0 0 1 0 7M5.6 3.6a9 9 0 0 0 0 12.8M18.4 3.6a9 9 0 0 1 0 12.8"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="i-tablet" viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2.5"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-desktop" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M9 20h6M12 16v4"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m4 11 8-7 8 7v9H4Z"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15ZM10 20.5h4"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.5 3.5 5.5 3.5 8.5s-1 6-3.5 8.5c-2.5-2.5-3.5-5.5-3.5-8.5s1-6 3.5-8.5Z"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="hdr">
+    <a class="logo" href="#/" aria-label="Spinrank home"><svg aria-hidden="true"><use href="#mark"/></svg>Spinrank</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/charts">Charts</a>
+      <a href="#/news">News</a>
+      <a href="#/plans">Plans</a>
+      <a href="#/help">Help</a>
+      <a href="#/about">About</a>
+    </nav>
+    <div class="hdr-end">
+      <a class="icon-btn hdr-search" href="#/charts?at=chart-q" aria-label="Search tracks"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg></a>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Switch to light theme"><svg class="i" aria-hidden="true"><use href="#i-sun"/></svg></button>
+      <a class="btn btn-quiet btn-sm" href="#/login">Log in</a>
+      <a class="btn btn-accent btn-sm" href="#/signup">Sign up</a>
+      <button id="menu-btn" class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+  <nav id="menu" class="menu" aria-label="Menu" hidden>
+    <a href="#/charts">Charts</a>
+    <a href="#/news">News</a>
+    <a href="#/plans">Plans</a>
+    <a href="#/help">Help</a>
+    <a href="#/about">About</a>
+    <a href="#/contact">Contact</a>
+    <div class="btn-row"><a class="btn btn-quiet" href="#/login">Log in</a><a class="btn btn-accent" href="#/signup">Sign up</a></div>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ============ Home ============ -->
+<div data-view="home">
+  <section class="wrap hero" aria-labelledby="home-title">
+    <div class="hero-copy">
+      <h1 id="home-title" class="display rise"><span class="fig num" data-count="482906310">482,906,310</span><span>Plays</span><span>counted</span></h1>
+      <p class="hero-sub rise" style="--i:1">The independent music chart, counted hourly.</p>
+      <ul class="laurels rise" style="--i:2">
+        <li><svg aria-hidden="true"><use href="#laurel"/></svg><span><b>Hourly</b><small>Chart updates</small></span><svg aria-hidden="true"><use href="#laurel"/></svg></li>
+        <li><svg aria-hidden="true"><use href="#laurel"/></svg><span><b>38</b><small>Countries reporting</small></span><svg aria-hidden="true"><use href="#laurel"/></svg></li>
+      </ul>
+      <form class="join-row rise" style="--i:3" data-form="newsletter" novalidate>
+        <div class="field"><label class="sr-only" for="h-email">Email address</label><input class="input" id="h-email" name="email" type="email" autocomplete="email" placeholder="Email address" required aria-describedby="h-email-err"><p class="error" id="h-email-err" aria-live="polite"></p></div>
+        <button class="btn btn-accent" type="submit">Get the weekly chart</button>
+      </form>
+      <p class="inline-ok" data-success="newsletter" hidden tabindex="-1"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>You are on the list. The next chart lands on Monday at 09:00 UTC.</p>
+      <div class="quick rise" style="--i:4">
+        <a class="sq" href="#/charts" aria-label="Open the charts"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg></a>
+        <a class="sq" href="#/news" aria-label="Read the news"><svg class="i" aria-hidden="true"><use href="#i-doc"/></svg></a>
+        <span class="sep" aria-hidden="true"></span>
+        <a class="sq" href="#app" aria-label="Get the app"><svg class="i" aria-hidden="true"><use href="#i-qr"/></svg></a>
+      </div>
+    </div>
+    <div class="hero-side">
+      <section class="panel rise" style="--i:2" aria-labelledby="top-title">
+        <div class="panel-head"><h2 id="top-title">Top tracks this week</h2><a class="more" href="#/charts">View all<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></div>
+        <ul class="rows">
+          <li><a href="#/track?t=glass-harbour"><span class="dot" style="--h:210">G</span><span class="t-name"><b>Glass Harbour</b><span>Mara Vey</span></span><span class="num">1,284,310</span><span class="chg up">+12.4%</span></a></li>
+          <li><a href="#/track?t=paper-satellites"><span class="dot" style="--h:30">P</span><span class="t-name"><b>Paper Satellites</b><span>The Lowlit</span></span><span class="num">1,102,944</span><span class="chg up">+3.1%</span></a></li>
+          <li><a href="#/track?t=slow-fever"><span class="dot" style="--h:330">S</span><span class="t-name"><b>Slow Fever</b><span>Juno Park</span></span><span class="num">998,201</span><span class="chg down">−4.8%</span></a></li>
+          <li><a href="#/track?t=neon-orchard"><span class="dot" style="--h:150">N</span><span class="t-name"><b>Neon Orchard</b><span>Tilde Moss</span></span><span class="num">954,770</span><span class="chg up">+28.6%</span></a></li>
+          <li><a href="#/track?t=kettle-black"><span class="dot" style="--h:60">K</span><span class="t-name"><b>Kettle Black</b><span>Odessa Rowe</span></span><span class="num">871,035</span><span class="chg down">−1.2%</span></a></li>
+        </ul>
+      </section>
+      <section class="panel rise" style="--i:3" aria-labelledby="news-title">
+        <div class="panel-head"><h2 id="news-title">News</h2><a class="more" href="#/news">All news<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></div>
+        <ul class="news">
+          <li><a href="#/post?p=neon-climb">Neon Orchard posts the biggest climb of the year: up 28.6% in a week</a></li>
+          <li><a href="#/post?p=night-shift">Inside a 3 a.m. shift at a station that never misses a report</a></li>
+          <li><a href="#/post?p=method-v42">Method v4.2: late reports now count for 72 hours, not 48</a></li>
+          <li><a href="#/post?p=new-entries">Fourteen new entries this week, and where they came from</a></li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <section class="wrap" aria-label="How the chart is made">
+    <ul class="strip">
+      <li class="reveal"><span class="sq" aria-hidden="true"><svg class="i"><use href="#i-radio"/></svg></span>Counted from 1,400 community, college and independent stations in 38 countries</li>
+      <li class="reveal"><span class="sq" aria-hidden="true"><svg class="i"><use href="#i-doc"/></svg></span>Our method is published in full and the raw counts go out every Monday</li>
+    </ul>
+  </section>
+
+  <section class="wrap sec" id="open" aria-labelledby="open-title">
+    <div class="duo">
+      <div class="reveal">
+        <h2 id="open-title" class="display"><span>Counted</span><span class="fig">in the open</span></h2>
+        <p class="lead">Every station that reports to us is listed by name, and every chart ships with the counts behind it. No position is paid for.</p>
+      </div>
+      <div class="reveal">
+        <p class="small">As of Monday 17 November 2026, the chart covers</p>
+        <b class="big-fig num">214,000 tracks</b>
+        <p class="small muted">Method v4.2 · weekly counts close Sunday 23:59 UTC</p>
+        <ul class="stats">
+          <li><b>1,400</b><span>Stations reporting</span></li>
+          <li><b>11,820</b><span>Artists charted this year</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="scenes">
+      <a class="scene reveal" href="#/post?p=night-shift"><img src="images/booth.svg" width="640" height="360" alt="A radio booth at night with a microphone, faders and a lit on-air sign"><span class="cap">Inside a 3 a.m. radio shift<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="scene reveal" href="#/post?p=record-shop"><img src="images/crates.svg" width="640" height="360" alt="Record crates under warm shop lights"><span class="cap">How a shop chart is born<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="scene reveal" href="#/post?p=neon-climb"><img src="images/stage.svg" width="640" height="360" alt="A guitarist on a stage under yellow lights, the crowd in silhouette"><span class="cap">The climb of the year, live<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="app" style="padding-top:0" aria-labelledby="app-title">
+    <div class="app">
+      <div class="device reveal">
+        <div class="device-stage" id="device">
+          <div class="phone is-on" data-pane="phone" aria-hidden="true"><div class="ph">
+            <div class="ph-bar"><span>9:41</span><i></i></div>
+            <div class="ph-search">Search tracks and artists</div>
+            <div class="ph-total"><small>Plays today, followed tracks</small><b class="num">48,210</b><small class="up">+3.1% vs yesterday</small><span class="ph-btn">Alerts</span></div>
+            <div class="ph-duo">
+              <div class="ph-card"><small>Glass Harbour</small><b>202K</b><svg viewBox="0 0 100 28"><path d="M2 26L18 24.5L34 19L50 17.5L66 15.9L82 9.7L98 2" fill="none" stroke="var(--up)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="ph-card gauge"><small>Chart heat</small><svg viewBox="0 0 100 50"><path d="M10 46a40 40 0 0 1 22-35.7" fill="none" stroke="var(--down)" stroke-width="7"/><path d="M36 8.5a40 40 0 0 1 28 0" fill="none" stroke="var(--accent)" stroke-width="7"/><path d="M68 10.3A40 40 0 0 1 90 46" fill="none" stroke="var(--up)" stroke-width="7"/><circle cx="74" cy="15" r="5" fill="var(--text)"/></svg><b>61</b></div>
+            </div>
+            <div class="ph-list">
+              <div class="ph-seg"><span>Following</span><b>Hot</b><span>New</span><span>Climbers</span></div>
+              <div class="ph-row"><span class="dot" style="--h:150">N</span><b>Neon Orchard</b><span>156K</span><span class="ph-chip">+28.6%</span></div>
+              <div class="ph-row"><span class="dot" style="--h:210">G</span><b>Glass Harbour</b><span>202K</span><span class="ph-chip">+12.4%</span></div>
+              <div class="ph-row"><span class="dot" style="--h:300">C</span><b>Cold Bloom</b><span>137K</span><span class="ph-chip nw">New</span></div>
+              <div class="ph-row"><span class="dot" style="--h:15">N</span><b>Night Bus Home</b><span>98K</span><span class="ph-chip dn">&minus;9.3%</span></div>
+            </div>
+            <div class="ph-nav"><svg class="i on"><use href="#i-home"/></svg><svg class="i"><use href="#i-chart"/></svg><svg class="i"><use href="#i-search"/></svg><svg class="i"><use href="#i-bell"/></svg><svg class="i"><use href="#i-user"/></svg></div>
+          </div></div>
+          <div class="desk" data-pane="desktop" aria-hidden="true">
+            <div class="desk-bar"><i></i><i></i><i></i></div>
+            <div class="desk-body">
+              <div class="panel-head"><b>Top tracks this week</b><span class="more">Updated 09:00</span></div>
+              <ul class="rows" id="desk-rows"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="u-tabs" data-tabs="device" role="group" aria-label="Device">
+          <button type="button" data-show="phone" aria-pressed="true">Phone</button>
+          <button type="button" data-show="desktop" aria-pressed="false">Desktop</button>
+        </div>
+      </div>
+      <div class="reveal">
+        <h2 id="app-title" class="h2">Charts in your pocket. Updated every hour.</h2>
+        <p class="lead muted" style="margin-top:16px">Follow the tracks you care about and get a nudge when they climb, drop or land a new station.</p>
+        <div class="qr-row">
+          <div class="qr"><svg id="qr" viewBox="0 0 25 25" shape-rendering="crispEdges" role="img" aria-label="Sample code: replace with a code for your own app link"><g fill="#15171b"><path d="M0 0h7v7H0zM18 0h7v7h-7zM0 18h7v7H0z"/></g><g fill="#fff"><path d="M1 1h5v5H1zM19 1h5v5h-5zM1 19h5v5H1z"/></g><g fill="#15171b"><path d="M2 2h3v3H2zM20 2h3v3h-3zM2 20h3v3H2z"/></g></svg></div>
+          <div><p class="muted">Scan to get the app</p><p class="h3" style="margin-top:6px">Phone and tablet</p></div>
+        </div>
+        <ul class="platforms">
+          <li><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Phone</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-tablet"/></svg>Tablet</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-desktop"/></svg>Desktop</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec" style="padding-top:0" id="faq" aria-labelledby="faq-title">
+    <h2 id="faq-title" class="h2 center reveal" style="margin-bottom:32px">Frequently asked questions</h2>
+    <div class="faq">
+      <details class="qa reveal"><summary><span class="n">1</span>What does Spinrank count?</summary><p class="a">Plays reported by community, college and independent radio stations, plus plays from independent streaming services that share their logs with us. Each play is matched to one track and counted once.</p></details>
+      <details class="qa reveal"><summary><span class="n">2</span>How often does the chart update?</summary><p class="a">The live chart refreshes every hour. The weekly chart closes on Sunday at 23:59 UTC and is published on Monday at 09:00 UTC.</p></details>
+      <details class="qa reveal"><summary><span class="n">3</span>Can a track pay to chart?</summary><p class="a">No. There is no paid placement anywhere on Spinrank. Plans pay for alerts, history and exports, never for position.</p></details>
+      <details class="qa reveal"><summary><span class="n">4</span>How do I get my station counted?</summary><p class="a">Send us your station name and how you log plays. Most stations connect in an afternoon. <a class="link" href="#/contact?topic=station">Write to us</a>.</p></details>
+      <details class="qa reveal"><summary><span class="n">5</span>What is a new entry?</summary><p class="a">A track that reaches the top 200 for the first time. It is marked New until its second week.</p></details>
+      <details class="qa reveal"><summary><span class="n">6</span>Is Spinrank free?</summary><p class="a">The charts, the news and the weekly email are free. Pro adds hourly alerts, full history and exports. <a class="link" href="#/plans">See plans</a>.</p></details>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="cta-title">
+    <div class="wrap">
+      <h2 id="cta-title" class="h2 reveal">Never miss a new entry</h2>
+      <a class="btn btn-accent reveal" href="#/signup">Sign up now</a>
+    </div>
+  </section>
+</div>
+
+<!-- ============ Charts ============ -->
+<div data-view="charts">
+  <section class="wrap page-top" aria-labelledby="charts-title">
+    <div class="big-tabs"><h1 id="charts-title">Charts</h1><a href="#/charts?tab=new">New entries</a><a href="#/about?at=method">Method</a></div>
+    <div class="minis" id="minis" hidden></div>
+
+    <div class="toolbar" id="chart-tools">
+      <div class="cat-tabs" role="group" aria-label="Show">
+        <button type="button" data-tab="all" aria-pressed="true">All tracks</button>
+        <button type="button" data-tab="fav" aria-pressed="false">Following</button>
+        <button type="button" data-tab="new" aria-pressed="false">New entries</button>
+      </div>
+      <label class="search"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><span class="sr-only">Search tracks</span><input id="chart-q" type="search" placeholder="Search tracks" autocomplete="off"></label>
+    </div>
+    <div class="chips" role="group" aria-label="Genre">
+      <button class="chip" type="button" data-genre="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-genre="indie" aria-pressed="false">Indie</button>
+      <button class="chip" type="button" data-genre="rock" aria-pressed="false">Rock</button>
+      <button class="chip" type="button" data-genre="electronic" aria-pressed="false">Electronic</button>
+      <button class="chip" type="button" data-genre="folk" aria-pressed="false">Folk</button>
+      <button class="chip" type="button" data-genre="pop" aria-pressed="false">Pop</button>
+      <button class="chip" type="button" data-genre="rnb" aria-pressed="false">R&amp;B</button>
+      <button class="chip" type="button" data-genre="hiphop" aria-pressed="false">Hip-hop</button>
+    </div>
+    <div class="tbl-head"><h2>Top tracks by plays this week</h2><p class="count" id="chart-count" aria-live="polite">12 tracks</p></div>
+    <p class="small muted">Plays from Monday 00:00 to Sunday 23:59 UTC. Change compares with the week before.</p>
+    <div class="tbl-wrap">
+      <table class="tbl" id="chart-table">
+        <thead><tr><th class="l" scope="col">#</th><th class="l" scope="col">Track</th><th scope="col" data-sort="plays"><button class="sort" type="button">Plays<svg class="i" aria-hidden="true"><use href="#i-sort"/></svg></button></th><th scope="col" data-sort="chg"><button class="sort" type="button">Change<svg class="i" aria-hidden="true"><use href="#i-sort"/></svg></button></th><th class="c-spark" scope="col">Last 7 days</th><th class="c-act" scope="col"><span class="sr-only">Follow</span></th></tr></thead>
+        <tbody>
+          <tr data-id="glass-harbour" data-genre="indie" data-plays="1284310" data-chg="12.4" data-w="6" data-peak="1" data-label="Tideline Records" data-h="171 173 180 182 184 192 202"><td class="l">1</td><td class="l"><a class="t-cell" href="#/track?t=glass-harbour"><span class="dot" style="--h:210">G</span><span class="t-name"><b>Glass Harbour</b><span>Mara Vey</span></span></a></td><td>1,284,310</td><td class="up">+12.4%</td></tr>
+          <tr data-id="paper-satellites" data-genre="rock" data-plays="1102944" data-chg="3.1" data-w="11" data-peak="1" data-label="Static Bloom" data-h="159 159 155 159 157 157 157"><td class="l">2</td><td class="l"><a class="t-cell" href="#/track?t=paper-satellites"><span class="dot" style="--h:30">P</span><span class="t-name"><b>Paper Satellites</b><span>The Lowlit</span></span></a></td><td>1,102,944</td><td class="up">+3.1%</td></tr>
+          <tr data-id="slow-fever" data-genre="rnb" data-plays="998201" data-chg="-4.8" data-w="9" data-peak="2" data-label="Velvet Lot" data-h="143 148 146 144 143 137 137"><td class="l">3</td><td class="l"><a class="t-cell" href="#/track?t=slow-fever"><span class="dot" style="--h:330">S</span><span class="t-name"><b>Slow Fever</b><span>Juno Park</span></span></a></td><td>998,201</td><td class="down">−4.8%</td></tr>
+          <tr data-id="neon-orchard" data-genre="electronic" data-plays="954770" data-chg="28.6" data-w="3" data-peak="4" data-label="Kiln Audio" data-h="117 124 132 138 138 149 156"><td class="l">4</td><td class="l"><a class="t-cell" href="#/track?t=neon-orchard"><span class="dot" style="--h:150">N</span><span class="t-name"><b>Neon Orchard</b><span>Tilde Moss</span></span></a></td><td>954,770</td><td class="up">+28.6%</td></tr>
+          <tr data-id="kettle-black" data-genre="folk" data-plays="871035" data-chg="-1.2" data-w="14" data-peak="3" data-label="Hearth House" data-h="125 122 124 121 127 127 124"><td class="l">5</td><td class="l"><a class="t-cell" href="#/track?t=kettle-black"><span class="dot" style="--h:60">K</span><span class="t-name"><b>Kettle Black</b><span>Odessa Rowe</span></span></a></td><td>871,035</td><td class="down">−1.2%</td></tr>
+          <tr data-id="rooftop-static" data-genre="indie" data-plays="802516" data-chg="6.7" data-w="5" data-peak="6" data-label="Tideline Records" data-h="109 114 113 116 117 116 117"><td class="l">6</td><td class="l"><a class="t-cell" href="#/track?t=rooftop-static"><span class="dot" style="--h:260">R</span><span class="t-name"><b>Rooftop Static</b><span>Bright Alley</span></span></a></td><td>802,516</td><td class="up">+6.7%</td></tr>
+          <tr data-id="cold-bloom" data-genre="pop" data-plays="777420" data-chg="new" data-w="1" data-peak="7" data-label="Paper Moon Music" data-h="85 93 101 111 124 127 137"><td class="l">7</td><td class="l"><a class="t-cell" href="#/track?t=cold-bloom"><span class="dot" style="--h:300">C</span><span class="t-name"><b>Cold Bloom</b><span>Saffi Lane</span></span></a></td><td>777,420</td><td><span class="new">New</span></td></tr>
+          <tr data-id="night-bus-home" data-genre="rock" data-plays="731882" data-chg="-9.3" data-w="18" data-peak="2" data-label="Static Bloom" data-h="110 106 106 104 102 104 98"><td class="l">8</td><td class="l"><a class="t-cell" href="#/track?t=night-bus-home"><span class="dot" style="--h:15">N</span><span class="t-name"><b>Night Bus Home</b><span>Hollow Pine Club</span></span></a></td><td>731,882</td><td class="down">−9.3%</td></tr>
+          <tr data-id="velvet-engine" data-genre="hiphop" data-plays="690115" data-chg="new" data-w="1" data-peak="9" data-label="Ninth Floor Sounds" data-h="74 81 91 98 106 117 122"><td class="l">9</td><td class="l"><a class="t-cell" href="#/track?t=velvet-engine"><span class="dot" style="--h:90">V</span><span class="t-name"><b>Velvet Engine</b><span>Rook Ado</span></span></a></td><td>690,115</td><td><span class="new">New</span></td></tr>
+          <tr data-id="salt-signal" data-genre="electronic" data-plays="655208" data-chg="15.9" data-w="4" data-peak="10" data-label="Kiln Audio" data-h="87 91 89 91 95 100 102"><td class="l">10</td><td class="l"><a class="t-cell" href="#/track?t=salt-signal"><span class="dot" style="--h:190">S</span><span class="t-name"><b>Salt Signal</b><span>Wren Atlas</span></span></a></td><td>655,208</td><td class="up">+15.9%</td></tr>
+          <tr data-id="quiet-machinery" data-genre="folk" data-plays="610994" data-chg="new" data-w="1" data-peak="11" data-label="Hearth House" data-h="65 72 79 87 92 103 112"><td class="l">11</td><td class="l"><a class="t-cell" href="#/track?t=quiet-machinery"><span class="dot" style="--h:120">Q</span><span class="t-name"><b>Quiet Machinery</b><span>Ana Solberg</span></span></a></td><td>610,994</td><td><span class="new">New</span></td></tr>
+          <tr data-id="orbit-lane" data-genre="pop" data-plays="588301" data-chg="-0.6" data-w="12" data-peak="5" data-label="Paper Moon Music" data-h="86 85 86 81 82 85 84"><td class="l">12</td><td class="l"><a class="t-cell" href="#/track?t=orbit-lane"><span class="dot" style="--h:340">O</span><span class="t-name"><b>Orbit Lane</b><span>Delta Choir</span></span></a></td><td>588,301</td><td class="down">−0.6%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="empty" data-empty="chart" hidden><p>No tracks match. Clear the search or pick another genre.</p><button class="btn btn-quiet" type="button" data-clear>Clear filters</button></div>
+    <div style="height:var(--sec)"></div>
+  </section>
+</div>
+
+<!-- ============ Track ============ -->
+<div data-view="track">
+  <section class="wrap page-top" aria-labelledby="t-title">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#/charts">Charts</a><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg><span data-t="title">Glass Harbour</span></nav>
+    <div class="t-head">
+      <span class="dot" data-t="dot" style="--h:210" aria-hidden="true">G</span>
+      <div><h1 class="h1" id="t-title" data-t="title">Glass Harbour</h1><p class="muted"><span data-t="artist">Mara Vey</span> · <span data-t="label">Tideline Records</span> · <span data-t="genre">Indie</span></p></div>
+      <button class="btn btn-quiet star-btn" id="t-follow" type="button" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-star"/></svg><span>Follow</span></button>
+    </div>
+    <dl class="t-figs">
+      <div><dt>Plays this week</dt><dd class="big" data-t="plays">1,284,310</dd></div>
+      <div><dt>Change</dt><dd data-t="chg" class="up">+12.4%</dd></div>
+      <div><dt>Position</dt><dd data-t="rank">#1</dd></div>
+      <div><dt>Peak</dt><dd data-t="peak">#1</dd></div>
+      <div><dt>Weeks on chart</dt><dd data-t="weeks">6</dd></div>
+    </dl>
+    <div class="t-grid">
+      <section class="panel" aria-labelledby="daily-title">
+        <div class="panel-head"><h2 id="daily-title">Daily plays</h2>
+          <div class="range" role="group" aria-label="Range"><button class="chip" type="button" data-range="7" aria-pressed="true">7D</button><button class="chip" type="button" data-range="30" aria-pressed="false">30D</button><button class="chip" type="button" data-range="90" aria-pressed="false">90D</button></div>
+        </div>
+        <svg class="chart" id="t-chart" viewBox="0 0 720 240" role="img" aria-label="Daily plays over the last 7 days, rising from 171 thousand to 202 thousand">
+          <defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--accent)" stop-opacity="0.32"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+          <g stroke="var(--border)" stroke-width="1"><path d="M0 24.5h720M0 89.5h720M0 154.5h720M0 219.5h720"/></g>
+          <path data-c="area" fill="url(#area)" d="M8 188L125.3 178.6L242.7 145.9L360 136.5L477.3 127.1L594.7 89.7L712 42.9L712 220L8 220Z"/>
+          <path data-c="line" fill="none" stroke="var(--figure)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" d="M8 188L125.3 178.6L242.7 145.9L360 136.5L477.3 127.1L594.7 89.7L712 42.9"/>
+        </svg>
+        <div class="axis"><span data-t="from">7 days ago</span><span data-t="range">Low 171K · High 202K</span><span>Today</span></div>
+      </section>
+      <section class="panel" aria-labelledby="where-title">
+        <div class="panel-head"><h2 id="where-title">Where it is playing</h2></div>
+        <ul class="bars" id="t-cities">
+          <li><span>Lisbon</span><span class="bar"><i style="--w:100%"></i></span><span>24%</span></li>
+          <li><span>Osaka</span><span class="bar"><i style="--w:79%"></i></span><span>19%</span></li>
+          <li><span>Melbourne</span><span class="bar"><i style="--w:71%"></i></span><span>17%</span></li>
+          <li><span>Toronto</span><span class="bar"><i style="--w:63%"></i></span><span>15%</span></li>
+          <li><span>Glasgow</span><span class="bar"><i style="--w:54%"></i></span><span>13%</span></li>
+          <li><span>Seoul</span><span class="bar"><i style="--w:50%"></i></span><span>12%</span></li>
+        </ul>
+      </section>
+    </div>
+  </section>
+</div>
+
+<!-- ============ News ============ -->
+<div data-view="news">
+  <section class="wrap page-top news-top" aria-labelledby="news-h">
+    <h1 class="h1" id="news-h">Spinrank News</h1>
+    <label class="search"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><span class="sr-only">Search posts</span><input id="news-q" type="search" placeholder="Search posts" autocomplete="off"></label>
+    <article class="feat">
+      <a class="cover" href="#/post?p=neon-climb" aria-label="Neon Orchard posts the biggest climb of the year"><small><svg aria-hidden="true"><use href="#mark"/></svg>SPINRANK</small><b>Biggest climb <em>+28.6%</em></b></a>
+      <div>
+        <span class="tag">Charts</span>
+        <h2 class="h2"><a href="#/post?p=neon-climb">Neon Orchard posts the biggest climb of the year</a></h2>
+        <p class="lead muted">A three-week-old electronic track jumped 28.6% in plays, carried by late-night shows in four cities. Here is how it happened.</p>
+        <time datetime="2026-11-17">17 November 2026</time>
+      </div>
+    </article>
+    <div class="toolbar" style="margin-top:56px">
+      <div class="chips" role="group" aria-label="Topic" style="padding-block:10px">
+        <button class="chip" type="button" data-topic="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-topic="charts" aria-pressed="false">Charts</button>
+        <button class="chip" type="button" data-topic="stations" aria-pressed="false">Stations</button>
+        <button class="chip" type="button" data-topic="interviews" aria-pressed="false">Interviews</button>
+        <button class="chip" type="button" data-topic="method" aria-pressed="false">Method</button>
+      </div>
+      <p class="count" id="news-count" aria-live="polite">6 posts</p>
+    </div>
+    <ul class="cards" id="post-list" style="margin-top:32px">
+      <li class="card" data-topic="stations" data-post="night-shift"><a href="#/post?p=night-shift"><span class="cover" data-tone="b"><small><svg aria-hidden="true"><use href="#mark"/></svg>SPINRANK</small><b>3 a.m. <em>on air</em></b></span><span class="tag">Stations</span><h3>Inside a 3 a.m. shift at a station that never misses a report</h3><time datetime="2026-11-14">14 November 2026</time></a></li>
+      <li class="card" data-topic="stations" data-post="record-shop"><a href="#/post?p=record-shop"><span class="cover" data-tone="c"><small><svg aria-hidden="true"><use href="#mark"/></svg>SPINRANK</small><b>The shop <em>chart</em></b></span><span class="tag">Stations</span><h3>How a record shop turns its counter into a weekly chart</h3><time datetime="2026-11-10">10 November 2026</time></a></li>
+      <li class="card" data-topic="method" data-post="method-v42"><a href="#/post?p=method-v42"><span class="cover"><small><svg aria-hidden="true"><use href="#mark"/></svg>SPINRANK</small><b>Method <em>v4.2</em></b></span><span class="tag">Method</span><h3>Method v4.2: late reports now count for 72 hours, not 48</h3><time datetime="2026-11-06">6 November 2026</time></a></li>
+      <li class="card" data-topic="interviews" data-post="six-weeks"><a href="#/post?p=six-weeks"><span class="cover" data-tone="b"><small><svg aria-hidden="true"><use href="#mark"/></svg>SPINRANK</small><b>Six weeks <em>on top</em></b></span><span class="tag">Interviews</span><h3>Mara Vey on six weeks at the top of the chart</h3><time datetime="2026-11-03">3 November 2026</time></a></li>
+      <li class="card" data-topic="charts" data-post="new-entries"><a href="#/post?p=new-entries"><span class="cover" data-tone="c"><small><svg aria-hidden="true"><use href="#mark"/></svg>SPINRANK</small><b>New entries <em>14</em></b></span><span class="tag">Charts</span><h3>Fourteen new entries this week, and where they came from</h3><time datetime="2026-10-30">30 October 2026</time></a></li>
+      <li class="card" data-topic="method" data-post="counted-once"><a href="#/post?p=counted-once"><span class="cover"><small><svg aria-hidden="true"><use href="#mark"/></svg>SPINRANK</small><b>One play, <em>counted once</em></b></span><span class="tag">Method</span><h3>How we stop one play from counting twice</h3><time datetime="2026-10-24">24 October 2026</time></a></li>
+    </ul>
+    <div class="empty" data-empty="news" hidden><p>No posts match that search.</p></div>
+    <div style="height:var(--sec)"></div>
+  </section>
+</div>
+
+<!-- ============ Post (filled from the card and POSTS) ============ -->
+<div data-view="post">
+  <article class="wrap page-top post" aria-labelledby="post-title">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#/news">News</a><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg><span data-p="tag">Charts</span></nav>
+    <h1 class="h1" id="post-title" data-p="title" style="margin-top:16px">Neon Orchard posts the biggest climb of the year</h1>
+    <p class="post-meta" data-p="meta">17 November 2026 · 4 min read</p>
+    <div data-p="cover"><span class="cover"><small><svg aria-hidden="true"><use href="#mark"/></svg>SPINRANK</small><b>Biggest climb <em>+28.6%</em></b></span></div>
+    <div class="post-body" data-p="body">
+      <p class="lead">A three-week-old electronic track jumped 28.6% in plays, carried by late-night shows in four cities.</p>
+    </div>
+  </article>
+</div>
+
+<!-- ============ Plans ============ -->
+<div data-view="plans">
+  <section class="wrap page-top center" aria-labelledby="plans-title">
+    <h1 class="h1" id="plans-title">Plans</h1>
+    <p class="lead muted" style="margin-top:12px">The charts are free for everyone. Plans add alerts, history and exports.</p>
+    <div class="billing" role="group" aria-label="Billing"><button type="button" data-bill="m" aria-pressed="true">Monthly</button><button type="button" data-bill="y" aria-pressed="false">Yearly <small>2 months free</small></button></div>
+  </section>
+  <section class="wrap" aria-label="Plans">
+    <div class="plans">
+      <div class="plan reveal"><div class="plan-top"><h2 class="h3">Free</h2></div><p class="price">$0</p><p class="muted">Forever</p>
+        <ul class="ticks"><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>The top 200, updated hourly</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>The weekly chart by email</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Follow up to 10 tracks</li></ul>
+        <a class="btn btn-quiet" href="#/signup?plan=free">Sign up free</a></div>
+      <div class="plan is-pick reveal"><div class="plan-top"><h2 class="h3">Pro</h2><span class="new">Most picked</span></div><p class="price" data-m="$6" data-y="$60">$6</p><p class="muted" data-m="per month" data-y="per year">per month</p>
+        <ul class="ticks"><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Everything in Free</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Hourly alerts for followed tracks</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Full chart history since 2014</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>CSV exports</li></ul>
+        <a class="btn btn-accent" href="#/signup?plan=pro">Start Pro</a></div>
+      <div class="plan reveal"><div class="plan-top"><h2 class="h3">Label</h2></div><p class="price" data-m="$29" data-y="$290">$29</p><p class="muted" data-m="per month" data-y="per year">per month</p>
+        <ul class="ticks"><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Everything in Pro</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Five team seats</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Artist and label reports</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Data feed access</li></ul>
+        <a class="btn btn-quiet" href="#/contact?topic=label">Talk to us</a></div>
+    </div>
+    <div class="tbl-wrap compare reveal">
+      <table class="tbl">
+        <caption class="sr-only">What each plan includes</caption>
+        <thead><tr><th scope="col">Compare</th><th scope="col">Free</th><th scope="col">Pro</th><th scope="col">Label</th></tr></thead>
+        <tbody>
+          <tr><td>Live chart and news</td><td><svg class="i" role="img" aria-label="Included"><use href="#i-check"/></svg></td><td><svg class="i" role="img" aria-label="Included"><use href="#i-check"/></svg></td><td><svg class="i" role="img" aria-label="Included"><use href="#i-check"/></svg></td></tr>
+          <tr><td>Followed tracks</td><td>10</td><td>Unlimited</td><td>Unlimited</td></tr>
+          <tr><td>Alerts</td><td>Weekly</td><td>Hourly</td><td>Hourly</td></tr>
+          <tr><td>Chart history</td><td>12 weeks</td><td>Since 2014</td><td>Since 2014</td></tr>
+          <tr><td>Exports</td><td>None</td><td>CSV</td><td>CSV and data feed</td></tr>
+          <tr><td>Seats</td><td>1</td><td>1</td><td>5</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="band" style="margin-top:var(--sec)" aria-labelledby="plans-q">
+    <div class="wrap"><h2 id="plans-q" class="h2">Questions about plans?</h2><div class="btn-row"><a class="btn btn-accent" href="#/help">Visit the help center</a><a class="btn btn-quiet" href="#/contact">Contact us</a></div></div>
+  </section>
+</div>
+
+<!-- ============ Sign up ============ -->
+<div data-view="signup">
+  <section class="wrap page-top split" aria-labelledby="signup-title">
+    <div>
+      <h1 class="h1" id="signup-title">Create your free account</h1>
+      <p class="lead muted" style="margin-top:12px">Follow tracks, get the weekly chart and set alerts.</p>
+      <form data-form="signup" novalidate>
+        <div class="grid2">
+          <div class="field"><label for="s-name">Name</label><input class="input" id="s-name" name="name" autocomplete="name" required aria-describedby="s-name-err"><p class="error" id="s-name-err" aria-live="polite"></p></div>
+          <div class="field"><label for="s-plan">Plan</label><select class="input" id="s-plan" name="plan" required aria-describedby="s-plan-err"><option value="free">Free</option><option value="pro">Pro, $6 per month</option><option value="label">Label, $29 per month</option></select><p class="error" id="s-plan-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field"><label for="s-email">Email</label><input class="input" id="s-email" name="email" type="email" autocomplete="email" required aria-describedby="s-email-err"><p class="error" id="s-email-err" aria-live="polite"></p></div>
+        <div class="field"><label for="s-pass">Password</label><div class="pw"><input class="input" id="s-pass" name="password" type="password" autocomplete="new-password" required pattern=".{8,}" aria-describedby="s-pass-err"><button class="icon-btn" type="button" data-reveal="s-pass" aria-label="Show password" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-eye"/></svg></button></div><p class="error" id="s-pass-err" aria-live="polite"></p></div>
+        <fieldset class="field"><legend>Genres you follow</legend>
+          <div class="picks" style="margin-top:8px">
+            <label class="pick"><input type="checkbox" name="genre" value="indie" checked><span>Indie</span></label>
+            <label class="pick"><input type="checkbox" name="genre" value="electronic" checked><span>Electronic</span></label>
+            <label class="pick"><input type="checkbox" name="genre" value="rock"><span>Rock</span></label>
+            <label class="pick"><input type="checkbox" name="genre" value="folk"><span>Folk</span></label>
+            <label class="pick"><input type="checkbox" name="genre" value="pop"><span>Pop</span></label>
+            <label class="pick"><input type="checkbox" name="genre" value="rnb"><span>R&amp;B</span></label>
+            <label class="pick"><input type="checkbox" name="genre" value="hiphop"><span>Hip-hop</span></label>
+          </div>
+        </fieldset>
+        <div class="field"><label class="check"><input type="checkbox" name="weekly" checked>Email me the weekly chart on Mondays</label></div>
+        <div class="field"><label class="check"><input id="s-terms" type="checkbox" name="terms" required aria-describedby="s-terms-err"><span>I agree to the <a class="link" href="#/legal">terms and privacy notice</a></span></label><p class="error" id="s-terms-err" aria-live="polite"></p></div>
+        <button class="btn btn-accent btn-block" type="submit">Create account</button>
+        <p class="small muted" style="margin-top:16px">Already have an account? <a class="link" href="#/login">Log in</a></p>
+      </form>
+      <div class="ok" data-success="signup" hidden tabindex="-1">
+        <span class="ok-mark"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+        <h2 class="h2">Welcome, <span data-echo="name">friend</span>.</h2>
+        <p class="muted">Your account is ready. Your first weekly chart arrives on Monday.</p>
+        <div class="btn-row"><a class="btn btn-accent" href="#/charts">Open the charts</a><button class="btn btn-quiet" type="button" data-reset>Start over</button></div>
+      </div>
+    </div>
+    <aside class="preview" aria-label="Preview of your chart">
+      <div class="phone"><div class="ph">
+        <div class="ph-bar"><span>9:41</span><i></i></div>
+        <div class="ph-total"><small>Your chart</small><b id="pv-hello">Hi there</b><small class="muted" id="pv-genres">Indie, Electronic</small><span class="ph-btn">Alerts</span></div>
+        <div class="ph-list" id="pv-list">
+          <div class="ph-seg"><b>This week</b><span>Plays</span></div>
+        </div>
+        <div class="ph-nav"><svg class="i on" aria-hidden="true"><use href="#i-home"/></svg><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></div>
+      </div></div>
+      <p class="small muted center">Your chart follows the genres you pick.</p>
+    </aside>
+  </section>
+</div>
+
+<!-- ============ Log in ============ -->
+<div data-view="login">
+  <section class="wrap login" aria-labelledby="login-title">
+    <h1 class="h1 center" id="login-title">Log in</h1>
+    <div class="panel">
+      <form data-form="login" novalidate>
+        <div class="field"><label for="l-email">Email</label><input class="input" id="l-email" name="email" type="email" autocomplete="email" required aria-describedby="l-email-err"><p class="error" id="l-email-err" aria-live="polite"></p></div>
+        <div class="field"><label for="l-pass">Password</label><div class="pw"><input class="input" id="l-pass" name="password" type="password" autocomplete="current-password" required aria-describedby="l-pass-err"><button class="icon-btn" type="button" data-reveal="l-pass" aria-label="Show password" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-eye"/></svg></button></div><p class="error" id="l-pass-err" aria-live="polite"></p></div>
+        <div class="field"><label class="check"><input type="checkbox" name="remember">Keep me logged in on this device</label></div>
+        <button class="btn btn-accent btn-block" type="submit">Log in</button>
+      </form>
+      <div class="ok" data-success="login" hidden tabindex="-1">
+        <span class="ok-mark"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+        <h2 class="h3">You are logged in.</h2>
+        <p class="muted">Your followed tracks and alerts are waiting on the charts page.</p>
+        <div class="btn-row"><a class="btn btn-accent" href="#/charts?tab=fav">See followed tracks</a><button class="btn btn-quiet" type="button" data-reset>Log out</button></div>
+      </div>
+    </div>
+    <p class="small muted center" style="margin-top:20px">New here? <a class="link" href="#/signup">Create a free account</a></p>
+  </section>
+</div>
+
+<!-- ============ Help ============ -->
+<div data-view="help">
+  <section class="wrap page-top" aria-labelledby="help-title">
+    <h1 class="h1" id="help-title">Help center</h1>
+    <label class="search" style="max-width:456px;height:48px;margin-top:24px"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><span class="sr-only">Search help</span><input id="help-q" type="search" placeholder="Search questions" autocomplete="off"></label>
+    <div class="faq" style="margin:40px 0 0">
+      <section class="help-group" aria-labelledby="hg1"><h2 class="h3" id="hg1" style="margin-top:16px">The charts</h2>
+        <details class="qa"><summary><span class="n">1</span>Which plays count?</summary><p class="a">Plays from stations and services that report to us, matched to one track each. A play has to last at least 30 seconds to count.</p></details>
+        <details class="qa"><summary><span class="n">2</span>Why did a track drop after I saw it climb?</summary><p class="a">The hourly chart moves with every report. Late reports can arrive up to 72 hours after a play and are added when they do.</p></details>
+        <details class="qa"><summary><span class="n">3</span>How do I report a wrong count?</summary><p class="a">Send the track, the station and the date from the <a class="link" href="#/contact?topic=correction">contact page</a>. We answer within two working days.</p></details>
+      </section>
+      <section class="help-group" aria-labelledby="hg2"><h2 class="h3" id="hg2" style="margin-top:32px">Your account</h2>
+        <details class="qa" id="help-app"><summary><span class="n">1</span>Is there an app?</summary><p class="a">Yes, for phone and tablet. It shows the same charts and sends the alerts you set on the website.</p></details>
+        <details class="qa"><summary><span class="n">2</span>How do alerts work?</summary><p class="a">Follow a track with the star. Free accounts get a weekly summary; Pro sends an alert when a followed track moves five places or more.</p></details>
+      </section>
+      <section class="help-group" aria-labelledby="hg3"><h2 class="h3" id="hg3" style="margin-top:32px">Plans</h2>
+        <details class="qa"><summary><span class="n">1</span>Can I switch between monthly and yearly?</summary><p class="a">Yes. The change starts at your next renewal and we show the new price before you confirm.</p></details>
+      </section>
+      <div class="empty" data-empty="help" hidden><p>Nothing matches that search. <a class="link" href="#/contact">Ask us directly</a>.</p></div>
+    </div>
+  </section>
+  <section class="band" style="margin-top:var(--sec)" aria-labelledby="help-more">
+    <div class="wrap"><h2 id="help-more" class="h2">Still stuck?</h2><a class="btn btn-accent" href="#/contact">Contact us</a></div>
+  </section>
+</div>
+
+<!-- ============ About ============ -->
+<div data-view="about">
+  <section class="wrap page-top sec" style="padding-top:clamp(40px,6vw,80px)" aria-labelledby="about-title">
+    <div class="duo">
+      <h1 id="about-title" class="display"><span>We count</span><span class="fig">every play</span></h1>
+      <p class="lead muted">Spinrank started in 2014 as a spreadsheet passed between six college stations. Today it is a small team counting plays for anyone who wants an honest chart of independent music.</p>
+    </div>
+    <ul class="stats" style="margin-top:56px">
+      <li><b>2014</b><span>First chart</span></li>
+      <li><b>1,400</b><span>Stations</span></li>
+      <li><b>38</b><span>Countries</span></li>
+      <li><b>11</b><span>People</span></li>
+    </ul>
+  </section>
+  <section class="wrap" id="method" aria-labelledby="method-title">
+    <h2 id="method-title" class="h2 reveal" style="margin-bottom:32px">How the chart is made</h2>
+    <ol class="steps">
+      <li class="panel reveal"><span class="n">1</span><h3 class="h3">Stations report</h3><p>Each station sends its play log every hour, from its playout system or a simple upload.</p></li>
+      <li class="panel reveal"><span class="n">2</span><h3 class="h3">We match and check</h3><p>Every play is matched to one track. Duplicates and test plays are removed, and big moves are checked by hand.</p></li>
+      <li class="panel reveal"><span class="n">3</span><h3 class="h3">The chart publishes</h3><p>The live chart updates on the hour. The weekly chart and its raw counts go out every Monday.</p></li>
+    </ol>
+  </section>
+  <section class="wrap sec" aria-labelledby="story-title">
+    <h2 id="story-title" class="h2 reveal" style="margin-bottom:24px">Our story</h2>
+    <ol class="timeline">
+      <li class="reveal"><b>2014</b><p>Six college stations share one spreadsheet and publish the first weekly chart.</p></li>
+      <li class="reveal"><b>2017</b><p>Community stations join. The chart passes 200 stations in nine countries.</p></li>
+      <li class="reveal"><b>2020</b><p>The hourly chart launches, with the full method published alongside it.</p></li>
+      <li class="reveal"><b>2023</b><p>Independent streaming services start sharing their logs. The app follows in the spring.</p></li>
+      <li class="reveal"><b>2026</b><p>1,400 stations in 38 countries report every hour.</p></li>
+    </ol>
+  </section>
+  <section class="wrap" style="padding-bottom:var(--sec)" aria-labelledby="team-title">
+    <h2 id="team-title" class="h2 reveal" style="margin-bottom:32px">The team</h2>
+    <ul class="team">
+      <li class="panel reveal"><span class="dot" style="--h:40" aria-hidden="true">IO</span><h3 class="h3">Ines Okafor</h3><p class="muted">Founder and editor</p></li>
+      <li class="panel reveal"><span class="dot" style="--h:200" aria-hidden="true">TL</span><h3 class="h3">Theo Lindqvist</h3><p class="muted">Data lead</p></li>
+      <li class="panel reveal"><span class="dot" style="--h:140" aria-hidden="true">PR</span><h3 class="h3">Priya Raman</h3><p class="muted">Station partnerships</p></li>
+      <li class="panel reveal"><span class="dot" style="--h:320" aria-hidden="true">SO</span><h3 class="h3">Sam Ortega</h3><p class="muted">News editor</p></li>
+    </ul>
+  </section>
+  <section class="band" aria-labelledby="about-cta">
+    <div class="wrap"><h2 id="about-cta" class="h2">Run a station? Get it counted.</h2><a class="btn btn-accent" href="#/contact?topic=station">Get in touch</a></div>
+  </section>
+</div>
+
+<!-- ============ Contact ============ -->
+<div data-view="contact">
+  <section class="wrap page-top split" aria-labelledby="contact-title">
+    <div>
+      <h1 class="h1" id="contact-title">Contact us</h1>
+      <p class="lead muted" style="margin-top:12px">Stations, labels, press and corrections. We answer within two working days.</p>
+      <form data-form="contact" novalidate>
+        <div class="grid2">
+          <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-err"><p class="error" id="c-name-err" aria-live="polite"></p></div>
+          <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-err"><p class="error" id="c-email-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field"><label for="c-topic">Topic</label><select class="input" id="c-topic" name="topic" required aria-describedby="c-topic-err"><option value="">Choose a topic</option><option value="station">Get my station counted</option><option value="label">Label plan</option><option value="correction">Report a wrong count</option><option value="press">Press</option><option value="other">Something else</option></select><p class="error" id="c-topic-err" aria-live="polite"></p></div>
+        <div class="field"><label for="c-msg">Message <span class="hint" id="c-count">0 / 600</span></label><textarea class="input" id="c-msg" name="message" maxlength="600" required aria-describedby="c-msg-err"></textarea><p class="error" id="c-msg-err" aria-live="polite"></p></div>
+        <button class="btn btn-accent" type="submit">Send message</button>
+      </form>
+      <div class="ok" data-success="contact" hidden tabindex="-1">
+        <span class="ok-mark"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+        <h2 class="h2">Thanks, <span data-echo="name">there</span>.</h2>
+        <p class="muted">Your message is in. We answer within two working days.</p>
+        <button class="btn btn-quiet" type="button" data-reset>Send another</button>
+      </div>
+    </div>
+    <div class="contact-side">
+      <div class="panel"><h2 class="h3">Stations</h2><p>Tell us your station name, city and how you log plays. Most stations connect in an afternoon.</p></div>
+      <div class="panel"><h2 class="h3">Press</h2><p>press@spinrank.example</p></div>
+      <div class="panel"><h2 class="h3">Office</h2><p>Spinrank, 4 Foundry Yard, Lisbon</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ Legal ============ -->
+<div data-view="legal">
+  <section class="wrap page-top" aria-labelledby="legal-title">
+    <h1 class="h1" id="legal-title" style="margin-bottom:40px">Privacy and terms</h1>
+    <div class="legal">
+      <nav class="toc" aria-label="On this page"><a href="#privacy">Privacy</a><a href="#terms">Terms</a><a href="#cookies">Cookies</a></nav>
+      <div class="prose">
+        <p>Last updated 1 November 2026. Replace this text with your own privacy notice and terms.</p>
+        <h2 id="privacy">Privacy</h2>
+        <p>We collect your email address and the tracks you follow so we can send the weekly chart and your alerts. We do not sell your data.</p>
+        <p>You can ask for a copy of your data or ask us to delete it at any time from your account settings or through the contact page.</p>
+        <h2 id="terms">Terms</h2>
+        <p>Chart positions are counted from plays reported to us and may change when late reports arrive. They are not sales figures and nobody can pay to change them.</p>
+        <p>You may quote and share the public chart with a link back. Exports from paid plans are for your own use.</p>
+        <h2 id="cookies">Cookies</h2>
+        <p>We use one cookie to keep you logged in and remember your theme. We do not use advertising cookies.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ 404 ============ -->
+<div data-view="404">
+  <section class="wrap lost" aria-labelledby="lost-title">
+    <h1 class="display" id="lost-title">404</h1>
+    <p class="lead" style="margin:16px auto 0">This page dropped off the chart.</p>
+    <div class="btn-row"><a class="btn btn-accent" href="#/">Back to home</a><a class="btn btn-quiet" href="#/charts">Open the charts</a></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a class="logo" href="#/" aria-label="Spinrank home"><svg aria-hidden="true"><use href="#mark"/></svg>Spinrank</a>
+        <ul class="f-pref" style="margin-top:24px">
+          <li><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg>English</li>
+          <li style="margin-top:14px"><button type="button" data-theme-alt><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg>Switch theme</button></li>
+        </ul>
+      </div>
+      <div><h2>Charts</h2><ul><li><a href="#/charts">Top tracks</a></li><li><a href="#/charts?tab=new">New entries</a></li><li><a href="#/charts?preset=climb">Biggest climbers</a></li><li><a href="#/charts?tab=fav">Following</a></li></ul></div>
+      <div><h2>Company</h2><ul><li><a href="#/about">About</a></li><li><a href="#/about?at=method">Method</a></li><li><a href="#/news">News</a></li><li><a href="#/contact">Contact</a></li></ul></div>
+      <div><h2>Support</h2><ul><li><a href="#/help">Help center</a></li><li><a href="#/plans">Plans</a></li><li><a href="#/login">Log in</a></li><li><a href="#/signup">Sign up</a></li></ul></div>
+      <div><h2>Legal</h2><ul><li><a href="#/legal">Privacy</a></li><li><a href="#/legal?at=terms">Terms</a></li><li><a href="#/legal?at=cookies">Cookies</a></li></ul></div>
+    </div>
+    <p class="fine"><b>About the figures:</b> Spinrank counts plays reported by stations and services that share their logs. Figures can change when late reports arrive. Chart positions are not sales figures and are never paid for. © 2026 Spinrank.</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+  const smooth = () => (reduced.matches ? "auto" : "smooth");
+  const fmt = (n) => Math.round(n).toLocaleString("en-US");
+  const short = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(2)}M` : `${(n / 1e3).toFixed(1)}K`);
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: dark first; light only after the visitor picks it ---------- */
+  const themeButton = $("#theme-toggle");
+  const syncTheme = () => {
+    const dark = root.dataset.theme !== "light";
+    themeButton.setAttribute("aria-label", `Switch to ${dark ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", dark ? "#i-sun" : "#i-moon");
+  };
+  if (store.get("spinrank-theme") === "light") root.dataset.theme = "light";
+  syncTheme();
+  new MutationObserver(syncTheme).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  const flipTheme = () => {
+    const next = root.dataset.theme === "light" ? "dark" : "light";
+    root.dataset.theme = next;
+    store.set("spinrank-theme", next);
+  };
+  themeButton.addEventListener("click", flipTheme);
+  $("[data-theme-alt]").addEventListener("click", flipTheme);
+
+  /* ---------- Underline tabs: data-tabs="<id>" shows the matching [data-pane] inside that element ---------- */
+  $$("[data-tabs]").forEach((group) => group.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-show]");
+    if (!button) return;
+    $$("[data-show]", group).forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    $$("[data-pane]", document.getElementById(group.dataset.tabs)).forEach((pane) => pane.classList.toggle("is-on", pane.dataset.pane === button.dataset.show));
+  }));
+
+  /* ---------- Counter headline: counts up once; the final number is already in the HTML ---------- */
+  function countUp(scope) {
+    if (reduced.matches) return;
+    $$("[data-count]:not(.is-counted)", scope).forEach((el) => {
+      el.classList.add("is-counted");
+      const target = Number(el.dataset.count);
+      const start = performance.now();
+      const step = (now) => {
+        const t = Math.min(1, (now - start) / 1400);
+        el.textContent = fmt(target * (1 - Math.pow(1 - t, 4)));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  }
+
+  /* ---------- Code card: decorative modules around the three corner squares ---------- */
+  const qr = $("#qr");
+  let seed = 7;
+  const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
+  let modules = "";
+  for (let y = 0; y < 25; y++) for (let x = 0; x < 25; x++) {
+    const corner = (x < 8 && y < 8) || (x > 16 && y < 8) || (x < 8 && y > 16);
+    if (!corner && rnd() < 0.48) modules += `M${x} ${y}h1v1h-1z`;
+  }
+  qr.insertAdjacentHTML("beforeend", `<path fill="#15171b" d="${modules}"/>`);
+
+  /* ---------- Chart data: the table rows are the single source ---------- */
+  const GENRES = { indie: "Indie", rock: "Rock", electronic: "Electronic", folk: "Folk", pop: "Pop", rnb: "R&B", hiphop: "Hip-hop" };
+  const tbody = $("#chart-table tbody");
+  const TRACKS = new Map($$("tr", tbody).map((tr, i) => [tr.dataset.id, {
+    id: tr.dataset.id, rank: i + 1, tr,
+    title: $(".t-name b", tr).textContent, artist: $(".t-name span", tr).textContent, hue: $(".dot", tr).style.getPropertyValue("--h"),
+    genre: tr.dataset.genre, plays: Number(tr.dataset.plays), chg: tr.dataset.chg, weeks: tr.dataset.w, peak: tr.dataset.peak, label: tr.dataset.label,
+    hist: tr.dataset.h.split(" ").map(Number),
+  }]));
+  const chgText = (t) => (t.chg === "new" ? "New" : `${t.chg.startsWith("-") ? "−" : "+"}${Math.abs(Number(t.chg)).toFixed(1)}%`);
+  const chgClass = (t) => (t.chg === "new" ? "" : t.chg.startsWith("-") ? "down" : "up");
+  function linePath(values, w, pad, top, bottom) {
+    const lo = Math.min(...values) * 0.96, hi = Math.max(...values) * 1.02;
+    return values.map((v, i) => `${i ? "L" : "M"}${(pad + (i * (w - 2 * pad)) / (values.length - 1)).toFixed(1)} ${(bottom - ((v - lo) / (hi - lo)) * (bottom - top)).toFixed(1)}`).join("");
+  }
+  const esc = (text) => String(text).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const icon = (id) => `<svg class="i" aria-hidden="true"><use href="#${id}"/></svg>`;
+  const dot = (t) => `<span class="dot" style="--h:${t.hue}">${esc(t.title[0])}</span>`;
+  const chgCell = (t) => `<span class="chg ${chgClass(t)}">${t.chg === "new" ? '<span class="new">New</span>' : chgText(t)}</span>`;
+  /* Rows get their sparkline and follow star; summary cards and the desktop mockup are drawn from the same rows */
+  for (const t of TRACKS.values()) {
+    t.tr.insertAdjacentHTML("beforeend", `<td class="c-spark"><svg class="spark" viewBox="0 0 96 32" aria-hidden="true"><path d="${linePath(t.hist, 96, 2, 3, 29)}" fill="none" stroke="var(--${t.chg.startsWith("-") ? "down" : "up"})" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td class="c-act"><button class="star" type="button" aria-pressed="false" aria-label="Follow ${esc(t.title)}">${icon("i-star")}</button></td>`);
+  }
+  const all = [...TRACKS.values()];
+  const moved = all.filter((t) => t.chg !== "new").sort((a, b) => b.chg - a.chg);
+  const MINIS = [["top", "Top", all.slice(0, 3)], ["new", "New entries", all.filter((t) => t.chg === "new").slice(0, 3)], ["climb", "Biggest climbers", moved.slice(0, 3)], ["drop", "Biggest drops", moved.slice(-3).reverse()]];
+  $("#minis").innerHTML = MINIS.map(([key, name, list]) => `<section class="mini"><div class="mini-head"><h2>${name}</h2><button type="button" data-preset="${key}">More${icon("i-chev")}</button></div><ul>${list.map((t) => `<li><a href="#/track?t=${t.id}">${dot(t)}<b>${esc(t.title)}</b><span class="num">${short(t.plays)}</span>${chgCell(t)}</a></li>`).join("")}</ul></section>`).join("");
+  $("#minis").hidden = false;
+  $("#desk-rows").innerHTML = all.slice(0, 5).map((t) => `<li><span class="r">${dot(t)}<span class="t-name"><b>${esc(t.title)}</b><span>${esc(t.artist)}</span></span><span class="num">${fmt(t.plays)}</span>${chgCell(t)}</span></li>`).join("");
+
+  /* ---------- Following: one list for the table stars and the track page ---------- */
+  let favs = new Set();
+  try { favs = new Set(JSON.parse(store.get("spinrank-follow") || "[]")); } catch { favs = new Set(); }
+  function syncStars() {
+    for (const t of TRACKS.values()) $(".star", t.tr).setAttribute("aria-pressed", String(favs.has(t.id)));
+    const follow = $("#t-follow");
+    const on = favs.has(follow.dataset.id);
+    follow.setAttribute("aria-pressed", String(on));
+    $("span", follow).textContent = on ? "Following" : "Follow";
+  }
+  function toggleFav(id) {
+    if (favs.has(id)) favs.delete(id); else favs.add(id);
+    store.set("spinrank-follow", JSON.stringify([...favs]));
+    syncStars();
+    if (state.tab === "fav") runChart();
+  }
+  tbody.addEventListener("click", (event) => {
+    const star = event.target.closest(".star");
+    if (star) toggleFav(star.closest("tr").dataset.id);
+  });
+
+  /* ---------- Charts table: tabs, genre chips, search, sorting and presets ---------- */
+  const state = { tab: "all", genre: "all", q: "", sort: "rank", dir: -1 };
+  const value = (t, key) => (key === "plays" ? t.plays : key === "chg" ? Number(t.chg) || 0 : -t.rank);
+  const compare = (a, b) => {
+    if (state.sort === "chg" && (a.chg === "new") !== (b.chg === "new")) return a.chg === "new" ? 1 : -1;
+    return (value(b, state.sort) - value(a, state.sort)) * (state.dir < 0 ? 1 : -1);
+  };
+  function runChart({ flash = false } = {}) {
+    const q = state.q.trim().toLowerCase();
+    const list = [...TRACKS.values()].sort(compare);
+    let shown = 0;
+    for (const t of list) {
+      const on = (state.genre === "all" || t.genre === state.genre)
+        && (state.tab === "all" || (state.tab === "fav" ? favs.has(t.id) : t.chg === "new"))
+        && (!q || `${t.title} ${t.artist}`.toLowerCase().includes(q));
+      t.tr.hidden = !on;
+      tbody.append(t.tr);
+      if (on) { shown++; if (flash && !reduced.matches) { t.tr.classList.remove("is-flash"); void t.tr.offsetWidth; t.tr.classList.add("is-flash"); } }
+    }
+    $$("[data-tab]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tab === state.tab)));
+    $$("[data-genre]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.genre === state.genre)));
+    $$("th[data-sort]").forEach((th) => {
+      if (th.dataset.sort === state.sort) th.setAttribute("aria-sort", state.dir < 0 ? "descending" : "ascending");
+      else th.removeAttribute("aria-sort");
+    });
+    $("#chart-count").textContent = `${shown} ${shown === 1 ? "track" : "tracks"}`;
+    $('[data-empty="chart"]').hidden = shown > 0;
+  }
+  $$("[data-tab]").forEach((b) => b.addEventListener("click", () => { state.tab = b.dataset.tab; runChart(); }));
+  $$("[data-genre]").forEach((b) => b.addEventListener("click", () => { state.genre = b.dataset.genre; runChart(); }));
+  $("#chart-q").addEventListener("input", (event) => { state.q = event.target.value; runChart(); });
+  $$("th[data-sort] .sort").forEach((button) => button.addEventListener("click", () => {
+    const key = button.closest("th").dataset.sort;
+    state.dir = state.sort === key ? -state.dir : -1;
+    state.sort = key;
+    runChart({ flash: true });
+  }));
+  const PRESETS = { top: { sort: "rank", dir: -1, tab: "all" }, new: { sort: "rank", dir: -1, tab: "new" }, climb: { sort: "chg", dir: -1, tab: "all" }, drop: { sort: "chg", dir: 1, tab: "all" } };
+  function preset(name) {
+    Object.assign(state, PRESETS[name] || PRESETS.top, { genre: "all", q: "" });
+    $("#chart-q").value = "";
+    runChart({ flash: true });
+  }
+  $$("[data-preset]").forEach((b) => b.addEventListener("click", () => {
+    preset(b.dataset.preset);
+    $("#chart-tools").scrollIntoView({ behavior: smooth(), block: "start" });
+  }));
+  $("[data-clear]").addEventListener("click", () => preset("top"));
+
+  /* ---------- Track page: rendered from the same rows ---------- */
+  const CITIES = ["Lisbon", "Osaka", "Melbourne", "Toronto", "Glasgow", "Seoul", "Mexico City", "Cape Town"];
+  let track = TRACKS.values().next().value;
+  function series(t, days) {
+    if (days === 7) return t.hist;
+    let s = [...t.id].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 11);
+    const r = () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296);
+    const out = [...t.hist];
+    while (out.length < days) out.unshift(Math.max(4, out[0] * (1 + (r() - 0.56) * 0.1)));
+    return out;
+  }
+  function drawChart(days) {
+    const values = series(track, days);
+    const line = linePath(values, 720, 8, 24, 220);
+    $('[data-c="line"]').setAttribute("d", line);
+    $('[data-c="area"]').setAttribute("d", `${line}L712 220L8 220Z`);
+    $("#t-chart").setAttribute("aria-label", `Daily plays over the last ${days} days, from ${short(values[0] * 1000)} to ${short(values[values.length - 1] * 1000)}`);
+    $('[data-t="from"]').textContent = `${days} days ago`;
+    $('[data-t="range"]').textContent = `Low ${short(Math.min(...values) * 1000)} · High ${short(Math.max(...values) * 1000)}`;
+    $$("[data-range]").forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.range) === days)));
+  }
+  $$("[data-range]").forEach((b) => b.addEventListener("click", () => drawChart(Number(b.dataset.range))));
+  function renderTrack(id) {
+    track = TRACKS.get(id) || TRACKS.values().next().value;
+    const t = track;
+    const set = (key, text) => $$(`[data-t="${key}"]`).forEach((el) => { el.textContent = text; });
+    set("title", t.title); set("artist", t.artist); set("label", t.label); set("genre", GENRES[t.genre]);
+    set("plays", fmt(t.plays)); set("chg", chgText(t)); set("rank", `#${t.rank}`); set("peak", `#${t.peak}`); set("weeks", t.weeks);
+    $('[data-t="chg"]').className = chgClass(t);
+    const dot = $('[data-t="dot"]');
+    dot.style.setProperty("--h", t.hue);
+    dot.textContent = t.title[0];
+    $("#t-follow").dataset.id = t.id;
+    let s = [...t.id].reduce((a, c) => (a * 17 + c.charCodeAt(0)) >>> 0, 3);
+    const shares = CITIES.map((city) => [city, 6 + ((s = (s * 1103515245 + 12345) >>> 0) % 20)]).sort((a, b) => b[1] - a[1]).slice(0, 6);
+    const total = shares.reduce((a, [, v]) => a + v, 0);
+    $("#t-cities").innerHTML = shares.map(([city, v]) => `<li><span>${city}</span><span class="bar"><i style="--w:${Math.round((v / shares[0][1]) * 100)}%"></i></span><span>${Math.round((v / total) * 100)}%</span></li>`).join("");
+    drawChart(7);
+    syncStars();
+  }
+  $("#t-follow").addEventListener("click", () => toggleFav(track.id));
+
+  /* ---------- News: chips and search; the post page reads its card ---------- */
+  const POSTS = {
+    "neon-climb": { lead: "A three-week-old electronic track jumped 28.6% in plays, carried by late-night shows in four cities.",
+      body: ["Neon Orchard by Tilde Moss entered at number 31 three weeks ago. This week it reached number 4, the largest weekly rise we have counted this year.", "We check every big climb by hand. This one held up: the plays came from 212 stations, none with more than 3% of the total."],
+      quote: "Most of the climb came after midnight, from presenters who played it twice in one show." },
+    "night-shift": { lead: "The overnight presenter at a small coastal station has not missed an hourly report in four years.",
+      body: ["The playout computer sends a log at five past every hour. When the line drops, the plays go on paper and are typed in before sunrise.", "Stations like this are why the chart moves overnight: a third of all plays we count happen between midnight and 06:00."],
+      quote: "If I play it, it should count. That is the whole deal." },
+    "record-shop": { lead: "A record shop with one till and two turntables now sends its in-store plays to the chart every evening.",
+      body: ["The owner logs each record in a shared sheet. At closing time it reaches us as one upload, matched like any station log.", "Shop plays are a small share of the chart, but they often spot a record weeks before radio does."],
+      quote: "Customers ask what is playing. Now the chart hears the answer too." },
+    "method-v42": { lead: "Late reports now count for 72 hours after a play instead of 48. Here is what that changes.",
+      body: ["Some stations upload once a day and a few after the weekend, so their Sunday plays used to miss the weekly chart.", "The weekly chart still closes on Sunday at 23:59 UTC. Later plays join the live chart in the next hour."],
+      quote: "A fair chart waits for the quiet stations too." },
+    "six-weeks": { lead: "Mara Vey spent six straight weeks at the top with Glass Harbour. We asked her how it started.",
+      body: ["The song was recorded in two days in a room above a bakery. Stations in Lisbon picked it up first; Osaka and Melbourne followed within a week.", "She does not check the chart every hour, she says. Her drummer does, and sends a screenshot every Monday."],
+      quote: "I wanted one person to hear it at the right time of night." },
+    "new-entries": { lead: "Fourteen tracks reached the top 200 for the first time this week, most of them folk and hip-hop.",
+      body: ["Five were first played on college stations. The highest new entry, Cold Bloom by Saffi Lane, landed at number 7.", "New entries keep their tag until their second week. Follow one with the star to see where it lands next."],
+      quote: "Five of fourteen were first played by student presenters." },
+    "counted-once": { lead: "When two stations share a broadcast, one play could be logged twice. Here is how we catch it.",
+      body: ["Shared broadcasts send the same log under two names. When the track and the time agree within a minute, we keep one play.", "Test plays, jingles and plays shorter than 30 seconds are removed before anything is counted."],
+      quote: "Counting once matters more than counting fast." },
+  };
+  const filterNews = (() => {
+    let topic = "all";
+    const run = (next = topic) => {
+      topic = next;
+      const q = $("#news-q").value.trim().toLowerCase();
+      let shown = 0;
+      $$("#post-list > li").forEach((li) => {
+        const on = (topic === "all" || li.dataset.topic === topic) && (!q || li.textContent.toLowerCase().includes(q));
+        li.hidden = !on;
+        if (on) shown++;
+      });
+      $$("[data-topic]:not(li)").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.topic === topic)));
+      $("#news-count").textContent = `${shown} ${shown === 1 ? "post" : "posts"}`;
+      $('[data-empty="news"]').hidden = shown > 0;
+    };
+    $$("button[data-topic]").forEach((b) => b.addEventListener("click", () => run(b.dataset.topic)));
+    $("#news-q").addEventListener("input", () => run());
+    return run;
+  })();
+  function renderPost(id) {
+    const post = POSTS[id] ? id : "neon-climb";
+    const card = $(`[data-post="${post}"]`);
+    const view = $('[data-view="post"]');
+    const title = card ? $("h3", card).textContent : $(".feat .h2").textContent;
+    const tag = card ? $(".tag", card).textContent : "Charts";
+    const date = (card ? $("time", card) : $(".feat time")).textContent;
+    $('[data-p="title"]', view).textContent = title;
+    $('[data-p="tag"]', view).textContent = tag;
+    const words = [POSTS[post].lead, ...POSTS[post].body, POSTS[post].quote].join(" ").split(" ").length;
+    $('[data-p="meta"]', view).textContent = `${date} · ${Math.max(2, Math.round(words / 30))} min read`;
+    const source = $(".cover", card || $(".feat"));
+    const cover = Object.assign(document.createElement("span"), { className: "cover", innerHTML: source.innerHTML });
+    if (source.dataset.tone) cover.dataset.tone = source.dataset.tone;
+    $('[data-p="cover"]', view).replaceChildren(cover);
+    const p = (text, cls) => Object.assign(document.createElement("p"), { textContent: text, className: cls || "" });
+    const quote = Object.assign(document.createElement("blockquote"), { textContent: POSTS[post].quote });
+    $('[data-p="body"]', view).replaceChildren(p(POSTS[post].lead, "lead"), p(POSTS[post].body[0]), quote, p(POSTS[post].body[1]));
+    return title;
+  }
+
+  /* ---------- Plans: monthly or yearly ---------- */
+  $$("[data-bill]").forEach((button) => button.addEventListener("click", () => {
+    const period = button.dataset.bill;
+    $$("[data-bill]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    $$("[data-m]").forEach((el) => { el.textContent = el.dataset[period]; });
+  }));
+
+  /* ---------- Sign up: the phone follows the form ---------- */
+  function syncPreview() {
+    const name = $("#s-name").value.trim().split(" ")[0];
+    $("#pv-hello").textContent = name ? `Hi, ${name}` : "Hi there";
+    const picked = $$('input[name="genre"]:checked').map((input) => input.value);
+    $("#pv-genres").textContent = picked.length ? picked.map((g) => GENRES[g]).join(", ") : "All genres";
+    const rows = [...TRACKS.values()].filter((t) => !picked.length || picked.includes(t.genre)).slice(0, 4);
+    $("#pv-list").innerHTML = `<div class="ph-seg"><b>This week</b><span>Plays</span></div>${rows.map((t) => `<div class="ph-row">${dot(t)}<b>${esc(t.title)}</b><span>${short(t.plays)}</span><span class="ph-chip${t.chg === "new" ? " nw" : t.chg.startsWith("-") ? " dn" : ""}">${chgText(t)}</span></div>`).join("")}`;
+  }
+  $("#s-name").addEventListener("input", syncPreview);
+  $$('input[name="genre"]').forEach((input) => input.addEventListener("change", syncPreview));
+  $$("[data-reveal]").forEach((button) => button.addEventListener("click", () => {
+    const input = document.getElementById(button.dataset.reveal);
+    const show = input.type === "password";
+    input.type = show ? "text" : "password";
+    button.setAttribute("aria-pressed", String(show));
+    button.setAttribute("aria-label", show ? "Hide password" : "Show password");
+  }));
+
+  /* ---------- Help: search hides questions and empty groups ---------- */
+  $("#help-q").addEventListener("input", (event) => {
+    const q = event.target.value.trim().toLowerCase();
+    let shown = 0;
+    $$(".help-group").forEach((group) => {
+      let inGroup = 0;
+      $$(".qa", group).forEach((qa) => {
+        const on = !q || qa.textContent.toLowerCase().includes(q);
+        qa.hidden = !on;
+        if (on) { inGroup++; if (q) qa.open = true; }
+      });
+      group.hidden = inGroup === 0;
+      shown += inGroup;
+    });
+    $('[data-empty="help"]').hidden = shown > 0;
+  });
+
+  /* ---------- Contact: character count ---------- */
+  const message = $("#c-msg");
+  message.addEventListener("input", () => { $("#c-count").textContent = `${message.value.length} / ${message.maxLength}`; });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "Spinrank: the independent music chart, counted every hour", charts: "Charts · Spinrank", track: "Track · Spinrank", news: "News · Spinrank", post: "News · Spinrank", plans: "Plans · Spinrank", signup: "Sign up · Spinrank", login: "Log in · Spinrank", help: "Help center · Spinrank", about: "About · Spinrank", contact: "Contact · Spinrank", legal: "Privacy and terms · Spinrank", "404": "Page not found · Spinrank" };
+  const sectionOf = { track: "charts", post: "news" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query), anchor: "" };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    current?.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    let title = titles[name];
+    const section = sectionOf[name] || name;
+    $$(".nav a, .menu a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === section) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "charts") {
+      if (p.get("preset")) preset(p.get("preset"));
+      else { state.tab = ["fav", "new"].includes(p.get("tab")) ? p.get("tab") : "all"; runChart(); }
+    }
+    if (name === "track") { renderTrack(p.get("t")); title = `${track.title} by ${track.artist} · Spinrank`; }
+    if (name === "news") filterNews(p.get("topic") || "all");
+    if (name === "post") title = `${renderPost(p.get("p"))} · Spinrank`;
+    if (name === "signup") { if (["free", "pro", "label"].includes(p.get("plan"))) $("#s-plan").value = p.get("plan"); syncPreview(); }
+    if (name === "contact" && p.get("topic")) $("#c-topic").value = p.get("topic");
+    document.title = title;
+    const at = p.get("at") && document.getElementById(p.get("at"));
+    if (at) requestAnimationFrame(() => { at.scrollIntoView({ block: "center" }); if (at.matches("input")) at.focus({ preventScroll: true }); });
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    if (name === "home") countUp(current);
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); closeMenu(); go(href); return; }
+    const target = href.length > 1 && document.querySelector(href);
+    if (!target) return;
+    event.preventDefault();
+    closeMenu();
+    if (!current.contains(target) && target.closest("[data-view]")) show({ view: target.closest("[data-view]").dataset.view, params: new URLSearchParams() }, { scroll: false });
+    target.scrollIntoView({ behavior: smooth(), block: "start" });
+    if (target.id === "main") target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Menu: opens below the bar, in the flow ---------- */
+  const menuButton = $("#menu-btn");
+  const menu = $("#menu");
+  function setMenu(open) {
+    menu.hidden = !open;
+    menuButton.setAttribute("aria-expanded", String(open));
+    menuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    $("use", menuButton).setAttribute("href", open ? "#i-x" : "#i-menu");
+  }
+  function closeMenu() { if (!menu.hidden) setMenu(false); }
+  menuButton.addEventListener("click", () => setMenu(menu.hidden));
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !menu.hidden) { setMenu(false); menuButton.focus(); } });
+  matchMedia("(min-width: 1080px)").addEventListener("change", closeMenu);
+
+  /* ---------- Reveal: keyframes on entry; visible without JS; timed fallback ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in")));
+  }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", patternMismatch: "Use at least 8 characters." };
+  const special = { checkbox: "Please tick this box to continue.", "select-one": "Please choose one." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error || !error.classList.contains("error")) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (problem === "valueMissing" && special[field.type]) || messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input[aria-describedby], select[aria-describedby], textarea[aria-describedby]", form);
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value && field.type !== "checkbox") checkField(field); });
+      field.addEventListener("input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+      field.addEventListener("change", () => { if (field.type === "checkbox" || field.tagName === "SELECT") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before "submit" fires, so the button's click runs it too (Enter clicks it). */
+    const button = $("[type=submit]", form);
+    const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+    const send = () => {
+      if (button.disabled) return;
+      const results = fields.map(checkField);
+      if (!results.every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      setTimeout(() => {
+        $$("[data-echo]", success).forEach((el) => { el.textContent = form.elements[el.dataset.echo]?.value.trim().split(" ")[0] || el.textContent; });
+        form.hidden = true;
+        success.hidden = false;
+        success.focus({ preventScroll: true });
+        button.disabled = false;
+      }, 500);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+    $("[data-reset]", success)?.addEventListener("click", () => {
+      form.reset();
+      fields.forEach((f) => f.removeAttribute("aria-invalid"));
+      $$(".error", form).forEach((e) => { e.textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      if (form.dataset.form === "signup") syncPreview();
+      fields[0].focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  syncStars();
+  const start = parse(location.hash);
+  show(start, { scroll: false });
+  if (start.anchor) document.querySelector(start.anchor)?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

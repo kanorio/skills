@@ -1,0 +1,1466 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Tideline League: women's basketball scores, standings and news</title>
+<meta name="description" content="Scores, standings, teams, tickets and stories from the Tideline League, women's basketball in eight towns on the coast.">
+<meta property="og:title" content="Tideline League: women's basketball scores, standings and news">
+<meta property="og:description" content="Scores, standings, teams, tickets and stories from the Tideline League, women's basketball in eight towns on the coast.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/libre-franklin-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/barlow-condensed-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts: a sturdy grotesque for reading and interface, a condensed face for names, numbers and scores ---------- */
+@font-face { font-family: "Libre Franklin"; src: url("fonts/libre-franklin-latin-wght.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Barlow Condensed"; src: url("fonts/barlow-condensed-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Barlow Condensed"; src: url("fonts/barlow-condensed-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Barlow Condensed"; src: url("fonts/barlow-condensed-latin-700-italic.woff2") format("woff2"); font-weight: 700; font-style: italic; font-display: swap; }
+
+/* ---------- Tokens: light (cool grey canvas, white cards) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(95.6% 0.004 255);
+  --surface: oklch(100% 0 0);
+  --surface-2: oklch(97.2% 0.003 255);   /* hover rows, chips, picture wells */
+  --text: oklch(21% 0.006 255);
+  --soft: oklch(36% 0.008 255);           /* summaries */
+  --text-muted: oklch(47% 0.01 255);      /* times, labels, losing scores */
+  --border: oklch(90.5% 0.005 255);
+  --field: oklch(62% 0.01 255);           /* input and chip outlines (3:1) */
+  --block: oklch(52% 0.205 27);           /* the name block, live, current tab: always with white text */
+  --accent: oklch(52% 0.205 27);          /* red as text on the page */
+  --accent-text: oklch(100% 0 0);
+  --link: oklch(50% 0.17 258);            /* links and outlined pills */
+  --link-fill: oklch(51% 0.18 258);       /* filled pills */
+  --link-soft: oklch(95.5% 0.022 258);    /* the sorted column, chosen options */
+  --bar: oklch(23% 0.004 255);            /* top bar, promo card, footer: dark in both themes */
+  --bar-text: oklch(97% 0 0);
+  --bar-muted: oklch(78% 0.006 255);
+  --up: oklch(47% 0.13 150);
+  --down: oklch(52% 0.205 27);
+  --danger: oklch(52% 0.205 27);
+  --ok: oklch(46% 0.12 150);
+  --shadow-card: 0 1px 2px oklch(20% 0.01 255 / 0.1), 0 0 0 1px oklch(20% 0.01 255 / 0.04);
+  --shadow-overlay: 0 16px 48px oklch(0% 0 0 / 0.28);
+  --sans: "Libre Franklin", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --fs-display: clamp(2.5rem, 1.8rem + 2.4vw, 4rem);
+  --fs-h1: clamp(1.75rem, 1.45rem + 1vw, 2.25rem);
+  --fs-h2: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --fs-h3: 1rem;
+  --fs-body: 1rem;
+  --fs-small: 0.8125rem;
+  --r-control: 6px;
+  --r-card: 8px;
+  --r-media: 6px;
+  --r-pill: 999px;
+  --gutter: clamp(12px, 3vw, 24px);
+  --max: 1240px;
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 300ms;
+  --ease: cubic-bezier(0.3, 0, 0, 1);
+}
+/* ---------- Tokens: dark. Same structure ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(14.5% 0.004 255); --surface: oklch(20.5% 0.005 255); --surface-2: oklch(24.5% 0.006 255); --text: oklch(95% 0.002 255);
+  --soft: oklch(85% 0.004 255); --text-muted: oklch(73% 0.008 255); --border: oklch(31% 0.006 255); --field: oklch(56% 0.01 255);
+  --accent: oklch(68% 0.18 25); --link: oklch(75% 0.12 255); --link-fill: oklch(55% 0.17 258); --link-soft: oklch(30% 0.05 258);
+  --bar: oklch(10% 0.003 255); --up: oklch(76% 0.14 150); --down: oklch(70% 0.17 25); --danger: oklch(70% 0.17 25); --ok: oklch(76% 0.13 150);
+  --shadow-card: 0 0 0 1px oklch(100% 0 0 / 0.04);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: oklch(14.5% 0.004 255); --surface: oklch(20.5% 0.005 255); --surface-2: oklch(24.5% 0.006 255); --text: oklch(95% 0.002 255);
+    --soft: oklch(85% 0.004 255); --text-muted: oklch(73% 0.008 255); --border: oklch(31% 0.006 255); --field: oklch(56% 0.01 255);
+    --accent: oklch(68% 0.18 25); --link: oklch(75% 0.12 255); --link-fill: oklch(55% 0.17 258); --link-soft: oklch(30% 0.05 258);
+    --bar: oklch(10% 0.003 255); --up: oklch(76% 0.14 150); --down: oklch(70% 0.17 25); --danger: oklch(70% 0.17 25); --ok: oklch(76% 0.13 150);
+    --shadow-card: 0 0 0 1px oklch(100% 0 0 / 0.04);
+  }
+}
+/* Team colours: crests, card tops and avatars (white letters on every one) */
+.t-gulls { --c: oklch(52% 0.1 195); } .t-pilots { --c: oklch(40% 0.11 265); } .t-foxes { --c: oklch(58% 0.16 45); } .t-owls { --c: oklch(46% 0.15 305); }
+.t-comets { --c: oklch(52% 0.19 27); } .t-herons { --c: oklch(54% 0.13 245); } .t-rivets { --c: oklch(50% 0.1 80); } .t-larks { --c: oklch(48% 0.12 150); }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 68px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs-body)/1.5 var(--sans); }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+h1, h2, h3, h4 { margin: 0; font-weight: 700; line-height: 1.2; text-wrap: balance; }
+p, ul, ol, figure, blockquote, dl, dd, fieldset { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+fieldset { padding: 0; border: 0; min-width: 0; }
+legend { padding: 0; }
+p { text-wrap: pretty; }
+:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: 8px; top: -80px; z-index: 60; padding: 12px 16px; border-radius: var(--r-control); background: var(--surface); color: var(--text); font-weight: 700; }
+.skip:focus { top: 8px; }
+.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+html:not(.js) .js-only { display: none; }
+.num { font-family: var(--display); font-weight: 700; font-variant-numeric: tabular-nums; }
+.muted { color: var(--text-muted); }
+
+/* ---------- Crest: a shield in the team colour with one condensed letter ---------- */
+.crest { display: inline-grid; place-items: center; flex: none; width: 24px; height: 26px; padding-bottom: 2px; background: var(--c, var(--text-muted)); color: #fff; font: 700 15px/1 var(--display); font-style: normal; clip-path: polygon(50% 0, 100% 12%, 100% 60%, 50% 100%, 0 60%, 0 12%); }
+.av { display: inline-grid; place-items: center; flex: none; width: 32px; height: 32px; border-radius: 50%; background: var(--c, var(--text-muted)); color: #fff; font: 700 0.75rem/1 var(--sans); }
+[data-theme="dark"] .av:not([class*="t-"]) { color: var(--bg); }
+
+/* ---------- Signature: the score strip ---------- */
+.strip { display: flex; height: 68px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.strip-head { flex: none; display: grid; align-content: center; padding: 0 16px 0 var(--gutter); border-right: 1px solid var(--border); font-size: 0.75rem; color: var(--text-muted); }
+.strip-head b { color: var(--text); font-size: 0.9375rem; }
+.strip-head:hover b { text-decoration: underline; }
+.games { flex: 1; min-width: 0; display: flex; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; position: relative; }
+.games::-webkit-scrollbar { display: none; }
+.g { flex: none; width: 152px; border-right: 1px solid var(--border); }
+.g a { display: grid; align-content: center; gap: 1px; height: 100%; padding: 0 12px; font-size: 0.8125rem; }
+.g a:hover { background: var(--surface-2); }
+.g-st { font-size: 0.6875rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.02em; }
+.g-t { display: flex; align-items: center; gap: 7px; line-height: 1.4; color: var(--text-muted); }
+.g-t b { font-weight: 700; }
+.g-t .num { margin-left: auto; font-size: 1rem; }
+.g-t.w, .g-t.w .num { color: var(--text); }
+.g-t .crest { width: 14px; height: 15px; font-size: 9px; padding: 0; }
+.g-t small { margin-left: auto; font-size: 0.75rem; }
+.strip-btn { flex: none; width: 44px; border: 0; border-left: 1px solid var(--border); background: var(--surface); color: var(--text-muted); display: grid; place-items: center; }
+.strip-btn:hover { color: var(--text); background: var(--surface-2); }
+.live { color: var(--accent); }
+.live::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 5px; border-radius: 50%; background: currentColor; vertical-align: 0.08em; animation: pulse 1.6s var(--ease) infinite; }
+@keyframes pulse { 50% { opacity: 0.25; } }
+
+/* ---------- Signature: the dark bar with the slanted name block ---------- */
+.bar { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; height: 52px; background: var(--bar); color: var(--bar-text); box-shadow: 0 2px 4px oklch(0% 0 0 / 0.16); }
+.brand { align-self: stretch; display: flex; }
+.block { display: flex; align-items: center; height: 100%; padding: 0 34px 0 var(--gutter); background: var(--block); color: #fff; font: italic 700 1.875rem/1 var(--display); letter-spacing: 0.01em; clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%); }
+.nav { display: flex; align-self: stretch; margin-left: 10px; }
+.nav a { display: flex; align-items: center; padding: 0 12px; font-size: 0.875rem; font-weight: 600; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease); }
+.nav a:hover { background: oklch(100% 0 0 / 0.08); }
+.nav a[aria-current="page"] { box-shadow: inset 0 -3px 0 var(--block); }
+.bar-end { margin-left: auto; display: flex; align-items: center; gap: 2px; padding-right: max(4px, calc(var(--gutter) - 10px)); }
+.icon-btn { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 50%; background: transparent; color: inherit; }
+.icon-btn:hover { background: oklch(100% 0 0 / 0.1); }
+.bar .pill { min-height: 34px; margin-right: 6px; }
+.i-sun, [data-theme="dark"] .i-moon { display: none; }
+[data-theme="dark"] .i-sun { display: block; }
+.menu-btn { display: none; }
+@media (max-width: 1099px) { .bar .pill { display: none; } }
+@media (max-width: 959px) { .nav { display: none; } .menu-btn { display: grid; } }
+
+/* ---------- Menu and search (a dialog from the left) ---------- */
+.menu { margin: 0; padding: 0; border: 0; width: min(380px, 100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; background: var(--surface); color: var(--text); box-shadow: var(--shadow-overlay); }
+.menu[open] { animation: menu-in var(--dur-slow) var(--ease); }
+@keyframes menu-in { from { opacity: 0; transform: translateX(-24px); } }
+.menu::backdrop { background: oklch(0% 0 0 / 0.45); }
+.menu-top { display: flex; align-items: center; justify-content: space-between; height: 52px; padding-right: 4px; background: var(--bar); color: var(--bar-text); }
+.menu-body { display: grid; gap: 16px; padding: 16px; }
+.search { position: relative; }
+.search .icon { position: absolute; left: 14px; top: 12px; color: var(--text-muted); }
+.search .input { padding-left: 44px; border-radius: var(--r-pill); }
+.results li + li, .menu-nav li + li, .links li + li, .heads li + li { border-top: 1px solid var(--border); }
+.results a { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 0; font-size: 0.875rem; font-weight: 500; }
+.results a:hover span, .links a:hover span, .heads a:hover, .hed a:hover, .lead-h a:hover, .bullets a:hover { text-decoration: underline; text-underline-offset: 2px; }
+.results small { display: block; color: var(--text-muted); font-size: 0.75rem; }
+.mini-h { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.menu-nav a { display: flex; align-items: center; justify-content: space-between; min-height: 46px; font-weight: 700; }
+.menu-nav a::after { content: ""; width: 8px; height: 8px; margin-right: 6px; border: solid var(--text-muted); border-width: 2px 2px 0 0; transform: rotate(45deg); }
+.menu-nav a[aria-current="page"] { color: var(--accent); }
+
+/* ---------- Layout: three card columns on the front, two inside ---------- */
+.page { width: min(100% - 2 * var(--gutter), var(--max)); margin: 20px auto 56px; }
+.cols { display: grid; gap: 16px; align-items: start; grid-template-columns: 220px minmax(0, 1fr) 300px; grid-template-areas: "left main right"; }
+.cols2 { display: grid; gap: 16px; align-items: start; grid-template-columns: minmax(0, 1fr) 300px; }
+.col { display: grid; gap: 12px; min-width: 0; }
+.cols > .col-main { grid-area: main; }
+.cols > .rail-l { grid-area: left; }
+.cols > .rail-r { grid-area: right; }
+@media (max-width: 1179px) { .cols { grid-template-columns: minmax(0, 1fr) 300px; grid-template-areas: "main right" "main left"; } }
+@media (max-width: 899px) {
+  .cols, .cols2 { grid-template-columns: minmax(0, 1fr); grid-template-areas: "main" "right" "left"; }
+}
+
+/* ---------- Cards, card heads, lists ---------- */
+.card { min-width: 0; padding: 16px; border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow-card); }
+.card-h { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); font-size: 0.9375rem; font-weight: 700; }
+.card-h a { color: var(--link); font-size: 0.8125rem; font-weight: 600; }
+.card-h a:hover { text-decoration: underline; }
+.links a { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 7px 0; font-size: 0.875rem; }
+.links .icon { width: 18px; height: 18px; color: var(--text-muted); }
+.heads a { display: block; padding: 10px 0; font-size: 0.875rem; font-weight: 500; line-height: 1.35; }
+.heads .icon { display: inline; width: 14px; height: 14px; margin-right: 6px; vertical-align: -2px; color: var(--link); }
+.sec-h { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font-size: 1.0625rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.01em; }
+.sec-h .crest { width: 32px; height: 35px; font-size: 20px; }
+.page-h { font-size: var(--fs-h1); font-weight: 800; letter-spacing: -0.01em; }
+.lede { margin-top: 6px; color: var(--soft); font-size: 1rem; }
+.kicker { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+
+/* ---------- Stories: pictures, play buttons, durations, headlines, meta lines ---------- */
+.media { position: relative; display: block; overflow: hidden; border-radius: var(--r-media); aspect-ratio: 16 / 9; background: var(--surface-2); }
+.media img { width: 100%; height: 100%; object-fit: cover; }
+.play { position: absolute; inset: 0; margin: auto; display: grid; place-items: center; width: 58px; height: 58px; border: 0; border-radius: 50%; background: oklch(100% 0 0 / 0.8); color: oklch(16% 0 0); transition: transform var(--dur-fast) var(--ease); }
+.play svg { width: 24px; height: 24px; margin-left: 3px; fill: currentColor; stroke: none; }
+a:hover .play, .play:hover { transform: scale(1.08); }
+.sm .play { width: 38px; height: 38px; } .sm .play svg { width: 16px; height: 16px; margin-left: 2px; }
+.dur { position: absolute; left: 8px; bottom: 8px; padding: 3px 7px; border-radius: 4px; background: oklch(0% 0 0 / 0.72); color: #fff; font: 700 0.75rem/1.2 var(--sans); }
+.hed { font-size: var(--fs-h3); font-weight: 700; line-height: 1.3; }
+.dek { color: var(--soft); font-size: 0.9375rem; line-height: 1.5; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; color: var(--text-muted); font-size: 0.75rem; }
+.meta > * + *::before { content: "\2022"; margin: 0 6px; }
+.lead { padding: 0; overflow: hidden; }
+.banner { padding: 6px 12px; background: linear-gradient(90deg, oklch(40% 0.11 265), var(--block)); color: #fff; text-align: center; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+.lead-in { display: grid; gap: 16px; padding: 16px; }
+.lead-body { display: grid; gap: 6px; }
+.lead-h { font-size: var(--fs-h2); font-weight: 800; line-height: 1.2; }
+.pair { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 14px; align-items: start; padding-top: 16px; border-top: 1px solid var(--border); }
+.pair > div { display: grid; gap: 6px; }
+.feature { padding: 0; border: 0; }
+.vrow-wrap { position: relative; }
+.vrow { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 36px) / 4); gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 2px; }
+.vrow::-webkit-scrollbar { display: none; }
+.vcard { scroll-snap-align: start; overflow: hidden; border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow-card); }
+.vcard .media { border-radius: 0; }
+.vcard h3 { padding: 8px 10px 4px; font-size: 0.8125rem; line-height: 1.3; }
+.vcard .meta { padding: 0 10px 10px; }
+.vnext { position: absolute; right: -8px; top: 22%; display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 50%; background: var(--surface); box-shadow: var(--shadow-card); color: var(--link); }
+.bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; padding-top: 14px; border-top: 1px solid var(--border); }
+.bullets a { display: flex; gap: 8px; font-size: 0.8125rem; font-weight: 500; line-height: 1.35; }
+.bullets a::before { content: ""; flex: none; width: 5px; height: 5px; margin-top: 0.45em; border-radius: 50%; background: var(--text-muted); }
+.rows > li { display: grid; grid-template-columns: minmax(0, 1fr) 196px; gap: 16px; padding: 16px 0; border-top: 1px solid var(--border); }
+.rows > li:first-child { border-top: 0; }
+.rows .txt { display: grid; gap: 6px; align-content: start; }
+.more-wrap { display: flex; justify-content: center; padding-top: 12px; }
+@media (max-width: 699px) {
+  .vrow { grid-auto-columns: 64%; } .vnext { display: none; }
+  .bullets, .feature { grid-template-columns: 1fr; }
+  .rows > li { grid-template-columns: minmax(0, 1fr) 112px; }
+  .rows .dek { display: none; }
+}
+
+/* ---------- Buttons, pills, segmented controls, chips ---------- */
+.pill, .pill-o { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; padding: 0 18px; border-radius: var(--r-pill); font-size: 0.875rem; font-weight: 700; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.pill { border: 0; background: var(--link-fill); color: #fff; }
+.pill:hover { background: color-mix(in oklch, var(--link-fill) 86%, black); }
+.pill-o { border: 1px solid var(--link); background: transparent; color: var(--link); }
+.pill-o:hover, .pill-o[aria-pressed="true"] { background: var(--link-soft); }
+.pill-o.sm { min-height: 32px; padding: 0 14px; font-size: 0.75rem; }
+.pill:disabled { opacity: 0.6; cursor: progress; }
+.seg { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--field); border-radius: var(--r-pill); }
+.seg button { min-height: 36px; padding: 0 16px; border: 0; border-radius: var(--r-pill); background: none; font-size: 0.875rem; font-weight: 600; }
+.seg button[aria-pressed="true"] { background: var(--text); color: var(--surface); }
+.tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--border); }
+.tabs button { flex: none; min-height: 44px; padding: 0 12px; border: 0; background: none; font-size: 0.875rem; font-weight: 600; color: var(--text-muted); box-shadow: inset 0 -3px 0 transparent; }
+.tabs button:hover { color: var(--text); }
+.tabs button[aria-pressed="true"] { color: var(--text); box-shadow: inset 0 -3px 0 var(--block); }
+@media (max-width: 699px) { .pill, .pill-o, .pill-o.sm { min-height: 44px; } }
+
+/* ---------- Left rail: the promo card ---------- */
+.promo { display: grid; gap: 14px; padding: 20px 16px; background: var(--bar); color: var(--bar-text); }
+.promo p { font: italic 700 2rem/0.95 var(--display); text-transform: uppercase; }
+.promo em { font-style: inherit; color: oklch(70% 0.18 27); }
+.promo .pill { justify-self: start; }
+
+/* ---------- Line scores (scores page, story head) ---------- */
+.lines { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+.lines th, .lines td { padding: 3px 5px; text-align: center; }
+.lines thead th { font-size: 0.6875rem; font-weight: 600; color: var(--text-muted); }
+.lines thead th:first-child { text-align: left; color: var(--text); font-weight: 800; text-transform: uppercase; }
+.lines tbody th { text-align: left; font-weight: 400; }
+.lines tbody th a { display: flex; align-items: center; gap: 10px; padding: 3px 0; }
+.lines tbody th a:hover b { text-decoration: underline; }
+.lines .crest { width: 26px; height: 28px; font-size: 16px; }
+.lines b { font-size: 0.9375rem; }
+.lines small { display: block; font-size: 0.6875rem; color: var(--text-muted); }
+.lines td { width: 30px; color: var(--text-muted); font: 600 0.9375rem/1 var(--display); font-variant-numeric: tabular-nums; }
+.lines .tot { position: relative; width: 52px; padding: 0 14px 0 8px; text-align: right; font-size: 1.375rem; font-weight: 700; }
+.lines .w .tot { color: var(--text); }
+.lines .w .tot::after { content: ""; position: absolute; right: 2px; top: 50%; margin-top: -5px; border-style: solid; border-width: 5px 6px 5px 0; border-color: transparent currentColor transparent transparent; }
+.day-h { padding-bottom: 12px; border-bottom: 1px solid var(--border); font-size: 1rem; }
+.game { display: grid; grid-template-columns: minmax(250px, 1.4fr) minmax(110px, 0.7fr) minmax(0, 1.2fr) auto; gap: 20px; padding: 18px 12px 18px 0; border-bottom: 1px solid var(--border); }
+.venue { display: grid; align-content: start; gap: 2px; padding-top: 4px; font-size: 0.75rem; color: var(--text-muted); }
+.venue b { color: var(--text); }
+.perf { display: grid; align-content: start; gap: 10px; font-size: 0.75rem; }
+.perf p { display: flex; align-items: center; gap: 10px; line-height: 1.35; }
+.perf .mini-h { grid-column: 1 / -1; }
+.perf b { font-size: 0.8125rem; }
+.acts { display: grid; align-content: start; gap: 8px; }
+.dates { display: flex; margin-top: 14px; border-top: 1px solid var(--border); }
+.date-list { position: relative; flex: 1; display: grid; grid-template-columns: repeat(8, minmax(58px, 1fr)); overflow-x: auto; scrollbar-width: none; }
+.date-list button { display: grid; justify-items: center; gap: 3px; padding: 10px 4px; border: 0; background: none; font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase; box-shadow: inset 0 -3px 0 transparent; }
+.date-list button b { color: var(--text); font-size: 0.8125rem; }
+.date-list button[aria-pressed="true"] { color: var(--text); font-weight: 700; box-shadow: inset 0 -3px 0 var(--block); }
+.date-list button:hover { background: var(--surface-2); }
+.arrow { flex: none; display: grid; place-items: center; width: 44px; border: 0; background: none; color: var(--link); }
+.empty { padding: 24px 0; color: var(--text-muted); }
+@media (max-width: 1099px) {
+  .game { grid-template-columns: minmax(0, 1fr) auto; padding-right: 0; }
+  .venue { display: none; }
+  .perf { grid-row: 2; grid-column: 1 / -1; grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 599px) {
+  .game { grid-template-columns: minmax(0, 1fr); }
+  .perf { grid-row: auto; grid-template-columns: 1fr; }
+  .acts { grid-auto-flow: column; justify-content: start; }
+  .lines .tot { font-size: 1.125rem; }
+}
+
+/* ---------- Signature: dense standings with a highlighted sort column ---------- */
+.tbl-wrap { position: relative; overflow-x: auto; margin-top: 12px; }
+.stand { width: 100%; min-width: 780px; border-collapse: collapse; font-size: 0.8125rem; }
+.stand th, .stand td { height: 38px; padding: 0 8px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--border); }
+.stand thead th { height: 34px; font-size: 0.6875rem; font-weight: 700; color: var(--text-muted); border-bottom-color: var(--field); }
+.stand td { font: 600 0.9375rem/1 var(--display); font-variant-numeric: tabular-nums; }
+.stand .tm { position: sticky; left: 0; z-index: 1; text-align: left; background: var(--surface); border-right: 1px solid var(--border); }
+.stand .tm a { display: flex; align-items: center; gap: 10px; font-weight: 500; }
+.stand .tm a:hover span { text-decoration: underline; }
+.stand .rk { width: 16px; color: var(--text-muted); font: 600 0.875rem/1 var(--display); }
+.stand th button { display: inline-flex; align-items: center; gap: 2px; padding: 0; border: 0; background: none; font: inherit; color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.stand th[aria-sort] { color: var(--text); }
+.stand th[aria-sort] .icon { display: inline; }
+.stand th .icon { display: none; width: 12px; height: 12px; stroke-width: 2.6; }
+/* The sorted column: W is column 2, PCT 4, PPG 8, OPP PPG 9, DIFF 10 */
+.stand[data-sorted="w"] :is(td, th):nth-child(2), .stand[data-sorted="pct"] :is(td, th):nth-child(4), .stand[data-sorted="ppg"] :is(td, th):nth-child(8), .stand[data-sorted="opp"] :is(td, th):nth-child(9), .stand[data-sorted="diff"] :is(td, th):nth-child(10) { background: var(--link-soft); }
+.stand .div-row th { height: 32px; text-align: left; background: var(--surface-2); color: var(--text); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+.stand .div-row th:first-child { position: sticky; left: 0; }
+.up { color: var(--up); } .down { color: var(--down); }
+.key { margin-top: 12px; font-size: 0.75rem; color: var(--text-muted); }
+.mini-t { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 0.8125rem; }
+.mini-t th, .mini-t td { height: 34px; padding: 0 4px; text-align: right; border-bottom: 1px solid var(--border); }
+.mini-t thead th { height: 28px; font-size: 0.6875rem; font-weight: 600; color: var(--text-muted); }
+.mini-t td { font: 600 0.9375rem/1 var(--display); font-variant-numeric: tabular-nums; }
+.mini-t .tm { text-align: left; }
+.mini-t .tm a { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.mini-t .crest { width: 18px; height: 20px; font-size: 11px; }
+.leaders li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid var(--border); font-size: 0.8125rem; }
+.leaders li small { display: block; color: var(--text-muted); font-size: 0.75rem; }
+.leaders .big { font: 700 1.75rem/1 var(--display); }
+.leaders .mini-h { margin-top: 14px; }
+
+/* ---------- Teams ---------- */
+.picker { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 10px 12px; }
+.picker a { display: inline-flex; align-items: center; gap: 8px; flex: none; min-height: 40px; padding: 0 14px 0 8px; border: 1px solid var(--border); border-radius: var(--r-pill); font-size: 0.8125rem; font-weight: 700; }
+.picker a:hover { background: var(--surface-2); }
+.picker a[aria-current="page"] { border-color: var(--text); box-shadow: inset 0 0 0 1px var(--text); }
+.team-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 18px; padding-top: 22px; border-top: 6px solid var(--c); }
+.team-head .crest { width: 72px; height: 78px; font-size: 44px; }
+.team-head h1 { font-size: var(--fs-h1); font-weight: 800; }
+.team-head .acts { grid-auto-flow: column; }
+.facts-row { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 4px; font-size: 0.875rem; color: var(--text-muted); }
+.facts-row b { color: var(--text); }
+.roster { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.roster th, .roster td { height: 44px; padding: 0 8px; text-align: left; border-bottom: 1px solid var(--border); }
+.roster thead th { height: 34px; font-size: 0.6875rem; font-weight: 700; color: var(--text-muted); }
+.roster .n { width: 48px; font: 700 1.125rem/1 var(--display); color: var(--text-muted); }
+.sched li { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; align-items: center; gap: 12px; min-height: 52px; padding: 8px 0; border-top: 1px solid var(--border); font-size: 0.875rem; }
+.sched li:first-child { border-top: 0; }
+.sched .opp { display: flex; align-items: center; gap: 10px; }
+.sched .res { font: 700 1rem/1 var(--display); }
+@media (max-width: 699px) {
+  .team-head { grid-template-columns: auto minmax(0, 1fr); }
+  .team-head .acts { grid-column: 1 / -1; justify-content: start; }
+  .team-head .crest { width: 56px; height: 61px; font-size: 34px; }
+}
+
+/* ---------- Article ---------- */
+.art { display: grid; gap: 16px; }
+.art h1 { font-size: var(--fs-h1); font-weight: 800; line-height: 1.15; letter-spacing: -0.01em; }
+.art .dek { font-size: 1.0625rem; }
+.byline { display: flex; align-items: center; gap: 10px; font-size: 0.8125rem; }
+.byline b { display: block; }
+.art-hero figcaption { margin-top: 8px; font-size: 0.8125rem; color: var(--text-muted); }
+.prog { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: oklch(100% 0 0 / 0.3); }
+.prog i { display: block; height: 100%; background: var(--block); transform-origin: left; transform: scaleX(var(--p, 0)); }
+.prose { display: grid; gap: 18px; max-width: 680px; font-size: 1.0625rem; line-height: 1.65; }
+.prose h2 { margin-top: 6px; font-size: 1.25rem; font-weight: 800; }
+.prose a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+.quote { padding-left: 16px; border-left: 4px solid var(--block); }
+.quote p { font: italic 700 1.625rem/1.15 var(--display); }
+.quote cite { display: block; margin-top: 8px; font: 600 0.8125rem/1.3 var(--sans); font-style: normal; color: var(--text-muted); }
+.box { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.box th, .box td { height: 38px; padding: 0 8px; text-align: right; border-bottom: 1px solid var(--border); }
+.box th:first-child, .box td:first-child { text-align: left; }
+.box thead th { font-size: 0.6875rem; color: var(--text-muted); }
+.box td { font: 600 0.9375rem/1 var(--display); font-variant-numeric: tabular-nums; }
+.box td:first-child { font: 500 0.875rem/1.2 var(--sans); }
+
+/* ---------- Tickets ---------- */
+.tiers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+.tier { position: relative; display: grid; align-content: start; gap: 12px; padding: 18px; border: 1px solid var(--border); border-radius: var(--r-card); }
+.tier.pick { border: 2px solid var(--link); padding: 17px; }
+.tag { justify-self: start; padding: 3px 8px; border-radius: 4px; background: var(--link-soft); color: var(--link); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.price { font: 700 2.75rem/1 var(--display); }
+.price small { font: 500 0.8125rem/1 var(--sans); color: var(--text-muted); }
+.ticks { display: grid; gap: 8px; font-size: 0.875rem; }
+.ticks li { display: flex; gap: 10px; }
+.ticks li::before { content: ""; flex: none; width: 6px; height: 11px; margin: 2px 4px 0; border: solid var(--ok); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+@media (max-width: 799px) { .tiers { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Forms: errors float in reserved space, so the button never moves ---------- */
+.form { display: grid; gap: 2px; max-width: 680px; margin-top: 16px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+.field { display: grid; gap: 6px; }
+.field > label, .legend { font-size: 0.8125rem; font-weight: 700; }
+.opt-note { font-weight: 400; color: var(--text-muted); }
+.input { width: 100%; min-height: 44px; padding: 0 12px; border: 1px solid var(--field); border-radius: var(--r-control); background: var(--surface); transition: border-color var(--dur-fast) var(--ease); }
+textarea.input { min-height: 120px; padding: 10px 12px; resize: vertical; }
+.input:hover { border-color: var(--text-muted); }
+.input:focus-visible { outline: 2px solid var(--link); outline-offset: 1px; border-color: var(--link); }
+.input[aria-invalid="true"] { border-color: var(--danger); box-shadow: inset 3px 0 0 var(--danger); }
+.err { min-height: 1.375rem; padding-top: 3px; color: var(--danger); font-size: 0.75rem; font-weight: 600; }
+.check { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; }
+.check input { flex: none; width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--link-fill); }
+.opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 6px; }
+.opt { position: relative; display: grid; }
+.opt input { position: absolute; top: 14px; right: 14px; width: 18px; height: 18px; margin: 0; accent-color: var(--link-fill); }
+.opt span { display: grid; gap: 4px; padding: 14px 40px 14px 14px; border: 1px solid var(--field); border-radius: var(--r-card); font-size: 0.8125rem; color: var(--text-muted); cursor: pointer; }
+.opt b { color: var(--text); font-size: 0.9375rem; }
+.opt input:checked + span { border-color: var(--link); background: var(--link-soft); box-shadow: inset 0 0 0 1px var(--link); }
+.form-end { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-top: 6px; }
+.fine { font-size: 0.75rem; color: var(--text-muted); }
+.success { display: grid; gap: 8px; margin-top: 16px; padding: 20px; border-left: 4px solid var(--ok); border-radius: var(--r-card); background: var(--surface-2); }
+.success h2, .success h3 { display: flex; align-items: center; gap: 8px; font-size: 1.0625rem; }
+.success .icon { color: var(--ok); }
+.nl-form { display: grid; gap: 8px; margin-top: 12px; }
+@media (max-width: 699px) { .grid2, .opts { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- About, FAQ, legal, 404 ---------- */
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+.facts li { padding: 14px; border-radius: var(--r-card); background: var(--surface-2); font-size: 0.8125rem; color: var(--text-muted); }
+.facts b { display: block; color: var(--text); font: 700 2.5rem/1 var(--display); }
+.steps { display: grid; gap: 12px; counter-reset: s; margin-top: 12px; }
+.steps li { display: grid; grid-template-columns: 36px minmax(0, 1fr); align-items: center; gap: 12px; font-size: 0.9375rem; counter-increment: s; }
+.steps li::before { content: counter(s); display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--text); color: var(--surface); font: 700 1.125rem/1 var(--display); }
+.people { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 12px; }
+.people li { display: flex; align-items: center; gap: 12px; font-size: 0.8125rem; color: var(--text-muted); }
+.people b { display: block; color: var(--text); font-size: 0.9375rem; }
+.people .av { width: 44px; height: 44px; font-size: 0.875rem; }
+.faq details { border-top: 1px solid var(--border); }
+.faq details:last-child { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 10px 0; font-weight: 700; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { color: var(--text-muted); transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(180deg); }
+.faq details p { padding: 0 0 16px; color: var(--soft); font-size: 0.9375rem; }
+.ways li { display: flex; gap: 12px; padding: 12px 0; border-top: 1px solid var(--border); font-size: 0.875rem; }
+.ways li:first-child { border-top: 0; }
+.ways .icon { color: var(--text-muted); }
+.ways b { display: block; }
+.ways a { color: var(--link); }
+.legal { display: grid; gap: 14px; max-width: 720px; color: var(--soft); }
+.legal h2 { margin-top: 8px; color: var(--text); font-size: 1.125rem; }
+.nf { display: grid; justify-items: center; gap: 12px; padding: 56px 16px; text-align: center; }
+.nf .big { font: italic 700 7rem/0.9 var(--display); color: var(--accent); }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 8px; }
+@media (max-width: 699px) { .facts { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- Footer (dark in both themes) ---------- */
+.site-footer { background: var(--bar); color: var(--bar-text); }
+.foot { display: grid; grid-template-columns: 1.3fr repeat(3, minmax(0, 1fr)); gap: 28px; width: min(100% - 2 * var(--gutter), var(--max)); margin: 0 auto; padding: 36px 0 28px; }
+.foot .block { display: inline-flex; height: 46px; padding-left: 16px; font-size: 1.625rem; }
+.foot p { margin-top: 12px; max-width: 30ch; color: var(--bar-muted); font-size: 0.8125rem; }
+.foot h2 { margin-bottom: 8px; color: var(--bar-muted); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.foot a { display: inline-block; padding: 5px 0; font-size: 0.875rem; }
+.foot a:hover { text-decoration: underline; }
+.foot-copy { width: min(100% - 2 * var(--gutter), var(--max)); margin: 0 auto; padding: 16px 0 24px; border-top: 1px solid oklch(100% 0 0 / 0.14); color: var(--bar-muted); font-size: 0.75rem; }
+@media (max-width: 799px) { .foot { grid-template-columns: 1fr 1fr; } .foot > div:first-child { grid-column: 1 / -1; } }
+
+/* ---------- Views (hash routes) ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.js [data-view].is-active { animation: view-in var(--dur-slow) var(--ease) both; }
+@keyframes view-in { from { opacity: 0; transform: translateY(6px); } }
+@media (max-width: 599px) { .strip-head { display: none; } .strip-btn { display: none; } .block { font-size: 1.625rem; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .live::before { animation: none; }
+}
+</style>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></symbol>
+  <symbol id="i-score" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 5v14M7 10v4M15.5 10h2v4h-2z"/></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14.5h18M9 4v16"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 5.5v6c0 4.5 3.2 7.8 7.5 9.5 4.3-1.7 7.5-5 7.5-9.5v-6z"/></symbol>
+  <symbol id="i-news" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12.5h8M8 16h5"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3.5 8.5V6h17v2.5a2.5 2.5 0 0 0 0 5V18h-17v-4.5a2.5 2.5 0 0 0 0-5Z"/><path d="M14 6v12" stroke-dasharray="2 2"/></symbol>
+  <symbol id="i-whistle" viewBox="0 0 24 24"><circle cx="9" cy="14" r="5"/><path d="M12.5 10.5 20 8v4l-6.2 1.4M5 6l2 2"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.01"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.5 3.5h3l1.5 4-2 1.5a11 11 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16.5 16.5 0 0 1 4.5 5.5a2 2 0 0 1 2-2Z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="strip" role="region" aria-label="Latest scores">
+  <a class="strip-head" href="#/scores"><b>Scores</b><span>Round 9 and 10</span></a>
+  <ol class="games" id="strip"><!-- built from GAMES by the script --></ol>
+  <button class="strip-btn js-only" id="strip-next" type="button" aria-label="Show more scores"><svg class="icon"><use href="#i-next"/></svg></button>
+</div>
+
+<header class="bar">
+  <a class="brand" href="#/" aria-label="Tideline League, home"><span class="block">TIDELINE</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="#/scores">Scores</a>
+    <a href="#/standings">Standings</a>
+    <a href="#/team">Teams</a>
+    <a href="#/news">News</a>
+    <a href="#/tickets">Tickets</a>
+    <a href="#/join">Join</a>
+    <a href="#/about">About</a>
+  </nav>
+  <div class="bar-end">
+    <a class="pill" href="#/tickets?tier=season&amp;at=buy">Season pass</a>
+    <button class="icon-btn" id="search-open" type="button" aria-label="Search teams and stories" aria-haspopup="dialog"><svg class="icon"><use href="#i-search"/></svg></button>
+    <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark theme"><svg class="icon i-moon"><use href="#i-moon"/></svg><svg class="icon i-sun"><use href="#i-sun"/></svg></button>
+    <button class="icon-btn menu-btn" id="menu-open" type="button" aria-label="Open menu" aria-haspopup="dialog"><svg class="icon"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+
+<dialog class="menu" id="menu" aria-label="Menu and search">
+  <div class="menu-top">
+    <span class="block">TIDELINE</span>
+    <button class="icon-btn" id="menu-close" type="button" aria-label="Close menu"><svg class="icon"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="menu-body">
+    <div class="search">
+      <label class="sr-only" for="q">Search teams and stories</label>
+      <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+      <input class="input" id="q" type="search" placeholder="Search teams, players or stories" autocomplete="off">
+    </div>
+    <p class="mini-h" id="q-status" aria-live="polite">Latest</p>
+    <ul class="results" id="results"></ul>
+    <nav aria-label="All pages">
+      <ul class="menu-nav">
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/scores">Scores and schedule</a></li>
+        <li><a href="#/standings">Standings</a></li>
+        <li><a href="#/team">Teams</a></li>
+        <li><a href="#/news">News</a></li>
+        <li><a href="#/tickets">Tickets</a></li>
+        <li><a href="#/join">Join the league</a></li>
+        <li><a href="#/about">About and FAQ</a></li>
+        <li><a href="#/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ======================= HOME ======================= -->
+<div data-view="home" class="page cols">
+  <h1 class="sr-only">Tideline League: women's basketball scores, standings and news</h1>
+  <div class="col col-main">
+    <article class="card lead">
+      <p class="banner">Round 9 &middot; Saturday night</p>
+      <div class="lead-in">
+        <a class="media" href="#/story" aria-label="Watch the highlights: Gulls 78, Comets 71"><img src="images/celebrate.svg" alt="Three Gulls players in teal raise their arms as confetti falls at Harbor Hall" width="1600" height="900"><span class="play" aria-hidden="true"><svg><use href="#i-play"/></svg></span><span class="dur">2:14</span></a>
+        <div class="lead-body">
+          <h2 class="lead-h"><a href="#/story">Calder scores 24 as the Gulls beat the Comets and clinch a playoff place</a></h2>
+          <p class="dek">Port Alder closed on a 9-2 run for a 78-71 win, its fourth in a row.</p>
+          <p class="meta"><span>2h</span><span>Callie Brandt</span></p>
+        </div>
+        <div class="pair">
+          <a class="media sm" href="#/story" tabindex="-1" aria-hidden="true"><img src="images/drive.svg" alt="" width="1600" height="900"></a>
+          <div>
+            <h3 class="hed"><a href="#/story">Quint's 26 points keep the Owls one game behind Port Alder</a></h3>
+            <p class="dek">Ashgrove pulled away in the fourth quarter to beat Kettle Falls 76-64.</p>
+            <p class="meta"><span>3h</span><span>Omar Feld</span></p>
+          </div>
+        </div>
+        <div class="vrow-wrap">
+          <ul class="vrow" id="vrow" aria-label="Videos">
+            <li class="vcard"><a class="media sm" href="#/story" tabindex="-1" aria-hidden="true"><img src="images/layup.svg" alt="" width="1600" height="900"><span class="play"><svg><use href="#i-play"/></svg></span><span class="dur">1:32</span></a><h3><a href="#/story">De Wit's three forces overtime at Quayside</a></h3><p class="meta"><span>3h</span></p></li>
+            <li class="vcard"><a class="media sm" href="#/story" tabindex="-1" aria-hidden="true"><img src="images/tipoff.svg" alt="" width="1600" height="900"><span class="play"><svg><use href="#i-play"/></svg></span><span class="dur">0:58</span></a><h3><a href="#/story">Every block from round 9 in under a minute</a></h3><p class="meta"><span>10h</span></p></li>
+            <li class="vcard"><a class="media sm" href="#/story" tabindex="-1" aria-hidden="true"><img src="images/huddle.svg" alt="" width="1600" height="900"><span class="play"><svg><use href="#i-play"/></svg></span><span class="dur">2:40</span></a><h3><a href="#/story">Rivets coach on ending the slide</a></h3><p class="meta"><span>4h</span></p></li>
+            <li class="vcard"><a class="media sm" href="#/story" tabindex="-1" aria-hidden="true"><img src="images/celebrate.svg" alt="" width="1600" height="900"><span class="play"><svg><use href="#i-play"/></svg></span><span class="dur">1:47</span></a><h3><a href="#/story">The last two minutes at Harbor Hall</a></h3><p class="meta"><span>1d</span></p></li>
+          </ul>
+          <button class="vnext js-only" id="vrow-next" type="button" aria-label="More videos"><svg class="icon"><use href="#i-next"/></svg></button>
+        </div>
+        <ul class="bullets">
+          <li><a href="#/standings">Standings: Port Alder leads the North by two games</a></li>
+          <li><a href="#/scores?d=2026-11-25">Wednesday: Gulls at Larks, Owls at Comets</a></li>
+          <li><a href="#/story">Box score: Gulls 78, Comets 71</a></li>
+          <li><a href="#/tickets">Tickets for round 10 are on sale</a></li>
+        </ul>
+      </div>
+    </article>
+
+    <section class="card" aria-labelledby="race-h">
+      <h2 class="sec-h" id="race-h"><i class="crest t-pilots" aria-hidden="true">P</i>The point guard nobody can stop</h2>
+      <article class="pair feature">
+        <a class="media" href="#/story" tabindex="-1" aria-hidden="true"><img src="images/jumper.svg" alt="" width="1600" height="900"></a>
+        <div>
+          <h3 class="lead-h"><a href="#/story">How Cleo Hartwell became the league's most dangerous passer</a></h3>
+          <p class="dek">Marrow Bay's point guard leads the league in assists for a third season, and she still watches every game twice.</p>
+          <p class="meta"><span>5h</span><span>Callie Brandt</span></p>
+        </div>
+      </article>
+    </section>
+
+    <section class="card js-only" aria-labelledby="feed-h">
+      <h2 class="card-h" id="feed-h">More stories <a href="#/news">All news</a></h2>
+      <ul class="rows" data-list="feed"></ul>
+      <div class="more-wrap"><button class="pill-o" type="button" id="feed-more">Show more stories</button></div>
+    </section>
+  </div>
+
+  <div class="col rail-r">
+    <section class="card" aria-labelledby="top-h">
+      <h2 class="card-h" id="top-h">Top headlines</h2>
+      <ul class="heads">
+        <li><a href="#/story">Calder scores 24 as the Gulls clinch a playoff place</a></li>
+        <li><a href="#/story">Larks win in overtime at Quayside after de Wit's late three</a></li>
+        <li><a href="#/story">Rivets end a five-game slide with a win over the Herons</a></li>
+        <li><a href="#/story">Playoff format confirmed: top two in each division go through</a></li>
+        <li><a href="#/scores?d=2026-11-23"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Cup quarterfinal: Pilots lead at Saltwick in the third</a></li>
+        <li><a href="#/story">Free winter clinics for ages 8 to 14 open in all eight towns</a></li>
+        <li><a href="#/story">Round 9 drew the biggest crowds of the season</a></li>
+      </ul>
+    </section>
+    <section class="card js-only" aria-labelledby="mini-h">
+      <h2 class="card-h" id="mini-h">Standings <a href="#/standings">Full table</a></h2>
+      <table class="mini-t">
+        <caption class="sr-only">League standings</caption>
+        <thead><tr><th scope="col" class="tm">Team</th><th scope="col">W</th><th scope="col">L</th><th scope="col">GB</th></tr></thead>
+        <tbody data-list="mini"></tbody>
+      </table>
+    </section>
+    <section class="card" id="newsletter" aria-labelledby="nl-h">
+      <h2 class="card-h" id="nl-h">Game-day email</h2>
+      <p class="dek" style="margin-top:10px;font-size:.875rem">Scores, tip-off times and one good story, every Monday and Friday.</p>
+      <form class="nl-form" data-form="newsletter" novalidate>
+        <div class="field"><label for="nl-email">Email address</label><input class="input" id="nl-email" name="email" type="email" autocomplete="email" required aria-describedby="nl-email-err"><p class="err" id="nl-email-err" aria-live="polite"></p></div>
+        <button class="pill" type="submit">Sign up</button>
+      </form>
+      <div class="success" data-success="newsletter" hidden><h3><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>You're on the list</h3><p class="dek">The next game-day email arrives on Friday.</p></div>
+    </section>
+  </div>
+
+  <div class="col rail-l">
+    <div class="card promo">
+      <p>Every home game. <em>One pass.</em></p>
+      <a class="pill" href="#/tickets?tier=season&amp;at=buy">Get a season pass</a>
+    </div>
+    <nav class="card" aria-labelledby="league-h">
+      <h2 class="card-h" id="league-h">League</h2>
+      <ul class="links">
+        <li><a href="#/scores"><svg class="icon" aria-hidden="true"><use href="#i-score"/></svg><span>Scores and schedule</span></a></li>
+        <li><a href="#/standings"><svg class="icon" aria-hidden="true"><use href="#i-table"/></svg><span>Standings</span></a></li>
+        <li><a href="#/news"><svg class="icon" aria-hidden="true"><use href="#i-news"/></svg><span>News and video</span></a></li>
+        <li><a href="#/tickets"><svg class="icon" aria-hidden="true"><use href="#i-ticket"/></svg><span>Tickets</span></a></li>
+        <li><a href="#/join"><svg class="icon" aria-hidden="true"><use href="#i-whistle"/></svg><span>Play, coach or volunteer</span></a></li>
+        <li><a href="#/about"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span>About the league</span></a></li>
+      </ul>
+    </nav>
+    <nav class="card js-only" aria-labelledby="teams-h">
+      <h2 class="card-h" id="teams-h">Teams <a href="#/team">All</a></h2>
+      <ul class="links" data-list="team-links"></ul>
+    </nav>
+  </div>
+</div>
+
+<!-- ======================= SCORES AND SCHEDULE ======================= -->
+<div data-view="scores" class="page cols2">
+  <div class="col col-main">
+    <section class="card">
+      <h1 class="page-h">Scores and schedule</h1>
+      <div class="dates">
+        <button class="arrow js-only" type="button" data-step="-1" aria-label="Previous day"><svg class="icon"><use href="#i-prev"/></svg></button>
+        <div class="date-list" role="group" aria-label="Pick a day">
+          <button type="button" data-date="2026-11-21" aria-pressed="true">Sat<b>Nov 21</b></button>
+          <button type="button" data-date="2026-11-22" aria-pressed="false">Sun<b>Nov 22</b></button>
+          <button type="button" data-date="2026-11-23" aria-pressed="false">Mon<b>Nov 23</b></button>
+          <button type="button" data-date="2026-11-24" aria-pressed="false">Tue<b>Nov 24</b></button>
+          <button type="button" data-date="2026-11-25" aria-pressed="false">Wed<b>Nov 25</b></button>
+          <button type="button" data-date="2026-11-26" aria-pressed="false">Thu<b>Nov 26</b></button>
+          <button type="button" data-date="2026-11-27" aria-pressed="false">Fri<b>Nov 27</b></button>
+          <button type="button" data-date="2026-11-28" aria-pressed="false">Sat<b>Nov 28</b></button>
+        </div>
+        <button class="arrow js-only" type="button" data-step="1" aria-label="Next day"><svg class="icon"><use href="#i-next"/></svg></button>
+      </div>
+    </section>
+    <section class="card" aria-labelledby="day-h">
+      <h2 class="day-h" id="day-h">Saturday, November 21, 2026</h2>
+      <div data-list="games">
+        <article class="game"><div><table class="lines"><caption class="sr-only">Cinder Hill Comets 71, Port Alder Gulls 78, final</caption><thead><tr><th scope="col">Final</th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th><th scope="col">T</th></tr></thead><tbody><tr><th scope="row"><a href="#/team?id=comets"><i class="crest t-comets" aria-hidden="true">C</i><span><b>Comets</b><small>6-4</small></span></a></th><td>18</td><td>20</td><td>15</td><td>18</td><td class="tot">71</td></tr><tr class="w"><th scope="row"><a href="#/team?id=gulls"><i class="crest t-gulls" aria-hidden="true">G</i><span><b>Gulls</b><small>8-2</small></span></a></th><td>21</td><td>17</td><td>22</td><td>18</td><td class="tot">78</td></tr></tbody></table></div><p class="venue"><b>Harbor Hall</b>Port Alder</p><div class="perf"><p class="mini-h">Top performers</p><p><span class="av t-gulls">AC</span><span><b>Ada Calder</b> PAG<br>24 PTS, 9 REB</span></p><p><span class="av t-comets">JB</span><span><b>Juno Brisco</b> CHC<br>19 PTS, 8 AST</span></p></div><div class="acts"><a class="pill-o sm" href="#/story">Recap</a><a class="pill-o sm" href="#/story?at=box">Box score</a></div></article>
+      </div>
+      <p class="empty" data-empty hidden>No games on this day. Pick another day above.</p>
+    </section>
+  </div>
+  <div class="col js-only">
+    <section class="card"><h2 class="card-h">League news <a href="#/news">All</a></h2><ul class="heads" data-list="heads"></ul></section>
+  </div>
+</div>
+
+<!-- ======================= STANDINGS ======================= -->
+<div data-view="standings" class="page cols2">
+  <div class="col col-main">
+    <section class="card">
+      <h1 class="page-h">Standings 2026</h1>
+      <p class="lede">Fourteen games each. The top two in each division reach the semifinals in March.</p>
+      <div class="seg js-only" role="group" aria-label="Group the table" style="margin-top:14px"><button type="button" data-groupby="league" aria-pressed="true">League</button><button type="button" data-groupby="division" aria-pressed="false">Division</button></div>
+      <div class="tbl-wrap">
+        <table class="stand" id="stand" data-sorted="pct">
+          <caption class="sr-only">League standings, sorted by winning percentage</caption>
+          <thead><tr><th scope="col" class="tm">Team</th><th scope="col"><button type="button" data-sort="w">W<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></button></th><th scope="col">L</th><th scope="col" aria-sort="descending"><button type="button" data-sort="pct">PCT<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></button></th><th scope="col">GB</th><th scope="col">HOME</th><th scope="col">AWAY</th><th scope="col"><button type="button" data-sort="ppg">PPG<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></button></th><th scope="col"><button type="button" data-sort="opp">OPP PPG<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></button></th><th scope="col"><button type="button" data-sort="diff">DIFF<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></button></th><th scope="col">STRK</th><th scope="col">L5</th></tr></thead>
+          <tbody>
+            <tr data-id="gulls"><th scope="row" class="tm"><a href="#/team?id=gulls"><span class="rk">1</span><i class="crest t-gulls" aria-hidden="true">G</i><span>Port Alder Gulls</span></a></th><td>8</td><td>2</td><td>.800</td><td>-</td><td>5-0</td><td>3-2</td><td>79.4</td><td>70.1</td><td class="up">+9.3</td><td>W4</td><td>4-1</td></tr>
+            <tr data-id="owls"><th scope="row" class="tm"><a href="#/team?id=owls"><span class="rk">2</span><i class="crest t-owls" aria-hidden="true">O</i><span>Ashgrove Owls</span></a></th><td>7</td><td>3</td><td>.700</td><td>1</td><td>4-1</td><td>3-2</td><td>77.8</td><td>72.0</td><td class="up">+5.8</td><td>W2</td><td>3-2</td></tr>
+            <tr data-id="comets"><th scope="row" class="tm"><a href="#/team?id=comets"><span class="rk">3</span><i class="crest t-comets" aria-hidden="true">C</i><span>Cinder Hill Comets</span></a></th><td>6</td><td>4</td><td>.600</td><td>2</td><td>4-1</td><td>2-3</td><td>75.2</td><td>72.9</td><td class="up">+2.3</td><td>L1</td><td>3-2</td></tr>
+            <tr data-id="larks"><th scope="row" class="tm"><a href="#/team?id=larks"><span class="rk">4</span><i class="crest t-larks" aria-hidden="true">L</i><span>Lindwood Larks</span></a></th><td>6</td><td>4</td><td>.600</td><td>2</td><td>3-2</td><td>3-2</td><td>74.6</td><td>73.8</td><td class="up">+0.8</td><td>W1</td><td>3-2</td></tr>
+            <tr data-id="pilots"><th scope="row" class="tm"><a href="#/team?id=pilots"><span class="rk">5</span><i class="crest t-pilots" aria-hidden="true">P</i><span>Marrow Bay Pilots</span></a></th><td>5</td><td>5</td><td>.500</td><td>3</td><td>3-2</td><td>2-3</td><td>72.1</td><td>72.6</td><td class="down">-0.5</td><td>L2</td><td>2-3</td></tr>
+            <tr data-id="rivets"><th scope="row" class="tm"><a href="#/team?id=rivets"><span class="rk">6</span><i class="crest t-rivets" aria-hidden="true">R</i><span>Ferro Park Rivets</span></a></th><td>3</td><td>7</td><td>.300</td><td>5</td><td>2-3</td><td>1-4</td><td>70.3</td><td>75.5</td><td class="down">-5.2</td><td>W1</td><td>2-3</td></tr>
+            <tr data-id="herons"><th scope="row" class="tm"><a href="#/team?id=herons"><span class="rk">7</span><i class="crest t-herons" aria-hidden="true">H</i><span>Saltwick Herons</span></a></th><td>3</td><td>7</td><td>.300</td><td>5</td><td>2-3</td><td>1-4</td><td>69.8</td><td>74.9</td><td class="down">-5.1</td><td>L3</td><td>1-4</td></tr>
+            <tr data-id="foxes"><th scope="row" class="tm"><a href="#/team?id=foxes"><span class="rk">8</span><i class="crest t-foxes" aria-hidden="true">F</i><span>Kettle Falls Foxes</span></a></th><td>2</td><td>8</td><td>.200</td><td>6</td><td>1-4</td><td>1-4</td><td>68.4</td><td>76.8</td><td class="down">-8.4</td><td>L4</td><td>1-4</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="key">W wins, L losses, PCT winning percentage, GB games behind the leader, PPG points per game, OPP PPG points allowed per game, DIFF the difference, STRK current streak, L5 the last five games. Select a column heading to sort.</p>
+    </section>
+  </div>
+  <div class="col">
+    <section class="card leaders" aria-labelledby="ldr-h">
+      <h2 class="card-h" id="ldr-h">Stat leaders</h2>
+      <h3 class="mini-h">Points per game</h3>
+      <ul><li><span class="av t-gulls">AC</span><span><b>Ada Calder</b><small>Gulls &middot; Guard</small></span><span class="big">22.4</span></li><li><span class="av t-owls">IQ</span><span><b>Isla Quint</b><small>Owls &middot; Guard</small></span><span class="big">20.9</span></li><li><span class="av t-rivets">TG</span><span><b>Tess Galloway</b><small>Rivets &middot; Guard</small></span><span class="big">19.6</span></li></ul>
+      <h3 class="mini-h">Rebounds per game</h3>
+      <ul><li><span class="av t-gulls">SM</span><span><b>Sade Marlowe</b><small>Gulls &middot; Center</small></span><span class="big">11.2</span></li><li><span class="av t-foxes">BC</span><span><b>Bryn Castell</b><small>Foxes &middot; Center</small></span><span class="big">10.4</span></li></ul>
+      <h3 class="mini-h">Assists per game</h3>
+      <ul><li><span class="av t-comets">JB</span><span><b>Juno Brisco</b><small>Comets &middot; Guard</small></span><span class="big">7.1</span></li><li><span class="av t-pilots">CH</span><span><b>Cleo Hartwell</b><small>Pilots &middot; Guard</small></span><span class="big">6.5</span></li></ul>
+    </section>
+  </div>
+</div>
+
+<!-- ======================= TEAM ======================= -->
+<div data-view="team" class="page cols2">
+  <div class="col col-main">
+    <nav class="card picker js-only" aria-label="All teams" data-list="picker"></nav>
+    <section class="card team-head t-gulls" id="team-head">
+      <i class="crest" id="tm-crest" aria-hidden="true">G</i>
+      <div>
+        <p class="kicker" id="tm-div">North Division</p>
+        <h1 id="tm-name">Port Alder Gulls</h1>
+        <p class="facts-row"><span><b id="tm-rec">8-2</b> record</span><span id="tm-place">1st in the North</span><span id="tm-venue">Harbor Hall</span></p>
+      </div>
+      <div class="acts"><button class="pill-o js-only" type="button" id="follow" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg><span>Follow</span></button><a class="pill" href="#/tickets">Tickets</a></div>
+    </section>
+    <section class="card" aria-labelledby="roster-h">
+      <h2 class="card-h" id="roster-h">Roster</h2>
+      <table class="roster"><caption class="sr-only">Starting roster</caption><thead><tr><th scope="col">No.</th><th scope="col">Name</th><th scope="col">Pos</th><th scope="col">Height</th></tr></thead>
+        <tbody data-list="roster"><tr><td class="n">4</td><th scope="row">Ada Calder</th><td>Guard</td><td>178 cm</td></tr><tr><td class="n">7</td><th scope="row">Wren Holloway</th><td>Guard</td><td>170 cm</td></tr><tr><td class="n">12</td><th scope="row">Mira Okafor</th><td>Forward</td><td>185 cm</td></tr><tr><td class="n">21</td><th scope="row">Tova Lindqvist</th><td>Forward</td><td>183 cm</td></tr><tr><td class="n">33</td><th scope="row">Sade Marlowe</th><td>Center</td><td>193 cm</td></tr></tbody>
+      </table>
+    </section>
+    <section class="card js-only" aria-labelledby="sched-h">
+      <h2 class="card-h" id="sched-h">Results and fixtures <a href="#/scores">All scores</a></h2>
+      <ul class="sched" data-list="sched"></ul>
+    </section>
+  </div>
+  <div class="col js-only">
+    <section class="card"><h2 class="card-h">Team news</h2><ul class="heads" data-list="team-news"></ul></section>
+  </div>
+</div>
+
+<!-- ======================= NEWS ======================= -->
+<div data-view="news" class="page cols2">
+  <div class="col col-main">
+    <section class="card">
+      <h1 class="page-h">News and video</h1>
+      <div class="tabs js-only" role="group" aria-label="Filter stories" style="margin-top:10px"><button type="button" data-cat="all" aria-pressed="true">All</button><button type="button" data-cat="recaps" aria-pressed="false">Game recaps</button><button type="button" data-cat="features" aria-pressed="false">Features</button><button type="button" data-cat="video" aria-pressed="false">Video</button><button type="button" data-cat="league" aria-pressed="false">League office</button><button type="button" data-cat="community" aria-pressed="false">Community</button></div>
+      <ul class="rows" data-list="news" style="margin-top:4px">
+        <li><div class="txt"><p class="kicker">Game recap</p><h2 class="hed"><a href="#/story">Calder scores 24 as the Gulls beat the Comets and clinch a playoff place</a></h2><p class="dek">Port Alder closed on a 9-2 run for a 78-71 win, its fourth in a row.</p><p class="meta"><span>2h</span><span>Callie Brandt</span></p></div><a class="media sm" href="#/story" tabindex="-1" aria-hidden="true"><img src="images/celebrate.svg" alt="" width="1600" height="900"><span class="play"><svg><use href="#i-play"/></svg></span><span class="dur">2:14</span></a></li>
+        <li><div class="txt"><p class="kicker">Game recap</p><h2 class="hed"><a href="#/story">Quint's 26 points keep the Owls one game behind Port Alder</a></h2><p class="dek">Ashgrove pulled away in the fourth quarter to beat Kettle Falls 76-64.</p><p class="meta"><span>3h</span><span>Omar Feld</span></p></div><a class="media sm" href="#/story" tabindex="-1" aria-hidden="true"><img src="images/drive.svg" alt="" width="1600" height="900"></a></li>
+      </ul>
+      <p class="empty" data-empty hidden>Nothing here yet. Try another filter.</p>
+      <div class="more-wrap js-only"><button class="pill-o" type="button" id="news-more">Show more stories</button></div>
+    </section>
+  </div>
+  <div class="col js-only">
+    <section class="card"><h2 class="card-h">Top headlines</h2><ul class="heads" data-list="heads"></ul></section>
+  </div>
+</div>
+
+<!-- ======================= STORY ======================= -->
+<div data-view="story" class="page cols2">
+  <div class="col col-main">
+    <article class="card art">
+      <table class="lines" style="max-width:420px"><caption class="sr-only">Line score: Comets 71, Gulls 78, final</caption><thead><tr><th scope="col">Final</th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th><th scope="col">T</th></tr></thead><tbody><tr><th scope="row"><a href="#/team?id=comets"><i class="crest t-comets" aria-hidden="true">C</i><b>Comets</b></a></th><td>18</td><td>20</td><td>15</td><td>18</td><td class="tot">71</td></tr><tr class="w"><th scope="row"><a href="#/team?id=gulls"><i class="crest t-gulls" aria-hidden="true">G</i><b>Gulls</b></a></th><td>21</td><td>17</td><td>22</td><td>18</td><td class="tot">78</td></tr></tbody></table>
+      <p class="kicker">Game recap &middot; Round 9</p>
+      <h1>Calder scores 24 as the Gulls beat the Comets and clinch a playoff place</h1>
+      <p class="dek">Port Alder closed on a 9-2 run for a 78-71 win, its fourth in a row, and is guaranteed a top-two finish in the North.</p>
+      <div class="byline"><span class="av" aria-hidden="true">CB</span><p><b>Callie Brandt</b><span class="muted">Senior writer &middot; <time datetime="2026-11-21T21:48">Nov 21, 2026, 9:48 PM</time></span></p></div>
+      <figure class="art-hero">
+        <div class="media"><img src="images/celebrate.svg" alt="Three Gulls players in teal celebrate under falling confetti at Harbor Hall" width="1600" height="900"><button class="play js-only" id="story-play" type="button" aria-pressed="false" aria-label="Play highlights"><svg><use href="#i-play"/></svg></button><span class="dur" id="story-clock">2:14</span><span class="prog" aria-hidden="true"><i id="story-bar"></i></span></div>
+        <figcaption>Highlights: the last two minutes at Harbor Hall (2:14).</figcaption>
+      </figure>
+      <div class="prose">
+        <p>Ada Calder scored 24 points and grabbed nine rebounds, and the Port Alder Gulls closed on a 9-2 run to beat the Cinder Hill Comets 78-71 on Saturday night at Harbor Hall.</p>
+        <p>The win is the Gulls' fourth in a row and guarantees them a top-two finish in the North Division, which means a place in the <a href="#/standings">semifinals in March</a>.</p>
+        <p>Cinder Hill led 53-52 after a three from Juno Brisco late in the third quarter. Port Alder answered with eight straight points, and with the game tied at 69, Calder's jumper with 1:40 left started the closing run.</p>
+        <blockquote class="quote"><p>"We didn't change anything at the end. We kept getting stops and trusted the next pass."</p><cite>Ada Calder, Gulls guard</cite></blockquote>
+        <p>Brisco finished with 19 points and eight assists for the Comets, who fall to 6-4 and two games behind in the North.</p>
+        <h2 id="box">Box score leaders</h2>
+        <div class="tbl-wrap" style="margin:0"><table class="box"><caption class="sr-only">Leaders from both teams</caption><thead><tr><th scope="col">Player</th><th scope="col">MIN</th><th scope="col">PTS</th><th scope="col">REB</th><th scope="col">AST</th></tr></thead><tbody><tr><td>Ada Calder, PAG</td><td>34</td><td>24</td><td>9</td><td>3</td></tr><tr><td>Sade Marlowe, PAG</td><td>30</td><td>14</td><td>11</td><td>1</td></tr><tr><td>Wren Holloway, PAG</td><td>31</td><td>12</td><td>3</td><td>6</td></tr><tr><td>Juno Brisco, CHC</td><td>35</td><td>19</td><td>4</td><td>8</td></tr><tr><td>Rhea Dunmore, CHC</td><td>29</td><td>16</td><td>10</td><td>0</td></tr></tbody></table></div>
+        <h2>What's next</h2>
+        <p>The Gulls visit Lindwood on Wednesday at 7:30 PM. Cinder Hill hosts Ashgrove the same night at 7:00 PM. <a href="#/tickets">Tickets for both games</a> are on sale.</p>
+      </div>
+      <ul class="bullets">
+        <li><a href="#/standings">Standings: Port Alder leads the North by two games</a></li>
+        <li><a href="#/team?id=gulls">Gulls roster and fixtures</a></li>
+      </ul>
+    </article>
+  </div>
+  <div class="col js-only">
+    <section class="card"><h2 class="card-h">Top headlines</h2><ul class="heads" data-list="heads"></ul></section>
+  </div>
+</div>
+
+<!-- ======================= TICKETS ======================= -->
+<div data-view="tickets" class="page cols2">
+  <div class="col col-main">
+    <section class="card">
+      <h1 class="page-h">Tickets</h1>
+      <p class="lede">Every seat is close to the floor. Children under 12 pay half price with an adult.</p>
+      <div class="seg js-only" role="group" aria-label="Ticket type" style="margin-top:14px"><button type="button" data-plan="single" aria-pressed="true">Single game</button><button type="button" data-plan="season" aria-pressed="false">Season pass, 7 home games</button></div>
+      <ul class="tiers">
+        <li class="tier"><h2 class="hed">General admission</h2><p class="price"><span data-single="$12" data-season="$70">$12</span> <small data-unit>per game</small></p><ul class="ticks"><li>Any open seat in the upper rows</li><li>Doors open 45 minutes before tip-off</li></ul><a class="pill-o" href="#/tickets?tier=general&amp;at=buy">Choose</a></li>
+        <li class="tier pick"><span class="tag">Best view</span><h2 class="hed">Reserved</h2><p class="price"><span data-single="$20" data-season="$120">$20</span> <small data-unit>per game</small></p><ul class="ticks"><li>Your own numbered seat</li><li>Lower rows behind the benches</li><li>Early entry for warm-ups</li></ul><a class="pill" href="#/tickets?tier=reserved&amp;at=buy">Choose</a></li>
+        <li class="tier"><h2 class="hed">Courtside</h2><p class="price"><span data-single="$45" data-season="$280">$45</span> <small data-unit>per game</small></p><ul class="ticks"><li>Floor-level seat on the sideline</li><li>Team sheet and a drink</li></ul><a class="pill-o" href="#/tickets?tier=courtside&amp;at=buy">Choose</a></li>
+      </ul>
+    </section>
+    <section class="card" id="buy" aria-labelledby="buy-h">
+      <h2 class="card-h" id="buy-h">Request tickets</h2>
+      <form class="form" data-form="tickets" novalidate>
+        <div class="grid2">
+          <div class="field"><label for="t-game">Game</label><select class="input" id="t-game" name="game"><option value="season">Season pass: all 7 home games</option><option value="g1" selected>Wed Nov 25, Gulls at Larks, 7:30 PM</option><option value="g2">Wed Nov 25, Owls at Comets, 7:00 PM</option><option value="g3">Sat Nov 28, Pilots at Foxes, 6:00 PM</option><option value="g4">Sat Nov 28, Rivets at Herons, 7:30 PM</option></select><p class="err"></p></div>
+          <div class="field"><label for="t-tier">Seats</label><select class="input" id="t-tier" name="tier"><option value="general">General admission</option><option value="reserved" selected>Reserved</option><option value="courtside">Courtside</option></select><p class="err"></p></div>
+          <div class="field"><label for="t-qty">Number of tickets</label><input class="input" id="t-qty" name="qty" type="number" min="1" max="10" value="2" required aria-describedby="t-qty-err"><p class="err" id="t-qty-err" aria-live="polite"></p></div>
+          <div class="field"><label for="t-name">Name</label><input class="input" id="t-name" name="name" autocomplete="name" required aria-describedby="t-name-err"><p class="err" id="t-name-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field"><label for="t-email">Email address</label><input class="input" id="t-email" name="email" type="email" autocomplete="email" required aria-describedby="t-email-err"><p class="err" id="t-email-err" aria-live="polite"></p></div>
+        <div class="form-end"><button class="pill" type="submit">Request tickets</button><p class="fine">We hold your seats for 48 hours and email you how to pay.</p></div>
+      </form>
+      <div class="success" data-success="tickets" hidden><h3><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Your seats are on hold</h3><p class="dek">Check your inbox for the payment link. Seats are held for 48 hours.</p></div>
+    </section>
+  </div>
+  <div class="col">
+    <section class="card"><h2 class="card-h">Good to know</h2><ul class="ways" style="margin-top:4px"><li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><p><b>Eight home courts</b>Every venue is on a bus route; parking is free after 6 PM.</p></li><li><svg class="icon" aria-hidden="true"><use href="#i-ticket"/></svg><p><b>Groups of 10 or more</b>Clubs and schools get one free ticket for every ten. <a href="#/contact?topic=tickets">Ask us</a>.</p></li><li><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><p><b>Postponed games</b>Tickets move to the new date automatically.</p></li></ul></section>
+  </div>
+</div>
+
+<!-- ======================= JOIN ======================= -->
+<div data-view="join" class="page">
+  <section class="card" style="max-width:860px;margin-inline:auto">
+    <h1 class="page-h">Play, coach or volunteer</h1>
+    <p class="lede">Registration for next season is open. Tell us how you want to take part and we will reply within a week.</p>
+    <form class="form" data-form="signup" novalidate>
+      <fieldset class="field" data-group aria-describedby="j-role-err">
+        <legend class="legend">I want to</legend>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="role" value="team"><span><b>Enter a team</b>Clubs register by March 31.</span></label>
+          <label class="opt"><input type="radio" name="role" value="player"><span><b>Try out</b>Open tryouts on January 10.</span></label>
+          <label class="opt"><input type="radio" name="role" value="volunteer"><span><b>Volunteer</b>Scorers, stats and doors.</span></label>
+        </div>
+        <p class="err" id="j-role-err" aria-live="polite"></p>
+      </fieldset>
+      <div class="grid2">
+        <div class="field"><label for="j-name">Full name</label><input class="input" id="j-name" name="name" autocomplete="name" required aria-describedby="j-name-err"><p class="err" id="j-name-err" aria-live="polite"></p></div>
+        <div class="field"><label for="j-email">Email address</label><input class="input" id="j-email" name="email" type="email" autocomplete="email" required aria-describedby="j-email-err"><p class="err" id="j-email-err" aria-live="polite"></p></div>
+      </div>
+      <div class="field"><label for="j-town">Nearest town</label><select class="input" id="j-town" name="town"><option>Port Alder</option><option>Cinder Hill</option><option>Marrow Bay</option><option>Ferro Park</option><option>Ashgrove</option><option>Lindwood</option><option>Saltwick</option><option>Kettle Falls</option><option>Somewhere else</option></select><p class="err"></p></div>
+      <div class="field"><label for="j-note">Anything we should know <span class="opt-note">(optional)</span></label><textarea class="input" id="j-note" name="note"></textarea><p class="err"></p></div>
+      <label class="check"><input type="checkbox" name="consent" required aria-describedby="j-consent-err"><span>The league may contact me about this registration.</span></label>
+      <p class="err" id="j-consent-err" aria-live="polite"></p>
+      <div class="form-end"><button class="pill" type="submit">Send registration</button></div>
+    </form>
+    <div class="success" data-success="signup" hidden><h2><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Registration received</h2><p class="dek">Thank you. Someone from the league office will email you within a week.</p></div>
+  </section>
+</div>
+
+<!-- ======================= ABOUT AND FAQ ======================= -->
+<div data-view="about" class="page cols2">
+  <div class="col col-main">
+    <section class="card">
+      <h1 class="page-h">About the league</h1>
+      <p class="lede">The Tideline League is women's basketball for eight towns on the coast. Teams play fourteen league games from October to February, a knockout cup before the holidays, and the top four meet in March.</p>
+      <ul class="facts"><li><b>8</b>teams</li><li><b>14</b>league games each</li><li><b>2011</b>first season</li><li><b>4</b>playoff places</li></ul>
+    </section>
+    <section class="card">
+      <h2 class="card-h">How a season works</h2>
+      <ol class="steps"><li><p><b>September.</b> Open tryouts and preseason camps in every town.</p></li><li><p><b>October to February.</b> Fourteen league games, home and away against every team.</p></li><li><p><b>November and December.</b> The Tideline Cup, a knockout for all eight teams.</p></li><li><p><b>March.</b> The top two in each division play the semifinals, then the final.</p></li></ol>
+    </section>
+    <section class="card faq" id="faq" aria-labelledby="faq-h">
+      <h2 class="card-h" id="faq-h" style="border:0">Questions</h2>
+      <details><summary>Where can I watch games?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Every game is in a home gym, and highlights are posted on the news page the same night.</p></details>
+      <details><summary>Do children need tickets?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Under-12s pay half price with an adult, and under-5s sit on a lap for free.</p></details>
+      <details><summary>How do we enter a team?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Register by March 31 on the <a class="muted" href="#/join">join page</a>. You need a coach, a home court and at least ten players.</p></details>
+      <details><summary>What happens when a game is postponed?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>We post the new date on the scores page within a day, and tickets move to it automatically.</p></details>
+    </section>
+  </div>
+  <div class="col">
+    <section class="card"><h2 class="card-h">League office</h2><ul class="people"><li><span class="av" aria-hidden="true">MC</span><p><b>Maeve Corrigan</b>Commissioner</p></li><li><span class="av" aria-hidden="true">DO</span><p><b>Daniel Osei</b>Operations and venues</p></li><li><span class="av" aria-hidden="true">RL</span><p><b>Rosa Lind</b>Referees</p></li><li><span class="av" aria-hidden="true">PS</span><p><b>Priya Shah</b>Community programs</p></li></ul></section>
+  </div>
+</div>
+
+<!-- ======================= CONTACT ======================= -->
+<div data-view="contact" class="page cols2">
+  <div class="col col-main">
+    <section class="card">
+      <h1 class="page-h">Contact the league office</h1>
+      <p class="lede">For tickets, entering a team, media requests or anything else. We answer on weekdays.</p>
+      <form class="form" data-form="contact" novalidate>
+        <div class="field"><label for="c-topic">Topic</label><select class="input" id="c-topic" name="topic"><option value="tickets">Tickets and groups</option><option value="teams">Entering a team</option><option value="media">Media and photos</option><option value="other" selected>Something else</option></select><p class="err"></p></div>
+        <div class="grid2">
+          <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-err"><p class="err" id="c-name-err" aria-live="polite"></p></div>
+          <div class="field"><label for="c-email">Email address</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-err"><p class="err" id="c-email-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field"><label for="c-msg">Message</label><textarea class="input" id="c-msg" name="message" required minlength="20" aria-describedby="c-msg-err"></textarea><p class="err" id="c-msg-err" aria-live="polite"></p></div>
+        <div class="form-end"><button class="pill" type="submit">Send message</button></div>
+      </form>
+      <div class="success" data-success="contact" hidden><h2><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Message sent</h2><p class="dek">Thanks for writing. We reply within two working days.</p></div>
+    </section>
+  </div>
+  <div class="col">
+    <section class="card"><h2 class="card-h">Other ways</h2><ul class="ways" style="margin-top:4px"><li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><p><b>Email</b><a href="mailto:office@tideline.example">office@tideline.example</a></p></li><li><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><p><b>Phone</b>+1 555 0142, weekdays 10 AM to 4 PM</p></li><li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><p><b>Office</b>14 Quay Street, Port Alder</p></li></ul></section>
+  </div>
+</div>
+
+<!-- ======================= PRIVACY ======================= -->
+<div data-view="privacy" class="page">
+  <section class="card legal" style="max-width:820px;margin-inline:auto">
+    <h1 class="page-h">Privacy notice</h1>
+    <p>This notice explains what the Tideline League collects when you use this site, and why. Last updated November 1, 2026.</p>
+    <h2>What we collect</h2>
+    <p>Only what you type into a form: your name, email address and message, the tickets you ask for, or your registration details. We do not use advertising trackers.</p>
+    <h2>How we use it</h2>
+    <p>To answer you, hold your tickets, process your registration and, if you sign up, send the game-day email. You can unsubscribe from any email.</p>
+    <h2>How long we keep it</h2>
+    <p>Messages for two years, ticket requests for one season, and registrations for as long as you take part in the league.</p>
+    <h2>Your choices</h2>
+    <p>Ask to see, correct or delete what we hold by writing to <a class="muted" href="#/contact">the league office</a>.</p>
+  </section>
+</div>
+
+<!-- ======================= 404 ======================= -->
+<div data-view="404" class="page">
+  <section class="card nf">
+    <p class="big" aria-hidden="true">404</p>
+    <h1 class="page-h">That page is out of bounds</h1>
+    <p class="lede">The link may be old, or the page has moved.</p>
+    <div class="actions"><a class="pill" href="#/">Go to the front page</a><a class="pill-o" href="#/scores">See the scores</a></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="foot">
+    <div><span class="block">TIDELINE</span><p>Women's basketball from eight towns on the coast, since 2011.</p></div>
+    <nav aria-labelledby="f1"><h2 id="f1">League</h2><ul><li><a href="#/scores">Scores and schedule</a></li><li><a href="#/standings">Standings</a></li><li><a href="#/team">Teams</a></li><li><a href="#/news">News and video</a></li></ul></nav>
+    <nav aria-labelledby="f2"><h2 id="f2">Fans</h2><ul><li><a href="#/tickets">Tickets</a></li><li><a href="#/?at=newsletter">Game-day email</a></li><li><a href="#/join">Play, coach or volunteer</a></li></ul></nav>
+    <nav aria-labelledby="f3"><h2 id="f3">Office</h2><ul><li><a href="#/about">About and FAQ</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/privacy">Privacy</a></li></ul></nav>
+  </div>
+  <p class="foot-copy">&copy; 2026 Tideline League. A sample site: the teams, players, scores and people are fictional.</p>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const BRAND = "Tideline League";
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: the system setting is the default; the toggle remembers a choice ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light theme" : "Switch to dark theme");
+  }
+  const saved = store.get("tideline-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("tideline-theme", next);
+  });
+  systemDark.addEventListener("change", (event) => { if (!store.get("tideline-theme")) applyTheme(event.matches ? "dark" : "light"); });
+
+  /* ---------- Content as data. The HTML keeps the first screen of every view so it reads without JavaScript;
+     the script rebuilds the parts that change (games by day, story lists, team pages). Paths are written out in full. ---------- */
+  const IMAGES = {
+    celebrate: "images/celebrate.svg", drive: "images/drive.svg", layup: "images/layup.svg", huddle: "images/huddle.svg",
+    jumper: "images/jumper.svg", trophy: "images/trophy.svg", clinic: "images/clinic.svg", tipoff: "images/tipoff.svg",
+    bench: "images/bench.svg", crowd: "images/crowd.svg", court: "images/court.svg",
+  };
+  // id: [town, name, abbreviation, division, home court, wins, losses, home, away, points per game, points allowed, streak, last five]
+  const TEAMS = {
+    gulls: ["Port Alder", "Gulls", "PAG", "North", "Harbor Hall", 8, 2, "5-0", "3-2", 79.4, 70.1, "W4", "4-1"],
+    owls: ["Ashgrove", "Owls", "ASH", "South", "The Roost", 7, 3, "4-1", "3-2", 77.8, 72.0, "W2", "3-2"],
+    comets: ["Cinder Hill", "Comets", "CHC", "North", "Ember Center", 6, 4, "4-1", "2-3", 75.2, 72.9, "L1", "3-2"],
+    larks: ["Lindwood", "Larks", "LIN", "South", "Meadow Gym", 6, 4, "3-2", "3-2", 74.6, 73.8, "W1", "3-2"],
+    pilots: ["Marrow Bay", "Pilots", "MBP", "North", "Quayside Arena", 5, 5, "3-2", "2-3", 72.1, 72.6, "L2", "2-3"],
+    rivets: ["Ferro Park", "Rivets", "FPR", "North", "Foundry Court", 3, 7, "2-3", "1-4", 70.3, 75.5, "W1", "2-3"],
+    herons: ["Saltwick", "Herons", "SAL", "South", "Tidewater Pavilion", 3, 7, "2-3", "1-4", 69.8, 74.9, "L3", "1-4"],
+    foxes: ["Kettle Falls", "Foxes", "KFF", "South", "Den Arena", 2, 8, "1-4", "1-4", 68.4, 76.8, "L4", "1-4"],
+  };
+  const team = (id) => {
+    const [town, name, abbr, div, venue, w, l, home, away, ppg, opp, strk, last5] = TEAMS[id];
+    return { id, town, name, abbr, div, venue, w, l, home, away, ppg, opp, strk, last5, full: `${town} ${name}`, pct: w / (w + l), diff: ppg - opp };
+  };
+  // Five players per team: "number name position height"
+  const ROSTERS = {
+    gulls: "4 Ada Calder G 178|7 Wren Holloway G 170|12 Mira Okafor F 185|21 Tova Lindqvist F 183|33 Sade Marlowe C 193",
+    owls: "11 Isla Quint G 175|5 Maren Ott G 168|19 Lula Adeyemi F 184|22 Vera Kostova F 186|35 Ines Pardo C 191",
+    comets: "3 Juno Brisco G 172|10 Pia Ferrante G 174|21 Lise Varga F 183|30 Nell Abernathy F 182|44 Rhea Dunmore C 195",
+    larks: "9 Fenna de Wit G 176|2 Ama Owusu G 169|17 Cora Bellweather F 182|28 Signe Aalto F 187|40 Dina Rossetti C 192",
+    pilots: "3 Cleo Hartwell G 171|8 Imke Sorensen G 177|15 Dani Achebe F 183|23 Faye Kowal F 185|41 Odile Nwosu C 194",
+    rivets: "30 Tess Galloway G 174|6 Lin Zhao G 167|20 Petra Halloran F 184|27 Kaia Brandvold F 186|45 June Abara C 190",
+    herons: "2 Gia Fairweather G 170|15 Noor Haddad G 173|18 Kit Ellery F 181|31 Bea Szabo F 185|50 Hana Ishikawa C 193",
+    foxes: "8 Edie Rourke G 171|1 Sol Ferreira G 166|14 Yara Mendez F 180|25 Agnes Thule F 184|42 Bryn Castell C 191",
+  };
+  const POS = { G: "Guard", F: "Forward", C: "Center" };
+  // [date, status (final, live, pre), away, home, away by quarter, home by quarter, clock or tip-off, top performers "name|team|line"]
+  const GAMES = [
+    ["2026-11-21", "final", "comets", "gulls", [18, 20, 15, 18], [21, 17, 22, 18], "", "Ada Calder|gulls|24 PTS, 9 REB", "Juno Brisco|comets|19 PTS, 8 AST"],
+    ["2026-11-21", "final", "foxes", "owls", [15, 16, 19, 14], [20, 18, 17, 21], "", "Isla Quint|owls|26 PTS, 5 STL", "Edie Rourke|foxes|18 PTS, 7 AST"],
+    ["2026-11-21", "final", "larks", "pilots", [17, 19, 18, 16, 9], [19, 15, 20, 16, 6], "", "Fenna de Wit|larks|22 PTS, 6 AST", "Cleo Hartwell|pilots|21 PTS, 9 AST"],
+    ["2026-11-21", "final", "herons", "rivets", [16, 18, 14, 19], [18, 17, 20, 17], "", "Tess Galloway|rivets|23 PTS, 4 3PM", "Hana Ishikawa|herons|14 PTS, 12 REB"],
+    ["2026-11-23", "live", "pilots", "herons", [14, 19, 18], [16, 15, 17], "Q3 4:12 · Cup", "Cleo Hartwell|pilots|15 PTS, 6 AST", "Noor Haddad|herons|13 PTS"],
+    ["2026-11-25", "pre", "gulls", "larks", [], [], "7:30 PM"],
+    ["2026-11-25", "pre", "owls", "comets", [], [], "7:00 PM"],
+    ["2026-11-28", "pre", "pilots", "foxes", [], [], "6:00 PM"],
+    ["2026-11-28", "pre", "rivets", "herons", [], [], "7:30 PM"],
+  ].map(([date, status, away, home, aq, hq, clock, ...perf]) => ({ date, status, away, home, aq, hq, clock, perf }));
+  const CATS = { recaps: "Game recap", features: "Feature", video: "Video", league: "League office", community: "Community" };
+  // [category, team, picture, video length, time, author, headline, summary]
+  const STORIES = [
+    ["recaps", "gulls", "celebrate", "2:14", "2h", "Callie Brandt", "Calder scores 24 as the Gulls beat the Comets and clinch a playoff place", "Port Alder closed on a 9-2 run for a 78-71 win, its fourth in a row."],
+    ["recaps", "owls", "drive", "", "3h", "Omar Feld", "Quint's 26 points keep the Owls one game behind Port Alder", "Ashgrove pulled away in the fourth quarter to beat Kettle Falls 76-64."],
+    ["recaps", "larks", "layup", "1:32", "3h", "Noa Lindgren", "Larks win in overtime at Quayside after de Wit's late three", "Lindwood scored the first seven points of overtime and won 79-76."],
+    ["recaps", "rivets", "huddle", "", "4h", "Omar Feld", "Rivets end a five-game slide with a 72-67 win over the Herons", "Tess Galloway scored 23, and Ferro Park held Saltwick to 14 points in the third quarter."],
+    ["features", "pilots", "jumper", "", "5h", "Callie Brandt", "How Cleo Hartwell became the league's most dangerous passer", "Marrow Bay's point guard leads the league in assists for a third season, and she still watches every game twice."],
+    ["league", "", "trophy", "", "6h", "League office", "Playoff format confirmed: the top two in each division reach the semifinals", "Semifinals are on March 6 and the final on March 13, hosted by the higher seed."],
+    ["community", "herons", "clinic", "", "8h", "Noa Lindgren", "Free winter clinics for ages 8 to 14 open in all eight towns", "Sessions run on Sunday mornings from January. Places are limited, so sign up early."],
+    ["video", "comets", "tipoff", "0:58", "10h", "Video team", "Every block from round 9 in under a minute", "Eleven blocks, four games, one angle each."],
+    ["features", "foxes", "bench", "", "1d", "Omar Feld", "Inside the Foxes' rebuild: five rookies and a coach who trusts them", "Kettle Falls is 2-8, but the minutes its first-year players are getting are the point."],
+    ["league", "", "crowd", "", "1d", "League office", "Round 9 drew the biggest crowds of the season", "Three of the four games sold out, and Harbor Hall opened standing room for the first time."],
+    ["league", "herons", "court", "", "1d", "Callie Brandt", "Cup quarterfinal: the Pilots visit Saltwick on Monday night", "The winner meets Port Alder or Lindwood in the semifinal on December 6."],
+    ["video", "gulls", "celebrate", "1:47", "1d", "Video team", "The last two minutes at Harbor Hall", "Every possession of the closing run, with the bench reaction."],
+    ["community", "larks", "crowd", "", "2d", "Noa Lindgren", "Volunteers repaint the Meadow Gym court before Wednesday's game", "Forty people spent the weekend sanding and painting the floor."],
+    ["features", "owls", "drive", "", "2d", "Callie Brandt", "Five things we learned from round 9", "A deeper Owls bench, a Gulls defense that travels and a race for second that may last until March."],
+  ].map(([cat, tm, img, dur, time, by, title, dek]) => ({ cat, tm, img, dur, time, by, title, dek }));
+
+  /* ---------- Templates for repeated components ---------- */
+  const crest = (id, cls = "") => `<i class="crest t-${id}${cls}" aria-hidden="true">${TEAMS[id][1][0]}</i>`;
+  const initials = (name) => name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+  const pic = (s, sm = true) => `<a class="media${sm ? " sm" : ""}" href="#/story" tabindex="-1" aria-hidden="true"><img src="${IMAGES[s.img]}" alt="" width="1600" height="900">${s.dur ? `<span class="play"><svg><use href="#i-play"/></svg></span><span class="dur">${s.dur}</span>` : ""}</a>`;
+  const meta = (s) => `<p class="meta"><span>${s.time}</span><span>${s.by}</span></p>`;
+  const storyRow = (s, tag = "h3") => `<li><div class="txt"><p class="kicker">${CATS[s.cat]}</p><${tag} class="hed"><a href="#/story">${s.title}</a></${tag}><p class="dek">${s.dek}</p>${meta(s)}</div>${pic(s)}</li>`;
+  const headLink = (s) => `<li><a href="#/story">${s.dur ? '<svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>' : ""}${s.title}</a></li>`;
+  const total = (q) => q.reduce((a, b) => a + b, 0);
+  const fmt = (date, options) => new Date(`${date}T12:00:00`).toLocaleDateString("en-US", options);
+  const DAY = (date) => fmt(date, { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+  function gameRow(g) {
+    const done = g.status !== "pre";
+    const at = total(g.aq);
+    const ht = total(g.hq);
+    const periods = Math.max(4, g.aq.length);
+    const cols = done ? Array.from({ length: periods }, (_, i) => `<th scope="col">${i < 4 ? i + 1 : "OT"}</th>`).join("") + '<th scope="col">T</th>' : "";
+    const status = g.status === "final" ? (g.aq.length > 4 ? "Final/OT" : "Final") : g.status === "live" ? `<span class="live">${g.clock}</span>` : g.clock;
+    const side = (id, q, mine, theirs) => {
+      const t = team(id);
+      const cells = done ? Array.from({ length: periods }, (_, i) => `<td>${q[i] ?? ""}</td>`).join("") + `<td class="tot">${mine}</td>` : "";
+      return `<tr${done && g.status === "final" && mine > theirs ? ' class="w"' : ""}><th scope="row"><a href="#/team?id=${id}">${crest(id)}<span><b>${t.name}</b><small>${t.w}-${t.l}</small></span></a></th>${cells}</tr>`;
+    };
+    const a = team(g.away);
+    const h = team(g.home);
+    const caption = done ? `${a.full} ${at}, ${h.full} ${ht}, ${g.status === "live" ? "in progress" : "final"}` : `${a.full} at ${h.full}, ${g.clock}`;
+    const perf = g.perf.length
+      ? `<div class="perf"><p class="mini-h">${g.status === "live" ? "Leading the way" : "Top performers"}</p>${g.perf.map((p) => { const [name, id, line] = p.split("|"); return `<p><span class="av t-${id}">${initials(name)}</span><span><b>${name}</b> ${TEAMS[id][2]}<br>${line}</span></p>`; }).join("")}</div>`
+      : `<div class="perf"><p class="mini-h">Season so far</p><p>${a.name} ${a.w}-${a.l} (${a.away} away)<br>${h.name} ${h.w}-${h.l} (${h.home} at home)</p></div>`;
+    const acts = g.status === "final"
+      ? '<a class="pill-o sm" href="#/story">Recap</a><a class="pill-o sm" href="#/story?at=box">Box score</a>'
+      : g.status === "live" ? '<a class="pill-o sm" href="#/story">Follow live</a>' : '<a class="pill-o sm" href="#/tickets?at=buy">Tickets</a><a class="pill-o sm" href="#/news">Preview</a>';
+    return `<article class="game"><div><table class="lines"><caption class="sr-only">${caption}</caption><thead><tr><th scope="col">${status}</th>${cols}</tr></thead><tbody>${side(g.away, g.aq, at, ht)}${side(g.home, g.hq, ht, at)}</tbody></table></div><p class="venue"><b>${h.venue}</b>${h.town}</p>${perf}<div class="acts">${acts}</div></article>`;
+  }
+  function fill(target, html) {
+    const lists = typeof target === "string" ? $$(`[data-list='${target}']`) : [target];
+    lists.forEach((list) => { list.innerHTML = html; });
+  }
+  const gb = (leader, t) => { const n = (leader.w - t.w + (t.l - leader.l)) / 2; return n === 0 ? "-" : String(n); };
+  const ranked = (list) => list.map(team).sort((a, b) => b.pct - a.pct || b.diff - a.diff);
+  function stripCell(g) {
+    const done = g.status !== "pre";
+    const status = g.status === "final" ? (g.aq.length > 4 ? "Final/OT" : "Final") : g.status === "live" ? `<span class="live">${g.clock}</span>` : `${fmt(g.date, { weekday: "short" })} ${g.clock}`;
+    const side = (id, mine, theirs) => {
+      const t = team(id);
+      return `<span class="g-t${g.status !== "final" || mine > theirs ? " w" : ""}">${crest(id)}<b>${t.abbr}</b>${done ? `<span class="num">${mine}</span>` : `<small>${t.w}-${t.l}</small>`}</span>`;
+    };
+    return `<li class="g"><a href="#/scores?d=${g.date}"><span class="g-st">${status}</span>${side(g.away, total(g.aq), total(g.hq))}${side(g.home, total(g.hq), total(g.aq))}</a></li>`;
+  }
+  fill($("#strip"), GAMES.map(stripCell).join(""));
+  fill("heads", STORIES.slice(0, 8).map(headLink).join(""));
+  const table1 = ranked(Object.keys(TEAMS));
+  fill("mini", table1.map((t) => `<tr><th scope="row" class="tm"><a href="#/team?id=${t.id}">${crest(t.id)}${t.name}</a></th><td>${t.w}</td><td>${t.l}</td><td>${gb(table1[0], t)}</td></tr>`).join(""));
+  fill("picker", Object.keys(TEAMS).map((id) => `<a href="#/team?id=${id}">${crest(id)}${team(id).name}</a>`).join(""));
+  fill("team-links", Object.keys(TEAMS).map((id) => `<li><a href="#/team?id=${id}">${crest(id)}<span>${team(id).full}</span></a></li>`).join(""));
+
+  /* ---------- Score strip and video row: arrow buttons scroll the row ---------- */
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  const nudge = (el) => el.scrollBy({ left: el.clientWidth * 0.8, behavior: reduce.matches ? "auto" : "smooth" });
+  $("#strip-next").addEventListener("click", () => nudge($("#strip")));
+  $("#vrow-next").addEventListener("click", () => nudge($("#vrow")));
+
+  /* ---------- Home: more stories with "Show more" ---------- */
+  let feedShown = 4;
+  const FEED = [3, 5, 6, 8, 9, 10, 12, 13].map((i) => STORIES[i]);
+  function renderFeed() {
+    fill("feed", FEED.slice(0, feedShown).map((s) => storyRow(s)).join(""));
+    $("#feed-more").hidden = feedShown >= FEED.length;
+  }
+  renderFeed();
+  $("#feed-more").addEventListener("click", () => {
+    const before = feedShown;
+    feedShown += 4;
+    renderFeed();
+    $$("[data-list='feed'] .hed a")[before]?.focus();
+  });
+
+  /* ---------- Scores and schedule: one day at a time ---------- */
+  const DATES = $$("[data-date]").map((b) => b.dataset.date);
+  let day = DATES[0];
+  function setDay(date) {
+    day = DATES.includes(date) ? date : DATES[0];
+    $$("[data-date]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.date === day)));
+    const chosen = $(`[data-date='${day}']`);
+    chosen.parentElement.scrollLeft = chosen.offsetLeft - chosen.parentElement.clientWidth / 2;
+    $("#day-h").textContent = DAY(day);
+    const games = GAMES.filter((g) => g.date === day);
+    fill("games", games.map(gameRow).join(""));
+    $("[data-view='scores'] [data-empty]").hidden = games.length > 0;
+    return `Scores: ${DAY(day)}`;
+  }
+  $$("[data-date]").forEach((b) => b.addEventListener("click", () => go(`#/scores?d=${b.dataset.date}`, { scroll: false })));
+  $$("[data-step]").forEach((b) => b.addEventListener("click", () => {
+    const next = DATES[Math.min(DATES.length - 1, Math.max(0, DATES.indexOf(day) + Number(b.dataset.step)))];
+    go(`#/scores?d=${next}`, { scroll: false });
+  }));
+
+  /* ---------- Standings: sort by a column, group by division ---------- */
+  const table = $("#stand");
+  const KEYS = { w: (t) => t.w, pct: (t) => t.pct, ppg: (t) => t.ppg, opp: (t) => -t.opp, diff: (t) => t.diff };
+  let sortKey = "pct";
+  let byDivision = false;
+  function renderStandings() {
+    const body = $("tbody", table);
+    $$(".div-row", body).forEach((r) => r.remove());
+    const rows = $$("tr[data-id]", body);
+    const rank = (r) => team(r.dataset.id);
+    rows.sort((a, b) => (byDivision ? rank(a).div.localeCompare(rank(b).div) : 0) || KEYS[sortKey](rank(b)) - KEYS[sortKey](rank(a)) || rank(b).pct - rank(a).pct);
+    let group = "";
+    let leader = null;
+    let n = 0;
+    rows.forEach((r) => {
+      const t = rank(r);
+      if (byDivision && t.div !== group) {
+        group = t.div;
+        n = 0;
+        body.insertAdjacentHTML("beforeend", `<tr class="div-row"><th scope="rowgroup" colspan="12">${group} Division</th></tr>`);
+      }
+      if (n === 0) leader = ranked(rows.map((x) => x.dataset.id)).find((x) => !byDivision || x.div === t.div);
+      n += 1;
+      body.append(r);
+      $(".rk", r).textContent = n;
+      r.children[4].textContent = gb(leader, t);
+    });
+    table.dataset.sorted = sortKey;
+    $$("th button[data-sort]", table).forEach((b) => {
+      const th = b.parentElement;
+      if (b.dataset.sort === sortKey) th.setAttribute("aria-sort", "descending"); else th.removeAttribute("aria-sort");
+    });
+    $("caption", table).textContent = `${byDivision ? "Division" : "League"} standings, sorted by ${$(`[data-sort='${sortKey}']`, table).textContent}`;
+  }
+  $$("th button[data-sort]", table).forEach((b) => b.addEventListener("click", () => { sortKey = b.dataset.sort; renderStandings(); }));
+  $$("button[data-groupby]").forEach((b) => b.addEventListener("click", () => {
+    byDivision = b.dataset.groupby === "division";
+    $$("button[data-groupby]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    renderStandings();
+  }));
+
+  /* ---------- Team pages from data, with a picker for every team ---------- */
+  let teamId = Object.keys(TEAMS)[0];
+  const followed = new Set((store.get("tideline-follow") || "").split(",").filter(Boolean));
+  const followButton = $("#follow");
+  function renderFollow() {
+    const on = followed.has(teamId);
+    followButton.setAttribute("aria-pressed", String(on));
+    $("span", followButton).textContent = on ? "Following" : "Follow";
+  }
+  followButton.addEventListener("click", () => {
+    if (followed.has(teamId)) followed.delete(teamId); else followed.add(teamId);
+    store.set("tideline-follow", [...followed].join(","));
+    renderFollow();
+  });
+  function setTeam(id) {
+    teamId = TEAMS[id] ? id : Object.keys(TEAMS)[0];
+    const t = team(teamId);
+    const head = $("#team-head");
+    head.className = `card team-head t-${teamId}`;
+    $("#tm-crest").textContent = t.name[0];
+    $("#tm-div").textContent = `${t.div} Division`;
+    $("#tm-name").textContent = t.full;
+    $("#tm-rec").textContent = `${t.w}-${t.l}`;
+    const place = Object.keys(TEAMS).map(team).filter((x) => x.div === t.div).sort((a, b) => b.pct - a.pct).findIndex((x) => x.id === teamId) + 1;
+    $("#tm-place").textContent = `${["1st", "2nd", "3rd", "4th"][place - 1]} in the ${t.div}`;
+    $("#tm-venue").textContent = t.venue;
+    fill("roster", ROSTERS[teamId].split("|").map((p) => {
+      const [, num, name, pos, cm] = p.match(/^(\d+) (.+) ([GFC]) (\d+)$/);
+      return `<tr><td class="n">${num}</td><th scope="row">${name}</th><td>${POS[pos]}</td><td>${cm} cm</td></tr>`;
+    }).join(""));
+    fill("sched", GAMES.filter((g) => g.away === teamId || g.home === teamId).map((g) => {
+      const home = g.home === teamId;
+      const opp = home ? g.away : g.home;
+      const mine = total(home ? g.hq : g.aq);
+      const theirs = total(home ? g.aq : g.hq);
+      const res = g.status === "pre" ? `<a class="pill-o sm" href="#/tickets?at=buy">${g.clock}</a>` : g.status === "live" ? `<span class="res live">${mine}-${theirs}</span>` : `<span class="res ${mine > theirs ? "up" : "down"}">${mine > theirs ? "W" : "L"} ${mine}-${theirs}</span>`;
+      return `<li><span class="muted">${fmt(g.date, { weekday: "short", month: "short", day: "numeric" })}</span><a class="opp" href="#/team?id=${opp}">${crest(opp)}<span>${home ? "vs" : "at"} ${team(opp).full}</span></a>${res}</li>`;
+    }).join(""));
+    const news = STORIES.filter((s) => s.tm === teamId);
+    fill("team-news", (news.length ? news : STORIES.slice(0, 3)).map(headLink).join(""));
+    $$("[data-list='picker'] a").forEach((a) => { if (a.getAttribute("href").endsWith(`=${teamId}`)) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    renderFollow();
+    return t.full;
+  }
+
+  /* ---------- News: category tabs and "Show more" ---------- */
+  let cat = "all";
+  let newsShown = 6;
+  function renderNews() {
+    const list = STORIES.filter((s) => cat === "all" || s.cat === cat);
+    fill("news", list.slice(0, newsShown).map((s) => storyRow(s, "h2")).join(""));
+    $("[data-view='news'] [data-empty]").hidden = list.length > 0;
+    $("#news-more").hidden = list.length <= newsShown;
+  }
+  $$("button[data-cat]").forEach((b) => b.addEventListener("click", () => {
+    cat = b.dataset.cat;
+    newsShown = 6;
+    $$("button[data-cat]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    renderNews();
+  }));
+  $("#news-more").addEventListener("click", () => {
+    const before = newsShown;
+    newsShown += 6;
+    renderNews();
+    $$("[data-list='news'] .hed a")[before]?.focus();
+  });
+  renderNews();
+
+  /* ---------- Story: a sample player that counts time (put a real <video> in .media for a site) ---------- */
+  const play = $("#story-play");
+  const LENGTH = 134;
+  let elapsed = 0;
+  let ticker = 0;
+  function paint() {
+    const left = LENGTH - elapsed;
+    $("#story-clock").textContent = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, "0")}`;
+    $("#story-bar").style.setProperty("--p", (elapsed / LENGTH).toFixed(3));
+  }
+  function setPlaying(on) {
+    play.setAttribute("aria-pressed", String(on));
+    play.setAttribute("aria-label", on ? "Pause highlights" : "Play highlights");
+    $("use", play).setAttribute("href", on ? "#i-pause" : "#i-play");
+    clearInterval(ticker);
+    if (on) ticker = setInterval(() => { elapsed = (elapsed + 1) % (LENGTH + 1); paint(); }, 1000);
+  }
+  play.addEventListener("click", () => setPlaying(play.getAttribute("aria-pressed") !== "true"));
+
+  /* ---------- Tickets: single game or season pass ---------- */
+  $$("button[data-plan]").forEach((b) => b.addEventListener("click", () => {
+    const season = b.dataset.plan === "season";
+    $$("button[data-plan]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    $$("[data-single]").forEach((p) => { p.textContent = season ? p.dataset.season : p.dataset.single; });
+    $$("[data-unit]").forEach((u) => { u.textContent = season ? "for 7 games" : "per game"; });
+    $("#t-game").value = season ? "season" : "g1";
+  }));
+  function preselect(id, value) {
+    const select = document.getElementById(id);
+    if (value && select.querySelector(`option[value="${CSS.escape(value)}"]`)) select.value = value;
+  }
+
+  /* ---------- Menu and search ---------- */
+  const menu = $("#menu");
+  const query = $("#q");
+  function search() {
+    const term = query.value.trim().toLowerCase();
+    const teams = Object.keys(TEAMS).map(team).filter((t) => term && `${t.full} ${t.abbr} ${t.venue} ${ROSTERS[t.id]}`.toLowerCase().includes(term));
+    const stories = term ? STORIES.filter((s) => `${s.title} ${s.dek} ${CATS[s.cat]}`.toLowerCase().includes(term)) : STORIES.slice(0, 4);
+    const html = teams.map((t) => `<li><a href="#/team?id=${t.id}">${crest(t.id)}<span>${t.full}<small>${t.div} Division, ${t.w}-${t.l}</small></span></a></li>`).join("")
+      + stories.slice(0, 6).map((s) => `<li><a href="#/story"><span>${s.title}<small>${CATS[s.cat]}, ${s.time} ago</small></span></a></li>`).join("");
+    fill($("#results"), html || '<li class="muted" style="padding:8px 0">Nothing matches that yet. Try a town, a team or a player.</li>');
+    const count = teams.length + stories.length;
+    $("#q-status").textContent = term ? `${count} ${count === 1 ? "result" : "results"}` : "Latest";
+  }
+  query.addEventListener("input", search);
+  search();
+  const openMenu = (focusSearch) => { menu.showModal(); if (focusSearch) query.focus(); else $(".menu-nav a", menu).focus(); };
+  $("#search-open").addEventListener("click", () => openMenu(true));
+  $("#menu-open").addEventListener("click", () => openMenu(false));
+  $("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: `${BRAND}: women's basketball scores, standings and news`,
+    standings: "Standings 2026",
+    news: "News and video",
+    story: "Calder scores 24 as the Gulls beat the Comets",
+    tickets: "Tickets",
+    join: "Play, coach or volunteer",
+    about: "About the league",
+    contact: "Contact the league office",
+    privacy: "Privacy notice",
+    "404": "Page not found",
+  };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, q = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(q) };
+  }
+  function show(route, hash, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current !== views.get(name)) {
+      current?.classList.remove("is-active");
+      current = views.get(name);
+      current.classList.add("is-active");
+    }
+    root.dataset.page = name;
+    let title = titles[name];
+    if (name === "scores") title = setDay(route.params.get("d"));
+    if (name === "team") title = setTeam(route.params.get("id"));
+    if (name === "tickets") preselect("t-tier", route.params.get("tier") === "season" ? "reserved" : route.params.get("tier"));
+    if (name === "tickets" && route.params.get("tier") === "season") $("button[data-plan='season']").click();
+    if (name === "contact") preselect("c-topic", route.params.get("topic"));
+    if (name !== "story") setPlaying(false);
+    document.title = name === "home" ? title : `${title} | ${BRAND}`;
+    // The bar underlines the page you are on (a team page belongs to Teams, a story to News)
+    const section = { story: "news" }[name] ?? name;
+    $$(".nav a, .menu-nav a").forEach((a) => {
+      const href = a.getAttribute("href").slice(2);
+      if (href === (section === "home" ? "" : section)) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const at = route.params.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function go(hash, options) {
+    show(parse(hash), hash, options);
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = document.querySelector(href);
+      if (target) { event.preventDefault(); target.setAttribute("tabindex", "-1"); target.scrollIntoView({ block: "start" }); target.focus({ preventScroll: true }); }
+    }
+  });
+  window.addEventListener("popstate", () => { if (menu.open) menu.close(); show(parse(location.hash), location.hash); });
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = {
+    valueMissing: "Please fill this in.",
+    typeMismatch: "Please enter a valid email address, like name@example.com.",
+    tooShort: "Please write a little more (20 characters or more).",
+    rangeUnderflow: "Choose at least 1 ticket.",
+    rangeOverflow: "For more than 10 tickets, contact us about group seats.",
+    badInput: "Please enter a number.",
+  };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    if (field.hasAttribute("data-group")) {
+      const ok = Boolean(field.querySelector("input:checked"));
+      error.textContent = ok ? "" : "Choose one option.";
+      return ok;
+    }
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (field.type === "checkbox" ? "Please tick this box to continue." : messages[problem]) : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input[aria-describedby], textarea[aria-describedby], [data-group]", form);
+    fields.forEach((field) => {
+      if (field.hasAttribute("data-group")) { $$("input", field).forEach((box) => box.addEventListener("change", () => checkField(field))); return; }
+      field.addEventListener(field.type === "checkbox" ? "change" : "blur", () => { if (field.value || field.type === "checkbox") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) {
+        const first = fields.find((f) => (f.hasAttribute("data-group") ? !f.querySelector("input:checked") : f.getAttribute("aria-invalid") === "true"));
+        (first?.matches("[data-group]") ? $("input", first) : first)?.focus();
+        return;
+      }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+        if (success) { success.hidden = false; success.setAttribute("tabindex", "-1"); success.focus({ preventScroll: true }); }
+      }, 500);
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), location.hash, { scroll: false });
+})();
+</script>
+</body>
+</html>

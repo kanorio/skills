@@ -1,0 +1,1372 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Nadja Velour · Saltglass, the new record, out now</title>
+<meta name="description" content="Nadja Velour's official site: Saltglass is out now. Every moment of the era, the full discography, The Saltglass Procession tour dates and the shop.">
+<meta property="og:title" content="Nadja Velour · Saltglass">
+<meta property="og:description" content="The sixth record is out now. Tour dates, music and the shop.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/crimson-pro-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/hanken-grotesk-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts (local files; scripts/inline.mjs embeds them for a single-file build) ---------- */
+@font-face { font-family: "Crimson Pro"; src: url("fonts/crimson-pro-latin-wght-normal.woff2") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Crimson Pro"; src: url("fonts/crimson-pro-latin-wght-italic.woff2") format("woff2"); font-weight: 200 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "Hanken Grotesk"; src: url("fonts/hanken-grotesk-latin-wght.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Fragment Mono"; src: url("fonts/fragment-mono-latin-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: light paper and the default black ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(99% 0 0); --surface: oklch(95.5% 0 0); --surface-2: oklch(91.5% 0 0);
+  --text: oklch(13% 0 0); --text-muted: oklch(44% 0 0); --border: oklch(86% 0 0); --border-strong: oklch(13% 0 0);
+  --accent: oklch(53% 0.2 30); --accent-text: oklch(99% 0 0);
+  --ink: oklch(13% 0 0); --ink-text: oklch(99% 0 0); --footer: oklch(95.5% 0 0);
+  --stage: oklch(0% 0 0); --stage-text: oklch(97% 0 0); --stage-muted: oklch(76% 0 0); --stage-accent: oklch(68% 0.2 35);
+  --grain-blend: multiply; --grain: url("illustrations/grain.svg");
+  --serif: "Crimson Pro", "Iowan Old Style", Georgia, serif;
+  --sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Fragment Mono", ui-monospace, Menlo, monospace;
+  --fs-display: clamp(5rem, 2rem + 11vw, 15rem);
+  --fs-h1: clamp(2.5rem, 1.6rem + 3.2vw, 4.75rem);
+  --fs-h2: clamp(1.9rem, 1.4rem + 1.8vw, 3rem);
+  --fs-h3: clamp(1.4rem, 1.25rem + .5vw, 1.75rem);
+  --r-control: 4px; --r-pill: 999px;
+  --fast: 140ms; --base: 280ms; --slow: 900ms; --ease: cubic-bezier(.2, .7, .1, 1);
+  --gutter: clamp(16px, 2.6vw, 40px); --wide: 1360px; --header: 64px;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(0% 0 0); --surface: oklch(14.5% 0 0); --surface-2: oklch(20% 0 0);
+  --text: oklch(97% 0 0); --text-muted: oklch(72% 0 0); --border: oklch(28% 0 0); --border-strong: oklch(97% 0 0);
+  --accent: oklch(68% 0.2 35); --accent-text: oklch(0% 0 0);
+  --ink: oklch(97% 0 0); --ink-text: oklch(0% 0 0); --footer: oklch(12% 0 0);
+  --grain-blend: screen;
+}
+/* Stage: always black, in both themes (the hero, the tour art, the list band, 404, the menu) */
+.stage {
+  --bg: var(--stage); --text: var(--stage-text); --text-muted: var(--stage-muted); --accent: var(--stage-accent); --accent-text: oklch(0% 0 0);
+  --border: oklch(100% 0 0 / .24); --border-strong: var(--stage-text); --ink: var(--stage-text); --ink-text: oklch(0% 0 0); --surface: oklch(14.5% 0 0);
+  background-color: var(--bg); color: var(--text); color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header) + 72px); }
+body, .strip-sticky { background: var(--grain) var(--bg); background-blend-mode: var(--grain-blend); }
+body { margin: 0; min-height: 100vh; color: var(--text); font: 400 1rem/1.55 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0 0 1rem; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: 8px; top: -60px; z-index: 50; padding: .6rem 1rem; background: var(--ink); color: var(--ink-text); border-radius: var(--r-control); }
+.skip:focus { top: 8px; }
+html:not(.js) .needs-js { display: none !important; }
+.wrap { width: min(100% - 2 * var(--gutter), var(--wide)); margin-inline: auto; }
+.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ---------- Type ---------- */
+.h1 { font: 400 var(--fs-h1)/1.02 var(--serif); letter-spacing: -.01em; margin: 0 0 1rem; text-wrap: balance; }
+.h2 { font: 400 var(--fs-h2)/1.05 var(--serif); margin: 0; text-wrap: balance; }
+.h3 { font: 500 var(--fs-h3)/1.15 var(--serif); margin: 0 0 .5rem; }
+.kicker { font: 500 clamp(1.05rem, .9rem + .55vw, 1.6rem)/1.1 var(--serif); text-transform: uppercase; letter-spacing: .05em; margin: 0 0 .6rem; }
+.lede { font-size: 1.125rem; color: var(--text-muted); max-width: 54ch; }
+.date, time { font-family: var(--mono); }
+.date { font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); }
+
+/* Era lettering: one word in heavy serif capitals, roughened by an SVG filter (see the sprite). The script fits the viewBox to the word. */
+.lettering { width: auto; height: var(--lh, 1em); max-width: 100%; overflow: visible; fill: currentColor; margin-inline: auto; }
+.lettering text { font: 800 200px/1 var(--serif); letter-spacing: -.005em; text-anchor: middle; }
+.lettering .it { font-style: italic; font-weight: 600; }
+.f-rough { filter: url(#rough); }
+.f-rough-sm { filter: url(#rough-sm); }
+.f-melt { filter: url(#melt); }
+.f-scan { filter: url(#scan); }
+
+/* ---------- Buttons, chips and tags ---------- */
+.actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .65rem; min-height: 46px; padding: 0 1.3rem; border: 1px solid currentColor; border-radius: var(--r-pill); background: transparent; color: var(--text); font: 500 .9375rem/1 var(--sans); text-decoration: none; cursor: pointer; transition: background-color var(--fast), color var(--fast), border-color var(--fast); }
+.btn.solid { background: var(--ink); color: var(--ink-text); border-color: var(--ink); }
+.btn.solid:hover { background: transparent; color: var(--text); }
+.btn.pill { padding-left: .45rem; }
+.ci { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid currentColor; border-radius: 50%; transition: background-color var(--fast), color var(--fast); }
+.ci .icon { width: 16px; height: 16px; }
+.btn.pill:hover .ci { background: var(--text); color: var(--bg); }
+.btn.sm { min-height: 34px; padding: 0 .9rem; font-size: .8125rem; }
+.btn.wide { width: 100%; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.icon-btn { display: grid; flex: none; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid transparent; background: none; color: inherit; cursor: pointer; }
+.icon-btn:hover { border-color: currentColor; }
+.chips { display: flex; flex-wrap: wrap; gap: .25rem .4rem; }
+.chip { padding: .45rem .6rem; border: 0; border-radius: var(--r-control); background: none; color: var(--text-muted); font: 450 .9375rem/1 var(--sans); cursor: pointer; }
+.chip:hover { color: var(--text); }
+.chip[aria-pressed="true"] { color: var(--text); box-shadow: inset 0 0 0 1px currentColor; }
+.tags { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0; }
+.tag, .status { display: inline-block; padding: .32rem .45rem .28rem; border: 1px solid color-mix(in oklch, var(--text) 45%, transparent); border-radius: 2px; color: var(--text-muted); font: 400 .6875rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+.more { display: inline-flex; align-items: center; gap: .4rem; color: inherit; text-decoration: none; font-weight: 500; }
+.more:hover { text-decoration: underline; text-underline-offset: .2em; }
+.sec { padding-block: clamp(3.5rem, 8vw, 7rem); }
+.sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+.empty { color: var(--text-muted); padding-block: 2rem; }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; background: var(--bg); color: var(--text); transition: background-color var(--base); }
+.bar { display: grid; grid-template-columns: 1fr minmax(0, auto) 1fr; align-items: center; gap: 1rem; height: var(--header); padding-inline: max(12px, calc(var(--gutter) - .55rem)); }
+.bar-l, .nav { display: flex; align-items: center; gap: clamp(.25rem, 1.4vw, 1.6rem); white-space: nowrap; }
+.nav-r { justify-content: flex-end; }
+.nav a, .bag-btn { padding: .42rem .55rem; border: 0; border-radius: var(--r-control); background: none; color: inherit; font: 450 .9375rem/1 var(--sans); text-decoration: none; cursor: pointer; }
+.nav a:hover, .bag-btn:hover { box-shadow: inset 0 0 0 1px color-mix(in oklch, currentColor 40%, transparent); }
+.nav a[aria-current="page"] { box-shadow: inset 0 0 0 1px currentColor; }
+.brand { display: block; min-width: 0; justify-self: center; color: var(--accent); padding: 4px; border-radius: var(--r-control); }
+.brand .lettering { --lh: 30px; display: block; }
+.menu-btn { display: none; border-color: currentColor; }
+[data-route="home"] .site-header:not(.is-scrolled) { background: transparent; color: var(--stage-text); --accent: var(--stage-accent); }
+.site-header.is-scrolled { background: color-mix(in oklch, var(--bg) 92%, transparent); }
+@media (max-width: 960px) {
+  .nav-l, .nav-r a { display: none; }
+  .menu-btn { display: grid; }
+}
+.menu { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0 var(--gutter) 2rem; border: 0; }
+.menu::backdrop { background: oklch(0% 0 0 / .6); }
+.menu-top { display: flex; justify-content: space-between; align-items: center; height: var(--header); }
+.menu nav { display: grid; gap: .2rem; margin-top: 1.5rem; }
+.menu nav a { font: 400 clamp(2.2rem, 8vw, 3.4rem)/1.15 var(--serif); text-decoration: none; }
+.menu nav a[aria-current="page"] { color: var(--accent); }
+
+/* ---------- Hero: full-bleed grainy art, a serif kicker, the era lettering ---------- */
+.hero { position: relative; isolation: isolate; display: grid; place-items: center; min-height: max(620px, 100svh); margin-top: calc(var(--header) * -1); overflow: hidden; text-align: center; }
+.hero-art { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 66% 40%; animation: push 2.8s var(--ease) both; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse 60% 42% at 50% 56%, oklch(0% 0 0 / .5), transparent 75%), linear-gradient(to bottom, oklch(0% 0 0 / .55), transparent 24%, transparent 55%, oklch(0% 0 0 / .85)); }
+.hero-copy { width: 100%; padding: calc(var(--header) + 2rem) var(--gutter) 8.5rem; }
+.hero .kicker { font-size: clamp(1.5rem, 1rem + 2vw, 3rem); letter-spacing: .02em; margin-bottom: .2rem; }
+.hero-word { --lh: clamp(84px, 15vw, 250px); }
+.hero-line { max-width: 40ch; margin: 1.25rem auto 1.75rem; font-size: 1.0625rem; text-shadow: 0 1px 14px oklch(0% 0 0 / .8); }
+.hero .actions { justify-content: center; }
+.rise { animation: rise var(--slow) var(--ease) both; }
+.d1 { animation-delay: 120ms; } .d2 { animation-delay: 260ms; } .d3 { animation-delay: 400ms; }
+@keyframes push { from { transform: scale(1.08); filter: brightness(.6); } to { transform: none; filter: none; } }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+/* ---------- The strip: a thumbnail per moment along a drawn wire, with a marker ---------- */
+.strip { display: flex; align-items: flex-end; gap: clamp(.75rem, 2vw, 2rem); padding: 0 var(--gutter) 1.1rem; }
+.hero .strip { position: absolute; left: 0; right: 0; bottom: 0; }
+.strip-label { flex: none; padding-bottom: 3px; color: var(--text-muted); font: italic 400 1.0625rem/1 var(--serif); }
+.strip-track { position: relative; flex: 1; min-width: 0; padding-bottom: 14px; }
+.strip-thumbs { position: relative; display: flex; justify-content: space-between; gap: 6px; margin: 0; padding: 4px 2px 2px; list-style: none; overflow-x: auto; scrollbar-width: none; }
+.strip-thumbs::-webkit-scrollbar { display: none; }
+.strip-thumbs a { display: block; padding: 2px; border-radius: 3px; }
+.strip-thumbs img { width: 30px; height: 30px; object-fit: cover; opacity: .72; transition: opacity var(--fast), transform var(--fast) var(--ease); }
+.strip-thumbs a:hover img, .strip-thumbs a.on img { opacity: 1; transform: translateY(-3px); }
+.strip-thumbs a.on { box-shadow: 0 0 0 1px var(--accent); }
+.wire { position: absolute; left: 0; right: 0; bottom: 4px; width: 100%; height: 10px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.strip-marker { position: absolute; bottom: 1px; left: calc(var(--p, 0) * (100% - 12px)); width: 12px; height: 12px; border: 1.5px solid var(--accent); background: var(--bg); transform: rotate(45deg); transition: left var(--base) var(--ease); }
+.strip-sticky { position: sticky; top: var(--header); z-index: 20; padding-top: .9rem; }
+
+/* ---------- Moments: dated entries scattered left and right ---------- */
+.moments { display: grid; gap: clamp(3.5rem, 9vw, 8rem); padding-block: clamp(2rem, 5vw, 4rem) clamp(4rem, 9vw, 8rem); }
+.moment { width: min(100%, var(--w, 440px)); margin-inline-start: min(var(--x, 0%), 100% - min(100%, var(--w, 440px))); }
+.moment:nth-child(4n+1) { --x: 6%; }
+.moment:nth-child(4n+2) { --x: 56%; --w: 380px; }
+.moment:nth-child(4n+3) { --x: 20%; --w: 500px; }
+.moment:nth-child(4n) { --x: 62%; --w: 340px; }
+.moment.wide { --w: 640px; }
+.moment > a { display: block; color: inherit; text-decoration: none; }
+.m-art { position: relative; display: block; overflow: hidden; background: var(--surface); }
+.m-art img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; transition: transform var(--slow) var(--ease); }
+.wide .m-art img { aspect-ratio: 16 / 9; }
+.moment > a:hover img { transform: scale(1.03); }
+.m-play { position: absolute; inset: 0; margin: auto; width: 64px; height: 64px; border: 1.5px solid #fff; border-radius: 50%; display: grid; place-items: center; color: #fff; background: oklch(0% 0 0 / .25); }
+.m-play .icon { width: 22px; height: 22px; fill: currentColor; stroke: none; margin-left: 3px; }
+.m-title { margin: 1rem 0 .35rem; font: 400 var(--fs-h3)/1.15 var(--serif); text-wrap: balance; }
+.moment > a:hover .m-title { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .15em; }
+.m-meta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 0; }
+.m-meta time { font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); }
+.m-meta .icon { width: 22px; height: 22px; color: var(--accent); }
+.moments.compact { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1.25rem, 2.5vw, 2.5rem); padding: 0; align-items: start; }
+.moments.compact .moment { width: auto; margin: 0; }
+.moments.compact .moment:nth-child(even) { margin-top: clamp(2rem, 6vw, 5rem); }
+.moments.compact .m-art img { aspect-ratio: 4 / 5; }
+.js .reveal { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--slow) var(--ease) both; }
+
+/* ---------- Page heads ---------- */
+.page-head { padding-block: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 3vw, 2.5rem); }
+.page-head .lede { margin: 0; }
+.filter-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; padding-block: 1.25rem .5rem; }
+
+/* ---------- Music: era index, era panels, the collection ---------- */
+.music { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 4.5rem); padding-block: clamp(2rem, 5vw, 4.5rem); }
+.era-index { position: sticky; top: calc(var(--header) + 2rem); align-self: start; }
+.index-title { margin: 0 0 1.25rem; font: 400 2.25rem/1 var(--serif); }
+.era-index ol { display: grid; justify-items: start; gap: .1rem; margin: 0; padding: 0; list-style: none; }
+.era-index a { margin-left: -.5rem; padding: .32rem .5rem; border-radius: var(--r-control); text-decoration: none; font-size: .9375rem; }
+.era-index a:hover { box-shadow: inset 0 0 0 1px color-mix(in oklch, currentColor 40%, transparent); }
+.era-index a[aria-current="true"] { box-shadow: inset 0 0 0 1px currentColor; }
+.era { --era-c: var(--era-l, var(--accent)); display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
+:root[data-theme="dark"] .era { --era-c: var(--era-d, var(--accent)); }
+.era + .era { margin-top: 4rem; }
+.js .era + .era { margin-top: 0; }
+.era-cover { width: 100%; height: auto; aspect-ratio: 1; }
+.era-name { margin: 0 0 1.1rem; color: var(--era-c); }
+.era-name .lettering { --lh: clamp(52px, 6.4vw, 104px); margin: 0; }
+.era-body > p:not(.kicker):not(.tags) { margin-top: 1.25rem; color: var(--text-muted); max-width: 46ch; }
+.tracks { margin: 1.5rem 0 2rem; padding: 0; list-style: none; counter-reset: t; columns: 2; column-gap: 2rem; }
+.tracks li { display: flex; gap: .75rem; padding: .5rem 0; border-top: 1px solid var(--border); break-inside: avoid; counter-increment: t; font: 400 1.125rem/1.3 var(--serif); }
+.tracks li::before { content: counter(t, decimal-leading-zero); color: var(--text-muted); font: 400 .75rem/1.9 var(--mono); }
+.collection { padding-block: clamp(2rem, 6vw, 5rem) clamp(4rem, 8vw, 7rem); }
+.coll-tools { display: flex; align-items: center; gap: 1rem; }
+.round { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 50%; background: none; color: inherit; cursor: pointer; }
+.round[aria-pressed="true"] { border-color: currentColor; }
+.releases { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 2.5rem 1.25rem; margin-top: 1.5rem; }
+.rel { display: grid; gap: .65rem; align-content: start; color: inherit; text-decoration: none; }
+.rel img { width: 100%; height: auto; aspect-ratio: 1; transition: opacity var(--fast); }
+.rel:hover img { opacity: .82; }
+.rel-name { font-size: 1.125rem; line-height: 1.25; }
+.releases[data-layout="list"] { grid-template-columns: 1fr; gap: 0; }
+.releases[data-layout="list"] .rel { grid-template-columns: 56px minmax(0, 1fr) auto; align-items: center; gap: 1.25rem; padding: .7rem 0; border-top: 1px solid var(--border); }
+
+/* ---------- Live: lettering, the city list, the halftone panel ---------- */
+.live { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.live-list { padding: clamp(2rem, 5vw, 4.5rem) clamp(16px, 4vw, 56px) clamp(4rem, 8vw, 6rem); }
+.live-head { text-align: center; margin-bottom: 2rem; }
+.live-head .lettering { --lh: clamp(64px, 8vw, 128px); }
+.live-head .lede { margin: 1rem auto 0; }
+.cities { margin-top: 1rem; border-top: 1px solid var(--border); }
+.city { border-bottom: 1px solid var(--border); }
+.city summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name status" "venue chev" "dates chev"; column-gap: 1rem; padding: 1.3rem 0; list-style: none; cursor: pointer; }
+.city summary::-webkit-details-marker { display: none; }
+.city summary > .city-name { grid-area: name; }
+.city-name { color: var(--accent); font: 500 clamp(1.7rem, 1.3rem + 1.4vw, 2.5rem)/1 var(--serif); text-transform: uppercase; letter-spacing: .01em; }
+.city-venue { grid-area: venue; margin-top: .55rem; color: var(--text-muted); }
+.city-dates { grid-area: dates; color: var(--text-muted); }
+.status { grid-area: status; justify-self: end; align-self: center; }
+.status.hot { color: var(--accent); border-color: currentColor; }
+.status.out { text-decoration: line-through; }
+.status.soon { border-style: dashed; }
+.chev { grid-area: chev; justify-self: end; align-self: center; transition: transform var(--base) var(--ease); }
+.city[open] .chev { transform: rotate(90deg); }
+.nights { display: grid; gap: .5rem; margin: 0 0 1.3rem; padding: 0; list-style: none; }
+.nights li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 1rem; padding: .55rem .55rem .55rem .9rem; border-radius: var(--r-control); background: var(--surface); }
+.nights time { font-size: .8125rem; letter-spacing: .08em; text-transform: uppercase; }
+.nights span { color: var(--text-muted); font-size: .875rem; }
+.notes { margin-top: 3rem; max-width: 60ch; color: var(--text-muted); }
+.notes .h3 { color: var(--text); }
+.live-art > div { position: sticky; top: var(--header); height: calc(100svh - var(--header)); min-height: 560px; overflow: hidden; }
+.live-art img { width: 100%; height: 100%; object-fit: cover; }
+.next { position: absolute; left: clamp(1rem, 3vw, 2.5rem); right: 1rem; bottom: clamp(1rem, 3vw, 2.5rem); display: grid; gap: .3rem; margin: 0; }
+.next .city-name { font-size: clamp(2rem, 1.4rem + 2vw, 3.4rem); }
+
+/* ---------- Home tour teaser ---------- */
+.tour-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); gap: clamp(2rem, 6vw, 6rem); align-items: center; }
+.tour-grid .lettering { --lh: clamp(58px, 7vw, 112px); margin: 0; color: var(--accent); }
+.city-mini { margin: 2rem 0; padding: 0; list-style: none; border-top: 1px solid var(--border); }
+.city-mini a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .2rem 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); text-decoration: none; }
+.city-mini .city-name { font-size: clamp(1.4rem, 1.2rem + .8vw, 1.9rem); }
+.city-mini span:last-child { color: var(--text-muted); align-self: center; text-align: right; font-size: .9375rem; }
+.city-mini a:hover .city-name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .12em; }
+.tour-art { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+
+/* ---------- Shop ---------- */
+.shop-tools { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin: 1.5rem 0 1.25rem; }
+.filters { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.25rem; padding: 1rem; border-radius: var(--r-control); background: var(--surface); }
+.filters select { min-height: 40px; width: auto; }
+.products { --cols: 4; display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: clamp(.75rem, 1.4vw, 1.25rem); padding-bottom: clamp(3rem, 6vw, 6rem); }
+.product { display: flex; flex-direction: column; background: var(--surface); color: inherit; text-decoration: none; }
+.p-well { position: relative; display: block; aspect-ratio: 4 / 5; }
+.p-art { position: absolute; inset: 10% 12%; width: 76%; height: 80%; }
+.product:hover .p-art { transform: scale(1.03); }
+.p-art { transition: transform var(--base) var(--ease); }
+.p-flag { position: absolute; top: .75rem; left: .75rem; background: var(--bg); }
+.p-name { padding: .9rem 1rem .15rem; font-size: .9375rem; }
+.p-price { padding: 0 1rem 1rem; font-size: .9375rem; }
+.sec .products { padding-bottom: 0; }
+
+/* ---------- Product page ---------- */
+.crumbs { display: flex; gap: .5rem; padding-block: 1.5rem; color: var(--text-muted); font-size: .875rem; }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+.pd-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(1.5rem, 5vw, 5rem); padding-bottom: clamp(3rem, 6vw, 6rem); align-items: start; }
+.pd-well { position: relative; aspect-ratio: 1; background: var(--surface); }
+.pd-well .p-art { inset: 8%; width: 84%; height: 84%; }
+.thumbs { display: flex; gap: .5rem; margin-top: .75rem; }
+.thumbs button { padding: .45rem .7rem; border: 0; border-radius: var(--r-control); background: none; color: var(--text-muted); cursor: pointer; }
+.thumbs button[aria-pressed="true"] { color: var(--text); box-shadow: inset 0 0 0 1px currentColor; }
+.pd-buy .h1 { font-size: clamp(2.2rem, 1.6rem + 2vw, 3.6rem); }
+.pd-price { font: 400 1.25rem/1 var(--mono); margin-bottom: 1.25rem; }
+.pd-note { color: var(--text-muted); max-width: 44ch; }
+.sizes { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.5rem 0 0; padding: 0; border: 0; }
+.sizes legend { margin-bottom: .6rem; }
+.size { position: relative; }
+.size input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.size span { display: grid; place-items: center; min-width: 52px; height: 44px; padding: 0 .8rem; border: 1px solid var(--border); border-radius: var(--r-control); font-size: .9375rem; }
+.size input:checked + span { border-color: var(--text); box-shadow: inset 0 0 0 1px var(--text); }
+.size input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.buy-row { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .75rem; margin-top: .4rem; }
+.stepper { display: flex; align-items: center; border: 1px solid var(--border); border-radius: var(--r-pill); }
+.stepper button { width: 44px; height: 44px; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
+.stepper #qty { width: 2.5rem; min-height: 0; padding: 0; border: 0; background: none; text-align: center; font-family: var(--mono); }
+.added { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin: 1rem 0 0; }
+.added button { padding: 0; border: 0; background: none; text-decoration: underline; cursor: pointer; }
+.details { margin-top: 2rem; border-top: 1px solid var(--border); }
+.details details { border-bottom: 1px solid var(--border); }
+.details summary { display: flex; justify-content: space-between; padding: 1rem 0; cursor: pointer; list-style: none; }
+.details summary::-webkit-details-marker { display: none; }
+.details details[open] .chev { transform: rotate(90deg); }
+.details p { color: var(--text-muted); }
+
+/* ---------- Bag drawer ---------- */
+.drawer { position: fixed; inset: 0 0 0 auto; width: min(420px, 100%); height: 100%; max-height: none; margin: 0; padding: 0 1.5rem 1.5rem; border: 0; background: var(--bg); color: var(--text); }
+.drawer::backdrop { background: oklch(0% 0 0 / .55); }
+.drawer[open] { display: flex; flex-direction: column; animation: slide var(--base) var(--ease); }
+@keyframes slide { from { transform: translateX(40px); opacity: 0; } }
+.drawer-head { display: flex; justify-content: space-between; align-items: center; height: var(--header); border-bottom: 1px solid var(--border); }
+.drawer-head .h3 { margin: 0; }
+.bag-list { flex: 1; overflow-y: auto; margin: 0; padding: 0; list-style: none; }
+.bag-list li { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 1rem; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+.bag-list svg { width: 64px; height: 64px; background: var(--surface); }
+.bag-list small { display: block; color: var(--text-muted); }
+.bag-list button { border: 0; background: none; color: var(--text-muted); text-decoration: underline; cursor: pointer; font-size: .8125rem; }
+.bag-empty { padding-top: 2rem; color: var(--text-muted); }
+.bag-total { display: flex; justify-content: space-between; padding-top: 1rem; font-weight: 600; }
+.note { min-height: 2.6em; margin: .75rem 0 0; color: var(--text-muted); font-size: .875rem; }
+
+/* ---------- Forms ---------- */
+.form { display: grid; gap: .35rem; }
+.field { display: grid; gap: .4rem; }
+.field label, .form legend { color: var(--text-muted); font-size: .875rem; }
+input:not([type="checkbox"]):not([type="radio"]), select, textarea { width: 100%; min-height: 48px; padding: .7rem .85rem; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--surface); color: var(--text); }
+textarea { min-height: 140px; resize: vertical; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+[aria-invalid="true"] { border-color: var(--accent) !important; }
+.err { min-height: 1.35rem; margin: 0; padding-top: .15rem; color: var(--accent); font: 400 .8125rem/1.25 var(--mono); }
+.checks { display: grid; gap: .55rem; margin: .4rem 0 .9rem; padding: 0; border: 0; }
+.checks legend { margin-bottom: .55rem; }
+.check { display: flex; gap: .65rem; align-items: flex-start; cursor: pointer; }
+.check input { width: 20px; height: 20px; margin: .1rem 0 0; accent-color: var(--accent); flex: none; }
+.form .btn[type="submit"] { justify-self: start; margin-top: .5rem; }
+.success { padding: 1.5rem; border: 1px solid var(--border-strong); border-radius: var(--r-control); }
+.success .h3 { margin-top: 0; }
+
+/* ---------- Join, contact, about, story, legal ---------- */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 6vw, 6rem); padding-block: clamp(2.5rem, 6vw, 5rem) clamp(4rem, 8vw, 7rem); align-items: start; }
+.perks { margin: 1.5rem 0 0; padding: 0; list-style: none; border-top: 1px solid var(--border); }
+.perks li { display: flex; gap: .75rem; padding: .85rem 0; border-bottom: 1px solid var(--border); }
+.perks .icon { color: var(--accent); margin-top: .1rem; }
+.desks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.desks h2 { margin: 0 0 .25rem; font: 500 1.125rem/1.2 var(--serif); }
+.desks a { color: var(--text-muted); font: 400 .875rem/1.4 var(--mono); overflow-wrap: anywhere; }
+.about-lede { max-width: 30ch; font: 400 clamp(1.6rem, 1.15rem + 1.6vw, 2.75rem)/1.2 var(--serif); text-wrap: pretty; }
+.about-art { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; margin-block: clamp(2rem, 5vw, 4rem); }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; margin: 0; padding-block: 1.5rem; border-block: 1px solid var(--border); }
+.facts dt { color: var(--text-muted); font-size: .875rem; }
+.facts dd { margin: .25rem 0 0; font: 400 1.375rem/1.2 var(--serif); }
+.cols-2 { columns: 2 22rem; column-gap: 3rem; color: var(--text-muted); }
+.story { padding-block: clamp(2.5rem, 6vw, 5rem) clamp(4rem, 8vw, 7rem); }
+.story-head { max-width: 820px; margin-inline: auto; text-align: center; }
+.story-art { width: 100%; max-width: 1120px; height: auto; aspect-ratio: 16 / 9; margin: clamp(2rem, 5vw, 3.5rem) auto; object-fit: cover; }
+.prose { max-width: 680px; margin-inline: auto; font-size: 1.125rem; line-height: 1.7; }
+.prose .lead { font: 400 clamp(1.35rem, 1.2rem + .6vw, 1.7rem)/1.45 var(--serif); }
+.prose h2 { margin: 2.5rem 0 1rem; font: 400 var(--fs-h3)/1.2 var(--serif); }
+.prose blockquote { margin: 2.5rem 0; padding-left: 1.25rem; border-left: 2px solid var(--accent); font: italic 400 clamp(1.5rem, 1.2rem + 1vw, 2.2rem)/1.25 var(--serif); }
+.prose ul { padding-left: 1.1rem; }
+.prose li { margin-bottom: .4rem; }
+.story-nav { display: flex; justify-content: space-between; gap: 1rem; max-width: 680px; margin: 3rem auto 0; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.legal { max-width: 720px; padding-block: clamp(2.5rem, 6vw, 5rem); }
+.legal h2 { margin: 2rem 0 .5rem; font: 500 1.375rem/1.2 var(--serif); }
+.legal p { color: var(--text-muted); }
+
+/* ---------- Bands, 404, footer ---------- */
+.band { position: relative; isolation: isolate; overflow: hidden; padding-block: clamp(5rem, 12vw, 10rem); text-align: center; }
+.band-art { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; opacity: .5; }
+.band .lede { margin: 0 auto 2rem; color: var(--text); text-shadow: 0 1px 14px oklch(0% 0 0 / .8); }
+.band .actions { justify-content: center; }
+.lost { display: grid; place-items: center; min-height: calc(100svh - var(--header)); padding: 3rem var(--gutter); text-align: center; }
+.lost .lettering { --lh: clamp(110px, 22vw, 300px); color: var(--accent); }
+.lost .actions { justify-content: center; }
+.site-footer { padding-block: 3rem 2rem; background: var(--footer); }
+.foot-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 2.5rem; }
+.inline-form [data-fields] { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 .6rem; max-width: 520px; }
+.inline-form .err { grid-column: 1 / -1; }
+.foot-links { display: grid; grid-template-columns: repeat(2, max-content); gap: .7rem 3rem; align-content: start; }
+.foot-links a { text-decoration: none; }
+.foot-links a:hover { text-decoration: underline; }
+.foot-line { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin: 1rem 0 0; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.foot-line .lettering { --lh: 22px; margin: 0; color: var(--accent); }
+
+/* ---------- Views and responsive ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+@media (max-width: 1100px) {
+  .moments.compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .products { --cols: 3; }
+}
+@media (max-width: 900px) {
+  .music, .era, .live, .tour-grid, .two, .pd-grid, .foot-grid { grid-template-columns: minmax(0, 1fr); }
+  .era-index { position: static; }
+  .era-index ol { display: flex; flex-wrap: wrap; gap: .25rem .5rem; }
+  .era-index a { margin-left: 0; }
+  .live-art { display: none; }
+  .tour-art { max-height: 380px; aspect-ratio: auto; }
+}
+@media (max-width: 700px) {
+  .moment, .moment.wide { --x: 0% !important; --w: 100% !important; }
+  .strip-thumbs { justify-content: flex-start; }
+  .hero .strip-thumbs { display: none; }
+  .hero .strip-track { padding-top: 10px; }
+  .products { --cols: 2; }
+  .tracks { columns: 1; }
+  .releases[data-layout="grid"] { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem .75rem; }
+  .city-mini a { grid-template-columns: minmax(0, 1fr); }
+  .city-mini span:last-child { text-align: left; }
+  .facts, .desks { grid-template-columns: minmax(0, 1fr); }
+  .sec-head { flex-wrap: wrap; }
+  .nights li { grid-template-columns: minmax(0, 1fr) auto; }
+  .nights li span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="bar">
+    <div class="bar-l">
+      <button class="icon-btn menu-btn" id="menu-open" type="button" aria-label="Open menu" aria-haspopup="dialog"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+      <nav class="nav nav-l" aria-label="Main"><a href="#/latest">Latest</a><a href="#/music">Music</a><a href="#/live">Live</a><a href="#/shop">Shop</a></nav>
+    </div>
+    <a class="brand" href="#/" aria-label="Nadja Velour, home"><svg class="lettering" viewBox="0 0 780 150" aria-hidden="true"><text class="f-rough-sm" x="390" y="140">VELOUR</text></svg></a>
+    <div class="nav nav-r">
+      <a href="#/about">About</a><a href="#/join">Join</a>
+      <button class="bag-btn" type="button" data-bag-open>Bag (<span data-bag-count>0</span>)</button>
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to light theme"><svg class="icon" aria-hidden="true"><use href="#i-sun"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ HOME ============ -->
+<div data-view="home">
+  <section class="hero stage" aria-labelledby="hero-title">
+    <img class="hero-art" src="illustrations/hero-saltglass.svg" width="1600" height="1000" alt="">
+    <div class="hero-copy">
+      <p class="kicker rise">Era VI</p>
+      <h1 id="hero-title" class="rise d1" style="margin:0"><svg class="lettering hero-word" viewBox="0 0 1120 190" role="img" aria-label="Saltglass"><text class="f-rough" x="560" y="170">SALTGLASS</text></svg></h1>
+      <p class="hero-line rise d2">The sixth record. Twelve songs about glass, salt and getting out.</p>
+      <div class="actions rise d3"><a class="btn solid" href="#/music?era=saltglass">Listen now</a><a class="btn pill" href="#/live"><span class="ci"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>Tour dates</a></div>
+    </div>
+    <nav class="strip needs-js" aria-label="Moments of the era" data-strip="end">
+      <span class="strip-label">Scroll</span>
+      <div class="strip-track"><ol class="strip-thumbs" data-strip-thumbs></ol><svg class="wire" viewBox="0 0 1000 10" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M0 5C60 3 120 7 180 5S300 3 360 6S480 4 540 5S660 7 720 4S840 6 900 5S970 4 1000 5"/></svg><span class="strip-marker" aria-hidden="true"></span></div>
+    </nav>
+  </section>
+
+  <section class="sec" aria-labelledby="h-home-latest">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="h2" id="h-home-latest">Latest</h2><a class="more" href="#/latest">Every moment<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div class="moments compact" data-home="moments"></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-home-tour" style="padding-top:0">
+    <div class="wrap tour-grid">
+      <div>
+        <p class="kicker">On tour in 2027</p>
+        <h2 id="h-home-tour" style="margin:0"><svg class="lettering" viewBox="0 0 1300 190" role="img" aria-label="The Saltglass Procession"><text class="f-melt" x="650" y="160">PROCESSION</text></svg></h2>
+        <ul class="city-mini" data-home="cities"></ul>
+        <a class="btn pill" href="#/live"><span class="ci"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>All dates and tickets</a>
+      </div>
+      <img class="tour-art" src="illustrations/halftone.svg" width="800" height="1000" alt="">
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-home-shop" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="h2" id="h-home-shop">Shop</h2><a class="more" href="#/shop">Shop all<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div class="products" data-home="products"></div>
+    </div>
+  </section>
+
+  <section class="band stage" aria-labelledby="h-home-join">
+    <img class="band-art" src="illustrations/still-halo.svg" width="1600" height="900" alt="">
+    <div class="wrap">
+      <p class="kicker">The list</p>
+      <h2 class="h1" id="h-home-join">Letters from the glasshouse</h2>
+      <p class="lede">New music the night before it is out, presale codes for every city, and a letter when there is something to say.</p>
+      <div class="actions"><a class="btn solid" href="#/join">Join the list</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ LATEST (the moments of the era) ============ -->
+<div data-view="latest">
+  <section class="page-head wrap" aria-labelledby="h-latest">
+    <p class="kicker">Latest</p>
+    <h1 class="h1" id="h-latest">Twelve months of Saltglass</h1>
+    <p class="lede">Every release, video and night on stage of the sixth era, in order.</p>
+  </section>
+  <nav class="strip strip-sticky needs-js" aria-label="Jump to a moment" data-strip="scroll">
+    <span class="strip-label">Scroll</span>
+    <div class="strip-track"><ol class="strip-thumbs" data-strip-thumbs></ol><svg class="wire" viewBox="0 0 1000 10" preserveAspectRatio="none" aria-hidden="true"><path vector-effect="non-scaling-stroke" d="M0 5C60 3 120 7 180 5S300 3 360 6S480 4 540 5S660 7 720 4S840 6 900 5S970 4 1000 5"/></svg><span class="strip-marker" aria-hidden="true"></span></div>
+  </nav>
+  <div class="wrap filter-row needs-js">
+    <div class="chips" role="group" aria-label="Show"><button class="chip" type="button" data-kind-filter="all" aria-pressed="true">All</button><button class="chip" type="button" data-kind-filter="release" aria-pressed="false">Releases</button><button class="chip" type="button" data-kind-filter="video" aria-pressed="false">Videos</button><button class="chip" type="button" data-kind-filter="live" aria-pressed="false">Live</button><button class="chip" type="button" data-kind-filter="news" aria-pressed="false">News</button></div>
+  </div>
+  <div class="wrap moments" id="moments" data-filter-list="kind">
+    <article class="moment reveal" id="m-wound" data-kind="release"><a href="#/music?era=saltglass"><span class="m-art"><img src="illustrations/cover-wound.svg" width="600" height="600" alt=""></span><h2 class="m-title">“Salt in the Wound” Release</h2></a><p class="m-meta"><time datetime="2026-03-06">Mar.06.2026</time><svg class="icon" role="img" aria-label="Release"><use href="#i-disc"/></svg></p></article>
+    <article class="moment wide reveal" id="m-wound-video" data-kind="video"><a href="#/music?era=saltglass"><span class="m-art"><img src="illustrations/still-video.svg" width="1600" height="900" alt=""><span class="m-play"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg></span></span><h2 class="m-title">“Salt in the Wound” Video</h2></a><p class="m-meta"><time datetime="2026-03-20">Mar.20.2026</time><svg class="icon" role="img" aria-label="Video"><use href="#i-film"/></svg></p></article>
+    <article class="moment reveal" id="m-halo" data-kind="release"><a href="#/music?era=saltglass"><span class="m-art"><img src="illustrations/cover-halo.svg" width="600" height="600" alt=""></span><h2 class="m-title">“Rust Halo” Release</h2></a><p class="m-meta"><time datetime="2026-05-15">May.15.2026</time><svg class="icon" role="img" aria-label="Release"><use href="#i-disc"/></svg></p></article>
+    <article class="moment wide reveal" id="m-announce" data-kind="news"><a href="#/music?era=saltglass"><span class="m-art"><img src="illustrations/hero-saltglass.svg" width="1600" height="1000" alt=""></span><h2 class="m-title">Saltglass Announced</h2></a><p class="m-meta"><time datetime="2026-06-03">Jun.03.2026</time><svg class="icon" role="img" aria-label="News"><use href="#i-spark"/></svg></p></article>
+    <article class="moment wide reveal" id="m-harbour-lights" data-kind="live"><a href="#/live"><span class="m-art"><img src="illustrations/still-stage.svg" width="1600" height="900" alt=""></span><h2 class="m-title">Headlining Harbour Lights Festival</h2></a><p class="m-meta"><time datetime="2026-07-25">Jul.25.2026</time><svg class="icon" role="img" aria-label="Live"><use href="#i-mic"/></svg></p></article>
+    <article class="moment reveal" id="m-saltglass" data-kind="release"><a href="#/music?era=saltglass"><span class="m-art"><img src="illustrations/cover-saltglass.svg" width="600" height="600" alt=""></span><h2 class="m-title">Saltglass Release</h2></a><p class="m-meta"><time datetime="2026-09-18">Sep.18.2026</time><svg class="icon" role="img" aria-label="Release"><use href="#i-disc"/></svg></p></article>
+    <article class="moment wide reveal" id="m-halo-video" data-kind="video"><a href="#/music?era=saltglass"><span class="m-art"><img src="illustrations/still-halo.svg" width="1600" height="900" alt=""><span class="m-play"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg></span></span><h2 class="m-title">“Rust Halo” Video</h2></a><p class="m-meta"><time datetime="2026-10-02">Oct.02.2026</time><svg class="icon" role="img" aria-label="Video"><use href="#i-film"/></svg></p></article>
+    <article class="moment wide reveal" id="m-tour" data-kind="news"><a href="#/live"><span class="m-art"><img src="illustrations/still-road.svg" width="1600" height="900" alt=""></span><h2 class="m-title">The Saltglass Procession Announced</h2></a><p class="m-meta"><time datetime="2026-10-16">Oct.16.2026</time><svg class="icon" role="img" aria-label="News"><use href="#i-spark"/></svg></p></article>
+    <article class="moment reveal" id="m-live-album" data-kind="release"><a href="#/music?era=saltglass"><span class="m-art"><img src="illustrations/cover-live.svg" width="600" height="600" alt=""></span><h2 class="m-title">Saltglass (Live at Harbour Hall) Release</h2></a><p class="m-meta"><time datetime="2026-11-06">Nov.06.2026</time><svg class="icon" role="img" aria-label="Release"><use href="#i-disc"/></svg></p></article>
+    <article class="moment wide reveal" id="m-sessions" data-kind="news"><a href="#/story"><span class="m-art"><img src="illustrations/still-studio.svg" width="1600" height="900" alt=""></span><h2 class="m-title">Inside the Saltglass Sessions</h2></a><p class="m-meta"><time datetime="2026-11-20">Nov.20.2026</time><svg class="icon" role="img" aria-label="News"><use href="#i-spark"/></svg></p></article>
+  </div>
+  <p class="empty wrap" data-empty="kind" hidden>Nothing of this kind yet.</p>
+</div>
+
+<!-- ============ STORY (one news post) ============ -->
+<div data-view="story">
+  <article class="story wrap" aria-labelledby="h-story">
+    <header class="story-head">
+      <p class="kicker"><a href="#/latest" style="text-decoration:none">Latest</a></p>
+      <h1 class="h1" id="h-story">Inside the Saltglass sessions</h1>
+      <p class="date"><time datetime="2026-11-20">Nov.20.2026</time> · Words by Ines Aurel</p>
+    </header>
+    <img class="story-art" src="illustrations/still-studio.svg" width="1600" height="900" alt="A desk lamp over a mixing desk in a dark room, cables across the floor">
+    <div class="prose">
+      <p class="lead">The record was made in one winter, in a rented glasshouse at the end of a sea wall, with one lamp, two microphones and a heater that worked on alternate days.</p>
+      <p>Nadja Velour arrived with eleven songs and left with twelve. The last one, “Leave the Light On”, was written on the final night, when the storm took out the power and the band played it by torchlight into a single microphone.</p>
+      <h2>Salt on everything</h2>
+      <p>The glass walls let in the sound of the sea, and the engineer stopped trying to keep it out. You can hear the tide under “Undertow Waltz” and the rain on the roof at the end of “Pillar of Salt”.</p>
+      <blockquote>I wanted a record you could hear the weather on. Every song had to survive the room.</blockquote>
+      <p>Strings were recorded in one afternoon with eight players standing in a circle around the lamp. The arrangements were finished the night before, on the back of the call sheets.</p>
+      <h2>Credits</h2>
+      <ul>
+        <li>Produced by Nadja Velour and Theo Lark</li>
+        <li>Engineered by Ines Aurel</li>
+        <li>Strings arranged by Mara Quist</li>
+      </ul>
+    </div>
+    <nav class="story-nav" aria-label="More stories"><a class="more" href="#/latest"><svg class="icon" aria-hidden="true" style="transform:scaleX(-1)"><use href="#i-arrow"/></svg>All moments</a><a class="more" href="#/music?era=saltglass">Listen to Saltglass<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></nav>
+  </article>
+</div>
+
+<!-- ============ MUSIC (eras and the collection) ============ -->
+<div data-view="music">
+  <section class="music wrap" aria-labelledby="h-music">
+    <nav class="era-index" aria-label="Eras">
+      <h1 class="index-title" id="h-music">Music</h1>
+      <ol>
+        <li><a href="#/music?era=saltglass" data-era-link="saltglass">Saltglass</a></li>
+        <li><a href="#/music?era=hothouse" data-era-link="hothouse">Hothouse Hymns</a></li>
+        <li><a href="#/music?era=saints" data-era-link="saints">Paper Saints</a></li>
+        <li><a href="#/music?era=static" data-era-link="static">Velvet Static</a></li>
+        <li><a href="#/music?era=debris" data-era-link="debris">Gilded Debris</a></li>
+        <li><a href="#/music?era=bloom" data-era-link="bloom">Night Bloom</a></li>
+      </ol>
+    </nav>
+    <div>
+      <article class="era" data-era="saltglass" style="--era-d:oklch(68% .2 35);--era-l:oklch(53% .2 30)">
+        <img class="era-cover" src="illustrations/cover-saltglass.svg" width="600" height="600" alt="The Saltglass cover: a pane of glass breaking under a red light">
+        <div class="era-body">
+          <p class="kicker">Era VI</p>
+          <h2 class="era-name"><svg class="lettering" viewBox="0 0 1120 190" role="img" aria-label="Saltglass"><text class="f-rough" x="560" y="170">SALTGLASS</text></svg></h2>
+          <p class="tags"><span class="tag">2026</span><span class="tag">Album</span><span class="tag">12 songs</span></p>
+          <p>Written in a rented glasshouse by the sea over one winter. Twelve songs about what breaks, what stays sharp and the light that gets through anyway.</p>
+          <ol class="tracks"><li>Salt in the Wound</li><li>Rust Halo</li><li>Glasshouse</li><li>Mercury Bride</li><li>Pillar of Salt</li><li>The Long Exhale</li><li>Crown of Brine</li><li>Shatterproof</li><li>Lantern Room</li><li>Undertow Waltz</li><li>Saint of Small Hours</li><li>Leave the Light On</li></ol>
+          <div class="actions"><a class="btn solid" href="#/product?id=saltglass-lp">Buy the record</a><a class="btn pill" href="#/story"><span class="ci"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>How it was made</a></div>
+        </div>
+      </article>
+      <article class="era" data-era="hothouse" style="--era-d:oklch(78% .14 150);--era-l:oklch(46% .12 150)">
+        <img class="era-cover" src="illustrations/cover-hothouse.svg" width="600" height="600" alt="The Hothouse Hymns cover: a pale orchid in green steam">
+        <div class="era-body">
+          <p class="kicker">Era V</p>
+          <h2 class="era-name"><svg class="lettering" viewBox="0 0 1500 190" role="img" aria-label="Hothouse Hymns"><text class="f-melt" x="750" y="170">HOTHOUSE HYMNS</text></svg></h2>
+          <p class="tags"><span class="tag">2023</span><span class="tag">Album</span><span class="tag">8 songs</span></p>
+          <p>Recorded after closing time in an old palm house. A choir, a lot of sub bass and a lot of condensation.</p>
+          <ol class="tracks"><li>Fever Chapel</li><li>Orchid Teeth</li><li>Greenhouse Choir</li><li>Humid</li><li>Vine</li><li>Steam Psalm</li><li>Night Gardener</li><li>Hymn for the Heat</li></ol>
+        </div>
+      </article>
+      <article class="era" data-era="saints" style="--era-d:oklch(88% .05 85);--era-l:oklch(42% .06 75)">
+        <img class="era-cover" src="illustrations/cover-saints.svg" width="600" height="600" alt="The Paper Saints cover: cut paper halos above a dark figure">
+        <div class="era-body">
+          <p class="kicker">Era IV</p>
+          <h2 class="era-name"><svg class="lettering" viewBox="0 0 1180 190" role="img" aria-label="Paper Saints"><text class="it" x="590" y="160">Paper Saints</text></svg></h2>
+          <p class="tags"><span class="tag">2020</span><span class="tag">Album</span><span class="tag">9 songs</span></p>
+          <p>A quiet record made at a kitchen table: piano, paper, a pencil and very little else.</p>
+          <ol class="tracks"><li>Paper Saints</li><li>Halo, Cut Out</li><li>Origami Heart</li><li>Tissue</li><li>Votive</li><li>Scissors</li><li>Candle Wax</li><li>Gilt Edge</li><li>Amen in Pencil</li></ol>
+        </div>
+      </article>
+      <article class="era" data-era="static" style="--era-d:oklch(74% .15 300);--era-l:oklch(48% .19 300)">
+        <img class="era-cover" src="illustrations/cover-static.svg" width="600" height="600" alt="The Velvet Static cover: a violet screen behind bands of static">
+        <div class="era-body">
+          <p class="kicker">Era III</p>
+          <h2 class="era-name"><svg class="lettering" viewBox="0 0 1400 190" role="img" aria-label="Velvet Static"><text class="f-scan" x="700" y="170">VELVET STATIC</text></svg></h2>
+          <p class="tags"><span class="tag">2017</span><span class="tag">Album</span><span class="tag">8 songs</span></p>
+          <p>Late-night television, an old synthesizer and the hiss between channels.</p>
+          <ol class="tracks"><li>Velvet Static</li><li>Channel Surf</li><li>Rabbit Ears</li><li>Test Pattern</li><li>Late Broadcast</li><li>Snow on the Screen</li><li>Signal Lost</li><li>Off Air</li></ol>
+        </div>
+      </article>
+      <article class="era" data-era="debris" style="--era-d:oklch(82% .12 85);--era-l:oklch(48% .1 75)">
+        <img class="era-cover" src="illustrations/cover-debris.svg" width="600" height="600" alt="The Gilded Debris cover: gold flakes drifting in the dark">
+        <div class="era-body">
+          <p class="kicker">Era II</p>
+          <h2 class="era-name"><svg class="lettering" viewBox="0 0 1400 190" role="img" aria-label="Gilded Debris"><text class="f-rough" x="700" y="170">GILDED DEBRIS</text></svg></h2>
+          <p class="tags"><span class="tag">2014</span><span class="tag">Album</span><span class="tag">8 songs</span></p>
+          <p>The first full record: dance floors, borrowed dresses and everything left over after the party.</p>
+          <ol class="tracks"><li>Gilded Debris</li><li>Gold Leaf</li><li>Rubble Queen</li><li>Shine</li><li>Fault Lines</li><li>Brass Knuckle Kiss</li><li>Glitter in the Ash</li><li>After the Party</li></ol>
+        </div>
+      </article>
+      <article class="era" data-era="bloom" style="--era-d:oklch(78% .11 240);--era-l:oklch(47% .14 250)">
+        <img class="era-cover" src="illustrations/cover-bloom.svg" width="600" height="600" alt="The Night Bloom cover: blue rings opening around a point of light">
+        <div class="era-body">
+          <p class="kicker">Era I</p>
+          <h2 class="era-name"><svg class="lettering" viewBox="0 0 1100 190" role="img" aria-label="Night Bloom"><text class="it" x="550" y="160">Night Bloom</text></svg></h2>
+          <p class="tags"><span class="tag">2012</span><span class="tag">EP</span><span class="tag">5 songs</span></p>
+          <p>Five songs recorded on a laptop in a shared flat, released at midnight with no warning.</p>
+          <ol class="tracks"><li>Night Bloom</li><li>Moth Hour</li><li>Porchlight</li><li>Cereus</li><li>Before Dawn</li></ol>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="collection wrap" aria-labelledby="h-coll">
+    <div class="sec-head" style="flex-wrap:wrap">
+      <h2 class="h2" id="h-coll">The collection</h2>
+      <div class="coll-tools needs-js">
+        <div class="chips" role="group" aria-label="Format"><button class="chip" type="button" data-format-filter="all" aria-pressed="true">All</button><button class="chip" type="button" data-format-filter="album" aria-pressed="false">Albums</button><button class="chip" type="button" data-format-filter="single" aria-pressed="false">Singles</button><button class="chip" type="button" data-format-filter="ep" aria-pressed="false">EPs</button><button class="chip" type="button" data-format-filter="live" aria-pressed="false">Live</button><button class="chip" type="button" data-format-filter="remix" aria-pressed="false">Remixes</button></div>
+        <div class="actions" role="group" aria-label="Layout" style="gap:.5rem"><button class="round" type="button" data-layout="grid" aria-pressed="true" aria-label="Show as a grid"><svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg></button><button class="round" type="button" data-layout="list" aria-pressed="false" aria-label="Show as a list"><svg class="icon" aria-hidden="true"><use href="#i-list"/></svg></button></div>
+      </div>
+    </div>
+    <div class="releases" id="releases" data-filter-list="format" data-layout="grid">
+      <a class="rel" href="#/music?era=saltglass" data-format="album"><img src="illustrations/cover-saltglass.svg" width="600" height="600" alt=""><span class="rel-name">Saltglass</span><span class="tags"><span class="tag">2026</span><span class="tag">Album</span></span></a>
+      <a class="rel" href="#/music?era=saltglass" data-format="live"><img src="illustrations/cover-live.svg" width="600" height="600" alt=""><span class="rel-name">Saltglass (Live at Harbour Hall)</span><span class="tags"><span class="tag">2026</span><span class="tag">Live</span></span></a>
+      <a class="rel" href="#/music?era=saltglass" data-format="single"><img src="illustrations/cover-mercury.svg" width="600" height="600" alt=""><span class="rel-name">Mercury Bride</span><span class="tags"><span class="tag">2026</span><span class="tag">Single</span></span></a>
+      <a class="rel" href="#/music?era=saltglass" data-format="single"><img src="illustrations/cover-halo.svg" width="600" height="600" alt=""><span class="rel-name">Rust Halo</span><span class="tags"><span class="tag">2026</span><span class="tag">Single</span></span></a>
+      <a class="rel" href="#/music?era=saltglass" data-format="single"><img src="illustrations/cover-wound.svg" width="600" height="600" alt=""><span class="rel-name">Salt in the Wound</span><span class="tags"><span class="tag">2026</span><span class="tag">Single</span></span></a>
+      <a class="rel" href="#/music?era=hothouse" data-format="remix"><img src="illustrations/cover-remix.svg" width="600" height="600" alt=""><span class="rel-name">Hothouse Hymns: Remixed</span><span class="tags"><span class="tag">2024</span><span class="tag">Remixes</span></span></a>
+      <a class="rel" href="#/music?era=hothouse" data-format="album"><img src="illustrations/cover-hothouse.svg" width="600" height="600" alt=""><span class="rel-name">Hothouse Hymns</span><span class="tags"><span class="tag">2023</span><span class="tag">Album</span></span></a>
+      <a class="rel" href="#/music?era=hothouse" data-format="single"><img src="illustrations/cover-fever.svg" width="600" height="600" alt=""><span class="rel-name">Fever Chapel</span><span class="tags"><span class="tag">2023</span><span class="tag">Single</span></span></a>
+      <a class="rel" href="#/music?era=saints" data-format="album"><img src="illustrations/cover-saints.svg" width="600" height="600" alt=""><span class="rel-name">Paper Saints</span><span class="tags"><span class="tag">2020</span><span class="tag">Album</span></span></a>
+      <a class="rel" href="#/music?era=static" data-format="album"><img src="illustrations/cover-static.svg" width="600" height="600" alt=""><span class="rel-name">Velvet Static</span><span class="tags"><span class="tag">2017</span><span class="tag">Album</span></span></a>
+      <a class="rel" href="#/music?era=debris" data-format="album"><img src="illustrations/cover-debris.svg" width="600" height="600" alt=""><span class="rel-name">Gilded Debris</span><span class="tags"><span class="tag">2014</span><span class="tag">Album</span></span></a>
+      <a class="rel" href="#/music?era=bloom" data-format="ep"><img src="illustrations/cover-bloom.svg" width="600" height="600" alt=""><span class="rel-name">Night Bloom</span><span class="tags"><span class="tag">2012</span><span class="tag">EP</span></span></a>
+    </div>
+    <p class="empty" data-empty="format" hidden>Nothing in this format yet.</p>
+  </section>
+</div>
+
+<!-- ============ LIVE (tour) ============ -->
+<div data-view="live">
+  <section class="live" aria-labelledby="h-live">
+    <div class="live-list">
+      <header class="live-head">
+        <p class="kicker">The Saltglass</p>
+        <h1 id="h-live" style="margin:0"><svg class="lettering" viewBox="0 0 1300 190" role="img" aria-label="The Saltglass Procession"><text class="f-melt" x="650" y="160">PROCESSION</text></svg></h1>
+        <p class="lede">Nineteen nights in ten cities, February to June 2027.</p>
+      </header>
+      <div class="chips needs-js" role="group" aria-label="Region" style="justify-content:center"><button class="chip" type="button" data-region-filter="all" aria-pressed="true">All</button><button class="chip" type="button" data-region-filter="europe" aria-pressed="false">Europe</button><button class="chip" type="button" data-region-filter="americas" aria-pressed="false">Americas</button><button class="chip" type="button" data-region-filter="asia" aria-pressed="false">Asia</button><button class="chip" type="button" data-region-filter="oceania" aria-pressed="false">Oceania</button></div>
+      <div class="cities" data-filter-list="region">
+        <details class="city" id="c-london" data-region="europe" data-nights="2027-02-12 18:30, 2027-02-13 18:30, 2027-02-15 18:30"><summary><span class="city-name">London</span><span class="city-venue">Harbour Hall</span><span class="city-dates">Feb 12, 13 &amp; 15, 2027</span><span class="status hot">Few left</span><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul class="nights"></ul></details>
+        <details class="city" id="c-paris" data-region="europe" data-nights="2027-02-19 19:00, 2027-02-20 19:00"><summary><span class="city-name">Paris</span><span class="city-venue">Salle Lumen</span><span class="city-dates">Feb 19 &amp; 20, 2027</span><span class="status">On sale</span><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul class="nights"></ul></details>
+        <details class="city" id="c-berlin" data-region="europe" data-nights="2027-02-24 18:30"><summary><span class="city-name">Berlin</span><span class="city-venue">Glaswerk Arena</span><span class="city-dates">Feb 24, 2027</span><span class="status out">Sold out</span><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul class="nights"></ul></details>
+        <details class="city" id="c-new-york" data-region="americas" data-nights="2027-03-18 19:00, 2027-03-19 19:00, 2027-03-21 18:30"><summary><span class="city-name">New York</span><span class="city-venue">Hudson Pier Hall</span><span class="city-dates">Mar 18, 19 &amp; 21, 2027</span><span class="status hot">Few left</span><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul class="nights"></ul></details>
+        <details class="city" id="c-los-angeles" data-region="americas" data-nights="2027-04-02 19:00, 2027-04-03 19:00"><summary><span class="city-name">Los Angeles</span><span class="city-venue">Canyon Bowl</span><span class="city-dates">Apr 2 &amp; 3, 2027</span><span class="status out">Sold out</span><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul class="nights"></ul></details>
+        <details class="city" id="c-mexico-city" data-region="americas" data-nights="2027-04-09 19:30"><summary><span class="city-name">Mexico City</span><span class="city-venue">Foro Luz</span><span class="city-dates">Apr 9, 2027</span><span class="status soon">Presale Jan 9</span><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul class="nights"></ul></details>
+        <details class="city" id="c-tokyo" data-region="asia" data-nights="2027-05-07 18:00, 2027-05-08 17:00"><summary><span class="city-name">Tokyo</span><span class="city-venue">Shiosai Hall</span><span class="city-dates">May 7 &amp; 8, 2027</span><span class="status">On sale</span><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul class="nights"></ul></details>
+        <details class="city" id="c-seoul" data-region="asia" data-nights="2027-05-12 19:00"><summary><span class="city-name">Seoul</span><span class="city-venue">Riverbank Arena</span><span class="city-dates">May 12, 2027</span><span class="status soon">Presale Jan 16</span><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul class="nights"></ul></details>
+        <details class="city" id="c-taipei" data-region="asia" data-nights="2027-05-16 18:00, 2027-05-17 19:00"><summary><span class="city-name">Taipei</span><span class="city-venue">Riverside Dome</span><span class="city-dates">May 16 &amp; 17, 2027</span><span class="status">On sale</span><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul class="nights"></ul></details>
+        <details class="city" id="c-sydney" data-region="oceania" data-nights="2027-06-04 19:00, 2027-06-05 19:00"><summary><span class="city-name">Sydney</span><span class="city-venue">Quay Arena</span><span class="city-dates">Jun 4 &amp; 5, 2027</span><span class="status">On sale</span><svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg></summary><ul class="nights"></ul></details>
+      </div>
+      <p class="empty" data-empty="region" hidden>No dates in this region yet. Join the list to hear first.</p>
+      <section class="notes" id="tickets" aria-labelledby="h-tickets">
+        <h2 class="h3" id="h-tickets">Tickets and access</h2>
+        <p>Tickets are sold only through each venue's official box office. Members of the list get a presale code two days before general sale.</p>
+        <p>Every venue has step-free entry and accessible seating. Write to the access desk on the contact page and we will help you book.</p>
+      </section>
+    </div>
+    <aside class="live-art stage" aria-label="Next show"><div>
+      <img src="illustrations/halftone.svg" width="800" height="1000" alt="">
+      <p class="next"><span class="date">Next night</span><span class="city-name">London</span><span>Fri, Feb 12, 2027 · Harbour Hall</span></p>
+    </div></aside>
+  </section>
+</div>
+
+<!-- ============ SHOP ============ -->
+<div data-view="shop">
+  <section class="wrap" aria-labelledby="h-shop">
+    <div class="page-head" style="padding-bottom:0"><h1 class="h1" id="h-shop">Shop</h1><p class="lede">Records, clothes and prints from every era. Ships worldwide in recycled packaging.</p></div>
+    <div class="shop-tools needs-js">
+      <button class="btn pill" type="button" aria-expanded="false" aria-controls="filters" data-filters-toggle><span class="ci"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span><span data-filters-label>Show filters</span></button>
+    </div>
+    <div class="filters" id="filters" hidden>
+      <div class="chips" role="group" aria-label="Category"><button class="chip" type="button" data-category-filter="all" aria-pressed="true">All</button><button class="chip" type="button" data-category-filter="music" aria-pressed="false">Music</button><button class="chip" type="button" data-category-filter="apparel" aria-pressed="false">Apparel</button><button class="chip" type="button" data-category-filter="accessories" aria-pressed="false">Accessories</button><button class="chip" type="button" data-category-filter="prints" aria-pressed="false">Prints</button></div>
+      <label class="field" style="grid-auto-flow:column;align-items:center"><span>Sort</span><select data-sort><option value="featured">Featured</option><option value="low">Price, low to high</option><option value="high">Price, high to low</option></select></label>
+    </div>
+    <div class="products" id="products" data-filter-list="category">
+      <a class="product" href="#/product?id=saltglass-lp" data-category="music" data-id="saltglass-lp" data-price="38" data-art="p-record" data-sizes="One size" data-note="Two clear records in a gatefold sleeve, with a lyric booklet and a printed inner sleeve."><span class="p-well"><svg class="p-art" viewBox="0 0 200 200" role="img" aria-label="Saltglass 2LP" style="--g:oklch(80% .02 30)"><use href="#p-record"/></svg><span class="tag p-flag">New</span></span><span class="p-name">Saltglass 2LP, clear vinyl</span><span class="p-price">$38.00</span></a>
+      <a class="product" href="#/product?id=halo-tee" data-category="apparel" data-id="halo-tee" data-price="42" data-art="p-tee" data-sizes="XS,S,M,L,XL" data-note="Heavy cotton, a rust halo on the chest and the tracklist on the back."><span class="p-well"><svg class="p-art" viewBox="0 0 200 200" role="img" aria-label="Rust Halo T-shirt, black" style="--g:oklch(20% 0 0)"><use href="#p-tee"/></svg></span><span class="p-name">Rust Halo T-shirt</span><span class="p-price">$42.00</span></a>
+      <a class="product" href="#/product?id=shard-hoodie" data-category="apparel" data-id="shard-hoodie" data-price="85" data-art="p-hoodie" data-sizes="S,M,L,XL" data-note="Brushed fleece in charcoal, one red shard stitched on the chest."><span class="p-well"><svg class="p-art" viewBox="0 0 200 200" role="img" aria-label="Shard hoodie, charcoal" style="--g:oklch(36% 0 0)"><use href="#p-hoodie"/></svg></span><span class="p-name">Shard hoodie</span><span class="p-price">$85.00</span></a>
+      <a class="product" href="#/product?id=lettering-print" data-category="prints" data-id="lettering-print" data-price="30" data-art="p-poster" data-sizes="One size" data-note="Screen printed in two colours on heavy paper, 50 by 70 cm, numbered by hand."><span class="p-well"><svg class="p-art" viewBox="0 0 200 200" role="img" aria-label="Saltglass lettering print" style="--g:oklch(94% .01 85)"><use href="#p-poster"/></svg><span class="tag p-flag">Numbered</span></span><span class="p-name">Saltglass lettering print</span><span class="p-price">$30.00</span></a>
+      <a class="product" href="#/product?id=procession-tee" data-category="apparel" data-id="procession-tee" data-price="45" data-art="p-tee" data-sizes="XS,S,M,L,XL" data-note="Bone cotton with every city of the tour printed down the back."><span class="p-well"><svg class="p-art" viewBox="0 0 200 200" role="img" aria-label="Procession tour T-shirt, bone" style="--g:oklch(92% .015 85)"><use href="#p-tee"/></svg></span><span class="p-name">Procession tour T-shirt</span><span class="p-price">$45.00</span></a>
+      <a class="product" href="#/product?id=saltglass-cd" data-category="music" data-id="saltglass-cd" data-price="14" data-art="p-cd" data-sizes="One size" data-note="The album in a recycled card wallet with a fold-out lyric sheet."><span class="p-well"><svg class="p-art" viewBox="0 0 200 200" role="img" aria-label="Saltglass CD" style="--g:oklch(60% .19 32)"><use href="#p-cd"/></svg></span><span class="p-name">Saltglass CD</span><span class="p-price">$14.00</span></a>
+      <a class="product" href="#/product?id=salt-tank" data-category="apparel" data-id="salt-tank" data-price="36" data-art="p-tank" data-sizes="XS,S,M,L" data-note="Ribbed cotton, cropped, with a small shard printed at the neck."><span class="p-well"><svg class="p-art" viewBox="0 0 200 200" role="img" aria-label="Salt cropped tank, white" style="--g:oklch(88% .01 85)"><use href="#p-tank"/></svg></span><span class="p-name">Salt cropped tank</span><span class="p-price">$36.00</span></a>
+      <a class="product" href="#/product?id=saltglass-tape" data-category="music" data-id="saltglass-tape" data-price="12" data-art="p-cassette" data-sizes="One size" data-note="A red cassette with a printed J-card. One run only."><span class="p-well"><svg class="p-art" viewBox="0 0 200 200" role="img" aria-label="Saltglass cassette, red" style="--g:oklch(55% .19 30)"><use href="#p-cassette"/></svg><span class="tag p-flag">Few left</span></span><span class="p-name">Saltglass cassette, red shell</span><span class="p-price">$12.00</span></a>
+      <a class="product" href="#/product?id=glass-tote" data-category="accessories" data-id="glass-tote" data-price="28" data-art="p-tote" data-sizes="One size" data-note="Heavy canvas, long handles, big enough for two records."><span class="p-well"><svg class="p-art" viewBox="0 0 200 200" role="img" aria-label="Glasshouse tote" style="--g:oklch(90% .02 85)"><use href="#p-tote"/></svg></span><span class="p-name">Glasshouse tote</span><span class="p-price">$28.00</span></a>
+      <a class="product" href="#/product?id=procession-cap" data-category="accessories" data-id="procession-cap" data-price="34" data-art="p-cap" data-sizes="One size" data-status="sold-out" data-note="Washed black cotton with the tour name stitched on the back."><span class="p-well"><svg class="p-art" viewBox="0 0 200 200" role="img" aria-label="Procession cap, black" style="--g:oklch(22% 0 0)"><use href="#p-cap"/></svg><span class="tag p-flag">Sold out</span></span><span class="p-name">Procession cap</span><span class="p-price">$34.00</span></a>
+    </div>
+    <p class="empty" data-empty="category" hidden>Nothing in this category right now.</p>
+  </section>
+</div>
+
+<!-- ============ PRODUCT (filled from the card that was clicked) ============ -->
+<div data-view="product">
+  <section class="wrap" aria-labelledby="pd-name">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#/shop">Shop</a><span aria-hidden="true">/</span><a href="#/shop?category=apparel" data-pd-cat>Apparel</a></nav>
+    <div class="pd-grid">
+      <div>
+        <div class="pd-well"><svg class="p-art" id="pd-art" viewBox="0 0 200 200" role="img" aria-label="Rust Halo T-shirt, black" style="--g:oklch(20% 0 0)"><use href="#p-tee"/></svg></div>
+        <div class="thumbs needs-js" role="group" aria-label="Views"><button type="button" data-box="0 0 200 200" aria-pressed="true">Full</button><button type="button" data-box="40 30 120 120" aria-pressed="false">Print</button><button type="button" data-box="70 55 60 60" aria-pressed="false">Detail</button></div>
+      </div>
+      <form class="pd-buy" data-form="add-to-bag" novalidate>
+        <h1 class="h1" id="pd-name">Rust Halo T-shirt</h1>
+        <p class="pd-price" id="pd-price">$42.00</p>
+        <p class="pd-note" id="pd-note">Heavy cotton, a rust halo on the chest and the tracklist on the back.</p>
+        <fieldset class="sizes" id="pd-sizes"><legend class="sr-only">Size</legend><label class="size"><input type="radio" name="size" value="XS"><span>XS</span></label><label class="size"><input type="radio" name="size" value="S"><span>S</span></label><label class="size"><input type="radio" name="size" value="M"><span>M</span></label><label class="size"><input type="radio" name="size" value="L"><span>L</span></label><label class="size"><input type="radio" name="size" value="XL"><span>XL</span></label></fieldset>
+        <p class="err" id="size-error" aria-live="polite"></p>
+        <div class="buy-row">
+          <div class="stepper"><button type="button" data-step="-1" aria-label="One fewer"><svg class="icon" aria-hidden="true"><use href="#i-minus"/></svg></button><input id="qty" value="1" inputmode="numeric" aria-label="Quantity"><button type="button" data-step="1" aria-label="One more"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+          <button class="btn solid wide" type="submit" data-add>Add to bag</button>
+        </div>
+        <p class="added" data-added role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span></span><button type="button" data-bag-open>View bag</button></p>
+        <div class="details">
+          <details><summary>Details<svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>Designed in London. Printed and packed by a family-run print shop. Every item ships in recycled packaging.</p></details>
+          <details><summary>Shipping and returns<svg class="icon chev" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>Orders leave within three working days, with tracking by email. Unworn items can come back within 30 days.</p></details>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- ============ JOIN (newsletter signup) ============ -->
+<div data-view="join">
+  <section class="wrap two" aria-labelledby="h-join">
+    <div>
+      <p class="kicker">The list</p>
+      <h1 class="h1" id="h-join">Letters from the glasshouse</h1>
+      <p class="lede">One letter when there is something to say. Never more than two a month.</p>
+      <ul class="perks">
+        <li><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg>A presale code for every city, two days before general sale</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-disc"/></svg>New songs the night before they are out</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>First pick of numbered pressings and prints</li>
+      </ul>
+    </div>
+    <form class="form" data-form="signup" novalidate>
+      <div class="form" data-fields>
+        <div class="field"><label for="j-email">Email</label><input id="j-email" name="email" type="email" required autocomplete="email" aria-describedby="j-email-err"><p class="err" id="j-email-err"></p></div>
+        <div class="field"><label for="j-name">First name</label><input id="j-name" name="name" required autocomplete="given-name" aria-describedby="j-name-err"><p class="err" id="j-name-err"></p></div>
+        <div class="field"><label for="j-region">Where you are</label><select id="j-region" name="region" aria-describedby="j-region-err" required><option value="">Choose a region</option><option>Europe</option><option>North America</option><option>Latin America</option><option>Asia</option><option>Oceania</option><option>Africa</option></select><p class="err" id="j-region-err"></p></div>
+        <fieldset class="checks"><legend>Write to me about</legend><label class="check"><input type="checkbox" name="topics" value="tour" checked>Tour dates and presales</label><label class="check"><input type="checkbox" name="topics" value="music" checked>New music</label><label class="check"><input type="checkbox" name="topics" value="shop">Shop drops</label></fieldset>
+        <label class="check"><input type="checkbox" name="consent" required aria-describedby="j-consent-err"><span>I agree to receive these letters and can leave the list at any time. Read the <a href="#/privacy">privacy notice</a>.</span></label>
+        <p class="err" id="j-consent-err"></p>
+        <button class="btn solid" type="submit">Join the list</button>
+      </div>
+      <div class="success" data-success="signup" role="status" hidden><h2 class="h3">You are on the list</h2><p>Check your inbox for a short welcome. The next letter comes with the next piece of news.</p></div>
+    </form>
+  </section>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<div data-view="about">
+  <section class="wrap" aria-labelledby="h-about" style="padding-block:clamp(2.5rem,6vw,5rem) clamp(4rem,8vw,7rem)">
+    <p class="kicker">About</p>
+    <h1 class="h1" id="h-about">Nadja Velour</h1>
+    <p class="about-lede">A singer and songwriter who builds one world per record, then leaves it behind for the next.</p>
+    <img class="about-art" src="illustrations/still-stage.svg" width="1600" height="900" alt="Stage lights falling through haze over a crowd">
+    <div class="cols-2">
+      <p>She started with five songs on a laptop in a shared flat and a release at midnight with no warning. Six records later, every era still begins the same way: a room, a rule and a colour.</p>
+      <p>Gilded Debris was made for dance floors. Velvet Static lived inside late-night television. Paper Saints was written at a kitchen table. Hothouse Hymns moved into a palm house, and Saltglass into a glasshouse by the sea.</p>
+      <p>On stage, each era gets its own show, its own lettering and its own set. The Saltglass Procession opens in London in February 2027.</p>
+    </div>
+    <dl class="facts" style="margin-top:2.5rem"><div><dt>Records</dt><dd>Five albums and one EP</dd></div><div><dt>Based in</dt><dd>London and Lisbon</dd></div><div><dt>Label</dt><dd>Glasshouse Records</dd></div></dl>
+  </section>
+</div>
+
+<!-- ============ CONTACT ============ -->
+<div data-view="contact">
+  <section class="wrap two" aria-labelledby="h-contact">
+    <div>
+      <p class="kicker">Contact</p>
+      <h1 class="h1" id="h-contact">Write to the right desk</h1>
+      <p class="lede">Every message is read by a person. Fan mail goes to the management desk and is passed on.</p>
+      <div class="desks">
+        <div><h2>Management</h2><a href="mailto:mgmt@nadjavelour.example">mgmt@nadjavelour.example</a></div>
+        <div><h2>Booking</h2><a href="mailto:booking@nadjavelour.example">booking@nadjavelour.example</a></div>
+        <div><h2>Press</h2><a href="mailto:press@nadjavelour.example">press@nadjavelour.example</a></div>
+        <div><h2>Orders and access</h2><a href="mailto:orders@nadjavelour.example">orders@nadjavelour.example</a></div>
+      </div>
+    </div>
+    <form class="form" data-form="contact" novalidate>
+      <div class="form" data-fields>
+        <div class="field"><label for="c-topic">Desk</label><select id="c-topic" name="topic"><option value="management">Management</option><option value="booking">Booking</option><option value="press">Press</option><option value="orders">Orders and access</option></select><p class="err"></p></div>
+        <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" required autocomplete="name" aria-describedby="c-name-err"><p class="err" id="c-name-err"></p></div>
+        <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" required autocomplete="email" aria-describedby="c-email-err"><p class="err" id="c-email-err"></p></div>
+        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required minlength="10" aria-describedby="c-msg-err"></textarea><p class="err" id="c-msg-err"></p></div>
+        <button class="btn solid" type="submit">Send message</button>
+      </div>
+      <div class="success" data-success="contact" role="status" hidden><h2 class="h3">Message sent</h2><p>Thank you. The desk you chose answers within three working days.</p></div>
+    </form>
+  </section>
+</div>
+
+<!-- ============ LEGAL ============ -->
+<div data-view="privacy">
+  <section class="wrap legal" aria-labelledby="h-privacy">
+    <h1 class="h1" id="h-privacy">Privacy</h1>
+    <p>This notice explains what Nadja Velour Music Ltd. collects through this site and why. Last updated on November 20, 2026.</p>
+    <h2>What we collect</h2><p>Your email and first name when you join the list, the region you choose, and what you ask us to write about. Orders add a delivery address. Messages to a desk keep your name and email.</p>
+    <h2>Why</h2><p>To send the letters you asked for, to deliver orders and to answer messages. We do not sell your details, and we do not share them except with the services that send email and deliver parcels for us.</p>
+    <h2>Your choices</h2><p>Every letter has a link to leave the list. Write to the management desk to see, correct or delete what we hold.</p>
+  </section>
+</div>
+<div data-view="terms">
+  <section class="wrap legal" aria-labelledby="h-terms">
+    <h1 class="h1" id="h-terms">Terms</h1>
+    <p>These terms cover the use of this site and orders from the shop. Last updated on November 20, 2026.</p>
+    <h2>Orders</h2><p>Prices include tax where shown. An order is confirmed when you receive the confirmation email. Numbered and limited items are first come, first served.</p>
+    <h2>Returns</h2><p>Unworn items can be returned within 30 days of delivery. Records and prints can be returned unopened.</p>
+    <h2>Tickets</h2><p>Tickets are sold by each venue's official box office under that box office's terms.</p>
+  </section>
+</div>
+
+<!-- ============ 404 ============ -->
+<div data-view="404">
+  <section class="lost stage" aria-labelledby="h-404">
+    <div>
+      <svg class="lettering" viewBox="0 0 640 190" aria-hidden="true"><text class="f-melt" x="320" y="160">LOST</text></svg>
+      <h1 class="h1" id="h-404" style="margin-top:1rem">This page is not part of any era</h1>
+      <p class="lede" style="margin-inline:auto">The link may be old, or the page has moved. Start again from the latest moments.</p>
+      <div class="actions"><a class="btn solid" href="#/">Go home</a><a class="btn pill" href="#/latest"><span class="ci"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>Latest</a></div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot-grid">
+    <div>
+      <h2 class="h3">Letters from the glasshouse</h2>
+      <p class="lede" style="font-size:1rem">Presale codes and new music, never more than two letters a month.</p>
+      <form class="inline-form" data-form="newsletter" novalidate>
+        <div data-fields><label class="sr-only" for="f-email">Email</label><input id="f-email" name="email" type="email" required placeholder="Email address" autocomplete="email" aria-describedby="f-email-err"><button class="btn pill" type="submit"><span class="ci"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>Sign up</button><p class="err" id="f-email-err"></p></div>
+        <p class="success" data-success="newsletter" role="status" hidden>You are on the list. The next letter comes with the next piece of news.</p>
+      </form>
+    </div>
+    <nav class="foot-links" aria-label="Footer"><a href="#/latest">Latest</a><a href="#/about">About</a><a href="#/music">Music</a><a href="#/join">Join the list</a><a href="#/live">Live</a><a href="#/contact">Contact</a><a href="#/shop">Shop</a><a href="#/contact?topic=orders">Help with an order</a><a href="#/privacy">Privacy</a><a href="#/terms">Terms</a></nav>
+    <div class="foot-line"><svg class="lettering" viewBox="0 0 780 150" aria-hidden="true"><text class="f-rough-sm" x="390" y="140">VELOUR</text></svg><span class="date">© 2026 Nadja Velour Music Ltd.</span></div>
+  </div>
+</footer>
+
+<dialog class="menu stage" id="menu" aria-label="Menu">
+  <div class="menu-top"><svg class="lettering" viewBox="0 0 780 150" aria-hidden="true" style="--lh:28px;margin:0;color:var(--accent)"><text class="f-rough-sm" x="390" y="140">VELOUR</text></svg><button class="icon-btn" id="menu-close" type="button" aria-label="Close menu" style="border-color:currentColor"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <nav aria-label="Menu"><a href="#/">Home</a><a href="#/latest">Latest</a><a href="#/music">Music</a><a href="#/live">Live</a><a href="#/shop">Shop</a><a href="#/about">About</a><a href="#/join">Join the list</a><a href="#/contact">Contact</a></nav>
+</dialog>
+
+<dialog class="drawer" id="bag" aria-labelledby="bag-title">
+  <div class="drawer-head"><h2 class="h3" id="bag-title">Your bag</h2><button class="icon-btn" type="button" data-bag-close aria-label="Close bag"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <ul class="bag-list" data-bag-list></ul>
+  <p class="bag-empty" data-bag-empty>Your bag is empty.</p>
+  <div data-bag-foot hidden><p class="bag-total"><span>Subtotal</span><span data-bag-total>$0.00</span></p><button class="btn solid wide" type="button" data-checkout>Checkout</button><p class="note" data-checkout-note role="status"></p></div>
+</dialog>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="rough" x="-4%" y="-15%" width="108%" height="130%"><feTurbulence type="fractalNoise" baseFrequency=".035 .08" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="11" xChannelSelector="R" yChannelSelector="G" result="d"/><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="1" seed="8" result="s"/><feColorMatrix in="s" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -14 10.6" result="h"/><feComposite in="d" in2="h" operator="in"/></filter>
+    <filter id="rough-sm" x="-4%" y="-15%" width="108%" height="130%"><feTurbulence type="fractalNoise" baseFrequency=".05 .1" numOctaves="2" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G"/></filter>
+    <filter id="melt" x="-3%" y="-10%" width="106%" height="150%"><feTurbulence type="fractalNoise" baseFrequency=".07 .004" numOctaves="1" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="38" xChannelSelector="B" yChannelSelector="R"/></filter>
+    <filter id="scan" x="-6%" y="-10%" width="112%" height="120%"><feTurbulence type="turbulence" baseFrequency="0 .09" numOctaves="1" seed="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="A"/></filter>
+  </defs>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M5 8h14M5 12h14M5 16h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></symbol>
+  <symbol id="i-disc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 5.5a6.5 6.5 0 0 1 6.5 6.5"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M10 9.5v5l4.5-2.5z"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 6.2L20 11l-6.2 1.8L12 19l-1.8-6.2L4 11l6.2-1.8z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <!-- Products: one drawing each, coloured through --g on the <svg> that uses them -->
+  <symbol id="p-tee" viewBox="0 0 200 200"><path d="M70 28l18-6c4 9 20 9 24 0l18 6 44 26-14 32-22-10v98H62V76l-22 10-14-32z" style="fill:var(--g)"/><path d="M88 22c4 12 20 12 24 0" fill="none" stroke="#000" stroke-opacity=".25" stroke-width="3"/><path d="M62 76v98h20V60z" fill="#000" opacity=".08"/><circle cx="100" cy="86" r="17" fill="none" stroke="#c4502b" stroke-width="5"/><circle cx="100" cy="86" r="17" fill="none" stroke="#ffd1b5" stroke-width="1.2"/></symbol>
+  <symbol id="p-hoodie" viewBox="0 0 200 200"><path d="M74 34c6-18 46-18 52 0l50 28-12 92-20-6v30H56v-30l-20 6-12-92z" style="fill:var(--g)"/><path d="M78 36c4 22 40 22 44 0" fill="none" stroke="#000" stroke-opacity=".3" stroke-width="4"/><path d="M76 128h48l6 22H70z" fill="#000" opacity=".15"/><path d="M94 104l6-22 6 22-6-5z" fill="#e2502a"/></symbol>
+  <symbol id="p-tank" viewBox="0 0 200 200"><path d="M76 26h10c2 22 26 22 28 0h10c0 20 10 30 22 36v100H54V62c12-6 22-16 22-36z" style="fill:var(--g)"/><path d="M54 62v100h16V70z" fill="#000" opacity=".07"/><path d="M96 74l4-14 4 14-4-3z" fill="#e2502a"/></symbol>
+  <symbol id="p-record" viewBox="0 0 200 200"><circle cx="124" cy="100" r="64" fill="#111"/><circle cx="124" cy="100" r="22" fill="#e2502a"/><circle cx="124" cy="100" r="3" fill="#111"/><rect x="26" y="34" width="132" height="132" style="fill:var(--g)"/><path d="M92 120L80 62l38 36-22-2z" fill="#e2502a" opacity=".85"/><path d="M40 150h50" stroke="#000" stroke-opacity=".4" stroke-width="3"/></symbol>
+  <symbol id="p-cd" viewBox="0 0 200 200"><rect x="34" y="40" width="120" height="120" rx="3" fill="#1a1a1a"/><circle cx="118" cy="100" r="52" fill="#d9d9d9"/><circle cx="118" cy="100" r="16" style="fill:var(--g)"/><circle cx="118" cy="100" r="5" fill="#1a1a1a"/><rect x="34" y="40" width="64" height="120" style="fill:var(--g)"/><path d="M50 140h30" stroke="#000" stroke-opacity=".4" stroke-width="3"/></symbol>
+  <symbol id="p-cassette" viewBox="0 0 200 200"><rect x="30" y="56" width="140" height="90" rx="8" style="fill:var(--g)"/><rect x="46" y="68" width="108" height="34" rx="4" fill="#f4efe7"/><circle cx="76" cy="85" r="10" fill="#222"/><circle cx="124" cy="85" r="10" fill="#222"/><path d="M62 146l10-22h56l10 22z" fill="#000" opacity=".2"/></symbol>
+  <symbol id="p-poster" viewBox="0 0 200 200"><rect x="44" y="20" width="112" height="160" style="fill:var(--g)"/><rect x="56" y="34" width="88" height="86" fill="#111"/><path d="M100 46l10 32 26 6-26 6-10 22-10-22-26-6 26-6z" fill="#e2502a"/><rect x="58" y="132" width="84" height="12" fill="#111"/><path d="M58 156h50M58 164h34" stroke="#111" stroke-width="3"/></symbol>
+  <symbol id="p-tote" viewBox="0 0 200 200"><path d="M74 72c0-34 52-34 52 0" fill="none" stroke="#2a2a2a" stroke-width="6"/><path d="M46 70h108l-6 110H52z" style="fill:var(--g)"/><path d="M84 106l16 26 16-26-16 6z" fill="#e2502a"/><path d="M76 150h48" stroke="#111" stroke-width="3"/></symbol>
+  <symbol id="p-cap" viewBox="0 0 200 200"><path d="M42 118c0-44 26-68 62-68s58 26 58 64z" style="fill:var(--g)"/><path d="M42 118c40-6 90-6 120-4 8 0 20 6 22 14-40-8-100-8-142-10z" fill="#000" opacity=".25"/><path d="M42 118c40-4 96-4 142 10-46-4-100-4-142 0z" style="fill:var(--g)"/><circle cx="102" cy="52" r="5" fill="#000" opacity=".3"/><path d="M96 98l6-22 6 22-6-5z" fill="#e2502a"/></symbol>
+</svg>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (selector, scope = document) => scope.querySelector(selector);
+  const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+
+  /* ---------- Storage (sandbox-safe: falls back to memory when localStorage is blocked) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: black by default whatever the system says; paper behind the toggle ---------- */
+  const themeButton = $("#theme-toggle");
+  function syncTheme() {
+    const dark = root.dataset.theme !== "light";
+    themeButton.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+    $("use", themeButton).setAttribute("href", dark ? "#i-sun" : "#i-moon");
+  }
+  new MutationObserver(syncTheme).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  root.dataset.theme = store.get("velour-theme") === "light" ? "light" : "dark";
+  syncTheme();
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "light" ? "dark" : "light";
+    root.dataset.theme = next;
+    store.set("velour-theme", next);
+  });
+
+  /* ---------- Lettering: fit each viewBox to its word (capital height to baseline) once the font is in ---------- */
+  function fitLettering(scope = document) {
+    $$("svg.lettering", scope).forEach((svg) => {
+      const text = $("text", svg);
+      let box;
+      try { box = text.getBBox(); } catch { return; }
+      if (!box.width) return;
+      const size = parseFloat(getComputedStyle(text).fontSize) || 200;
+      const base = text.y.baseVal.length ? text.y.baseVal[0].value : box.y + box.height;
+      const top = base - size * 0.66;
+      const padX = size * 0.06;
+      const bottom = base + size * (text.classList.contains("it") ? 0.3 : 0.12);
+      svg.setAttribute("viewBox", `${(box.x - padX).toFixed(1)} ${(top - size * 0.08).toFixed(1)} ${(box.width + padX * 2).toFixed(1)} ${(bottom - top + size * 0.08).toFixed(1)}`);
+    });
+  }
+  if (document.fonts) document.fonts.ready.then(() => fitLettering(document));
+
+  /* ---------- Data that lives once in the markup and is reused elsewhere ---------- */
+  const moments = $$("#moments > .moment");
+  const cities = $$(".cities > .city");
+  const products = $$("#products > .product");
+  const eras = $$(".era");
+  const money = (n) => `$${Number(n).toFixed(2)}`;
+
+  // Home: the four newest moments, the first five cities, the first four products
+  const homeMoments = $('[data-home="moments"]');
+  moments.slice(-4).reverse().forEach((moment) => {
+    const copy = moment.cloneNode(true);
+    copy.removeAttribute("id");
+    const title = $("h2", copy);
+    const h3 = document.createElement("h3");
+    h3.className = title.className;
+    h3.textContent = title.textContent;
+    title.replaceWith(h3);
+    homeMoments.append(copy);
+  });
+  const homeCities = $('[data-home="cities"]');
+  cities.slice(0, 5).forEach((city) => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = `#/live?city=${city.id}`;
+    const name = $(".city-name", city).cloneNode(true);
+    const when = document.createElement("span");
+    when.textContent = `${$(".city-venue", city).textContent} · ${$(".city-dates", city).textContent}`;
+    a.append(name, when);
+    li.append(a);
+    homeCities.append(li);
+  });
+  const homeProducts = $('[data-home="products"]');
+  products.slice(0, 4).forEach((product) => homeProducts.append(product.cloneNode(true)));
+
+  // Tour nights: data-nights="YYYY-MM-DD HH:MM, …" on each city; the city's status decides the button
+  const dayLabel = (iso) => new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" });
+  cities.forEach((city) => {
+    const status = $(".status", city);
+    $(".nights", city).append(...city.dataset.nights.split(",").map((night) => {
+      const [date, doors] = night.trim().split(" ");
+      const li = document.createElement("li");
+      const time = document.createElement("time");
+      time.dateTime = date;
+      time.textContent = dayLabel(date);
+      const span = document.createElement("span");
+      span.textContent = `Doors ${doors}`;
+      let action;
+      if (status.classList.contains("out")) action = status.cloneNode(true);
+      else {
+        action = document.createElement("a");
+        action.className = "btn sm";
+        action.href = "#tickets";
+        action.textContent = status.classList.contains("soon") ? "Presale details" : "Tickets";
+      }
+      li.append(time, span, action);
+      return li;
+    }));
+  });
+
+  /* ---------- The strip: one thumbnail per moment, a marker that follows reading ---------- */
+  $$("[data-strip-thumbs]").forEach((list) => {
+    moments.forEach((moment) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = `#/latest?m=${moment.id}`;
+      a.dataset.for = moment.id;
+      a.title = `${$(".m-title", moment).textContent} · ${$("time", moment).textContent}`;
+      a.setAttribute("aria-label", a.title);
+      const img = $("img", moment).cloneNode();
+      img.alt = "";
+      img.width = 30;
+      img.height = 30;
+      a.append(img);
+      li.append(a);
+      list.append(li);
+    });
+  });
+  const momentList = $("#moments");
+  function updateStrip() {
+    const strip = current && $("[data-strip]", current);
+    if (!strip) return;
+    let progress = 1;
+    let active = moments[moments.length - 1];
+    if (strip.dataset.strip === "scroll") {
+      const rect = momentList.getBoundingClientRect();
+      const middle = innerHeight * 0.5;
+      progress = Math.min(1, Math.max(0, (middle - rect.top) / Math.max(1, rect.height)));
+      const shown = moments.filter((m) => !m.hidden);
+      active = shown.filter((m) => m.getBoundingClientRect().top < middle).pop() || shown[0];
+    }
+    strip.style.setProperty("--p", progress.toFixed(4));
+    $$("a", strip).forEach((a) => {
+      a.classList.toggle("on", Boolean(active) && a.dataset.for === active.id);
+      a.parentElement.hidden = $(`#${a.dataset.for}`).hidden;
+    });
+  }
+  let ticking = false;
+  window.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { ticking = false; updateStrip(); header.classList.toggle("is-scrolled", window.scrollY > 8); });
+  }, { passive: true });
+
+  /* ---------- Filters: chips with aria-pressed; the list items carry data-<kind> ---------- */
+  function filterBy(kind, value) {
+    const buttons = $$(`[data-${kind}-filter]`);
+    const known = buttons.some((b) => b.dataset[`${kind}Filter`] === value);
+    const active = known ? value : "all";
+    buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset[`${kind}Filter`] === active)));
+    let shown = 0;
+    $$(`[data-filter-list="${kind}"] > [data-${kind}]`).forEach((item) => {
+      const match = active === "all" || item.dataset[kind] === active;
+      item.hidden = !match;
+      if (match) shown += 1;
+    });
+    const empty = $(`[data-empty="${kind}"]`);
+    if (empty) empty.hidden = shown > 0;
+    if (kind === "kind") updateStrip();
+  }
+  ["kind", "format", "region", "category"].forEach((kind) => {
+    $$(`[data-${kind}-filter]`).forEach((button) => button.addEventListener("click", () => filterBy(kind, button.dataset[`${kind}Filter`])));
+  });
+
+  /* ---------- Music: one era at a time, a grid or list collection ---------- */
+  function selectEra(id) {
+    const era = eras.find((e) => e.dataset.era === id) || eras[0];
+    eras.forEach((e) => { e.hidden = e !== era; });
+    $$("[data-era-link]").forEach((a) => {
+      if (a.dataset.eraLink === era.dataset.era) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+    });
+    fitLettering(era);
+  }
+  const releases = $("#releases");
+  function setLayout(layout) {
+    releases.dataset.layout = layout;
+    $$("[data-layout]:not(#releases)").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.layout === layout)));
+    store.set("velour-layout", layout);
+  }
+  $$("button[data-layout]").forEach((b) => b.addEventListener("click", () => setLayout(b.dataset.layout)));
+  setLayout(store.get("velour-layout") === "list" ? "list" : "grid");
+
+  /* ---------- Shop: filter panel, sort and products per row ---------- */
+  const filtersPanel = $("#filters");
+  const filtersToggle = $("[data-filters-toggle]");
+  filtersToggle.addEventListener("click", () => {
+    const open = filtersPanel.hidden;
+    filtersPanel.hidden = !open;
+    filtersToggle.setAttribute("aria-expanded", String(open));
+    $("[data-filters-label]").textContent = open ? "Hide filters" : "Show filters";
+    $("use", filtersToggle).setAttribute("href", open ? "#i-minus" : "#i-plus");
+  });
+  const grid = $("#products");
+  $("[data-sort]").addEventListener("change", (event) => {
+    const order = event.target.value;
+    const sorted = [...products].sort((a, b) => (order === "featured" ? 0 : (a.dataset.price - b.dataset.price) * (order === "low" ? 1 : -1)));
+    grid.append(...(order === "featured" ? products : sorted));
+  });
+
+  /* ---------- Product page: filled from the card's data ---------- */
+  const productForm = $('[data-form="add-to-bag"]');
+  const art = $("#pd-art");
+  let currentProduct = products[0];
+  function showProduct(id) {
+    const card = products.find((p) => p.dataset.id === id) || products[0];
+    const d = card.dataset;
+    currentProduct = card;
+    const name = $(".p-name", card).textContent;
+    $("#pd-name").textContent = name;
+    $("#pd-price").textContent = money(d.price);
+    $("#pd-note").textContent = d.note;
+    art.style.setProperty("--g", $(".p-art", card).style.getPropertyValue("--g"));
+    $("use", art).setAttribute("href", `#${d.art}`);
+    art.setAttribute("aria-label", $(".p-art", card).getAttribute("aria-label"));
+    art.setAttribute("viewBox", "0 0 200 200");
+    $$(".thumbs button").forEach((b, i) => b.setAttribute("aria-pressed", String(i === 0)));
+    const crumb = $("[data-pd-cat]");
+    crumb.href = `#/shop?category=${d.category}`;
+    crumb.textContent = $(`[data-category-filter="${d.category}"]`).textContent;
+    const sizes = $("#pd-sizes");
+    $$(".size", sizes).forEach((s) => s.remove());
+    d.sizes.split(",").forEach((size, i, all) => {
+      const label = document.createElement("label");
+      label.className = "size";
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "size";
+      input.value = size;
+      if (all.length === 1) input.checked = true;
+      const span = document.createElement("span");
+      span.textContent = size;
+      label.append(input, span);
+      sizes.append(label);
+    });
+    const soldOut = d.status === "sold-out";
+    const add = $("[data-add]");
+    add.disabled = soldOut;
+    add.textContent = soldOut ? "Sold out" : "Add to bag";
+    $("#qty").value = "1";
+    $("#size-error").textContent = "";
+    $("[data-added]").hidden = true;
+    titles.product = `${name} · Nadja Velour`;
+  }
+  $$(".thumbs button").forEach((button) => button.addEventListener("click", () => {
+    $$(".thumbs button").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    art.setAttribute("viewBox", button.dataset.box);
+  }));
+  $$("[data-step]").forEach((button) => button.addEventListener("click", () => {
+    const qty = $("#qty");
+    qty.value = String(Math.min(9, Math.max(1, (parseInt(qty.value, 10) || 1) + Number(button.dataset.step))));
+  }));
+
+  /* ---------- Bag: kept in the store wrapper; a real shop replaces it with its cart ---------- */
+  const bag = $("#bag");
+  const readBag = () => { try { return JSON.parse(store.get("velour-bag")) || []; } catch { return []; } };
+  function renderBag() {
+    const items = readBag();
+    const list = $("[data-bag-list]");
+    list.replaceChildren();
+    let count = 0;
+    let total = 0;
+    items.forEach((item, index) => {
+      const card = products.find((p) => p.dataset.id === item.id);
+      if (!card) return;
+      count += item.qty;
+      total += card.dataset.price * item.qty;
+      const li = document.createElement("li");
+      const thumb = $(".p-art", card).cloneNode(true);
+      thumb.removeAttribute("role");
+      thumb.setAttribute("aria-hidden", "true");
+      const text = document.createElement("div");
+      text.textContent = $(".p-name", card).textContent;
+      const small = document.createElement("small");
+      small.textContent = `${item.size} · ${item.qty} × ${money(card.dataset.price)}`;
+      text.append(small);
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.textContent = "Remove";
+      remove.addEventListener("click", () => { const next = readBag(); next.splice(index, 1); store.set("velour-bag", JSON.stringify(next)); renderBag(); });
+      li.append(thumb, text, remove);
+      list.append(li);
+    });
+    $$("[data-bag-count]").forEach((el) => { el.textContent = String(count); });
+    $("[data-bag-empty]").hidden = count > 0;
+    $("[data-bag-foot]").hidden = count === 0;
+    $("[data-bag-total]").textContent = money(total);
+    $("[data-checkout-note]").textContent = "";
+  }
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("[data-bag-open]")) { renderBag(); bag.showModal(); }
+    if (event.target.closest("[data-bag-close]") || event.target === bag) bag.close();
+  });
+  $("[data-checkout]").addEventListener("click", () => {
+    $("[data-checkout-note]").textContent = "Checkout is not connected yet. Your bag is kept in this browser.";
+  });
+  renderBag();
+
+  /* ---------- Forms: run from the submit button and Enter (sandboxed frames block native submission) ---------- */
+  function onSubmit(form, handler) {
+    form.addEventListener("submit", (event) => { event.preventDefault(); handler(); });
+    form.addEventListener("click", (event) => { if (event.target.closest("[type=submit]")) { event.preventDefault(); handler(); } });
+    form.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" || !event.target.matches("input:not([type=checkbox]):not([type=radio])")) return;
+      event.preventDefault();
+      if (!event.isComposing) handler();
+    });
+  }
+  onSubmit(productForm, () => {
+    const add = $("[data-add]");
+    if (add.disabled) return;
+    const size = $('input[name="size"]:checked', productForm);
+    if (!size) { $("#size-error").textContent = "Choose a size first."; $('input[name="size"]', productForm).focus(); return; }
+    $("#size-error").textContent = "";
+    const qty = Math.min(9, Math.max(1, parseInt($("#qty").value, 10) || 1));
+    const items = readBag();
+    const same = items.find((i) => i.id === currentProduct.dataset.id && i.size === size.value);
+    if (same) same.qty += qty; else items.push({ id: currentProduct.dataset.id, size: size.value, qty });
+    store.set("velour-bag", JSON.stringify(items));
+    renderBag();
+    const added = $("[data-added]");
+    $("span", added).textContent = `Added ${qty} × ${size.value}.`;
+    added.hidden = false;
+  });
+  productForm.addEventListener("change", (event) => { if (event.target.name === "size") $("#size-error").textContent = ""; });
+
+  const messages = { valueMissing: "This one is needed.", typeMismatch: "Enter an email like name@example.com.", tooShort: "A few more words, please." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (field.type === "checkbox" ? "Tick this box to join." : messages[problem]) : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]:not([data-form='add-to-bag'])").forEach((form) => {
+    const fields = $$("input[aria-describedby], select[aria-describedby], textarea[aria-describedby]", form);
+    fields.forEach((field) => field.addEventListener(field.type === "checkbox" ? "change" : "blur", () => checkField(field)));
+    onSubmit(form, () => {
+      const button = $("[type=submit]", form);
+      if (button.disabled) return;
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) { fields.find((f) => f.getAttribute("aria-invalid") === "true").focus(); return; }
+      button.disabled = true;
+      button.lastChild.textContent = "Sending…";
+      setTimeout(() => {
+        $("[data-fields]", form).hidden = true;
+        $(`[data-success="${form.dataset.form}"]`, form).hidden = false;
+      }, 600);
+    });
+  });
+
+  /* ---------- Reveal: keyframes once in view; everything shows after 2.5 s regardless ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); } });
+  }, { rootMargin: "0px 0px -6% 0px" }) : null;
+  function observeReveals(scope) { $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in"))); }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Header and menu ---------- */
+  const header = $(".site-header");
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+
+  /* ---------- Router: hash routes, state first so it works when the frame refuses URL changes ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Nadja Velour · Saltglass, the new record, out now", latest: "Latest · Nadja Velour", story: "Inside the Saltglass sessions · Nadja Velour",
+    music: "Music · Nadja Velour", live: "The Saltglass Procession · Nadja Velour", shop: "Shop · Nadja Velour", product: "Shop · Nadja Velour",
+    join: "Join the list · Nadja Velour", about: "About · Nadja Velour", contact: "Contact · Nadja Velour", privacy: "Privacy · Nadja Velour",
+    terms: "Terms · Nadja Velour", "404": "Page not found · Nadja Velour",
+  };
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    const params = route.params;
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    root.dataset.route = name;
+    $$(".nav a, .menu nav a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (name === "latest") filterBy("kind", params.get("kind") || "all");
+    if (name === "music") { selectEra(params.get("era")); filterBy("format", params.get("format") || "all"); }
+    if (name === "live") filterBy("region", params.get("region") || "all");
+    if (name === "shop") {
+      filterBy("category", params.get("category") || "all");
+      if (params.get("category") && filtersPanel.hidden) filtersToggle.click();
+    }
+    if (name === "product") showProduct(params.get("id"));
+    if (name === "contact") { const topic = params.get("topic"); const select = $("#c-topic"); if (topic && $(`option[value="${topic}"]`, select)) select.value = topic; }
+    document.title = titles[name];
+    let target = null;
+    if (name === "latest" && params.get("m")) target = document.getElementById(params.get("m"));
+    if (name === "live" && params.get("city")) { target = document.getElementById(params.get("city")); if (target) target.open = true; }
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "center" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    header.classList.toggle("is-scrolled", window.scrollY > 8);
+    fitLettering(current);
+    observeReveals(current);
+    updateStrip();
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      if (bag.open) bag.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = current && $(href, current);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

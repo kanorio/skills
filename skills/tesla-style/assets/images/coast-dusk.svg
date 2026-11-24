@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000">
+<rect y="0" width="1600" height="1000" fill="#19213a"/>
+<rect y="250" width="1600" height="140" fill="#1d2641"/>
+<rect y="390" width="1600" height="90" fill="#252f4d"/>
+<rect y="480" width="1600" height="60" fill="#323a5a"/>
+<rect y="540" width="1600" height="52" fill="#4b4667"/>
+<rect y="592" width="1600" height="36" fill="#7b5a70"/>
+<rect y="628" width="1600" height="24" fill="#b7756b"/>
+<circle cx="1020" cy="652" r="66" fill="#f2aa7e"/>
+<rect y="652" width="1600" height="96" fill="#1c2942"/>
+<path d="M940 670h170M968 688h114M994 706h62M1012 724h26" stroke="#f2aa7e" stroke-opacity=".5" stroke-width="3"/>
+<path d="M0 548L170 512L300 590L410 652L460 748H0Z" fill="#131a2b"/><path d="M170 512L240 552L300 590L230 600Z" fill="#1a2237"/>
+<path d="M1600 598L1470 626L1390 652L1360 748H1600Z" fill="#151c2f"/>
+<rect y="748" width="1600" height="252" fill="#11151e"/><rect y="748" width="1600" height="12" fill="#1c2130"/><path d="M0 898H1600" stroke="#3a4153" stroke-width="5" stroke-dasharray="80 70"/>
+</svg>

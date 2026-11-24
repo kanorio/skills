@@ -1,0 +1,1596 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Tinyfold: thirty-second craft videos</title>
+<meta name="description" content="Tinyfold is three makers in one rented room, filming paper folds, lino prints, plant cuttings and small repairs in thirty seconds or less.">
+<meta property="og:title" content="Tinyfold: thirty-second craft videos">
+<meta property="og:description" content="Paper folds, lino prints, plant cuttings and small repairs, each in thirty seconds or less.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/rubik-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font ---------- */
+@font-face { font-family: "Rubik"; src: url("fonts/rubik-latin-wght-normal.woff2") format("woff2"); font-weight: 300 900; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: light (default, follows the system setting) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);
+  --surface: oklch(96.4% 0.002 286);       /* chips, round action buttons, the search pill, hover rows, cards */
+  --surface-2: oklch(92.4% 0.003 286);     /* hover on surface, image wells */
+  --text: oklch(17% 0.006 286);
+  --text-muted: oklch(47% 0.012 286);      /* counts beside names, dates, captions under tiles */
+  --border: oklch(91.5% 0.003 286);
+  --border-strong: oklch(80% 0.005 286);   /* field outlines */
+  --accent: oklch(54% 0.25 290);           /* the first color of the pair, violet: Follow, main buttons */
+  --accent-text: oklch(100% 0 0);
+  --pop: oklch(90% 0.2 128);               /* the second color, lime: progress, badges, Saved, the tab underline on video */
+  --pop-text: oklch(18% 0.03 128);
+  --ink: oklch(17% 0.006 286);             /* the selected chip */
+  --ink-text: oklch(100% 0 0);
+  --link: oklch(48% 0.23 290);             /* links, hashtags, the current nav row */
+  --heart: oklch(54% 0.25 290);            /* a liked heart on the page */
+  --danger: oklch(52% 0.2 27);
+  --focus: oklch(54% 0.25 290);
+  --stage: oklch(11% 0.005 286);           /* video frames and the watch stage: dark in both themes */
+  --on-stage: oklch(99% 0 0);
+  --on-stage-heart: oklch(74% 0.18 298);   /* a liked heart over video */
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.06), 0 8px 24px oklch(0% 0 0 / 0.08);
+  --shadow-overlay: 0 12px 40px oklch(0% 0 0 / 0.2);
+
+  --font: "Rubik", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fs-display: clamp(3.5rem, 2rem + 6vw, 6.5rem);
+  --fs-h1: clamp(1.625rem, 1.3rem + 1.2vw, 2.25rem);
+  --fs-h2: 1.25rem;
+  --fs-h3: 1.0625rem;
+  --fs-body: 1rem;
+  --fs-small: 0.8125rem;
+
+  --rail: 248px;
+  --top: 0px;                               /* height of the phone top bar */
+  --gutter: clamp(16px, 3vw, 40px);
+  --r-control: 10px;
+  --r-pill: 999px;
+  --r-card: 14px;
+  --r-media: 10px;
+  --r-panel: 18px;
+
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --dur-slow: 460ms;
+  --ease: cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: oklch(13.5% 0.004 286); --surface: oklch(20.5% 0.005 286); --surface-2: oklch(27% 0.006 286);
+    --text: oklch(96.5% 0.003 286); --text-muted: oklch(72% 0.01 286); --border: oklch(25% 0.005 286); --border-strong: oklch(40% 0.006 286);
+    --accent: oklch(57% 0.24 290); --ink: oklch(96.5% 0.003 286); --ink-text: oklch(13.5% 0.004 286);
+    --link: oklch(77% 0.14 292); --heart: oklch(74% 0.18 298); --danger: oklch(72% 0.16 25); --focus: oklch(77% 0.14 292); --stage: oklch(7% 0.004 286);
+    --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.5), 0 8px 24px oklch(0% 0 0 / 0.5); --shadow-overlay: 0 12px 40px oklch(0% 0 0 / 0.6);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(13.5% 0.004 286); --surface: oklch(20.5% 0.005 286); --surface-2: oklch(27% 0.006 286);
+  --text: oklch(96.5% 0.003 286); --text-muted: oklch(72% 0.01 286); --border: oklch(25% 0.005 286); --border-strong: oklch(40% 0.006 286);
+  --accent: oklch(57% 0.24 290); --ink: oklch(96.5% 0.003 286); --ink-text: oklch(13.5% 0.004 286);
+  --link: oklch(77% 0.14 292); --heart: oklch(74% 0.18 298); --danger: oklch(72% 0.16 25); --focus: oklch(77% 0.14 292); --stage: oklch(7% 0.004 286);
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.5), 0 8px 24px oklch(0% 0 0 / 0.5); --shadow-overlay: 0 12px 40px oklch(0% 0 0 / 0.6);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs-body)/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+img, svg, video { display: block; max-width: 100%; }
+h1, h2, h3, p, ol, ul, dl, dd, figure, fieldset { margin: 0; }
+h1, h2, h3 { line-height: 1.2; text-wrap: balance; }
+p { text-wrap: pretty; }
+ol, ul { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; padding: 0; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.i { width: 24px; height: 24px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.i.f { fill: currentColor; stroke: none; }
+.i.sm { width: 18px; height: 18px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: var(--r-control); background: var(--ink); color: var(--ink-text); font-weight: 600; }
+.skip:focus { top: 8px; }
+.muted { color: var(--text-muted); }
+.text-link { color: var(--link); font-weight: 600; }
+.text-link:hover { text-decoration: underline; }
+.clamp { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+
+/* ---------- Buttons, chips, badges, avatars ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 20px; border-radius: var(--r-control); background: var(--surface); color: var(--text); font-weight: 600; font-size: 0.9375rem; white-space: nowrap; transition: background-color var(--dur-fast), transform var(--dur-fast); }
+.btn:hover { background: var(--surface-2); }
+.btn:active { transform: scale(0.97); }
+.btn .i { width: 20px; height: 20px; }
+.btn.accent { background: var(--accent); color: var(--accent-text); }
+.btn.accent:hover { background: color-mix(in oklch, var(--accent) 86%, black); }
+.btn.accent[aria-pressed="true"] { background: var(--surface); color: var(--text); }
+.btn.wide { width: 100%; }
+.btn.sm { min-height: 36px; padding: 0 14px; font-size: 0.875rem; }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+.icon-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: 50%; transition: background-color var(--dur-fast); }
+.icon-btn:hover, .icon-btn.soft { background: var(--surface); }
+.icon-btn.soft:hover { background: var(--surface-2); }
+.icon-btn.glass { background: oklch(100% 0 0 / 0.14); color: var(--on-stage); }
+.icon-btn.glass:hover { background: oklch(100% 0 0 / 0.24); }
+.chip { min-height: 38px; padding: 0 16px; border-radius: var(--r-pill); background: var(--surface); font-size: 0.9375rem; font-weight: 600; white-space: nowrap; transition: background-color var(--dur-fast); }
+.chip:hover { background: var(--surface-2); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--ink-text); }
+.badge { display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: 6px; background: var(--pop); color: var(--pop-text); font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
+.av { --h: 290; display: inline-grid; place-items: center; width: 40px; height: 40px; flex: none; border-radius: 50%; background: oklch(85% 0.1 var(--h)); color: oklch(28% 0.09 var(--h)); font-size: 0.875rem; font-weight: 700; letter-spacing: 0.02em; }
+.av.xs { width: 22px; height: 22px; font-size: 0.5625rem; }
+.av.sm { width: 32px; height: 32px; font-size: 0.6875rem; }
+.av.lg { width: 48px; height: 48px; font-size: 1rem; }
+.av.xl { width: 116px; height: 116px; font-size: 2.375rem; }
+.ring { display: inline-grid; flex: none; align-self: start; padding: 4px; border-radius: 50%; background: conic-gradient(from 200deg, var(--accent), var(--pop), var(--accent)); }
+.ring > .av { box-shadow: 0 0 0 2px var(--ring-gap, var(--bg)); }
+.member, .suggest-row { --ring-gap: var(--surface); }
+
+/* ---------- App shell: the left rail (full, icon rail, or a top bar with a menu on phones) ---------- */
+.app { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); }
+.rail { position: sticky; top: 0; z-index: 20; display: flex; flex-direction: column; height: 100vh; height: 100dvh; padding: 18px 12px 16px; background: var(--bg); }
+.rail-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-left: 8px; }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-size: 1.375rem; font-weight: 800; letter-spacing: -0.03em; white-space: nowrap; }
+.brand-mark { width: 32px; height: 32px; }
+.tools { display: flex; align-items: center; }
+.search-link, #menu-btn { display: none; }
+.rail-body { position: relative; display: flex; flex-direction: column; gap: 14px; flex: 1; min-height: 0; margin-top: 16px; overflow-y: auto; scrollbar-width: none; }
+.search { display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 6px 0 16px; border-radius: var(--r-pill); background: var(--surface); }
+.search:focus-within { box-shadow: inset 0 0 0 2px var(--focus); }
+.search input { flex: 1; min-width: 0; height: 100%; border: 0; background: none; outline: none; font-size: 0.9375rem; }
+.search input::placeholder { color: var(--text-muted); }
+.search .go { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: var(--text-muted); }
+.nav { display: grid; gap: 2px; }
+.nav a { display: flex; align-items: center; gap: 14px; min-height: 48px; padding: 0 12px; border-radius: var(--r-control); font-size: 1.0625rem; font-weight: 600; transition: background-color var(--dur-fast); }
+.nav a:hover { background: var(--surface); }
+.nav a[aria-current="page"] { color: var(--link); }
+.nav a[aria-current="page"] .i { stroke-width: 2.5; }
+.rail-title { padding: 14px 12px 2px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; }
+.people a { display: flex; align-items: center; gap: 10px; padding: 6px 12px; border-radius: var(--r-control); }
+.people a:hover, .people a[aria-current="page"] { background: var(--surface); }
+.people b { display: block; font-size: 0.9375rem; font-weight: 600; line-height: 1.25; }
+.people small { display: block; color: var(--text-muted); font-size: 0.8125rem; }
+.rail-foot { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: auto; padding: 12px 12px 0; color: var(--text-muted); font-size: 0.8125rem; font-weight: 500; }
+.rail-foot a:hover { text-decoration: underline; }
+@media (min-width: 720px) and (max-width: 1099px) {
+  :root { --rail: 80px; }
+  .rail { align-items: center; padding: 16px 8px; }
+  .rail-head { flex-direction: column; padding: 0; }
+  .tools { flex-direction: column; gap: 4px; }
+  .brand span, .rail .lbl, .rail-title, .people a > span:last-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .search-link { display: inline-grid; }
+  .rail .search, .rail-foot { display: none; }
+  .rail-body { align-items: center; width: 100%; }
+  .nav a, .rail-cta { justify-content: center; width: 52px; padding: 0; }
+  .people a { padding: 4px; }
+}
+@media (max-width: 719px) {
+  :root { --top: 57px; }
+  .app { display: block; }
+  .rail { height: auto; flex-direction: row; align-items: center; padding: 6px 6px 6px 16px; border-bottom: 1px solid var(--border); }
+  .rail-head { flex: 1; padding: 0; }
+  .brand { font-size: 1.25rem; }
+  .search-link, #menu-btn { display: inline-grid; }
+  .rail-body { position: absolute; top: 100%; left: 0; right: 0; display: none; max-height: calc(100dvh - var(--top)); margin: 0; padding: 12px 16px 20px; background: var(--bg); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-overlay); }
+  .rail.open .rail-body { display: flex; animation: drop var(--dur-base) var(--ease); }
+}
+
+/* ---------- Views and page frame ---------- */
+main { min-width: 0; }
+.js [data-view]:not(.is-active) { display: none; }
+.page { max-width: 1360px; padding: 28px var(--gutter) 56px; }
+.page-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 14px 24px; margin-bottom: 20px; }
+.h1 { font-size: var(--fs-h1); font-weight: 800; letter-spacing: -0.02em; }
+.lead { max-width: 60ch; margin-top: 8px; color: var(--text-muted); font-size: 1.0625rem; }
+.sec { margin-top: 48px; }
+.sec-title { margin-bottom: 16px; font-size: var(--fs-h2); font-weight: 700; }
+.site-foot { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 24px var(--gutter) 40px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem; }
+.site-foot a:hover { color: var(--text); }
+.no-foot .site-foot { display: none; }
+@media (min-width: 1100px) { .site-foot, .explore-search { display: none; } }
+
+/* ---------- The feed: one vertical video at a time ---------- */
+.feed-wrap { position: relative; }
+.feed { position: relative; container-type: size; height: calc(100vh - var(--top)); height: calc(100dvh - var(--top)); overflow-y: auto; scroll-snap-type: y mandatory; overscroll-behavior-y: contain; scrollbar-width: none; }
+.feed::-webkit-scrollbar { display: none; }
+.post { position: relative; display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; height: 100%; padding: 16px 0; scroll-snap-align: start; scroll-snap-stop: always; }
+.frame { position: relative; grid-column: 2; height: min(100cqh - 32px, (100cqw - 200px) * 16 / 9); aspect-ratio: 9 / 16; overflow: hidden; isolation: isolate; border-radius: var(--r-panel); background: var(--stage); color: var(--on-stage); }
+.frame::before, .frame::after { content: ""; position: absolute; inset: 0 0 84%; z-index: 0; background: linear-gradient(oklch(0% 0 0 / 0.34), transparent); pointer-events: none; }
+.frame::after { inset: 55% 0 0; background: linear-gradient(transparent, oklch(0% 0 0 / 0.66)); }
+.poster { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; }
+.hit { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; cursor: pointer; }
+.hit:focus-visible { outline-offset: -4px; }
+.sticker { position: absolute; top: 20%; left: 50%; z-index: 1; max-width: 80%; padding: 7px 14px; border-radius: 9px; background: oklch(100% 0 0); color: oklch(16% 0 0); font-size: clamp(1rem, 0.8rem + 0.55vw, 1.3rem); font-weight: 800; line-height: 1.2; text-align: center; transform: translateX(-50%); pointer-events: none; box-shadow: 0 4px 16px oklch(0% 0 0 / 0.18); }
+.sticker.swap { animation: sticker var(--dur-base) var(--ease); }
+.state { position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; width: 76px; height: 76px; margin: auto; border-radius: 50%; background: oklch(0% 0 0 / 0.42); opacity: 0; pointer-events: none; transition: opacity var(--dur-base); }
+.state .i { width: 34px; height: 34px; margin-left: 4px; }
+.is-paused .state { opacity: 1; }
+.cap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; display: grid; gap: 6px; padding: 16px 16px 24px; text-shadow: 0 1px 2px oklch(0% 0 0 / 0.45); pointer-events: none; }
+.cap a, .cap button { pointer-events: auto; }
+.cap-by { font-size: 1.0625rem; font-weight: 700; }
+.cap-by a:hover { text-decoration: underline; }
+.cap-date { color: oklch(100% 0 0 / 0.78); font-size: 0.875rem; font-weight: 400; }
+.cap-text { font-size: 0.9375rem; line-height: 1.4; }
+.cap-text a, .tile-cap a, .v-cap a { font-weight: 700; }
+.cap-text a:hover, .tile-cap a:hover, .v-cap a:hover { text-decoration: underline; }
+.sound { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 0.875rem; font-weight: 500; }
+.sound .i { width: 16px; height: 16px; }
+.marquee { max-width: 70%; overflow: hidden; white-space: nowrap; mask-image: linear-gradient(90deg, #000 82%, transparent); }
+.marquee span { display: inline-block; padding-right: 40px; }
+.is-playing .marquee span::after { content: attr(data-t); margin-left: 40px; }
+.is-playing .marquee span { animation: marquee 9s linear infinite; }
+.bar { position: absolute; left: 12px; right: 12px; bottom: 9px; z-index: 1; height: 3px; overflow: hidden; border-radius: 2px; background: oklch(100% 0 0 / 0.3); pointer-events: none; }
+.bar i { display: block; height: 100%; background: var(--pop); transform: scaleX(0); transform-origin: left; }
+.is-playing .poster { animation: drift 14s ease-in-out infinite alternate; }
+.actions { grid-column: 3; align-self: end; justify-self: start; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.act-av { position: relative; margin-bottom: 8px; }
+.act-av > a { display: block; border-radius: 50%; }
+.follow-plus { position: absolute; left: 50%; bottom: -10px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent); color: var(--accent-text); box-shadow: 0 0 0 2px var(--bg); transform: translateX(-50%); }
+.follow-plus .i { width: 15px; height: 15px; stroke-width: 3; }
+.follow-plus[aria-pressed="true"] { background: var(--bg); color: var(--link); }
+.act { display: grid; justify-items: center; gap: 5px; color: var(--text); font-size: 0.75rem; font-weight: 700; }
+.act-ico { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--surface); transition: background-color var(--dur-fast), color var(--dur-fast); }
+.act:hover .act-ico { background: var(--surface-2); }
+.act .i { width: 26px; height: 26px; }
+[data-like][aria-pressed="true"] .act-ico { color: var(--heart); }
+[data-save][aria-pressed="true"] .act-ico { background: var(--pop); color: var(--pop-text); }
+.act.pop .act-ico { animation: pop 380ms var(--ease); }
+.disc { display: grid; place-items: center; width: 44px; height: 44px; margin-top: 2px; border-radius: 50%; background: radial-gradient(circle, oklch(30% 0 0) 0 40%, oklch(12% 0 0) 41% 100%); box-shadow: 0 0 0 1px var(--border); }
+.is-playing .disc { animation: spin 6s linear infinite; }
+.post-nav, .stage-nav { position: absolute; top: 50%; right: 24px; z-index: 2; display: grid; gap: 12px; transform: translateY(-50%); }
+.feed-tabs { position: absolute; top: 30px; left: 50%; z-index: 5; display: flex; gap: 20px; color: var(--on-stage); text-shadow: 0 1px 3px oklch(0% 0 0 / 0.5); transform: translateX(-50%); }
+.feed-tabs button { position: relative; padding: 6px 2px; font-size: 1rem; font-weight: 600; opacity: 0.8; }
+.feed-tabs [aria-pressed="true"] { font-weight: 700; opacity: 1; }
+.feed-tabs [aria-pressed="true"]::after { content: ""; position: absolute; left: 25%; right: 25%; bottom: 0; height: 3px; border-radius: 2px; background: var(--pop); }
+.feed-empty { display: grid; place-content: center; justify-items: center; gap: 12px; min-height: calc(100dvh - var(--top)); padding: 80px var(--gutter) 40px; text-align: center; }
+.feed-empty .suggest { display: grid; gap: 10px; width: min(360px, 100%); margin-top: 12px; text-align: left; }
+.suggest-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--r-card); background: var(--surface); }
+.suggest-row a { flex: 1; min-width: 0; font-weight: 600; }
+.feed-wrap:has(.feed-empty:not([hidden])) .feed-tabs { color: var(--text); text-shadow: none; }
+.burst { position: absolute; z-index: 3; width: 104px; height: 104px; margin: -52px 0 0 -52px; color: var(--on-stage-heart); pointer-events: none; animation: burst 820ms var(--ease) forwards; }
+.burst::before { content: ""; position: absolute; inset: -18px; background: radial-gradient(circle at 18% 30%, var(--pop) 0 5px, transparent 6px), radial-gradient(circle at 84% 22%, var(--pop) 0 4px, transparent 5px), radial-gradient(circle at 78% 86%, var(--pop) 0 5px, transparent 6px), radial-gradient(circle at 12% 80%, var(--pop) 0 3px, transparent 4px); }
+.burst .i { width: 100%; height: 100%; filter: drop-shadow(0 6px 14px oklch(0% 0 0 / 0.35)); }
+@media (max-width: 1099px) { .post-nav { display: none; } }
+@media (max-width: 719px) {
+  .post { display: block; padding: 0; }
+  .frame { width: 100%; height: 100%; max-width: none; aspect-ratio: auto; border-radius: 0; }
+  .cap { padding-right: 76px; }
+  .actions { position: absolute; right: 6px; bottom: 26px; z-index: 2; gap: 12px; }
+  .actions .act { color: var(--on-stage); text-shadow: 0 1px 2px oklch(0% 0 0 / 0.5); }
+  .actions .act-ico, .actions .act:hover .act-ico { width: 46px; height: 40px; background: none; filter: drop-shadow(0 1px 2px oklch(0% 0 0 / 0.45)); }
+  .actions .act .i { width: 32px; height: 32px; }
+  .actions [data-like][aria-pressed="true"] .act-ico { color: var(--on-stage-heart); }
+  .actions [data-save][aria-pressed="true"] .act-ico { background: none; color: var(--pop); }
+  .follow-plus { box-shadow: none; }
+  .feed-tabs { top: 14px; }
+}
+
+/* ---------- Explore: category chips over a dense vertical grid ---------- */
+.scroll-wrap { position: relative; margin-bottom: 22px; }
+.chips { position: relative; display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding: 2px; }
+.chips::-webkit-scrollbar { display: none; }
+.arrow { position: absolute; top: 50%; z-index: 1; transform: translateY(-50%); background: var(--bg); box-shadow: 0 0 18px 14px var(--bg); }
+.arrow.prev { left: 0; }
+.arrow.next { right: 0; }
+.flip { transform: rotate(180deg); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 26px 16px; }
+.tile { min-width: 0; }
+.tile-media { position: relative; display: block; aspect-ratio: 9 / 16; overflow: hidden; border-radius: var(--r-media); background: var(--surface-2); }
+.tile-media img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease); }
+.tile-media:hover img { transform: scale(1.04); }
+.tile-media::after { content: ""; position: absolute; inset: 72% 0 0; background: linear-gradient(transparent, oklch(0% 0 0 / 0.55)); }
+.tile-n { position: absolute; left: 10px; bottom: 8px; z-index: 1; display: flex; align-items: center; gap: 4px; color: oklch(100% 0 0); font-size: 0.875rem; font-weight: 600; }
+.tile-n .i { width: 16px; height: 16px; }
+.tile-cap { margin-top: 9px; font-size: 0.9375rem; line-height: 1.35; }
+.tile-by { display: inline-flex; align-items: center; gap: 7px; margin-top: 6px; color: var(--text-muted); font-size: 0.875rem; }
+.tile-by:hover { color: var(--text); }
+.tile.is-current .tile-media { outline: 3px solid var(--pop); outline-offset: -3px; }
+.grid.compact { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.compact .tile-cap, .compact .tile-by { display: none; }
+.empty { display: grid; justify-items: center; gap: 8px; padding: 56px 16px; color: var(--text-muted); text-align: center; }
+.empty b { color: var(--text); font-size: 1.0625rem; }
+.results { display: flex; align-items: center; gap: 12px; margin: -6px 0 18px; color: var(--text-muted); }
+@media (max-width: 719px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 10px; }
+  .grid.compact { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; margin-inline: calc(var(--gutter) * -1); }
+  .compact .tile-media { border-radius: 0; }
+}
+
+/* ---------- Video page: stage at the left, details and comments at the right ---------- */
+.watch { display: grid; grid-template-columns: minmax(0, 1fr) 440px; height: 100vh; height: 100dvh; }
+.stage { position: relative; container-type: size; display: grid; place-items: center; overflow: hidden; background: var(--stage); }
+.stage-bg { position: absolute; inset: -40px; width: calc(100% + 80px); max-width: none; height: calc(100% + 80px); object-fit: cover; filter: blur(36px) brightness(0.5) saturate(1.2); }
+.stage .frame { grid-column: auto; height: min(100cqh - 32px, (100cqw - 144px) * 16 / 9); }
+.stage-close { position: absolute; top: 16px; left: 16px; z-index: 2; }
+.side { display: flex; flex-direction: column; min-width: 0; min-height: 0; border-left: 1px solid var(--border); }
+.side-scroll { position: relative; flex: 1; min-height: 0; overflow-y: auto; padding: 20px 20px 0; }
+.by-card { display: grid; gap: 10px; padding: 16px; border-radius: var(--r-card); background: var(--surface); }
+.by-row { display: flex; align-items: center; gap: 12px; }
+.by-row > div { flex: 1; min-width: 0; }
+.by-u { font-size: 1.0625rem; font-weight: 700; }
+.by-u:hover { text-decoration: underline; }
+.by-meta { color: var(--text-muted); font-size: 0.875rem; }
+.v-title { font-size: 1.1875rem; font-weight: 700; }
+.v-cap a { color: var(--link); }
+.v-acts { display: flex; align-items: center; gap: 18px; padding: 16px 4px 14px; }
+.v-acts .act { grid-auto-flow: column; align-items: center; gap: 7px; font-size: 0.8125rem; }
+.v-acts .act-ico { width: 38px; height: 38px; }
+.v-acts .act .i { width: 20px; height: 20px; }
+.v-acts .share { margin-left: auto; }
+.copy-row { display: flex; align-items: center; overflow: hidden; border-radius: var(--r-control); background: var(--surface); }
+.copy-row input { flex: 1; min-width: 0; height: 42px; padding: 0 12px; border: 0; background: none; color: var(--text-muted); font-size: 0.875rem; }
+.copy-row button { min-height: 42px; padding: 0 16px; font-size: 0.875rem; font-weight: 700; }
+.copy-row button:hover { background: var(--surface-2); }
+.tabs { position: relative; display: flex; margin-top: 18px; border-bottom: 1px solid var(--border); }
+.tabs [role="tab"] { position: relative; min-height: 46px; padding: 0 16px; color: var(--text-muted); font-weight: 600; white-space: nowrap; }
+.tabs [aria-selected="true"] { color: var(--text); }
+.tabs [aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--text); }
+.panel { padding: 16px 0 24px; }
+.comments { display: grid; gap: 18px; }
+.cmt { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: start; }
+.cmt-name { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.875rem; font-weight: 600; }
+.cmt-text { margin-top: 2px; font-size: 0.9375rem; overflow-wrap: anywhere; }
+.cmt-meta { display: flex; gap: 16px; margin-top: 4px; color: var(--text-muted); font-size: 0.8125rem; }
+.cmt-meta button { color: var(--text-muted); font-weight: 600; }
+.cmt-meta button:hover { color: var(--text); }
+.cmt-like { display: grid; justify-items: center; gap: 2px; width: 40px; padding-top: 4px; color: var(--text-muted); font-size: 0.75rem; }
+.cmt-like .i { width: 20px; height: 20px; }
+.cmt-like[aria-pressed="true"] { color: var(--heart); }
+.comment-form { display: flex; align-items: center; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--border); background: var(--bg); }
+.comment-form .field { flex: 1; padding: 0; }
+.comment-form input { min-height: 44px; border: 0; background: var(--surface); }
+.comment-form .err { bottom: calc(100% + 6px); }
+.post-btn { min-height: 44px; padding: 0 10px; color: var(--link); font-weight: 700; }
+@media (max-width: 1099px) {
+  .watch { display: block; height: auto; }
+  .stage { height: min(88dvh, 900px); }
+  .side { border-left: 0; }
+  .side-scroll { overflow: visible; padding: 20px var(--gutter) 0; }
+  .comment-form { padding: 14px var(--gutter) 28px; border-top: 0; }
+}
+@media (max-width: 719px) {
+  .stage { height: calc(86dvh - var(--top)); }
+  .stage .frame { width: 100%; height: 100%; border-radius: 0; aspect-ratio: auto; }
+  .stage-bg, .stage-nav { display: none; }
+}
+
+/* ---------- Creator page ---------- */
+.prof { display: flex; align-items: center; gap: 28px; }
+.prof-u { font-size: var(--fs-h1); font-weight: 800; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+.prof-name { margin-top: 2px; font-size: 1.0625rem; font-weight: 600; }
+.prof-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.prof-stats { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 22px; color: var(--text-muted); }
+.prof-stats b { margin-right: 5px; color: var(--text); font-size: 1.0625rem; font-weight: 700; }
+.prof-bio { max-width: 60ch; margin-top: 10px; }
+.prof-link { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+.prof-link .i { width: 18px; height: 18px; }
+.prof-bar { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 10px; margin: 28px 0 16px; border-bottom: 1px solid var(--border); }
+.prof-bar .tabs { margin: 0; border: 0; }
+.seg { display: inline-flex; padding: 3px; margin-bottom: 8px; border-radius: var(--r-control); background: var(--surface); }
+.seg button { min-height: 34px; padding: 0 12px; border-radius: 8px; color: var(--text-muted); font-size: 0.875rem; font-weight: 600; }
+.seg [aria-pressed="true"] { background: var(--bg); color: var(--text); box-shadow: 0 1px 3px oklch(0% 0 0 / 0.14); }
+@media (max-width: 719px) {
+  .prof { flex-direction: column; text-align: center; gap: 14px; }
+  .prof-actions, .prof-stats { justify-content: center; }
+  .prof-bio, .prof-link { margin-inline: auto; justify-content: center; text-align: center; }
+}
+
+/* ---------- Course, live, collab, about, legal, 404 ---------- */
+.course-hero { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 32px; align-items: end; }
+.cover { position: relative; aspect-ratio: 9 / 16; overflow: hidden; border-radius: var(--r-card); }
+.cover img { width: 100%; height: 100%; object-fit: cover; }
+.cover .badge { position: absolute; top: 10px; left: 10px; }
+.meta-row { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 12px 0 16px; color: var(--text-muted); }
+.meta-row span { display: inline-flex; align-items: center; gap: 6px; }
+.meta-row .i { width: 18px; height: 18px; }
+.price { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 400px); gap: 48px; align-items: start; margin-top: 44px; }
+.eps { display: grid; gap: 4px; }
+.ep { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 8px; border-radius: var(--r-control); }
+a.ep:hover { background: var(--surface); }
+.ep-tile { --h: 290; display: grid; place-items: center; aspect-ratio: 9 / 16; border-radius: 8px; background: linear-gradient(165deg, oklch(64% 0.17 var(--h)), oklch(38% 0.15 calc(var(--h) + 40))); color: oklch(100% 0 0); font-size: 1.125rem; font-weight: 800; }
+.ep b { display: block; font-weight: 600; }
+.ep small { display: block; color: var(--text-muted); font-size: 0.875rem; }
+.ep > .i { color: var(--text-muted); }
+.card { padding: 24px; border-radius: var(--r-card); background: var(--surface); }
+.card .field input, .card .field select, .card .field textarea { background: var(--bg); }
+.checks { display: grid; gap: 10px; margin-top: 14px; }
+.checks li { display: flex; gap: 10px; }
+.checks .i { width: 20px; height: 20px; color: var(--link); }
+.live-list { display: grid; gap: 12px; max-width: 900px; }
+.live-row { display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; gap: 18px; align-items: center; padding: 14px; border-radius: var(--r-card); background: var(--surface); }
+.date-tile { display: grid; place-items: center; align-content: center; aspect-ratio: 1; border-radius: 12px; background: var(--bg); line-height: 1.1; }
+.date-tile small { color: var(--link); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+.date-tile b { font-size: 1.625rem; font-weight: 800; }
+.live-title { font-size: 1.0625rem; font-weight: 700; }
+.live-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 4px; color: var(--text-muted); font-size: 0.875rem; }
+.live-meta a { display: inline-flex; align-items: center; gap: 6px; color: var(--text); font-weight: 600; }
+.live-row .btn { background: var(--bg); }
+.live-row .btn:hover { background: var(--surface-2); }
+.live-row [data-remind][aria-pressed="true"] { background: var(--pop); color: var(--pop-text); }
+.two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 48px; align-items: start; }
+.formats { display: grid; gap: 12px; margin-top: 24px; }
+.format { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; padding: 16px; border-radius: var(--r-card); background: var(--surface); }
+.format .ic { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--bg); color: var(--link); }
+.format b { display: block; font-size: 1.0625rem; }
+.format p { color: var(--text-muted); font-size: 0.9375rem; }
+.team { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+.member { display: grid; align-content: start; justify-items: start; gap: 10px; padding: 20px; border-radius: var(--r-card); background: var(--surface); }
+.member .m-u { font-size: 1.0625rem; font-weight: 700; }
+.member .m-u:hover { text-decoration: underline; }
+.member .m-role { color: var(--text-muted); font-size: 0.9375rem; }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; counter-reset: step; }
+.steps li { display: grid; gap: 6px; padding-top: 14px; border-top: 2px solid var(--text); counter-increment: step; }
+.steps li::before { content: counter(step, decimal-leading-zero); color: var(--link); font-weight: 800; }
+.steps b { font-size: 1.0625rem; }
+.steps p { color: var(--text-muted); }
+.faq { max-width: 760px; }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; cursor: pointer; font-weight: 600; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .i { transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .i { transform: rotate(180deg); }
+.faq details p { padding-bottom: 18px; color: var(--text-muted); max-width: 64ch; }
+.prose { max-width: 68ch; }
+.prose h2 { margin: 32px 0 8px; font-size: var(--fs-h2); font-weight: 700; }
+.prose p, .prose ul { margin-top: 10px; }
+.prose ul { padding-left: 20px; list-style: disc; }
+.prose a { color: var(--link); font-weight: 600; }
+.nf { display: grid; justify-items: center; gap: 14px; padding: 72px var(--gutter); text-align: center; }
+.nf-frame { display: grid; place-items: center; width: 132px; aspect-ratio: 9 / 16; border: 2px dashed var(--border-strong); border-radius: 16px; color: var(--text-muted); }
+.nf-frame .i { width: 40px; height: 40px; }
+.display { font-size: var(--fs-display); font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+@media (max-width: 899px) {
+  .split, .two-col { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 719px) {
+  .course-hero { grid-template-columns: 1fr; gap: 18px; }
+  .course-hero .cover { width: 132px; }
+  .live-row { grid-template-columns: 60px minmax(0, 1fr); }
+  .live-row .btn { grid-column: 1 / -1; }
+}
+
+/* ---------- Forms ---------- */
+.form { display: grid; gap: 2px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+.field { position: relative; display: grid; gap: 6px; padding-bottom: 24px; }
+.field > label, .field legend { font-size: 0.875rem; font-weight: 600; }
+.field legend { margin-bottom: 8px; padding: 0; }
+.field input:not([type="checkbox"]):not([type="radio"]), .field select, .field textarea { width: 100%; min-height: 46px; padding: 10px 14px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--bg); font-size: 1rem; }
+.field textarea { min-height: 128px; resize: vertical; }
+.field :is(input, select, textarea):focus-visible { outline: 2px solid var(--focus); outline-offset: 0; border-color: transparent; }
+.field [aria-invalid="true"] { border-color: var(--danger) !important; }
+.err { position: absolute; left: 0; bottom: 3px; color: var(--danger); font-size: 0.8125rem; font-weight: 600; line-height: 1.3; }
+.err:empty { display: none; }
+fieldset { min-width: 0; padding: 0; border: 0; }
+.choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.choice { position: relative; }
+.choice input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.choice span { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: var(--r-pill); background: var(--surface-2); font-size: 0.9375rem; font-weight: 600; }
+.choice input:checked + span { background: var(--ink); color: var(--ink-text); }
+.choice input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.consent { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9375rem; }
+.consent input { flex: none; width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--accent); }
+.consent a { color: var(--link); font-weight: 600; }
+.success { display: grid; justify-items: start; gap: 8px; padding: 24px; border-radius: var(--r-card); background: var(--surface); animation: rise var(--dur-slow) var(--ease); }
+.card .success { padding: 0; background: none; }
+.ok { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--pop); color: var(--pop-text); }
+@media (max-width: 719px) { .form-row { grid-template-columns: 1fr; } }
+
+/* ---------- Toast ---------- */
+.toast { position: fixed; left: 50%; bottom: 28px; z-index: 60; max-width: calc(100vw - 32px); padding: 12px 18px; border-radius: var(--r-control); background: var(--ink); color: var(--ink-text); font-size: 0.9375rem; font-weight: 600; box-shadow: var(--shadow-overlay); transform: translateX(-50%); animation: rise var(--dur-base) var(--ease); }
+
+/* ---------- Motion ---------- */
+@keyframes rise { from { opacity: 0; translate: 0 12px; } to { opacity: 1; translate: 0 0; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.28); } 100% { transform: scale(1); } }
+@keyframes sticker { from { opacity: 0; transform: translateX(-50%) scale(0.86); } to { opacity: 1; transform: translateX(-50%) scale(1); } }
+@keyframes drift { from { transform: scale(1); } to { transform: scale(1.07) translateY(-1.5%); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes burst { 0% { opacity: 0; transform: scale(0.4) rotate(var(--r, -10deg)); } 18% { opacity: 1; transform: scale(1.15) rotate(var(--r, -10deg)); } 40% { transform: scale(1) rotate(var(--r, -10deg)); } 100% { opacity: 0; transform: translateY(-70px) scale(1.2) rotate(var(--r, -10deg)); } }
+.js .reveal:not(.is-in) { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal:not(.is-in) { opacity: 1; }
+  .burst { display: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="0 0 64 64"><path d="M16 0h26l22 22v26a16 16 0 0 1-16 16H16A16 16 0 0 1 0 48V16A16 16 0 0 1 16 0z" fill="#6d37ec"/><path d="M42 0v14a8 8 0 0 0 8 8h14z" fill="#b8f450"/><path d="M18 40l10-10 8 8 10-10" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 10.5 12 3.5l8.5 7V20a1 1 0 0 1-1 1H15v-6H9v6H4.5a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.8 8.2-2.3 5.3-5.3 2.3 2.3-5.3z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.2a6.5 6.5 0 0 1 3.5 5.8"/></symbol>
+  <symbol id="i-live" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7m7 0a5 5 0 0 0 0-7M5.6 5.6a9 9 0 0 0 0 12.8m12.8 0a9 9 0 0 0 0-12.8"/></symbol>
+  <symbol id="i-course" viewBox="0 0 24 24"><rect x="4" y="3" width="11" height="18" rx="2.5"/><path d="M18 6.5v11M21 8.5v7M8 9.5l4 2.5-4 2.5z"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.8h.01"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.6v14.8a1 1 0 0 0 1.5.9l12.2-7.4a1 1 0 0 0 0-1.8L8.5 3.7A1 1 0 0 0 7 4.6z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.8s-8.8-5.1-8.8-11.4A5 5 0 0 1 12 6.3a5 5 0 0 1 8.8 3.1c0 6.3-8.8 11.4-8.8 11.4z"/></symbol>
+  <symbol id="i-bubble" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M4 4.5h16a1.5 1.5 0 0 1 1.5 1.5v10a1.5 1.5 0 0 1-1.5 1.5h-9L6 21.5v-4H4A1.5 1.5 0 0 1 2.5 16V6A1.5 1.5 0 0 1 4 4.5zM7 9h10v1.8H7zm0 3.6h6.5v1.8H7z"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M6.5 3h11A1.5 1.5 0 0 1 19 4.5V21l-7-4.6L5 21V4.5A1.5 1.5 0 0 1 6.5 3z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M21.4 2.6 2.8 10c-.9.4-.8 1.6.1 1.9l6.8 2.2 2.2 6.8c.3.9 1.5 1 1.9.1zM9.7 14.1l4.6-4.5"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M9 18V5.5l11-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 9.5v5l4-2.5z"/></symbol>
+</svg>
+
+<div class="app">
+<header class="rail" id="rail">
+  <div class="rail-head">
+    <a class="brand" href="#/" aria-label="Tinyfold home"><svg class="brand-mark" aria-hidden="true"><use href="#mark"/></svg><span>Tinyfold</span></a>
+    <div class="tools">
+      <a class="icon-btn search-link" href="#/explore?search=1" aria-label="Search videos"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg></a>
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to dark colors"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button class="icon-btn" type="button" id="menu-btn" aria-label="Open menu" aria-controls="rail-body" aria-expanded="false"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+  <div class="rail-body" id="rail-body">
+    <form class="search" role="search" id="rail-search" novalidate>
+      <label class="sr-only" for="rail-q">Search videos</label>
+      <input id="rail-q" name="q" type="search" placeholder="Search" autocomplete="off">
+      <button class="go" type="submit" id="rail-go" aria-label="Search"><svg class="i sm" aria-hidden="true"><use href="#i-search"/></svg></button>
+    </form>
+    <nav class="nav" aria-label="Main">
+      <a href="#/"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg><span class="lbl">For you</span></a>
+      <a href="#/explore"><svg class="i" aria-hidden="true"><use href="#i-compass"/></svg><span class="lbl">Explore</span></a>
+      <a href="#/?feed=following"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg><span class="lbl">Following</span></a>
+      <a href="#/live"><svg class="i" aria-hidden="true"><use href="#i-live"/></svg><span class="lbl">Live workshops</span></a>
+      <a href="#/course"><svg class="i" aria-hidden="true"><use href="#i-course"/></svg><span class="lbl">Course</span></a>
+      <a href="#/about"><svg class="i" aria-hidden="true"><use href="#i-info"/></svg><span class="lbl">About</span></a>
+    </nav>
+    <a class="btn accent rail-cta" href="#/collab"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><span class="lbl">Work with us</span></a>
+    <p class="rail-title">Our creators</p>
+    <ul class="people">
+      <li><a href="#/creator?u=ines.cuts"><span class="ring"><span class="av sm" style="--h:20">IC</span></span><span><b>ines.cuts</b><small>Ines Calloway</small></span></a></li>
+      <li><a href="#/creator?u=wren.grows"><span class="ring"><span class="av sm" style="--h:150">WO</span></span><span><b>wren.grows</b><small>Wren Okoro</small></span></a></li>
+      <li><a href="#/creator?u=bo.fixes"><span class="ring"><span class="av sm" style="--h:245">BA</span></span><span><b>bo.fixes</b><small>Bo Achterberg</small></span></a></li>
+    </ul>
+    <p class="rail-foot"><a href="#/about">About</a><a href="#/collab">Work with us</a><a href="#/legal">Privacy and terms</a><span>&copy; 2026 Tinyfold</span></p>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ===================== HOME: the feed, one vertical video at a time ===================== -->
+<div data-view="home">
+  <h1 class="sr-only">Tinyfold: thirty-second craft videos</h1>
+  <div class="feed-wrap">
+    <div class="feed-tabs" role="group" aria-label="Feed">
+      <button type="button" data-feed-tab="foryou" aria-pressed="true">For you</button>
+      <button type="button" data-feed-tab="following" aria-pressed="false">Following</button>
+    </div>
+    <div class="feed" id="feed">
+      <article class="post player" data-id="crane" aria-label="Video">
+        <div class="frame">
+          <img class="poster" data-f="poster" src="images/crane.svg" alt="A paper crane in 28 seconds" width="540" height="960">
+          <button class="hit" type="button" aria-label="Pause video"></button>
+          <p class="sticker" data-f="step" aria-hidden="true">Start with a square</p>
+          <span class="state" aria-hidden="true"><svg class="i f"><use href="#i-play"/></svg></span>
+          <div class="cap">
+            <p class="cap-by"><a data-f="u" data-href="#/creator?u={u}" href="#/creator?u=ines.cuts">ines.cuts</a> <span class="cap-date" data-f="date">Nov 18</span></p>
+            <p class="cap-text clamp" data-f="caption">One square, four folds, one crane. Slow-motion wings at the end. #origami #papercraft</p>
+            <p class="sound"><svg class="i" aria-hidden="true"><use href="#i-note"/></svg><span class="marquee"><span data-f="sound" data-t="original sound - Ines Calloway">original sound - Ines Calloway</span></span></p>
+          </div>
+          <div class="bar" aria-hidden="true"><i></i></div>
+        </div>
+        <div class="actions">
+          <div class="act-av">
+            <a data-href="#/creator?u={u}" href="#/creator?u=ines.cuts"><span class="av lg" data-f="av" style="--h:20">IC</span><span class="sr-only">Creator profile</span></a>
+            <button class="follow-plus" type="button" data-follow="ines.cuts" aria-pressed="false" aria-label="Follow ines.cuts"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button>
+          </div>
+          <button class="act" type="button" data-like aria-pressed="false"><span class="act-ico"><svg class="i f" aria-hidden="true"><use href="#i-heart"/></svg></span><span data-f="likes">48.2K</span><span class="sr-only">likes</span></button>
+          <a class="act" data-href="#/video?v={id}" href="#/video?v=crane"><span class="act-ico"><svg class="i f" aria-hidden="true"><use href="#i-bubble"/></svg></span><span data-f="comments">312</span><span class="sr-only">comments</span></a>
+          <button class="act" type="button" data-save aria-pressed="false"><span class="act-ico"><svg class="i f" aria-hidden="true"><use href="#i-save"/></svg></span><span data-f="saves">5.1K</span><span class="sr-only">saves</span></button>
+          <button class="act" type="button" data-share><span class="act-ico"><svg class="i f" aria-hidden="true"><use href="#i-send"/></svg></span><span data-f="shares">890</span><span class="sr-only">shares, copy link</span></button>
+          <span class="disc" aria-hidden="true"><span class="av xs" data-f="av" style="--h:20">IC</span></span>
+        </div>
+        <div class="post-nav">
+          <button class="icon-btn soft" type="button" data-step="-1" aria-label="Previous video"><svg class="i" aria-hidden="true"><use href="#i-up"/></svg></button>
+          <button class="icon-btn soft" type="button" data-step="1" aria-label="Next video"><svg class="i" aria-hidden="true"><use href="#i-down"/></svg></button>
+        </div>
+      </article>
+    </div>
+    <div class="feed-empty" data-feed-empty hidden>
+      <svg class="i" aria-hidden="true" style="width:48px;height:48px"><use href="#i-users"/></svg>
+      <h2 class="sec-title" style="margin:0">Follow someone to fill this feed</h2>
+      <p class="muted">Videos from the creators you follow show up here, newest first.</p>
+      <div class="suggest" data-suggest></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== EXPLORE: category chips and the grid (every video is written once, here) ===================== -->
+<div data-view="explore">
+  <section class="page" aria-labelledby="explore-h">
+    <div class="page-head">
+      <div><h1 class="h1" id="explore-h">Explore</h1><p class="lead">Every video we have made, newest favourites first. Pick a category or search.</p></div>
+      <div class="search explore-search" role="search" style="width:min(360px,100%)"><svg class="i sm muted" aria-hidden="true"><use href="#i-search"/></svg><label class="sr-only" for="explore-q">Search videos</label><input id="explore-q" type="search" placeholder="Search folds, plants, fixes" autocomplete="off"></div>
+    </div>
+    <div class="scroll-wrap" data-scroller>
+      <div class="chips" role="group" aria-label="Category">
+        <button class="chip" type="button" data-cat="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-cat="paper" aria-pressed="false">Paper</button>
+        <button class="chip" type="button" data-cat="print" aria-pressed="false">Print</button>
+        <button class="chip" type="button" data-cat="plants" aria-pressed="false">Plants</button>
+        <button class="chip" type="button" data-cat="fixit" aria-pressed="false">Fix-it</button>
+        <button class="chip" type="button" data-cat="room" aria-pressed="false">Room</button>
+        <button class="chip" type="button" data-cat="studio" aria-pressed="false">Studio</button>
+        <button class="chip" type="button" data-cat="saved" aria-pressed="false">Saved</button>
+      </div>
+      <button class="icon-btn arrow prev" type="button" data-dir="-1" aria-label="Scroll categories back" hidden><svg class="i flip" aria-hidden="true"><use href="#i-chev"/></svg></button>
+      <button class="icon-btn arrow next" type="button" data-dir="1" aria-label="Scroll categories forward" hidden><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    </div>
+    <p class="results" data-results hidden><span data-results-text></span><button class="btn sm" type="button" data-clear>Clear search</button></p>
+    <div class="grid" data-grid>
+      <article class="tile" data-id="crane" data-cat="paper" data-u="ines.cuts" data-date="2026-11-18" data-dur="28" data-likes="48200" data-comments="312" data-saves="5100" data-shares="890" data-views="402000" data-steps="Start with a square|Fold the bird base|Narrow both legs|Pull the wings open">
+        <a class="tile-media" href="#/video?v=crane"><img src="images/crane.svg" alt="A paper crane in 28 seconds" width="540" height="960"></a>
+        <p class="tile-cap clamp">One square, four folds, one crane. Slow-motion wings at the end. #origami #papercraft</p>
+      </article>
+      <article class="tile" data-id="pothos" data-cat="plants" data-u="wren.grows" data-date="2026-11-20" data-dur="31" data-likes="61900" data-comments="427" data-saves="12800" data-shares="1320" data-views="530000" data-sound="Window rain - Tinyfold studio" data-steps="Find the node|Snip just below it|Two leaves per cutting|Water up to the node">
+        <a class="tile-media" href="#/video?v=pothos"><img src="images/pothos.svg" alt="Pothos cuttings: where to snip" width="540" height="960"></a>
+        <p class="tile-cap clamp">Cut just below a node, keep two leaves, water only up to the node. Roots in about three weeks. #propagation #houseplants</p>
+      </article>
+      <article class="tile" data-id="lino" data-cat="print" data-u="ines.cuts" data-date="2026-11-15" data-dur="30" data-likes="33400" data-comments="205" data-saves="6100" data-shares="540" data-views="260000" data-sound="Morning radio - Tinyfold studio" data-steps="Trace the lemon|Carve away the white|Roll the ink thin|Press and peel">
+        <a class="tile-media" href="#/video?v=lino"><img src="images/lino.svg" alt="Carving a lemon stamp" width="540" height="960"></a>
+        <p class="tile-cap clamp">Soft-cut block, one V gouge, twenty minutes squeezed into thirty seconds. #linocut #printmaking</p>
+      </article>
+      <article class="tile" data-id="tube" data-cat="fixit" data-u="bo.fixes" data-date="2026-11-16" data-dur="33" data-likes="39800" data-comments="356" data-saves="8200" data-shares="970" data-views="342000" data-sound="Garage echo - Tinyfold studio" data-steps="Find the hole|Roughen the rubber|Thin glue, then wait|Press the patch hard">
+        <a class="tile-media" href="#/video?v=tube"><img src="images/tube.svg" alt="Patch a bike tube in a minute" width="540" height="960"></a>
+        <p class="tile-cap clamp">Find the hole with water, roughen, glue, wait, patch. The waiting is the part everyone skips. #bikerepair #fixit</p>
+      </article>
+      <article class="tile" data-id="starbox" data-cat="paper" data-u="ines.cuts" data-date="2026-11-12" data-dur="34" data-likes="21700" data-comments="148" data-saves="3900" data-shares="412" data-views="188000" data-steps="One sheet of A4|Crease into sixteenths|Twist the base|Close the star lid">
+        <a class="tile-media" href="#/video?v=starbox"><img src="images/starbox.svg" alt="A star box from one sheet" width="540" height="960"></a>
+        <p class="tile-cap clamp">No glue, no tape, one sheet of A4. Holds exactly six sweets. #origami #giftwrap</p>
+      </article>
+      <article class="tile" data-id="shelf" data-cat="room" data-u="bo.fixes" data-date="2026-11-10" data-dur="32" data-likes="24500" data-comments="512" data-saves="4700" data-shares="380" data-views="212000" data-sound="Sunday playlist - Tinyfold studio" data-steps="Look one: in a row|Look two: a triangle|Look three: by colour|Which one wins?">
+        <a class="tile-media" href="#/video?v=shelf"><img src="images/shelf.svg" alt="One shelf, three looks" width="540" height="960"></a>
+        <p class="tile-cap clamp">Same shelf, same objects, three ways to arrange them. Number two won the vote. #shelfie #roommakeover</p>
+      </article>
+      <article class="tile" data-id="moss" data-cat="plants" data-u="wren.grows" data-date="2026-11-08" data-dur="29" data-likes="27300" data-comments="190" data-saves="5400" data-shares="610" data-views="231000" data-sound="Window rain - Tinyfold studio" data-steps="Gravel first|A pinch of charcoal|Press the moss down|Lid on, mist weekly">
+        <a class="tile-media" href="#/video?v=moss"><img src="images/moss.svg" alt="A moss jar for a dark shelf" width="540" height="960"></a>
+        <p class="tile-cap clamp">Gravel, charcoal, soil, moss, lid. Mist once a week and that is it. #terrarium #moss</p>
+      </article>
+      <article class="tile" data-id="setup" data-cat="studio" data-u="bo.fixes" data-date="2026-11-21" data-dur="35" data-likes="15200" data-comments="233" data-saves="6600" data-shares="455" data-views="121000" data-steps="Phone on a clamp|Lamp through baking paper|Lock the focus|Film from above">
+        <a class="tile-media" href="#/video?v=setup"><img src="images/setup.svg" alt="How we film on one phone" width="540" height="960"></a>
+        <p class="tile-cap clamp">One phone, a clamp, a desk lamp and baking paper as a diffuser. That is the whole studio. #behindthescenes</p>
+      </article>
+      <article class="tile" data-id="chair" data-cat="fixit" data-u="bo.fixes" data-date="2026-11-05" data-dur="27" data-likes="18300" data-comments="141" data-saves="2900" data-shares="302" data-views="155000" data-steps="Pull the leg out|Scrape the old glue|Glue and clamp|Leave it overnight">
+        <a class="tile-media" href="#/video?v=chair"><img src="images/chair.svg" alt="Fixing a wobbly chair leg" width="540" height="960"></a>
+        <p class="tile-cap clamp">Old glue out, new glue in, clamp overnight. The chair is from 1971 and it is good for another fifty years. #woodworking #fixit</p>
+      </article>
+      <article class="tile" data-id="popup" data-cat="paper" data-u="ines.cuts" data-date="2026-11-03" data-dur="22" data-likes="9800" data-comments="76" data-saves="1400" data-shares="233" data-views="91000" data-sound="Tape loop - Tinyfold studio" data-steps="Fold the card in half|Two cuts from the fold|Push the tab inside|Open slowly">
+        <a class="tile-media" href="#/video?v=popup"><img src="images/popup.svg" alt="Pop-up card: one cut, one fold" width="540" height="960"></a>
+        <p class="tile-cap clamp">The easiest pop-up there is. Works for birthdays, thank-yous and very small apologies. #popupcard #papercraft</p>
+      </article>
+      <article class="tile" data-id="tote" data-cat="print" data-u="ines.cuts" data-date="2026-10-29" data-dur="26" data-likes="12600" data-comments="98" data-saves="1700" data-shares="188" data-views="104000" data-steps="Iron the bags flat|Card inside each bag|Ink, press, lift|Dry overnight">
+        <a class="tile-media" href="#/video?v=tote"><img src="images/tote.svg" alt="Twenty tote bags before lunch" width="540" height="960"></a>
+        <p class="tile-cap clamp">Same lemon stamp, twenty bags, one very tired wrist. They sold out at the Saturday market. #blockprint #totebag</p>
+      </article>
+      <article class="tile" data-id="repot" data-cat="plants" data-u="wren.grows" data-date="2026-10-24" data-dur="25" data-likes="7400" data-comments="64" data-saves="980" data-shares="120" data-views="66000" data-steps="Water the day before|Squeeze, then tip|Loosen the roots|Fill and firm">
+        <a class="tile-media" href="#/video?v=repot"><img src="images/repot.svg" alt="Repotting without the mess" width="540" height="960"></a>
+        <p class="tile-cap clamp">A sheet of newspaper and a spoon do most of the work. #repotting #plantcare</p>
+      </article>
+    </div>
+    <div class="empty" data-empty="explore" hidden><b>Nothing here yet</b><p>No videos match. Try another word or category.</p></div>
+  </section>
+</div>
+
+<!-- ===================== VIDEO: one video with its details, comments and the creator's other videos ===================== -->
+<div data-view="video">
+  <div class="watch player" data-id="crane">
+    <div class="stage">
+      <img class="stage-bg" data-f="bg" src="images/crane.svg" alt="" width="540" height="960">
+      <a class="icon-btn glass stage-close" href="#/explore" data-back aria-label="Close video"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></a>
+      <div class="frame">
+        <img class="poster" data-f="poster" src="images/crane.svg" alt="A paper crane in 28 seconds" width="540" height="960">
+        <button class="hit" type="button" aria-label="Pause video"></button>
+        <p class="sticker" data-f="step" aria-hidden="true">Start with a square</p>
+        <span class="state" aria-hidden="true"><svg class="i f"><use href="#i-play"/></svg></span>
+        <div class="bar" aria-hidden="true"><i></i></div>
+      </div>
+      <div class="stage-nav">
+        <button class="icon-btn glass" type="button" data-step="-1" aria-label="Previous video"><svg class="i" aria-hidden="true"><use href="#i-up"/></svg></button>
+        <button class="icon-btn glass" type="button" data-step="1" aria-label="Next video"><svg class="i" aria-hidden="true"><use href="#i-down"/></svg></button>
+      </div>
+    </div>
+    <div class="side">
+      <div class="side-scroll">
+        <div class="by-card">
+          <div class="by-row">
+            <a data-href="#/creator?u={u}" href="#/creator?u=ines.cuts" tabindex="-1" aria-hidden="true"><span class="av lg" data-f="av" style="--h:20">IC</span></a>
+            <div><a class="by-u" data-f="u" data-href="#/creator?u={u}" href="#/creator?u=ines.cuts">ines.cuts</a><p class="by-meta"><span data-f="name">Ines Calloway</span> &middot; <span data-f="date">Nov 18</span></p></div>
+            <button class="btn accent sm" type="button" data-follow="ines.cuts" aria-pressed="false">Follow</button>
+          </div>
+          <h1 class="v-title" data-f="title">A paper crane in 28 seconds</h1>
+          <p class="v-cap" data-f="caption">One square, four folds, one crane. Slow-motion wings at the end. #origami #papercraft</p>
+          <p class="sound"><svg class="i" aria-hidden="true"><use href="#i-note"/></svg><span data-f="sound">original sound - Ines Calloway</span></p>
+        </div>
+        <div class="v-acts">
+          <button class="act" type="button" data-like aria-pressed="false"><span class="act-ico"><svg class="i f" aria-hidden="true"><use href="#i-heart"/></svg></span><span data-f="likes">48.2K</span><span class="sr-only">likes</span></button>
+          <a class="act" href="#comments"><span class="act-ico"><svg class="i f" aria-hidden="true"><use href="#i-bubble"/></svg></span><span data-f="comments">312</span><span class="sr-only">comments</span></a>
+          <button class="act" type="button" data-save aria-pressed="false"><span class="act-ico"><svg class="i f" aria-hidden="true"><use href="#i-save"/></svg></span><span data-f="saves">5.1K</span><span class="sr-only">saves</span></button>
+          <button class="act share" type="button" data-share><span class="act-ico"><svg class="i f" aria-hidden="true"><use href="#i-send"/></svg></span><span data-f="shares">890</span><span class="sr-only">shares, copy link</span></button>
+        </div>
+        <div class="copy-row"><label class="sr-only" for="link-field">Link to this video</label><input id="link-field" readonly value="https://tinyfold.example/#/video?v=crane"><button type="button" data-share>Copy link</button></div>
+        <div class="tabs" role="tablist" aria-label="Video panels" data-tabs="video">
+          <button type="button" role="tab" id="tab-comments" aria-controls="comments" aria-selected="true" data-tab="comments">Comments (<span data-f="comments">312</span>)</button>
+          <button type="button" role="tab" id="tab-more" aria-controls="more" aria-selected="false" tabindex="-1" data-tab="more">Creator videos</button>
+        </div>
+        <div class="panel" id="comments" role="tabpanel" aria-labelledby="tab-comments">
+          <ol class="comments" data-comment-list>
+          </ol>
+        </div>
+        <div class="panel" id="more" role="tabpanel" aria-labelledby="tab-more" hidden><div class="grid compact" data-more></div></div>
+      </div>
+      <form class="comment-form" data-form="comment" novalidate>
+        <div class="field"><label class="sr-only" for="c-text">Add a comment</label><input id="c-text" name="comment" placeholder="Add a comment..." autocomplete="off" required maxlength="300" aria-describedby="c-text-err"><p class="err" id="c-text-err" aria-live="polite"></p></div>
+        <button class="post-btn" type="submit">Post</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CREATOR: profile with Videos and Liked tabs ===================== -->
+<div data-view="creator">
+  <section class="page" aria-labelledby="prof-h">
+    <div class="prof">
+      <span class="ring"><span class="av xl" data-p="av" style="--h:20">IC</span></span>
+      <div>
+        <h1 class="prof-u" id="prof-h" data-p="u">ines.cuts</h1>
+        <p class="prof-name" data-p="name">Ines Calloway</p>
+        <div class="prof-actions">
+          <button class="btn accent" type="button" data-follow="ines.cuts" aria-pressed="false">Follow</button>
+          <a class="btn" href="#/collab?with=ines.cuts" data-p="collab">Message</a>
+          <button class="icon-btn soft" type="button" data-share-profile aria-label="Copy profile link"><svg class="i f" aria-hidden="true"><use href="#i-send"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <p class="prof-stats"><span><b data-p="following">214</b>Following</span><span><b data-p="followers">48.2K</b>Followers</span><span><b data-p="likes">1.1M</b>Likes</span></p>
+    <p class="prof-bio" data-p="bio">Paper, scissors and one good bone folder. A new fold every Tuesday.</p>
+    <p class="prof-link"><svg class="i" aria-hidden="true"><use href="#i-link"/></svg><a class="text-link" href="#/course" data-p="link">Paper in a minute, the course</a></p>
+    <div class="prof-bar">
+      <div class="tabs" role="tablist" aria-label="Profile" data-tabs="prof">
+        <button type="button" role="tab" id="ptab-videos" aria-controls="prof-panel" aria-selected="true" data-tab="videos">Videos</button>
+        <button type="button" role="tab" id="ptab-liked" aria-controls="prof-panel" aria-selected="false" tabindex="-1" data-tab="liked">Liked</button>
+      </div>
+      <div class="seg" role="group" aria-label="Sort videos">
+        <button type="button" data-sort="latest" aria-pressed="true">Latest</button>
+        <button type="button" data-sort="popular" aria-pressed="false">Popular</button>
+        <button type="button" data-sort="oldest" aria-pressed="false">Oldest</button>
+      </div>
+    </div>
+    <div id="prof-panel" role="tabpanel" aria-labelledby="ptab-videos">
+      <div class="grid compact" data-prof-grid></div>
+      <div class="empty" data-prof-empty hidden><b>No videos yet</b><p>New videos show up here as soon as they are posted.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== COURSE: a course made of one-minute lessons ===================== -->
+<div data-view="course">
+  <section class="page" aria-labelledby="course-h">
+    <div class="course-hero reveal">
+      <div class="cover"><img src="images/crane.svg" alt="" width="540" height="960"><span class="badge">Course</span></div>
+      <div>
+        <p class="muted" style="font-weight:600">With <a class="text-link" href="#/creator?u=ines.cuts">ines.cuts</a></p>
+        <h1 class="h1" id="course-h">Paper in a minute</h1>
+        <p class="lead">Six lessons, none longer than a minute, from your first valley fold to a star box with no glue. Watch on your phone with the paper in your other hand.</p>
+        <p class="meta-row"><span><svg class="i" aria-hidden="true"><use href="#i-film"/></svg>6 lessons</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>5 minutes in total</span><span><svg class="i" aria-hidden="true"><use href="#i-star"/></svg>Beginner</span></p>
+        <p class="price">$24 <span class="muted" style="font-size:1rem;font-weight:500">once, keep it forever</span></p>
+        <div class="btn-row"><a class="btn accent" href="#enroll">Enroll</a><a class="btn" href="#/video?v=crane">Watch lesson 1 free</a></div>
+      </div>
+    </div>
+    <div class="split">
+      <div>
+        <h2 class="sec-title">Lessons</h2>
+        <ol class="eps">
+          <li><a class="ep" href="#/video?v=crane"><span class="ep-tile" style="--h:262">1</span><span><b>The square and the valley fold</b><small>0:48 &middot; Free preview</small></span><span class="badge">Free</span></a></li>
+          <li><a class="ep" href="#/video?v=popup"><span class="ep-tile" style="--h:160">2</span><span><b>One cut, one fold: pop-ups</b><small>0:52 &middot; Free preview</small></span><span class="badge">Free</span></a></li>
+          <li><div class="ep"><span class="ep-tile" style="--h:80">3</span><span><b>The bird base</b><small>0:57</small></span><svg class="i sm" aria-label="Locked" role="img"><use href="#i-lock"/></svg></div></li>
+          <li><div class="ep"><span class="ep-tile" style="--h:30">4</span><span><b>Boxes from one sheet</b><small>0:55</small></span><svg class="i sm" aria-label="Locked" role="img"><use href="#i-lock"/></svg></div></li>
+          <li><div class="ep"><span class="ep-tile" style="--h:200">5</span><span><b>Cards that stand up</b><small>0:46</small></span><svg class="i sm" aria-label="Locked" role="img"><use href="#i-lock"/></svg></div></li>
+          <li><div class="ep"><span class="ep-tile" style="--h:290">6</span><span><b>Wrapping with no tape</b><small>0:54</small></span><svg class="i sm" aria-label="Locked" role="img"><use href="#i-lock"/></svg></div></li>
+        </ol>
+        <h2 class="sec-title sec">What you will make</h2>
+        <ul class="checks">
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>A crane, a lily and a jumping frog from standard 15 cm paper</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>A pop-up card and a stand-up place card</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>A star box and a gift wrapped without tape</li>
+        </ul>
+      </div>
+      <div class="card" id="enroll">
+        <h2 class="sec-title">Enroll</h2>
+        <form class="form" data-form="signup" novalidate>
+          <div class="field"><label for="e-name">Your name</label><input id="e-name" name="name" autocomplete="name" required aria-describedby="e-name-err"><p class="err" id="e-name-err" aria-live="polite"></p></div>
+          <div class="field"><label for="e-email">Email</label><input id="e-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email-err"><p class="err" id="e-email-err" aria-live="polite"></p></div>
+          <fieldset class="field" data-group-required aria-describedby="e-plan-err">
+            <legend>Plan</legend>
+            <div class="choices">
+              <label class="choice"><input type="radio" name="plan" value="course" checked><span>This course, $24</span></label>
+              <label class="choice"><input type="radio" name="plan" value="pass"><span>Studio pass, $59 a year</span></label>
+            </div>
+            <p class="err" id="e-plan-err" aria-live="polite"></p>
+          </fieldset>
+          <div class="field"><label class="consent"><input type="checkbox" name="terms" required aria-describedby="e-terms-err"><span>I agree to the <a href="#/legal?at=terms">terms</a> and the <a href="#/legal">privacy notice</a>.</span></label><p class="err" id="e-terms-err" aria-live="polite"></p></div>
+          <button class="btn accent wide" type="submit">Enroll</button>
+        </form>
+        <div class="success" data-success="signup" hidden><span class="ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><h3>You are enrolled</h3><p class="muted">Your lesson links arrive by email within a day. Keep a few squares of paper nearby.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== LIVE: upcoming workshops with reminders ===================== -->
+<div data-view="live">
+  <section class="page" aria-labelledby="live-h">
+    <div class="page-head"><div><h1 class="h1" id="live-h">Live workshops</h1><p class="lead">Fold, carve and fix along with us. Free to watch; bring your own paper, plant or puncture.</p></div></div>
+    <ol class="live-list">
+      <li class="live-row reveal"><span class="date-tile"><small>Dec</small><b>3</b></span><div><p class="live-title">Fold-along: paper stars for the window</p><p class="live-meta"><a href="#/creator?u=ines.cuts"><span class="av xs" style="--h:20">IC</span>ines.cuts</a><span><time datetime="2026-12-03T19:00">Thu 7:00 PM</time> &middot; 45 min</span></p></div><button class="btn sm" type="button" data-remind="stars" aria-pressed="false">Remind me</button></li>
+      <li class="live-row reveal"><span class="date-tile"><small>Dec</small><b>6</b></span><div><p class="live-title">Cuttings clinic: bring your sad plant</p><p class="live-meta"><a href="#/creator?u=wren.grows"><span class="av xs" style="--h:150">WO</span>wren.grows</a><span><time datetime="2026-12-06T11:00">Sun 11:00 AM</time> &middot; 30 min</span></p></div><button class="btn sm" type="button" data-remind="clinic" aria-pressed="false">Remind me</button></li>
+      <li class="live-row reveal"><span class="date-tile"><small>Dec</small><b>9</b></span><div><p class="live-title">Fix-it night: bikes, zips and wobbly things</p><p class="live-meta"><a href="#/creator?u=bo.fixes"><span class="av xs" style="--h:245">BA</span>bo.fixes</a><span><time datetime="2026-12-09T20:00">Wed 8:00 PM</time> &middot; 40 min</span></p></div><button class="btn sm" type="button" data-remind="fixit" aria-pressed="false">Remind me</button></li>
+      <li class="live-row reveal"><span class="date-tile"><small>Dec</small><b>12</b></span><div><p class="live-title">Lino carving questions, answered</p><p class="live-meta"><a href="#/creator?u=ines.cuts"><span class="av xs" style="--h:20">IC</span>ines.cuts</a><span><time datetime="2026-12-12T15:00">Sat 3:00 PM</time> &middot; 30 min</span></p></div><button class="btn sm" type="button" data-remind="lino" aria-pressed="false">Remind me</button></li>
+    </ol>
+    <p class="sec muted">Missed one? Replays live in <a class="text-link" href="#/explore?cat=studio">Explore, Studio</a>.</p>
+  </section>
+</div>
+
+<!-- ===================== COLLAB: brand partnerships form ===================== -->
+<div data-view="collab">
+  <section class="page two-col" aria-labelledby="collab-h">
+    <div>
+      <h1 class="h1" id="collab-h">Work with us</h1>
+      <p class="lead">We make short, useful videos for brands whose things people actually use: paper, tools, plants, homes. Tell us what you have in mind.</p>
+      <div class="formats">
+        <div class="format"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-film"/></svg></span><div><b>One video</b><p>A thirty-second how-to with your product doing the work, posted on our account.</p></div></div>
+        <div class="format"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-course"/></svg></span><div><b>A series of three</b><p>Three videos over three weeks, each a step further, for a launch or a season.</p></div></div>
+        <div class="format"><span class="ic"><svg class="i" aria-hidden="true"><use href="#i-live"/></svg></span><div><b>A live workshop</b><p>Forty-five minutes making something together, with your product in every pair of hands.</p></div></div>
+      </div>
+      <p class="sec muted">We reply within three working days. Prefer email? <a class="text-link" href="mailto:hello@tinyfold.example">hello@tinyfold.example</a></p>
+    </div>
+    <div class="card">
+      <form class="form" data-form="contact" novalidate>
+        <div class="form-row">
+          <div class="field"><label for="k-name">Your name</label><input id="k-name" name="name" autocomplete="name" required aria-describedby="k-name-err"><p class="err" id="k-name-err" aria-live="polite"></p></div>
+          <div class="field"><label for="k-email">Work email</label><input id="k-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="k-email-err"><p class="err" id="k-email-err" aria-live="polite"></p></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label for="k-brand">Brand or company</label><input id="k-brand" name="brand" autocomplete="organization" required aria-describedby="k-brand-err"><p class="err" id="k-brand-err" aria-live="polite"></p></div>
+          <div class="field"><label for="k-with">Who you would like to work with</label><select id="k-with" name="creator"><option value="any">Any of us</option><option value="ines.cuts">ines.cuts</option><option value="wren.grows">wren.grows</option><option value="bo.fixes">bo.fixes</option></select></div>
+        </div>
+        <fieldset class="field" data-group-required aria-describedby="k-format-err">
+          <legend>What you have in mind</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="format" value="video"><span>One video</span></label>
+            <label class="choice"><input type="radio" name="format" value="series"><span>A series</span></label>
+            <label class="choice"><input type="radio" name="format" value="live"><span>Live workshop</span></label>
+            <label class="choice"><input type="radio" name="format" value="other"><span>Not sure yet</span></label>
+          </div>
+          <p class="err" id="k-format-err" aria-live="polite"></p>
+        </fieldset>
+        <div class="field"><label for="k-budget">Budget</label><select id="k-budget" name="budget" required aria-describedby="k-budget-err"><option value="">Choose a range</option><option>Under $1,000</option><option>$1,000 to $3,000</option><option>$3,000 to $8,000</option><option>Not decided yet</option></select><p class="err" id="k-budget-err" aria-live="polite"></p></div>
+        <div class="field"><label for="k-msg">Message</label><textarea id="k-msg" name="message" required minlength="20" placeholder="The product, the timing and anything we should know" aria-describedby="k-msg-err"></textarea><p class="err" id="k-msg-err" aria-live="polite"></p></div>
+        <button class="btn accent wide" type="submit">Send</button>
+      </form>
+      <div class="success" data-success="contact" hidden><span class="ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><h2 class="sec-title" style="margin:0">Thanks, it is with us</h2><p class="muted">One of us will reply within three working days, usually sooner.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== ABOUT: story, the team (each creator's data lives here), how we film, questions ===================== -->
+<div data-view="about">
+  <section class="page" aria-labelledby="about-h">
+    <h1 class="h1" id="about-h">Three makers, one rented room</h1>
+    <p class="lead">Tinyfold started as a shelf of half-finished projects and a phone propped against a jar. Now it is three of us filming one small, useful thing at a time, in thirty seconds or less, so you can make it tonight.</p>
+    <h2 class="sec-title sec">The team</h2>
+    <div class="team">
+      <div class="member reveal" data-u="ines.cuts" data-name="Ines Calloway" data-h="20" data-ini="IC" data-following="214" data-followers="48200" data-likes="1100000" data-picks="pothos,shelf,tube" data-link="#/course" data-label="Paper in a minute, the course">
+        <span class="ring"><span class="av lg" style="--h:20">IC</span></span>
+        <div><a class="m-u" href="#/creator?u=ines.cuts">ines.cuts</a><p class="m-role">Ines Calloway, paper and print</p></div>
+        <p class="m-bio">Paper, scissors and one good bone folder. A new fold every Tuesday.</p>
+        <button class="btn accent sm" type="button" data-follow="ines.cuts" aria-pressed="false">Follow</button>
+      </div>
+      <div class="member reveal" data-u="wren.grows" data-name="Wren Okoro" data-h="150" data-ini="WO" data-following="98" data-followers="61400" data-likes="870000" data-picks="crane,lino,setup" data-link="#/live" data-label="Cuttings clinic, live on December 6">
+        <span class="ring"><span class="av lg" style="--h:150">WO</span></span>
+        <div><a class="m-u" href="#/creator?u=wren.grows">wren.grows</a><p class="m-role">Wren Okoro, plants</p></div>
+        <p class="m-bio">Cuttings, jars and plants that forgive you. Watering questions welcome.</p>
+        <button class="btn accent sm" type="button" data-follow="wren.grows" aria-pressed="false">Follow</button>
+      </div>
+      <div class="member reveal" data-u="bo.fixes" data-name="Bo Achterberg" data-h="245" data-ini="BA" data-following="156" data-followers="39100" data-likes="640000" data-picks="starbox,moss,popup" data-link="#/live" data-label="Fix-it night, live on December 9">
+        <span class="ring"><span class="av lg" style="--h:245">BA</span></span>
+        <div><a class="m-u" href="#/creator?u=bo.fixes">bo.fixes</a><p class="m-role">Bo Achterberg, fixing and filming</p></div>
+        <p class="m-bio">Fixes things that wobble, leak or squeak. Also holds the camera.</p>
+        <button class="btn accent sm" type="button" data-follow="bo.fixes" aria-pressed="false">Follow</button>
+      </div>
+    </div>
+    <h2 class="sec-title sec">How a video gets made</h2>
+    <ol class="steps">
+      <li class="reveal"><b>Make it twice</b><p>Once to learn it, once to find the four steps that matter.</p></li>
+      <li class="reveal"><b>Film from above</b><p>One phone on a clamp, one lamp through baking paper.</p></li>
+      <li class="reveal"><b>Cut to thirty seconds</b><p>Every step gets a caption you can read with the sound off.</p></li>
+      <li class="reveal"><b>Answer the comments</b><p>The best questions become the next video.</p></li>
+    </ol>
+    <h2 class="sec-title sec">Questions</h2>
+    <div class="faq">
+      <details><summary>Can I use your videos in my class?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Yes, show them in a classroom or a workshop as often as you like. Please do not re-upload them; link to them instead.</p></details>
+      <details><summary>Do you sell the things you make?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Sometimes, at the Saturday market. We do not run a shop; the point is that you can make them yourself.</p></details>
+      <details><summary>Do you take requests?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>All the time. Leave a comment under any video; about one in five of our videos started as a question.</p></details>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="legal">
+  <section class="page prose" aria-labelledby="legal-h">
+    <h1 class="h1" id="legal-h">Privacy and terms</h1>
+    <p class="muted">Last updated 1 November 2026</p>
+    <h2 id="privacy">Privacy</h2>
+    <p>We collect what you send us through the forms on this site (your name, email and message) and use it only to reply, to enroll you in a course or to remind you about a workshop you asked about.</p>
+    <ul><li>Likes, saves, follows, reminders and comments you add here are kept in your own browser, not on our servers.</li><li>We do not sell or share your details, and there are no advertising trackers on this site.</li><li>To see or delete what we hold about you, write to <a href="mailto:hello@tinyfold.example">hello@tinyfold.example</a>.</li></ul>
+    <h2 id="terms">Terms</h2>
+    <p>Our videos, patterns and captions are for your own making and for teaching. Please link to them rather than re-uploading them. Course access is personal and does not expire. If a course is not for you, write within 14 days for a full refund.</p>
+  </section>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="nf" aria-labelledby="nf-h">
+    <span class="nf-frame" aria-hidden="true"><svg class="i"><use href="#i-film"/></svg></span>
+    <p class="display" aria-hidden="true">404</p>
+    <h1 class="h1" id="nf-h">This video is not here</h1>
+    <p class="muted">It may have been moved or taken down. The feed has plenty more.</p>
+    <div class="btn-row"><a class="btn accent" href="#/">Back to For you</a><a class="btn" href="#/explore">Explore</a></div>
+  </section>
+</div>
+
+<footer class="site-foot"><a href="#/about">About</a><a href="#/collab">Work with us</a><a href="#/legal">Privacy and terms</a><span>&copy; 2026 Tinyfold</span></footer>
+</main>
+</div>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const BRAND = "Tinyfold";
+  const KEY = "tinyfold";
+  const SITE = "https://tinyfold.example/";
+
+  /* ---------- Sample comments, by video id: [handle, avatar hue, text, likes, when, is the creator] ---------- */
+  const COMMENTS = {
+    crane: [
+      ["mira.k", 330, "Folded one with my daughter tonight. The wings took us three tries but we got there.", 214, "2d ago"],
+      ["ines.cuts", 20, "@mira.k three tries is normal! Thinner paper makes the wings much easier.", 96, "2d ago", 1],
+      ["oddsocks.lu", 60, "The slow motion at the end is so satisfying.", 88, "3d ago"],
+      ["teo_builds", 200, "What size square is that?", 31, "4d ago"],
+      ["ines.cuts", 20, "@teo_builds 15 cm, standard origami paper.", 40, "4d ago", 1],
+    ],
+    pothos: [
+      ["leafy.dani", 130, "Mine rooted in two weeks next to a sunny window.", 152, "1d ago"],
+      ["grantp", 50, "Do you change the water?", 22, "1d ago"],
+      ["wren.grows", 150, "@grantp once a week, or whenever it looks cloudy.", 41, "1d ago", 1],
+    ],
+    tube: [["ana.cycles", 230, "The waiting part. Every single time I skip it.", 77, "5d ago"]],
+  };
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+  const readJSON = (key, fallback) => { try { return JSON.parse(store.get(`${KEY}-${key}`)) ?? fallback; } catch { return fallback; } };
+  const sets = Object.fromEntries(["liked", "saved", "followed", "reminders"].map((name) => [name, new Set(readJSON(name, []))]));
+  function toggleIn(name, value) {
+    const set = sets[name], on = !set.has(value);
+    if (on) set.add(value); else set.delete(value);
+    store.set(`${KEY}-${name}`, JSON.stringify([...set]));
+    return on;
+  }
+  const shares = new Map();
+  const mine = (id) => readJSON(`comments-${id}`, []);
+
+  /* ---------- Toast ---------- */
+  const toastEl = $("#toast");
+  let toastTimer;
+  function toast(text) {
+    toastEl.hidden = true; void toastEl.offsetWidth;
+    toastEl.textContent = text; toastEl.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => { toastEl.hidden = true; }, 2800);
+  }
+
+  /* ---------- Data: every video is one .tile in Explore, every creator one .member in About ---------- */
+  const people = new Map($$(".member[data-u]").map((m) => {
+    const d = m.dataset;
+    return [d.u, { u: d.u, name: d.name, h: d.h, ini: d.ini, following: Number(d.following), followers: Number(d.followers), likes: Number(d.likes), picks: d.picks.split(","), bio: $(".m-bio", m).textContent, link: d.link, label: d.label }];
+  }));
+  const avatar = (p, size) => `<span class="av ${size}" style="--h:${p.h}">${p.ini}</span>`;
+  const videos = $$("[data-grid] .tile").map((tile) => {
+    const d = tile.dataset, img = $("img", tile), p = people.get(d.u), cap = $(".tile-cap", tile);
+    cap.innerHTML = cap.innerHTML.replace(/#(\w+)/g, '<a href="#/explore?q=$1">#$1</a>');
+    $(".tile-media", tile).insertAdjacentHTML("beforeend", '<span class="tile-n"><svg class="i f" aria-hidden="true"><use href="#i-heart"/></svg><span data-f="likes"></span></span>');
+    tile.insertAdjacentHTML("beforeend", `<a class="tile-by" href="#/creator?u=${d.u}">${avatar(p, "xs")}${d.u}</a>`);
+    return {
+      id: d.id, u: d.u, cat: d.cat, title: img.alt, date: d.date, dur: Number(d.dur), sound: d.sound || `original sound - ${p.name}`, steps: d.steps.split("|"), src: d.src,
+      likes: Number(d.likes), comments: Number(d.comments), saves: Number(d.saves), shares: Number(d.shares), views: Number(d.views),
+      poster: img.getAttribute("src"), caption: cap.innerHTML, tile,
+    };
+  });
+  const byId = new Map(videos.map((v) => [v.id, v]));
+  const fmt = (n) => (n < 1000 ? String(n) : n < 1e6 ? `${Number((n / 1e3).toFixed(1))}K` : `${Number((n / 1e6).toFixed(1))}M`);
+  function ago(iso) {
+    const date = new Date(`${iso}T12:00:00`), days = Math.floor((Date.now() - date) / 864e5);
+    if (days < 1) return "Today";
+    if (days < 7) return `${days}d ago`;
+    return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: date.getFullYear() === new Date().getFullYear() ? undefined : "numeric" });
+  }
+  function total(v, key) {
+    if (key === "likes") return v.likes + (sets.liked.has(v.id) ? 1 : 0);
+    if (key === "saves") return v.saves + (sets.saved.has(v.id) ? 1 : 0);
+    if (key === "comments") return v.comments + mine(v.id).length;
+    if (key === "shares") return v.shares + (shares.get(v.id) || 0);
+    return v[key];
+  }
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const initials = (handle) => handle.split(/[._]/).filter(Boolean).map((s) => s[0]).join("").slice(0, 2).toUpperCase();
+  const linkTo = (id) => `${/^https?:/.test(location.protocol) ? location.href.split("#")[0] : SITE}#/video?v=${id}`;
+
+  /* Fill a post, the video page or a tile from one video: [data-f] fields and {id}/{u} link templates */
+  function fill(el, v) {
+    const p = people.get(v.u);
+    el.dataset.id = v.id;
+    if (el.matches("article")) el.setAttribute("aria-label", v.title);
+    $$("[data-f]", el).forEach((n) => {
+      const f = n.dataset.f;
+      if (f === "poster" || f === "bg") { n.src = v.poster; n.alt = f === "poster" ? v.title : ""; }
+      else if (f === "caption") n.innerHTML = v.caption;
+      else if (f === "av") { n.textContent = p.ini; n.style.setProperty("--h", p.h); }
+      else if (f === "u") n.textContent = v.u;
+      else if (f === "name") n.textContent = p.name;
+      else if (f === "title") n.textContent = v.title;
+      else if (f === "date") n.textContent = ago(v.date);
+      else if (f === "step") n.textContent = v.steps[0];
+      else if (f === "sound") { n.textContent = v.sound; n.dataset.t = v.sound; }
+      else n.textContent = fmt(total(v, f));
+    });
+    $$("[data-href]", el).forEach((a) => a.setAttribute("href", a.dataset.href.replace("{id}", v.id).replace("{u}", v.u)));
+    $$("[data-follow]", el).forEach((b) => { b.dataset.follow = v.u; });
+    const frame = $(".frame", el);
+    $("video", frame)?.remove();
+    if (v.src) frame.insertAdjacentHTML("afterbegin", `<video class="poster" src="${esc(v.src)}" poster="${esc(v.poster)}" muted loop playsinline preload="metadata"></video>`);
+  }
+
+  /* One pass that brings every count and toggle on the page in line with the stored state */
+  function paint() {
+    $$("[data-f='likes'], [data-f='comments'], [data-f='saves'], [data-f='shares'], [data-f='views']").forEach((n) => {
+      const v = byId.get(n.closest("[data-id]")?.dataset.id);
+      if (v) n.textContent = fmt(total(v, n.dataset.f));
+    });
+    $$("[data-like]").forEach((b) => b.setAttribute("aria-pressed", String(sets.liked.has(b.closest("[data-id]").dataset.id))));
+    $$("[data-save]").forEach((b) => b.setAttribute("aria-pressed", String(sets.saved.has(b.closest("[data-id]").dataset.id))));
+    $$("[data-follow]").forEach((b) => {
+      const on = sets.followed.has(b.dataset.follow);
+      b.setAttribute("aria-pressed", String(on));
+      if (b.classList.contains("follow-plus")) { $("use", b).setAttribute("href", on ? "#i-check" : "#i-plus"); b.setAttribute("aria-label", `${on ? "Unfollow" : "Follow"} ${b.dataset.follow}`); }
+      else b.textContent = on ? "Following" : "Follow";
+    });
+    $$("[data-remind]").forEach((b) => { const on = sets.reminders.has(b.dataset.remind); b.setAttribute("aria-pressed", String(on)); b.textContent = on ? "Reminder set" : "Remind me"; });
+    const p = people.get(prof.u);
+    if (p) $("[data-p='followers']").textContent = fmt(p.followers + (sets.followed.has(p.u) ? 1 : 0));
+  }
+
+  /* ---------- Theme: light by default following the system setting, dark behind the toggle ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light colors" : "Switch to dark colors");
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const savedTheme = store.get(`${KEY}-theme`);
+  applyTheme(savedTheme === "light" || savedTheme === "dark" ? savedTheme : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set(`${KEY}-theme`, next);
+  });
+
+  /* ---------- Phone menu (the rail becomes a top bar with a drop-down sheet) ---------- */
+  const rail = $("#rail"), menuButton = $("#menu-btn");
+  function setMenu(open) {
+    rail.classList.toggle("open", open);
+    menuButton.setAttribute("aria-expanded", String(open));
+    menuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    $("use", menuButton).setAttribute("href", open ? "#i-x" : "#i-menu");
+  }
+  menuButton.addEventListener("click", () => setMenu(!rail.classList.contains("open")));
+
+  /* ---------- The player: a demo clock over the poster (or a real <video> when the tile has data-src) ---------- */
+  const player = { el: null, v: null, t: 0, on: false, raf: 0, last: 0 };
+  function draw() {
+    const { el, v, t } = player;
+    $(".bar i", el).style.transform = `scaleX(${Math.min(1, t / v.dur)})`;
+    const step = Math.min(v.steps.length - 1, Math.floor((t / v.dur) * v.steps.length));
+    const sticker = $(".sticker", el);
+    if (sticker.dataset.i !== String(step)) {
+      sticker.dataset.i = step; sticker.textContent = v.steps[step];
+      sticker.classList.remove("swap"); void sticker.offsetWidth; sticker.classList.add("swap");
+    }
+  }
+  function tick(now) {
+    const video = $("video", player.el);
+    if (video && video.duration) { player.v = { ...player.v, dur: video.duration }; player.t = video.currentTime; }
+    else player.t = (player.t + (now - player.last) / 1000) % player.v.dur;
+    player.last = now;
+    draw();
+    player.raf = requestAnimationFrame(tick);
+  }
+  function setPlaying(on) {
+    const el = player.el;
+    if (!el) return;
+    player.on = on;
+    el.classList.toggle("is-playing", on);
+    el.classList.toggle("is-paused", !on);
+    $(".hit", el).setAttribute("aria-label", on ? "Pause video" : "Play video");
+    const video = $("video", el);
+    if (video) { if (on) video.play().catch(() => {}); else video.pause(); }
+    cancelAnimationFrame(player.raf);
+    if (on) { player.last = performance.now(); player.raf = requestAnimationFrame(tick); }
+  }
+  function stop() {
+    if (player.el) { setPlaying(false); player.el.classList.remove("is-paused"); }
+    player.el = null;
+  }
+  function activate(el) {
+    if (player.el === el) return;
+    stop();
+    player.el = el; player.v = byId.get(el.dataset.id); player.t = 0;
+    const video = $("video", el);
+    if (video) video.currentTime = 0;
+    $(".sticker", el).dataset.i = "";
+    draw();
+    setPlaying(!reduced.matches);
+  }
+  function burst(el, event) {
+    if (reduced.matches) return;
+    const frame = $(".frame", el), box = frame.getBoundingClientRect();
+    const heart = document.createElement("span");
+    heart.className = "burst";
+    heart.innerHTML = '<svg class="i f" aria-hidden="true"><use href="#i-heart"/></svg>';
+    heart.style.left = `${event.clientX - box.left}px`;
+    heart.style.top = `${event.clientY - box.top}px`;
+    heart.style.setProperty("--r", `${Math.round(Math.random() * 30 - 15)}deg`);
+    frame.append(heart);
+    setTimeout(() => heart.remove(), 900);
+  }
+
+  /* ---------- Feed ---------- */
+  const feed = $("#feed"), feedEmpty = $("[data-feed-empty]");
+  const postTemplate = $(".post", feed).cloneNode(true);
+  let feedMode = "";
+  const feedObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting && current?.dataset.view === "home") activate(entry.target);
+  }, { root: feed, threshold: 0.6 });
+  function renderFeed(mode) {
+    $$("[data-feed-tab]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.feedTab === mode)));
+    if (mode === feedMode) return;
+    feedMode = mode;
+    stop();
+    const list = mode === "following" ? videos.filter((v) => sets.followed.has(v.u)) : videos;
+    feed.replaceChildren(...list.map((v) => { const post = postTemplate.cloneNode(true); fill(post, v); return post; }));
+    feed.hidden = list.length === 0;
+    feedEmpty.hidden = list.length > 0;
+    feed.scrollTop = 0;
+    $("[data-suggest]").innerHTML = [...people.values()].map((p) => `<div class="suggest-row">${avatar(p, "")}<a href="#/creator?u=${p.u}">${p.u}<br><span class="muted" style="font-weight:400">${p.name}</span></a><button class="btn accent sm" type="button" data-follow="${p.u}" aria-pressed="false">Follow</button></div>`).join("");
+    paint();
+    $$(".post", feed).forEach((post) => feedObserver.observe(post));
+  }
+  function stepFeed(post, dir) {
+    const posts = $$(".post", feed), next = posts[posts.indexOf(post) + dir];
+    if (next) feed.scrollTo({ top: next.offsetTop, behavior: reduced.matches ? "auto" : "smooth" });
+  }
+
+  /* ---------- Explore: categories (plus Saved), search, sideways chip row ---------- */
+  const exploreInput = $("#explore-q");
+  const explore = { cat: "all", q: "" };
+  function filterExplore() {
+    const q = explore.q.trim().toLowerCase();
+    let shown = 0;
+    videos.forEach((v) => {
+      const text = `${v.title} ${v.tile.textContent} ${v.sound} ${v.cat}`.toLowerCase();
+      const inCat = explore.cat === "all" || v.cat === explore.cat || (explore.cat === "saved" && sets.saved.has(v.id));
+      v.tile.hidden = !(inCat && (!q || text.includes(q)));
+      if (!v.tile.hidden) shown += 1;
+    });
+    $$(".chip[data-cat]").forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.cat === explore.cat)));
+    $("[data-results]").hidden = !q;
+    $("[data-results-text]").textContent = `${shown} ${shown === 1 ? "video" : "videos"} for "${explore.q.trim()}"`;
+    const empty = $("[data-empty='explore']");
+    empty.hidden = shown > 0;
+    $("p", empty).textContent = explore.cat === "saved" && !q ? "Tap the bookmark on any video to keep it here." : "No videos match. Try another word or category.";
+  }
+  function exploreHash() {
+    const params = new URLSearchParams();
+    if (explore.cat !== "all") params.set("cat", explore.cat);
+    if (explore.q.trim()) params.set("q", explore.q.trim());
+    return `#/explore${String(params) ? `?${params}` : ""}`;
+  }
+  /* Both search fields filter Explore as you type; the rail's field takes you there from any other view */
+  const railInput = $("#rail-q");
+  [exploreInput, railInput].forEach((input) => input.addEventListener("input", () => {
+    if (current?.dataset.view !== "explore") return;
+    explore.q = input.value; (input === railInput ? exploreInput : railInput).value = input.value;
+    filterExplore(); setUrl(exploreHash(), true);
+  }));
+  $("[data-clear]").addEventListener("click", () => { explore.q = ""; exploreInput.value = ""; railInput.value = ""; filterExplore(); setUrl(exploreHash(), true); });
+  $("#rail-search").addEventListener("submit", (event) => event.preventDefault());
+  $("#rail-go").addEventListener("click", (event) => {
+    event.preventDefault();
+    const q = railInput.value.trim();
+    go(q ? `#/explore?q=${encodeURIComponent(q)}` : "#/explore");
+  });
+  const scrollers = $$("[data-scroller]").map((wrap) => {
+    const track = $(".chips", wrap), prev = $(".arrow.prev", wrap), next = $(".arrow.next", wrap);
+    const update = () => {
+      prev.hidden = track.scrollLeft < 8;
+      next.hidden = track.scrollLeft + track.clientWidth >= track.scrollWidth - 8;
+    };
+    [prev, next].forEach((button) => button.addEventListener("click", () => track.scrollBy({ left: Number(button.dataset.dir) * track.clientWidth * 0.7, behavior: reduced.matches ? "auto" : "smooth" })));
+    track.addEventListener("scroll", update, { passive: true });
+    addEventListener("resize", update);
+    return { update };
+  });
+
+  /* A copy of a tile for compact grids (creator page, "Creator videos"): shows plays instead of likes */
+  function compactTile(v) {
+    const tile = v.tile.cloneNode(true);
+    tile.hidden = false;
+    $(".tile-n use", tile).setAttribute("href", "#i-play");
+    $(".tile-n [data-f]", tile).dataset.f = "views";
+    return tile;
+  }
+
+  /* ---------- Video page ---------- */
+  const watch = $(".watch");
+  function renderComments(v) {
+    const list = [...mine(v.id).map((text) => ["you", 290, text, 0, "Just now", 0, 1]), ...(COMMENTS[v.id] || [])];
+    $("[data-comment-list]").innerHTML = list.length ? list.map(([u, h, text, likes, when, creator, own]) => `<li class="cmt"><span class="av sm" style="--h:${h}">${own ? "You" : initials(u)}</span><div><p class="cmt-name">${own ? "You" : u}${creator ? ' <span class="badge">Creator</span>' : ""}</p><p class="cmt-text">${esc(text)}</p><p class="cmt-meta"><span>${when}</span><button type="button" data-reply="${own ? "" : u}">Reply</button></p></div><button class="cmt-like" type="button" aria-pressed="false" data-clike="${likes}" aria-label="Like comment"><svg class="i f" aria-hidden="true"><use href="#i-heart"/></svg><span>${likes ? fmt(likes) : ""}</span></button></li>`).join("") : '<li class="empty"><b>No comments yet</b><p>Start the conversation.</p></li>';
+  }
+  function setTab(list, name) {
+    $$("[role='tab']", list).forEach((tab) => {
+      const on = tab.dataset.tab === name;
+      tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+    });
+  }
+  function loadVideo(id) {
+    const v = byId.get(id) || videos[0];
+    if (player.el === watch) stop();
+    fill(watch, v);
+    $("#link-field").value = linkTo(v.id);
+    document.title = `${v.title} · ${BRAND}`;
+    renderComments(v);
+    $("[data-more]").replaceChildren(...videos.filter((x) => x.u === v.u).map((x) => { const t = compactTile(x); t.classList.toggle("is-current", x.id === v.id); return t; }));
+    paint();
+    activate(watch);
+  }
+  function postComment(form) {
+    const id = watch.dataset.id, input = $("#c-text", form);
+    const list = [input.value.trim(), ...mine(id)];
+    store.set(`${KEY}-comments-${id}`, JSON.stringify(list));
+    form.reset();
+    renderComments(byId.get(id));
+    paint();
+    toast("Comment posted");
+  }
+
+  /* ---------- Creator page ---------- */
+  const prof = { u: "", tab: "videos", sort: "latest" };
+  function renderProfile() {
+    const p = people.get(prof.u);
+    let list = prof.tab === "liked" ? p.picks.map((id) => byId.get(id)).filter(Boolean) : videos.filter((v) => v.u === p.u);
+    if (prof.tab === "videos") list = list.sort(prof.sort === "popular" ? (a, b) => b.views - a.views : prof.sort === "oldest" ? (a, b) => a.date.localeCompare(b.date) : (a, b) => b.date.localeCompare(a.date));
+    $("[data-prof-grid]").replaceChildren(...list.map(compactTile));
+    $("[data-prof-empty]").hidden = list.length > 0;
+    $(".seg").hidden = prof.tab !== "videos";
+    $$("[data-sort]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.sort === prof.sort)));
+    setTab($("[data-tabs='prof']"), prof.tab);
+    $("#prof-panel").setAttribute("aria-labelledby", `ptab-${prof.tab}`);
+    paint();
+  }
+  function loadCreator(u, tab) {
+    const p = people.get(u) || people.values().next().value;
+    prof.u = p.u; prof.tab = tab === "liked" ? "liked" : "videos";
+    const view = views.get("creator");
+    const av = $("[data-p='av']", view);
+    av.textContent = p.ini; av.style.setProperty("--h", p.h);
+    $("[data-p='u']", view).textContent = p.u;
+    $("[data-p='name']", view).textContent = p.name;
+    $("[data-p='following']", view).textContent = fmt(p.following);
+    $("[data-p='likes']", view).textContent = fmt(p.likes);
+    $("[data-p='bio']", view).textContent = p.bio;
+    $("[data-p='collab']", view).setAttribute("href", `#/collab?with=${p.u}`);
+    const link = $("[data-p='link']", view);
+    link.parentElement.hidden = !p.link;
+    if (p.link) { link.setAttribute("href", p.link); link.textContent = p.label; }
+    $("[data-follow]", view).dataset.follow = p.u;
+    document.title = `${p.name} (@${p.u}) · ${BRAND}`;
+    renderProfile();
+  }
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: `${BRAND}: thirty-second craft videos`,
+    explore: `Explore · ${BRAND}`,
+    course: `Paper in a minute, the course · ${BRAND}`,
+    live: `Live workshops · ${BRAND}`,
+    collab: `Work with us · ${BRAND}`,
+    about: `About · ${BRAND}`,
+    legal: `Privacy and terms · ${BRAND}`,
+    "404": `Video not found · ${BRAND}`,
+  };
+  let current = null, lastHash = "#/explore";
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    current?.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    root.classList.toggle("no-foot", name === "home" || name === "video");
+    document.title = titles[name] || titles.home;
+    const feedParam = route.params.get("feed") === "following" ? "following" : "foryou";
+    $$(".nav a").forEach((a) => {
+      const target = parse(a.getAttribute("href"));
+      const on = target.view === name && (name !== "home" || (target.params.get("feed") || "foryou") === feedParam);
+      if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    $$(".people a").forEach((a) => { if (name === "creator" && a.getAttribute("href").endsWith(`=${route.params.get("u")}`)) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    setMenu(false);
+    if (name !== "home" && name !== "video") stop();
+    if (name === "home") {
+      renderFeed(feedParam);
+      const posts = $$(".post", feed), shown = posts.find((p) => Math.abs(p.offsetTop - feed.scrollTop) < p.offsetHeight / 2) || posts[0];
+      if (shown) activate(shown);
+    }
+    if (name !== "video") lastHash = `#/${name === "home" ? "" : name}${String(route.params) ? `?${route.params}` : ""}`;
+    if (name === "explore") {
+      explore.cat = route.params.get("cat") || "all"; explore.q = route.params.get("q") || "";
+      exploreInput.value = explore.q; railInput.value = explore.q; filterExplore();
+      if (route.params.has("search")) requestAnimationFrame(() => (exploreInput.offsetParent ? exploreInput : railInput).focus());
+    }
+    if (name === "video") loadVideo(route.params.get("v"));
+    if (name === "creator") loadCreator(route.params.get("u"), route.params.get("tab"));
+    if (name === "course") { const plan = route.params.get("plan"); const radio = plan && $(`input[name="plan"][value="${CSS.escape(plan)}"]`); if (radio) radio.checked = true; }
+    if (name === "collab") { const who = route.params.get("with"), select = $("#k-with"); if (who && select.querySelector(`option[value="${CSS.escape(who)}"]`)) select.value = who; }
+    const at = route.params.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+    scrollers.forEach((s) => s.update());
+  }
+  function setUrl(hash, replace) {
+    try { if (location.hash !== hash) history[replace ? "replaceState" : "pushState"](null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  function go(hash, replace) { show(parse(hash)); setUrl(hash, replace); }
+  addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Reveal (content stays visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -6% 0px" }) : null;
+  function observeReveals(scope) { scope.querySelectorAll(".reveal:not(.is-in)").forEach((el) => (io ? io.observe(el) : el.classList.add("is-in"))); }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- One click handler for links, toggles and the player ---------- */
+  let clickTimer = 0;
+  async function copy(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch {
+      const area = document.createElement("textarea");
+      area.value = text; area.setAttribute("readonly", ""); area.style.cssText = "position:fixed;opacity:0";
+      document.body.append(area); area.select();
+      let ok = false;
+      try { ok = document.execCommand("copy"); } catch { ok = false; }
+      area.remove();
+      return ok;
+    }
+  }
+  document.addEventListener("click", (event) => {
+    const t = event.target;
+    const link = t.closest("a[href^='#']");
+    if (link) {
+      const href = link.getAttribute("href");
+      if (link.hasAttribute("data-back")) { event.preventDefault(); go(lastHash); return; }
+      if (href.startsWith("#/")) { event.preventDefault(); go(href); return; }
+      const target = href.length > 1 && document.getElementById(href.slice(1));
+      if (target) {
+        event.preventDefault();
+        if (href === "#comments") $("#tab-comments").click();
+        target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+        if (href === "#comments") $("#c-text").focus({ preventScroll: true });
+      }
+      return;
+    }
+    const hit = t.closest(".hit");
+    if (hit) {
+      const el = hit.closest(".player");
+      if (event.detail === 0) { if (player.el !== el) activate(el); else setPlaying(!player.on); return; }
+      if (clickTimer) {
+        clearTimeout(clickTimer); clickTimer = 0;
+        if (!sets.liked.has(el.dataset.id)) { toggleIn("liked", el.dataset.id); paint(); }
+        burst(el, event);
+        return;
+      }
+      clickTimer = setTimeout(() => { clickTimer = 0; if (player.el !== el) activate(el); else setPlaying(!player.on); }, 250);
+      return;
+    }
+    const button = t.closest("button");
+    if (!button) return;
+    const ds = button.dataset;
+    const id = button.closest("[data-id]")?.dataset.id;
+    if ("like" in ds) {
+      const on = toggleIn("liked", id);
+      paint();
+      if (on && !reduced.matches) { button.classList.remove("pop"); void button.offsetWidth; button.classList.add("pop"); }
+    } else if ("save" in ds) {
+      toast(toggleIn("saved", id) ? "Saved. Find it in Explore, Saved." : "Removed from Saved");
+      paint();
+      if (explore.cat === "saved") filterExplore();
+    } else if ("share" in ds) {
+      copy(linkTo(id)).then((ok) => {
+        shares.set(id, 1); paint();
+        toast(ok ? "Link copied" : `Copy this link: ${linkTo(id)}`);
+      });
+    } else if ("shareProfile" in ds) {
+      const url = `${linkTo("").split("#")[0]}#/creator?u=${prof.u}`;
+      copy(url).then((ok) => toast(ok ? "Profile link copied" : `Copy this link: ${url}`));
+    } else if ("follow" in ds) {
+      const on = toggleIn("followed", ds.follow);
+      paint();
+      toast(on ? `Following ${ds.follow}` : `Unfollowed ${ds.follow}`);
+      if (feedMode === "following" && current?.dataset.view === "home") { feedMode = ""; renderFeed("following"); }
+    } else if ("remind" in ds) {
+      toast(toggleIn("reminders", ds.remind) ? "Reminder set. We will email you an hour before." : "Reminder removed");
+      paint();
+    } else if ("step" in ds) {
+      const dir = Number(ds.step);
+      if (current?.dataset.view === "video") { const list = videos, i = list.indexOf(byId.get(watch.dataset.id)); go(`#/video?v=${list[(i + dir + list.length) % list.length].id}`, true); }
+      else stepFeed(button.closest(".post"), dir);
+    } else if ("feedTab" in ds) {
+      go(ds.feedTab === "following" ? "#/?feed=following" : "#/");
+    } else if ("cat" in ds) {
+      explore.cat = ds.cat; filterExplore(); setUrl(exploreHash(), true);
+    } else if ("tab" in ds) {
+      const list = button.closest("[role='tablist']");
+      if (list.dataset.tabs === "prof") { prof.tab = ds.tab; renderProfile(); }
+      else { setTab(list, ds.tab); $("#comments").hidden = ds.tab !== "comments"; $("#more").hidden = ds.tab !== "more"; }
+    } else if ("sort" in ds) {
+      prof.sort = ds.sort; renderProfile();
+    } else if ("clike" in ds) {
+      const on = button.getAttribute("aria-pressed") !== "true", n = Number(ds.clike) + (on ? 1 : 0);
+      button.setAttribute("aria-pressed", String(on));
+      $("span", button).textContent = n ? fmt(n) : "";
+    } else if ("reply" in ds) {
+      const input = $("#c-text");
+      input.value = ds.reply ? `@${ds.reply} ` : "";
+      input.focus();
+    }
+  });
+
+  /* Tabs: arrow keys move between tabs; arrow keys and Space also drive the feed and the video page */
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && rail.classList.contains("open")) { setMenu(false); menuButton.focus(); return; }
+    const tab = event.target.closest("[role='tab']");
+    if (tab && (event.key === "ArrowRight" || event.key === "ArrowLeft")) {
+      const tabs = $$("[role='tab']", tab.parentElement), next = tabs[(tabs.indexOf(tab) + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length];
+      next.focus(); next.click(); event.preventDefault(); return;
+    }
+    if (event.target.closest("input, textarea, select, [role='tab']") || event.altKey || event.ctrlKey || event.metaKey) return;
+    const view = current?.dataset.view;
+    if (view !== "home" && view !== "video") return;
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      const dir = event.key === "ArrowDown" ? 1 : -1;
+      if (view === "video") $(`.stage-nav [data-step="${dir}"]`).click(); else if (player.el) stepFeed(player.el, dir);
+    } else if ((event.key === " " && !event.target.closest("a, button")) || event.key === "k") {
+      event.preventDefault();
+      if (player.el) setPlaying(!player.on);
+    }
+  });
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please write a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    let problem = "";
+    if (field.matches("fieldset")) problem = field.querySelector("input:checked") ? "" : "Please choose one.";
+    else {
+      const key = Object.keys(messages).find((k) => field.validity[k]);
+      if (key) problem = field.type === "checkbox" ? "Please tick this box to continue." : field.tagName === "SELECT" ? "Please choose one." : field.id === "c-text" ? "Write something first." : messages[key];
+    }
+    error.textContent = problem;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input[aria-describedby], textarea[aria-describedby], select[aria-describedby], fieldset[data-group-required]", form);
+    fields.forEach((field) => field.addEventListener(field.matches("fieldset, [type=checkbox], select") ? "change" : "blur", () => {
+      if (form.dataset.form === "comment" && !field.value) { $("#c-text-err").textContent = ""; field.removeAttribute("aria-invalid"); return; }
+      checkField(field);
+    }));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) {
+        const first = fields.find((f) => f.getAttribute("aria-invalid") === "true");
+        (first?.matches("fieldset") ? $("input", first) : first)?.focus();
+        return;
+      }
+      if (form.dataset.form === "comment") { postComment(form); return; }
+      button.disabled = true;
+      button.textContent = "Sending...";
+      setTimeout(() => {
+        form.hidden = true;
+        button.disabled = false;
+        button.textContent = label;
+        const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+        if (success) { success.hidden = false; success.setAttribute("tabindex", "-1"); success.focus({ preventScroll: true }); }
+      }, 500);
+    });
+  });
+
+  /* ---------- Start ---------- */
+  paint();
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

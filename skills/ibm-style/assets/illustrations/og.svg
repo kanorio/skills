@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#fff"/>
+  <g transform="translate(64 64)"><path d="M0 0h40v40H0z" fill="#1558ef"/><path d="M0 40A40 40 0 0 1 40 0v40z" fill="#0b1e67"/><path d="M20 40a20 20 0 0 1 20-20v20z" fill="#fff"/></g>
+  <text x="124" y="96" font-family="Public Sans, Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#171717">Varrow Systems</text>
+  <text font-family="Public Sans, Helvetica, Arial, sans-serif" font-size="60" font-weight="300" fill="#1558ef"><tspan x="64" y="268">Plant data your team</tspan><tspan x="64" y="340">can act on</tspan></text>
+  <text x="64" y="548" font-family="Public Sans, Helvetica, Arial, sans-serif" font-size="24" fill="#525252">Industrial data engineering, from sensor to shift report</text>
+  <path d="M0 600h1200v30H0z" fill="#1558ef"/>
+  <g transform="translate(800 0)">
+    <rect width="200" height="200" fill="#e7e7e7"/><path d="M0 200V0a200 200 0 0 1 200 200z" fill="#1558ef"/>
+    <rect x="200" width="200" height="200" fill="#a6c5fc"/><circle cx="300" cy="100" r="75" fill="#0b1e67"/><circle cx="300" cy="100" r="28" fill="#a6c5fc"/>
+    <rect y="200" width="200" height="200" fill="#1558ef"/><path d="M0 200h200v200z" fill="#a6c5fc"/>
+    <rect x="200" y="200" width="200" height="200" fill="#e7e7e7"/><path d="M200 235a165 165 0 0 1 165 165M200 285a115 115 0 0 1 115 115M200 335a65 65 0 0 1 65 65" fill="none" stroke="#171717" stroke-width="20"/>
+    <rect y="400" width="200" height="200" fill="#0b1e67"/><path d="M0 600a100 100 0 0 1 200 0z" fill="#a6c5fc"/>
+    <rect x="200" y="400" width="200" height="200" fill="#fff"/><path d="M300 420l80 80-80 80-80-80z" fill="#1558ef"/>
+  </g>
+</svg>

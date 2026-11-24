@@ -1,0 +1,1398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Popround: quiz nights, study clubs and team quizzes</title>
+<meta name="description" content="Popround runs live-hosted quiz nights, weekly study clubs and private team quizzes for pubs, classrooms and offices.">
+<meta property="og:title" content="Popround: quiz nights, study clubs and team quizzes">
+<meta property="og:description" content="Live-hosted quiz nights, weekly study clubs and private team quizzes.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<style>
+@font-face { font-family: "Red Hat Display"; src: url("fonts/red-hat-display-latin-wght-normal.woff2") format("woff2"); font-weight: 300 900; font-display: swap; }
+
+/* ---------- Tokens: light follows the system; each colour is light-dark(light, dark) ---------- */
+:root {
+  color-scheme: light dark;
+  --press: inset 0 -3px 0 oklch(0% 0 0 / 0.22);
+  --bg: light-dark(oklch(95.6% 0.005 300), oklch(16% 0.022 295));
+  --surface: light-dark(oklch(100% 0 0), oklch(21% 0.028 295));
+  --surface-2: light-dark(oklch(97.4% 0.005 300), oklch(25% 0.032 295));
+  --text: light-dark(oklch(26% 0.014 300), oklch(95.5% 0.008 300));
+  --text-muted: light-dark(oklch(46% 0.016 300), oklch(77% 0.02 300));
+  --border: light-dark(oklch(88.5% 0.008 300), oklch(32% 0.03 295));
+  --border-strong: light-dark(oklch(76% 0.014 300), oklch(46% 0.035 295));
+  --accent: light-dark(oklch(38% 0.19 293), oklch(76% 0.13 298));
+  --accent-hover: light-dark(oklch(31% 0.17 293), oklch(83% 0.1 298));
+  --accent-text: light-dark(oklch(100% 0 0), oklch(20% 0.06 295));
+  --link: light-dark(oklch(45% 0.2 266), oklch(80% 0.11 262));
+  --console: light-dark(oklch(35% 0.17 292), oklch(29% 0.14 292));
+  --go: oklch(51% 0.15 148);
+  --go-hover: oklch(45% 0.14 148);
+  /* Mode colours: the console buttons and anything keyed to a mode; the same in both themes */
+  --m-green: oklch(51% 0.15 148);
+  --m-gold: oklch(55% 0.12 76);
+  --m-blue: oklch(50% 0.19 262);
+  --m-red: oklch(54% 0.21 20);
+  --m-violet: oklch(52% 0.22 303);
+  /* Answer tiles (letters, never shapes) */
+  --a-1: oklch(50% 0.22 292);
+  --a-2: oklch(52% 0.11 192);
+  --a-3: oklch(60% 0.17 50);
+  --a-4: oklch(54% 0.2 355);
+  /* Gradient cards: pastel in light, deep jewel tones in dark */
+  --pc-lilac-a: light-dark(oklch(94.5% 0.04 305), oklch(31% 0.1 300));
+  --pc-lilac-b: light-dark(oklch(95% 0.04 165), oklch(26% 0.06 195));
+  --pc-rose-a: light-dark(oklch(92.5% 0.06 330), oklch(31% 0.1 335));
+  --pc-rose-b: light-dark(oklch(95% 0.04 215), oklch(26% 0.07 245));
+  --pc-mint-a: light-dark(oklch(94% 0.06 160), oklch(30% 0.07 165));
+  --pc-mint-b: light-dark(oklch(96% 0.05 95), oklch(26% 0.05 110));
+  --pc-deep-a: light-dark(oklch(48% 0.2 266), oklch(38% 0.17 266));
+  --pc-deep-b: light-dark(oklch(37% 0.19 274), oklch(28% 0.14 276));
+  --tab: light-dark(oklch(31% 0.16 293), oklch(84% 0.08 298));
+  --tab-text: light-dark(oklch(100% 0 0), oklch(22% 0.08 295));
+  --badge: light-dark(oklch(45% 0.22 296), oklch(70% 0.17 300));
+  --badge-text: light-dark(oklch(100% 0 0), oklch(18% 0.06 295));
+  /* The gradient word in a headline */
+  --pop-a: light-dark(oklch(68% 0.19 48), oklch(82% 0.14 65));
+  --pop-b: light-dark(oklch(60% 0.25 350), oklch(74% 0.18 350));
+  --pop-c: light-dark(oklch(49% 0.25 293), oklch(76% 0.14 298));
+  --foot: light-dark(oklch(29% 0.006 300), oklch(12% 0.016 295));
+  --foot-text: oklch(96% 0.004 300);
+  --foot-muted: oklch(79% 0.01 300);
+  --foot-line: oklch(42% 0.012 300);
+  --ok: light-dark(oklch(48% 0.14 150), oklch(78% 0.15 150));
+  --error: light-dark(oklch(51% 0.2 25), oklch(76% 0.14 25));
+  --focus: light-dark(oklch(52% 0.22 280), oklch(80% 0.13 290));
+  --shadow-card: 0 1px 2px oklch(20% 0.05 295 / 0.08), 0 10px 26px -14px oklch(20% 0.1 295 / 0.35);
+  --shadow-overlay: 0 4px 12px oklch(20% 0.05 295 / 0.14), 0 26px 50px -18px oklch(20% 0.12 295 / 0.5);
+
+  --font: "Red Hat Display", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-display: clamp(2.5rem, 1.55rem + 3.1vw, 4.25rem);
+  --fs-h1: clamp(2.125rem, 1.45rem + 2.1vw, 3.25rem);
+  --fs-h2: clamp(1.625rem, 1.3rem + 1.05vw, 2.375rem);
+  --fs-h3: clamp(1.1875rem, 1.1rem + 0.3vw, 1.375rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+
+  --r-control: 6px;
+  --r-card: 24px;
+  --r-media: 12px;
+  --r-panel: 16px;
+  --r-block: 10px;
+  --dur-fast: 120ms;
+  --dur-base: 240ms;
+  --dur-slow: 520ms;
+  --ease: cubic-bezier(0.34, 1.45, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --page: 1320px;
+  --gutter: clamp(16px, 2.4vw, 32px);
+  --sec: clamp(64px, 7.5vw, 112px);
+  --cw: 78px;
+  --sb: 56px;
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--cw) + var(--sb) + 16px); }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); font-weight: 450; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3 { margin: 0; font-weight: 850; line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; }
+p, li, dd { text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+::selection { background: color-mix(in oklch, var(--focus) 26%, transparent); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+.console :focus-visible, .promo-in :focus-visible, .site-footer :focus-visible, .next-note:focus-visible { outline-color: #fff; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 60; padding: 10px 14px; border-radius: var(--r-control); background: var(--accent); color: var(--accent-text); font-weight: 800; }
+.skip:focus { top: 12px; }
+.wrap { position: relative; width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.muted { color: var(--text-muted); }
+.center { text-align: center; }
+
+/* ---------- Type: one heavy geometric family; the gradient word is the shout ---------- */
+.display { font-size: var(--fs-display); font-weight: 900; letter-spacing: -0.03em; line-height: 1.02; }
+.h1 { font-size: var(--fs-h1); font-weight: 900; letter-spacing: -0.028em; }
+.h2 { font-size: var(--fs-h2); }
+.h3 { font-size: var(--fs-h3); font-weight: 800; letter-spacing: -0.01em; }
+.lede { font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.3125rem); color: var(--text-muted); max-width: 40em; }
+.center .lede { margin-inline: auto; }
+.eyebrow { margin: 0 0 10px; font-size: 0.8125rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+/* Gradient word (signature): one word or phrase per page, never a whole sentence */
+.pop { background: linear-gradient(90deg, var(--pop-a), var(--pop-b) 55%, var(--pop-c)); -webkit-background-clip: text; background-clip: text; color: transparent; padding-inline-end: 0.06em; }
+.tlink { display: inline-flex; align-items: center; gap: 4px; padding: 0; border: 0; background: none; color: var(--text); font-weight: 800; text-decoration: none; cursor: pointer; }
+.tlink:hover { text-decoration: underline; text-underline-offset: 4px; }
+.tlink .icon { width: 16px; height: 16px; stroke-width: 2.5; transition: transform var(--dur-base) var(--ease); }
+.tlink:hover .icon { transform: translateX(3px); }
+
+/* ---------- Buttons: compact, heavy, small radius, a pressable bottom edge ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 18px; border: 2px solid transparent; border-radius: var(--r-control); font-size: 1rem; font-weight: 800; line-height: 1; text-decoration: none; white-space: nowrap; cursor: pointer; box-shadow: var(--press); transition: transform var(--dur-fast) var(--ease), background-color var(--dur-fast), box-shadow var(--dur-fast); }
+.btn:active { transform: translateY(2px); box-shadow: inset 0 -1px 0 oklch(0% 0 0 / 0.2); }
+.btn-go { background: var(--go); color: #fff; }
+.btn-go:hover { background: var(--go-hover); }
+.btn-solid { background: var(--accent); color: var(--accent-text); }
+.btn-solid:hover { background: var(--accent-hover); }
+.btn-line { background: var(--surface); color: var(--text); border-color: var(--border-strong); box-shadow: none; }
+.btn-line:hover { border-color: var(--text); }
+.btn-light { background: #fff; color: oklch(24% 0.05 295); }
+.btn-ghost { min-height: 36px; padding: 0 12px; background: transparent; color: var(--link); border-color: currentColor; box-shadow: none; font-size: 0.9375rem; }
+.btn-ghost:hover { background: color-mix(in oklch, var(--link) 10%, transparent); }
+.btn-block { width: 100%; min-height: 50px; }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+.center .btn-row { justify-content: center; }
+.icon-btn { width: 40px; height: 40px; display: inline-grid; place-items: center; border: 0; border-radius: var(--r-control); background: transparent; color: inherit; cursor: pointer; }
+.icon-btn:hover { background: var(--surface-2); }
+.badge { display: inline-flex; align-items: center; padding: 3px 8px 4px; border-radius: 5px; background: var(--badge); color: var(--badge-text); font-size: 0.55em; font-weight: 900; letter-spacing: 0; line-height: 1.1; vertical-align: 0.28em; }
+
+/* ---------- Header: the console bar of mode buttons (signature) over a white link bar ---------- */
+.site-header { position: sticky; top: 0; z-index: 40; background: var(--surface); }
+.console-wrap { height: var(--cw); padding: 10px 12px 0; }
+.console { display: flex; align-items: center; gap: 14px; height: 100%; padding: 0 12px 0 16px; border-radius: var(--r-panel); background: var(--console); color: #fff; box-shadow: 0 10px 22px -14px oklch(25% 0.15 293 / 0.8); }
+.brand { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; flex: none; }
+.brand-mark { width: 36px; height: 36px; }
+.brand b { display: block; font-size: 1.5rem; font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+.brand small { display: block; margin-top: 4px; font-size: 0.75rem; font-weight: 700; opacity: 0.85; white-space: nowrap; }
+.modes { display: flex; gap: 8px; }
+.mode { --c: var(--m-green); display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 16px 0 5px; border-radius: var(--r-control); background: var(--c); color: #fff; font-size: 0.9375rem; font-weight: 800; text-decoration: none; white-space: nowrap; box-shadow: var(--press); transition: transform var(--dur-fast) var(--ease), filter var(--dur-fast); }
+.mode:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.mode:active { transform: translateY(1px); }
+.mode .mi { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 4px; background: color-mix(in oklch, var(--c), black 26%); }
+.mode .icon { width: 20px; height: 20px; }
+.mode[aria-current="page"] { box-shadow: var(--press), 0 0 0 2px var(--console), 0 0 0 4px #fff; }
+.find { position: relative; flex: 1 1 200px; min-width: 0; max-width: 340px; margin-left: auto; }
+.find input { width: 100%; height: 44px; padding: 0 12px 0 42px; border: 2px solid transparent; border-radius: var(--r-control); background: #fff; color: oklch(26% 0.014 300); font-size: 1rem; }
+.find input::placeholder { color: oklch(50% 0.016 300); }
+.find input:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.find .icon { position: absolute; left: 13px; top: 50%; translate: 0 -50%; color: oklch(46% 0.016 300); pointer-events: none; }
+.console-cta { flex: none; }
+.subbar { border-bottom: 1px solid var(--border); background: var(--surface); }
+.subbar-in { display: flex; align-items: center; gap: 4px; height: var(--sb); padding-inline: 16px; }
+.mini { display: none; place-items: center; width: 34px; height: 34px; margin-inline-end: 8px; border-radius: 8px; background: var(--console); color: #fff; }
+.mini svg { width: 26px; height: 26px; }
+.links { display: flex; gap: 2px; }
+.links a { padding: 6px 10px; border-radius: var(--r-control); font-size: 0.9375rem; font-weight: 750; text-decoration: none; white-space: nowrap; }
+.links a:hover { background: var(--surface-2); }
+.links a[aria-current="page"] { background: var(--m-blue); color: #fff; }
+.sub-end { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+.menu-btn { display: none; }
+@media (max-width: 1239px) { .find { display: none; } .modes { margin-left: auto; } }
+@media (max-width: 1023px) {
+  :root { --cw: 96px; }
+  .site-header { top: calc(-1 * var(--cw)); }
+  html { scroll-padding-top: calc(var(--sb) + 16px); }
+  .console { gap: 10px; }
+  .modes { gap: 4px; }
+  .mode { flex-direction: column; justify-content: center; gap: 5px; width: 64px; height: 72px; padding: 0; background: none; box-shadow: none; font-size: 0.75rem; font-weight: 750; }
+  .mode .mi { width: 40px; height: 40px; border-radius: 8px; background: var(--c); box-shadow: var(--press); }
+  .mode[aria-current="page"] { box-shadow: none; }
+  .mode[aria-current="page"] .mi { box-shadow: 0 0 0 2px var(--console), 0 0 0 4px #fff; }
+  .mini { display: grid; }
+}
+@media (max-width: 899px) { .links { display: none; } .menu-btn { display: inline-grid; } }
+@media (max-width: 767px) {
+  :root { --cw: 148px; }
+  .console { flex-wrap: wrap; align-content: center; row-gap: 8px; padding: 0 10px; }
+  .brand { flex: 1; }
+  .modes { order: 3; width: 100%; justify-content: space-between; margin: 0; }
+  .mode { width: 60px; height: 66px; }
+  .console-cta { min-height: 40px; padding: 0 14px; }
+}
+@media (max-width: 419px) { .sub-end .btn-ghost { display: none; } }
+.sheet { border: 0; padding: 0; margin: 0; width: 100%; max-width: 100%; height: 100dvh; max-height: 100dvh; background: var(--surface); color: var(--text); overscroll-behavior: contain; }
+.sheet::backdrop { background: oklch(15% 0.05 295 / 0.4); }
+.sheet-in { display: flex; flex-direction: column; gap: 6px; min-height: 100%; padding: 12px 16px 28px; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; height: 52px; }
+.sheet-links a { display: block; padding: 14px 4px; border-bottom: 1px solid var(--border); font-size: 1.375rem; font-weight: 800; text-decoration: none; }
+.sheet-links a[aria-current="page"] { color: var(--link); }
+
+/* ---------- Views and sections ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+html:not(.js) .js-only { display: none; }
+main { min-height: 70vh; }
+[data-view="home"] { background: var(--surface); }
+.sec { padding-block: var(--sec) 0; }
+.sec-head { margin-bottom: clamp(24px, 3vw, 40px); }
+.sec-head.center { max-width: 760px; margin-inline: auto; margin-bottom: clamp(28px, 3.4vw, 48px); }
+.sec-head .h2 + .lede { margin-top: 12px; }
+.sec-row { display: flex; justify-content: space-between; align-items: end; gap: 12px 24px; flex-wrap: wrap; margin-bottom: 24px; }
+.page-head { padding-block: clamp(36px, 5vw, 72px) clamp(24px, 3vw, 40px); }
+.page-head .lede { margin-top: 14px; }
+
+/* ---------- Announcement strip: ink with a purple glow and drifting question marks ---------- */
+.promo { padding: 18px var(--gutter) 0; background: var(--bg); }
+.promo-in { position: relative; display: flex; align-items: center; gap: 14px 20px; flex-wrap: wrap; max-width: var(--page); margin-inline: auto; padding: 16px 64px 16px 20px; overflow: hidden; border-radius: var(--r-block); background: linear-gradient(100deg, oklch(17% 0.03 295) 45%, oklch(42% 0.2 305)); color: #fff; isolation: isolate; }
+.promo-in::after { content: "? ? ?"; position: absolute; z-index: -1; right: 70px; top: 50%; translate: 0 -50%; font-size: 5.5rem; font-weight: 900; letter-spacing: 0.4em; color: oklch(100% 0 0 / 0.12); rotate: -12deg; white-space: nowrap; animation: drift 9s ease-in-out infinite alternate; }
+@keyframes drift { to { translate: -24px -56%; rotate: -6deg; } }
+.promo-ico { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: 8px; background: var(--m-gold); box-shadow: var(--press); }
+.promo p { flex: 1 1 320px; margin: 0; font-size: 1.0625rem; }
+.promo b { display: block; font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); font-weight: 900; text-transform: uppercase; letter-spacing: 0.01em; }
+.promo-x { position: absolute; top: 10px; right: 10px; color: #fff; }
+.promo-x:hover { background: oklch(100% 0 0 / 0.12); }
+
+/* ---------- Hero: centred shout, then the three gradient cards with folder tabs (signature) ---------- */
+.hero { padding-block: clamp(28px, 4vw, 52px) 0; background: linear-gradient(180deg, var(--bg) 35%, var(--surface)); }
+.hero h1 { max-width: 15em; margin-inline: auto; }
+.hero .lede { margin-block: 14px clamp(28px, 3.5vw, 44px); }
+.pcards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 22px); }
+.pcard { position: relative; display: flex; flex-direction: column; align-items: center; padding: 64px clamp(18px, 2vw, 28px) 0; overflow: hidden; border-radius: var(--r-card); background: linear-gradient(140deg, var(--a), var(--b)); color: var(--text); text-align: center; box-shadow: var(--shadow-card); }
+.pc-lilac { --a: var(--pc-lilac-a); --b: var(--pc-lilac-b); }
+.pc-rose { --a: var(--pc-rose-a); --b: var(--pc-rose-b); }
+.pc-mint { --a: var(--pc-mint-a); --b: var(--pc-mint-b); }
+.pc-deep { --a: var(--pc-deep-a); --b: var(--pc-deep-b); color: #fff; --text-muted: oklch(92% 0.03 270); --tab: #fff; --tab-text: oklch(40% 0.2 268); --badge: #fff; --badge-text: oklch(40% 0.2 268); }
+.pc-deep .tlink { color: #fff; }
+.tab { position: absolute; top: 0; right: 0; max-width: calc(100% - 28px); padding: 9px 16px 9px 18px; border-radius: 0 var(--r-card) 0 16px; background: var(--tab); color: var(--tab-text); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.06em; line-height: 1.25; text-transform: uppercase; }
+.tab-inline { position: static; display: inline-block; border-radius: var(--r-control); }
+.pname { font-size: clamp(1.875rem, 1.5rem + 1vw, 2.5rem); font-weight: 900; letter-spacing: -0.04em; }
+.ptag { margin: 12px 0 8px; font-size: 1.0625rem; font-weight: 800; }
+.pcard > p { max-width: 30em; }
+.pcard .muted { color: var(--text-muted); }
+.price { margin: 4px 0 14px; font-size: 1.0625rem; font-weight: 800; }
+.price small { display: block; font-size: var(--fs-small); font-weight: 600; color: var(--link); }
+.pc-deep .price small { color: oklch(88% 0.08 220); }
+.pcard .btn-row { justify-content: center; }
+.pframe { width: min(100%, 380px); margin-top: auto; padding-top: 28px; }
+.pframe img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border: 6px solid oklch(100% 0 0 / 0.75); border-bottom: 0; border-radius: var(--r-media) var(--r-media) 0 0; margin-bottom: -30px; }
+@media (max-width: 1023px) { .pcards { grid-template-columns: 1fr; max-width: 640px; margin-inline: auto; } }
+
+/* ---------- Rail of saturated gradient tiles (signature) ---------- */
+.rail-wrap { position: relative; }
+.rail { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); padding: 4px var(--gutter) 12px; scrollbar-width: none; position: relative; }
+.rail::-webkit-scrollbar { display: none; }
+.tile { --h: 300; flex: none; width: clamp(232px, 21vw, 300px); scroll-snap-align: start; }
+.tile a { position: relative; display: flex; flex-direction: column; aspect-ratio: 4 / 5; padding: 22px 20px; overflow: hidden; border-radius: var(--r-block); background: linear-gradient(180deg, oklch(50% 0.2 var(--h)) 0%, oklch(64% 0.17 var(--h)) 55%, light-dark(oklch(93% 0.05 var(--h)), oklch(30% 0.1 var(--h))) 100%); color: #fff; text-decoration: none; transition: transform var(--dur-base) var(--ease); }
+.tile a:hover { transform: translateY(-4px) rotate(-0.6deg); }
+.tile h3 { font-size: clamp(1.375rem, 1.2rem + 0.5vw, 1.75rem); font-weight: 850; max-width: 9em; }
+.tile p { margin: 8px 0 0; font-size: 0.9375rem; font-weight: 600; opacity: 0.92; max-width: 15em; }
+.tile-art { position: absolute; right: -8%; bottom: -6%; width: 72%; height: auto; aspect-ratio: 1; fill: none; stroke: #fff; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; opacity: 0.9; }
+.tile a::after { content: ""; position: absolute; left: 18px; bottom: 22px; width: 56px; height: 56px; border-radius: 50%; background: radial-gradient(circle, oklch(100% 0 0 / 0.55) 0 5px, transparent 6px) 0 0 / 28px 28px; opacity: 0.8; }
+.rail-btn { position: absolute; top: 50%; z-index: 2; translate: 0 -50%; display: grid; place-items: center; width: 48px; height: 48px; border: 0; border-radius: 50%; background: var(--surface); color: var(--text); box-shadow: var(--shadow-overlay); cursor: pointer; transition: opacity var(--dur-base), transform var(--dur-fast) var(--ease); }
+.rail-btn:hover { transform: scale(1.08); }
+.rail-btn[disabled] { opacity: 0; pointer-events: none; }
+.rail-btn.prev { left: max(8px, calc(var(--gutter) - 24px)); }
+.rail-btn.next { right: max(8px, calc(var(--gutter) - 24px)); }
+@media (max-width: 639px) { .rail-btn { display: none; } }
+
+/* ---------- Warm-up round: answer tiles in four colours with letters, and a live leaderboard ---------- */
+.quiz-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(260px, 1fr); gap: clamp(16px, 2vw, 24px); align-items: start; }
+.quiz, .board, .card { border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow-card); }
+.quiz { overflow: hidden; }
+.quiz-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 20px; background: var(--console); color: #fff; font-weight: 800; }
+.quiz-top b { font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.timer { height: 8px; background: color-mix(in srgb, var(--console) 16%, var(--surface)); }
+.timer i { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, var(--pop-a), var(--pop-b)); transform-origin: left; }
+.timer.run i { animation: shrink 20s linear forwards; }
+@keyframes shrink { to { transform: scaleX(0); } }
+.qbody { padding: clamp(20px, 3vw, 32px); }
+.qtext { margin: 0 0 22px; font-size: clamp(1.375rem, 1.15rem + 0.9vw, 2rem); font-weight: 900; line-height: 1.15; letter-spacing: -0.02em; text-align: center; text-wrap: balance; }
+.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ans { --c: var(--a-1); position: relative; display: flex; align-items: center; gap: 14px; width: 100%; min-height: 76px; padding: 12px 16px 14px 12px; border: 0; border-radius: var(--r-control); background: var(--c); color: #fff; font-size: 1.1875rem; font-weight: 800; text-align: start; cursor: pointer; box-shadow: inset 0 -4px 0 oklch(0% 0 0 / 0.22); transition: transform var(--dur-fast) var(--ease), opacity var(--dur-base), filter var(--dur-base); }
+.ans:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.08); }
+.ans:active:not(:disabled) { transform: translateY(2px); }
+.ans b { display: grid; place-items: center; flex: none; width: 38px; height: 38px; border-radius: 50%; background: oklch(100% 0 0 / 0.95); color: var(--c); font-size: 1.1875rem; font-weight: 900; }
+.ans:disabled { cursor: default; }
+.answers.done .ans:not(.is-right, .is-picked) { opacity: 0.38; filter: saturate(0.6); }
+.answers.done .ans.is-picked { opacity: 0.7; }
+.ans.is-right { animation: bump var(--dur-slow) var(--ease); }
+.ans .mark { margin-left: auto; width: 28px; height: 28px; padding: 4px; border-radius: 50%; background: #fff; color: var(--c); stroke-width: 3; }
+@keyframes bump { 40% { transform: scale(1.04); } }
+.qfoot { display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap; min-height: 52px; margin-top: 18px; }
+.qfact { margin: 0; font-weight: 600; color: var(--text-muted); }
+.qfact b { color: var(--text); }
+.board { padding: 20px; }
+.board h3 { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 1.125rem; }
+.board ol { display: grid; gap: 6px; }
+.board li { display: grid; grid-template-columns: 30px 1fr auto; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--r-control); background: var(--surface-2); font-weight: 700; transition: background-color var(--dur-base); }
+.board li b { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--console); color: #fff; font-size: 0.875rem; }
+.board li:first-child b { background: var(--m-gold); }
+.board em { font-style: normal; font-weight: 900; font-variant-numeric: tabular-nums; }
+.board .you { background: color-mix(in srgb, var(--go) 16%, var(--surface)); box-shadow: inset 3px 0 0 var(--go); }
+@media (max-width: 899px) { .quiz-grid { grid-template-columns: 1fr; } }
+@media (max-width: 519px) { .answers { grid-template-columns: 1fr; } .ans { min-height: 60px; } }
+
+/* ---------- Night cards: a date chip in the night's colour ---------- */
+.ngrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr)); gap: 14px; }
+.ncard { --h: 300; }
+.ncard a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; height: 100%; padding: 14px 18px 14px 14px; border-radius: var(--r-panel); background: var(--surface); text-decoration: none; box-shadow: var(--shadow-card); transition: transform var(--dur-base) var(--ease), box-shadow var(--dur-base); }
+.ncard a:hover { transform: translateY(-3px); box-shadow: var(--shadow-overlay); }
+.date { display: grid; justify-items: center; width: 64px; padding: 8px 0 9px; border-radius: var(--r-block); background: oklch(52% 0.19 var(--h)); color: #fff; line-height: 1.05; box-shadow: var(--press); }
+.date small { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.date b { font-size: 1.75rem; font-weight: 900; }
+.kind { display: block; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.ntitle { margin-block: 2px 4px; font-size: 1.1875rem; font-weight: 850; letter-spacing: -0.01em; }
+.nmeta { display: block; font-size: 0.9375rem; color: var(--text-muted); }
+.nend { display: grid; justify-items: end; gap: 2px; text-align: end; }
+.nend b { font-size: 1.25rem; font-weight: 900; }
+.nend small { font-size: 0.8125rem; font-weight: 700; color: var(--link); white-space: nowrap; }
+
+/* ---------- Toolbar: chips, search, count, empty state ---------- */
+.toolbar { display: flex; align-items: center; gap: 12px 16px; flex-wrap: wrap; margin-bottom: 22px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { min-height: 40px; padding: 0 16px; border: 2px solid var(--border); border-radius: var(--r-control); background: var(--surface); font-size: 0.9375rem; font-weight: 800; cursor: pointer; transition: background-color var(--dur-fast), border-color var(--dur-fast); }
+.chip:hover { border-color: var(--border-strong); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.search { position: relative; flex: 1 1 220px; max-width: 320px; }
+.search input { width: 100%; min-height: 44px; padding: 0 12px 0 40px; border: 2px solid var(--border); border-radius: var(--r-control); background: var(--surface); }
+.search .icon { position: absolute; left: 12px; top: 50%; translate: 0 -50%; color: var(--text-muted); pointer-events: none; }
+.count { margin: 0 0 0 auto; font-size: var(--fs-small); font-weight: 700; color: var(--text-muted); }
+.empty { padding: 32px; border: 2px dashed var(--border-strong); border-radius: var(--r-panel); text-align: center; font-weight: 700; }
+.pop-in { animation: popin var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 40ms); }
+@keyframes popin { from { opacity: 0; transform: translateY(10px) scale(0.97); } }
+
+/* ---------- Track cards: a gradient header with a folder tab and a big line drawing ---------- */
+.tgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 18px; }
+.tcard { --h: 150; }
+.tcard a { display: flex; flex-direction: column; height: 100%; overflow: hidden; border-radius: var(--r-card); background: var(--surface); text-decoration: none; box-shadow: var(--shadow-card); transition: transform var(--dur-base) var(--ease); }
+.tcard a:hover { transform: translateY(-4px); }
+.ttop { position: relative; height: 150px; overflow: hidden; background: linear-gradient(135deg, oklch(56% 0.18 var(--h)), oklch(44% 0.2 calc(var(--h) + 40))); }
+.ttop .tab { --tab: oklch(100% 0 0 / 0.92); --tab-text: oklch(30% 0.12 var(--h)); }
+.ttop svg { position: absolute; left: 18px; bottom: -22px; width: 130px; height: 130px; fill: none; stroke: #fff; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
+.tbody { display: flex; flex-direction: column; gap: 6px; flex: 1; padding: 20px 22px 22px; }
+.tbody h3 { font-size: 1.375rem; }
+.tbody p { margin: 0; color: var(--text-muted); }
+.tfoot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: auto; padding-top: 12px; font-weight: 800; }
+
+/* ---------- Slanted colour cards (signature): picture on top, a tilted panel, a tab at the foot ---------- */
+.sgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 1.8vw, 24px); }
+.scard { --c: var(--m-violet); }
+.scard a { position: relative; display: flex; flex-direction: column; height: 100%; overflow: hidden; border-radius: 4px; background: var(--surface); color: #fff; text-decoration: none; box-shadow: var(--shadow-card); transition: transform var(--dur-base) var(--ease); }
+.scard a:hover { transform: translateY(-4px) rotate(0.4deg); }
+.spic img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; }
+.spanel { position: relative; display: flex; flex-direction: column; gap: 10px; flex: 1; margin-top: -22px; padding: 40px 20px 64px; background: var(--c); clip-path: polygon(0 22px, 100% 0, 100% 100%, 0 100%); }
+.sby { display: flex; align-items: center; gap: 12px; font-size: 0.875rem; line-height: 1.3; }
+.sby small { display: block; opacity: 0.85; }
+.ring { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border: 3px solid currentColor; border-radius: 50%; font-size: 0.8125rem; font-weight: 900; }
+.stitle { font-size: 1.25rem; font-weight: 900; line-height: 1.2; }
+.sx { font-size: 0.9375rem; opacity: 0.95; }
+.more { font-weight: 800; text-decoration: underline; text-underline-offset: 4px; }
+.stab { position: absolute; left: 20px; right: 20px; bottom: 0; padding: 14px 0 9px; background: var(--surface); color: var(--c); font-size: 0.875rem; font-weight: 900; text-align: center; clip-path: polygon(0 7px, 100% 0, 100% 100%, 0 100%); }
+:root[data-theme="dark"] .stab { color: var(--text); }
+.feature a { display: grid; grid-template-columns: 1.1fr 1fr; overflow: hidden; border-radius: 4px; background: var(--surface); color: #fff; text-decoration: none; box-shadow: var(--shadow-card); }
+.feature img { width: 100%; height: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.feature .spanel { margin: 0 0 0 -26px; padding: clamp(28px, 4vw, 52px) clamp(24px, 3.5vw, 44px) 76px clamp(48px, 5vw, 68px); clip-path: polygon(26px 0, 100% 0, 100% 100%, 0 100%); }
+.feature .stitle { font-size: clamp(1.5rem, 1.15rem + 1.3vw, 2.5rem); }
+@media (max-width: 1023px) { .sgrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 719px) { .sgrid { grid-template-columns: 1fr; } .feature a { grid-template-columns: 1fr; } .feature .spanel { margin: -22px 0 0; padding: 40px 20px 72px; clip-path: polygon(0 22px, 100% 0, 100% 100%, 0 100%); } }
+
+/* ---------- Features, CTA band ---------- */
+.feats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; text-align: center; }
+.feats svg { width: 52px; height: 52px; margin: 0 auto 14px; stroke: var(--accent); stroke-width: 1.6; }
+.feats h3 { margin-bottom: 10px; font-size: 1.3125rem; }
+.feats p { color: var(--text-muted); max-width: 24em; margin-inline: auto; }
+@media (max-width: 767px) { .feats { grid-template-columns: 1fr; } }
+.cta-band { margin-top: var(--sec); padding-block: clamp(48px, 6vw, 80px); background: linear-gradient(180deg, light-dark(oklch(95% 0.03 300), oklch(23% 0.05 300)), light-dark(oklch(96% 0.03 165), oklch(20% 0.04 190))); text-align: center; }
+.cta-band .h2 { margin-bottom: 12px; }
+.cta-band .lede { margin: 0 auto 22px; }
+.cta-band .btn-row { justify-content: center; }
+.cta-band small { display: block; margin-top: 12px; font-size: var(--fs-small); font-weight: 600; color: var(--text-muted); }
+
+/* ---------- Detail views: a gradient head card with a folder tab ---------- */
+.back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 18px; font-weight: 800; text-decoration: none; color: var(--text); }
+.back .icon { width: 18px; height: 18px; }
+.dhead { --h: 300; position: relative; padding: clamp(56px, 6vw, 72px) clamp(20px, 4vw, 48px) clamp(28px, 4vw, 44px); overflow: hidden; border-radius: var(--r-card); background: linear-gradient(130deg, oklch(52% 0.2 var(--h)), oklch(36% 0.18 calc(var(--h) + 30))); color: #fff; }
+.dhead .tab { --tab: #fff; --tab-text: oklch(34% 0.16 var(--h)); }
+.dhead .h1 { max-width: 16em; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 20px; font-weight: 700; }
+.facts li { display: flex; align-items: center; gap: 8px; }
+.dhead::after { content: "?"; position: absolute; right: clamp(16px, 5vw, 64px); bottom: -0.32em; font-size: clamp(9rem, 16vw, 15rem); font-weight: 900; line-height: 1; color: oklch(100% 0 0 / 0.1); }
+.split { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; padding-top: clamp(28px, 4vw, 48px); }
+.split > div > .h3 { margin: 0 0 14px; }
+.split > div > .h3 ~ .h3 { margin-top: 34px; }
+@media (max-width: 899px) { .split { grid-template-columns: 1fr; } }
+.steps { display: grid; gap: 10px; counter-reset: s; }
+.steps li { position: relative; padding: 14px 16px 14px 60px; border-radius: var(--r-control); background: var(--surface); font-weight: 650; box-shadow: var(--shadow-card); counter-increment: s; }
+.steps li::before { content: counter(s); position: absolute; left: 14px; top: 50%; translate: 0 -50%; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 6px; background: var(--c, var(--console)); color: #fff; font-weight: 900; }
+.steps li:nth-child(4n+1) { --c: var(--a-1); } .steps li:nth-child(4n+2) { --c: var(--a-2); } .steps li:nth-child(4n+3) { --c: var(--a-3); } .steps li:nth-child(4n+4) { --c: var(--a-4); }
+.host { display: flex; align-items: center; gap: 14px; }
+.ava { --h: 300; display: grid; place-items: center; flex: none; width: 56px; height: 56px; border-radius: 50%; background: oklch(52% 0.19 var(--h)); color: #fff; font-weight: 900; }
+.host p { margin: 0; }
+.host b { display: block; }
+.card { padding: clamp(20px, 3vw, 28px); }
+.card .h3 { margin-bottom: 6px; }
+.sticky-card { position: sticky; top: calc(var(--cw) + var(--sb) + 20px); }
+@media (max-width: 1023px) { .sticky-card { top: calc(var(--sb) + 20px); } }
+
+/* ---------- Forms: reserved space for messages so the button never moves ---------- */
+.form { display: grid; gap: 4px; margin-top: 16px; }
+.form-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+@media (max-width: 519px) { .form-2 { grid-template-columns: 1fr; } }
+.field label, .field legend { display: block; margin-bottom: 6px; font-size: 0.9375rem; font-weight: 800; }
+.field input, .field select, .field textarea { width: 100%; min-height: 48px; padding: 10px 12px; border: 2px solid var(--border-strong); border-radius: var(--r-control); background: var(--surface); font-size: 1rem; }
+.field textarea { min-height: 120px; resize: vertical; }
+.field input:hover, .field select:hover, .field textarea:hover { border-color: var(--text-muted); }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 0; border-color: var(--focus); }
+.field [aria-invalid="true"] { border-color: var(--error); }
+.err { display: block; min-height: 1.45em; margin-top: 4px; font-size: 0.8125rem; font-weight: 700; color: var(--error); }
+.hint { font-weight: 500; color: var(--text-muted); }
+.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 600; }
+.check input { width: 22px; height: 22px; min-height: 0; margin: 1px 0 0; accent-color: var(--accent); flex: none; }
+.success { padding: 26px; border-radius: var(--r-panel); background: color-mix(in srgb, var(--go) 12%, var(--surface)); text-align: center; animation: popin var(--dur-slow) var(--ease) both; }
+.success svg { width: 52px; height: 52px; margin: 0 auto 10px; padding: 10px; border-radius: 50%; background: var(--go); color: #fff; stroke-width: 3; }
+.success h3 { margin-bottom: 6px; font-size: 1.375rem; }
+.success p { margin: 0 0 14px; }
+
+/* ---------- Pricing ---------- */
+.seg { display: inline-flex; gap: 4px; margin-top: 24px; padding: 4px; border-radius: var(--r-control); background: var(--surface); box-shadow: var(--shadow-card); }
+.seg button { min-height: 40px; padding: 0 18px; border: 0; border-radius: 4px; background: transparent; font-weight: 800; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); }
+.plans .pcard { padding-bottom: 28px; }
+.plans .price { font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; }
+.plans .price small { display: inline; font-size: 1rem; color: inherit; font-weight: 700; letter-spacing: 0; }
+.ticks { display: grid; gap: 8px; margin: 0 0 22px; text-align: start; font-weight: 600; }
+.ticks li { display: flex; gap: 10px; }
+.ticks svg { width: 20px; height: 20px; margin-top: 2px; padding: 3px; border-radius: 50%; background: var(--go); color: #fff; stroke-width: 3.2; }
+.plans .btn { margin-top: auto; }
+.table-wrap { overflow-x: auto; position: relative; border-radius: var(--r-panel); background: var(--surface); box-shadow: var(--shadow-card); }
+table { width: 100%; min-width: 620px; border-collapse: collapse; }
+th, td { padding: 14px 18px; border-bottom: 1px solid var(--border); text-align: start; }
+thead th { background: var(--console); color: #fff; font-weight: 800; }
+tbody th { font-weight: 700; }
+tbody tr:last-child > * { border-bottom: 0; }
+td svg { color: var(--go); stroke-width: 3; }
+
+/* ---------- FAQ ---------- */
+.faq { display: grid; gap: 10px; max-width: 820px; }
+.faq h2 { margin: 28px 0 6px; font-size: 1.125rem; }
+.faq details { border-radius: var(--r-control); background: var(--surface); box-shadow: var(--shadow-card); }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 18px; font-weight: 800; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(45deg); }
+.faq details p { margin: 0; padding: 0 18px 18px; color: var(--text-muted); }
+
+/* ---------- About ---------- */
+.hosts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 14px; }
+.hosts li { display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: var(--r-panel); background: var(--surface); box-shadow: var(--shadow-card); }
+.hosts b { display: block; }
+.hosts span:not(.ava) { font-size: 0.9375rem; color: var(--text-muted); }
+
+/* ---------- Article ---------- */
+.article { max-width: 760px; padding-top: clamp(28px, 4vw, 48px); }
+.article .h1 { margin: 14px 0 18px; }
+.article .sby { color: var(--text-muted); }
+.article .ring { color: var(--accent); }
+.article .sby b { color: var(--text); }
+.apic { margin: 26px 0; }
+.apic img { width: 100%; height: auto; aspect-ratio: 16 / 10; border-radius: var(--r-media); object-fit: cover; }
+.prose p { font-size: 1.125rem; line-height: 1.7; }
+.next-note { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 32px; padding: 20px 22px; border-radius: var(--r-panel); background: var(--console); color: #fff; font-weight: 800; text-decoration: none; }
+.next-note span { font-size: 1.25rem; }
+
+/* ---------- Legal and 404 ---------- */
+.legal { max-width: 760px; padding-top: clamp(32px, 5vw, 64px); }
+.legal h2 { margin: 28px 0 8px; font-size: 1.25rem; }
+.notfound { padding-block: clamp(56px, 9vw, 128px); }
+.notfound .lede { margin-block: 12px 24px; }
+.notfound .bigq { display: grid; place-items: center; width: 132px; height: 132px; margin: 0 auto 24px; border-radius: 22px; background: var(--console); color: #fff; font-size: 5.5rem; font-weight: 900; box-shadow: inset 0 -8px 0 oklch(0% 0 0 / 0.25); rotate: -6deg; }
+
+/* ---------- Footer: charcoal, both themes ---------- */
+.site-footer { margin-top: var(--sec); padding-block: 56px 32px; background: var(--foot); color: var(--foot-text); }
+main:has(> .is-active > .cta-band:last-child) + .site-footer { margin-top: 0; }
+.foot-cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 24px; }
+.foot-cols h2 { margin-bottom: 16px; font-size: 1rem; font-weight: 800; }
+.foot-cols li + li { margin-top: 12px; }
+.foot-cols a { color: var(--foot-text); text-decoration: none; }
+.foot-cols a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.foot-base { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--foot-line); color: var(--foot-muted); font-size: var(--fs-small); }
+.foot-base .brand b { font-size: 1.25rem; }
+@media (max-width: 767px) { .foot-cols { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- Reveal: keyframes after the script adds .js; visible without JS ---------- */
+.js .reveal { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease-out) both; animation-delay: calc(var(--d, 0) * 70ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(22px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal { opacity: 1; }
+  .timer i { transform: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-mark" viewBox="0 0 32 32"><path d="M6 10.5A4.5 4.5 0 0 1 10.5 6h11A4.5 4.5 0 0 1 26 10.5v7a4.5 4.5 0 0 1-4.5 4.5H15l-5.5 4.5V22A4 4 0 0 1 6 18z" fill="#fff"/><circle cx="11" cy="14" r="2.2" fill="#12a39b"/><circle cx="16" cy="14" r="2.2" fill="#f2801f"/><circle cx="21" cy="14" r="2.2" fill="#df3f86"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 5.5C5.5 4 8.5 4 12 6c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5zM12 6v13.5"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14a6.5 6.5 0 0 1 3.5 6"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><circle cx="10" cy="8" r="4"/><path d="M3 20a7 7 0 0 1 11-5.7M18 14v6M15 17h6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v1.5A3.5 3.5 0 0 0 7.5 11M17 6h3v1.5a3.5 3.5 0 0 1-3.5 3.5M12 14v4M8 21h8M9 18h6"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-5 4v-4h.5A2.5 2.5 0 0 1 4 14.5z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01"/></symbol>
+  <symbol id="i-cake" viewBox="0 0 24 24"><path d="M4 21h16v-8H4zM4 16c2 1.5 4 1.5 6 0s4-1.5 6 0 3 1.2 4 .5M8 13V9.5M12 13V9.5M16 13V9.5M8 6.5v.01M12 6v.01M16 6.5v.01"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19.5h20M8 12.5v-2M12 12.5V8.5M16 12.5v-3"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.7-8-10.2A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 8 2.8C20 15.3 12 20 12 20z"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9.5 3h5M10 3v6l-5.5 9.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3M7 15h10"/></symbol>
+  <symbol id="i-hash" viewBox="0 0 24 24"><path d="M5 9h15M4 15h15M10 4 8 20M16 4l-2 16"/></symbol>
+  <symbol id="i-clap" viewBox="0 0 24 24"><path d="M4 9.5 18.5 5l1 3.5L5 13zM5 13v7h14v-11.5M8 7.6l2.6 3M12.5 6.3l2.6 3"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 7 8.5-7"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="console-wrap">
+    <nav class="console" aria-label="Main">
+      <a class="brand" href="#/"><svg class="brand-mark" aria-hidden="true"><use href="#i-mark"/></svg><span><b>Popround</b><small>Quiz nights for everyone</small></span></a>
+      <ul class="modes">
+        <li><a class="mode" href="#/nights" style="--c:var(--m-green)"><span class="mi"><svg class="icon" aria-hidden="true"><use href="#i-mic"/></svg></span>Nights</a></li>
+        <li><a class="mode" href="#/study" style="--c:var(--m-gold)"><span class="mi"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></span>Study</a></li>
+        <li><a class="mode" href="#/teams" style="--c:var(--m-blue)"><span class="mi"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg></span>Teams</a></li>
+        <li><a class="mode" href="#play" style="--c:var(--m-red)"><span class="mi"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg></span>Play</a></li>
+        <li><a class="mode" href="#/join" style="--c:var(--m-violet)"><span class="mi"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></span>Join</a></li>
+      </ul>
+      <form class="find" role="search" data-search>
+        <label class="sr-only" for="find-q">Find a quiz night</label>
+        <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+        <input id="find-q" name="q" type="search" placeholder="Find a quiz night" autocomplete="off">
+        <button class="sr-only" type="submit">Search nights</button>
+      </form>
+      <a class="btn btn-go console-cta" href="#/nights">Book a table</a>
+    </nav>
+  </div>
+  <div class="subbar">
+    <div class="subbar-in">
+      <a class="mini" href="#/" aria-label="Popround home"><svg aria-hidden="true"><use href="#i-mark"/></svg></a>
+      <nav class="links" aria-label="More">
+        <a href="#/about">About</a><a href="#/notes">Quiz notes</a><a href="#/faq">FAQ</a><a href="#/contact">Contact</a>
+      </nav>
+      <div class="sub-end">
+        <a class="btn btn-ghost" href="#/contact?topic=team">Plan a team quiz</a>
+        <button id="theme-toggle" class="icon-btn" type="button" aria-label="Switch to dark theme"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+        <button id="menu-open" class="icon-btn menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<dialog id="menu" class="sheet" aria-label="Menu">
+  <div class="sheet-in">
+    <div class="sheet-top"><a class="brand" href="#/" style="color:var(--text)"><b>Popround</b></a><button id="menu-close" class="icon-btn" type="button" aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+    <nav class="sheet-links" aria-label="Menu links"><a href="#/">Home</a><a href="#/nights">Quiz nights</a><a href="#/study">Study club</a><a href="#/teams">Team quizzes</a><a href="#/join">Join free</a><a href="#/about">About</a><a href="#/notes">Quiz notes</a><a href="#/faq">FAQ</a><a href="#/contact">Contact</a></nav>
+  </div>
+</dialog>
+
+<main id="main" tabindex="-1">
+
+<div data-view="home">
+  <aside class="promo" id="promo" aria-label="Announcement">
+    <div class="promo-in">
+      <span class="promo-ico"><svg class="icon" aria-hidden="true"><use href="#i-trophy"/></svg></span>
+      <p><b>Spring league starts 5 March</b>Teams that sign up this week play the first round free.</p>
+      <a class="btn btn-light" href="#/nights?kind=pub">Enter a team</a>
+      <button id="promo-close" class="icon-btn promo-x" type="button" aria-label="Hide this announcement"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+  </aside>
+
+  <section class="hero center">
+    <div class="wrap">
+      <h1 class="display">Turn any room into a <span class="pop">quiz show!</span></h1>
+      <p class="lede">Live-hosted quiz nights, weekly study clubs and private team quizzes for pubs, classrooms and offices.</p>
+      <ul class="pcards">
+        <li class="pcard pc-lilac reveal">
+          <span class="tab">For pubs, cafés and parties</span>
+          <h2 class="pname">Quiz nights <span class="badge">Live</span></h2>
+          <p class="ptag">Six rounds, one host, a room full of rivals</p>
+          <p class="muted">Bring a team of two to eight to a public night, or book us for a birthday or a fundraiser.</p>
+          <p class="price">From $9 a player<small>Under-12s free at family brunches</small></p>
+          <div class="btn-row"><a class="btn btn-go" href="#/nights">Find a night</a><a class="tlink" href="#/faq">How it works<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+          <div class="pframe"><img src="images/podium.svg" alt="Three cheerful players on a winners' podium under bunting" width="480" height="360"></div>
+        </li>
+        <li class="pcard pc-rose reveal" style="--d:1">
+          <span class="tab">For students and book clubs</span>
+          <h2 class="pname">Study club <span class="badge">Weekly</span></h2>
+          <p class="ptag">Revision that feels like a game night</p>
+          <p class="muted">Small groups practise with quick-fire rounds, then a host explains every answer they missed.</p>
+          <p class="price">From $96 a term<small>First session free</small></p>
+          <div class="btn-row"><a class="btn btn-go" href="#/study">See the tracks</a><a class="tlink" href="#play">Try a round<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+          <div class="pframe"><img src="images/question.svg" alt="A quiz screen with a picture question and four coloured answers" width="480" height="360"></div>
+        </li>
+        <li class="pcard pc-deep reveal" style="--d:2">
+          <span class="tab">For teams and trainers</span>
+          <h2 class="pname">Team quiz <span class="badge">Private</span></h2>
+          <p class="ptag">Your people, your in-jokes, one trophy</p>
+          <p class="muted">A hosted quiz for offsites, onboarding days and training sessions, in the room or online.</p>
+          <p class="price">From $390 an event<small>Custom rounds about your company</small></p>
+          <div class="btn-row"><a class="btn btn-go" href="#/teams">See packages</a><a class="tlink" href="#/contact?topic=team">Check a date<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+          <div class="pframe"><img src="images/results.svg" alt="A laptop showing live answer results as a bar chart" width="480" height="360"></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap sec-head center"><h2 class="h2">A quiz for every room</h2><p class="lede">Whether you are revising, celebrating or breaking the ice, there is a format that gets everyone answering.</p></div>
+    <div class="rail-wrap">
+      <button class="rail-btn prev" type="button" data-rail="-1" aria-label="Previous occasions" disabled><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button>
+      <ul class="rail" id="rail" aria-label="Occasions">
+        <li class="tile" style="--h:300"><a href="#/nights?kind=pub"><h3>Pub quiz nights</h3><p>Weekly leagues with a jackpot round</p><svg class="tile-art" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mic"/></svg></a></li>
+        <li class="tile" style="--h:48"><a href="#/study"><h3>Classroom revision</h3><p>Ten-minute warm-ups before an exam</p><svg class="tile-art" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-flask"/></svg></a></li>
+        <li class="tile" style="--h:150"><a href="#/teams"><h3>Team offsites</h3><p>Mixed tables, so departments meet</p><svg class="tile-art" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-users"/></svg></a></li>
+        <li class="tile" style="--h:262"><a href="#/study?level=adult"><h3>Book clubs</h3><p>A round on this month's book</p><svg class="tile-art" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-book"/></svg></a></li>
+        <li class="tile" style="--h:350"><a href="#/contact?topic=party"><h3>Birthdays</h3><p>A round all about the guest of honour</p><svg class="tile-art" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cake"/></svg></a></li>
+        <li class="tile" style="--h:196"><a href="#/study?level=adult"><h3>Language cafés</h3><p>Answer in the language you are learning</p><svg class="tile-art" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-globe"/></svg></a></li>
+        <li class="tile" style="--h:22"><a href="#/nights/charity-quiz"><h3>Charity nights</h3><p>Every entry fee goes to the cause</p><svg class="tile-art" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-heart"/></svg></a></li>
+        <li class="tile" style="--h:280"><a href="#/nights?kind=online"><h3>Online lunch quizzes</h3><p>Thirty minutes, any device, camera optional</p><svg class="tile-art" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-laptop"/></svg></a></li>
+      </ul>
+      <button class="rail-btn next" type="button" data-rail="1" aria-label="Next occasions"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+    </div>
+  </section>
+
+  <section class="sec" id="play">
+    <div class="wrap sec-head center"><h2 class="h2">Try tonight's <span class="pop">warm-up round</span></h2><p class="lede">Three questions. Faster answers score more points, and the leaderboard updates after each one.</p></div>
+    <div class="wrap quiz-grid">
+      <div class="quiz">
+        <div class="quiz-top"><span data-q="count">Question 1 of 3</span><span>Score <b data-q="score">0</b></span></div>
+        <div class="timer" data-q="timer" aria-hidden="true"><i></i></div>
+        <div class="qbody">
+          <p class="qtext" data-q="text">Which planet has the shortest day?</p>
+          <ol class="answers" data-q="answers">
+            <li><button class="ans" type="button" style="--c:var(--a-1)"><b>A</b><span>Mercury</span></button></li>
+            <li><button class="ans" type="button" style="--c:var(--a-2)"><b>B</b><span>Jupiter</span></button></li>
+            <li><button class="ans" type="button" style="--c:var(--a-3)"><b>C</b><span>Mars</span></button></li>
+            <li><button class="ans" type="button" style="--c:var(--a-4)"><b>D</b><span>Venus</span></button></li>
+          </ol>
+          <div class="qfoot" aria-live="polite"><p class="qfact" data-q="fact">Pick an answer. The bar shows your speed bonus.</p><button class="btn btn-solid" type="button" data-q="next" hidden>Next question</button></div>
+        </div>
+      </div>
+      <aside class="board" aria-label="Leaderboard">
+        <h3><svg class="icon" aria-hidden="true"><use href="#i-trophy"/></svg>Leaderboard</h3>
+        <ol data-q="board">
+          <li data-pts="2840"><b>1</b><span>The Quizzly Bears</span><em>2,840</em></li>
+          <li data-pts="2310"><b>2</b><span>The Know-It-Owls</span><em>2,310</em></li>
+          <li data-pts="1720"><b>3</b><span>Table Six</span><em>1,720</em></li>
+          <li data-pts="960"><b>4</b><span>Smarty Plants</span><em>960</em></li>
+          <li class="you" data-pts="0"><b>5</b><span>Your team</span><em>0</em></li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <section class="sec wrap js-only">
+    <div class="sec-row"><h2 class="h2">This week's nights</h2><a class="tlink" href="#/nights">All quiz nights<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+    <ul class="ngrid" id="home-nights"></ul>
+  </section>
+
+  <section class="sec wrap">
+    <div class="sec-head center"><h2 class="h2">Why rooms light up</h2></div>
+    <ul class="feats">
+      <li class="reveal"><svg class="icon" aria-hidden="true"><use href="#i-mic"/></svg><h3>Hosted, not just projected</h3><p>A real host reads the room, keeps score and makes sure every table laughs at least once.</p></li>
+      <li class="reveal" style="--d:1"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><h3>Everyone plays</h3><p>Answer on a phone or on paper. Mixed ages and mixed teams, with nothing to install.</p></li>
+      <li class="reveal" style="--d:2"><svg class="icon" aria-hidden="true"><use href="#i-trophy"/></svg><h3>Scores that settle arguments</h3><p>A live leaderboard after every round, and a results sheet for the trophy shelf.</p></li>
+    </ul>
+  </section>
+
+  <section class="sec wrap js-only">
+    <div class="sec-row"><h2 class="h2">From the quiz desk</h2><a class="tlink" href="#/notes">All quiz notes<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+    <ul class="sgrid" id="home-notes"></ul>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap"><h2 class="h2">Ready to run your <span class="pop">first round?</span></h2><p class="lede">Book a table at a public night, or plan a private quiz for your team or class.</p><div class="btn-row"><a class="btn btn-solid" href="#/join">Join free</a><a class="btn btn-line" href="#/teams">Plan a team quiz</a></div><small>No card needed to join.</small></div>
+  </section>
+</div>
+
+<div data-view="nights">
+  <section class="page-head"><div class="wrap"><p class="eyebrow">Public quiz nights</p><h1 class="h1">Find a <span class="pop">quiz night</span></h1><p class="lede">Bring a team of two to eight. Book a table, turn up, play. Every night is hosted live.</p></div></section>
+  <section class="wrap">
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="Filter nights">
+        <button class="chip" type="button" data-for="nights" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-for="nights" data-filter="pub" aria-pressed="false">Pub quiz</button>
+        <button class="chip" type="button" data-for="nights" data-filter="themed" aria-pressed="false">Themed</button>
+        <button class="chip" type="button" data-for="nights" data-filter="family" aria-pressed="false">Family</button>
+        <button class="chip" type="button" data-for="nights" data-filter="online" aria-pressed="false">Online</button>
+      </div>
+      <label class="search"><span class="sr-only">Search nights by name or venue</span><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input id="nights-q" type="search" placeholder="Search name or venue" autocomplete="off"></label>
+      <p class="count" data-count="nights" aria-live="polite">7 nights</p>
+    </div>
+    <ul class="ngrid" data-list="nights" id="nights-list">
+      <li class="ncard" data-kind="pub" data-slug="general-knowledge" style="--h:300"><a href="#/nights/general-knowledge"><span class="date"><small>Thu</small><b>5</b><small>Mar</small></span><span><span class="kind">Pub quiz</span><h2 class="ntitle">General knowledge Thursday</h2><span class="nmeta">The Copper Kettle · 7:30 pm</span></span><span class="nend"><b>$9</b><small>6 tables left</small></span></a></li>
+      <li class="ncard" data-kind="themed" data-slug="film-and-tv" style="--h:20"><a href="#/nights/film-and-tv"><span class="date"><small>Fri</small><b>6</b><small>Mar</small></span><span><span class="kind">Themed</span><h2 class="ntitle">Film and TV night</h2><span class="nmeta">Lantern Room · 8:00 pm</span></span><span class="nend"><b>$12</b><small>3 tables left</small></span></a></li>
+      <li class="ncard" data-kind="family" data-slug="family-brunch" style="--h:150"><a href="#/nights/family-brunch"><span class="date"><small>Sun</small><b>8</b><small>Mar</small></span><span><span class="kind">Family</span><h2 class="ntitle">Family quiz brunch</h2><span class="nmeta">Fig and Fern Café · 11:00 am</span></span><span class="nend"><b>$6</b><small>9 tables left</small></span></a></li>
+      <li class="ncard" data-kind="themed" data-slug="name-that-intro" style="--h:350"><a href="#/nights/name-that-intro"><span class="date"><small>Tue</small><b>10</b><small>Mar</small></span><span><span class="kind">Themed</span><h2 class="ntitle">Name that intro</h2><span class="nmeta">Harbour Street Social · 8:00 pm</span></span><span class="nend"><b>$10</b><small>5 tables left</small></span></a></li>
+      <li class="ncard" data-kind="online" data-slug="lunch-quiz" style="--h:280"><a href="#/nights/lunch-quiz"><span class="date"><small>Wed</small><b>11</b><small>Mar</small></span><span><span class="kind">Online</span><h2 class="ntitle">Lunchtime online quiz</h2><span class="nmeta">Online · 12:30 pm</span></span><span class="nend"><b>Free</b><small>Open to all</small></span></a></li>
+      <li class="ncard" data-kind="family" data-slug="kitchen-science" style="--h:48"><a href="#/nights/kitchen-science"><span class="date"><small>Sat</small><b>14</b><small>Mar</small></span><span><span class="kind">Family</span><h2 class="ntitle">Kitchen science for kids</h2><span class="nmeta">Northgate Library · 10:00 am</span></span><span class="nend"><b>Free</b><small>Book a place</small></span></a></li>
+      <li class="ncard" data-kind="pub" data-slug="charity-quiz" style="--h:22"><a href="#/nights/charity-quiz"><span class="date"><small>Sat</small><b>28</b><small>Mar</small></span><span><span class="kind">Pub quiz</span><h2 class="ntitle">Charity quiz for the food bank</h2><span class="nmeta">Riverside Hall · 7:00 pm</span></span><span class="nend"><b>$15</b><small>12 tables left</small></span></a></li>
+    </ul>
+    <p class="empty" data-empty="nights" hidden>No nights match that. <button class="tlink" type="button" data-for="nights" data-filter="all">Show every night</button></p>
+  </section>
+  <section class="cta-band"><div class="wrap"><h2 class="h2">Running a venue?</h2><p class="lede">We bring the host, the questions and the leaderboard. You bring the room.</p><div class="btn-row"><a class="btn btn-solid" href="#/contact?topic=venue">Host a weekly night</a></div></div></section>
+</div>
+
+<div data-view="night">
+  <section class="wrap" style="padding-top:clamp(20px,3vw,32px)">
+    <a class="back" href="#/nights"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg>All quiz nights</a>
+    <div class="dhead" data-n="band">
+      <span class="tab" data-n="kind">Pub quiz</span>
+      <h1 class="h1" data-n="title">General knowledge Thursday</h1>
+      <ul class="facts">
+        <li><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg><span data-n="date">Thursday 5 March</span></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span data-n="time">7:30 pm</span></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span data-n="venue">The Copper Kettle, 14 Mill Lane</span></li>
+      </ul>
+    </div>
+  </section>
+  <section class="wrap split">
+    <div>
+      <h2 class="h3">The rounds</h2>
+      <ol class="steps" data-n="rounds"><li>General knowledge</li><li>Picture round</li><li>Music intros</li><li>Science and nature</li><li>Wipeout</li><li>Jackpot question</li></ol>
+      <h2 class="h3">Your host</h2>
+      <div class="host"><span class="ava" data-n="ava" style="--h:300">DO</span><p><b data-n="host">Dee Okonkwo</b><span class="muted" data-n="hostline">Former science teacher. Strict about spelling, generous with half points.</span></p></div>
+      <h2 class="h3">Good to know</h2>
+      <p data-n="about">Tables seat up to eight. Answers go on paper, and phones stay in pockets.</p>
+    </div>
+    <aside class="card sticky-card">
+      <h2 class="h3">Book a table</h2>
+      <p class="muted"><span data-n="seats">6 tables left</span> · <span data-n="price">$9 a player</span>, paid on the night</p>
+      <form class="form" data-form="booking">
+        <div class="field"><label for="b-team">Team name</label><input id="b-team" name="team" required aria-describedby="b-team-err" autocomplete="off"><span class="err" id="b-team-err"></span></div>
+        <div class="field"><label for="b-size">Players</label><select id="b-size" name="size"><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select><span class="err"></span></div>
+        <div class="field"><label for="b-email">Email</label><input id="b-email" name="email" type="email" required autocomplete="email" aria-describedby="b-email-err"><span class="err" id="b-email-err"></span></div>
+        <button class="btn btn-go btn-block" type="submit">Book the table</button>
+      </form>
+      <div class="success" data-success="booking" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><h3>Table booked</h3><p>The details are on their way to <b data-echo="email">your inbox</b>. See you at the first question.</p><a class="tlink" href="#/nights">Find another night<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+    </aside>
+  </section>
+</div>
+
+<div data-view="study">
+  <section class="page-head"><div class="wrap"><p class="eyebrow">Study club</p><h1 class="h1">Revision that feels like <span class="pop">game night</span></h1><p class="lede">Small groups, quick-fire rounds and a host who explains every answer you missed. Your first session is free.</p></div></section>
+  <section class="wrap">
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="Filter tracks">
+        <button class="chip" type="button" data-for="tracks" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-for="tracks" data-filter="young" aria-pressed="false">Ages 11 to 13</button>
+        <button class="chip" type="button" data-for="tracks" data-filter="teen" aria-pressed="false">Ages 14 to 16</button>
+        <button class="chip" type="button" data-for="tracks" data-filter="adult" aria-pressed="false">Adults</button>
+      </div>
+      <p class="count" data-count="tracks" aria-live="polite">6 tracks</p>
+    </div>
+    <ul class="tgrid" data-list="tracks" id="tracks-list">
+      <li class="tcard" data-kind="teen" data-slug="exam-sprint-science" style="--h:150"><a href="#/join?track=exam-sprint-science"><span class="ttop"><span class="tab">Ages 14 to 16</span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-flask"/></svg></span><span class="tbody"><h2 class="h3">Exam sprint: science</h2><p>Biology, chemistry and physics in rounds you can win.</p><span class="tfoot"><span>Mondays · 8 weeks</span><span>$96</span></span></span></a></li>
+      <li class="tcard" data-kind="young" data-slug="maths-in-minutes" style="--h:48"><a href="#/join?track=maths-in-minutes"><span class="ttop"><span class="tab">Ages 11 to 13</span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-hash"/></svg></span><span class="tbody"><h2 class="h3">Maths in minutes</h2><p>Mental maths races that build speed and nerve.</p><span class="tfoot"><span>Tuesdays · 8 weeks</span><span>$96</span></span></span></a></li>
+      <li class="tcard" data-kind="teen" data-slug="history-head-to-head" style="--h:20"><a href="#/join?track=history-head-to-head"><span class="ttop"><span class="tab">Ages 14 to 16</span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg></span><span class="tbody"><h2 class="h3">History head to head</h2><p>Dates, causes and sources, argued in teams.</p><span class="tfoot"><span>Thursdays · 8 weeks</span><span>$96</span></span></span></a></li>
+      <li class="tcard" data-kind="adult" data-slug="language-cafe" style="--h:196"><a href="#/join?track=language-cafe"><span class="ttop"><span class="tab">Adults</span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-globe"/></svg></span><span class="tbody"><h2 class="h3">Language café rounds</h2><p>Spanish and French questions, answered over coffee.</p><span class="tfoot"><span>Wednesdays · 6 weeks</span><span>$72</span></span></span></a></li>
+      <li class="tcard" data-kind="adult" data-slug="book-club-rounds" style="--h:262"><a href="#/join?track=book-club-rounds"><span class="ttop"><span class="tab">Adults</span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-book"/></svg></span><span class="tbody"><h2 class="h3">Book club rounds</h2><p>One novel a month, one quiz to prove you read it.</p><span class="tfoot"><span>Monthly · Sundays</span><span>$40</span></span></span></a></li>
+      <li class="tcard" data-kind="adult" data-slug="quiz-writing" style="--h:300"><a href="#/join?track=quiz-writing"><span class="ttop"><span class="tab">Adults and teachers</span><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-star"/></svg></span><span class="tbody"><h2 class="h3">Write a great quiz</h2><p>For teachers and trainers who host their own.</p><span class="tfoot"><span>Online · 4 weeks</span><span>$60</span></span></span></a></li>
+    </ul>
+    <p class="empty" data-empty="tracks" hidden>No tracks for that group yet. <button class="tlink" type="button" data-for="tracks" data-filter="all">Show all tracks</button></p>
+  </section>
+</div>
+
+<div data-view="teams">
+  <section class="page-head center">
+    <div class="wrap"><p class="eyebrow">Private quizzes</p><h1 class="h1">Quizzes for teams that <span class="pop">actually show up</span></h1><p class="lede">A hosted quiz for offsites, onboarding days and training weeks. Mixed tables, custom rounds and a trophy someone will keep on their desk.</p>
+      <div class="seg" role="group" aria-label="Where you play"><button type="button" data-mode="room" aria-pressed="true">In the room</button><button type="button" data-mode="online" aria-pressed="false">Online</button></div>
+    </div>
+  </section>
+  <section class="wrap">
+    <ul class="pcards plans">
+      <li class="pcard pc-mint"><span class="tab">Up to 30 people</span><h2 class="pname">Huddle</h2><p class="ptag">An hour, one host, five rounds</p><p class="price"><span data-room="$390" data-online="$290">$390</span> <small>an event</small></p><ul class="ticks"><li><svg aria-hidden="true"><use href="#i-check"/></svg>Hosted live for 60 minutes</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Answer sheets or phones</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Results sheet for everyone</li></ul><a class="btn btn-go" href="#/contact?topic=team">Check a date</a></li>
+      <li class="pcard pc-deep"><span class="tab">Most booked · up to 120</span><h2 class="pname">Offsite</h2><p class="ptag">Ninety minutes with a round about you</p><p class="price"><span data-room="$890" data-online="$690">$890</span> <small>an event</small></p><ul class="ticks"><li><svg aria-hidden="true"><use href="#i-check"/></svg>Two hosts and a scorer</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>One custom round about your company</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Mixed tables so teams meet</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Trophy and winners' photo</li></ul><a class="btn btn-light" href="#/contact?topic=team">Check a date</a></li>
+      <li class="pcard pc-rose"><span class="tab">Up to 400 people</span><h2 class="pname">Festival</h2><p class="ptag">A stage show for the whole company</p><p class="price"><span data-room="$2,400" data-online="$1,600">$2,400</span> <small>an event</small></p><ul class="ticks"><li><svg aria-hidden="true"><use href="#i-check"/></svg>Three hosts, buzzers and a stage set</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Up to three custom rounds</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>A planning call two weeks before</li></ul><a class="btn btn-go" href="#/contact?topic=team">Check a date</a></li>
+    </ul>
+    <p class="center muted" id="mode-note" style="margin-top:16px">Prices for the room include travel within the city. Taxes added at checkout.</p>
+  </section>
+  <section class="sec wrap">
+    <h2 class="h2 sec-head">Compare packages</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Included</th><th scope="col">Huddle</th><th scope="col">Offsite</th><th scope="col">Festival</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Length</th><td>60 min</td><td>90 min</td><td>2 hours</td></tr>
+          <tr><th scope="row">Hosts</th><td>1</td><td>2 and a scorer</td><td>3 and a scorer</td></tr>
+          <tr><th scope="row">Custom rounds</th><td>None</td><td>1</td><td>Up to 3</td></tr>
+          <tr><th scope="row">Buzzers and stage set</th><td>None</td><td>None</td><td><svg class="icon" role="img" aria-label="Included"><use href="#i-check"/></svg></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="cta-band"><div class="wrap"><h2 class="h2">Not sure which one fits?</h2><p class="lede">Tell us the date, the headcount and the room. We reply within one working day.</p><div class="btn-row"><a class="btn btn-solid" href="#/contact?topic=team">Ask about a date</a><a class="btn btn-line" href="#/faq">Read the FAQ</a></div></div></section>
+</div>
+
+<div data-view="notes">
+  <section class="page-head"><div class="wrap"><p class="eyebrow">Quiz notes</p><h1 class="h1">Notes from the <span class="pop">quiz desk</span></h1><p class="lede">How we write questions, run rooms and keep a hundred people quiet for the tie-breaker.</p></div></section>
+  <section class="wrap">
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="Filter notes">
+        <button class="chip" type="button" data-for="notes" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-for="notes" data-filter="hosting" aria-pressed="false">Hosting</button>
+        <button class="chip" type="button" data-for="notes" data-filter="writing" aria-pressed="false">Question writing</button>
+        <button class="chip" type="button" data-for="notes" data-filter="classroom" aria-pressed="false">Classroom</button>
+        <button class="chip" type="button" data-for="notes" data-filter="teams" aria-pressed="false">Teams</button>
+      </div>
+      <p class="count" data-count="notes" aria-live="polite">4 notes</p>
+    </div>
+    <ul class="sgrid" data-list="notes" id="notes-list">
+      <li class="feature" data-kind="writing" data-slug="fair-questions" style="grid-column:1/-1;--c:var(--m-blue)"><a href="#/notes/fair-questions"><img src="images/books.svg" alt="A stack of books beside a mug and a question card" width="480" height="300"><span class="spanel"><span class="sby"><span class="ring">LR</span><span><b>Lucía Romero</b><small>19 Feb 2026</small></span></span><h2 class="stitle">How to write a question that is hard but fair</h2><span class="sx">If the room groans when they hear the answer, you got it right. If they argue, you did not.</span><span class="more">Read more</span><span class="stab">Question writing</span></span></a></li>
+      <li class="scard" data-kind="hosting" data-slug="five-rounds" style="--c:var(--m-violet)"><a href="#/notes/five-rounds"><span class="spic"><img src="images/mic.svg" alt="A microphone on a stand under a spotlight" width="480" height="300"></span><span class="spanel"><span class="sby"><span class="ring">DO</span><span><b>Dee Okonkwo</b><small>12 Feb 2026</small></span></span><h2 class="stitle">Five rounds that work in any room</h2><span class="sx">The running order we reach for when we know nothing about the crowd.</span><span class="more">Read more</span><span class="stab">Hosting</span></span></a></li>
+      <li class="scard" data-kind="classroom" data-slug="quiz-before-the-exam" style="--c:var(--m-green)"><a href="#/notes/quiz-before-the-exam"><span class="spic"><img src="images/question.svg" alt="A quiz screen with four coloured answers" width="480" height="360"></span><span class="spanel"><span class="sby"><span class="ring">MS</span><span><b>Marta Silva</b><small>5 Feb 2026</small></span></span><h2 class="stitle">Why we quiz the week before an exam</h2><span class="sx">Retrieval beats rereading, and a leaderboard beats both for turning up.</span><span class="more">Read more</span><span class="stab">Classroom</span></span></a></li>
+      <li class="scard" data-kind="teams" data-slug="icebreakers" style="--c:var(--m-red)"><a href="#/notes/icebreakers"><span class="spic"><img src="images/huddle.svg" alt="Four players around a table with an answer sheet" width="480" height="300"></span><span class="spanel"><span class="sby"><span class="ring">SA</span><span><b>Sam Adeyemi</b><small>29 Jan 2026</small></span></span><h2 class="stitle">Icebreakers that are not awkward</h2><span class="sx">Mixed tables and one easy first question do most of the work.</span><span class="more">Read more</span><span class="stab">Teams</span></span></a></li>
+    </ul>
+    <p class="empty" data-empty="notes" hidden>No notes in that topic yet. <button class="tlink" type="button" data-for="notes" data-filter="all">Show all notes</button></p>
+  </section>
+</div>
+
+<div data-view="note">
+  <article class="wrap article">
+    <a class="back" href="#/notes"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg>All quiz notes</a>
+    <p><span class="tab tab-inline" data-p="kind">Question writing</span></p>
+    <h1 class="h1" data-p="title">How to write a question that is hard but fair</h1>
+    <div class="sby"><span class="ring" data-p="ava">LR</span><span><b data-p="author">Lucía Romero</b><small data-p="date">19 Feb 2026</small></span></div>
+    <figure class="apic"><img data-p="img" src="images/books.svg" alt="A stack of books beside a mug and a question card" width="480" height="300"></figure>
+    <div class="prose" data-p="body">
+      <p>A good question has one answer, and most of the room has met it before. The difficulty should come from remembering, not from guessing what the writer meant.</p>
+      <p>We test every question on two people who did not write it. If either of them can argue for a second answer, the question goes back to the desk.</p>
+      <p>Finally, read it aloud. A question that looks clear on paper can be a tongue-twister on the microphone.</p>
+    </div>
+    <a class="next-note" data-p="next" href="#/notes/five-rounds"><span data-p="next-title">Five rounds that work in any room</span><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a>
+  </article>
+</div>
+
+<div data-view="faq">
+  <section class="page-head center"><div class="wrap"><p class="eyebrow">Help</p><h1 class="h1">Questions, answered</h1><p class="lede">The short version of everything people ask before their first night.</p></div></section>
+  <section class="wrap faq" id="faq-list">
+    <h2>Quiz nights</h2>
+    <details><summary>How big can a team be?<svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></summary><p>Two to eight players. Bigger groups split into two tables and play against each other, which is usually more fun anyway.</p></details>
+    <details><summary>Do I need to book?<svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></summary><p>Booking holds a table until the first question. Walk-ins are welcome when there is room.</p></details>
+    <h2>Study club</h2>
+    <details><summary>Is the first session really free?<svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></summary><p>Yes. Come once, and pay for the term only if you want to stay.</p></details>
+    <h2>Team quizzes</h2>
+    <details><summary>How far ahead should we book?<svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></summary><p>Three weeks for a Huddle, six for an Offsite or a Festival, so there is time to write your custom rounds.</p></details>
+    <details><summary>Can you run it online?<svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></summary><p>Yes. Players answer on any device and the host runs the show on a video call you choose.</p></details>
+  </section>
+</div>
+
+<div data-view="about">
+  <section class="page-head center"><div class="wrap"><p class="eyebrow">About</p><h1 class="h1">We host the best hour <span class="pop">of your week</span></h1><p class="lede">Popround started as one Thursday quiz in a pub back room in 2019. Now eight hosts run nights, study clubs and team quizzes across Bristol and online.</p></div></section>
+  <section class="wrap">
+    <h2 class="sr-only">What we believe</h2>
+    <ul class="feats">
+      <li><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg><h3>Nobody sits out</h3><p>Every quiz has rounds for the youngest and oldest at the table.</p></li>
+      <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><h3>Every question checked</h3><p>Two people test each question before it reaches a microphone.</p></li>
+      <li><svg class="icon" aria-hidden="true"><use href="#i-clap"/></svg><h3>The host is the show</h3><p>We train hosts to read a room, not just read a screen.</p></li>
+    </ul>
+  </section>
+  <section class="sec wrap">
+    <h2 class="h2 sec-head">Meet the hosts</h2>
+    <ul class="hosts">
+      <li><span class="ava" style="--h:300">DO</span><span><b>Dee Okonkwo</b><span>Thursday nights, science</span></span></li>
+      <li><span class="ava" style="--h:150">MS</span><span><b>Marta Silva</b><span>Study club, biology</span></span></li>
+      <li><span class="ava" style="--h:262">LR</span><span><b>Lucía Romero</b><span>Question editor</span></span></li>
+      <li><span class="ava" style="--h:20">SA</span><span><b>Sam Adeyemi</b><span>Team quizzes</span></span></li>
+      <li><span class="ava" style="--h:48">KI</span><span><b>Kenji Ito</b><span>Music and film nights</span></span></li>
+      <li><span class="ava" style="--h:350">HL</span><span><b>Hana Lee</b><span>Family brunches</span></span></li>
+    </ul>
+  </section>
+</div>
+
+<div data-view="contact">
+  <section class="page-head"><div class="wrap"><p class="eyebrow">Contact</p><h1 class="h1">Tell us about <span class="pop">your quiz</span></h1><p class="lede">A date, a headcount and a room are enough to start. We reply within one working day.</p></div></section>
+  <section class="wrap split" style="padding-top:0">
+    <div class="card">
+      <form class="form" data-form="contact">
+        <div class="form-2">
+          <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" required autocomplete="name" aria-describedby="c-name-err"><span class="err" id="c-name-err"></span></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" required autocomplete="email" aria-describedby="c-email-err"><span class="err" id="c-email-err"></span></div>
+        </div>
+        <div class="form-2">
+          <div class="field"><label for="c-topic">What is it for?</label><select id="c-topic" name="topic"><option value="team">A team quiz</option><option value="party">A birthday or party</option><option value="study">Study club</option><option value="venue">Hosting at my venue</option><option value="other">Something else</option></select><span class="err"></span></div>
+          <div class="field"><label for="c-date">Date <span class="hint">(optional)</span></label><input id="c-date" name="date" type="date"><span class="err"></span></div>
+        </div>
+        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required minlength="10" aria-describedby="c-msg-err"></textarea><span class="err" id="c-msg-err"></span></div>
+        <button class="btn btn-solid btn-block" type="submit">Send message</button>
+      </form>
+      <div class="success" data-success="contact" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><h3>Message sent</h3><p>We will reply to <b data-echo="email">your email</b> within one working day.</p><a class="tlink" href="#/">Back to home<svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+    </div>
+    <aside class="card">
+      <h2 class="h3">Other ways to reach us</h2>
+      <ul class="facts" style="flex-direction:column;align-items:flex-start;font-weight:600">
+        <li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>hello@popround.example</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Monday to Friday, 10 am to 6 pm</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Studio 4, 21 Harbour Street, Bristol</li>
+      </ul>
+    </aside>
+  </section>
+</div>
+
+<div data-view="join">
+  <section class="wrap split" style="padding-top:clamp(28px,4vw,56px)">
+    <div class="pcard pc-lilac" style="align-items:flex-start;text-align:start;padding-bottom:28px">
+      <span class="tab">Free to join</span>
+      <p class="eyebrow">Join the club</p>
+      <h1 class="h1">Play more, <span class="pop">miss less</span></h1>
+      <p class="lede" style="margin-block:14px 18px">A free account keeps your team together and your seat saved.</p>
+      <ul class="ticks"><li><svg aria-hidden="true"><use href="#i-check"/></svg>Early booking for themed nights</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Your team's scores across the season</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>One email a week with the best question</li></ul>
+    </div>
+    <div class="card">
+      <form class="form" data-form="signup" style="margin:0">
+        <div class="field"><label for="s-name">Name</label><input id="s-name" name="name" required autocomplete="name" aria-describedby="s-name-err"><span class="err" id="s-name-err"></span></div>
+        <div class="field"><label for="s-email">Email</label><input id="s-email" name="email" type="email" required autocomplete="email" aria-describedby="s-email-err"><span class="err" id="s-email-err"></span></div>
+        <div class="field"><label for="s-pass">Password</label><input id="s-pass" name="password" type="password" required minlength="8" autocomplete="new-password" aria-describedby="s-pass-err"><span class="err" id="s-pass-err"></span></div>
+        <div class="field"><label for="s-track">Interested in a study track? <span class="hint">(optional)</span></label><select id="s-track" name="track"><option value="">Not right now</option><option value="exam-sprint-science">Exam sprint: science</option><option value="maths-in-minutes">Maths in minutes</option><option value="history-head-to-head">History head to head</option><option value="language-cafe">Language café rounds</option><option value="book-club-rounds">Book club rounds</option><option value="quiz-writing">Write a great quiz</option></select><span class="err"></span></div>
+        <div class="field"><label class="check"><input id="s-terms" name="terms" type="checkbox" required aria-describedby="s-terms-err">I agree to the <a href="#/terms">terms</a> and the <a href="#/privacy">privacy policy</a>.</label><span class="err" id="s-terms-err"></span></div>
+        <button class="btn btn-go btn-block" type="submit">Create my account</button>
+      </form>
+      <div class="success" data-success="signup" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><h3>Welcome to the club</h3><p>We sent a confirmation link to <b data-echo="email">your inbox</b>.</p><a class="btn btn-go" href="#/nights">Find your first night</a></div>
+    </div>
+  </section>
+</div>
+
+<div data-view="privacy"><section class="wrap legal"><p class="eyebrow">Legal</p><h1 class="h1">Privacy policy</h1><p class="lede">How Popround handles the details of players, parents and clients.</p><h2>What we collect</h2><p>Your name, email, bookings and team name. For study club, a parent's contact details and the student's year group.</p><h2>How we use it</h2><p>To hold your table, send booking details and run the season leaderboard. We never sell data or show ads.</p><h2>Your choices</h2><p>Ask for a copy or for deletion at any time by writing to privacy@popround.example.</p></section></div>
+<div data-view="terms"><section class="wrap legal"><p class="eyebrow">Legal</p><h1 class="h1">Terms</h1><p class="lede">The short version of how bookings work.</p><h2>Bookings</h2><p>A booking holds a table until the first question. Cancel up to a day before at no cost.</p><h2>Private events</h2><p>A deposit of a quarter of the price confirms the date. The rest is due a week before the event.</p><h2>Fair play</h2><p>Hosts have the final word on answers, ties and half points.</p></section></div>
+
+<div data-view="404">
+  <section class="notfound center"><div class="wrap"><div class="bigq" aria-hidden="true">?</div><h1 class="h1">This question has no answer</h1><p class="lede">The page may have moved, or the link has a typo.</p><div class="btn-row"><a class="btn btn-solid" href="#/">Go home</a><a class="btn btn-line" href="#/nights">Find a quiz night</a></div></div></section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-cols">
+      <nav aria-label="Popround"><h2>Popround</h2><ul><li><a href="#/about">About us</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/contact?topic=venue">Host at your venue</a></li><li><a href="#/join">Join free</a></li></ul></nav>
+      <nav aria-label="Play"><h2>Play</h2><ul><li><a href="#/nights">Quiz nights</a></li><li><a href="#/study">Study club</a></li><li><a href="#/teams">Team quizzes</a></li><li><a href="#play">Warm-up round</a></li></ul></nav>
+      <nav aria-label="Read"><h2>Read</h2><ul><li><a href="#/notes">Quiz notes</a></li><li><a href="#/faq">FAQ</a></li></ul></nav>
+      <nav aria-label="Legal"><h2>Legal</h2><ul><li><a href="#/privacy">Privacy policy</a></li><li><a href="#/terms">Terms</a></li></ul></nav>
+    </div>
+    <div class="foot-base"><a class="brand" href="#/"><svg class="brand-mark" aria-hidden="true"><use href="#i-mark"/></svg><b>Popround</b></a><span>© 2026 Popround. Quiz nights, study clubs and team quizzes.</span></div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks one ---------- */
+  const THEME_KEY = "popround-theme";
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get(THEME_KEY);
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  systemDark.addEventListener("change", (event) => { if (!store.get(THEME_KEY)) applyTheme(event.matches ? "dark" : "light"); });
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set(THEME_KEY, next);
+  });
+
+  /* ---------- Content: details that the cards do not show (titles, dates and prices come from the cards) ---------- */
+  const HOSTS = {
+    dee: ["Dee Okonkwo", "DO", 300, "Former science teacher. Strict about spelling, generous with half points."],
+    marta: ["Marta Silva", "MS", 150, "Biology graduate and our most patient explainer."],
+    lucia: ["Lucía Romero", "LR", 262, "Edits every question we write, and most of the jokes."],
+    sam: ["Sam Adeyemi", "SA", 20, "Runs our team quizzes, from twelve people to four hundred."],
+    kenji: ["Kenji Ito", "KI", 48, "Plays three seconds of a song and watches the room panic."],
+    hana: ["Hana Lee", "HL", 350, "Hosts the family brunches. Picture rounds a five-year-old can win."],
+  };
+  const PUB = "General knowledge|Picture round|Music intros|Science and nature|Wipeout|Jackpot question";
+  const NIGHTS = {
+    "general-knowledge": { date: "Thursday 5 March", where: "14 Mill Lane", host: "dee", rounds: PUB, about: "Tables seat up to eight. Answers go on paper, and phones stay in pockets." },
+    "film-and-tv": { date: "Friday 6 March", where: "3 Quay Steps", host: "kenji", rounds: "Opening lines|Three stills|Theme tunes|Who said it|Jackpot question", about: "Costumes welcome: the best-dressed table gets ten bonus points." },
+    "family-brunch": { date: "Sunday 8 March", where: "88 Park Row", host: "hana", rounds: "Animals|Picture round for under-8s|Sounds round|Grown-ups versus kids", about: "Under-12s play free, and every table gets colouring sheets." },
+    "name-that-intro": { date: "Tuesday 10 March", where: "21 Harbour Street", host: "kenji", rounds: "One-second intros|Number ones|Soundtracks|Finish the lyric", about: "It gets loud, so answers go on paper." },
+    "lunch-quiz": { date: "Wednesday 11 March", where: "link sent after booking", host: "sam", rounds: "This week's headlines|Picture round|Quick fire", about: "Thirty minutes on any device. Cameras optional." },
+    "kitchen-science": { date: "Saturday 14 March", where: "Room 2", host: "marta", rounds: "What floats?|Colour mixing|Kitchen chemistry|The big fizz finale", about: "For ages six to eleven with a grown-up. Free, but please book." },
+    "charity-quiz": { date: "Saturday 28 March", where: "2 Water Lane", host: "sam", rounds: PUB, about: "Every entry fee goes to the food bank, with a raffle at half-time." },
+  };
+  const POSTS = {
+    "fair-questions": { author: "lucia" },
+    "five-rounds": { author: "dee", body: ["With a crowd we do not know, we open with general knowledge, then a picture round so the quiet players can shine.", "Music goes third, a wipeout fifth to shake up the leaderboard, and a jackpot question keeps every table in it to the end."] },
+    "quiz-before-the-exam": { author: "marta", body: ["Trying to remember something strengthens it more than reading it again. A quiz is a friendly way to make people try.", "The leaderboard is not the point, but it is the reason half the class turns up on time."] },
+    icebreakers: { author: "sam", body: ["Most icebreakers ask people to talk about themselves before they feel safe. A quiz gives a mixed table something else to talk about.", "Start with a question everyone can answer, and the table is a team by question three."] },
+  };
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const SITE = "Popround";
+  const titles = { home: "Popround: quiz nights, study clubs and team quizzes", nights: "Quiz nights", study: "Study club", teams: "Team quizzes", notes: "Quiz notes", faq: "FAQ", about: "About", contact: "Contact", join: "Join free", privacy: "Privacy policy", terms: "Terms", "404": "Page not found" };
+  const DETAIL = { nights: "night", notes: "note" };
+  const parent = { night: "nights", note: "notes" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", slug: "", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, query = ""] = hash.slice(2).split("?");
+    const [first = "", second = "", extra] = path.split("/");
+    let view = first || "home";
+    if (second && DETAIL[first] && !extra) view = DETAIL[first];
+    else if (second || extra || parent[first]) view = "404";
+    return { view, slug: second, params: new URLSearchParams(query), anchor: "" };
+  }
+  const setText = (scope, attr, key, value) => { const el = $(`[${attr}="${key}"]`, scope); if (el) el.textContent = value; };
+  const host = (id) => HOSTS[id] || HOSTS.dee;
+  function setHost(view, attr, id) {
+    const [name, initials, hue, line] = host(id);
+    setText(view, attr, "host", name);
+    setText(view, attr, "hostline", line);
+    const ava = $(`[${attr}="ava"]`, view);
+    ava.textContent = initials;
+    ava.style.setProperty("--h", hue);
+  }
+  function resetForms(view) {
+    $$("form[data-form]", view).forEach((form) => {
+      form.reset();
+      form.hidden = false;
+      $$("[aria-invalid]", form).forEach((f) => f.removeAttribute("aria-invalid"));
+      $$(".err", form).forEach((e) => { e.textContent = ""; });
+      const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+      if (success) success.hidden = true;
+    });
+  }
+
+  function renderNight(slug) {
+    const card = Object.hasOwn(NIGHTS, slug) && $(`#nights-list [data-slug="${CSS.escape(slug)}"]`);
+    if (!card) return false;
+    const d = NIGHTS[slug];
+    const view = views.get("night");
+    const title = $(".ntitle", card).textContent;
+    setText(view, "data-n", "title", title);
+    setText(view, "data-n", "kind", $(".kind", card).textContent);
+    const [place, time] = $(".nmeta", card).textContent.split(" · ");
+    setText(view, "data-n", "time", time);
+    setText(view, "data-n", "venue", `${place}, ${d.where}`);
+    for (const key of ["date", "about"]) setText(view, "data-n", key, d[key]);
+    const price = $(".nend b", card).textContent;
+    setText(view, "data-n", "price", price === "Free" ? "Free" : `${price} a player`);
+    setText(view, "data-n", "seats", $(".nend small", card).textContent);
+    $('[data-n="rounds"]', view).replaceChildren(...d.rounds.split("|").map((text) => Object.assign(document.createElement("li"), { textContent: text })));
+    $('[data-n="band"]', view).style.setProperty("--h", card.style.getPropertyValue("--h"));
+    setHost(view, "data-n", d.host);
+    resetForms(view);
+    document.title = `${title} · ${SITE}`;
+    return true;
+  }
+
+  const notesList = $("#notes-list");
+  const firstBody = $('[data-p="body"]').innerHTML;
+  function renderNote(slug) {
+    const card = Object.hasOwn(POSTS, slug) && $(`[data-slug="${CSS.escape(slug)}"]`, notesList);
+    if (!card) return false;
+    const d = POSTS[slug];
+    const view = views.get("note");
+    const title = $(".stitle", card).textContent;
+    const [name, initials] = host(d.author);
+    setText(view, "data-p", "title", title);
+    setText(view, "data-p", "kind", $(".stab", card).textContent);
+    setText(view, "data-p", "author", name);
+    setText(view, "data-p", "ava", initials);
+    setText(view, "data-p", "date", $(".sby small", card).textContent);
+    const picture = $("img", card);
+    const img = $('[data-p="img"]', view);
+    img.src = picture.src;
+    img.alt = picture.alt;
+    const body = $('[data-p="body"]', view);
+    if (d.body) body.replaceChildren(...d.body.map((text) => Object.assign(document.createElement("p"), { textContent: text })));
+    else body.innerHTML = firstBody;
+    const items = [...notesList.children];
+    const next = items[(items.indexOf(card) + 1) % items.length];
+    setText(view, "data-p", "next-title", `Next: ${$(".stitle", next).textContent}`);
+    $('[data-p="next"]', view).setAttribute("href", `#/notes/${next.dataset.slug}`);
+    document.title = `${title} · Quiz notes · ${SITE}`;
+    return true;
+  }
+
+  function show(route, { scroll = true } = {}) {
+    let name = views.has(route.view) ? route.view : "404";
+    if (name === "night" && !renderNight(route.slug)) name = "404";
+    if (name === "note" && !renderNote(route.slug)) name = "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    if (titles[name]) document.title = name === "home" ? titles.home : `${titles[name]} · ${SITE}`;
+    const section = parent[name] || name;
+    $$(".modes a, .links a, .sheet a").forEach((a) => {
+      const href = a.getAttribute("href");
+      if (href.startsWith("#/") && href !== "#/" && parse(href).view === section) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "nights") { const q = p.get("q") || ""; $("#nights-q").value = q; filter("nights", p.get("kind") || "all", q); }
+    if (name === "study") filter("tracks", p.get("level") || "all");
+    if (name === "notes") filter("notes", p.get("kind") || "all");
+    if (name === "home") syncRail();
+    if (name === "teams") setMode(p.get("mode") === "online" ? "online" : "room");
+    if (name === "join") { resetForms(current); if (p.get("track")) setSelect("s-track", p.get("track")); }
+    if (name === "contact") { resetForms(current); if (p.get("topic")) setSelect("c-topic", p.get("topic")); }
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  function setSelect(id, value) {
+    const select = document.getElementById(id);
+    if ([...select.options].some((o) => o.value === value)) select.value = value;
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); if (menu.open) menu.close(); go(href); return; }
+    const target = href.length > 1 && document.getElementById(href.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    if (menu.open) menu.close();
+    /* a section ID on another view (the Play button points at #play on home): open that view first, then scroll */
+    const view = target.closest("[data-view]");
+    if (view && view !== current) go(view.dataset.view === "home" ? "#/" : `#/${view.dataset.view}`);
+    target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    if (target.id === "main") target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Menu sheet ---------- */
+  const menu = $("#menu");
+  const menuOpen = $("#menu-open");
+  menuOpen.addEventListener("click", () => { menu.showModal(); menuOpen.setAttribute("aria-expanded", "true"); });
+  $("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("close", () => menuOpen.setAttribute("aria-expanded", "false"));
+
+  /* ---------- Reveal: keyframes on entry; content stays visible without JS; timed fallback ---------- */
+  const io = "IntersectionObserver" in window && !reduced.matches ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) { $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in"))); }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Filters: chips with aria-pressed, an optional search, a live count, an empty state ---------- */
+  const nouns = { nights: ["night", "nights"], tracks: ["track", "tracks"], notes: ["note", "notes"] };
+  const query = {};
+  function filter(group, kind, q = query[group] || "") {
+    if (!$(`.chip[data-for="${group}"][data-filter="${CSS.escape(kind)}"]`)) kind = "all";
+    query[group] = q;
+    const needle = q.trim().toLowerCase();
+    const items = $$(`[data-list="${group}"] > [data-kind]`);
+    let shown = 0;
+    items.forEach((item) => {
+      item.hidden = (kind !== "all" && !item.dataset.kind.split(" ").includes(kind)) || (needle && !item.textContent.toLowerCase().includes(needle));
+      item.classList.remove("pop-in");
+      if (!item.hidden) { item.style.setProperty("--i", shown % 6); shown++; }
+    });
+    if (!reduced.matches) { void document.body.offsetWidth; items.forEach((item) => { if (!item.hidden) item.classList.add("pop-in"); }); }
+    $$(`.chip[data-for="${group}"]`).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === kind)));
+    $(`[data-count="${group}"]`).textContent = `${shown} ${nouns[group][shown === 1 ? 0 : 1]}`;
+    $(`[data-empty="${group}"]`).hidden = shown > 0;
+    filter[group] = kind;
+  }
+  document.addEventListener("click", (event) => {
+    const b = event.target.closest("button[data-filter]");
+    if (!b) return;
+    const clear = !b.classList.contains("chip");
+    if (clear && b.dataset.for === "nights") $("#nights-q").value = "";
+    filter(b.dataset.for, b.dataset.filter, clear ? "" : undefined);
+  });
+  $("#nights-q").addEventListener("input", (event) => filter("nights", filter.nights || "all", event.target.value));
+
+  /* ---------- Console search: Enter clicks the hidden button; both open the nights list filtered ---------- */
+  const find = $("[data-search]");
+  const runFind = (event) => { event.preventDefault(); const q = find.elements.q.value.trim(); go(q ? `#/nights?q=${encodeURIComponent(q)}` : "#/nights"); };
+  find.addEventListener("submit", runFind);
+  $("[type=submit]", find).addEventListener("click", runFind);
+
+  /* ---------- Teams: in the room or online ---------- */
+  function setMode(mode) {
+    $$("[data-mode]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
+    $$("[data-room]").forEach((el) => { el.textContent = el.dataset[mode]; });
+    $("#mode-note").textContent = mode === "room" ? "Prices for the room include travel within the city. Taxes added at checkout." : "Online prices include a rehearsal call and answer links for every player.";
+  }
+  $$("[data-mode]").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
+
+  /* ---------- Announcement strip ---------- */
+  const promo = $("#promo");
+  if (store.get("popround-promo") === "closed") promo.hidden = true;
+  $("#promo-close").addEventListener("click", () => { promo.hidden = true; store.set("popround-promo", "closed"); });
+
+  /* ---------- Rail: arrows scroll one tile and hide at the ends ---------- */
+  const rail = $("#rail");
+  const [prev, next] = $$("[data-rail]");
+  const step = () => rail.firstElementChild.getBoundingClientRect().width + 16;
+  $$("[data-rail]").forEach((b) => b.addEventListener("click", () => rail.scrollBy({ left: Number(b.dataset.rail) * step() * 2, behavior: reduced.matches ? "auto" : "smooth" })));
+  const syncRail = () => { prev.disabled = rail.scrollLeft <= 4; next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4; };
+  rail.addEventListener("scroll", syncRail, { passive: true });
+  addEventListener("resize", syncRail);
+
+  /* ---------- Home: the next three nights and the latest three notes are copied from their lists ---------- */
+  function copyCards(cards, target, titleSelector) {
+    target.append(...cards.slice(0, 3).map((card, i) => {
+      const copy = card.cloneNode(true);
+      const title = $(titleSelector, copy);
+      title.replaceWith(Object.assign(document.createElement("h3"), { className: title.className, textContent: title.textContent }));
+      copy.classList.add("reveal");
+      copy.style.setProperty("--d", i);
+      return copy;
+    }));
+  }
+  copyCards($$("#nights-list > li"), $("#home-nights"), ".ntitle");
+  copyCards($$(".scard", notesList), $("#home-notes"), ".stitle");
+
+  /* ---------- Warm-up round: three questions, a speed bonus, a live leaderboard ---------- */
+  const QUIZ = [
+    { q: "Which planet has the shortest day?", a: ["Mercury", "Jupiter", "Mars", "Venus"], right: 1, fact: "A day on Jupiter lasts just under ten hours." },
+    { q: "Which is the largest ocean on Earth?", a: ["Atlantic", "Indian", "Pacific", "Arctic"], right: 2, fact: "The Pacific covers about a third of the planet's surface." },
+    { q: "What do bees collect from flowers to make honey?", a: ["Pollen", "Nectar", "Sap", "Dew"], right: 1, fact: "Bees turn nectar into honey; pollen is their protein." },
+  ];
+  const quiz = { i: 0, score: 0, start: 0 };
+  const q = (key) => $(`[data-q="${key}"]`);
+  const answers = $$(".ans", q("answers"));
+  const board = q("board");
+  const nf = new Intl.NumberFormat("en");
+  function ask() {
+    const item = QUIZ[quiz.i];
+    q("count").textContent = `Question ${quiz.i + 1} of ${QUIZ.length}`;
+    q("text").textContent = item.q;
+    answers.forEach((button, i) => {
+      button.disabled = false;
+      button.classList.remove("is-right", "is-picked");
+      $("span", button).textContent = item.a[i];
+      $(".mark", button)?.remove();
+    });
+    q("answers").classList.remove("done");
+    q("fact").textContent = "Pick an answer. The bar shows your speed bonus.";
+    q("next").hidden = true;
+    const timer = q("timer");
+    timer.classList.remove("run");
+    void timer.offsetWidth;
+    timer.classList.add("run");
+    quiz.start = performance.now();
+  }
+  function rank() {
+    const rows = [...board.children].sort((a, b) => Number(b.dataset.pts) - Number(a.dataset.pts) || (a.classList.contains("you") ? 1 : -1));
+    rows.forEach((row, i) => { $("b", row).textContent = i + 1; });
+    board.append(...rows);
+    return rows.findIndex((row) => row.classList.contains("you")) + 1;
+  }
+  answers.forEach((button, i) => button.addEventListener("click", () => {
+    const item = QUIZ[quiz.i];
+    const right = i === item.right;
+    const bonus = Math.max(0, 1 - (performance.now() - quiz.start) / 20000);
+    const points = right ? Math.round(500 + 500 * bonus) : 0;
+    quiz.score += points;
+    q("timer").classList.remove("run");
+    q("answers").classList.add("done");
+    answers.forEach((b) => { b.disabled = true; });
+    const correct = answers[item.right];
+    correct.classList.add("is-right");
+    correct.insertAdjacentHTML("beforeend", '<svg class="icon mark" aria-hidden="true"><use href="#i-check"/></svg>');
+    if (!right) {
+      button.classList.add("is-picked");
+      button.insertAdjacentHTML("beforeend", '<svg class="icon mark" aria-hidden="true"><use href="#i-close"/></svg>');
+    }
+    q("score").textContent = nf.format(quiz.score);
+    const you = $(".you", board);
+    you.dataset.pts = quiz.score;
+    $("em", you).textContent = nf.format(quiz.score);
+    const place = rank();
+    const last = quiz.i === QUIZ.length - 1;
+    q("fact").innerHTML = "";
+    q("fact").append(Object.assign(document.createElement("b"), { textContent: right ? `Correct, +${points} points. ` : `Not quite: it's ${item.a[item.right]}. ` }), last ? `You finished in place ${place} of ${board.children.length}.` : item.fact);
+    q("next").textContent = last ? "Play again" : "Next question";
+    q("next").hidden = false;
+    q("next").focus({ preventScroll: true });
+  }));
+  q("next").addEventListener("click", () => {
+    if (quiz.i === QUIZ.length - 1) {
+      quiz.i = 0;
+      quiz.score = 0;
+      q("score").textContent = "0";
+      const you = $(".you", board);
+      you.dataset.pts = 0;
+      $("em", you).textContent = "0";
+      rank();
+    } else quiz.i++;
+    ask();
+  });
+  ask();
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please add a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    let text = problem ? messages[problem] : "";
+    if (problem === "tooShort" && field.type === "password") text = `Use at least ${field.minLength} characters.`;
+    if (problem === "valueMissing" && field.type === "checkbox") text = "Please tick this box to continue.";
+    error.textContent = text;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input, textarea", form);
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value && field.type !== "checkbox") checkField(field); });
+      field.addEventListener(field.type === "checkbox" ? "change" : "input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before "submit" fires, so the button's click runs it too (Enter clicks it). */
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    const send = () => {
+      if (button.disabled) return;
+      if (!fields.map(checkField).every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+        const email = form.elements.email?.value;
+        $$("[data-echo='email']", success).forEach((el) => { if (email) el.textContent = email; });
+        form.hidden = true;
+        success.hidden = false;
+        button.disabled = false;
+        button.textContent = label;
+      }, 600);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+  });
+
+  /* ---------- Start ---------- */
+  const start = parse(location.hash);
+  show(start, { scroll: false });
+  if (start.anchor) document.getElementById(start.anchor.slice(1))?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

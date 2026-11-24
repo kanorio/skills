@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Tendwell: home help, booked in minutes</title>
+<meta name="description" content="Tendwell sends vetted local pros for cleaning, repairs, furniture assembly, moving help and garden work. See prices, pick a two-hour window and book in minutes.">
+<meta property="og:title" content="Tendwell: home help, booked in minutes">
+<meta property="og:description" content="Cleaning, repairs, assembly, moving help and garden work from vetted local pros. Prices up front.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/albert-sans-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font: Albert Sans, one variable file for every weight ---------- */
+@font-face {
+  font-family: "Albert Sans";
+  src: url("fonts/albert-sans-latin-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Tokens: light (default, follows the system setting) ---------- */
+:root {
+  color-scheme: light;
+  --paper: oklch(100% 0 0);              /* white bands */
+  --bg: var(--paper);
+  --surface: oklch(96.5% 0 0);           /* fields, cards and chips on white */
+  --surface-2: oklch(91.5% 0 0);         /* hover and pressed */
+  --text: oklch(0% 0 0);
+  --text-muted: oklch(44% 0 0);
+  --border: oklch(89% 0 0);
+  --accent: oklch(0% 0 0);               /* the main button: black on white, white on black */
+  --accent-text: oklch(100% 0 0);
+  --ink: oklch(0% 0 0);                  /* black bands, header and footer, in both themes */
+  --ink-field: oklch(96.5% 0 0);         /* fields sitting on a black band */
+  --ink-field-text: oklch(0% 0 0);
+  --signal: oklch(50% 0.13 155);         /* availability and success only */
+  --danger: oklch(52% 0.2 27);
+  --tint: oklch(84% 0.06 230);           /* the one coloured panel per page */
+  --shadow-card: 0 4px 16px oklch(0% 0 0 / 0.16);
+  --shadow-overlay: 0 12px 40px oklch(0% 0 0 / 0.32);
+
+  --font: "Albert Sans", system-ui, "Helvetica Neue", Arial, sans-serif;
+  --fs-display: clamp(2.5rem, 1.7rem + 2.6vw, 3.5rem);
+  --fs-h1: clamp(2.25rem, 1.7rem + 2.2vw, 3.25rem);
+  --fs-h2: clamp(1.75rem, 1.4rem + 1.4vw, 2.25rem);
+  --fs-h3: 1.25rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+
+  --r-control: 8px;
+  --r-card: 8px;
+  --r-media: 8px;
+  --r-pill: 999px;
+  --r-panel: 16px;
+  --r-block: 32px;
+
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 500ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  --wrap: 1152px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --field: var(--surface);
+  --field-text: var(--text);
+  --chip: var(--surface);
+}
+/* ---------- Tokens: dark (behind the toggle, or the system setting without JS) ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: oklch(17% 0 0);
+  --surface: oklch(24% 0 0);
+  --surface-2: oklch(31% 0 0);
+  --text: oklch(98% 0 0);
+  --text-muted: oklch(76% 0 0);
+  --border: oklch(32% 0 0);
+  --accent: oklch(100% 0 0);
+  --accent-text: oklch(0% 0 0);
+  --ink-field: oklch(25% 0 0);
+  --ink-field-text: oklch(98% 0 0);
+  --signal: oklch(76% 0.15 155);
+  --danger: oklch(72% 0.17 25);
+  --tint: oklch(36% 0.06 230);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: oklch(17% 0 0);
+    --surface: oklch(24% 0 0);
+    --surface-2: oklch(31% 0 0);
+    --text: oklch(98% 0 0);
+    --text-muted: oklch(76% 0 0);
+    --border: oklch(32% 0 0);
+    --accent: oklch(100% 0 0);
+    --accent-text: oklch(0% 0 0);
+    --ink-field: oklch(25% 0 0);
+    --ink-field-text: oklch(98% 0 0);
+    --signal: oklch(76% 0.15 155);
+    --danger: oklch(72% 0.17 25);
+    --tint: oklch(36% 0.06 230);
+  }
+}
+/* Inside a black band every token flips, so components work unchanged on either colour */
+.ink {
+  --bg: var(--ink);
+  --surface: oklch(25% 0 0);
+  --surface-2: oklch(33% 0 0);
+  --text: oklch(100% 0 0);
+  --text-muted: oklch(78% 0 0);
+  --border: oklch(30% 0 0);
+  --accent: oklch(100% 0 0);
+  --accent-text: oklch(0% 0 0);
+  --field: var(--ink-field);
+  --field-text: var(--ink-field-text);
+  --chip: oklch(14% 0 0);
+  --signal: oklch(76% 0.15 155);
+  --danger: oklch(72% 0.17 25);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; }
+body { margin: 0; background: var(--paper); color: var(--text); font: 400 var(--fs-body)/1.5 var(--font); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+h1, h2, h3, p, ul, ol, figure, dl, dd, fieldset { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+fieldset { padding: 0; border: 0; min-width: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 50; padding: 10px 16px; border-radius: var(--r-control); background: var(--accent); color: var(--accent-text); }
+.skip:focus { top: 12px; }
+.wrap { width: min(var(--wrap), 100% - 2 * var(--gutter)); margin-inline: auto; }
+.narrow { width: min(720px, 100% - 2 * var(--gutter)); margin-inline: auto; }
+.icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.fill { fill: currentColor; stroke: none; }
+
+/* ---------- Type ---------- */
+.display, .h1, .h2 { font-weight: 700; text-wrap: balance; }
+.display { font-size: var(--fs-display); line-height: 1.04; letter-spacing: -0.03em; }
+.h1 { font-size: var(--fs-h1); line-height: 1.08; letter-spacing: -0.025em; }
+.h2 { font-size: var(--fs-h2); line-height: 1.15; letter-spacing: -0.02em; }
+.h3 { font-size: var(--fs-h3); font-weight: 600; line-height: 1.3; letter-spacing: -0.005em; }
+.lead { font-size: 1.125rem; line-height: 1.55; }
+.muted { color: var(--text-muted); }
+.small { font-size: var(--fs-small); }
+.tiny { font-size: 0.75rem; }
+.stack > * + * { margin-top: var(--gap, 16px); }
+
+/* ---------- Bands: black and white alternate; a seam picture straddles the change ---------- */
+.band { background: var(--bg); color: var(--text); padding-block: clamp(56px, 7vw, 88px); }
+.band.flush-top { padding-top: 0; }
+.band.flush-bottom { padding-bottom: 0; }
+.ink { background: var(--bg); color: var(--text); }
+.seam { --from: var(--ink); --to: var(--paper); background: linear-gradient(var(--from) 50%, var(--to) 50%); }
+.seam.up { --from: var(--paper); --to: var(--ink); }
+.seam img { width: 100%; aspect-ratio: 32 / 9; object-fit: cover; border-radius: var(--r-block); }
+.sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 16px; margin-bottom: 32px; }
+.sec-head .tlink { white-space: nowrap; }
+
+/* ---------- Header: black bar, pill links ---------- */
+.top { position: sticky; top: 0; z-index: 30; }
+.top-in { width: min(1280px, 100% - 2 * var(--gutter)); margin-inline: auto; height: 64px; display: flex; align-items: center; gap: 4px; }
+.brand { font-size: 1.5rem; font-weight: 500; letter-spacing: -0.035em; text-decoration: none; margin-right: 20px; white-space: nowrap; }
+.nav { display: flex; gap: 4px; }
+.top-end { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+#menu-open { display: none; }
+@media (max-width: 960px) { .nav, .top .hide-sm { display: none; } #menu-open { display: inline-flex; } }
+
+/* ---------- Pills: links, chips, small buttons ---------- */
+.pill { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; padding: 0 12px; border: 0; border-radius: var(--r-pill); background: var(--chip); color: var(--text); font-size: var(--fs-small); font-weight: 500; line-height: 1; text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.pill:hover, .pill[aria-current="page"] { background: var(--surface-2); }
+.pill.solid { background: var(--accent); color: var(--accent-text); }
+.pill.solid:hover { background: color-mix(in oklch, var(--accent) 86%, var(--bg)); }
+.pill.round { width: 36px; padding: 0; }
+.pill.lg { min-height: 48px; padding: 0 20px; font-size: 1rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+
+/* ---------- Buttons and text links ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 24px; border: 0; border-radius: var(--r-control); background: var(--accent); color: var(--accent-text); font-size: 1rem; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease); }
+.btn:hover { background: color-mix(in oklch, var(--accent) 84%, var(--bg)); }
+.btn.alt { background: var(--surface); color: var(--text); }
+.btn.alt:hover { background: var(--surface-2); }
+.btn.wide { width: 100%; }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.tlink { font-weight: 500; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 7px; }
+.tlink:hover { text-decoration-thickness: 2px; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
+
+/* ---------- Fields ---------- */
+.field { display: block; width: 100%; min-height: 56px; padding: 0 16px; border: 2px solid transparent; border-radius: var(--r-control); background: var(--field); color: var(--field-text); font-size: 1rem; appearance: none; transition: border-color var(--dur-fast) var(--ease); }
+textarea.field { min-height: 128px; padding-block: 14px; resize: vertical; }
+.field::placeholder { color: color-mix(in oklch, var(--field-text) 58%, transparent); }
+.field:focus, .field:focus-visible { outline: none; border-color: var(--field-text); }
+.field[aria-invalid="true"] { border-color: var(--danger); }
+.sel { position: relative; }
+.sel .field { padding-right: 44px; cursor: pointer; }
+.sel > .icon { position: absolute; right: 16px; top: 18px; pointer-events: none; color: var(--field-text); }
+.f { position: relative; margin-bottom: 28px; }
+.f > label:not(.check), .legend { display: block; margin-bottom: 8px; font-size: var(--fs-small); font-weight: 500; }
+.err { position: absolute; left: 0; top: calc(100% + 4px); margin: 0; font-size: 0.8125rem; line-height: 1.3; color: var(--danger); }
+.err:empty { display: none; }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: var(--fs-small); cursor: pointer; }
+.check input { width: 20px; height: 20px; margin: 0; accent-color: var(--accent); flex: none; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+
+/* ---------- The route form: stacked fields joined by a line, dot at the start, square at the end ---------- */
+.stops { position: relative; display: grid; gap: 16px; margin-bottom: 28px; }
+.stops::before { content: ""; position: absolute; left: 25px; top: 28px; bottom: 28px; width: 2px; background: var(--text); }
+.stop { position: relative; z-index: 1; }
+.stop .field { padding-left: 52px; }
+.stop::after { content: ""; position: absolute; left: 20px; top: 23px; width: 12px; height: 12px; border-radius: 50%; background: var(--field-text); }
+.stop:last-of-type::after { border-radius: 2px; }
+.stop:not(:last-of-type) .field { background-image: linear-gradient(var(--field-text), var(--field-text)); background-size: 2px 20px; background-position: 23px 100%; background-repeat: no-repeat; }
+.stop:not(:first-of-type) .field { background-image: linear-gradient(var(--field-text), var(--field-text)); background-size: 2px 20px; background-position: 23px 0; background-repeat: no-repeat; }
+.stop:not(:first-of-type):not(:last-of-type) .field { background-image: linear-gradient(var(--field-text), var(--field-text)), linear-gradient(var(--field-text), var(--field-text)); background-size: 2px 20px, 2px 20px; background-position: 23px 0, 23px 100%; }
+.stop-act { position: absolute; right: 8px; top: 8px; width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--field-text); }
+.stop-act:hover { background: color-mix(in oklch, var(--field-text) 10%, transparent); }
+.stops > .err { top: calc(100% + 6px); }
+.when { display: inline-flex; margin-bottom: 24px; }
+.when .field { min-height: 48px; width: auto; padding: 0 44px; border-radius: var(--r-pill); font-weight: 600; }
+.when > .icon:first-child { left: 16px; right: auto; top: 14px; }
+.when > .icon:last-child { top: 14px; }
+
+/* ---------- Hero ---------- */
+.hero { padding-block: clamp(32px, 5vw, 64px) clamp(56px, 7vw, 88px); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px 64px; align-items: start; }
+.hero-copy { max-width: 460px; }
+.loc { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-bottom: 12px; font-size: var(--fs-small); font-weight: 600; }
+.loc .tlink { font-weight: 400; text-underline-offset: 4px; }
+.hero .display, .hero .h1 { margin-bottom: 24px; }
+.mosaic { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-width: 460px; }
+.mosaic img { width: 100%; aspect-ratio: 5 / 4; object-fit: cover; border-radius: 4px; }
+.mosaic img:nth-child(odd) { transform: translateY(24px); }
+.float-card { position: absolute; left: 12px; right: 12px; bottom: -12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 12px 12px 20px; border-radius: var(--r-panel); background: oklch(18% 0 0 / 0.72); color: oklch(100% 0 0); font-weight: 600; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: var(--shadow-card); }
+.float-card .pill { --chip: oklch(100% 0 0); color: oklch(0% 0 0); min-height: 44px; padding: 0 16px; font-size: 1rem; }
+.hero-art img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--r-media); }
+
+/* ---------- Service cards: grey card, small title, white pill, spot drawing on the right ---------- */
+.svc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.svc { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 96px; gap: 8px 12px; min-height: 160px; padding: 16px; border-radius: var(--r-card); background: var(--surface); transition: background-color var(--dur-fast) var(--ease); }
+.svc:hover { background: var(--surface-2); }
+.svc h3 { font-size: 1.0625rem; font-weight: 600; }
+.svc p { font-size: 0.8125rem; line-height: 1.45; margin-top: 6px; }
+.svc .pill { align-self: end; justify-self: start; margin-top: 12px; }
+.svc .pill::after { content: ""; position: absolute; inset: 0; border-radius: var(--r-card); }
+.svc .spot { grid-column: 2; grid-row: 1 / span 2; width: 96px; height: 96px; align-self: center; }
+.svc .price { font-size: 0.8125rem; font-weight: 600; margin-top: 8px; }
+
+/* ---------- Steps carousel: counter and round arrows ---------- */
+.track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 2 * 24px) / 3); gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; position: relative; }
+.track::-webkit-scrollbar { display: none; }
+.track > * { scroll-snap-align: start; }
+.step img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; margin-bottom: 20px; }
+.step h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 8px; }
+.pager { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 32px; font-size: var(--fs-small); font-weight: 600; }
+.pager .pill { width: 52px; min-height: 52px; --chip: var(--accent); color: var(--accent-text); }
+.pager .pill:disabled { opacity: 0.45; cursor: default; }
+.pager .count { margin-right: 12px; font-variant-numeric: tabular-nums; }
+
+/* ---------- Columns, splits and picture cards ---------- */
+.cols3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 36px; }
+.col img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; margin-bottom: 24px; }
+.col h3 { margin-bottom: 12px; }
+.col p { margin-bottom: 20px; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px 96px; align-items: center; }
+.split img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--r-media); }
+.split .h2 { margin-bottom: 20px; }
+.split p + .actions, .split p + .btn, .split p + .pill { margin-top: 32px; }
+.pics2 { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+.pics2 img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--r-media); margin-bottom: 24px; }
+.pics2 h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 8px; }
+.pics2 .btn { margin-top: 24px; }
+.orb { position: relative; max-width: 520px; padding-bottom: 56px; }
+.orb > img { width: 82%; margin-inline: auto; aspect-ratio: 1; object-fit: cover; border-radius: 50%; }
+.orb ul { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; gap: 12px; }
+.orb li { width: 30%; aspect-ratio: 1; display: grid; place-items: center; border-radius: 22px; background: oklch(14% 0 0); border: 2px solid oklch(32% 0 0); box-shadow: var(--shadow-card); }
+.orb li svg { width: 60%; height: 60%; }
+
+/* ---------- Contact cards (white boxes on black) ---------- */
+.cards2 { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+.lcard { display: flex; align-items: center; gap: 24px; padding: 24px 24px 24px 28px; background: oklch(100% 0 0); color: oklch(0% 0 0); text-decoration: none; min-height: 140px; }
+.lcard .tile { width: 88px; height: 88px; display: grid; place-items: center; border-radius: 20px; background: oklch(0% 0 0); color: oklch(100% 0 0); flex: none; }
+.lcard .tile .icon { width: 36px; height: 36px; }
+.lcard b { display: block; font-size: 1.5rem; letter-spacing: -0.02em; }
+.lcard > .icon { margin-left: auto; }
+.lcard:hover > .icon { transform: translateX(4px); }
+.lcard > .icon { transition: transform var(--dur-fast) var(--ease); }
+
+/* ---------- Sub-nav (section pages) ---------- */
+.subnav { background: var(--paper); border-bottom: 1px solid var(--border); }
+.subnav .top-in { gap: 24px; overflow-x: auto; scrollbar-width: none; position: relative; }
+.subnav b { font-size: 1.5rem; letter-spacing: -0.03em; margin-right: auto; white-space: nowrap; }
+.subnav a { font-size: var(--fs-small); color: var(--text-muted); text-decoration: none; white-space: nowrap; }
+.subnav a:hover { color: var(--text); }
+
+/* ---------- Lists, tables, FAQ ---------- */
+.ticks li { position: relative; padding-left: 36px; margin-bottom: 14px; }
+.ticks li::before { content: ""; position: absolute; left: 0; top: 2px; width: 20px; height: 20px; border-radius: 50%; background: var(--text); }
+.ticks li::after { content: ""; position: absolute; left: 6px; top: 7px; width: 8px; height: 5px; border-left: 2px solid var(--bg); border-bottom: 2px solid var(--bg); transform: rotate(-45deg); }
+.ticks.two { columns: 2; column-gap: 48px; }
+.ticks.two li { break-inside: avoid; }
+.rows { border-top: 1px solid var(--border); }
+.rows > * { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 24px; align-items: center; padding: 18px 4px; border-bottom: 1px solid var(--border); }
+.rows .num { font-variant-numeric: tabular-nums; font-weight: 600; min-width: 84px; text-align: right; }
+.rows .head { font-size: 0.8125rem; color: var(--text-muted); padding-block: 12px; }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px; font-weight: 500; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(180deg); }
+.faq details > div { padding: 0 20px 24px; color: var(--text-muted); max-width: 72ch; }
+.faq details[open] > div { animation: rise var(--dur-base) var(--ease) both; }
+.faq-group + .faq-group { margin-top: 40px; }
+.faq-group > h2 { margin-bottom: 8px; }
+
+/* ---------- Plans ---------- */
+.seg { display: inline-flex; padding: 4px; gap: 4px; border-radius: var(--r-pill); background: var(--chip); margin-bottom: 40px; }
+.seg .pill { --chip: transparent; min-height: 40px; padding: 0 18px; }
+.seg .pill[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+.plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; max-width: 900px; }
+.plan { display: flex; flex-direction: column; gap: 16px; padding: 32px; border-radius: var(--r-panel); background: var(--surface); }
+.plan .amount { font-size: 3rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.plan .ticks { margin-block: 8px 16px; }
+.plan .btn { margin-top: auto; }
+.plan .btn.alt { background: var(--surface-2); }
+.tag { display: inline-flex; align-items: center; gap: 6px; min-height: 24px; padding: 0 10px; border-radius: var(--r-pill); background: var(--text); color: var(--bg); font-size: 0.75rem; font-weight: 600; align-self: flex-start; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--signal); display: inline-block; flex: none; }
+
+/* ---------- Coloured panel (plan ahead) ---------- */
+.panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); overflow: hidden; border-radius: var(--r-panel); background: var(--tint); }
+.panel > div { padding: clamp(28px, 4vw, 40px); }
+.panel img { width: 100%; height: 100%; min-height: 280px; object-fit: cover; }
+.panel .h2 { margin-bottom: 24px; }
+
+/* ---------- Booking ---------- */
+.book { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 48px 64px; align-items: start; }
+.book fieldset { margin-bottom: 40px; }
+.book legend { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 16px; padding: 0; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt { position: relative; }
+.opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.opt > span { display: inline-flex; flex-direction: column; justify-content: center; min-height: 56px; padding: 6px 18px; border-radius: var(--r-control); background: var(--surface); font-size: var(--fs-small); font-weight: 600; line-height: 1.25; transition: background-color var(--dur-fast) var(--ease); }
+.opt small { font-weight: 400; color: var(--text-muted); }
+.opt input:checked + span { background: var(--text); color: var(--bg); }
+.opt input:checked + span small { color: inherit; }
+.opt input:focus-visible + span { outline: 2px solid var(--text); outline-offset: 2px; }
+.opt .dot { margin-right: 6px; }
+.summary { position: sticky; top: 88px; padding: 24px; border-radius: var(--r-panel); background: var(--surface); }
+.summary dl { display: grid; grid-template-columns: auto 1fr; gap: 12px 16px; margin-block: 20px; font-size: var(--fs-small); }
+.summary dt { color: var(--text-muted); }
+.summary dd { text-align: right; font-weight: 500; }
+.summary .total { display: flex; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--border); font-size: 1.125rem; font-weight: 700; }
+.done { padding: 32px; border-radius: var(--r-panel); background: var(--surface); animation: rise var(--dur-slow) var(--ease) both; }
+.done .badge { width: 56px; height: 56px; display: grid; place-items: center; border-radius: 50%; background: var(--signal); color: oklch(100% 0 0); margin-bottom: 20px; }
+.done .badge .icon { width: 28px; height: 28px; stroke-width: 3; }
+.done .h2 { margin-bottom: 12px; }
+.done .actions { margin-top: 24px; }
+
+/* ---------- Search field, count line, empty states ---------- */
+.search { position: relative; max-width: 560px; margin-block: 24px 20px; }
+.search .field { border-radius: var(--r-pill); padding-left: 52px; }
+.search .icon { position: absolute; left: 20px; top: 18px; color: var(--field-text); }
+.count-line { margin-block: 24px 16px; font-size: var(--fs-small); color: var(--text-muted); }
+.empty { padding: 40px 0; color: var(--text-muted); }
+
+/* ---------- Journal and article ---------- */
+.feature { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px 48px; align-items: center; margin-bottom: 56px; text-decoration: none; }
+.feature img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--r-media); }
+.feature .h2 { margin-block: 8px 12px; }
+.posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 24px; }
+.post-card { text-decoration: none; }
+.post-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; margin-bottom: 16px; }
+.post-card h3 { font-size: 1.125rem; font-weight: 600; margin-block: 6px; }
+.post-card:hover h3 { text-decoration: underline; text-underline-offset: 4px; }
+.meta { font-size: 0.8125rem; color: var(--text-muted); }
+.article > * + * { margin-top: 20px; }
+.article h2 { font-size: 1.5rem; letter-spacing: -0.015em; margin-top: 40px; }
+.article img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--r-media); margin-block: 32px; }
+.article .ticks { margin-top: 20px; }
+
+/* ---------- Big numbers ---------- */
+.nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.nums b { display: block; font-size: clamp(2.5rem, 2rem + 2vw, 4rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin-bottom: 12px; }
+
+/* ---------- Footer ---------- */
+.foot { padding-block: 64px 40px; }
+.foot .brand { display: inline-block; margin-bottom: 32px; }
+.foot-cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 1.5fr); gap: 32px; margin-block: 48px; }
+.foot-cols h2 { font-size: 1.125rem; font-weight: 600; margin-bottom: 20px; }
+.foot-cols li { margin-bottom: 14px; }
+.foot-cols a { font-size: var(--fs-small); text-decoration: none; }
+.foot-cols a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.foot-news .f { margin-bottom: 12px; }
+.foot-news .field { min-height: 48px; }
+.foot-base { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding-top: 32px; font-size: 0.8125rem; color: var(--text-muted); }
+.foot-base nav { display: flex; gap: 24px; }
+.foot-base a { text-decoration: none; }
+
+/* ---------- Menu (phones and tablets) ---------- */
+.menu { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0; border: 0; }
+.menu[open] { animation: fade var(--dur-base) var(--ease) both; }
+.menu::backdrop { background: transparent; }
+.menu .top-in { justify-content: space-between; }
+.menu-links { display: grid; gap: 4px; padding: 24px var(--gutter) 40px; }
+.menu-links a { font-size: 1.75rem; font-weight: 600; letter-spacing: -0.02em; text-decoration: none; padding-block: 6px; }
+.menu .actions { padding: 0 var(--gutter); }
+
+/* ---------- Reveal and keyframes (content stays visible without JS; timed fallback) ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.js .reveal:not(.is-in) { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+.js [data-view].is-active .hero-copy > *, .js [data-view].is-active .mosaic { animation: rise var(--dur-slow) var(--ease) both; }
+.js [data-view].is-active .hero-copy > :nth-child(2) { animation-delay: 60ms; }
+.js [data-view].is-active .hero-copy > :nth-child(n+3) { animation-delay: 120ms; }
+.js [data-view].is-active .mosaic { animation-delay: 160ms; }
+.js [data-view]:not(.is-active) { display: none; }
+:root:not(.js) .needs-js { display: none; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .hero-grid, .split, .feature, .book, .panel { grid-template-columns: minmax(0, 1fr); }
+  .hero-copy { max-width: 560px; }
+  .svc-grid, .posts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .track { grid-auto-columns: calc((100% - 24px) / 2); }
+  .foot-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .foot-news { grid-column: 1 / -1; }
+  .summary { position: static; }
+  .split .orb { margin-inline: auto; }
+}
+@media (max-width: 720px) {
+  .svc-grid, .posts, .cols3, .pics2, .cards2, .plans, .nums { grid-template-columns: minmax(0, 1fr); }
+  .track { grid-auto-columns: 86%; gap: 16px; }
+  .seam img { aspect-ratio: 16 / 9; border-radius: 24px; }
+  .ticks.two { columns: 1; }
+  .rows > * { grid-template-columns: minmax(0, 1fr) auto; }
+  .rows .hide-xs { display: none; }
+  .lcard { padding: 20px; gap: 16px; min-height: 0; }
+  .lcard .tile { width: 64px; height: 64px; border-radius: 16px; }
+  .lcard b { font-size: 1.25rem; }
+  .brand { margin-right: auto; }
+  .top .solid { padding: 0 14px; }
+  .float-card { position: static; margin-top: 32px; grid-column: 1 / -1; }
+  .mosaic img:nth-child(odd) { transform: none; }
+}
+@media (max-width: 420px) { .row2 { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal:not(.is-in) { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-pin" viewBox="0 0 24 24"><path class="fill" fill-rule="evenodd" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><path class="fill" fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 10.6V6h-2v7.4l4.3 3.1 1.2-1.6Z"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-locate" viewBox="0 0 24 24"><path class="fill" d="M21 3 3 10.5l7.5 3 3 7.5Z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4Z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></symbol>
+  <symbol id="s-spray" viewBox="0 0 64 64"><path d="M22 26h20l2 30H20Z" fill="#2d5bd7"/><path d="M22 26h20l2 30H32Z" fill="#1f44b0"/><path d="M24 14h18v12H24Z" fill="#f2c230"/><path d="M42 16h10v5H42Z" fill="#111"/><circle cx="57" cy="13" r="2" fill="#9cc8ee"/><circle cx="58" cy="21" r="2" fill="#9cc8ee"/><circle cx="61" cy="17" r="2" fill="#9cc8ee"/><path d="M30 34h6v10h-6Z" fill="#f3ecdf"/></symbol>
+  <symbol id="s-bucket" viewBox="0 0 64 64"><path d="M12 26h40l-5 30H17Z" fill="#2e7d5b"/><path d="M32 26h20l-5 30H32Z" fill="#256a4c"/><ellipse cx="32" cy="26" rx="20" ry="5" fill="#9cc8ee"/><rect x="24" y="12" width="22" height="12" rx="3" fill="#f2c230" transform="rotate(-12 35 18)"/><path d="M12 26q20-26 40 0" fill="none" stroke="#111" stroke-width="3"/></symbol>
+  <symbol id="s-wrench" viewBox="0 0 64 64"><path d="M14 50 40 24" stroke="#c9ccd2" stroke-width="8" stroke-linecap="round"/><circle cx="45" cy="19" r="10" fill="#c9ccd2"/><path d="M45 9 l6 6-6 6-6-6Z" fill="#111" opacity=".85"/><path d="M50 50 26 26" stroke="#111" stroke-width="4"/><path d="M52 52 44 44" stroke="#e8693a" stroke-width="10" stroke-linecap="round"/></symbol>
+  <symbol id="s-drop" viewBox="0 0 64 64"><path d="M10 20h26v8H18v6h-8Z" fill="#c9ccd2"/><path d="M26 12h6v8h-6Z" fill="#111"/><path d="M14 40c0 0-8 10-8 15a8 8 0 0 0 16 0c0-5-8-15-8-15Z" fill="#9cc8ee"/><path d="M40 30h18v26H40Z" fill="#e8693a"/><path d="M40 30h18v6H40Z" fill="#111" opacity=".3"/></symbol>
+  <symbol id="s-flatpack" viewBox="0 0 64 64"><path d="M10 22 36 14l18 8-26 9Z" fill="#d9a86e"/><path d="M10 22l18 9v22l-18-9Z" fill="#c99a5e"/><path d="M28 31l26-9v22l-26 9Z" fill="#b5864f"/><path d="M38 40v-8l8 4" fill="none" stroke="#f3ecdf" stroke-width="3"/><path d="M14 58h12l-4-6" fill="none" stroke="#111" stroke-width="3" stroke-linecap="round"/></symbol>
+  <symbol id="s-screen" viewBox="0 0 64 64"><rect x="6" y="12" width="52" height="32" rx="3" fill="#111"/><rect x="10" y="16" width="44" height="24" fill="#2d5bd7"/><path d="M10 40 30 22l24 18Z" fill="#9cc8ee"/><circle cx="44" cy="22" r="4" fill="#f2c230"/><path d="M24 50h16M32 44v6" stroke="#c9ccd2" stroke-width="4"/></symbol>
+  <symbol id="s-boxes" viewBox="0 0 64 64"><rect x="8" y="30" width="28" height="26" fill="#c99a5e"/><rect x="36" y="34" width="22" height="22" fill="#b5864f"/><rect x="14" y="8" width="26" height="22" fill="#d9a86e"/><path d="M22 30v26M47 34v22M27 8v22" stroke="#f3ecdf" stroke-width="4"/></symbol>
+  <symbol id="s-bag" viewBox="0 0 64 64"><path d="M20 22q12-8 24 0l6 30q-18 8-36 0Z" fill="#111"/><path d="M26 22l-4-10 10 6 10-6-4 10" fill="#111"/><path d="M28 28q6 4 12 0" stroke="#555" stroke-width="2" fill="none"/><path d="M48 56h10V38H48Z" fill="#2e7d5b"/></symbol>
+  <symbol id="s-plant" viewBox="0 0 64 64"><path d="M18 40h28l-4 18H22Z" fill="#e8693a"/><path d="M32 40q-16-6-18-24q14 4 18 24Z" fill="#2e7d5b"/><path d="M32 40q14-8 20-26q-16 6-20 26Z" fill="#3d8a52"/><path d="M32 40V18" stroke="#2e7d5b" stroke-width="3"/></symbol>
+  <symbol id="s-window" viewBox="0 0 64 64"><rect x="8" y="8" width="40" height="48" fill="#9cc8ee"/><path d="M8 8h40v48H8Z M28 8v48 M8 32h40" fill="none" stroke="#f3ecdf" stroke-width="4"/><path d="M14 18l8-6M34 40l8-6" stroke="#fff" stroke-width="3"/><path d="M42 30l16 8" stroke="#111" stroke-width="4"/><rect x="50" y="34" width="8" height="18" rx="2" fill="#f2c230" transform="rotate(25 54 43)"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top ink">
+  <div class="top-in">
+    <a class="brand" href="#/">Tendwell</a>
+    <nav class="nav" aria-label="Main">
+      <a class="pill" href="#/services">Services</a>
+      <a class="pill" href="#/pricing">Pricing</a>
+      <a class="pill" href="#/join">Work with us</a>
+      <a class="pill" href="#/about">About</a>
+      <a class="pill" href="#/journal">Journal</a>
+    </nav>
+    <div class="top-end">
+      <a class="pill hide-sm" href="#/help">Help</a>
+      <button class="pill round" type="button" id="theme-toggle" aria-label="Switch to dark colors"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="pill solid" href="#/book">Book now</a>
+      <button class="pill round" type="button" id="menu-open" aria-label="Menu" aria-haspopup="dialog"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<dialog class="menu ink" id="menu" aria-label="Menu">
+  <div class="top-in"><a class="brand" href="#/">Tendwell</a><button class="pill round" type="button" id="menu-close" aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <nav class="menu-links" aria-label="Menu">
+    <a href="#/">Home</a>
+    <a href="#/services">Services</a>
+    <a href="#/pricing">Pricing</a>
+    <a href="#/join">Work with us</a>
+    <a href="#/about">About</a>
+    <a href="#/journal">Journal</a>
+    <a href="#/help">Help</a>
+  </nav>
+  <div class="actions"><a class="btn" href="#/book">Book now</a><a class="tlink" href="#/help?at=manage">Manage a booking</a></div>
+</dialog>
+
+<main id="main">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="band ink hero" aria-labelledby="home-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="loc"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Northside, Riverbend and Old Port <a class="tlink" href="#/about?at=areas">Change area</a></p>
+        <h1 class="display" id="home-title">Home help, sorted</h1>
+        <form class="route" data-form="quote" novalidate>
+          <div class="sel when"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><label class="sr-only" for="q-when">When</label><select class="field" id="q-when" name="when"><option value="soon">Soonest available</option><option value="today">Today</option><option value="tomorrow">Tomorrow</option><option value="weekend">This weekend</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></div>
+          <div class="stops">
+            <div class="stop"><label class="sr-only" for="q-addr">Your address</label><input class="field" id="q-addr" name="address" placeholder="Your address" autocomplete="street-address" required aria-describedby="q-err"><button class="stop-act" type="button" data-locate="q-addr" aria-label="Use my location"><svg class="icon" aria-hidden="true"><use href="#i-locate"/></svg></button></div>
+            <div class="stop sel"><label class="sr-only" for="q-svc">Service</label><select class="field" id="q-svc" name="service" required aria-describedby="q-err" data-service-options><option value="">What needs doing?</option><option value="regular-clean">Regular clean</option><option value="deep-clean">Deep clean</option><option value="handy-hour">Handy hour</option><option value="assembly">Furniture assembly</option><option value="moving">Moving help</option><option value="garden">Garden tidy</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></div>
+            <p class="err" id="q-err" role="alert"></p>
+          </div>
+          <div class="actions"><button class="btn" type="submit">See times</button><a class="tlink" href="#/help?at=manage">Manage a booking</a></div>
+        </form>
+      </div>
+      <div class="mosaic" aria-label="Pros at work">
+        <img src="illustrations/clean.svg" alt="A cleaner mopping a sunny living room" width="800" height="600" fetchpriority="high">
+        <img src="illustrations/fix.svg" alt="A pro kneeling to fix the pipe under a kitchen sink" width="800" height="600">
+        <img src="illustrations/build.svg" alt="Someone building a bookshelf with a drill" width="800" height="600">
+        <img src="illustrations/move.svg" alt="A mover carrying a box from a red house to a van" width="800" height="600">
+        <p class="float-card">Moving this month? <a class="pill" href="#/service?s=moving">Plan ahead</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band ink flush-top" aria-labelledby="explore-title">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="h2" id="explore-title">Explore what we can do</h2><a class="tlink" href="#/services">All services</a></div>
+      <div class="svc-grid">
+        <article class="svc"><div><h3>Regular clean</h3><p class="muted">Weekly or fortnightly, the same pro each time.</p></div><a class="pill solid" href="#/service?s=regular-clean">Details</a><svg class="spot" aria-hidden="true"><use href="#s-bucket"/></svg></article>
+        <article class="svc"><div><h3>Deep clean</h3><p class="muted">Inside the oven, behind the sofa, top to bottom.</p></div><a class="pill solid" href="#/service?s=deep-clean">Details</a><svg class="spot" aria-hidden="true"><use href="#s-spray"/></svg></article>
+        <article class="svc"><div><h3>Handy hour</h3><p class="muted">One pro, one hour, your list of small fixes.</p></div><a class="pill solid" href="#/service?s=handy-hour">Details</a><svg class="spot" aria-hidden="true"><use href="#s-wrench"/></svg></article>
+        <article class="svc"><div><h3>Furniture assembly</h3><p class="muted">Flat-pack built level, tight and fixed to the wall.</p></div><a class="pill solid" href="#/service?s=assembly">Details</a><svg class="spot" aria-hidden="true"><use href="#s-flatpack"/></svg></article>
+        <article class="svc"><div><h3>Moving help</h3><p class="muted">Two pros and a van, by the hour, across town.</p></div><a class="pill solid" href="#/service?s=moving">Details</a><svg class="spot" aria-hidden="true"><use href="#s-boxes"/></svg></article>
+        <article class="svc"><div><h3>Garden tidy</h3><p class="muted">Hedges, lawn and leaves, with the clippings taken away.</p></div><a class="pill solid" href="#/service?s=garden">Details</a><svg class="spot" aria-hidden="true"><use href="#s-plant"/></svg></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band ink flush-top" aria-labelledby="how-title">
+    <div class="wrap">
+      <h2 class="h2 sec-head" id="how-title">How booking works</h2>
+      <div class="track" id="steps" tabindex="0" aria-label="Steps">
+        <article class="step"><img src="illustrations/plan.svg" alt="A hand picking a day in a booking app" width="800" height="600"><h3>Tell us the job</h3><p class="muted">Add your address and what needs doing. You see the price before you book.</p></article>
+        <article class="step"><img src="illustrations/clean.svg" alt="A tidy living room in afternoon light" width="800" height="600"><h3>Pick a two-hour window</h3><p class="muted">Choose a day and a window that suits you, from today up to 60 days ahead.</p></article>
+        <article class="step"><img src="illustrations/pro.svg" alt="Portrait of a smiling pro in a cap" width="800" height="600"><h3>Meet your pro</h3><p class="muted">You get their name and photo the evening before, and a text when they are on the way.</p></article>
+        <article class="step"><img src="illustrations/build.svg" alt="A finished bookshelf next to an empty box" width="800" height="600"><h3>Pay when it is done</h3><p class="muted">Check the work together, then pay by card. Not right? We come back for free.</p></article>
+      </div>
+      <div class="pager" data-pager="steps"><span class="count" aria-live="polite">1/2</span><button class="pill round" type="button" data-dir="-1" aria-label="Previous step"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button><button class="pill round" type="button" data-dir="1" aria-label="Next step"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button></div>
+    </div>
+  </section>
+
+  <section class="band ink flush-top" aria-labelledby="more-title">
+    <div class="wrap">
+      <h2 class="h2 sec-head" id="more-title">More ways to use Tendwell</h2>
+      <div class="cols3">
+        <article class="col reveal"><img src="illustrations/move.svg" alt="Boxes being loaded into a van outside a house" width="800" height="600"><h3 class="h3">Moving day, handled</h3><p class="muted">Two pros and a van for as many hours as you need. Book up to 60 days ahead.</p><a class="tlink" href="#/service?s=moving">Plan a move</a></article>
+        <article class="col reveal"><img src="illustrations/garden.svg" alt="A gardener trimming a hedge on a sunny day" width="800" height="600"><h3 class="h3">Garden ready by Saturday</h3><p class="muted">Hedges cut, lawn mowed and clippings gone, usually in one visit.</p><a class="tlink" href="#/service?s=garden">Book a tidy</a></article>
+        <article class="col reveal"><img src="illustrations/fix.svg" alt="A pro fixing the pipe under a sink" width="800" height="600"><h3 class="h3">The fix-it list</h3><p class="muted">Dripping taps, sticky doors, a shelf that never went up. One hour clears most lists.</p><a class="tlink" href="#/service?s=handy-hour">See the handy hour</a></article>
+      </div>
+    </div>
+  </section>
+
+  <div class="seam" role="presentation"><div class="wrap"><img src="illustrations/street.svg" alt="" width="1600" height="480"></div></div>
+
+  <section class="band" aria-labelledby="plus-title">
+    <div class="wrap">
+      <div class="pics2">
+        <article class="reveal"><img src="illustrations/clean.svg" alt="A living room after a clean" width="800" height="600"><h3>A clean you do not have to think about</h3><p class="muted">The same pro, the same day, every week or two. Skip a visit any time before noon the day before.</p><a class="btn" href="#/service?s=regular-clean">Set up regular cleans</a></article>
+        <article class="reveal"><img src="illustrations/build.svg" alt="A bookshelf being built in a bright room" width="800" height="600"><h3>Flat-pack, built properly</h3><p class="muted">Beds, wardrobes, desks and cots, built level and fixed to the wall where they should be.</p><a class="btn" href="#/service?s=assembly">Book assembly</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band flush-top" aria-labelledby="member-title">
+    <div class="wrap split">
+      <div class="reveal"><h2 class="h2" id="member-title">Get member prices on every visit</h2><p>Join Tendwell Plus for 15% off every booking, first pick of weekend slots and a free re-do if anything is not right.</p><a class="btn" href="#/pricing">See Plus</a></div>
+      <img class="reveal" src="illustrations/plan.svg" alt="A phone showing a booked visit in a calendar" width="800" height="600">
+    </div>
+  </section>
+
+  <div class="seam up" role="presentation"><div class="wrap"><img src="illustrations/rooms.svg" alt="" width="1600" height="480"></div></div>
+
+  <section class="band ink" aria-labelledby="earn-title">
+    <div class="wrap">
+      <h2 class="h2 sec-head" id="earn-title">Work with Tendwell</h2>
+      <div class="cols3">
+        <article class="col reveal"><h3 class="h3">Clean on your schedule</h3><p class="muted">Pick the days and the neighbourhoods. We fill your calendar and pay weekly.</p><a class="tlink" href="#/join">Apply to clean</a></article>
+        <article class="col reveal"><h3 class="h3">Bring your trade</h3><p class="muted">Handy, plumbing and assembly pros keep their own rates within our price bands.</p><a class="tlink" href="#/join?at=j-roles">See open areas</a></article>
+        <article class="col reveal"><h3 class="h3">Drive a moving van</h3><p class="muted">Full driving licence and a strong back. Vans are ours, the tips are yours.</p><a class="tlink" href="#/join">Get started</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band ink flush-top" aria-labelledby="biz-title">
+    <div class="wrap split">
+      <div class="orb reveal"><img src="illustrations/pro.svg" alt="A pro in a blue work jacket" width="800" height="600"><ul><li><svg aria-hidden="true"><use href="#s-bucket"/></svg></li><li><svg aria-hidden="true"><use href="#s-wrench"/></svg></li><li><svg aria-hidden="true"><use href="#s-boxes"/></svg></li></ul></div>
+      <div class="reveal"><h2 class="h2" id="biz-title">For landlords and small offices</h2><p>One account for every address you look after: end-of-tenancy cleans, repairs between lets and a monthly invoice instead of a pile of receipts.</p><div class="actions"><a class="btn" href="#/help?at=contact">Talk to our team</a><a class="tlink" href="#/pricing">See prices</a></div></div>
+    </div>
+  </section>
+
+  <section class="band ink flush-top" aria-labelledby="talk-title">
+    <div class="wrap">
+      <h2 class="h2 sec-head" id="talk-title">Talk to a person</h2>
+      <div class="cards2">
+        <a class="lcard" href="#/help?at=contact"><span class="tile"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg></span><span><b>+1 555 0188</b><span>Every day, 8 am to 8 pm</span></span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="lcard" href="#/help?at=contact"><span class="tile"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></span><span><b>Send a message</b><span>Answers within the hour</span></span><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== SERVICES ===================== -->
+<div data-view="services">
+  <section class="band" aria-labelledby="svc-title">
+    <div class="wrap">
+      <h1 class="h1" id="svc-title">Services</h1>
+      <p class="lead muted" style="margin-top:12px">Every price is set before we arrive. Plus members save 15%.</p>
+      <div class="search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><label class="sr-only" for="svc-q">Search services</label><input class="field" type="search" id="svc-q" placeholder="Search services" autocomplete="off"></div>
+      <div class="chips" role="group" aria-label="Filter services">
+        <button class="pill chip" type="button" data-cat-filter="all" aria-pressed="true">All</button>
+        <button class="pill chip" type="button" data-cat-filter="cleaning" aria-pressed="false">Cleaning</button>
+        <button class="pill chip" type="button" data-cat-filter="repairs" aria-pressed="false">Repairs</button>
+        <button class="pill chip" type="button" data-cat-filter="assembly" aria-pressed="false">Assembly</button>
+        <button class="pill chip" type="button" data-cat-filter="moving" aria-pressed="false">Moving</button>
+        <button class="pill chip" type="button" data-cat-filter="outdoor" aria-pressed="false">Outdoor</button>
+      </div>
+      <p class="count-line" data-svc-count aria-live="polite"></p>
+      <div class="svc-grid needs-js" id="svc-list"></div>
+      <p class="empty" data-empty="svc" hidden>No services match. Try "clean", "tap" or "move", or <a class="tlink" href="#/help?at=contact">ask us</a>.</p>
+    </div>
+  </section>
+  <section class="band ink" aria-labelledby="svc-cta">
+    <div class="wrap split">
+      <div><h2 class="h2" id="svc-cta">Not on the list?</h2><p>Tell us the job in a sentence. If one of our pros can do it, we will send a price within the hour.</p><a class="btn" href="#/help?at=contact">Describe the job</a></div>
+      <img src="illustrations/fix.svg" alt="A pro fixing a pipe under a sink" width="800" height="600">
+    </div>
+  </section>
+</div>
+
+<!-- ===================== SERVICE (one page, filled from SERVICES by ?s=) ===================== -->
+<div data-view="service">
+  <nav class="subnav" aria-label="On this page"><div class="top-in"><b data-s="name">Deep clean</b><a href="#s-top">Overview</a><a href="#s-inc">What's included</a><a href="#s-prices">Prices</a><a href="#s-faq">Questions</a></div></nav>
+  <section class="band hero" id="s-top" aria-labelledby="s-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="loc"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Northside, Riverbend and Old Port <a class="tlink" href="#/about?at=areas">Change area</a></p>
+        <h1 class="h1" id="s-title" data-s="name">Deep clean</h1>
+        <p class="lead" data-s="line" style="margin-bottom:28px">Inside the oven, behind the sofa, top to bottom.</p>
+        <form data-form="quote" novalidate>
+          <div class="stops">
+            <div class="stop"><label class="sr-only" for="s-addr">Your address</label><input class="field" id="s-addr" placeholder="Your address" autocomplete="street-address" required aria-describedby="s-err"><button class="stop-act" type="button" data-locate="s-addr" aria-label="Use my location"><svg class="icon" aria-hidden="true"><use href="#i-locate"/></svg></button></div>
+            <div class="stop sel"><label class="sr-only" for="s-when">When</label><select class="field" id="s-when" aria-describedby="s-err"><option value="soon">Soonest available</option><option value="today">Today</option><option value="tomorrow">Tomorrow</option><option value="weekend">This weekend</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></div>
+            <p class="err" id="s-err" role="alert"></p>
+          </div>
+          <div class="actions"><button class="btn" type="submit">See times</button><span class="muted small">From <b data-s="from">$140</b> · <span data-s="hours">3 to 5 hours</span></span></div>
+        </form>
+      </div>
+      <div class="hero-art"><img data-s="img" src="illustrations/clean.svg" alt="A cleaner mopping a sunny living room" width="800" height="600"></div>
+    </div>
+  </section>
+  <section class="band flush-top" id="s-inc" aria-labelledby="inc-title">
+    <div class="wrap"><h2 class="h2 sec-head" id="inc-title">What's included</h2><ul class="ticks two" data-s="inc"><li>Kitchen: inside the oven, fridge and cupboards</li><li>Bathroom: descaled, grout scrubbed</li><li>Every room: skirting, doors, switches and behind furniture</li><li>Windows on the inside, sills and frames</li></ul></div>
+  </section>
+  <section class="band flush-top" id="s-prices" aria-labelledby="prices-title">
+    <div class="wrap">
+      <h2 class="h2 sec-head" id="prices-title">Prices</h2>
+      <div class="rows" data-s="sizes"><p class="head"><span>Option</span><span class="num">Price</span><span class="num">With Plus</span></p></div>
+      <p class="muted small" style="margin-top:16px">You pay after the visit. Free to change or cancel up to 24 hours before.</p>
+    </div>
+  </section>
+  <section class="band flush-top" aria-labelledby="ahead-title">
+    <div class="wrap panel">
+      <div><h2 class="h2" id="ahead-title">Book ahead, keep your slot</h2>
+        <form data-form="quote" novalidate>
+          <div class="row2">
+            <div class="f sel"><label for="a-day">Day</label><select class="field" id="a-day" required aria-describedby="a-day-err"><option value="">Choose a day</option><option value="next-week">Next week</option><option value="in-two-weeks">In two weeks</option><option value="next-month">Next month</option></select><svg class="icon" aria-hidden="true" style="top:46px"><use href="#i-down"/></svg><p class="err" id="a-day-err"></p></div>
+            <div class="f sel"><label for="a-time">Time</label><select class="field" id="a-time"><option>Morning</option><option>Midday</option><option>Evening</option></select><svg class="icon" aria-hidden="true" style="top:46px"><use href="#i-down"/></svg></div>
+          </div>
+          <button class="btn wide" type="submit">Next</button>
+        </form>
+      </div>
+      <img src="illustrations/plan.svg" alt="A calendar and a phone on a desk" width="800" height="600">
+    </div>
+  </section>
+  <section class="band flush-top" id="s-faq" aria-labelledby="sfaq-title">
+    <div class="wrap faq">
+      <h2 class="h2 sec-head" id="sfaq-title">Questions</h2>
+      <details><summary>Do I need to be home?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>No. Many customers leave a key in a lockbox. Add the code in the notes and your pro will text when they arrive and leave.</div></details>
+      <details><summary>Do you bring supplies?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>Yes. Pros bring their own tools and products. Tell us in the notes if you would like us to use yours.</div></details>
+      <details><summary>What if something is not right?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>Tell us within 48 hours and we send someone back to put it right, free of charge.</div></details>
+    </div>
+  </section>
+  <section class="band ink" aria-labelledby="rel-title">
+    <div class="wrap"><h2 class="h2 sec-head" id="rel-title">Often booked together</h2><div class="svc-grid needs-js" id="related"></div></div>
+  </section>
+</div>
+
+<!-- ===================== PRICING ===================== -->
+<div data-view="pricing">
+  <section class="band ink" aria-labelledby="pr-title">
+    <div class="wrap">
+      <h1 class="h1" id="pr-title">Know the price before we knock</h1>
+      <p class="lead muted" style="margin-block:16px 32px;max-width:560px">Pay per visit, or join Plus for member prices on everything. No call-out fees, no surprises at the door.</p>
+      <div class="seg" role="group" aria-label="Billing"><button class="pill" type="button" data-bill="month" aria-pressed="true">Monthly</button><button class="pill" type="button" data-bill="year" aria-pressed="false">Yearly, 2 months free</button></div>
+      <div class="plans">
+        <article class="plan"><h2 class="h3">Pay per visit</h2><p class="amount">$0</p><p class="muted">No membership. Prices as listed.</p><ul class="ticks"><li>Prices set before you book</li><li>Free to change up to 24 hours before</li><li>Pay by card after the visit</li></ul><a class="btn alt" href="#/services">Browse services</a></article>
+        <article class="plan"><span class="tag">Most booked</span><h2 class="h3">Tendwell Plus</h2><p class="amount" data-plan-price>$12</p><p class="muted" data-plan-note>per month, cancel any time</p><ul class="ticks"><li>15% off every visit</li><li>First pick of weekend slots</li><li>Free re-do within 48 hours</li></ul><a class="btn" href="#/book?plan=plus">Join and book</a></article>
+      </div>
+    </div>
+  </section>
+  <section class="band" aria-labelledby="list-title">
+    <div class="wrap">
+      <h2 class="h2 sec-head" id="list-title">Every service, every price</h2>
+      <div class="rows" id="price-list"><p class="head"><span>Service</span><span class="num hide-xs">From</span><span class="num">With Plus</span></p></div>
+    </div>
+  </section>
+  <section class="band flush-top" aria-labelledby="bill-title">
+    <div class="wrap faq">
+      <h2 class="h2 sec-head" id="bill-title">Billing questions</h2>
+      <details><summary>When am I charged?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>After the visit, once you have checked the work. Plus is billed on the day you join, then monthly or yearly.</div></details>
+      <details><summary>Can I pause Plus?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>Yes, for up to three months a year, from your account or by asking us.</div></details>
+      <details><summary>Do you charge for parking?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>Only if the street has paid parking and there is no space at your home. The amount is on your receipt.</div></details>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== BOOK ===================== -->
+<div data-view="book">
+  <section class="band" aria-labelledby="book-title">
+    <div class="wrap">
+      <h1 class="h1" id="book-title" style="margin-bottom:40px">Book a visit</h1>
+      <div class="book">
+        <div>
+          <form data-form="booking" novalidate>
+            <fieldset><legend>Where and what</legend>
+              <div class="stops">
+                <div class="stop"><label class="sr-only" for="b-addr">Your address</label><input class="field" id="b-addr" placeholder="Your address" autocomplete="street-address" required aria-describedby="b-route-err"><button class="stop-act" type="button" data-locate="b-addr" aria-label="Use my location"><svg class="icon" aria-hidden="true"><use href="#i-locate"/></svg></button></div>
+                <div class="stop" data-route-only hidden><label class="sr-only" for="b-to">Moving to</label><input class="field" id="b-to" placeholder="Moving to" required aria-describedby="b-route-err"></div>
+                <div class="stop sel"><label class="sr-only" for="b-svc">Service</label><select class="field" id="b-svc" required aria-describedby="b-route-err" data-service-options><option value="">What needs doing?</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></div>
+                <p class="err" id="b-route-err" role="alert"></p>
+              </div>
+            </fieldset>
+            <fieldset data-group-required aria-describedby="b-day-err" class="f"><legend>Day</legend><div class="opts" id="b-days"></div><p class="err" id="b-day-err"></p></fieldset>
+            <fieldset data-group-required aria-describedby="b-time-err" class="f"><legend>Arrival window</legend>
+              <div class="opts">
+                <label class="opt"><input type="radio" name="time" value="8–10 am"><span>8–10 am<small>Early start</small></span></label>
+                <label class="opt"><input type="radio" name="time" value="10 am–12 pm"><span>10 am–12 pm<small><span class="dot" aria-hidden="true"></span>Few left</small></span></label>
+                <label class="opt"><input type="radio" name="time" value="12–2 pm"><span>12–2 pm<small>Midday</small></span></label>
+                <label class="opt"><input type="radio" name="time" value="2–4 pm"><span>2–4 pm<small>Afternoon</small></span></label>
+                <label class="opt"><input type="radio" name="time" value="4–6 pm"><span>4–6 pm<small>After work</small></span></label>
+              </div><p class="err" id="b-time-err"></p></fieldset>
+            <fieldset><legend>Your details</legend>
+              <div class="row2">
+                <div class="f"><label for="b-name">Name</label><input class="field" id="b-name" autocomplete="name" required aria-describedby="b-name-err"><p class="err" id="b-name-err"></p></div>
+                <div class="f"><label for="b-phone">Mobile</label><input class="field" id="b-phone" type="tel" autocomplete="tel" required pattern="[0-9 +\(\)\-]{7,}" aria-describedby="b-phone-err"><p class="err" id="b-phone-err"></p></div>
+              </div>
+              <div class="f"><label for="b-email">Email</label><input class="field" id="b-email" type="email" autocomplete="email" required aria-describedby="b-email-err"><p class="err" id="b-email-err"></p></div>
+              <div class="f"><label for="b-notes">Notes for your pro <span class="muted">(optional)</span></label><textarea class="field" id="b-notes" placeholder="Parking, pets, a lockbox code"></textarea></div>
+              <div class="f"><label class="check"><input type="checkbox" id="b-ok" required aria-describedby="b-ok-err">I agree to the <a class="tlink" href="#/legal" style="text-underline-offset:3px">booking terms</a> and know I pay after the visit.</label><p class="err" id="b-ok-err"></p></div>
+            </fieldset>
+            <button class="btn wide" type="submit">Request booking</button>
+          </form>
+          <div class="done" data-success="booking" hidden tabindex="-1">
+            <span class="badge"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span>
+            <h2 class="h2">Booking requested</h2>
+            <p>Reference <b data-ref>TW-00000</b>. We will confirm your pro and the exact window by email and text.</p>
+            <div class="actions"><button class="btn" type="button" data-again>Book another visit</button><a class="tlink" href="#/">Back to home</a></div>
+          </div>
+        </div>
+        <aside class="summary" aria-label="Your booking">
+          <h2 class="h3">Your booking</h2>
+          <dl><dt>Service</dt><dd data-sum="svc">Choose a service</dd><dt>Day</dt><dd data-sum="day">Choose a day</dd><dt>Window</dt><dd data-sum="time">Choose a window</dd><dt>Address</dt><dd data-sum="addr">Add your address</dd></dl>
+          <p class="total"><span>From</span><span data-sum="price">$0</span></p>
+          <p class="muted small" style="margin-top:12px">You pay after the visit. Change or cancel free up to 24 hours before.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== WORK WITH US ===================== -->
+<div data-view="join">
+  <nav class="subnav" aria-label="On this page"><div class="top-in"><b>Work with us</b><a href="#j-why">Why Tendwell</a><a href="#j-req">Requirements</a><a href="#j-roles">Open areas</a><a href="#j-faq">Questions</a></div></nav>
+  <section class="band ink hero" aria-labelledby="join-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 class="display" id="join-title">Your trade, your hours, our bookings</h1>
+        <p class="lead" style="margin-bottom:28px">Earn on your own schedule.</p>
+        <form data-form="signup" novalidate>
+          <div class="f"><label for="j-phone">Phone number</label><input class="field" id="j-phone" type="tel" autocomplete="tel" placeholder="+1 (555) 000-0000" required pattern="[0-9 +\(\)\-]{7,}" aria-describedby="j-phone-err"><p class="err" id="j-phone-err"></p></div>
+          <div class="actions"><button class="btn" type="submit">Get started</button><a class="tlink" href="#/help?at=contact">Already with us? Get in touch</a></div>
+          <p class="tiny muted" style="margin-top:20px">We will text you a link to finish your application. Message rates may apply.</p>
+        </form>
+        <div class="done" data-success="signup" hidden tabindex="-1"><span class="badge"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><h2 class="h3">Check your phone</h2><p class="muted">We have sent a link to finish your application. It takes about ten minutes.</p></div>
+      </div>
+      <div class="hero-art"><img src="illustrations/pro.svg" alt="A smiling pro in a cap and a blue work jacket" width="800" height="600"></div>
+    </div>
+  </section>
+  <section class="band" id="j-why" aria-labelledby="why-title">
+    <div class="wrap">
+      <h2 class="h2 sec-head" id="why-title">Why pros choose Tendwell</h2>
+      <div class="cols3">
+        <article class="col reveal"><img src="illustrations/plan.svg" alt="A calendar app with a booked day" width="800" height="600"><h3 class="h3">Set your hours</h3><p class="muted">Turn days on and off in the app. Take as much or as little work as you like.</p></article>
+        <article class="col reveal"><img src="illustrations/street.svg" alt="A pro walking down a street of colourful houses" width="1600" height="480"><h3 class="h3">Stay in your patch</h3><p class="muted">Choose the neighbourhoods you cover, so less time goes on travel.</p></article>
+        <article class="col reveal"><img src="illustrations/fix.svg" alt="A pro fixing a pipe" width="800" height="600"><h3 class="h3">Paid every week</h3><p class="muted">Earnings land every Friday, with tips passed on in full.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="band flush-top" id="j-req" aria-labelledby="req-title">
+    <div class="wrap split">
+      <div><h2 class="h2" id="req-title">What you need</h2><p class="muted">We check every pro before their first job. Most applications take about a week.</p></div>
+      <ul class="ticks"><li>The right to work and a photo ID</li><li>Two years of paid experience in your trade</li><li>A smartphone with a data plan</li><li>Your own basic tools (we supply products and vans)</li><li>A background check, paid for by us</li></ul>
+    </div>
+  </section>
+  <section class="band flush-top" id="j-roles" aria-labelledby="roles-title">
+    <div class="wrap">
+      <h2 class="h2" id="roles-title" style="margin-bottom:24px">Open areas</h2>
+      <div class="chips" role="group" aria-label="Filter by trade" style="margin-bottom:24px">
+        <button class="pill chip" type="button" data-role-filter="all" aria-pressed="true">All trades</button>
+        <button class="pill chip" type="button" data-role-filter="cleaning" aria-pressed="false">Cleaning</button>
+        <button class="pill chip" type="button" data-role-filter="repairs" aria-pressed="false">Repairs</button>
+        <button class="pill chip" type="button" data-role-filter="moving" aria-pressed="false">Moving</button>
+      </div>
+      <div class="rows" id="roles">
+        <p data-cat="cleaning"><b>Home cleaner</b><span class="muted hide-xs">Northside</span><span class="num">$26–31/hr</span></p>
+        <p data-cat="cleaning"><b>Deep clean lead</b><span class="muted hide-xs">Riverbend</span><span class="num">$30–35/hr</span></p>
+        <p data-cat="repairs"><b>Handy pro</b><span class="muted hide-xs">Old Port</span><span class="num">$34–42/hr</span></p>
+        <p data-cat="repairs"><b>Plumber</b><span class="muted hide-xs">All areas</span><span class="num">$40–52/hr</span></p>
+        <p data-cat="moving"><b>Van driver</b><span class="muted hide-xs">Northside</span><span class="num">$28–33/hr</span></p>
+        <p data-cat="moving"><b>Moving crew</b><span class="muted hide-xs">All areas</span><span class="num">$24–28/hr</span></p>
+      </div>
+    </div>
+  </section>
+  <section class="band ink" aria-labelledby="start-title">
+    <div class="wrap">
+      <h2 class="h2 sec-head" id="start-title">How to start</h2>
+      <ol class="nums"><li class="reveal"><b>1</b><h3 class="h3">Apply in ten minutes</h3><p class="muted">Your trade, your areas, your experience.</p></li><li class="reveal"><b>2</b><h3 class="h3">A short call</h3><p class="muted">Twenty minutes with someone from our team.</p></li><li class="reveal"><b>3</b><h3 class="h3">Your first job</h3><p class="muted">Shadow an experienced pro, then go solo.</p></li></ol>
+    </div>
+  </section>
+  <section class="band" id="j-faq" aria-labelledby="jfaq-title">
+    <div class="wrap faq">
+      <h2 class="h2 sec-head" id="jfaq-title">Questions from pros</h2>
+      <details><summary>Am I an employee?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>Pros work as independent contractors and set their own hours. Van drivers on the moving crew can choose a part-time contract.</div></details>
+      <details><summary>Who pays for products?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>We do. Cleaning products and moving supplies are restocked at our depot every week.</div></details>
+      <details><summary>Am I insured on the job?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>Yes. Every booking carries liability cover for accidental damage, at no cost to you.</div></details>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<div data-view="about">
+  <section class="band ink" aria-labelledby="about-title">
+    <div class="wrap"><h1 class="display" id="about-title" style="max-width:860px">We started with one van and a long list of small jobs</h1><p class="lead muted" style="margin-top:24px;max-width:620px">Tendwell began in 2019 when two neighbours kept being asked to help with the same things: a leaking tap, a wardrobe in pieces, a flat to clean before the deposit came back.</p></div>
+  </section>
+  <div class="seam" role="presentation"><div class="wrap"><img src="illustrations/street.svg" alt="" width="1600" height="480"></div></div>
+  <section class="band" aria-labelledby="values-title">
+    <div class="wrap">
+      <h2 class="h2 sec-head" id="values-title">What we hold on to</h2>
+      <div class="cols3"><article class="col"><h3 class="h3">Prices before the door</h3><p class="muted">If the job turns out bigger, we ask before doing more. You never sign off on a surprise.</p></article><article class="col"><h3 class="h3">The same faces</h3><p class="muted">Regular customers get the same pro wherever we can, because trust takes more than one visit.</p></article><article class="col"><h3 class="h3">Pros paid fairly</h3><p class="muted">Pros keep their tips and earn above the local living wage on every booking.</p></article></div>
+    </div>
+  </section>
+  <section class="band flush-top" aria-labelledby="nums-title">
+    <div class="wrap"><h2 class="sr-only" id="nums-title">Tendwell in numbers</h2><div class="nums"><p><b>2019</b><span class="muted">First van on the road</span></p><p><b>9</b><span class="muted">Neighbourhoods covered</span></p><p><b>240</b><span class="muted">Pros on the team</span></p></div></div>
+  </section>
+  <section class="band flush-top" id="areas" aria-labelledby="areas-title">
+    <div class="wrap">
+      <h2 class="h2" id="areas-title" style="margin-bottom:24px">Where we work</h2>
+      <ul class="chips"><li class="pill">Northside</li><li class="pill">Riverbend</li><li class="pill">Old Port</li><li class="pill">Millfield</li><li class="pill">Harbour Hill</li><li class="pill">Eastgate</li><li class="pill">Linden Park</li><li class="pill">Southbank</li><li class="pill">Westcroft</li></ul>
+      <p class="muted" style="margin-top:20px">Not on the list? <a class="tlink" href="#/help?at=contact">Tell us where you are</a> and we will let you know when we arrive.</p>
+    </div>
+  </section>
+  <section class="band ink" aria-labelledby="about-cta">
+    <div class="wrap split"><div><h2 class="h2" id="about-cta">Need a hand this week?</h2><p>Most jobs can be booked for tomorrow.</p><div class="actions" style="margin-top:32px"><a class="btn" href="#/book">Book a visit</a><a class="tlink" href="#/join">Work with us</a></div></div><img src="illustrations/move.svg" alt="A mover carrying a box to a van" width="800" height="600"></div>
+  </section>
+</div>
+
+<!-- ===================== HELP ===================== -->
+<div data-view="help">
+  <section class="band" aria-labelledby="help-title">
+    <div class="wrap">
+      <h1 class="h1" id="help-title">How can we help?</h1>
+      <div class="search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><label class="sr-only" for="faq-q">Search answers</label><input class="field" type="search" id="faq-q" placeholder="Search answers" autocomplete="off"></div>
+      <div class="chips" role="group" aria-label="Topics" style="margin-bottom:40px">
+        <button class="pill chip" type="button" data-topic="all" aria-pressed="true">All topics</button>
+        <button class="pill chip" type="button" data-topic="bookings" aria-pressed="false">Bookings</button>
+        <button class="pill chip" type="button" data-topic="payments" aria-pressed="false">Payments</button>
+        <button class="pill chip" type="button" data-topic="safety" aria-pressed="false">Safety</button>
+      </div>
+      <div class="faq">
+        <div class="faq-group" data-faq-group="bookings"><h2 class="h3">Bookings</h2>
+          <details><summary>How do I change or cancel a booking?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>Use the link in your confirmation email, or the form below. Changes are free up to 24 hours before your window.</div></details>
+          <details><summary>Can I ask for the same pro again?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>Yes. Add their name in the notes and we will book them whenever they are free.</div></details>
+          <details><summary>How late can my pro arrive?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>Your pro arrives within the two-hour window you chose. If they are running late, they text you first.</div></details>
+        </div>
+        <div class="faq-group" data-faq-group="payments"><h2 class="h3">Payments</h2>
+          <details><summary>When do I pay?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>After the visit, by card. You get a receipt by email straight away.</div></details>
+          <details><summary>Can I get an invoice for my company?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>Yes. Add your company name and tax number in your account and every receipt will show them.</div></details>
+        </div>
+        <div class="faq-group" data-faq-group="safety"><h2 class="h3">Safety</h2>
+          <details><summary>How do you check your pros?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>Every pro passes an ID check, a background check and a trial job with one of our leads before working alone.</div></details>
+          <details><summary>What if something gets damaged?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><div>Tell us within 48 hours. Every booking carries cover for accidental damage.</div></details>
+        </div>
+        <p class="empty" data-empty="faq" hidden>No answers match. Try "cancel", "invoice" or "damage", or send us a message below.</p>
+      </div>
+    </div>
+  </section>
+  <section class="band ink" id="manage" aria-labelledby="manage-title">
+    <div class="wrap split">
+      <div><h2 class="h2" id="manage-title">Manage a booking</h2><p class="muted">We will email you a link to change the day, the window or the notes.</p></div>
+      <div>
+        <form data-form="manage" novalidate>
+          <div class="row2">
+            <div class="f"><label for="m-ref">Booking reference</label><input class="field" id="m-ref" placeholder="TW-12345" required pattern="TW-[0-9]{5}" aria-describedby="m-ref-err"><p class="err" id="m-ref-err"></p></div>
+            <div class="f"><label for="m-email">Email</label><input class="field" id="m-email" type="email" autocomplete="email" required aria-describedby="m-email-err"><p class="err" id="m-email-err"></p></div>
+          </div>
+          <button class="btn" type="submit">Email me a link</button>
+        </form>
+        <div class="done" data-success="manage" hidden tabindex="-1"><span class="badge"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><h3 class="h3">Link sent</h3><p class="muted">If the reference matches, the link is in your inbox now.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="band" id="contact" aria-labelledby="contact-title">
+    <div class="narrow">
+      <h2 class="h2" id="contact-title" style="margin-bottom:12px">Send us a message</h2>
+      <p class="muted" style="margin-bottom:32px">A person answers every message, usually within the hour.</p>
+      <form data-form="contact" novalidate>
+        <div class="row2">
+          <div class="f"><label for="c-name">Name</label><input class="field" id="c-name" autocomplete="name" required aria-describedby="c-name-err"><p class="err" id="c-name-err"></p></div>
+          <div class="f"><label for="c-email">Email</label><input class="field" id="c-email" type="email" autocomplete="email" required aria-describedby="c-email-err"><p class="err" id="c-email-err"></p></div>
+        </div>
+        <div class="f sel"><label for="c-topic">Topic</label><select class="field" id="c-topic" required aria-describedby="c-topic-err"><option value="">Choose a topic</option><option>A booking</option><option>A job not on the list</option><option>Landlords and offices</option><option>Working with us</option><option>Something else</option></select><svg class="icon" aria-hidden="true" style="top:46px"><use href="#i-down"/></svg><p class="err" id="c-topic-err"></p></div>
+        <div class="f"><label for="c-msg">Message</label><textarea class="field" id="c-msg" required minlength="20" aria-describedby="c-msg-err"></textarea><p class="err" id="c-msg-err"></p></div>
+        <button class="btn" type="submit">Send message</button>
+      </form>
+      <div class="done" data-success="contact" hidden tabindex="-1"><span class="badge"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><h3 class="h2">Message sent</h3><p>Your case number is <b data-case>C-00000</b>. We will reply by email.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== JOURNAL ===================== -->
+<div data-view="journal">
+  <section class="band" aria-labelledby="jr-title">
+    <div class="wrap">
+      <h1 class="h1" id="jr-title">Journal</h1>
+      <p class="lead muted" style="margin-block:12px 32px">Small fixes, seasonal jobs and notes from our pros.</p>
+      <a class="feature" href="#/post"><img src="illustrations/clean.svg" alt="A living room in afternoon light" width="800" height="600"><div><p class="meta">Cleaning · 12 Nov 2026</p><h2 class="h2">The twenty-minute reset our cleaners swear by</h2><p class="muted">Five rooms, one timer, and the order that stops you cleaning the same surface twice.</p></div></a>
+      <div class="chips" role="group" aria-label="Filter stories" style="margin-bottom:32px">
+        <button class="pill chip" type="button" data-post-filter="all" aria-pressed="true">All</button>
+        <button class="pill chip" type="button" data-post-filter="Cleaning" aria-pressed="false">Cleaning</button>
+        <button class="pill chip" type="button" data-post-filter="Repairs" aria-pressed="false">Repairs</button>
+        <button class="pill chip" type="button" data-post-filter="Moving" aria-pressed="false">Moving</button>
+        <button class="pill chip" type="button" data-post-filter="Garden" aria-pressed="false">Garden</button>
+      </div>
+      <div class="posts needs-js" id="posts"></div>
+      <p class="empty" data-empty="posts" hidden>No stories in this topic yet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== POST ===================== -->
+<div data-view="post">
+  <article class="band">
+    <div class="narrow article">
+      <a class="tlink small" href="#/journal">Journal</a>
+      <p class="meta">Cleaning · 12 Nov 2026 · 4 min read</p>
+      <h1 class="h1">The twenty-minute reset our cleaners swear by</h1>
+      <p class="lead muted">Five rooms, one timer, and the order that stops you cleaning the same surface twice.</p>
+      <img src="illustrations/clean.svg" alt="A cleaner mopping a sunny living room" width="800" height="600">
+      <p>Ask any of our cleaners how they get a flat back in shape between deep cleans and you will hear the same thing: work top to bottom, dry to wet, and never go back into a room you have finished.</p>
+      <h2>Start with the bin bag</h2>
+      <p>Walk the whole home once with a bag and a basket. Rubbish in the bag, things in the wrong room in the basket. Do not stop to put anything away yet.</p>
+      <h2>Then the order that matters</h2>
+      <ul class="ticks"><li>Dust high surfaces before low ones</li><li>Kitchen counters before the floor</li><li>Bathroom last, so you leave with the wet cloths</li><li>Floors from the far corner towards the door</li></ul>
+      <p>Set a timer for twenty minutes. When it rings, stop. The point is a reset you will actually repeat, not a perfect home once a month.</p>
+      <div class="panel" style="grid-template-columns:1fr;margin-top:40px"><div><h2 class="h3" style="margin:0 0 8px">Rather hand it over?</h2><p style="margin-bottom:20px">A regular clean takes care of it every week or two.</p><a class="btn" href="#/service?s=regular-clean">Book a regular clean</a></div></div>
+    </div>
+  </article>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="legal">
+  <section class="band">
+    <div class="narrow article">
+      <h1 class="h1">Privacy and terms</h1>
+      <p class="muted">Last updated 1 November 2026</p>
+      <h2>What we collect</h2>
+      <p>Your name, contact details and address so a pro can reach you, the details of each booking, and payment confirmations from our card processor. We never see or store your full card number.</p>
+      <h2>How we use it</h2>
+      <p>To arrange and confirm visits, to pay our pros, to answer your messages and, if you agree, to send our monthly journal. You can unsubscribe from any email.</p>
+      <h2>Booking terms</h2>
+      <p>Prices are set when you book. You can change or cancel free up to 24 hours before your window; later cancellations may be charged at half the visit price. Tell us within 48 hours if something is not right and we will come back to fix it.</p>
+      <h2>Contact</h2>
+      <p>Write to privacy@tendwell.example to see, correct or delete your data.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="band ink">
+    <div class="wrap" style="min-height:40vh">
+      <p class="muted" style="margin-bottom:12px">Error 404</p>
+      <h1 class="display" style="max-width:760px">We could not find that page</h1>
+      <p class="lead muted" style="margin-block:20px 32px">It may have moved, or the link may be out of date.</p>
+      <div class="actions"><a class="btn" href="#/">Go home</a><a class="tlink" href="#/services">See all services</a></div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="ink foot">
+  <div class="wrap">
+    <a class="brand" href="#/">Tendwell</a>
+    <p><a class="tlink" href="#/help">Visit the help centre</a></p>
+    <div class="foot-cols">
+      <nav aria-labelledby="f1"><h2 id="f1">Company</h2><ul><li><a href="#/about">About us</a></li><li><a href="#/journal">Journal</a></li><li><a href="#/join">Work with us</a></li><li><a href="#/about?at=areas">Where we work</a></li></ul></nav>
+      <nav aria-labelledby="f2"><h2 id="f2">Services</h2><ul><li><a href="#/services?cat=cleaning">Cleaning</a></li><li><a href="#/services?cat=repairs">Repairs</a></li><li><a href="#/services?cat=assembly">Assembly</a></li><li><a href="#/services?cat=moving">Moving</a></li><li><a href="#/services?cat=outdoor">Outdoor</a></li></ul></nav>
+      <nav aria-labelledby="f3"><h2 id="f3">Plans</h2><ul><li><a href="#/pricing">Pricing</a></li><li><a href="#/pricing">Tendwell Plus</a></li><li><a href="#/help?at=contact">Landlords</a></li></ul></nav>
+      <nav aria-labelledby="f4"><h2 id="f4">Help</h2><ul><li><a href="#/help">Help centre</a></li><li><a href="#/help?at=manage">Manage a booking</a></li><li><a href="#/help?at=contact">Contact</a></li></ul></nav>
+      <div class="foot-news">
+        <h2 class="h3" style="margin-bottom:8px">Small fixes, once a month</h2>
+        <p class="muted small" style="margin-bottom:16px">Seasonal checklists and member offers. No spam.</p>
+        <form data-form="newsletter" novalidate>
+          <div class="f"><label class="sr-only" for="n-email">Email</label><input class="field" id="n-email" type="email" autocomplete="email" placeholder="Email address" required aria-describedby="n-email-err"><p class="err" id="n-email-err"></p></div>
+          <button class="pill solid lg" type="submit">Subscribe</button>
+        </form>
+        <p class="small" data-success="newsletter" hidden><span class="dot" aria-hidden="true"></span> You are on the list. The next issue arrives on the first of the month.</p>
+      </div>
+    </div>
+    <div class="foot-base">
+      <div class="chips"><span class="pill"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg>English</span><a class="pill" href="#/about?at=areas"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Northside</a></div>
+      <nav aria-label="Legal"><a href="#/legal">Privacy</a><a href="#/legal">Terms</a><a href="#/help?at=contact">Accessibility</a></nav>
+      <p>© 2026 Tendwell. A fictional company.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Every illustration path is written out in full: scripts/inline.mjs can only embed paths it can read,
+  // not ones assembled at runtime. Add new pictures here.
+  const IMAGES = {
+    clean: "illustrations/clean.svg",
+    fix: "illustrations/fix.svg",
+    build: "illustrations/build.svg",
+    move: "illustrations/move.svg",
+    garden: "illustrations/garden.svg",
+    plan: "illustrations/plan.svg",
+    pro: "illustrations/pro.svg",
+    street: "illustrations/street.svg",
+    rooms: "illustrations/rooms.svg",
+  };
+  const ALTS = {
+    clean: "A cleaner mopping a sunny living room",
+    fix: "A pro kneeling to fix the pipe under a kitchen sink",
+    build: "Someone building a bookshelf with a drill",
+    move: "A mover carrying a box from a red house to a van",
+    garden: "A gardener trimming a hedge on a sunny day",
+  };
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const money = (n) => "$" + n;
+  const esc = (s) => String(s).replace(/[<>&"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" })[c]);
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: light by default following the system setting, dark behind the toggle ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light colors" : "Switch to dark colors");
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const savedTheme = store.get("tendwell-theme");
+  applyTheme(savedTheme === "light" || savedTheme === "dark" ? savedTheme : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("tendwell-theme", next);
+  });
+
+  /* ---------- Services: one record per service drives the list, the service page, prices and booking ---------- */
+  const SERVICES = {
+    "regular-clean": { name: "Regular clean", cat: "cleaning", line: "Weekly or fortnightly, the same pro each time.", hours: "2 to 3 hours", spot: "s-bucket", img: "clean", sizes: [["Studio", 65], ["1–2 bedrooms", 85], ["3+ bedrooms", 115]], inc: ["Kitchen and bathroom surfaces", "Floors vacuumed and mopped", "Beds made, bins emptied", "Dusting at hand height"] },
+    "deep-clean": { name: "Deep clean", cat: "cleaning", line: "Inside the oven, behind the sofa, top to bottom.", hours: "3 to 5 hours", spot: "s-spray", img: "clean", sizes: [["Studio", 140], ["1–2 bedrooms", 190], ["3+ bedrooms", 260]], inc: ["Inside the oven, fridge and cupboards", "Bathroom descaled, grout scrubbed", "Skirting, doors, switches and behind furniture", "Windows inside, sills and frames"] },
+    windows: { name: "Window cleaning", cat: "outdoor", line: "Inside and out, frames and sills, ladder included.", hours: "1 to 2 hours", spot: "s-window", img: "garden", sizes: [["Up to 8 windows", 55], ["9–16 windows", 85], ["17+ windows", 120]], inc: ["Glass inside and out", "Frames and sills wiped", "Ground and first floor", "Purified water, no streaks"] },
+    "handy-hour": { name: "Handy hour", cat: "repairs", line: "One pro, one hour, your list of small fixes.", hours: "1 hour, add more on the day", spot: "s-wrench", img: "fix", sizes: [["First hour", 75], ["Each extra hour", 60]], inc: ["Sticky doors and loose handles", "Shelves, curtain rails and pictures", "Silicone around baths and sinks", "Small parts bought for you at cost"] },
+    plumbing: { name: "Leaks and taps", cat: "repairs", line: "Drips, slow drains and running toilets, fixed today.", hours: "1 to 2 hours", spot: "s-drop", img: "fix", sizes: [["Call-out and first hour", 95], ["Each extra hour", 70]], inc: ["Dripping taps and washers", "Slow sinks and showers cleared", "Running toilets and cisterns", "Isolation valves fitted"] },
+    assembly: { name: "Furniture assembly", cat: "assembly", line: "Flat-pack built level, tight and fixed to the wall.", hours: "1 to 3 hours", spot: "s-flatpack", img: "build", sizes: [["Small item", 60], ["Wardrobe or bed", 110], ["Whole room", 220]], inc: ["Built from the maker's instructions", "Fixed to the wall where needed", "Packaging flattened and taken away", "Leftover parts bagged and labelled"] },
+    mounting: { name: "TV and shelf mounting", cat: "assembly", line: "Screens, shelves and mirrors, level and secure.", hours: "1 to 2 hours", spot: "s-screen", img: "build", sizes: [["One item", 70], ["Each extra item", 35]], inc: ["Wall checked for pipes and cables", "Fixings chosen for your wall", "Cables tidied where possible", "Dust cleaned up after drilling"] },
+    moving: { name: "Moving help", cat: "moving", line: "Two pros and a van, by the hour, across town.", hours: "3 hours minimum", spot: "s-boxes", img: "move", route: true, sizes: [["Two pros and a van, per hour", 95], ["Each extra pro, per hour", 35]], inc: ["Loading, driving and unloading", "Blankets and straps for furniture", "Beds and tables taken apart and rebuilt", "Boxes available on request"] },
+    removal: { name: "Rubbish removal", cat: "moving", line: "Old furniture and garden waste, gone the same day.", hours: "Under an hour", spot: "s-bag", img: "move", sizes: [["Quarter van", 80], ["Half van", 140], ["Full van", 240]], inc: ["Lifting and carrying included", "Licensed waste disposal", "Recycling sorted where possible", "Space swept afterwards"] },
+    garden: { name: "Garden tidy", cat: "outdoor", line: "Hedges, lawn and leaves, with the clippings taken away.", hours: "2 to 4 hours", spot: "s-plant", img: "garden", sizes: [["Small garden", 70], ["Medium garden", 110], ["Large garden", 160]], inc: ["Lawn mowed and edged", "Hedges and shrubs trimmed", "Beds weeded and leaves cleared", "Green waste taken away"] },
+  };
+  const PLUS = 0.85;
+  const fromPrice = (s) => s.sizes[0][1];
+  const svcCard = (id) => {
+    const s = SERVICES[id];
+    return `<article class="svc"><div><h3>${s.name}</h3><p class="muted">${s.line}</p><p class="price">From ${money(fromPrice(s))}</p></div><a class="pill solid" href="#/service?s=${id}">Details</a><svg class="spot" aria-hidden="true"><use href="#${s.spot}"/></svg></article>`;
+  };
+  $$("[data-service-options]").forEach((select) => {
+    select.innerHTML = `<option value="">What needs doing?</option>` + Object.entries(SERVICES).map(([id, s]) => `<option value="${id}">${s.name}</option>`).join("");
+  });
+  $("#price-list").insertAdjacentHTML("beforeend", Object.entries(SERVICES).map(([id, s]) =>
+    `<a href="#/service?s=${id}" style="text-decoration:none"><span>${s.name}</span><span class="num hide-xs">${money(fromPrice(s))}</span><span class="num">${money(Math.round(fromPrice(s) * PLUS))}</span></a>`).join(""));
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Tendwell: home help, booked in minutes",
+    services: "Services · Tendwell",
+    service: "Service · Tendwell",
+    pricing: "Pricing · Tendwell",
+    book: "Book a visit · Tendwell",
+    join: "Work with us · Tendwell",
+    about: "About · Tendwell",
+    help: "Help · Tendwell",
+    journal: "Journal · Tendwell",
+    post: "The twenty-minute reset · Tendwell",
+    legal: "Privacy and terms · Tendwell",
+    "404": "Page not found · Tendwell",
+  };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name];
+    const section = { service: "services", post: "journal" }[name] || name;
+    $$(".nav a, .top-end a.pill:not(.solid)").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === section) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (name === "services") filterServices(route.params.get("cat") || "all");
+    if (name === "service") setService(route.params.get("s"));
+    if (name === "book") startBooking(route.params);
+    if (name === "journal") filterPosts("all");
+    if (name === "home") stepsPager.update();
+    const at = route.params.get("at");
+    const target = at && document.getElementById(at);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = document.getElementById(href.slice(1));
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Menu (phones and tablets) ---------- */
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+
+  /* ---------- Reveal (content stays visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) { $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in"))); }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Steps carousel: scroll-snap track (works without JS), counter and round arrows ---------- */
+  const stepsPager = (() => {
+    const track = $("#steps");
+    const pager = $("[data-pager='steps']");
+    const [prev, next] = $$("button", pager);
+    const pages = () => Math.ceil(track.children.length / Math.max(1, Math.round(track.clientWidth / (track.children[0].offsetWidth || 1)) || 1));
+    function update() {
+      const n = pages();
+      const end = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+      const p = end ? n : Math.min(n, Math.round(track.scrollLeft / (track.clientWidth || 1)) + 1);
+      $(".count", pager).textContent = `${p}/${n}`;
+      prev.disabled = p <= 1;
+      next.disabled = p >= n;
+    }
+    [prev, next].forEach((b) => b.addEventListener("click", () => {
+      track.scrollBy({ left: Number(b.dataset.dir) * track.clientWidth, behavior: reduced.matches ? "auto" : "smooth" });
+    }));
+    let settle;
+    track.addEventListener("scroll", () => { clearTimeout(settle); settle = setTimeout(update, 120); }, { passive: true });
+    addEventListener("resize", update);
+    return { update };
+  })();
+
+  /* ---------- "Use my location": a real site asks the browser for the position; here it fills a label ---------- */
+  $$("[data-locate]").forEach((b) => b.addEventListener("click", () => {
+    const field = document.getElementById(b.dataset.locate);
+    field.value = "Current location";
+    field.dispatchEvent(new Event("input", { bubbles: true }));
+    field.focus();
+  }));
+
+  /* ---------- Services list: search and category chips ---------- */
+  const svcList = $("#svc-list");
+  svcList.innerHTML = Object.keys(SERVICES).map(svcCard).join("");
+  const svcCards = [...svcList.children].map((el, i) => ({ el, id: Object.keys(SERVICES)[i] }));
+  let svcCat = "all";
+  function renderServices() {
+    const q = $("#svc-q").value.trim().toLowerCase();
+    let shown = 0;
+    svcCards.forEach(({ el, id }) => {
+      const s = SERVICES[id];
+      el.hidden = (svcCat !== "all" && s.cat !== svcCat) || (q && !`${s.name} ${s.line} ${s.inc.join(" ")}`.toLowerCase().includes(q));
+      if (!el.hidden) shown += 1;
+    });
+    $("[data-svc-count]").textContent = `${shown} ${shown === 1 ? "service" : "services"}`;
+    $("[data-empty='svc']").hidden = shown > 0;
+  }
+  function filterServices(cat) {
+    svcCat = $$("[data-cat-filter]").some((c) => c.dataset.catFilter === cat) ? cat : "all";
+    $$("[data-cat-filter]").forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.catFilter === svcCat)));
+    renderServices();
+  }
+  $$("[data-cat-filter]").forEach((chip) => chip.addEventListener("click", () => filterServices(chip.dataset.catFilter)));
+  $("#svc-q").addEventListener("input", renderServices);
+
+  /* ---------- Service page: filled from SERVICES by ?s= ---------- */
+  let serviceId = "deep-clean";
+  function setService(id) {
+    serviceId = SERVICES[id] ? id : "deep-clean";
+    const s = SERVICES[serviceId];
+    const view = views.get("service");
+    $$("[data-s='name']", view).forEach((el) => { el.textContent = s.name; });
+    $("[data-s='line']", view).textContent = s.line;
+    $("[data-s='from']", view).textContent = money(fromPrice(s));
+    $("[data-s='hours']", view).textContent = s.hours;
+    const img = $("[data-s='img']", view);
+    img.src = IMAGES[s.img];
+    img.alt = ALTS[s.img];
+    $("[data-s='inc']", view).innerHTML = s.inc.map((x) => `<li>${x}</li>`).join("");
+    const rows = $("[data-s='sizes']", view);
+    $$("p:not(.head)", rows).forEach((p) => p.remove());
+    rows.insertAdjacentHTML("beforeend", s.sizes.map(([label, price]) => `<p><span>${label}</span><span class="num">${money(price)}</span><span class="num">${money(Math.round(price * PLUS))}</span></p>`).join(""));
+    const related = Object.keys(SERVICES).filter((k) => k !== serviceId).sort((a, b) => (SERVICES[b].cat === s.cat) - (SERVICES[a].cat === s.cat)).slice(0, 3);
+    $("#related").innerHTML = related.map(svcCard).join("");
+    document.title = `${s.name} · Tendwell`;
+  }
+
+  /* ---------- Pricing: monthly or yearly ---------- */
+  $$("[data-bill]").forEach((b) => b.addEventListener("click", () => {
+    $$("[data-bill]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    const yearly = b.dataset.bill === "year";
+    $("[data-plan-price]").textContent = yearly ? "$120" : "$12";
+    $("[data-plan-note]").textContent = yearly ? "per year, two months free" : "per month, cancel any time";
+  }));
+
+  /* ---------- Booking: days from today, live summary, route stop for moves ---------- */
+  const booking = $("[data-form='booking']");
+  const dayFmt = new Intl.DateTimeFormat("en-US", { weekday: "short", day: "numeric", month: "short" });
+  $("#b-days").innerHTML = Array.from({ length: 8 }, (_, i) => {
+    const d = new Date(); d.setDate(d.getDate() + i);
+    const label = i === 0 ? "Today" : i === 1 ? "Tomorrow" : dayFmt.format(d).split(",")[0];
+    return `<label class="opt"><input type="radio" name="day" value="${dayFmt.format(d)}"><span>${label}<small>${dayFmt.format(d).replace(/^\w+, /, "")}</small></span></label>`;
+  }).join("");
+  function summarise() {
+    const s = SERVICES[$("#b-svc").value];
+    const routeStop = $("[data-route-only]");
+    routeStop.hidden = !s?.route;
+    $("#b-to").disabled = !s?.route;
+    const addr = $("#b-addr").value.trim();
+    const to = $("#b-to").value.trim();
+    $("[data-sum='svc']").textContent = s ? s.name : "Choose a service";
+    $("[data-sum='day']").textContent = $("input[name='day']:checked", booking)?.value || "Choose a day";
+    $("[data-sum='time']").textContent = $("input[name='time']:checked", booking)?.value || "Choose a window";
+    $("[data-sum='addr']").textContent = addr ? (s?.route && to ? `${addr} to ${to}` : addr) : "Add your address";
+    $("[data-sum='price']").textContent = s ? money(fromPrice(s)) : "$0";
+  }
+  booking.addEventListener("input", summarise);
+  booking.addEventListener("change", summarise);
+  function startBooking(params) {
+    if (SERVICES[params.get("s")]) $("#b-svc").value = params.get("s");
+    if (params.get("addr")) $("#b-addr").value = params.get("addr");
+    const when = params.get("when");
+    const days = $$("input[name='day']", booking);
+    if (when === "today") days[0].checked = true;
+    if (when === "tomorrow") days[1].checked = true;
+    summarise();
+  }
+  $("[data-again]").addEventListener("click", () => {
+    booking.reset();
+    booking.hidden = false;
+    $("[data-success='booking']").hidden = true;
+    summarise();
+    $("#b-addr").focus();
+  });
+
+  /* ---------- Work with us: trade chips ---------- */
+  $$("[data-role-filter]").forEach((chip) => chip.addEventListener("click", () => {
+    const cat = chip.dataset.roleFilter;
+    $$("[data-role-filter]").forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
+    $$("#roles [data-cat]").forEach((row) => { row.hidden = cat !== "all" && row.dataset.cat !== cat; });
+  }));
+
+  /* ---------- Help: topics and search ---------- */
+  let topic = "all";
+  function filterFaq() {
+    const q = $("#faq-q").value.trim().toLowerCase();
+    let shown = 0;
+    $$("[data-faq-group]").forEach((group) => {
+      let inGroup = 0;
+      $$("details", group).forEach((item) => {
+        const match = (topic === "all" || group.dataset.faqGroup === topic) && (!q || item.textContent.toLowerCase().includes(q));
+        item.hidden = !match;
+        if (match) { inGroup += 1; if (q) item.open = true; }
+      });
+      group.hidden = inGroup === 0;
+      shown += inGroup;
+    });
+    $("[data-empty='faq']").hidden = shown > 0;
+  }
+  $$("[data-topic]").forEach((chip) => chip.addEventListener("click", () => {
+    topic = chip.dataset.topic;
+    $$("[data-topic]").forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
+    filterFaq();
+  }));
+  $("#faq-q").addEventListener("input", filterFaq);
+
+  /* ---------- Journal: stories drawn from data, filtered by topic ---------- */
+  const POSTS = [
+    { cat: "Repairs", date: "5 Nov 2026", title: "Five fixes to try before you call anyone", img: "fix" },
+    { cat: "Moving", date: "28 Oct 2026", title: "Packing a kitchen in one evening", img: "move" },
+    { cat: "Garden", date: "20 Oct 2026", title: "What to cut back before the first frost", img: "garden" },
+    { cat: "Cleaning", date: "9 Oct 2026", title: "Getting your deposit back: the checklist", img: "plan" },
+    { cat: "Repairs", date: "30 Sep 2026", title: "Which wall plug for which wall", img: "build" },
+    { cat: "Moving", date: "18 Sep 2026", title: "A day in the van with our moving crew", img: "street" },
+  ];
+  $("#posts").innerHTML = POSTS.map((p) => `<a class="post-card" href="#/post" data-cat="${p.cat}"><img src="${IMAGES[p.img]}" alt="" width="800" height="600"><p class="meta">${p.cat} · ${p.date}</p><h3>${esc(p.title)}</h3></a>`).join("");
+  function filterPosts(cat) {
+    let shown = 0;
+    $$("[data-post-filter]").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.postFilter === cat)));
+    $$("#posts > a").forEach((a) => { a.hidden = cat !== "all" && a.dataset.cat !== cat; if (!a.hidden) shown += 1; });
+    $("[data-empty='posts']").hidden = shown > 0;
+  }
+  $$("[data-post-filter]").forEach((chip) => chip.addEventListener("click", () => filterPosts(chip.dataset.postFilter)));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Enter a valid email address.", tooShort: "Please write at least 20 characters.", patternMismatch: "Check the format and try again." };
+  function problemOf(field) {
+    if (field.matches("fieldset")) return $("input:checked", field) ? "" : "Please choose one.";
+    if (field.disabled || field.closest("[hidden]")) return "";
+    const key = Object.keys(messages).find((k) => field.validity[k]);
+    if (!key) return "";
+    if (field.closest(".stops")) return field.tagName === "SELECT" ? "Choose what needs doing." : field.id === "b-to" ? "Add where you are moving to." : "Add your address to see times.";
+    if (field.type === "checkbox") return "Please tick this box to continue.";
+    if (field.tagName === "SELECT") return "Please choose one.";
+    if (key === "patternMismatch") return field.type === "tel" ? "Enter a phone number with at least 7 digits." : "Use the format TW-12345.";
+    return messages[key];
+  }
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    const problem = problemOf(field);
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    // fields that share one message (the route stops) keep the first problem shown
+    const shared = $$(`[aria-describedby="${error.id}"]`).map(problemOf).find(Boolean) || "";
+    error.textContent = shared;
+    return !problem;
+  }
+  const onValid = {
+    quote(form) {
+      const params = new URLSearchParams();
+      const svc = $("select[name='service']", form)?.value || (form.closest("[data-view='service']") ? serviceId : "");
+      if (svc) params.set("s", svc);
+      const addr = $("input[autocomplete='street-address']", form)?.value.trim();
+      if (addr) params.set("addr", addr);
+      const when = $("select[id$='when']", form)?.value;
+      if (when) params.set("when", when);
+      go(`#/book?${params}`);
+      return false;
+    },
+    booking() { $("[data-ref]").textContent = `TW-${String(Date.now()).slice(-5)}`; return true; },
+    contact() { $("[data-case]").textContent = `C-${String(Date.now()).slice(-5)}`; return true; },
+  };
+  $$("form[data-form]").forEach((form) => {
+    const fields = () => $$("input[aria-describedby], textarea[aria-describedby], select[aria-describedby], fieldset[data-group-required]", form);
+    fields().forEach((field) => field.addEventListener(field.matches("fieldset, [type=checkbox], select") ? "change" : "blur", () => checkField(field)));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    const kind = form.dataset.form;
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const list = fields();
+      if (!list.map(checkField).every(Boolean)) {
+        const first = list.find((f) => f.getAttribute("aria-invalid") === "true");
+        (first?.matches("fieldset") ? $("input", first) : first)?.focus();
+        return;
+      }
+      if (kind === "quote") { onValid.quote(form); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        button.disabled = false;
+        button.textContent = label;
+        const success = (form.closest("[data-view], footer") || document).querySelector(`[data-success="${kind}"]`);
+        if (!onValid[kind] || onValid[kind](form)) form.hidden = true;
+        if (!success) return;
+        success.hidden = false;
+        if (success.tabIndex === -1) success.focus({ preventScroll: true });
+        const box = success.getBoundingClientRect();
+        if (box.top < 80 || box.bottom > innerHeight) success.scrollIntoView({ block: "center", behavior: reduced.matches ? "auto" : "smooth" });
+      }, 600);
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

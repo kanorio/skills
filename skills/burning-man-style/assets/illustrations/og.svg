@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070915"/><stop offset="0.7" stop-color="#1b1830"/><stop offset="1" stop-color="#46293a"/></linearGradient>
+    <radialGradient id="glow" cx="0.72" cy="0.55" r="0.4"><stop offset="0" stop-color="#ff9b52" stop-opacity="0.55"/><stop offset="1" stop-color="#ff9b52" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#sky)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g fill="#f4efe6" opacity="0.8"><circle cx="90" cy="60" r="1.6"/><circle cx="240" cy="120" r="1.2"/><circle cx="410" cy="48" r="1.4"/><circle cx="620" cy="96" r="1.1"/><circle cx="780" cy="40" r="1.5"/><circle cx="1010" cy="110" r="1.3"/><circle cx="1130" cy="58" r="1.1"/><circle cx="330" cy="200" r="1"/><circle cx="930" cy="190" r="1.2"/></g>
+  <path d="M0 360 L180 330 L320 350 L470 318 L640 346 L800 322 L960 350 L1200 330 V400 H0 Z" fill="#141220"/>
+  <g stroke="#ffb27a" stroke-width="3" fill="none" opacity="0.95"><path d="M800 380 L860 120 L920 380"/><path d="M812 330 L908 330 M826 270 L894 270 M840 210 L880 210 M852 160 L868 160"/><path d="M812 330 L894 270 L840 210 L868 160 M908 330 L826 270 L880 210 L852 160"/></g>
+  <circle cx="860" cy="112" r="10" fill="#ffe3bf"/>
+  <path d="M0 430 L60 424 L130 432 L210 421 L300 433 L380 426 L470 436 L560 423 L650 431 L740 420 L830 432 L920 424 L1010 434 L1100 422 L1200 430 V630 H0 Z" fill="#f6a774"/>
+  <path d="M0 430 L60 424 L130 432 L210 421 L300 433 L380 426 L470 436 L560 423 L650 431 L740 420 L830 432 L920 424 L1010 434 L1100 422 L1200 430" fill="none" stroke="#fbe9d6" stroke-width="4"/>
+  <g transform="translate(72 476)"><circle cx="34" cy="34" r="30" fill="none" stroke="#1e1612" stroke-width="5"/><path d="M34 14c4.5 6 12 11.5 12 21.5a12 12 0 0 1-24 0c0-5 2.7-8.8 5.2-11.8 1 3.4 2.9 5.4 5.7 6-1.5-5.6-1-10.7 1.1-15.7z" fill="#1e1612"/></g>
+  <text x="172" y="532" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700" fill="#1e1612">Emberwell</text>
+  <text x="174" y="580" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#3a2a22">Seven nights of light art on Halite Flats · October 7 to 13, 2027</text>
+</svg>

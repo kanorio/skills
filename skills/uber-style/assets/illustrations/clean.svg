@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+<defs><pattern id="d" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.6" fill="#111" fill-opacity=".4"/></pattern></defs>
+<rect width="800" height="600" fill="#9cc8ee"/>
+<rect x="470" y="60" width="260" height="310" fill="#d6ebfa"/>
+<circle cx="660" cy="150" r="46" fill="#f2c230"/>
+<path d="M470 250 Q560 210 640 250 T730 240 V370 H470Z" fill="#2e7d5b"/>
+<path d="M470 60h260v310H470Z M600 60v310 M470 215h260" fill="none" stroke="#111" stroke-width="12"/>
+<rect x="456" y="366" width="288" height="16" fill="#f3ecdf"/>
+<rect x="90" y="120" width="120" height="90" fill="#f3ecdf"/><path d="M100 200 l40-50 30 30 20-20 10 40Z" fill="#e8693a"/><circle cx="180" cy="148" r="12" fill="#f2c230"/>
+<rect y="440" width="800" height="160" fill="#d9773f"/>
+<path d="M470 440 H730 L800 520 V600 H380Z" fill="#f2c230" fill-opacity=".5"/>
+<rect x="30" y="300" width="250" height="150" rx="20" fill="#2d5bd7"/>
+<rect x="30" y="300" width="250" height="70" rx="20" fill="#1f44b0"/>
+<rect x="40" y="370" width="230" height="40" rx="12" fill="#3f6ee6"/>
+<path d="M30 450h250l-20 30H50Z" fill="url(#d)"/>
+<path d="M60 450v22M250 450v22" stroke="#111" stroke-width="10" stroke-linecap="round"/>
+<ellipse cx="380" cy="568" rx="120" ry="18" fill="url(#d)"/>
+<path d="M368 440 L356 556 M404 440 L420 556" stroke="#22305a" stroke-width="30" stroke-linecap="round"/>
+<ellipse cx="350" cy="562" rx="24" ry="11" fill="#111"/><ellipse cx="428" cy="562" rx="24" ry="11" fill="#111"/>
+<path d="M346 312 Q384 286 424 312 L432 450 H338Z" fill="#e8693a"/>
+<path d="M392 300 Q424 312 432 450 H396Z" fill="url(#d)"/>
+<rect x="374" y="270" width="22" height="30" fill="#8a5a3c"/>
+<circle cx="385" cy="250" r="32" fill="#8a5a3c"/>
+<path d="M352 248 Q350 208 388 210 Q424 212 418 250 Q404 230 380 236 Q364 238 352 248Z" fill="#111"/>
+<path d="M300 220 L250 560" stroke="#111" stroke-width="9" stroke-linecap="round"/>
+<path d="M352 330 Q320 360 290 330 M420 330 Q380 420 272 410" fill="none" stroke="#e8693a" stroke-width="24" stroke-linecap="round"/>
+<circle cx="290" cy="328" r="13" fill="#8a5a3c"/><circle cx="276" cy="410" r="13" fill="#8a5a3c"/>
+<path d="M200 552 h110 l-10 26 h-90Z" fill="#f3ecdf"/>
+<path d="M210 578v12M230 578v14M250 578v12M270 578v14M290 578v12" stroke="#f3ecdf" stroke-width="6" stroke-linecap="round"/>
+<path d="M560 470 h80 l-12 90 h-56Z" fill="#2e7d5b"/>
+<ellipse cx="600" cy="472" rx="40" ry="10" fill="#9cc8ee"/>
+<path d="M520 560h160" stroke="#111" stroke-opacity=".25" stroke-width="10" stroke-linecap="round"/>
+<path d="M700 300 q-30-60 10-110 q20 50-10 110Z M720 300 q10-70 60-90 q-10 60-60 90Z M690 310 q-60-20-70-70 q50 10 70 70Z" fill="#2e7d5b"/>
+<path d="M670 300h80l-10 60h-60Z" fill="#e8693a"/>
+</svg>

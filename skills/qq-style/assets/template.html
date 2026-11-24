@@ -1,0 +1,1654 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Nightloom: long, slow sound for focus, reading and sleep</title>
+<meta name="description" content="Nightloom mixes rain, wind, low synth and room tone into rooms you can work, read or fall asleep in. Free on phones, computers and the web.">
+<meta property="og:title" content="Nightloom: long, slow sound for focus, reading and sleep">
+<meta property="og:description" content="Rooms of sound that never loop the same way twice. Free on every device.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/sora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font ---------- */
+@font-face { font-family: "Sora"; src: url("fonts/sora-latin-wght-normal.woff2") format("woff2"); font-weight: 100 800; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens (light) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);
+  --surface: oklch(97.3% 0.005 272);
+  --surface-2: oklch(94% 0.01 272);
+  --text: oklch(23% 0.022 272);
+  --text-muted: oklch(50% 0.02 272);
+  --border: oklch(91.5% 0.008 272);
+  --border-strong: oklch(70% 0.014 272);
+  --accent: oklch(54% 0.17 254);
+  --accent-hover: oklch(47% 0.16 257);
+  --accent-text: oklch(100% 0 0);
+  --focus: oklch(60% 0.18 254);
+  --danger: oklch(52% 0.19 25);
+  --ok: oklch(52% 0.12 165);
+  --ink: oklch(22% 0.03 272);          /* text on the white pill and on pale aurora */
+  --pill: oklch(100% 0 0 / 0.88);
+  --shadow-card: 0 1px 2px oklch(25% 0.04 272 / 0.06), 0 14px 34px -14px oklch(25% 0.06 272 / 0.2);
+  --shadow-overlay: 0 20px 50px -14px oklch(22% 0.06 272 / 0.3);
+  --font: "Sora", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r-control: 12px; --r-card: 20px; --r-media: 28px; --r-panel: 16px; --r-pill: 999px;
+  --fast: 150ms; --base: 280ms; --slow: 900ms; --ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+  --flute: 36px;
+  --wrap: 1200px;
+  --gut: clamp(16px, 4vw, 48px);
+  --head: 64px;
+}
+/* ---------- Tokens (dark) ---------- */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(16.5% 0.028 274);
+  --surface: oklch(20.5% 0.032 274);
+  --surface-2: oklch(25.5% 0.036 274);
+  --text: oklch(95% 0.008 272);
+  --text-muted: oklch(74% 0.02 272);
+  --border: oklch(29% 0.03 274);
+  --border-strong: oklch(50% 0.03 274);
+  --accent: oklch(78% 0.12 234);
+  --accent-hover: oklch(86% 0.09 232);
+  --accent-text: oklch(17% 0.03 274);
+  --focus: oklch(80% 0.13 234);
+  --danger: oklch(74% 0.14 25);
+  --ok: oklch(78% 0.12 165);
+  --shadow-card: 0 1px 2px oklch(5% 0.02 274 / 0.4), 0 16px 40px -16px oklch(5% 0.02 274 / 0.7);
+  --shadow-overlay: 0 22px 54px -14px oklch(4% 0.02 274 / 0.8);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--head) + 16px); }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.7 var(--font); -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+h1, h2, h3, p, ul, ol, dl, figure, blockquote { margin: 0; }
+h1, h2, h3 { line-height: 1.2; text-wrap: balance; }
+h1 { font-size: clamp(2.1rem, 1.5rem + 2.2vw, 3.25rem); font-weight: 600; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem); font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 1.25rem; font-weight: 600; }
+p { text-wrap: pretty; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
+.aurora :focus-visible { outline-color: oklch(100% 0 0); }
+.aurora .lead, .aurora .meta { color: inherit; opacity: 0.86; }
+.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.i.sm { width: 14px; height: 14px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 30; padding: 10px 16px; border-radius: var(--r-pill); background: var(--accent); color: var(--accent-text); }
+.skip:focus { top: 12px; }
+.wrap { width: min(100% - 2 * var(--gut), var(--wrap)); margin-inline: auto; }
+.narrow { --wrap: 720px; }
+.center { text-align: center; }
+.muted { color: var(--text-muted); }
+.js [data-view]:not(.is-active) { display: none; }
+.js [data-view].is-active { animation: fade var(--base) var(--ease); }
+
+/* ---------- Header: a solid bar, text links, the current one in the accent ---------- */
+.top { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--border); }
+.top-in { display: flex; align-items: center; gap: 24px; height: var(--head); width: min(100% - 2 * var(--gut), 1320px); margin-inline: auto; }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); font-weight: 600; font-size: 1.125rem; letter-spacing: 0.02em; white-space: nowrap; }
+.brand:hover { color: var(--text); }
+.mark { width: 30px; height: 30px; }
+.nav { display: flex; align-items: center; gap: clamp(20px, 3vw, 48px); margin-inline: auto; }
+.nav > a, .dd > a { display: inline-flex; align-items: center; gap: 6px; height: var(--head); color: var(--text); font-size: 0.9375rem; white-space: nowrap; }
+.nav > a:hover, .dd > a:hover, .nav a[aria-current="page"] { color: var(--accent); }
+.dd { position: relative; }
+.dd > a .i { transition: transform var(--fast) var(--ease); }
+.dd:hover > a .i, .dd:focus-within > a .i { transform: rotate(180deg); }
+.dd-menu { position: absolute; left: -24px; top: calc(100% - 1px); min-width: 188px; padding: 10px; border-radius: 0 0 var(--r-control) var(--r-control); background: var(--bg); box-shadow: var(--shadow-overlay); visibility: hidden; opacity: 0; transition: opacity var(--fast), visibility var(--fast); }
+.dd:hover .dd-menu, .dd:focus-within .dd-menu { visibility: visible; opacity: 1; }
+.dd-menu a { display: flex; align-items: center; gap: 10px; padding: 7px 12px; border-radius: 8px; color: var(--text); font-size: 0.875rem; }
+.dd-menu a:hover { background: var(--surface); color: var(--text); }
+.dd-menu hr { margin: 6px 12px; border: 0; border-top: 1px solid var(--border); }
+.top-end { display: flex; align-items: center; gap: 8px; }
+.top-link { color: var(--text); font-size: 0.9375rem; padding: 0 10px; white-space: nowrap; }
+.icon-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: transparent; color: var(--text); }
+.icon-btn:hover { background: var(--surface-2); }
+.menu-btn { display: none; }
+.sheet { border-top: 1px solid var(--border); padding: 12px var(--gut) 24px; }
+.sheet a { display: flex; align-items: center; justify-content: space-between; padding: 14px 4px; border-bottom: 1px solid var(--border); color: var(--text); font-size: 1.0625rem; }
+.sheet a[aria-current="page"] { color: var(--accent); }
+.sheet .btn { justify-content: center; margin-top: 20px; border: 0; color: var(--accent-text); }
+@media (max-width: 1099px) {
+  .nav, .top-link { display: none; }
+  .menu-btn { display: inline-grid; }
+  .top-end { margin-left: auto; }
+}
+
+/* ---------- Aurora through fluted glass (the signature) ----------
+   ::before  the light: a base gradient and soft colour fields (drifts slowly on hero and call to action)
+   .flutes   the same light, scaled, shown through every other flute: the refraction
+   ::after   the glass: a highlight and a shadow repeated every --flute pixels
+   .frost    optional soft white shapes behind the glass                                         */
+.aurora {
+  --a0: oklch(26% 0.1 272); --a1: oklch(38% 0.15 266); --a2: oklch(68% 0.13 192); --a3: oklch(53% 0.18 292);
+  --a4: oklch(87% 0.08 55); --a5: oklch(87% 0.07 345); --a6: oklch(74% 0.12 235);
+  --on: oklch(100% 0 0); --foot: oklch(30% 0.06 285 / 0.78);
+  --light:
+    radial-gradient(26% 58% at 14% 32%, var(--a2), transparent 70%),
+    radial-gradient(16% 52% at 47% 18%, var(--a2), transparent 70%),
+    radial-gradient(30% 60% at 74% 30%, var(--a3), transparent 72%),
+    radial-gradient(24% 48% at 93% 50%, var(--a6), transparent 70%),
+    radial-gradient(42% 34% at 20% 94%, var(--a4), transparent 72%),
+    radial-gradient(40% 36% at 72% 98%, var(--a5), transparent 72%),
+    linear-gradient(180deg, var(--a0), var(--a1) 34%, var(--a6) 60%, var(--a5) 80%, var(--a4));
+  position: relative; isolation: isolate; overflow: hidden; color: var(--on); background: var(--a1);
+  text-shadow: var(--shade, 0 1px 14px oklch(18% 0.08 280 / 0.5));
+}
+.pill, .search, .seg button, .aurora .av { text-shadow: none; }
+.aurora::before { content: ""; position: absolute; inset: -14% -18%; z-index: -3; background: var(--light); filter: hue-rotate(var(--hue, 0deg)) saturate(var(--sat, 1)); }
+.aurora::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, oklch(100% 0 0 / 0.22), oklch(100% 0 0 / 0.05) 20%, oklch(100% 0 0 / 0) 52%, oklch(18% 0.06 274 / 0.11) 88%, oklch(100% 0 0 / 0.16)) 0 0 / var(--flute) 100%;
+}
+.flutes {
+  position: absolute; inset: -16% 0; z-index: -2; pointer-events: none; opacity: 0.85;
+  background: var(--light); background-size: 128% 100%; background-position: 70% 0;
+  filter: hue-rotate(var(--hue, 0deg)) saturate(var(--sat, 1));
+  -webkit-mask: linear-gradient(90deg, #000 50%, transparent 0) 0 0 / calc(var(--flute) * 2) 100%;
+          mask: linear-gradient(90deg, #000 50%, transparent 0) 0 0 / calc(var(--flute) * 2) 100%;
+}
+.frost { position: absolute; z-index: -2; width: 34%; aspect-ratio: 1; fill: oklch(100% 0 0 / 0.78); filter: blur(5px); pointer-events: none; }
+.live::before { animation: drift 26s ease-in-out infinite alternate; }
+.live .flutes { animation: tide 19s ease-in-out infinite alternate; }
+.live.is-off::before, .live.is-off .flutes { animation-play-state: paused; }
+@keyframes drift { from { transform: translate3d(-4%, 1%, 0) scale(1.04); } to { transform: translate3d(5%, -2%, 0) scale(1.12); } }
+@keyframes tide { from { transform: translate3d(0, -6%, 0); } to { transform: translate3d(0, 7%, 0); } }
+/* palettes: change only the seven stops */
+.au-dawn { --shade: none; --a0: oklch(88% 0.06 232); --a1: oklch(90% 0.05 262); --a2: oklch(93% 0.045 205); --a3: oklch(85% 0.08 312); --a4: oklch(92% 0.06 40); --a5: oklch(86% 0.09 355); --a6: oklch(84% 0.08 242); --on: var(--ink); }
+.au-ember { --a0: oklch(25% 0.09 300); --a1: oklch(35% 0.15 318); --a2: oklch(66% 0.17 25); --a3: oklch(50% 0.2 335); --a4: oklch(84% 0.11 70); --a5: oklch(76% 0.13 35); --a6: oklch(60% 0.16 352); }
+.au-tide { --a0: oklch(25% 0.07 242); --a1: oklch(37% 0.1 228); --a2: oklch(76% 0.12 182); --a3: oklch(53% 0.13 258); --a4: oklch(89% 0.07 172); --a5: oklch(83% 0.08 218); --a6: oklch(66% 0.12 200); }
+.au-lilac { --a0: oklch(29% 0.1 292); --a1: oklch(43% 0.15 300); --a2: oklch(79% 0.09 322); --a3: oklch(59% 0.17 284); --a4: oklch(89% 0.06 300); --a5: oklch(84% 0.08 258); --a6: oklch(71% 0.12 322); }
+.aurora.deep, [data-theme="dark"] .aurora.deep { --a4: oklch(47% 0.15 302); --a5: oklch(43% 0.13 278); --a6: oklch(50% 0.14 250); }
+[data-theme="dark"] .au-night { --a4: oklch(60% 0.12 42); --a5: oklch(56% 0.13 340); --foot: oklch(100% 0 0 / 0.82); }
+[data-theme="dark"] .au-dawn { --shade: 0 1px 14px oklch(18% 0.08 280 / 0.5); --a0: oklch(29% 0.07 255); --a1: oklch(33% 0.09 272); --a2: oklch(52% 0.09 212); --a3: oklch(46% 0.14 310); --a4: oklch(55% 0.1 32); --a5: oklch(49% 0.13 352); --a6: oklch(45% 0.1 246); --on: oklch(100% 0 0); }
+[data-theme="dark"] .au-ember, [data-theme="dark"] .au-tide, [data-theme="dark"] .au-lilac { --a4: oklch(58% 0.1 60); --a5: oklch(54% 0.1 300); }
+
+/* the glowing, widely tracked white title */
+.glow { color: oklch(100% 0 0); font-weight: 500; letter-spacing: 0.14em; text-shadow: 0 0 0.16em oklch(100% 0 0 / 0.6), 0 0 0.55em oklch(100% 0 0 / 0.38), 0 0 1.3em oklch(88% 0.06 250 / 0.42); }
+.au-dawn .glow { color: var(--on); text-shadow: 0 0 0.6em oklch(100% 0 0 / 0.8); }
+[data-theme="dark"] .au-dawn .glow { text-shadow: 0 0 0.16em oklch(100% 0 0 / 0.6), 0 0 0.55em oklch(100% 0 0 / 0.38); }
+
+/* ---------- Buttons ---------- */
+.pill, .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 28px; border: 0; border-radius: var(--r-pill); font-weight: 600; font-size: 1rem; white-space: nowrap; transition: transform var(--fast) var(--ease), background-color var(--fast), box-shadow var(--fast); }
+.pill { background: var(--pill); color: var(--ink); box-shadow: 0 12px 34px -10px oklch(22% 0.12 285 / 0.55), inset 0 1px 0 oklch(100% 0 0); -webkit-backdrop-filter: blur(10px) saturate(1.3); backdrop-filter: blur(10px) saturate(1.3); }
+.pill:hover { color: var(--ink); background: oklch(100% 0 0 / 0.97); transform: translateY(-1px); }
+.pill.lg { min-height: 72px; padding: 0 44px; font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem); gap: 14px; }
+.pill.lg .i { width: 30px; height: 30px; stroke-width: 1.5; }
+.pill.ghost { background: transparent; color: var(--on); box-shadow: inset 0 0 0 1.5px oklch(100% 0 0 / 0.75); -webkit-backdrop-filter: none; backdrop-filter: none; }
+.au-dawn .pill.ghost { box-shadow: inset 0 0 0 1.5px var(--on); }
+.pill.ghost:hover { background: oklch(100% 0 0 / 0.14); color: var(--on); }
+.btn { background: var(--accent); color: var(--accent-text); }
+.btn:hover { background: var(--accent-hover); color: var(--accent-text); }
+.btn.line { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--border-strong); }
+.btn.line:hover { background: var(--surface); color: var(--text); }
+.btn.sm { min-height: 38px; padding: 0 18px; font-size: 0.875rem; }
+.btn.lg { min-height: 56px; padding: 0 34px; font-size: 1.0625rem; }
+.btn:disabled { opacity: 0.6; cursor: default; }
+.link { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.link .i { transition: transform var(--fast) var(--ease); }
+.link:hover .i { transform: translateX(3px); }
+
+/* ---------- Home hero: one screen, the title, one pill, the platforms ---------- */
+.hero { min-height: calc(100svh - var(--head)); display: grid; grid-template-rows: 1fr auto; padding: 48px var(--gut) 40px; }
+.hero-in { display: grid; justify-items: center; align-content: center; gap: 28px; text-align: center; padding-top: 6vh; }
+.hero-title { font-size: clamp(2.6rem, 1.3rem + 4.2vw, 4.75rem); line-height: 1.12; margin-right: -0.14em; }
+.hero-title span { white-space: nowrap; }
+.hero-title span + span { margin-left: 0.3em; }
+.ver { font-size: 0.9375rem; font-weight: 500; letter-spacing: 0.02em; text-shadow: 0 0 2px oklch(25% 0.1 270 / 0.55), 0 0 12px oklch(25% 0.1 280 / 0.6); }
+.plats { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 36px; margin-top: 56px; }
+.plats a { display: inline-flex; align-items: center; gap: 8px; color: var(--foot); font-size: 0.9375rem; font-weight: 500; padding: 6px 2px; text-shadow: none; }
+[data-theme="dark"] .plats a { text-shadow: inherit; }
+.plats a:hover { color: var(--on); }
+.au-night .plats a:hover { color: var(--ink); }
+[data-theme="dark"] .au-night .plats a:hover { color: oklch(100% 0 0); }
+.js .hero-in > * { animation: rise var(--slow) var(--ease) both; }
+.js .hero-in > :nth-child(2) { animation-delay: 120ms; }
+.js .hero-in > :nth-child(3) { animation-delay: 220ms; }
+
+/* ---------- Sections ---------- */
+.sec { padding: clamp(64px, 8vw, 112px) 0; }
+.sec + .sec { padding-top: 0; }
+.tint { background: var(--surface); }
+.sec.tint, .tint + .sec { padding-top: clamp(64px, 8vw, 112px); }
+.sec-head { display: grid; gap: 12px; max-width: 760px; margin-bottom: clamp(28px, 4vw, 48px); }
+.sec-head p { color: var(--text-muted); font-size: 1.0625rem; }
+.sec-head.center { margin-inline: auto; justify-items: center; }
+.sec-head.row { max-width: none; display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 32px; }
+.sec-head.row > div:not(.chips) { display: grid; gap: 10px; max-width: 640px; }
+.lead { font-size: 1.125rem; color: var(--text-muted); }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
+.ticks { list-style: none; padding: 0; display: grid; gap: 10px; }
+.ticks li { display: flex; gap: 10px; align-items: flex-start; }
+.ticks li::before { content: ""; flex: none; width: 18px; height: 18px; margin-top: 4px; border-radius: 50%; background: radial-gradient(circle, currentColor 0 3px, transparent 3.5px), color-mix(in oklch, currentColor 14%, transparent); color: var(--accent); }
+.aurora .ticks li::before { color: oklch(100% 0 0); }
+
+/* rooms: three aurora cards with glowing titles */
+.rooms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.room { display: grid; align-content: end; gap: 8px; min-height: 440px; padding: 28px; border-radius: var(--r-media); color: var(--on); }
+.room:hover { color: var(--on); }
+.room .frost { top: 10%; left: 33%; }
+.room h3 { font-size: 1.75rem; letter-spacing: 0.1em; }
+.room p { max-width: 30ch; opacity: 0.92; }
+.tag { justify-self: start; padding: 4px 12px; border-radius: var(--r-pill); background: oklch(100% 0 0 / 0.2); font-size: 0.8125rem; font-weight: 500; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.room .more { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-weight: 600; }
+.room:hover .more .i { transform: translateX(3px); }
+.room .more .i { transition: transform var(--fast) var(--ease); }
+
+/* mixer: sliders on a glass panel; values move the aurora */
+.mixer { --flute: 30px; border-radius: var(--r-media); padding: clamp(24px, 4vw, 48px); min-height: 460px; display: grid; align-items: center; }
+.mix-glass { display: grid; gap: 18px; padding: 28px; border-radius: var(--r-card); background: oklch(100% 0 0 / 0.14); box-shadow: inset 0 1px 0 oklch(100% 0 0 / 0.35), 0 20px 40px -20px oklch(15% 0.08 280 / 0.6); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); }
+.mix-name { font-size: 1.375rem; }
+.slider { display: grid; grid-template-columns: 84px 1fr 36px; align-items: center; gap: 14px; font-size: 0.9375rem; }
+.slider output { text-align: right; font-variant-numeric: tabular-nums; opacity: 0.9; }
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: transparent; }
+input[type="range"]::-webkit-slider-runnable-track { height: 4px; border-radius: 4px; background: oklch(100% 0 0 / 0.4); }
+input[type="range"]::-moz-range-track { height: 4px; border-radius: 4px; background: oklch(100% 0 0 / 0.4); }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; margin-top: -8px; border-radius: 50%; background: oklch(100% 0 0); box-shadow: 0 0 12px oklch(100% 0 0 / 0.8); }
+input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border: 0; border-radius: 50%; background: oklch(100% 0 0); box-shadow: 0 0 12px oklch(100% 0 0 / 0.8); }
+.seg { display: flex; flex-wrap: wrap; gap: 8px; }
+.seg button { min-height: 36px; padding: 0 16px; border: 0; border-radius: var(--r-pill); background: oklch(100% 0 0 / 0.16); color: inherit; font-size: 0.875rem; }
+.seg button[aria-pressed="true"] { background: oklch(100% 0 0); color: var(--ink); }
+
+/* features */
+.feats { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.feats li { display: grid; gap: 10px; align-content: start; padding: 28px 24px; border-radius: var(--r-card); background: var(--surface); }
+.feats p { color: var(--text-muted); font-size: 0.9375rem; }
+.ico { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; color: var(--accent); background: color-mix(in oklch, var(--accent) 12%, transparent); }
+.ico .i { width: 24px; height: 24px; }
+
+/* nights list */
+.nights { list-style: none; padding: 0; display: grid; }
+.night { display: grid; grid-template-columns: 80px 1fr auto auto; align-items: center; gap: 12px 28px; padding: 22px 0; border-top: 1px solid var(--border); }
+.night:last-child { border-bottom: 1px solid var(--border); }
+.nd { display: grid; justify-items: center; line-height: 1.1; }
+.nd b { font-size: 2.25rem; font-weight: 300; letter-spacing: 0.04em; }
+.nd span { color: var(--text-muted); font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.14em; }
+.nb { display: grid; gap: 4px; }
+.nb p { display: flex; flex-wrap: wrap; gap: 4px 16px; color: var(--text-muted); font-size: 0.9375rem; }
+.nb p span { display: inline-flex; align-items: center; gap: 6px; }
+.nb .i { width: 16px; height: 16px; }
+.badge { padding: 4px 12px; border-radius: var(--r-pill); background: var(--surface-2); color: var(--text-muted); font-size: 0.8125rem; white-space: nowrap; }
+.badge.hot { background: color-mix(in oklch, var(--accent) 14%, transparent); color: var(--accent); }
+
+/* cards (stories) */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px 20px; }
+.card a { display: grid; gap: 10px; color: var(--text); }
+.card a:hover h3 { color: var(--accent); }
+.cover { aspect-ratio: 16 / 10; border-radius: var(--r-card); --flute: 24px; transition: transform var(--base) var(--ease); }
+.card a:hover .cover { transform: translateY(-3px); }
+.cover .frost { left: 33%; top: 18%; }
+.meta { color: var(--text-muted); font-size: 0.875rem; }
+.card h3 { transition: color var(--fast); }
+.card p:last-child { color: var(--text-muted); font-size: 0.9375rem; }
+.empty { padding: 40px 0; text-align: center; color: var(--text-muted); }
+
+/* filter chips */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips button { min-height: 38px; padding: 0 18px; border: 1px solid var(--border); border-radius: var(--r-pill); background: var(--bg); font-size: 0.875rem; color: var(--text); }
+.chips button:hover { border-color: var(--border-strong); }
+.chips button[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: var(--bg); }
+
+/* closing call to action */
+.cta { padding: clamp(88px, 12vw, 160px) 0; }
+.cta .wrap { display: grid; justify-items: center; gap: 20px; }
+.cta h2 { font-size: clamp(2rem, 1.2rem + 3vw, 3.5rem); font-weight: 500; margin-right: -0.14em; }
+.cta p { font-size: 1.125rem; opacity: 0.92; }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 12px; }
+
+/* page heads: a short aurora band with a glowing title */
+.pagehead { padding: clamp(72px, 9vw, 120px) 0 clamp(64px, 8vw, 104px); }
+.pagehead .wrap { display: grid; justify-items: center; gap: 16px; }
+.pagehead h1 { font-size: clamp(2.2rem, 1.4rem + 3vw, 3.75rem); margin-right: -0.14em; }
+.pagehead p { max-width: 56ch; font-size: 1.0625rem; opacity: 0.94; }
+
+/* download */
+.ptabs { display: flex; gap: 6px; overflow-x: auto; padding: 6px; border-radius: var(--r-pill); background: var(--surface); width: max-content; max-width: 100%; margin: 0 auto 32px; position: relative; }
+.ptabs button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--text-muted); font-size: 0.9375rem; white-space: nowrap; }
+.ptabs button[aria-selected="true"] { background: var(--bg); color: var(--text); box-shadow: var(--shadow-card); }
+.ppanel { display: grid; grid-template-columns: 280px 1fr; gap: clamp(24px, 4vw, 56px); align-items: center; padding: clamp(20px, 3vw, 36px); border: 1px solid var(--border); border-radius: var(--r-media); margin-bottom: 72px; }
+.pp-art { display: grid; place-items: center; aspect-ratio: 1; border-radius: var(--r-card); --flute: 26px; }
+.pp-art .i { width: 88px; height: 88px; stroke-width: 1.1; filter: drop-shadow(0 0 10px oklch(100% 0 0 / 0.8)); }
+.pp-body { display: grid; gap: 14px; justify-items: start; }
+.pp-body ul { padding-left: 1.2em; color: var(--text-muted); font-size: 0.9375rem; }
+.note { min-height: 1.7em; font-size: 0.9375rem; color: var(--ok); }
+.table-wrap { position: relative; overflow-x: auto; border: 1px solid var(--border); border-radius: var(--r-panel); }
+.tbl { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.tbl th, .tbl td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.tbl thead th { background: var(--surface); font-weight: 600; font-size: 0.875rem; color: var(--text-muted); }
+.tbl tbody tr:last-child > * { border-bottom: 0; }
+.tbl td .i { display: inline-block; vertical-align: -4px; margin-right: 8px; }
+.h-sub { font-size: 1.5rem; margin: 56px 0 14px; }
+.code { border-radius: var(--r-panel); background: var(--surface); overflow: hidden; margin-top: 16px; }
+.code-bar { display: flex; align-items: center; justify-content: space-between; padding: 8px 8px 8px 18px; border-bottom: 1px solid var(--border); font-size: 0.8125rem; color: var(--text-muted); }
+.code-bar button { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px; border: 0; border-radius: var(--r-pill); background: transparent; font-size: 0.8125rem; }
+.code-bar button:hover { background: var(--surface-2); }
+.code pre { margin: 0; padding: 18px; overflow-x: auto; font: 0.8125rem/1.8 ui-monospace, "SF Mono", Menlo, Consolas, monospace; position: relative; }
+
+/* release notes: a grey version list beside one document */
+.log { display: grid; grid-template-columns: 300px 1fr; min-height: calc(100svh - var(--head)); }
+.log-side { background: var(--surface); padding: 40px 28px; display: grid; align-content: start; gap: 20px; }
+.log-side h1 { font-size: 1.625rem; }
+.sel select, .field select { width: 100%; min-height: 44px; padding: 0 14px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--bg); }
+.log-list { list-style: none; padding: 0; display: grid; gap: 2px; }
+.log-list button { width: 100%; display: flex; gap: 8px; padding: 9px 14px; border: 0; border-radius: 10px; background: transparent; text-align: left; font-size: 0.875rem; color: var(--text-muted); }
+.log-list button b { color: var(--text); font-weight: 600; }
+.log-list button:hover { background: var(--surface-2); }
+.log-list button[aria-current="true"] { background: var(--surface-2); color: var(--text); }
+.log-doc { padding: 44px clamp(20px, 6vw, 96px) 80px; max-width: 860px; display: grid; align-content: start; gap: 14px; }
+.log-doc h2 { font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem); }
+.log-doc h3 { font-size: 1rem; margin-top: 16px; }
+.log-doc ul { padding-left: 1.2em; display: grid; gap: 10px; }
+
+/* stories hero: a pale aurora with frosted shapes, dark text, one accent pill */
+.feature { min-height: 520px; display: grid; align-items: center; padding: 72px 0; }
+.feature .frost { width: 26%; }
+.feature .f1 { left: 54%; top: 12%; }
+.feature .f2 { left: 80%; top: 48%; width: 16%; }
+.feature-in { display: grid; gap: 14px; justify-items: start; max-width: 520px; }
+.kicker { font-size: 0.9375rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+.feature-title { font-size: clamp(2.2rem, 1.5rem + 2.6vw, 3.5rem); font-weight: 700; }
+.feature p { font-size: 1.0625rem; }
+
+/* article */
+.post-head { padding: 56px 0 64px; }
+.post-head .wrap { display: grid; gap: 16px; }
+.post-head .frost { left: 77%; top: 8%; width: 18%; }
+.back { display: inline-flex; align-items: center; gap: 6px; color: var(--on); font-weight: 500; justify-self: start; }
+.back:hover { color: var(--on); opacity: 0.8; }
+.by { display: flex; align-items: center; gap: 10px; font-size: 0.9375rem; }
+.av { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: oklch(100% 0 0 / 0.5); color: var(--ink); font-size: 0.8125rem; font-weight: 600; }
+.prose { padding: 56px 0 24px; display: grid; gap: 22px; font-size: 1.0625rem; line-height: 1.8; }
+.prose h2 { font-size: 1.625rem; margin-top: 18px; }
+.prose ul { padding-left: 1.2em; display: grid; gap: 8px; }
+.prose blockquote { padding: 8px 0 8px 24px; border-left: 3px solid var(--accent); font-size: 1.375rem; line-height: 1.5; font-weight: 500; }
+.prose figure { display: grid; gap: 10px; }
+.prose figcaption { color: var(--text-muted); font-size: 0.875rem; }
+.fig { aspect-ratio: 16 / 8; border-radius: var(--r-card); --flute: 28px; }
+.fig .frost { left: 38%; top: 14%; width: 24%; }
+.post-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 28px 0 96px; border-top: 1px solid var(--border); margin-top: 32px; }
+
+/* rsvp and forms */
+.rsvp { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(24px, 4vw, 56px); margin-top: 88px; align-items: start; }
+.how { padding: 36px; border-radius: var(--r-media); display: grid; gap: 18px; align-content: start; min-height: 100%; }
+.how h2 { font-size: 1.75rem; letter-spacing: 0.08em; }
+.how ol { padding-left: 1.2em; display: grid; gap: 10px; }
+.form { display: grid; gap: 6px; }
+.form-head { display: grid; gap: 8px; margin-bottom: 18px; }
+.form-head h2 { font-size: 1.75rem; }
+.form-head p { color: var(--text-muted); }
+.field { display: grid; gap: 6px; }
+.field label, .field legend { font-size: 0.875rem; font-weight: 600; }
+.field input:not([type="checkbox"]):not([type="radio"]), .field textarea { width: 100%; min-height: 48px; padding: 10px 16px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--bg); }
+.field textarea { min-height: 140px; resize: vertical; }
+.field input:focus, .field textarea:focus, .field select:focus { outline: 2px solid var(--focus); outline-offset: 0; border-color: transparent; }
+.field [aria-invalid="true"], .field[aria-invalid="true"] .opts { border-color: var(--danger); }
+.err { min-height: 1.5em; color: var(--danger); font-size: 0.8125rem; line-height: 1.5; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+fieldset.field { border: 0; padding: 0; margin: 0; min-width: 0; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; border: 1px solid transparent; border-radius: var(--r-control); }
+.opt { position: relative; }
+.opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.opt span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border: 1px solid var(--border); border-radius: var(--r-pill); font-size: 0.9375rem; }
+.opt input:checked + span { background: var(--text); color: var(--bg); border-color: var(--text); }
+.opt input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9375rem; font-weight: 400 !important; }
+.check input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--accent); }
+.pw { position: relative; }
+.pw input { padding-right: 56px !important; }
+.pw button { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border: 0; border-radius: 50%; background: transparent; display: grid; place-items: center; color: var(--text-muted); }
+.form .btn { margin-top: 8px; justify-self: start; }
+.success { display: grid; gap: 12px; justify-items: start; padding: 32px; border-radius: var(--r-card); background: var(--surface); }
+.success .ico { color: var(--ok); background: color-mix(in oklch, var(--ok) 14%, transparent); }
+.success:focus { outline: none; }
+
+/* pricing */
+.switch { display: inline-flex; gap: 4px; padding: 5px; border-radius: var(--r-pill); background: var(--surface); margin-top: 12px; }
+.switch button { min-height: 40px; padding: 0 20px; border: 0; border-radius: var(--r-pill); background: transparent; font-size: 0.9375rem; color: var(--text-muted); }
+.switch button[aria-pressed="true"] { background: var(--bg); color: var(--text); box-shadow: var(--shadow-card); }
+.switch em { font-style: normal; color: var(--accent); font-size: 0.8125rem; margin-left: 4px; }
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+.plan { display: grid; align-content: start; gap: 14px; padding: 32px 28px; border: 1px solid var(--border); border-radius: var(--r-media); }
+.plan h2 { font-size: 1.5rem; }
+.plan .ticks { margin-top: 6px; font-size: 0.9375rem; }
+.price { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.price b { font-size: 2.75rem; font-weight: 500; letter-spacing: 0.02em; }
+.price span { font-size: 0.875rem; opacity: 0.8; }
+.plan.hot { border: 0; --flute: 30px; }
+.plan.hot h2 { letter-spacing: 0.12em; }
+.flag { justify-self: start; }
+.compare td:not(:first-child), .compare th:not(:first-child) { text-align: center; }
+
+/* help */
+.search { display: flex; align-items: center; gap: 10px; width: min(100%, 560px); min-height: 56px; padding: 0 20px; margin-top: 12px; border-radius: var(--r-pill); background: var(--pill); color: var(--ink); box-shadow: 0 12px 34px -12px oklch(22% 0.12 285 / 0.5); }
+.search input { flex: 1; min-width: 0; height: 54px; border: 0; background: transparent; color: var(--ink); outline: none; }
+.search:focus-within { outline: 2px solid oklch(100% 0 0); outline-offset: 3px; }
+.qg { display: grid; gap: 4px; margin-bottom: 40px; }
+.qg h2 { font-size: 1.25rem; margin-bottom: 8px; }
+.qa { border-bottom: 1px solid var(--border); }
+.qa summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0; cursor: pointer; list-style: none; font-weight: 500; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary .i { transition: transform var(--fast) var(--ease); color: var(--text-muted); }
+.qa[open] summary .i { transform: rotate(180deg); }
+.qa p { padding: 0 0 20px; color: var(--text-muted); }
+.h3 { font-size: 1.25rem; }
+.help-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 32px; border-radius: var(--r-card); background: var(--surface); }
+
+/* about */
+.values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.values li { padding: 28px; border-radius: var(--r-card); border: 1px solid var(--border); display: grid; gap: 10px; align-content: start; }
+.values p { color: var(--text-muted); }
+.team { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.team li { display: grid; gap: 4px; justify-items: start; }
+.team .av { width: 72px; height: 72px; font-size: 1.25rem; margin-bottom: 10px; color: oklch(100% 0 0); background: linear-gradient(160deg, var(--c1), var(--c2)); text-shadow: 0 0 8px oklch(100% 0 0 / 0.6); }
+.team span { color: var(--text-muted); font-size: 0.9375rem; }
+
+/* contact, sign-up */
+.contact { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+.ways { list-style: none; padding: 0; display: grid; gap: 22px; margin-top: 28px; }
+.ways li { display: grid; grid-template-columns: 48px 1fr; gap: 16px; align-items: start; }
+.ways p { color: var(--text-muted); font-size: 0.9375rem; }
+.signup { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100svh - var(--head)); }
+.signup .aurora { display: grid; align-content: center; gap: 22px; padding: clamp(40px, 6vw, 88px); }
+.signup .aurora h1 { font-size: clamp(2rem, 1.4rem + 2vw, 3rem); }
+.signup-form { display: grid; align-content: center; padding: clamp(40px, 6vw, 88px); }
+.signup-form > * { width: min(100%, 460px); }
+
+/* legal and 404 */
+.doc { padding: 64px 0 104px; display: grid; gap: 18px; }
+.doc h2 { font-size: 1.25rem; margin-top: 16px; }
+.doc p, .doc li { color: var(--text-muted); }
+.doc ul { padding-left: 1.2em; display: grid; gap: 6px; }
+.lost { min-height: calc(80svh - var(--head)); display: grid; place-items: center; text-align: center; padding: 64px var(--gut); }
+.lost .wrap { display: grid; justify-items: center; gap: 18px; }
+.lost .big { font-size: clamp(5rem, 3rem + 10vw, 10rem); line-height: 1; margin-right: -0.14em; }
+
+/* ---------- Footer: links, then the centred care line and copyright ---------- */
+.foot { border-top: 1px solid var(--border); padding: 56px 0 32px; font-size: 0.9375rem; }
+.foot-in { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 32px; }
+.foot-in p { color: var(--text-muted); margin-top: 12px; max-width: 32ch; }
+.foot h2 { font-size: 0.875rem; font-weight: 600; margin-bottom: 12px; }
+.foot ul { list-style: none; padding: 0; display: grid; gap: 8px; }
+.foot ul a { color: var(--text-muted); }
+.foot ul a:hover { color: var(--accent); }
+.foot-legal { display: grid; justify-items: center; gap: 6px; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 0.8125rem; color: var(--text-muted); text-align: center; }
+.foot-legal p:first-child { display: flex; gap: 12px; font-weight: 600; }
+.foot-legal p:first-child a { color: var(--text); }
+
+/* ---------- Motion ---------- */
+.js .reveal { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--slow) var(--ease) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal { opacity: 1; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1023px) {
+  .feats { grid-template-columns: repeat(2, 1fr); }
+  .rooms, .cards { grid-template-columns: repeat(2, 1fr); }
+  .rooms > :last-child { grid-column: 1 / -1; min-height: 340px; }
+  .plans { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; }
+  .split, .rsvp, .contact, .signup, .ppanel { grid-template-columns: 1fr; }
+  .ppanel .pp-art { max-width: 220px; }
+  .foot-in { grid-template-columns: repeat(3, 1fr); }
+  .foot-in > :first-child { grid-column: 1 / -1; }
+  .team { grid-template-columns: repeat(2, 1fr); }
+  .log { grid-template-columns: 240px 1fr; }
+}
+@media (max-width: 820px) {
+  .hero-title span { display: block; }
+  .hero-title span + span { margin-left: 0; }
+}
+@media (max-width: 699px) {
+  :root { --flute: 22px; }
+  .hero { padding-bottom: 28px; }
+  .pill.lg { min-height: 60px; padding: 0 30px; }
+  .pill.lg .i { width: 24px; height: 24px; }
+  .plats { gap: 4px 0; margin-top: 40px; }
+  .plats a { flex-direction: column; gap: 4px; width: 33.33%; font-size: 0.75rem; }
+  .rooms, .cards, .feats, .values, .two { grid-template-columns: 1fr; }
+  .rooms > :last-child { grid-column: auto; }
+  .room { min-height: 340px; }
+  .night { grid-template-columns: 60px 1fr; }
+  .night .badge { grid-column: 2; justify-self: start; }
+  .night .btn { grid-column: 2; justify-self: start; }
+  .nd b { font-size: 1.75rem; }
+  .log { grid-template-columns: 1fr; min-height: 0; }
+  .log-side { padding: 28px var(--gut); }
+  .log-list { grid-auto-flow: column; grid-auto-columns: max-content; overflow-x: auto; position: relative; }
+  .log-doc { padding: 32px var(--gut) 64px; }
+  .feature { min-height: 440px; }
+  .foot-in { grid-template-columns: 1fr 1fr; }
+  .slider { grid-template-columns: 5.2rem 1fr 2rem; gap: 10px; font-size: 0.875rem; }
+  .ptabs { flex-wrap: wrap; justify-content: center; width: auto; border-radius: var(--r-card); }
+  .feature .f2 { display: none; }
+  .feature .f1 { left: 66%; top: 3%; width: 30%; }
+  .post-head .frost { left: 70%; top: 3%; width: 26%; }
+  .how, .success { padding: 24px; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="mk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2f86"/><stop offset=".5" stop-color="#6a4fc9"/><stop offset="1" stop-color="#f6b99a"/></linearGradient>
+  </defs>
+  <symbol id="mark" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="url(#mk)"/><path d="M8 7v18M12.5 5v22M17 5v22M21.5 5v22M26 8v16" stroke="#fff" stroke-opacity=".16" stroke-width="2"/><path d="M19.5 8.5a8 8 0 1 0 5.2 12.4 6.6 6.6 0 0 1-5.2-12.4Z" fill="#fff"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.25"/><path d="M12 7.5v8m-3.5-3.5 3.5 3.5 3.5-3.5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.75" width="10" height="18.5" rx="2.5"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-phone2" viewBox="0 0 24 24"><rect x="6.5" y="2.75" width="11" height="18.5" rx="3"/><circle cx="12" cy="5.6" r=".5"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="10" rx="1.5"/><path d="M2.75 18.5h18.5"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M9 20h6m-3-4v4"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2"/><path d="m7 9.5 3 2.5-3 2.5m5.5.5h4"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.25"/><path d="M2.75 12h18.5M12 2.75c2.6 2.6 3.8 5.9 3.8 9.25s-1.2 6.65-3.8 9.25C9.4 18.65 8.2 15.35 8.2 12S9.4 5.35 12 2.75Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2m0 15v2M4.6 4.6 6 6m12 12 1.4 1.4M2.5 12h2m15 0h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m5-5-5 5 5 5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6A1.5 1.5 0 0 0 14 4.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.25"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-fade" viewBox="0 0 24 24"><path d="M3 12h1.5M7 8v8m4-10v12m4-9v6m4-4v2"/></symbol>
+  <symbol id="i-offline" viewBox="0 0 24 24"><path d="M7 18.5h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.2 9.6 4.5 4.5 0 0 0 7 18.5Z"/><path d="M12 10.5v5m-2.2-2.2 2.2 2.2 2.2-2.2"/></symbol>
+  <symbol id="i-quiet" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M4.5 19.5 19.5 4.5"/></symbol>
+  <symbol id="i-sync" viewBox="0 0 24 24"><rect x="2.75" y="5" width="12.5" height="9" rx="1.5"/><rect x="16.5" y="8" width="4.75" height="11" rx="1.5"/><path d="M6 18h6"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5.5h16v10H9.5L5 19.5v-4H4Z"/></symbol>
+  <symbol id="i-lamp" viewBox="0 0 24 24"><path d="M8 3.5h8l3 7H5Z"/><path d="M12 10.5v8m-4 2h8"/></symbol>
+  <!-- frosted shapes behind the glass (filled, 100 x 100) -->
+  <symbol id="g-moon" viewBox="0 0 100 100"><path d="M60 8a42 42 0 1 0 32 62A36 36 0 0 1 60 8Z"/></symbol>
+  <symbol id="g-drop" viewBox="0 0 100 100"><path d="M50 6C35 30 22 46 22 63a28 28 0 0 0 56 0C78 46 65 30 50 6Z"/></symbol>
+  <symbol id="g-wave" viewBox="0 0 100 100"><path d="M4 52c15-17 31-17 46 0s31 17 46 0v20c-15 17-31 17-46 0S19 55 4 72Z"/></symbol>
+  <symbol id="g-lamp" viewBox="0 0 100 100"><path d="M30 10h40l16 38H14Z"/><rect x="45" y="48" width="10" height="34"/><rect x="26" y="82" width="48" height="10" rx="5"/></symbol>
+  <symbol id="g-star" viewBox="0 0 100 100"><path d="M50 4c4 26 20 42 46 46-26 4-42 20-46 46-4-26-20-42-46-46 26-4 42-20 46-46Z"/></symbol>
+  <symbol id="g-ring" viewBox="0 0 100 100"><path fill-rule="evenodd" d="M50 8a42 42 0 1 1 0 84 42 42 0 0 1 0-84Zm0 20a22 22 0 1 0 0 44 22 22 0 0 0 0-44Z"/></symbol>
+  <symbol id="g-boat" viewBox="0 0 100 100"><path d="M10 62h80L78 86H22Z"/><path d="M46 12v44H20Z"/><path d="M53 22l26 34H53Z"/></symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#/" aria-label="Nightloom home"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg><span>Nightloom</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/">Home</a>
+      <div class="dd">
+        <a href="#/download">Download<svg class="i sm" aria-hidden="true"><use href="#i-chev"/></svg></a>
+        <div class="dd-menu">
+          <a href="#/download?p=ios"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>iOS</a>
+          <a href="#/download?p=android"><svg class="i" aria-hidden="true"><use href="#i-phone2"/></svg>Android</a>
+          <hr>
+          <a href="#/download?p=mac"><svg class="i" aria-hidden="true"><use href="#i-laptop"/></svg>macOS</a>
+          <a href="#/download?p=windows"><svg class="i" aria-hidden="true"><use href="#i-monitor"/></svg>Windows</a>
+          <a href="#/download?p=linux"><svg class="i" aria-hidden="true"><use href="#i-terminal"/></svg>Linux</a>
+          <a href="#/download?p=web"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg>Web player</a>
+        </div>
+      </div>
+      <a href="#/changelog">Release notes</a>
+      <a href="#/blog">Stories</a>
+      <a href="#/events">Nights</a>
+      <a href="#/pricing">Plus</a>
+    </nav>
+    <div class="top-end">
+      <a class="top-link" href="#/faq">Help</a>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Switch to dark theme"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="sheet" aria-label="Open menu"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+  <nav class="sheet" id="sheet" aria-label="Menu" hidden>
+    <a href="#/">Home</a>
+    <a href="#/download">Download</a>
+    <a href="#/changelog">Release notes</a>
+    <a href="#/blog">Stories</a>
+    <a href="#/events">Nights</a>
+    <a href="#/pricing">Plus</a>
+    <a href="#/faq">Help</a>
+    <a class="btn" href="#/signup">Create an account</a>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ================= HOME ================= -->
+<div data-view="home">
+  <section class="hero aurora au-night live" aria-labelledby="hero-title">
+    <i class="flutes" aria-hidden="true"></i>
+    <div class="hero-in">
+      <h1 class="glow hero-title" id="hero-title"><span>Nightloom</span> <span>rest easy</span></h1>
+      <a class="pill lg" href="#/download" data-get-link><svg class="i" aria-hidden="true"><use href="#i-down"/></svg><span data-get-label>Download Nightloom</span></a>
+      <p class="ver" data-get-ver>v 4.2.0 · free on phones, computers and the web</p>
+    </div>
+    <nav class="plats" aria-label="Platforms">
+      <a href="#/download?p=ios"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>iOS</a>
+      <a href="#/download?p=android"><svg class="i" aria-hidden="true"><use href="#i-phone2"/></svg>Android</a>
+      <a href="#/download?p=mac"><svg class="i" aria-hidden="true"><use href="#i-laptop"/></svg>macOS</a>
+      <a href="#/download?p=windows"><svg class="i" aria-hidden="true"><use href="#i-monitor"/></svg>Windows</a>
+      <a href="#/download?p=linux"><svg class="i" aria-hidden="true"><use href="#i-terminal"/></svg>Linux</a>
+      <a href="#/download?p=web"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg>Web</a>
+    </nav>
+  </section>
+
+  <section class="sec" aria-labelledby="rooms-title">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <h2 id="rooms-title">Rooms you can stay in</h2>
+        <p>Each room is a long, slow mix that never plays the same way twice. Pick one, set a fade, close the lid.</p>
+      </header>
+      <div class="rooms">
+        <a class="room aurora au-tide deep reveal" href="#/post">
+          <i class="flutes" aria-hidden="true"></i><svg class="frost" aria-hidden="true"><use href="#g-drop"/></svg>
+          <span class="tag">For focus</span>
+          <h3 class="glow">Rain on glass</h3>
+          <p>Steady rain, a far road and a radiator that ticks now and then.</p>
+          <span class="more">Read how we recorded it<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+        <a class="room aurora au-ember deep reveal" href="#/post">
+          <i class="flutes" aria-hidden="true"></i><svg class="frost" aria-hidden="true"><use href="#g-boat"/></svg>
+          <span class="tag">For sleep</span>
+          <h3 class="glow">Night ferry</h3>
+          <p>An engine hum, water against the hull, a bell every few minutes.</p>
+          <span class="more">Read how we recorded it<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+        <a class="room aurora au-lilac deep reveal" href="#/post">
+          <i class="flutes" aria-hidden="true"></i><svg class="frost" aria-hidden="true"><use href="#g-lamp"/></svg>
+          <span class="tag">For reading</span>
+          <h3 class="glow">Low lamp</h3>
+          <p>Warm pads under quiet room tone, and a page turning somewhere.</p>
+          <span class="more">Read how we recorded it<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="mix-title">
+    <div class="wrap split">
+      <div class="sec-head reveal">
+        <h2 id="mix-title">Mix your own room</h2>
+        <p>Four layers, one slider each. Nightloom keeps the balance you set and fades it out when you ask.</p>
+        <ul class="ticks">
+          <li>Your mix follows you to every device</li>
+          <li>Fade timers from 15 minutes to 2 hours</li>
+          <li>Save up to 12 rooms with Plus</li>
+        </ul>
+        <a class="link" href="#/pricing">See what Plus adds<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="mixer aurora au-night reveal" data-mixer>
+        <i class="flutes" aria-hidden="true"></i>
+        <div class="mix-glass">
+          <p class="mix-name glow">Your room</p>
+          <label class="slider"><span>Rain</span><input type="range" min="0" max="100" value="70" data-mix="rain"><output>70</output></label>
+          <label class="slider"><span>Wind</span><input type="range" min="0" max="100" value="40" data-mix="wind"><output>40</output></label>
+          <label class="slider"><span>Low synth</span><input type="range" min="0" max="100" value="55" data-mix="synth"><output>55</output></label>
+          <label class="slider"><span>Vinyl</span><input type="range" min="0" max="100" value="20" data-mix="vinyl"><output>20</output></label>
+          <div class="seg" role="group" aria-label="Fade out after">
+            <button type="button" aria-pressed="false">15 min</button>
+            <button type="button" aria-pressed="true">30 min</button>
+            <button type="button" aria-pressed="false">1 hour</button>
+            <button type="button" aria-pressed="false">2 hours</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="feat-title">
+    <div class="wrap">
+      <header class="sec-head reveal"><h2 id="feat-title">Quiet by design</h2></header>
+      <ul class="feats">
+        <li class="reveal"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-fade"/></svg></span><h3>Fades, never stops dead</h3><p>Timers lower the sound over ten minutes, so the end of a room never wakes you.</p></li>
+        <li class="reveal"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-offline"/></svg></span><h3>Works offline</h3><p>Save a room once and it plays on a plane, in a tent or in a basement flat.</p></li>
+        <li class="reveal"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-quiet"/></svg></span><h3>No feed, no ads</h3><p>There is nothing to scroll. Nightloom opens on the last room you used.</p></li>
+        <li class="reveal"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-sync"/></svg></span><h3>One library everywhere</h3><p>Rooms, mixes and timers follow your account to phone, laptop and the web.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec tint" aria-labelledby="nt-title">
+    <div class="wrap">
+      <header class="sec-head row reveal">
+        <div><h2 id="nt-title">Listening nights</h2><p>Lights low, phones away, one long set played through a proper room.</p></div>
+        <a class="link" href="#/events">All nights<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </header>
+      <ol class="nights reveal" data-nights-teaser></ol>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="st-title">
+    <div class="wrap">
+      <header class="sec-head row reveal">
+        <div><h2 id="st-title">Stories</h2><p>Field notes from recording trips, release diaries and nights we hosted.</p></div>
+        <a class="link" href="#/blog">All stories<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </header>
+      <div class="cards" data-stories-teaser></div>
+    </div>
+  </section>
+
+  <section class="cta aurora au-ember live" aria-labelledby="cta-title">
+    <i class="flutes" aria-hidden="true"></i>
+    <div class="wrap center">
+      <h2 class="glow" id="cta-title">Stay a little longer</h2>
+      <p>Free on six platforms. No account needed to start.</p>
+      <div class="actions">
+        <a class="pill lg" href="#/download"><svg class="i" aria-hidden="true"><use href="#i-down"/></svg>Download</a>
+        <a class="pill ghost" href="#/pricing">Try Plus free</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= DOWNLOAD ================= -->
+<div data-view="download">
+  <section class="pagehead aurora au-night">
+    <i class="flutes" aria-hidden="true"></i>
+    <div class="wrap center">
+      <h1 class="glow">Download</h1>
+      <p>Nightloom is free on every device. Pick yours, or play in the browser without installing anything.</p>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <div class="ptabs" role="tablist" aria-label="Platform" data-ptabs hidden></div>
+      <div class="ppanel" id="ppanel" role="tabpanel" data-ppanel hidden></div>
+      <h2 class="h-sub" id="all">All downloads</h2>
+      <div class="table-wrap">
+        <table class="tbl" id="dl-table">
+          <thead><tr><th scope="col">Platform</th><th scope="col">Version</th><th scope="col">Size</th><th scope="col">Needs</th><th scope="col">File</th></tr></thead>
+          <tbody>
+            <tr data-p="ios" data-icon="i-phone"><td><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>iOS</td><td>4.2.0</td><td>48 MB</td><td>iOS 16 or later</td><td>App Store listing</td></tr>
+            <tr data-p="android" data-icon="i-phone2"><td><svg class="i" aria-hidden="true"><use href="#i-phone2"/></svg>Android</td><td>4.2.0</td><td>36 MB</td><td>Android 10 or later</td><td>Play listing or .apk</td></tr>
+            <tr data-p="mac" data-icon="i-laptop"><td><svg class="i" aria-hidden="true"><use href="#i-laptop"/></svg>macOS</td><td>4.2.0</td><td>92 MB</td><td>macOS 12 or later, Apple silicon and Intel</td><td>nightloom-4.2.0.dmg</td></tr>
+            <tr data-p="windows" data-icon="i-monitor"><td><svg class="i" aria-hidden="true"><use href="#i-monitor"/></svg>Windows</td><td>4.2.0</td><td>88 MB</td><td>Windows 10 or later, 64-bit</td><td>nightloom-4.2.0-setup.exe</td></tr>
+            <tr data-p="linux" data-icon="i-terminal"><td><svg class="i" aria-hidden="true"><use href="#i-terminal"/></svg>Linux</td><td>4.1.3</td><td>95 MB</td><td>x86-64, glibc 2.31 or later</td><td>nightloom-4.1.3.AppImage</td></tr>
+            <tr data-p="web" data-icon="i-globe"><td><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg>Web player</td><td>4.2.0</td><td>None</td><td>A current browser</td><td>Opens in your browser</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 class="h-sub" id="checksums">Checksums</h2>
+      <p class="muted">Check a desktop download against these SHA-256 sums before you install it.</p>
+      <div class="code">
+        <div class="code-bar"><span>SHA-256 · 4.2.0</span><button type="button" data-copy><svg class="i sm" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div>
+        <pre><code>4f1c9e2a7b0d63e5c8a1f4b29d70e6c3a5b8f12d9e047c6a3b1d5f8e2c9a07b4  nightloom-4.2.0.dmg
+9a3e7c15d2b8f40e6a1c7d93b5e2f08c4d6a9b17e3c5f2a80d4b6e91c7a3f5d2  nightloom-4.2.0-setup.exe
+c7b2e94a1f6d03b8e5a2c79d14f0b6e3a8d5c21f7e9b04a6d3c8e1f5b2a97d40  nightloom-4.1.3.AppImage</code></pre>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= RELEASE NOTES ================= -->
+<div data-view="changelog">
+  <div class="log">
+    <aside class="log-side">
+      <h1>Release notes</h1>
+      <label class="sel"><span class="sr-only">Platform</span>
+        <select id="log-platform">
+          <option value="all">All platforms</option>
+          <option value="phone">Phones</option>
+          <option value="desktop">Computers</option>
+          <option value="web">Web player</option>
+        </select>
+      </label>
+      <ol class="log-list" data-log-list aria-label="Versions"></ol>
+    </aside>
+    <article class="log-doc" data-log-doc aria-live="polite">
+      <h2>Version 4.2.0</h2>
+      <p class="meta">Released 12 November 2026 · Phones, computers and the web player</p>
+      <h3>In this update</h3>
+      <ul>
+        <li>Fade timers now lower each layer at its own pace, so rain lasts longest.</li>
+        <li>A new room, Night ferry, recorded on an overnight crossing.</li>
+        <li>The mixer remembers a separate balance for headphones and speakers.</li>
+      </ul>
+      <h3>Fixed</h3>
+      <ul>
+        <li>A click at the loop point of Low lamp on some Bluetooth speakers.</li>
+        <li>Timers that kept running after you stopped a room from the lock screen.</li>
+      </ul>
+    </article>
+  </div>
+</div>
+
+<!-- ================= STORIES ================= -->
+<div data-view="blog">
+  <section class="feature aurora au-dawn">
+    <i class="flutes" aria-hidden="true"></i>
+    <svg class="frost f1" aria-hidden="true"><use href="#g-moon"/></svg>
+    <svg class="frost f2" aria-hidden="true"><use href="#g-star"/></svg>
+    <div class="wrap">
+      <div class="feature-in">
+        <h1 class="kicker">Stories</h1>
+        <p class="meta">2026.11 · Featured</p>
+        <h2 class="feature-title">A year of slow nights</h2>
+        <p>What forty listening nights in four cities taught us about rooms, volume and leaving early.</p>
+        <a class="btn" href="#/post">Read the story</a>
+      </div>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <header class="sec-head row">
+        <div><h2>All stories</h2></div>
+        <div class="chips" role="group" aria-label="Filter stories" data-filter-bar="stories">
+          <button type="button" data-f="all" aria-pressed="true">All</button>
+          <button type="button" data-f="product" aria-pressed="false">Product</button>
+          <button type="button" data-f="sound" aria-pressed="false">Sound</button>
+          <button type="button" data-f="nights" aria-pressed="false">Nights</button>
+          <button type="button" data-f="studio" aria-pressed="false">Studio</button>
+        </div>
+      </header>
+      <div class="cards" data-filter-list="stories" data-stories></div>
+      <p class="empty" data-empty="stories" hidden>No stories with this tag yet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ================= STORY ================= -->
+<div data-view="post">
+  <article>
+    <header class="post-head aurora au-dawn">
+      <i class="flutes" aria-hidden="true"></i>
+      <svg class="frost" aria-hidden="true"><use href="#g-moon"/></svg>
+      <div class="wrap narrow">
+        <a class="back" href="#/blog"><svg class="i" aria-hidden="true"><use href="#i-back"/></svg>Stories</a>
+        <p class="meta">12 November 2026 · Nights</p>
+        <h1>A year of slow nights</h1>
+        <p class="lead">What forty listening nights in four cities taught us about rooms, volume and leaving early.</p>
+        <p class="by"><span class="av">IH</span>Ines Halloran, sound lead</p>
+      </div>
+    </header>
+    <div class="wrap narrow prose">
+      <p>The first night was in a borrowed rehearsal room with eleven chairs and one speaker that hummed. Nine people came. Two fell asleep, which we took as a good sign, and one stayed afterwards to ask whether we could do it again somewhere warmer.</p>
+      <p>A year later we have hosted forty nights in Lisbon, Seoul, Taipei and Berlin. The format barely changed: lights low, phones in a basket by the door, one long set from a single room, and nobody on stage.</p>
+      <h2>The room matters more than the speaker</h2>
+      <p>We spent the first months chasing better equipment. It helped less than we hoped. What changed every night was the space: wooden floors kept the rain warm, concrete made the ferry engine feel close, and a library with carpet swallowed the low synth completely.</p>
+      <blockquote>People do not want louder. They want to stop noticing the sound, and then notice it again an hour later.</blockquote>
+      <figure>
+        <div class="fig aurora au-tide"><i class="flutes" aria-hidden="true"></i><svg class="frost" aria-hidden="true"><use href="#g-wave"/></svg></div>
+        <figcaption>The set at Kiln Hall runs from nine until two. Most people leave around midnight.</figcaption>
+      </figure>
+      <h2>What we changed in the app</h2>
+      <ul>
+        <li>Fade timers now lower each layer at its own pace, which is how the room sounded as the night wound down.</li>
+        <li>Mixes remember headphones and speakers separately.</li>
+        <li>Nights appear in the app 48 hours before tickets go on general sale, for Plus members.</li>
+      </ul>
+      <p>Next year we want to try mornings: a short set at first light for people who wake before the city does. If you have a room that could host one, write to us.</p>
+    </div>
+    <footer class="wrap narrow post-foot">
+      <button class="btn line sm" type="button" data-copy-link><svg class="i sm" aria-hidden="true"><use href="#i-link"/></svg><span>Copy link</span></button>
+      <a class="link" href="#/blog">More stories<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </footer>
+  </article>
+</div>
+
+<!-- ================= NIGHTS ================= -->
+<div data-view="events">
+  <section class="pagehead aurora au-ember">
+    <i class="flutes" aria-hidden="true"></i>
+    <div class="wrap center">
+      <h1 class="glow">Listening nights</h1>
+      <p>One long set, played through a real room. Lights low, phones in a basket, leave whenever you like.</p>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <header class="sec-head row">
+        <div><h2>Coming up</h2></div>
+        <div class="chips" role="group" aria-label="Filter by city" data-filter-bar="nights">
+          <button type="button" data-f="all" aria-pressed="true">All cities</button>
+          <button type="button" data-f="lisbon" aria-pressed="false">Lisbon</button>
+          <button type="button" data-f="seoul" aria-pressed="false">Seoul</button>
+          <button type="button" data-f="taipei" aria-pressed="false">Taipei</button>
+          <button type="button" data-f="berlin" aria-pressed="false">Berlin</button>
+        </div>
+      </header>
+      <ol class="nights" data-filter-list="nights">
+        <li class="night" data-tags="lisbon" data-night="Rain set, all night · Lisbon, 5 Dec">
+          <time class="nd" datetime="2026-12-05"><b>05</b><span>Dec</span></time>
+          <div class="nb"><h3>Rain set, all night</h3><p><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Kiln Hall, Lisbon</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>21:00 to 02:00</span></p></div>
+          <span class="badge hot">Few seats left</span>
+          <a class="btn sm" href="#/events?to=rsvp&amp;night=0">Reserve</a>
+        </li>
+        <li class="night" data-tags="seoul" data-night="Ferry crossing, live · Seoul, 12 Dec">
+          <time class="nd" datetime="2026-12-12"><b>12</b><span>Dec</span></time>
+          <div class="nb"><h3>Ferry crossing, live</h3><p><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Pier Nine Studio, Seoul</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>20:30 to 01:00</span></p></div>
+          <span class="badge">Open</span>
+          <a class="btn sm" href="#/events?to=rsvp&amp;night=1">Reserve</a>
+        </li>
+        <li class="night" data-tags="taipei" data-night="Low lamp reading night · Taipei, 19 Dec">
+          <time class="nd" datetime="2026-12-19"><b>19</b><span>Dec</span></time>
+          <div class="nb"><h3>Low lamp reading night</h3><p><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Greyhouse Library, Taipei</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>19:00 to 23:00</span></p></div>
+          <span class="badge">Open</span>
+          <a class="btn sm" href="#/events?to=rsvp&amp;night=2">Reserve</a>
+        </li>
+        <li class="night" data-tags="berlin" data-night="">
+          <time class="nd" datetime="2027-01-09"><b>09</b><span>Jan</span></time>
+          <div class="nb"><h3>Longest night, replayed</h3><p><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>The Quiet Annex, Berlin</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>22:00 to 04:00</span></p></div>
+          <span class="badge">Full</span>
+          <a class="btn line sm" href="#/contact?topic=nights">Join the waitlist</a>
+        </li>
+        <li class="night" data-tags="lisbon" data-night="Rain set, all night · Lisbon, 16 Jan">
+          <time class="nd" datetime="2027-01-16"><b>16</b><span>Jan</span></time>
+          <div class="nb"><h3>Rain set, all night</h3><p><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Kiln Hall, Lisbon</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>21:00 to 02:00</span></p></div>
+          <span class="badge">Open</span>
+          <a class="btn sm" href="#/events?to=rsvp&amp;night=4">Reserve</a>
+        </li>
+        <li class="night" data-tags="seoul" data-night="First light · Seoul, 30 Jan">
+          <time class="nd" datetime="2027-01-30"><b>30</b><span>Jan</span></time>
+          <div class="nb"><h3>First light</h3><p><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Pier Nine Studio, Seoul</span><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>05:00 to 07:30</span></p></div>
+          <span class="badge">Open</span>
+          <a class="btn sm" href="#/events?to=rsvp&amp;night=5">Reserve</a>
+        </li>
+      </ol>
+      <p class="empty" data-empty="nights" hidden>No nights in this city yet. <a href="#/contact?topic=nights">Ask us to come</a>.</p>
+
+      <section class="rsvp" id="rsvp" aria-labelledby="rsvp-title">
+        <div class="how aurora au-night deep">
+          <i class="flutes" aria-hidden="true"></i>
+          <h2 class="glow">How a night works</h2>
+          <ol>
+            <li>Arrive any time after doors. The set has no start or finish you can miss.</li>
+            <li>Leave your phone in the basket. Bring a jumper; we keep the lights low and the heating gentle.</li>
+            <li>Seats are free. We ask for a reservation so we know how many chairs to set out.</li>
+          </ol>
+        </div>
+        <div>
+          <form class="form" data-form="rsvp" novalidate>
+            <div class="form-head"><h2 id="rsvp-title">Reserve a seat</h2><p>We hold your seat until thirty minutes after doors.</p></div>
+            <div class="field"><label for="r-night">Night</label><select id="r-night" required data-err="r-night-err" data-msg="Please choose a night."><option value="">Choose a night</option></select><p class="err" id="r-night-err" aria-live="polite"></p></div>
+            <div class="two">
+              <div class="field"><label for="r-name">Name</label><input id="r-name" autocomplete="name" required data-err="r-name-err" data-msg="Please tell us your name."><p class="err" id="r-name-err" aria-live="polite"></p></div>
+              <div class="field"><label for="r-email">Email</label><input id="r-email" type="email" autocomplete="email" required data-err="r-email-err" data-msg="Please enter your email."><p class="err" id="r-email-err" aria-live="polite"></p></div>
+            </div>
+            <fieldset class="field" data-err="r-seats-err" data-msg="Please choose how many seats.">
+              <legend>Seats</legend>
+              <div class="opts">
+                <label class="opt"><input type="radio" name="seats" value="1" checked><span>1</span></label>
+                <label class="opt"><input type="radio" name="seats" value="2"><span>2</span></label>
+                <label class="opt"><input type="radio" name="seats" value="3"><span>3</span></label>
+                <label class="opt"><input type="radio" name="seats" value="4"><span>4</span></label>
+              </div>
+              <p class="err" id="r-seats-err" aria-live="polite"></p>
+            </fieldset>
+            <label class="check"><input type="checkbox" name="news"><span>Tell me when a night is announced in my city</span></label>
+            <button class="btn" type="submit">Reserve</button>
+          </form>
+          <div class="success" data-success="rsvp" tabindex="-1" hidden>
+            <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+            <h2>Your seat is held</h2>
+            <p class="muted">A confirmation is on its way to your inbox, with the address and the door code.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</div>
+
+<!-- ================= PLUS (PRICING) ================= -->
+<div data-view="pricing">
+  <section class="sec">
+    <div class="wrap center">
+      <header class="sec-head center">
+        <h1>Plans</h1>
+        <p>Nightloom is free to use for as long as you like. Plus opens every room and the full mixer.</p>
+        <div class="switch" role="group" aria-label="Billing period">
+          <button type="button" data-bill="m" aria-pressed="false">Monthly</button>
+          <button type="button" data-bill="y" aria-pressed="true">Yearly <em>save 25%</em></button>
+        </div>
+      </header>
+    </div>
+    <div class="wrap plans">
+      <article class="plan">
+        <h2>Free</h2>
+        <p class="price"><b>$0</b><span>forever</span></p>
+        <p class="muted">Six rooms, two layers and a 30-minute fade. No account needed.</p>
+        <a class="btn line" href="#/download">Download</a>
+        <ul class="ticks"><li>6 rooms</li><li>2 mixer layers</li><li>1 room saved for offline</li><li>Phones, computers and the web</li></ul>
+      </article>
+      <article class="plan hot aurora au-night deep">
+        <i class="flutes" aria-hidden="true"></i>
+        <span class="tag flag">Most chosen</span>
+        <h2 class="glow">Plus</h2>
+        <p class="price"><b class="glow" data-price data-m="$6" data-y="$4.50">$4.50</b><span data-per>a month, billed yearly</span></p>
+        <p>Every room, the full mixer and fades up to two hours.</p>
+        <a class="pill" href="#/signup?plan=plus">Try 14 days free</a>
+        <ul class="ticks"><li>All 40 rooms, new ones every month</li><li>4 mixer layers, 12 saved mixes</li><li>Unlimited offline rooms</li><li>Nights tickets 48 hours early</li></ul>
+      </article>
+      <article class="plan">
+        <h2>Household</h2>
+        <p class="price"><b data-price data-m="$10" data-y="$7.50">$7.50</b><span data-per>a month, billed yearly</span></p>
+        <p class="muted">Plus for up to five people under one roof, each with their own library.</p>
+        <a class="btn line" href="#/signup?plan=household">Try 14 days free</a>
+        <ul class="ticks"><li>Everything in Plus</li><li>Up to 5 people</li><li>Separate libraries and mixes</li><li>One bill</li></ul>
+      </article>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="h-sub" id="compare">Compare plans</h2>
+      <div class="table-wrap">
+        <table class="tbl compare">
+          <thead><tr><th scope="col">Feature</th><th scope="col">Free</th><th scope="col">Plus</th><th scope="col">Household</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Rooms</th><td>6</td><td>All 40</td><td>All 40</td></tr>
+            <tr><th scope="row">Mixer layers</th><td>2</td><td>4</td><td>4</td></tr>
+            <tr><th scope="row">Longest fade</th><td>30 min</td><td>2 hours</td><td>2 hours</td></tr>
+            <tr><th scope="row">Offline rooms</th><td>1</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Saved mixes</th><td>3</td><td>12</td><td>12 each</td></tr>
+            <tr><th scope="row">People</th><td>1</td><td>1</td><td>Up to 5</td></tr>
+            <tr><th scope="row">Early nights tickets</th><td>No</td><td>48 hours</td><td>48 hours</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin-top:16px">Prices in US dollars. Cancel any time from your account; you keep Plus until the end of the period. <a href="#/faq">Billing questions</a></p>
+    </div>
+  </section>
+</div>
+
+<!-- ================= HELP ================= -->
+<div data-view="faq">
+  <section class="pagehead aurora au-tide">
+    <i class="flutes" aria-hidden="true"></i>
+    <div class="wrap center">
+      <h1 class="glow">Help</h1>
+      <p>Answers to the questions we hear most.</p>
+      <label class="search"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><span class="sr-only">Search help</span><input type="search" id="faq-q" placeholder="Search help" autocomplete="off"></label>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap narrow" data-faq>
+      <section class="qg"><h2>Getting started</h2>
+        <details class="qa"><summary>Do I need an account?<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>No. The free rooms play without one. An account keeps your mixes and timers in step across devices.</p></details>
+        <details class="qa"><summary>Which devices can I use?<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>iOS 16 or later, Android 10 or later, macOS 12 or later, 64-bit Windows 10 or later, most 64-bit Linux desktops, and any current browser through the web player.</p></details>
+        <details class="qa"><summary>Can I play two rooms at once?<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>Not yet. Build a mix instead: the mixer can blend layers from any room you have opened.</p></details>
+      </section>
+      <section class="qg"><h2>Plus and billing</h2>
+        <details class="qa"><summary>How does the free trial work?<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>You get fourteen days of Plus. We remind you by email two days before it ends, and nothing is charged if you cancel first.</p></details>
+        <details class="qa"><summary>How do I cancel?<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>Open your account, choose Plan, then Cancel. You keep Plus until the end of the period you paid for.</p></details>
+        <details class="qa"><summary>Can I share Plus with my family?<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>Household covers up to five people. Each person keeps their own library, mixes and timers.</p></details>
+      </section>
+      <section class="qg"><h2>Listening nights</h2>
+        <details class="qa"><summary>Are nights free?<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>Yes. We ask you to reserve so we know how many chairs to set out. Plus members see new nights 48 hours early.</p></details>
+        <details class="qa"><summary>Can I host a night?<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>If you run a quiet room for forty people or more, write to us with photos of the space and the nights it is free.</p></details>
+      </section>
+      <section class="qg"><h2>Privacy</h2>
+        <details class="qa"><summary>Do you listen through my microphone?<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>No. Nightloom never asks for microphone access. It only plays sound.</p></details>
+        <details class="qa"><summary>What do you collect?<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p>Your email if you make an account, your saved mixes, and anonymous crash reports you can turn off. The privacy policy has the details.</p></details>
+      </section>
+      <p class="empty" data-faq-empty hidden>Nothing matches that. <a href="#/contact">Ask us directly</a>.</p>
+      <aside class="help-card">
+        <div><h2 class="h3">Still stuck?</h2><p class="muted">We answer within one working day.</p></div>
+        <a class="btn" href="#/contact">Contact support</a>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<div data-view="about">
+  <section class="pagehead aurora au-lilac">
+    <i class="flutes" aria-hidden="true"></i>
+    <div class="wrap center">
+      <h1 class="glow">About Nightloom</h1>
+      <p>A small team of sound recordists and engineers making long, slow sound for the hours after ten.</p>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap split">
+      <div class="sec-head">
+        <h2>We started with one room</h2>
+        <p>In 2021 a recordist with insomnia spent a winter recording the rain outside a rented flat, then wrote a small player that never repeated it. Friends asked for copies. That player became Nightloom.</p>
+        <p>We are independent and paid for by Plus. There are no ads, and we do not sell or share what you listen to.</p>
+      </div>
+      <figure class="fig aurora au-dawn" style="aspect-ratio: 4 / 3"><i class="flutes" aria-hidden="true"></i><svg class="frost" aria-hidden="true"><use href="#g-drop"/></svg></figure>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <header class="sec-head"><h2>What we hold to</h2></header>
+      <ul class="values" style="list-style:none;padding:0">
+        <li><h3>Long over loud</h3><p>Rooms run for hours without a loop you can hear. Nothing builds, drops or asks for attention.</p></li>
+        <li><h3>Leave whenever</h3><p>No streaks, no reminders, no feed. Closing the app is always the right thing to do.</p></li>
+        <li><h3>Recorded, not generated</h3><p>Every room starts as a real place, recorded by a person who sat in it all night.</p></li>
+      </ul>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <header class="sec-head row"><div><h2>The team</h2></div><a class="link" href="#/contact?topic=work">Work with us<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></header>
+      <ul class="team">
+        <li><span class="av" style="--c1: oklch(45% 0.15 270); --c2: oklch(70% 0.12 195)">IH</span><b>Ines Halloran</b><span>Sound lead</span></li>
+        <li><span class="av" style="--c1: oklch(42% 0.16 320); --c2: oklch(78% 0.11 60)">KB</span><b>Kofi Brandt</b><span>Engineering</span></li>
+        <li><span class="av" style="--c1: oklch(40% 0.1 230); --c2: oklch(80% 0.09 175)">YP</span><b>Yuna Petrakis</b><span>Design</span></li>
+        <li><span class="av" style="--c1: oklch(44% 0.15 295); --c2: oklch(82% 0.07 320)">SO</span><b>Sami Oduya</b><span>Nights and venues</span></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ================= CONTACT ================= -->
+<div data-view="contact">
+  <section class="sec">
+    <div class="wrap contact">
+      <div>
+        <h1>Contact</h1>
+        <p class="lead" style="margin-top:12px">Questions about the app, your plan or a night. A person reads every message.</p>
+        <ul class="ways">
+          <li><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg></span><div><h3>Support</h3><p>Weekdays, 09:00 to 18:00 Lisbon time. We reply within one working day.</p></div></li>
+          <li><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span><div><h3>Venues</h3><p>Run a quiet room for forty or more? Choose "Hosting a night" below.</p></div></li>
+          <li><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></span><div><h3>Press</h3><p>press@nightloom.example</p></div></li>
+        </ul>
+      </div>
+      <div>
+        <form class="form" data-form="contact" novalidate>
+          <div class="two">
+            <div class="field"><label for="c-name">Name</label><input id="c-name" autocomplete="name" required data-err="c-name-err" data-msg="Please tell us your name."><p class="err" id="c-name-err" aria-live="polite"></p></div>
+            <div class="field"><label for="c-email">Email</label><input id="c-email" type="email" autocomplete="email" required data-err="c-email-err" data-msg="Please enter your email."><p class="err" id="c-email-err" aria-live="polite"></p></div>
+          </div>
+          <div class="two">
+            <div class="field"><label for="c-topic">Topic</label><select id="c-topic" required data-err="c-topic-err" data-msg="Please choose a topic."><option value="">Choose a topic</option><option value="app">The app</option><option value="plus">Plus and billing</option><option value="nights">Listening nights</option><option value="venue">Hosting a night</option><option value="feedback">Feedback</option><option value="work">Working with us</option></select><p class="err" id="c-topic-err" aria-live="polite"></p></div>
+            <div class="field"><label for="c-device">Device <span class="muted">(optional)</span></label><select id="c-device"><option value="">Any</option><option>iOS</option><option>Android</option><option>macOS</option><option>Windows</option><option>Linux</option><option>Web player</option></select><p class="err"></p></div>
+          </div>
+          <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" minlength="20" required data-err="c-msg-err" data-msg="Please write your message."></textarea><p class="err" id="c-msg-err" aria-live="polite"></p></div>
+          <button class="btn" type="submit">Send message</button>
+        </form>
+        <div class="success" data-success="contact" tabindex="-1" hidden>
+          <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <h2>Message sent</h2>
+          <p class="muted">Thank you. We will reply to the address you gave within one working day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= SIGN UP ================= -->
+<div data-view="signup">
+  <div class="signup">
+    <section class="aurora au-night deep">
+      <i class="flutes" aria-hidden="true"></i>
+      <h1 class="glow">Make an account</h1>
+      <p>Keep your mixes and timers on every device, and try Plus free for fourteen days.</p>
+      <ul class="ticks"><li>Your library on phone, computer and web</li><li>No card needed for the free plan</li><li>Delete your account any time</li></ul>
+    </section>
+    <div class="signup-form">
+      <form class="form" data-form="signup" novalidate>
+        <div class="field"><label for="s-name">Name</label><input id="s-name" autocomplete="name" required data-err="s-name-err" data-msg="Please tell us your name."><p class="err" id="s-name-err" aria-live="polite"></p></div>
+        <div class="field"><label for="s-email">Email</label><input id="s-email" type="email" autocomplete="email" required data-err="s-email-err" data-msg="Please enter your email."><p class="err" id="s-email-err" aria-live="polite"></p></div>
+        <div class="field"><label for="s-pw">Password</label><div class="pw"><input id="s-pw" type="password" autocomplete="new-password" minlength="8" required data-err="s-pw-err" data-msg="Please choose a password."><button type="button" data-reveal="s-pw" aria-label="Show password" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-eye"/></svg></button></div><p class="err" id="s-pw-err" aria-live="polite"></p></div>
+        <fieldset class="field" data-err="s-plan-err" data-msg="Please choose a plan.">
+          <legend>Plan</legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="plan" value="free" checked><span>Free</span></label>
+            <label class="opt"><input type="radio" name="plan" value="plus"><span>Plus trial</span></label>
+            <label class="opt"><input type="radio" name="plan" value="household"><span>Household trial</span></label>
+          </div>
+          <p class="err" id="s-plan-err" aria-live="polite"></p>
+        </fieldset>
+        <div class="field"><label class="check"><input type="checkbox" id="s-terms" required data-err="s-terms-err" data-msg="Please accept the terms to continue."><span>I accept the <a href="#/terms">terms</a> and the <a href="#/privacy">privacy policy</a></span></label><p class="err" id="s-terms-err" aria-live="polite"></p></div>
+        <button class="btn lg" type="submit">Create account</button>
+      </form>
+      <div class="success" data-success="signup" tabindex="-1" hidden>
+        <span class="ico"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+        <h2>Check your inbox</h2>
+        <p class="muted">We sent a link to confirm your email. It works for 24 hours.</p>
+        <a class="btn" href="#/download">Download Nightloom</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PRIVACY ================= -->
+<div data-view="privacy">
+  <article class="wrap narrow doc">
+    <h1>Privacy policy</h1>
+    <p>Last updated 1 November 2026. This policy explains what Nightloom Audio Ltd collects when you use the app, the web player and this website.</p>
+    <h2>What we collect</h2>
+    <ul><li>Your name and email, if you make an account or reserve a seat.</li><li>Your saved mixes, timers and offline rooms, so they follow you between devices.</li><li>Anonymous crash reports, which you can turn off in settings.</li></ul>
+    <h2>What we never collect</h2>
+    <p>We do not use the microphone, track your location or sell what you listen to. There are no advertising trackers in the app or on this site.</p>
+    <h2>Your choices</h2>
+    <p>You can export or delete your account at any time from settings, or by writing to us. We delete backups within 30 days.</p>
+    <h2>Contact</h2>
+    <p>Write to privacy@nightloom.example or use the <a href="#/contact">contact form</a>.</p>
+  </article>
+</div>
+
+<!-- ================= TERMS ================= -->
+<div data-view="terms">
+  <article class="wrap narrow doc">
+    <h1>Terms of use</h1>
+    <p>Last updated 1 November 2026. These terms apply to the Nightloom apps, the web player and listening nights.</p>
+    <h2>Using Nightloom</h2>
+    <p>The rooms are for personal listening. Please do not record, resell or broadcast them. Venues that want to play Nightloom in public can ask us for a licence.</p>
+    <h2>Plus and Household</h2>
+    <p>Subscriptions renew until you cancel. A trial becomes paid at the end of its fourteen days unless you cancel before then. Prices include tax where the law requires it.</p>
+    <h2>Listening nights</h2>
+    <p>Seats are free and held until thirty minutes after doors. We may change a venue or time and will email you if we do.</p>
+    <h2>Changes</h2>
+    <p>If these terms change in a way that matters, we will tell you by email at least 30 days before.</p>
+  </article>
+</div>
+
+<!-- ================= 404 ================= -->
+<div data-view="404">
+  <section class="lost aurora au-night">
+    <i class="flutes" aria-hidden="true"></i>
+    <div class="wrap">
+      <p class="glow big" aria-hidden="true">404</p>
+      <h1 class="glow">This room is empty</h1>
+      <p>The page you were looking for has moved or never existed.</p>
+      <a class="pill" href="#/">Back to the start</a>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <a class="brand" href="#/"><svg class="mark" aria-hidden="true"><use href="#mark"/></svg><span>Nightloom</span></a>
+      <p>Long, slow sound for focus, reading and sleep.</p>
+    </div>
+    <nav aria-label="Product"><h2>Product</h2><ul><li><a href="#/download">Download</a></li><li><a href="#/changelog">Release notes</a></li><li><a href="#/pricing">Plus</a></li><li><a href="#/download?p=web">Web player</a></li></ul></nav>
+    <nav aria-label="Nights"><h2>Nights</h2><ul><li><a href="#/events">Listening nights</a></li><li><a href="#/contact?topic=venue">Host a night</a></li><li><a href="#/blog">Stories</a></li><li><a href="#/about">About</a></li></ul></nav>
+    <nav aria-label="Help"><h2>Help</h2><ul><li><a href="#/faq">Help center</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/privacy">Privacy</a></li><li><a href="#/terms">Terms</a></li></ul></nav>
+  </div>
+  <div class="wrap foot-legal">
+    <p><a href="#/contact">Customer care</a><span aria-hidden="true">|</span><a href="#/contact?topic=feedback">Send feedback</a></p>
+    <p>© 2026 Nightloom Audio Ltd. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (selector, scope = document) => scope.querySelector(selector);
+  const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+  const ic = (id, cls = "i") => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: the system setting until the toggle is used ---------- */
+  const THEME_KEY = "nightloom-theme";
+  const toggle = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    toggle.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    $("use", toggle).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get(THEME_KEY);
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  systemDark.addEventListener("change", (event) => { if (!store.get(THEME_KEY)) applyTheme(event.matches ? "dark" : "light"); });
+  toggle.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set(THEME_KEY, next);
+  });
+
+  /* ---------- Mobile menu (a sheet under the bar) ---------- */
+  const menuButton = $(".menu-btn");
+  const sheet = $("#sheet");
+  function setMenu(open) {
+    sheet.hidden = !open;
+    menuButton.setAttribute("aria-expanded", String(open));
+    menuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    $("use", menuButton).setAttribute("href", open ? "#i-close" : "#i-menu");
+  }
+  menuButton.addEventListener("click", () => setMenu(sheet.hidden));
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !sheet.hidden) { setMenu(false); menuButton.focus(); } });
+
+  /* ---------- Data: release notes and stories (cards are built from these) ---------- */
+  const VERSIONS = [
+    { v: "4.2.0", date: "12 November 2026", on: ["phone", "desktop", "web"], neu: ["Fade timers now lower each layer at its own pace, so rain lasts longest.", "A new room, Night ferry, recorded on an overnight crossing.", "The mixer remembers a separate balance for headphones and speakers."], fix: ["A click at the loop point of Low lamp on some Bluetooth speakers.", "Timers that kept running after you stopped a room from the lock screen."] },
+    { v: "4.1.3", date: "21 October 2026", on: ["desktop"], neu: ["A portable Linux build that runs without installing."], fix: ["The menu bar icon on macOS now follows the system accent colour."] },
+    { v: "4.1.0", date: "9 October 2026", on: ["phone", "desktop", "web"], neu: ["Rebuilt fade timers: choose 15 minutes, 30 minutes, 1 hour or 2 hours.", "Household plan for up to five people."], fix: ["Offline rooms that re-downloaded after an update."] },
+    { v: "4.0.2", date: "18 September 2026", on: ["phone"], neu: ["Lock screen controls on Android show the current mix."], fix: ["Audio that ducked too long after a notification."] },
+    { v: "4.0.0", date: "2 September 2026", on: ["phone", "desktop", "web"], neu: ["The four-layer mixer.", "Listening nights in the app, with reservations.", "A new look: rooms now open on a full-screen aurora."], fix: [] },
+    { v: "3.9.0", date: "30 July 2026", on: ["web"], neu: ["The web player: every free room in the browser, no install."], fix: [] },
+  ];
+  const TAGS = { product: "Product", sound: "Sound", nights: "Nights", studio: "Studio" };
+  const STORIES = [
+    { t: "A year of slow nights", d: "12 Nov 2026", tag: "nights", au: "dawn", g: "g-moon", x: "What forty listening nights in four cities taught us about rooms, volume and leaving early." },
+    { t: "Recording rain that does not loop", d: "28 Oct 2026", tag: "sound", au: "tide", g: "g-drop", x: "Forty hours of rain, cut into pieces that never meet the same way twice." },
+    { t: "Fade timers, rebuilt", d: "9 Oct 2026", tag: "product", au: "lilac", g: "g-wave", x: "Why stopping a sound is harder than starting one, and how 4.1 does it." },
+    { t: "The ferry that became a room", d: "21 Sep 2026", tag: "sound", au: "ember", g: "g-boat", x: "A night crossing, two microphones and a very patient crew." },
+    { t: "Hosting a night in your own space", d: "2 Sep 2026", tag: "nights", au: "night", g: "g-star", x: "Chairs, lamps, a decent speaker and a rule about phones. That is most of it." },
+    { t: "A room for the last chapter", d: "14 Aug 2026", tag: "studio", au: "dawn", g: "g-lamp", x: "Warm pads, a page turning somewhere, nothing that asks for attention." },
+    { t: "What we will not build", d: "30 Jul 2026", tag: "studio", au: "tide", g: "g-ring", x: "No streaks, no feed, no autoplay. A short list we keep coming back to." },
+    { t: "Nightloom on Linux", d: "3 Jul 2026", tag: "product", au: "night", g: "g-star", x: "A portable build for 64-bit desktops, and what it took to keep the audio steady." },
+  ];
+  const card = (s) => `<article class="card" data-tags="${s.tag}"><a href="#/post"><div class="cover aurora au-${s.au}"><i class="flutes" aria-hidden="true"></i>${ic(s.g, "frost")}</div><p class="meta">${s.d} · ${TAGS[s.tag]}</p><h3>${s.t}</h3><p>${s.x}</p></a></article>`;
+  $("[data-stories]").innerHTML = STORIES.map(card).join("");
+  $("[data-stories-teaser]").innerHTML = STORIES.slice(0, 3).map(card).join("");
+  /* the home teaser reuses the first three rows of the nights list */
+  $("[data-nights-teaser]").append(...$$("[data-filter-list='nights'] > .night").slice(0, 3).map((row) => row.cloneNode(true)));
+
+  /* ---------- Router: #/view?key=value; ?to=<id> scrolls to a section of that view ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Nightloom: long, slow sound for focus, reading and sleep", download: "Download · Nightloom", changelog: "Release notes · Nightloom",
+    blog: "Stories · Nightloom", post: "A year of slow nights · Nightloom", events: "Listening nights · Nightloom", pricing: "Plans · Nightloom",
+    faq: "Help · Nightloom", about: "About · Nightloom", contact: "Contact · Nightloom", signup: "Make an account · Nightloom",
+    privacy: "Privacy policy · Nightloom", terms: "Terms of use · Nightloom", "404": "Page not found · Nightloom",
+  };
+  /* which header link is current for views without one of their own */
+  const navOf = { post: "blog", signup: "pricing", privacy: "faq", terms: "faq", contact: "faq", about: "blog" };
+  const hooks = {
+    download: (params) => selectPlatform(params.get("p") || detected, false),
+    changelog: (params) => { if (params.get("v")) showVersion(params.get("v")); },
+    blog: (params) => setFilter("stories", params.get("tag")),
+    events: (params) => {
+      setFilter("nights", params.get("city"));
+      const night = params.get("night");
+      if (night && nightSelect.querySelector(`option[value="${CSS.escape(night)}"]`)) nightSelect.value = night;
+    },
+    contact: (params) => { const topic = params.get("topic"); if (topic && $(`#c-topic option[value="${CSS.escape(topic)}"]`)) $("#c-topic").value = topic; },
+    signup: (params) => { const radio = $(`input[name="plan"][value="${CSS.escape(params.get("plan") || "")}"]`); if (radio) radio.checked = true; },
+  };
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    const navName = navOf[name] || name;
+    $$(".nav a, .sheet a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === navName && !a.closest(".dd-menu")) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    hooks[name]?.(route.params);
+    const to = route.params.get("to");
+    const target = to && current.querySelector(`#${CSS.escape(to)}`);
+    if (target) target.scrollIntoView({ block: "start" });
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    setMenu(false);
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); go(href); return; }
+    const target = href.length > 1 && document.getElementById(href.slice(1));
+    if (target) { event.preventDefault(); target.focus({ preventScroll: true }); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Reveal: keyframes, observer, and a timed fallback ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -6% 0px" }) : null;
+  function observeReveals(scope) { $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in"))); }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+  /* the drifting aurora pauses while it is off screen */
+  if ("IntersectionObserver" in window) {
+    const live = new IntersectionObserver((entries) => { for (const entry of entries) entry.target.classList.toggle("is-off", !entry.isIntersecting); });
+    $$(".live").forEach((el) => live.observe(el));
+  }
+
+  /* ---------- Download: the visitor's platform on the hero pill, tabs built from the downloads table ---------- */
+  const ua = navigator.userAgent;
+  const detected = /iPhone|iPad|iPod/.test(ua) ? "ios" : /Android/.test(ua) ? "android" : /Mac/.test(ua) ? "mac" : /Win/.test(ua) ? "windows" : /Linux|CrOS/.test(ua) ? "linux" : "web";
+  const rows = new Map($$("#dl-table tbody tr").map((tr) => [tr.dataset.p, tr]));
+  const cell = (p, i) => rows.get(p).cells[i].textContent.trim();
+  const heroRow = rows.get(detected);
+  if (heroRow) {
+    $("[data-get-label]").textContent = detected === "web" ? "Open the web player" : `Download for ${cell(detected, 0)}`;
+    $("[data-get-link]").setAttribute("href", `#/download?p=${detected}`);
+    $("[data-get-ver]").textContent = `v ${cell(detected, 1)} · ${cell(detected, 3)}`;
+  }
+  const tabs = $("[data-ptabs]");
+  const panel = $("[data-ppanel]");
+  tabs.hidden = panel.hidden = false;
+  tabs.innerHTML = [...rows.values()].map((tr) => `<button type="button" role="tab" id="pt-${tr.dataset.p}" aria-controls="ppanel" aria-selected="false" tabindex="-1" data-p="${tr.dataset.p}">${ic(tr.dataset.icon)}${cell(tr.dataset.p, 0)}</button>`).join("");
+  function selectPlatform(p, focus) {
+    if (!rows.has(p)) p = "mac";
+    const tr = rows.get(p);
+    $$("[role=tab]", tabs).forEach((tab) => {
+      const on = tab.dataset.p === p;
+      tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+      if (on && focus) tab.focus();
+    });
+    panel.setAttribute("aria-labelledby", `pt-${p}`);
+    const web = p === "web";
+    panel.innerHTML = `<div class="pp-art aurora au-night"><i class="flutes" aria-hidden="true"></i>${ic(tr.dataset.icon)}</div>
+      <div class="pp-body"><h2>Nightloom for ${cell(p, 0)}</h2><p class="muted">Version ${cell(p, 1)} · ${cell(p, 2) === "None" ? "nothing to install" : cell(p, 2)} · ${cell(p, 3)}</p>
+      <button class="btn lg" type="button" data-get>${ic(web ? "i-globe" : "i-down")}${web ? "Open the web player" : "Download"}</button>
+      <p class="note" role="status" data-get-note></p>
+      <ul><li>${cell(p, 4)}</li><li>Older versions are listed in the <a href="#/changelog">release notes</a>.</li></ul></div>`;
+  }
+  tabs.addEventListener("click", (event) => { const tab = event.target.closest("[role=tab]"); if (tab) selectPlatform(tab.dataset.p, false); });
+  tabs.addEventListener("keydown", (event) => {
+    const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+    if (!step) return;
+    event.preventDefault();
+    const keys = [...rows.keys()];
+    const now = $("[aria-selected=true]", tabs).dataset.p;
+    selectPlatform(keys[(keys.indexOf(now) + step + keys.length) % keys.length], true);
+  });
+  /* Sample only: in a real site make each download button a link to the installer file or the store listing */
+  panel.addEventListener("click", (event) => {
+    if (!event.target.closest("[data-get]")) return;
+    $("[data-get-note]", panel).textContent = `${$("[aria-selected=true]", tabs).textContent.trim()}: your download starts here once a real file is linked.`;
+  });
+
+  /* ---------- Release notes: version list, platform filter ---------- */
+  const logList = $("[data-log-list]");
+  const logDoc = $("[data-log-doc]");
+  const ON = { phone: "Phones", desktop: "computers", web: "the web player" };
+  const onText = (on) => on.length === 3 ? "Phones, computers and the web player" : on.map((k) => ON[k]).join(", ").replace(/^./, (c) => c.toUpperCase());
+  function showVersion(v) {
+    const entry = VERSIONS.find((x) => x.v === v) || VERSIONS[0];
+    $$("button", logList).forEach((b) => b.setAttribute("aria-current", String(b.dataset.v === entry.v)));
+    const list = (items) => `<ul>${items.map((i) => `<li>${i}</li>`).join("")}</ul>`;
+    logDoc.innerHTML = `<h2>Version ${entry.v}</h2><p class="meta">Released ${entry.date} · ${onText(entry.on)}</p><h3>In this update</h3>${list(entry.neu)}${entry.fix.length ? `<h3>Fixed</h3>${list(entry.fix)}` : ""}`;
+  }
+  function renderLog() {
+    const p = $("#log-platform").value;
+    const shown = VERSIONS.filter((x) => p === "all" || x.on.includes(p));
+    logList.innerHTML = shown.map((x) => `<li><button type="button" data-v="${x.v}"><b>${x.v}</b>${x.date.replace(/ 20\d\d$/, "")}</button></li>`).join("");
+    showVersion(shown[0].v);
+  }
+  $("#log-platform").addEventListener("change", renderLog);
+  logList.addEventListener("click", (event) => { const b = event.target.closest("[data-v]"); if (b) showVersion(b.dataset.v); });
+  renderLog();
+
+  /* ---------- Filters (stories by tag, nights by city) ---------- */
+  function setFilter(group, value) {
+    const bar = $(`[data-filter-bar="${group}"]`);
+    if (!value || !$(`[data-f="${CSS.escape(value)}"]`, bar)) value = "all";
+    $$("[data-f]", bar).forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.f === value)));
+    let shown = 0;
+    $$(`[data-filter-list="${group}"] > [data-tags]`).forEach((item) => {
+      const match = value === "all" || item.dataset.tags.split(" ").includes(value);
+      item.hidden = !match;
+      if (match) shown += 1;
+    });
+    $(`[data-empty="${group}"]`).hidden = shown > 0;
+  }
+  $$("[data-filter-bar]").forEach((bar) => bar.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-f]");
+    if (button) setFilter(bar.dataset.filterBar, button.dataset.f);
+  }));
+
+  /* ---------- Nights: the reservation list comes from the rows that still have seats ---------- */
+  const nightSelect = $("#r-night");
+  $$("[data-filter-list='nights'] > .night").forEach((row, index) => {
+    if (row.dataset.night) nightSelect.add(new Option(row.dataset.night, String(index)));
+  });
+
+  /* ---------- Single-choice button groups (fade timer) ---------- */
+  $$(".seg").forEach((group) => group.addEventListener("click", (event) => {
+    const button = event.target.closest("button");
+    if (button) $$("button", group).forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+  }));
+
+  /* ---------- Mixer: each slider moves the light behind the glass ---------- */
+  $$("[data-mixer]").forEach((mixer) => {
+    const value = (key) => Number($(`[data-mix="${key}"]`, mixer).value);
+    const update = () => {
+      mixer.style.setProperty("--hue", `${(value("rain") - 70) * 0.9}deg`);
+      mixer.style.setProperty("--flute", `${16 + value("wind") * 0.36}px`);
+      mixer.style.setProperty("--sat", String(0.55 + value("synth") / 90));
+      mixer.style.setProperty("--a4", `oklch(${80 + value("vinyl") / 10}% ${0.04 + value("vinyl") / 700} 55)`);
+      $$("input", mixer).forEach((input) => { input.nextElementSibling.value = input.value; });
+    };
+    mixer.addEventListener("input", update);
+    update();
+  });
+
+  /* ---------- Billing switch ---------- */
+  $(".switch").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-bill]");
+    if (!button) return;
+    const yearly = button.dataset.bill === "y";
+    $$("[data-bill]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    $$("[data-price]").forEach((price) => {
+      price.textContent = yearly ? price.dataset.y : price.dataset.m;
+      price.nextElementSibling.textContent = yearly ? "a month, billed yearly" : "a month, billed monthly";
+    });
+  });
+
+  /* ---------- Help search: filters questions and hides empty groups ---------- */
+  const faq = $("[data-faq]");
+  $("#faq-q").addEventListener("input", (event) => {
+    const query = event.target.value.trim().toLowerCase();
+    let shown = 0;
+    $$(".qa", faq).forEach((qa) => {
+      const match = !query || qa.textContent.toLowerCase().includes(query);
+      qa.hidden = !match;
+      if (match && query) qa.open = true;
+      if (match) shown += 1;
+    });
+    $$(".qg", faq).forEach((group) => { group.hidden = !$$(".qa:not([hidden])", group).length; });
+    $("[data-faq-empty]", faq).hidden = shown > 0;
+  });
+
+  /* ---------- Copy (clipboard may be blocked in a frame: fall back to a hidden field) ---------- */
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch {
+      try {
+        const area = Object.assign(document.createElement("textarea"), { value: text });
+        area.style.cssText = "position:absolute;left:-9999px";
+        document.body.append(area);
+        area.select();
+        const ok = document.execCommand("copy");
+        area.remove();
+        return ok;
+      } catch { return false; }
+    }
+  }
+  $$("[data-copy], [data-copy-link]").forEach((button) => button.addEventListener("click", async () => {
+    const label = $("span", button);
+    const text = button.hasAttribute("data-copy") ? $("code", button.closest(".code")).textContent : location.href;
+    const before = label.textContent;
+    label.textContent = (await copyText(text)) ? "Copied" : "Could not copy";
+    setTimeout(() => { label.textContent = before; }, 1800);
+  }));
+
+  /* ---------- Show or hide a password ---------- */
+  $$("[data-reveal]").forEach((button) => button.addEventListener("click", () => {
+    const input = document.getElementById(button.dataset.reveal);
+    const show = input.type === "password";
+    input.type = show ? "text" : "password";
+    button.setAttribute("aria-pressed", String(show));
+    button.setAttribute("aria-label", show ? "Hide password" : "Show password");
+  }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const MESSAGES = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please write a little more." };
+  const SHORT = { "s-pw": "Use at least 8 characters.", "c-msg": "Please write at least 20 characters." };
+  function check(field) {
+    let problem = "";
+    if (field.tagName === "FIELDSET") { if (!field.querySelector(":checked")) problem = field.dataset.msg; }
+    else if (field.type === "checkbox") { if (!field.checked) problem = field.dataset.msg; }
+    else {
+      const key = Object.keys(MESSAGES).find((k) => field.validity[k]);
+      if (key) problem = (key === "valueMissing" && field.dataset.msg) || (key === "tooShort" && SHORT[field.id]) || MESSAGES[key];
+    }
+    document.getElementById(field.dataset.err).textContent = problem;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("[data-err]", form);
+    fields.forEach((field) => {
+      field.setAttribute("aria-describedby", field.dataset.err);
+      field.addEventListener(field.tagName === "FIELDSET" || field.type === "checkbox" || field.tagName === "SELECT" ? "change" : "blur", () => {
+        if (field.tagName === "FIELDSET" || field.type === "checkbox" || field.tagName === "SELECT" || field.value) check(field);
+      });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before the submit event fires, so the submit button runs the handler;
+       Enter in a field clicks that button (implicit submission). */
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    const send = () => {
+      const valid = fields.map(check).every(Boolean);
+      if (!valid) {
+        const first = fields.find((f) => f.getAttribute("aria-invalid") === "true");
+        (first.tagName === "FIELDSET" ? $("input", first) : first).focus();
+        return;
+      }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        button.disabled = false;
+        button.textContent = label;
+        const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+        success.hidden = false;
+        success.focus();
+      }, 500);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

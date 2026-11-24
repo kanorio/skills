@@ -1,0 +1,1244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Pebbleway: one app for life in Larch Quarter</title>
+<meta name="description" content="Book the laundry room, collect parcels, pay the service fee and meet your neighbours. Pebbleway is the residents' app for the 1,200 homes of Larch Quarter.">
+<meta property="og:title" content="Pebbleway: one app for life in Larch Quarter">
+<meta property="og:description" content="Book, collect, pay and meet the people next door, all in one place.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/urbanist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font ---------- */
+@font-face { font-family: "Urbanist"; src: url("fonts/urbanist-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: every color is light-dark(light, dark); the theme is the color-scheme ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(97.2% 0 0), oklch(15.5% 0.004 150));
+  --surface: light-dark(oklch(100% 0 0), oklch(21.5% 0.005 150));
+  --surface-2: light-dark(oklch(94.6% 0.002 150), oklch(27.5% 0.006 150));
+  --text: light-dark(oklch(22% 0.006 150), oklch(94.5% 0.004 150));
+  --text-muted: light-dark(oklch(48% 0.006 150), oklch(72% 0.006 150));
+  --border: light-dark(oklch(90.5% 0.002 150), oklch(31% 0.006 150));
+  --band: light-dark(oklch(55% 0.135 152), oklch(40% 0.095 152));
+  --on-band: oklch(100% 0 0);
+  --veil: oklch(100% 0 0 / 0.13);
+  --veil-2: oklch(100% 0 0 / 0.24);
+  --accent: light-dark(oklch(52% 0.13 152), oklch(76% 0.16 152));
+  --btn: oklch(55% 0.135 152);
+  --tint: light-dark(oklch(95.5% 0.03 152), oklch(29% 0.045 152));
+  --c-green: light-dark(oklch(58% 0.15 152), oklch(76% 0.15 152));
+  --c-blue: light-dark(oklch(54% 0.17 272), oklch(74% 0.12 272));
+  --c-amber: light-dark(oklch(70% 0.15 70), oklch(82% 0.14 80));
+  --c-coral: light-dark(oklch(60% 0.17 32), oklch(75% 0.13 32));
+  --c-teal: light-dark(oklch(56% 0.1 205), oklch(76% 0.1 200));
+  --error: light-dark(oklch(52% 0.19 25), oklch(74% 0.15 25));
+  --focus: light-dark(oklch(45% 0.12 152), oklch(80% 0.15 152));
+  /* illustration palette: the same in both themes, they are pictures */
+  --a-w: oklch(99% 0 0); --a-k: oklch(28% 0.03 250); --a-g: oklch(64% 0.16 152); --a-y: oklch(85% 0.15 88);
+  --a-c: oklch(68% 0.16 35); --a-b: oklch(57% 0.16 262); --a-s: oklch(82% 0.065 60); --a-d: oklch(91% 0.006 250);
+  --p-green: oklch(62% 0.15 152); --p-blue: oklch(60% 0.15 258); --p-amber: oklch(82% 0.13 82); --p-teal: oklch(66% 0.1 200);
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.04);
+  --shadow-lift: 0 2px 6px oklch(0% 0 0 / 0.05), 0 16px 32px -18px oklch(0% 0 0 / 0.22);
+  --shadow-overlay: 0 4px 12px oklch(0% 0 0 / 0.06), 0 24px 56px -24px oklch(0% 0 0 / 0.3);
+  --r-control: 6px; --r-card: 10px; --r-media: 10px; --r-panel: 16px;
+  --dur-fast: 150ms; --dur-base: 260ms; --dur-slow: 520ms; --ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --font: "Urbanist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-display: clamp(44px, 4.6vw, 64px); --fs-h1: clamp(34px, 3.9vw, 54px); --fs-h2: clamp(26px, 2.4vw, 32px);
+  --fs-h3: 20px; --fs-body: 17px; --fs-small: 14px;
+  --wrap: 1100px; --gut: clamp(16px, 4vw, 40px); --sec: clamp(64px, 8vw, 112px);
+  --arch: clamp(30px, 8vw, 116px); --lift: clamp(56px, 7vw, 104px);
+}
+[data-theme="light"] { color-scheme: light; }
+[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 88px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs-body)/1.6 var(--font); -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+h1, h2, h3, p, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.site-header :focus-visible, .band :focus-visible { outline-color: var(--on-band); }
+.wrap { width: min(100% - 2 * var(--gut), var(--wrap)); margin-inline: auto; }
+.narrow { width: min(100% - 2 * var(--gut), 820px); margin-inline: auto; }
+.i { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.flip { transform: scaleX(-1); }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 50; padding: 10px 16px; border-radius: var(--r-control); background: var(--surface); color: var(--text); }
+.skip:focus { top: 12px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.h1 { font-size: var(--fs-h1); font-weight: 500; line-height: 1.12; letter-spacing: -0.012em; }
+.h2 { font-size: var(--fs-h2); font-weight: 600; line-height: 1.2; letter-spacing: -0.005em; }
+.h3 { font-size: var(--fs-h3); font-weight: 600; line-height: 1.3; }
+.muted { color: var(--text-muted); }
+.link { color: var(--accent); font-weight: 600; text-decoration: none; }
+.link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.link .i { width: 16px; height: 16px; display: inline; vertical-align: -3px; }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 22px; border: 1px solid transparent; border-radius: var(--r-control); background: none; font-size: 16px; font-weight: 600; line-height: 1; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color var(--dur-fast), border-color var(--dur-fast), transform var(--dur-fast) var(--ease); }
+.btn:active { transform: scale(0.97); }
+.btn .i { width: 18px; height: 18px; }
+.btn-green { background: var(--btn); color: var(--on-band); }
+.btn-green:hover { background: color-mix(in oklab, var(--btn) 86%, black); }
+.btn-soft { background: var(--surface-2); }
+.btn-soft:hover { background: color-mix(in oklab, var(--text) 10%, var(--surface-2)); }
+.btn-white { background: var(--on-band); color: oklch(42% 0.11 152); }
+.btn-white:hover { background: oklch(94% 0.03 152); }
+.btn-veil { background: var(--veil); color: var(--on-band); }
+.btn-veil:hover { background: var(--veil-2); }
+.btn-sm { min-height: 38px; padding: 0 16px; font-size: 15px; }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.icon-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; flex: none; border: 0; border-radius: 50%; background: var(--veil); color: inherit; cursor: pointer; transition: background-color var(--dur-fast); }
+.icon-btn:hover { background: var(--veil-2); }
+.icon-btn .i { width: 20px; height: 20px; }
+
+/* ---------- Header: the green starts at the very top ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; background: var(--band); color: var(--on-band); transition: box-shadow var(--dur-base); }
+.site-header.is-scrolled { box-shadow: 0 10px 24px -14px oklch(0% 0 0 / 0.4); }
+.hdr { display: flex; align-items: center; gap: 24px; height: 72px; width: min(100% - 2 * var(--gut), 1240px); margin-inline: auto; }
+.logo { --mark-in: var(--band); display: inline-flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; }
+.mk { width: 30px; height: 30px; flex: none; }
+.nav { display: flex; gap: clamp(20px, 2.3vw, 34px); margin-left: auto; }
+.nav a { padding: 6px 0; border-bottom: 2px solid transparent; font-size: 16px; font-weight: 500; text-decoration: none; white-space: nowrap; transition: border-color var(--dur-fast); }
+.nav a:hover { border-bottom-color: var(--veil-2); }
+.nav a[aria-current="page"] { border-bottom-color: currentColor; }
+.hdr-end { display: flex; align-items: center; gap: 10px; margin-left: 12px; }
+.menu-btn { display: none; }
+.menu { display: grid; width: min(100% - 2 * var(--gut), 1240px); margin-inline: auto; padding: 4px 0 24px; border-top: 1px solid var(--veil-2); }
+.menu a:not(.btn) { padding: 14px 0; border-bottom: 1px solid var(--veil); font-size: 20px; font-weight: 500; text-decoration: none; }
+.menu a[aria-current="page"] { text-decoration: underline; text-underline-offset: 6px; }
+.menu .btn { margin-top: 20px; justify-self: start; }
+@media (max-width: 1179px) {
+  .nav { display: none; }
+  .menu-btn { display: inline-grid; }
+  .hdr-end { margin-left: auto; }
+}
+@media (max-width: 560px) {
+  .hdr { height: 64px; gap: 12px; }
+  .hdr-end .btn-white { display: none; }
+}
+
+/* ---------- Views ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+main { min-height: 60vh; }
+.js .is-active .rise > * { animation: rise var(--dur-slow) var(--ease) both; }
+.js .is-active .rise > :nth-child(2) { animation-delay: 70ms; }
+.js .is-active .rise > :nth-child(3) { animation-delay: 140ms; }
+.js .is-active .rise > :nth-child(4) { animation-delay: 210ms; }
+.js .reveal:not(.is-in) { opacity: 0; }
+.reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---------- Signature: the green band with an arched lower edge ---------- */
+.band { position: relative; margin-bottom: var(--arch); padding: clamp(36px, 5.5vw, 72px) var(--gut) clamp(32px, 4vw, 56px); background: var(--band); color: var(--on-band); text-align: center; }
+.band::after { content: ""; position: absolute; left: 0; right: 0; top: calc(100% - 1px); height: calc(var(--arch) + 1px); background: var(--band); clip-path: ellipse(55% 100% at 50% 0); pointer-events: none; }
+.band.lifted { padding-bottom: calc(var(--lift) + 44px); }
+.band.thin { padding: 0; height: clamp(16px, 3vw, 40px); }
+.band .h1 { max-width: 18em; margin-inline: auto; }
+.band-sub { max-width: 34em; margin: 16px auto 0; font-size: clamp(17px, 1.4vw, 20px); letter-spacing: 0.015em; }
+.lift { position: relative; z-index: 2; margin-top: calc(-1 * (var(--arch) + var(--lift))); }
+.thin + .lift { margin-top: calc(-1 * var(--arch) + 8px); }
+/* a short lifted card still has to cover the arch it sits on */
+.lift.narrow > .panel { display: grid; align-content: center; min-height: calc(var(--arch) + var(--lift) + 24px); }
+/* the same arch, turned over, opens the closing band */
+.band.cap { margin: var(--arch) 0 0; padding-block: clamp(40px, 5vw, 64px) clamp(56px, 6vw, 88px); }
+.band.cap::after { top: auto; bottom: calc(100% - 1px); clip-path: ellipse(55% 100% at 50% 100%); }
+.band-search { position: relative; max-width: 500px; margin: 30px auto 0; }
+.band-search .i { position: absolute; left: 16px; top: 50%; width: 18px; height: 18px; translate: 0 -50%; pointer-events: none; }
+.band-search input { width: 100%; height: 50px; padding: 0 16px 0 44px; border: 1px solid oklch(100% 0 0 / 0.6); border-radius: var(--r-control); background: oklch(100% 0 0 / 0.08); color: var(--on-band); font-size: 16px; }
+.band-search input::placeholder { color: oklch(100% 0 0 / 0.82); }
+.band-search input:focus { background: oklch(100% 0 0 / 0.14); border-color: var(--on-band); }
+
+/* ---------- Home: centred lockup, round platform buttons, three white entry cards ---------- */
+.hero { padding-top: clamp(48px, 7vw, 104px); padding-bottom: clamp(48px, 6vw, 84px); }
+.lockup { --mark-in: var(--band); display: inline-flex; align-items: center; gap: 0.28em; font-size: var(--fs-display); font-weight: 500; line-height: 1; letter-spacing: -0.015em; }
+.lockup .mk { width: 1.2em; height: 1.2em; }
+.tagline { margin-top: clamp(24px, 3vw, 36px); font-size: clamp(18px, 1.5vw, 21px); font-weight: 500; line-height: 1.65; letter-spacing: 0.03em; }
+.tagline span { display: block; text-wrap: balance; }
+.tagline span + span { margin-top: 2px; }
+.orbs { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; margin-top: clamp(36px, 4vw, 52px); }
+.orb { display: grid; place-content: center; justify-items: center; gap: 8px; width: 120px; height: 120px; border-radius: 50%; background: var(--veil); font-size: 15px; font-weight: 600; text-decoration: none; transition: background-color var(--dur-fast), transform var(--dur-base) var(--ease); }
+.orb .i { width: 32px; height: 32px; stroke-width: 1.6; }
+.orb:hover { background: var(--veil-2); transform: translateY(-3px); }
+@media (max-width: 560px) {
+  .orbs { display: grid; grid-template-columns: repeat(2, 100px); gap: 24px 40px; }
+  .orb { width: 100px; height: 100px; font-size: 14px; }
+  .orb .i { width: 28px; height: 28px; }
+}
+.entries { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; width: min(100% - 2 * var(--gut), 964px); margin: calc(var(--arch) + clamp(20px, 4vw, 56px)) auto 0; }
+.entry { display: grid; place-content: center; justify-items: center; gap: 10px; min-height: 216px; padding: 24px; border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow-card); text-align: center; text-decoration: none; transition: transform var(--dur-base) var(--ease), box-shadow var(--dur-base); }
+.entry .i { width: 36px; height: 36px; color: var(--c); stroke-width: 2; }
+.entry strong { margin-top: 6px; font-size: 18px; font-weight: 500; }
+.entry span { font-size: 14px; color: var(--text-muted); }
+.entry:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+@media (max-width: 760px) { .entries { grid-template-columns: 1fr; gap: 16px; } .entry { min-height: 150px; } }
+
+/* ---------- Sections, panels, round service icons ---------- */
+.sec { padding-block: var(--sec); }
+.sec.tight { padding-top: clamp(40px, 5vw, 64px); }
+.sec-head { margin-bottom: clamp(24px, 3.5vw, 40px); text-align: center; }
+.sec-head p { max-width: 36em; margin: 10px auto 0; color: var(--text-muted); }
+.panel { padding: clamp(24px, 4vw, 48px); border-radius: var(--r-panel); background: var(--surface); box-shadow: var(--shadow-card); }
+.toolbar { padding-block: clamp(20px, 2.6vw, 32px) 2px; }
+.toolbar .count { margin-bottom: 14px; }
+.listing { margin-top: 24px; }
+.life { display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px 12px; }
+.life a { display: grid; justify-items: center; gap: 12px; font-size: 15px; font-weight: 500; text-align: center; text-decoration: none; }
+.disc { display: grid; place-items: center; width: 60px; height: 60px; flex: none; border-radius: 50%; background: color-mix(in oklab, var(--c, var(--c-green)) 14%, var(--surface)); color: var(--c, var(--c-green)); transition: transform var(--dur-base) var(--ease); }
+.disc .i { width: 26px; height: 26px; }
+.life a:hover .disc { transform: scale(1.08); }
+@media (max-width: 560px) { .life { gap: 24px 4px; } .life a { font-size: 13px; } .life .disc { width: 52px; height: 52px; } }
+
+/* ---------- Chips, counts, empty states ---------- */
+.chips { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.chip { min-height: 38px; padding: 0 18px; border: 0; border-radius: var(--r-control); background: var(--surface-2); font-size: 15px; white-space: nowrap; cursor: pointer; transition: background-color var(--dur-fast), color var(--dur-fast); }
+.chip:hover { background: color-mix(in oklab, var(--text) 10%, var(--surface-2)); }
+.chip[aria-pressed="true"] { background: var(--btn); color: var(--on-band); }
+.count { margin: 16px 0 24px; font-size: var(--fs-small); color: var(--text-muted); text-align: center; }
+.empty { padding: 48px 16px; color: var(--text-muted); text-align: center; }
+@media (max-width: 640px) { .chips { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; } }
+
+/* ---------- Horizontal story cards ---------- */
+.stories { display: grid; gap: 20px; }
+.story { display: grid; grid-template-columns: minmax(0, 360px) 1fr; overflow: hidden; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--surface); text-decoration: none; transition: box-shadow var(--dur-base), transform var(--dur-base) var(--ease); }
+.story:hover { box-shadow: var(--shadow-lift); transform: translateY(-2px); }
+.art { width: 100%; height: auto; aspect-ratio: 9 / 5; }
+.story-body { display: grid; align-content: center; gap: 12px; padding: 24px 32px; }
+.story time, .stamp { font-size: var(--fs-small); color: var(--text-muted); }
+.story h3 { font-size: clamp(19px, 1.7vw, 23px); font-weight: 500; line-height: 1.35; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { padding: 3px 12px; border-radius: var(--r-control); background: var(--surface-2); font-size: 13px; }
+@media (max-width: 760px) { .story { grid-template-columns: 1fr; } .story-body { padding: 18px 20px 22px; } }
+.pager { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 32px; }
+.pager button { min-width: 40px; height: 40px; border: 0; border-radius: 50%; background: none; color: var(--text-muted); cursor: pointer; }
+.pager button[aria-current="page"] { color: var(--accent); font-weight: 700; }
+.pager .arrow { display: grid; place-items: center; background: var(--surface-2); color: var(--text); }
+.pager .arrow[disabled] { opacity: 0.4; cursor: default; }
+.pager .i { width: 16px; height: 16px; }
+
+/* ---------- Feature carousel that sits on the arch ---------- */
+.feature { position: relative; width: min(100% - 2 * var(--gut), 1010px); margin-inline: auto; overflow: hidden; border-radius: var(--r-panel); background: var(--surface); box-shadow: var(--shadow-overlay); }
+.feature .art { aspect-ratio: 12 / 5; }
+.slide { position: relative; display: block; text-decoration: none; }
+.js .slide.is-current { animation: fade var(--dur-slow) var(--ease); }
+.caption { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 16px 24px; background: oklch(18% 0.01 150 / 0.62); color: oklch(100% 0 0); font-size: 15px; text-align: left; }
+.caption b { font-size: 17px; font-weight: 600; }
+.caption span { padding: 3px 12px; border-radius: 999px; background: oklch(100% 0 0); color: oklch(22% 0.006 150); font-size: 13px; font-weight: 600; }
+.dots { display: flex; justify-content: center; gap: 4px; margin-top: 12px; }
+.dots button { display: grid; place-items: center; height: 24px; padding: 0 4px; border: 0; background: none; cursor: pointer; }
+.dots button::before { content: ""; width: 8px; height: 6px; border-radius: 999px; background: color-mix(in oklab, var(--text) 25%, transparent); transition: width var(--dur-base) var(--ease); }
+.dots button[aria-current="true"]::before { width: 32px; background: var(--btn); }
+@media (max-width: 640px) { .feature .art { aspect-ratio: 9 / 5; } .caption { position: static; } }
+
+/* ---------- Cards and grids ---------- */
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 960px) { .grid3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .grid3 { grid-template-columns: 1fr; } }
+.card { display: grid; align-content: start; gap: 10px; padding: 28px; border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow-card); }
+.card p { font-size: 15.5px; color: var(--text-muted); }
+.card .disc { width: 52px; height: 52px; margin-bottom: 4px; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: var(--fs-small); color: var(--text-muted); }
+.meta span { display: inline-flex; align-items: center; gap: 6px; }
+.meta .i { width: 16px; height: 16px; }
+.card .link { margin-top: 4px; font-size: 15px; }
+.step-n { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--tint); color: var(--accent); font-weight: 700; }
+
+/* ---------- Membership ---------- */
+.toggle { display: inline-flex; margin-top: 28px; padding: 4px; border-radius: 999px; background: var(--veil); }
+.toggle button { min-height: 40px; padding: 0 22px; border: 0; border-radius: 999px; background: none; color: var(--on-band); font-weight: 600; cursor: pointer; transition: background-color var(--dur-fast), color var(--dur-fast); }
+.toggle button[aria-pressed="true"] { background: var(--on-band); color: oklch(42% 0.11 152); }
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: min(100% - 2 * var(--gut), 1040px); margin-inline: auto; }
+.plan { display: grid; align-content: start; gap: 12px; padding: 36px 32px; border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow-card); text-align: center; }
+.plan.featured { box-shadow: inset 0 0 0 2px var(--btn), var(--shadow-lift); }
+.plan .price { font-size: 46px; font-weight: 600; line-height: 1; letter-spacing: -0.02em; }
+.plan .per { font-size: var(--fs-small); color: var(--text-muted); }
+.plan ul { display: grid; gap: 10px; margin: 10px 0 18px; font-size: 15.5px; text-align: left; }
+.plan li { display: flex; gap: 10px; }
+.plan li .i { width: 20px; height: 20px; color: var(--accent); }
+.badge { justify-self: center; padding: 4px 12px; border-radius: 999px; background: var(--tint); color: var(--accent); font-size: 13px; font-weight: 600; }
+@media (max-width: 880px) { .plans { grid-template-columns: 1fr; max-width: 460px; } }
+
+/* ---------- Events ---------- */
+.evs { display: grid; gap: 16px; }
+.ev { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px; padding: 22px 28px; border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow-card); }
+.date { display: grid; place-content: center; width: 72px; height: 72px; border-radius: 50%; background: var(--tint); color: var(--accent); line-height: 1.05; text-align: center; }
+.date b { font-size: 24px; }
+.date small { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.ev h3 { margin-bottom: 4px; }
+.left { margin-top: 6px; font-size: var(--fs-small); font-weight: 600; color: var(--accent); }
+@media (max-width: 680px) { .ev { grid-template-columns: auto 1fr; gap: 16px 18px; padding: 20px; } .ev .btn { grid-column: 1 / -1; } .date { width: 60px; height: 60px; } }
+
+/* ---------- Forms: errors float under the field, so the button never moves ---------- */
+.form { display: grid; }
+.field { position: relative; display: grid; gap: 6px; padding: 0 0 24px; margin: 0; border: 0; min-width: 0; }
+.field > label, .legend { padding: 0; font-size: var(--fs-small); font-weight: 600; }
+.input { width: 100%; min-height: 46px; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--bg); font-size: 16px; }
+textarea.input { min-height: 128px; resize: vertical; }
+.input:focus-visible { outline-offset: 0; border-color: transparent; }
+.input[aria-invalid="true"] { border-color: var(--error); }
+.error { position: absolute; left: 0; bottom: 3px; font-size: 13px; color: var(--error); }
+.hint { position: absolute; right: 0; bottom: 3px; font-size: 13px; color: var(--text-muted); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+@media (max-width: 560px) { .row2 { grid-template-columns: 1fr; } }
+.opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.opt { position: relative; }
+.opt input { position: absolute; inset: 0; opacity: 0; }
+.opt span { display: grid; gap: 2px; height: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--r-control); font-size: var(--fs-small); color: var(--text-muted); cursor: pointer; transition: border-color var(--dur-fast), background-color var(--dur-fast); }
+.opt b { font-size: 16px; color: var(--text); }
+.opt input:checked + span { border-color: var(--btn); background: var(--tint); box-shadow: inset 0 0 0 1px var(--btn); }
+.opt input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+@media (max-width: 480px) { .opts { grid-template-columns: 1fr; } }
+.check { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; }
+.check input { width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--btn); }
+.stepper { display: inline-flex; align-items: center; gap: 4px; }
+.stepper button { display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--surface-2); cursor: pointer; }
+.stepper .i { width: 18px; height: 18px; }
+.stepper output { min-width: 40px; font-size: 18px; font-weight: 600; text-align: center; }
+.form .btn[type="submit"] { justify-self: start; margin-top: 4px; }
+.success { display: grid; justify-items: center; gap: 12px; padding: 24px 0; text-align: center; }
+.success .disc { width: 72px; height: 72px; background: var(--tint); color: var(--accent); animation: rise var(--dur-slow) var(--ease) both; }
+.success .disc .i { width: 32px; height: 32px; stroke-width: 2.2; }
+
+/* ---------- Help centre ---------- */
+.cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: min(100% - 2 * var(--gut), 1224px); margin-inline: auto; }
+.cat { display: grid; align-content: start; justify-items: center; gap: 10px; min-height: 220px; padding: 36px 26px; border: 2px solid transparent; border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow-card); text-align: center; cursor: pointer; transition: border-color var(--dur-fast), transform var(--dur-base) var(--ease); }
+.cat:hover { transform: translateY(-3px); }
+.cat strong { font-size: 20px; font-weight: 600; }
+.cat > span:last-child { font-size: 15.5px; line-height: 1.55; color: var(--text-muted); }
+.cat .i { width: 30px; height: 30px; color: var(--c); }
+.cat[aria-pressed="true"] { border-color: var(--btn); }
+@media (max-width: 980px) { .cats { grid-template-columns: repeat(2, 1fr); } .cat { min-height: 0; } }
+@media (max-width: 520px) { .cats { grid-template-columns: 1fr; gap: 12px; } .cat { padding: 22px; } }
+.qa { border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow-card); }
+.qa + .qa { margin-top: 10px; }
+.qa summary { display: flex; align-items: center; gap: 16px; padding: 20px 24px; font-weight: 600; list-style: none; cursor: pointer; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary .tag { margin-left: auto; font-weight: 400; }
+.qa summary .i { width: 18px; height: 18px; color: var(--text-muted); transition: transform var(--dur-base) var(--ease); }
+.qa[open] summary .i { transform: rotate(90deg); }
+.qa .ans { padding: 0 24px 22px; color: var(--text-muted); }
+
+/* ---------- About ---------- */
+.statement { max-width: 30em; margin-inline: auto; font-size: clamp(20px, 2vw, 26px); font-weight: 500; line-height: 1.5; text-align: center; }
+.tl { position: relative; display: grid; gap: 28px; padding-left: 40px; }
+.tl::before { content: ""; position: absolute; left: 9px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+.tl li { position: relative; }
+.tl li::before { content: ""; position: absolute; left: -40px; top: 3px; width: 20px; height: 20px; border: 5px solid var(--btn); border-radius: 50%; background: var(--surface); }
+.tl b { display: block; font-size: var(--fs-small); letter-spacing: 0.04em; color: var(--accent); }
+.people { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.person { display: grid; justify-items: center; gap: 4px; padding: 28px 18px; border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow-card); text-align: center; }
+.avatar { display: grid; place-items: center; width: 88px; height: 88px; margin-bottom: 10px; border-radius: 50%; background: color-mix(in oklab, var(--c) 18%, var(--surface)); color: var(--c); font-size: 28px; font-weight: 600; }
+.person span { font-size: var(--fs-small); color: var(--text-muted); }
+@media (max-width: 900px) { .people { grid-template-columns: repeat(2, 1fr); } }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+
+/* ---------- Reading pages: a white sheet on the canvas ---------- */
+.sheet { width: min(100% - 2 * var(--gut), 960px); margin-inline: auto; padding: clamp(28px, 5vw, 64px) clamp(20px, 7vw, 96px); border-radius: var(--r-panel); background: var(--surface); box-shadow: var(--shadow-card); }
+.sheet .h1 { margin: 10px 0 18px; }
+.prose h2 { margin: 36px 0 10px; font-size: 19px; font-weight: 700; }
+.prose p, .prose li { line-height: 1.75; }
+.prose p + p { margin-top: 14px; }
+.prose ul { display: grid; gap: 6px; margin-top: 12px; padding-left: 20px; list-style: disc; }
+.prose a { color: var(--accent); text-decoration: none; }
+.prose a:hover { text-decoration: underline; }
+.post .art { margin: 28px 0 32px; border-radius: var(--r-media); }
+.back { display: inline-flex; align-items: center; gap: 4px; }
+
+/* ---------- Get the app: a phone drawn in HTML ---------- */
+.phone { width: 248px; height: 500px; margin-inline: auto; padding: 10px; border-radius: 38px; background: oklch(24% 0.006 150); box-shadow: var(--shadow-overlay); }
+.screen { height: 100%; overflow: hidden; border-radius: 29px; background: var(--bg); }
+.screen-band { position: relative; margin-bottom: 26px; padding: 34px 16px 18px; background: var(--band); color: var(--on-band); text-align: center; font-size: 15px; font-weight: 600; }
+.screen-band::after { content: ""; position: absolute; left: 0; right: 0; top: calc(100% - 1px); height: 20px; background: var(--band); clip-path: ellipse(55% 100% at 50% 0); }
+.screen-band small { display: block; font-weight: 400; opacity: 0.9; }
+.screen-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 4px; padding: 14px 12px; }
+.screen-grid i { justify-self: center; width: 36px; height: 36px; border-radius: 50%; background: color-mix(in oklab, var(--c) 22%, var(--surface)); }
+.screen-card { margin: 10px 12px 0; height: 54px; border-radius: 8px; background: var(--surface); }
+@media (max-width: 860px) { .phone { display: none; } }
+
+/* ---------- Footer ---------- */
+.site-footer { padding: 40px var(--gut) 44px; background: var(--surface); font-size: 14.5px; text-align: center; }
+.foot-links { display: flex; flex-wrap: wrap; justify-content: center; row-gap: 8px; }
+.foot-links a { padding: 0 12px; border-left: 1px solid color-mix(in oklab, var(--text) 45%, transparent); line-height: 1.1; text-decoration: none; }
+.foot-links a:first-child { border-left: 0; }
+.foot-links a:hover { color: var(--accent); }
+.copy { margin-top: 14px; font-size: 13px; color: var(--text-muted); }
+.socials { display: flex; justify-content: center; gap: 12px; margin-top: 16px; }
+.socials a { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--surface-2); color: var(--text-muted); }
+.socials a:hover { color: var(--accent); }
+.socials .i { width: 16px; height: 16px; }
+
+/* ---------- 404 ---------- */
+.notfound .disc { width: 96px; height: 96px; margin: 0 auto 20px; }
+.notfound .disc .i { width: 40px; height: 40px; }
+
+/* ---------- Illustrations: flat shapes on a panel color ---------- */
+/* the shapes live inside <symbol>, so these selectors stay single classes (no ancestor) to reach the <use> copies */
+.bgp { fill: var(--p, var(--p-green)); }
+.w { fill: var(--a-w); } .k { fill: var(--a-k); } .g { fill: var(--a-g); } .y { fill: var(--a-y); }
+.c { fill: var(--a-c); } .b { fill: var(--a-b); } .s { fill: var(--a-s); } .d { fill: var(--a-d); }
+.l { fill: oklch(100% 0 0 / 0.2); } .sh { fill: var(--shirt, var(--a-b)); }
+.ws { fill: none; stroke: var(--a-w); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.lw { fill: none; stroke: oklch(100% 0 0 / 0.22); stroke-width: 12; }
+.ry { fill: none; stroke: var(--a-y); stroke-width: 5; stroke-dasharray: 1 11; stroke-linecap: round; }
+.p-green { --p: var(--p-green); } .p-blue { --p: var(--p-blue); } .p-amber { --p: var(--p-amber); } .p-teal { --p: var(--p-teal); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal:not(.is-in) { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-mark" viewBox="0 0 32 32"><path d="M16.6 3C24.1 3 29 8.3 29 15.5 29 23.3 23.3 29 15.8 29 8.3 29 3 23.8 3 16.7 3 8.9 9 3 16.6 3z" fill="currentColor"/><path d="M9.4 21.6c2.7-.2 4.1-1.6 4.7-3.7.7-2.4 2.3-3.7 4.9-3.9 2-.2 3.4-1.1 4.1-2.7" style="fill:none;stroke:var(--mark-in);stroke-width:2.6;stroke-linecap:round"/><circle cx="9.3" cy="21.6" r="1.9" style="fill:var(--mark-in)"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.4"/><path d="M10.5 18.5h3"/></symbol>
+    <symbol id="i-tablet" viewBox="0 0 24 24"><rect x="3.5" y="3" width="17" height="18" rx="2.4"/><path d="M10.5 18h3"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="10" rx="1.6"/><path d="M2.5 18.5h19"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/></symbol>
+    <symbol id="i-news" viewBox="0 0 24 24"><path d="M5 4h11v16H6.5A2.5 2.5 0 0 1 4 17.5V5a1 1 0 0 1 1-1z"/><path d="M16 9h3.5v8.5A2.5 2.5 0 0 1 17 20h-1M7.5 8h5M7.5 12h5M7.5 16h3"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.4 3 7.9 7 9.5 4-1.6 7-5.1 7-9.5V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-wash" viewBox="0 0 24 24"><rect x="4.5" y="3" width="15" height="18" rx="2.2"/><circle cx="12" cy="13" r="4.3"/><path d="M8 6.5h3M15.5 6.5h.01"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15"/><path d="M5 19c3-4 6-7 10-9"/></symbol>
+    <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3 18.5V6.5M3 14h18v4.5M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.8"/></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24"><path d="M4.5 19.5l8.4-8.4"/><path d="M15.6 3.5a4.6 4.6 0 0 0-3.3 6.4l1.8 1.8a4.6 4.6 0 0 0 6.4-3.3l-3 1.1-1.9-1.9z"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></symbol>
+    <symbol id="i-basket" viewBox="0 0 24 24"><path d="M3.5 10h17l-1.7 8.8a1.6 1.6 0 0 1-1.6 1.2H6.8a1.6 1.6 0 0 1-1.6-1.2z"/><path d="m8 10 3-6M16 10l-3-6M9.5 14v2.5M14.5 14v2.5"/></symbol>
+    <symbol id="i-bike" viewBox="0 0 24 24"><circle cx="5.5" cy="16" r="3.5"/><circle cx="18.5" cy="16" r="3.5"/><path d="M5.5 16 9 9h6.5l3 7M12 16 9 9M8 6h3M14.5 6.5h2l-1 2.5"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M3.5 16.5V13l2.2-5h12.6l2.2 5v3.5z"/><path d="M3.5 13h17"/><circle cx="7.5" cy="16.5" r="1.8"/><circle cx="16.5" cy="16.5" r="1.8"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M15.5 5.5a3 3 0 0 1 0 6M17 14.5a5 5 0 0 1 3.5 4.5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+    <symbol id="i-rss" viewBox="0 0 24 24"><path d="M5 5a14 14 0 0 1 14 14M5 11a8 8 0 0 1 8 8"/><circle cx="6" cy="18" r="1.2"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 8-8M16 7l2 2M14 9l2 2"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></symbol>
+    <!-- illustration parts -->
+    <symbol id="a-ph" viewBox="0 0 56 102"><rect class="k" width="56" height="102" rx="10"/><rect class="w" x="4" y="4" width="48" height="94" rx="7"/><path class="g" d="M4 11a7 7 0 0 1 7-7h34a7 7 0 0 1 7 7v16q-24 9-48 0z"/><circle class="d" cx="15" cy="45" r="5"/><circle class="d" cx="28" cy="45" r="5"/><circle class="d" cx="41" cy="45" r="5"/><rect class="d" x="10" y="60" width="36" height="5" rx="2.5"/><rect class="d" x="10" y="71" width="25" height="5" rx="2.5"/></symbol>
+    <symbol id="a-person" viewBox="0 0 40 74"><path class="sh" d="M3 74V48a17 17 0 0 1 34 0v26z"/><circle class="s" cx="20" cy="15" r="11"/><path class="k" d="M8.6 14C8.6 6.6 13.6 3 20 3s11.4 3.6 11.4 11c-3-3-6.6-4-11.4-4S11.6 11 8.6 14z"/></symbol>
+    <symbol id="a-laundry" viewBox="0 0 360 200"><rect class="bgp" width="360" height="200"/><circle class="l" cx="320" cy="30" r="58"/><rect class="l" x="28" y="166" width="304" height="8" rx="4"/><rect class="w" x="50" y="64" width="82" height="104" rx="9"/><rect class="d" x="60" y="74" width="28" height="6" rx="3"/><circle class="g" cx="120" cy="77" r="4"/><circle class="b" cx="91" cy="123" r="27"/><circle class="w" cx="91" cy="123" r="17"/><rect class="w" x="142" y="64" width="82" height="104" rx="9"/><rect class="d" x="152" y="74" width="28" height="6" rx="3"/><circle class="c" cx="212" cy="77" r="4"/><circle class="y" cx="183" cy="123" r="27"/><circle class="w" cx="183" cy="123" r="17"/><use href="#a-ph" x="252" y="56" width="58" height="106"/><circle class="l" cx="160" cy="40" r="9"/><circle class="l" cx="182" cy="24" r="6"/><circle class="l" cx="140" cy="26" r="4"/></symbol>
+    <symbol id="a-market" viewBox="0 0 360 200"><rect class="bgp" width="360" height="200"/><circle class="l" cx="50" cy="34" r="50"/><rect class="l" x="20" y="168" width="320" height="8" rx="4"/><rect class="k" x="46" y="66" width="6" height="104"/><rect class="k" x="148" y="66" width="6" height="104"/><rect class="w" x="36" y="48" width="128" height="24" rx="4"/><path class="c" d="M36 52a4 4 0 0 1 4-4h18v24H36zM79 48h21v24H79zM121 48h22v24h-22z"/><rect class="w" x="40" y="122" width="120" height="48" rx="4"/><circle class="y" cx="60" cy="114" r="10"/><circle class="c" cx="81" cy="112" r="11"/><circle class="g" cx="103" cy="114" r="10"/><circle class="y" cx="125" cy="113" r="10"/><circle class="g" cx="145" cy="115" r="8"/><use href="#a-person" x="182" y="96" width="40" height="74" style="--shirt:var(--a-y)"/><rect class="w" x="240" y="84" width="92" height="86" rx="6"/><rect class="g" x="232" y="66" width="108" height="22" rx="4"/><rect class="d" x="252" y="102" width="66" height="8" rx="4"/><rect class="d" x="252" y="118" width="44" height="8" rx="4"/><circle class="c" cx="300" cy="148" r="10"/><circle class="y" cx="274" cy="148" r="10"/></symbol>
+    <symbol id="a-roof" viewBox="0 0 360 200"><rect class="bgp" width="360" height="200"/><circle class="y" cx="298" cy="46" r="22"/><path class="l" d="M0 126h36V88h34v22h26V72h38v54h70V96h40v30h116v74H0z"/><rect class="d" x="0" y="146" width="360" height="54"/><rect class="k" x="34" y="122" width="96" height="28" rx="4"/><circle class="g" cx="54" cy="116" r="15"/><circle class="y" cx="80" cy="112" r="12"/><circle class="g" cx="106" cy="117" r="14"/><use href="#a-person" x="150" y="82" width="38" height="70" style="--shirt:var(--a-c)"/><use href="#a-person" x="190" y="88" width="34" height="64" style="--shirt:var(--a-b)"/><rect class="k" x="238" y="122" width="96" height="28" rx="4"/><circle class="c" cx="258" cy="116" r="12"/><circle class="g" cx="284" cy="113" r="16"/><circle class="g" cx="312" cy="117" r="13"/></symbol>
+    <symbol id="a-bike" viewBox="0 0 360 200"><rect class="bgp" width="360" height="200"/><path class="lw" d="M0 58h360M0 172h360M96 0v200M262 0v200"/><path class="ry" d="M104 150c60 0 60-92 150-92"/><path class="c" d="M262 14a19 19 0 0 1 19 19c0 15-19 31-19 31s-19-16-19-31a19 19 0 0 1 19-19z"/><circle class="w" cx="262" cy="33" r="7"/><circle class="ws" cx="62" cy="144" r="25"/><circle class="ws" cx="148" cy="144" r="25"/><path class="ws" d="M62 144l26-42h40l20 42M88 102l20 42h40M80 90h20M128 102l6-14h14"/><use href="#a-ph" x="284" y="96" width="48" height="88"/></symbol>
+    <symbol id="a-parcel" viewBox="0 0 360 200"><rect class="bgp" width="360" height="200"/><circle class="l" cx="300" cy="170" r="70"/><rect class="w" x="54" y="34" width="176" height="140" rx="8"/><rect class="d" x="64" y="44" width="48" height="36" rx="4"/><rect class="d" x="118" y="44" width="48" height="36" rx="4"/><rect class="d" x="172" y="44" width="48" height="36" rx="4"/><rect class="d" x="64" y="86" width="48" height="36" rx="4"/><rect class="k" x="118" y="86" width="48" height="36" rx="4"/><rect class="y" x="126" y="98" width="32" height="24" rx="2"/><rect class="d" x="172" y="86" width="48" height="36" rx="4"/><rect class="d" x="64" y="128" width="48" height="36" rx="4"/><rect class="d" x="118" y="128" width="48" height="36" rx="4"/><rect class="d" x="172" y="128" width="48" height="36" rx="4"/><rect class="w" x="164" y="84" width="10" height="40" rx="2"/><use href="#a-ph" x="252" y="50" width="58" height="106"/><rect class="l" x="20" y="174" width="320" height="8" rx="4"/></symbol>
+    <symbol id="a-hall" viewBox="0 0 360 200"><rect class="bgp" width="360" height="200"/><circle class="l" cx="180" cy="44" r="72"/><use href="#a-person" x="88" y="84" width="40" height="74" style="--shirt:var(--a-c)"/><use href="#a-person" x="160" y="74" width="40" height="74" style="--shirt:var(--a-y)"/><use href="#a-person" x="232" y="84" width="40" height="74" style="--shirt:var(--a-b)"/><rect class="w" x="56" y="140" width="248" height="14" rx="7"/><rect class="k" x="82" y="154" width="8" height="38"/><rect class="k" x="270" y="154" width="8" height="38"/><rect class="g" x="116" y="124" width="16" height="16" rx="3"/><rect class="y" x="198" y="130" width="42" height="10" rx="2"/><rect class="c" x="252" y="126" width="14" height="14" rx="3"/></symbol>
+  </defs>
+</svg>
+
+<header class="site-header">
+  <div class="hdr">
+    <a class="logo" href="#/" aria-label="Pebbleway, home"><svg class="mk" aria-hidden="true"><use href="#i-mark"/></svg><span>Pebbleway</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/services">Services</a>
+      <a href="#/membership">Membership</a>
+      <a href="#/events">Events</a>
+      <a href="#/news">News</a>
+      <a href="#/help">Help</a>
+      <a href="#/about">About</a>
+    </nav>
+    <div class="hdr-end">
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to dark theme"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="btn btn-white btn-sm" href="#/get">Get the app</a>
+      <button class="icon-btn menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+  <nav class="menu" id="menu" aria-label="Menu" hidden>
+    <a href="#/services">Services</a>
+    <a href="#/membership">Membership</a>
+    <a href="#/events">Events</a>
+    <a href="#/news">News</a>
+    <a href="#/help">Help</a>
+    <a href="#/about">About</a>
+    <a href="#/contact">Contact</a>
+    <a class="btn btn-white" href="#/get">Get the app</a>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="band hero" aria-labelledby="home-title">
+    <div class="rise">
+      <h1 class="lockup" id="home-title"><svg class="mk" aria-hidden="true"><use href="#i-mark"/></svg>Pebbleway</h1>
+      <p class="tagline"><span>One app for the 1,200 homes of Larch Quarter</span> <span>Book, collect, pay and meet the people next door</span></p>
+      <ul class="orbs" aria-label="Get the app">
+        <li><a class="orb" href="#/get"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Phone</a></li>
+        <li><a class="orb" href="#/get"><svg class="i" aria-hidden="true"><use href="#i-tablet"/></svg>Tablet</a></li>
+        <li><a class="orb" href="#/get"><svg class="i" aria-hidden="true"><use href="#i-laptop"/></svg>Computer</a></li>
+        <li><a class="orb" href="#/get"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg>Web</a></li>
+      </ul>
+    </div>
+  </section>
+  <nav class="entries" aria-label="Start here">
+    <a class="entry reveal" href="#/news" style="--c:var(--c-blue)"><svg class="i" aria-hidden="true"><use href="#i-news"/></svg><strong>Newsroom</strong><span>Notices and stories from the quarter</span></a>
+    <a class="entry reveal" href="#/events" style="--c:var(--c-green)"><svg class="i" aria-hidden="true"><use href="#i-cal"/></svg><strong>Events</strong><span>Markets, workshops and walks</span></a>
+    <a class="entry reveal" href="#/help" style="--c:var(--c-amber)"><svg class="i" aria-hidden="true"><use href="#i-info"/></svg><strong>Help centre</strong><span>Answers, and the front desk</span></a>
+  </nav>
+
+  <section class="sec" aria-labelledby="life-title">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="h2" id="life-title">Everything on the block, in one place</h2><p>Each circle is something you can do from your phone today. Tap one to see how it works.</p></div>
+      <div class="panel reveal">
+        <ul class="life">
+          <li><a href="#/services?cat=spaces"><span class="disc" style="--c:var(--c-blue)"><svg class="i" aria-hidden="true"><use href="#i-wash"/></svg></span>Laundry</a></li>
+          <li><a href="#/services?cat=spaces"><span class="disc" style="--c:var(--c-green)"><svg class="i" aria-hidden="true"><use href="#i-leaf"/></svg></span>Rooftop</a></li>
+          <li><a href="#/services?cat=home"><span class="disc" style="--c:var(--c-amber)"><svg class="i" aria-hidden="true"><use href="#i-tool"/></svg></span>Tool library</a></li>
+          <li><a href="#/services?cat=deliveries"><span class="disc" style="--c:var(--c-coral)"><svg class="i" aria-hidden="true"><use href="#i-box"/></svg></span>Parcels</a></li>
+          <li><a href="#/services?cat=spaces"><span class="disc" style="--c:var(--c-teal)"><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg></span>Guest room</a></li>
+          <li><a href="#/services?cat=around"><span class="disc" style="--c:var(--c-green)"><svg class="i" aria-hidden="true"><use href="#i-bike"/></svg></span>Bikes</a></li>
+          <li><a href="#/services?cat=deliveries"><span class="disc" style="--c:var(--c-amber)"><svg class="i" aria-hidden="true"><use href="#i-basket"/></svg></span>Market</a></li>
+          <li><a href="#/news"><span class="disc" style="--c:var(--c-blue)"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></span>Notices</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0" aria-labelledby="latest-title">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="h2" id="latest-title">Latest updates</h2></div>
+      <div class="stories" id="home-stories"><p class="empty">The newest stories are in the <a class="link" href="#/news">newsroom</a>.</p></div>
+      <div class="btn-row" style="margin-top:28px"><a class="btn btn-soft" href="#/news">All stories <svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></div>
+    </div>
+  </section>
+
+  <section class="band cap" aria-labelledby="cap-title">
+    <h2 class="h1" id="cap-title">Your neighbours are already on it</h2>
+    <p class="band-sub">Free for every household in Larch Quarter. Sign in with your flat number and the code from your welcome letter.</p>
+    <div class="btn-row" style="margin-top:32px"><a class="btn btn-white" href="#/get">Get the app</a><a class="btn btn-veil" href="#/membership">See membership</a></div>
+  </section>
+</div>
+
+<!-- ===================== SERVICES ===================== -->
+<div data-view="services">
+  <section class="band lifted" aria-labelledby="svc-title">
+    <div class="rise">
+      <h1 class="h1" id="svc-title">Services</h1>
+      <p class="band-sub">Rooms to book, things to borrow and help at the door. All of it opens in the app.</p>
+      <div class="band-search"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><label class="sr-only" for="svc-q">Search services</label><input id="svc-q" type="search" placeholder="Search services" data-search="services" autocomplete="off"></div>
+    </div>
+  </section>
+  <section class="lift wrap" aria-label="All services">
+    <div class="panel toolbar">
+      <div class="chips" data-chips="services" role="group" aria-label="Filter services">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-value="spaces" aria-pressed="false">Spaces</button>
+        <button class="chip" type="button" data-value="home" aria-pressed="false">At home</button>
+        <button class="chip" type="button" data-value="deliveries" aria-pressed="false">Deliveries</button>
+        <button class="chip" type="button" data-value="around" aria-pressed="false">Getting around</button>
+      </div>
+      <p class="count" data-count="services" data-one="service" data-many="services" aria-live="polite">9 services</p>
+    </div>
+    <div class="grid3 listing" data-list="services">
+        <article class="card" data-cat="spaces"><span class="disc" style="--c:var(--c-blue)"><svg class="i" aria-hidden="true"><use href="#i-wash"/></svg></span><h2 class="h3">Laundry room</h2><p>Six washers and four dryers on the ground floor of Ferrier Lane. Book by the half hour; the app tells you when your load is done.</p><div class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>7:00 to 22:00</span><span>1 credit a load</span></div><a class="link" href="#/get">Book in the app <svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></article>
+        <article class="card" data-cat="spaces"><span class="disc" style="--c:var(--c-green)"><svg class="i" aria-hidden="true"><use href="#i-leaf"/></svg></span><h2 class="h3">Rooftop garden</h2><p>Forty raised beds and a table for twelve. Beds go by season; the table books by the evening.</p><div class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>8:00 to 21:00</span><span>Included</span></div><a class="link" href="#/get">Book in the app <svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></article>
+        <article class="card" data-cat="spaces"><span class="disc" style="--c:var(--c-teal)"><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg></span><h2 class="h3">Guest room</h2><p>A double room with its own shower for visiting family. Up to three nights; the door code arrives the morning they come.</p><div class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Check-in from 14:00</span><span>From 4 credits</span></div><a class="link" href="#/get">Book in the app <svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></article>
+        <article class="card" data-cat="home"><span class="disc" style="--c:var(--c-amber)"><svg class="i" aria-hidden="true"><use href="#i-tool"/></svg></span><h2 class="h3">Tool library</h2><p>Drills, ladders, a sewing machine and a carpet cleaner. Borrow for two days, return to the same shelf.</p><div class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>9:00 to 19:00</span><span>Included</span></div><a class="link" href="#/get">Reserve in the app <svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></article>
+        <article class="card" data-cat="home"><span class="disc" style="--c:var(--c-coral)"><svg class="i" aria-hidden="true"><use href="#i-key"/></svg></span><h2 class="h3">Repairs desk</h2><p>Report a leak, a broken light or a stuck window with a photo. You can follow the job until it is closed.</p><div class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Replies within a working day</span></div><a class="link" href="#/get">Report in the app <svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></article>
+        <article class="card" data-cat="deliveries"><span class="disc" style="--c:var(--c-coral)"><svg class="i" aria-hidden="true"><use href="#i-box"/></svg></span><h2 class="h3">Parcel lockers</h2><p>Couriers leave parcels in the lobby lockers. You get a code the moment one lands, and the locker opens with your phone.</p><div class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Open all day</span><span>Included</span></div><a class="link" href="#/news">How the lockers work <svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></article>
+        <article class="card" data-cat="deliveries"><span class="disc" style="--c:var(--c-amber)"><svg class="i" aria-hidden="true"><use href="#i-basket"/></svg></span><h2 class="h3">Market pre-orders</h2><p>Order from the Saturday stalls by Thursday night and collect a bag with your name on it, no queue.</p><div class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Order by Thursday 22:00</span></div><a class="link" href="#/events">See the market <svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></article>
+        <article class="card" data-cat="around"><span class="disc" style="--c:var(--c-green)"><svg class="i" aria-hidden="true"><use href="#i-bike"/></svg></span><h2 class="h3">Bike docks</h2><p>Twenty-four covered docks behind Cobb Yard, plus two cargo bikes for the big shop.</p><div class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Open all day</span><span>Cargo bike 1 credit</span></div><a class="link" href="#/get">Book in the app <svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></article>
+        <article class="card" data-cat="around"><span class="disc" style="--c:var(--c-blue)"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg></span><h2 class="h3">Shared car</h2><p>Two small electric cars on Wren Row for the trips a bike cannot do. Book by the hour, unlock with your phone.</p><div class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Book up to a week ahead</span><span>3 credits an hour</span></div><a class="link" href="#/get">Book in the app <svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></article>
+      </div>
+      <p class="empty" data-empty="services" hidden>Nothing matches “<span data-echo-q></span>”. Try another word, or <a class="link" href="#/contact">ask the front desk</a>.</p>
+  </section>
+  <section class="sec" aria-labelledby="credits-title">
+    <div class="narrow sec-head" style="margin-bottom:0"><h2 class="h2" id="credits-title">How credits work</h2><p>Every membership comes with credits each month. Most bookings use one or two, and unused credits carry over for a month. <a class="link" href="#/membership">Compare memberships</a></p></div>
+  </section>
+</div>
+
+<!-- ===================== MEMBERSHIP ===================== -->
+<div data-view="membership">
+  <section class="band lifted" aria-labelledby="mem-title">
+    <div class="rise">
+      <h1 class="h1" id="mem-title">Membership</h1>
+      <p class="band-sub">Every home in the quarter gets the app free. Membership adds credits for the rooms and things you share.</p>
+      <div class="toggle" role="group" aria-label="Billing">
+        <button type="button" data-billing="m" aria-pressed="true">Monthly</button>
+        <button type="button" data-billing="y" aria-pressed="false">Yearly, two months free</button>
+      </div>
+    </div>
+  </section>
+  <section class="lift" aria-label="Plans">
+    <div class="plans">
+      <article class="plan reveal">
+        <h2 class="h3">Neighbour</h2>
+        <p class="price">£0</p><p class="per">always free</p>
+        <ul><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Notices, events and the newsroom</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Parcel locker codes</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Repairs desk</li></ul>
+        <a class="btn btn-soft" href="#/get?plan=neighbour">Get the app</a>
+      </article>
+      <article class="plan featured reveal">
+        <span class="badge">Most homes choose this</span>
+        <h2 class="h3">Resident</h2>
+        <p class="price" data-m="£6" data-y="£60">£6</p><p class="per" data-m="a month, 8 credits" data-y="a year, 8 credits a month">a month, 8 credits</p>
+        <ul><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Everything in Neighbour</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Laundry, guest room and cargo bikes</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>One rooftop bed a season</li></ul>
+        <a class="btn btn-green" href="#/get?plan=resident">Choose Resident</a>
+      </article>
+      <article class="plan reveal">
+        <h2 class="h3">Household</h2>
+        <p class="price" data-m="£11" data-y="£110">£11</p><p class="per" data-m="a month, 18 credits" data-y="a year, 18 credits a month">a month, 18 credits</p>
+        <ul><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Everything in Resident</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Up to five people on one account</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Shared car at member rates</li></ul>
+        <a class="btn btn-soft" href="#/get?plan=household">Choose Household</a>
+      </article>
+    </div>
+  </section>
+  <section class="sec" aria-labelledby="inc-title">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="h2" id="inc-title">What every plan includes</h2></div>
+      <div class="grid3">
+        <div class="card reveal"><span class="disc"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><h3 class="h3">No contract</h3><p>Change or stop your plan from the app. It ends on the last day you paid for.</p></div>
+        <div class="card reveal"><span class="disc" style="--c:var(--c-blue)"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg></span><h3 class="h3">Run with residents</h3><p>The residents' association sets the rooms, the rules and the prices once a year.</p></div>
+        <div class="card reveal"><span class="disc" style="--c:var(--c-amber)"><svg class="i" aria-hidden="true"><use href="#i-card"/></svg></span><h3 class="h3">Pay how you like</h3><p>Card in the app, or cash at the front desk on weekday mornings.</p></div>
+      </div>
+      <p class="muted" style="text-align:center;margin-top:28px">Questions about paying? <a class="link" href="#/help?cat=payments">Read the payments answers</a></p>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== EVENTS ===================== -->
+<div data-view="events">
+  <section class="band lifted" aria-labelledby="ev-title">
+    <div class="rise">
+      <h1 class="h1" id="ev-title">Events</h1>
+      <p class="band-sub">Small things on the doorstep, most of them free. Save a spot so the organisers know how many chairs to put out.</p>
+    </div>
+  </section>
+  <section class="lift wrap" aria-label="Upcoming events">
+    <div class="panel toolbar">
+      <div class="chips" data-chips="events" role="group" aria-label="Filter events">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-value="market" aria-pressed="false">Market</button>
+        <button class="chip" type="button" data-value="workshop" aria-pressed="false">Workshops</button>
+        <button class="chip" type="button" data-value="outdoors" aria-pressed="false">Outdoors</button>
+        <button class="chip" type="button" data-value="kids" aria-pressed="false">Kids</button>
+      </div>
+      <p class="count" data-count="events" data-one="event" data-many="events" aria-live="polite">6 events</p>
+    </div>
+    <div class="evs listing" data-list="events">
+        <article class="ev" data-cat="market"><p class="date"><b>29</b><small>Nov</small></p><div><h2 class="h3">Saturday market</h2><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>9:00 to 13:00</span><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Cobb Yard</span></p><p class="left">Free, no booking</p></div><a class="btn btn-soft btn-sm" href="#/services?cat=deliveries">Pre-order</a></article>
+        <article class="ev" data-cat="workshop"><p class="date"><b>2</b><small>Dec</small></p><div><h2 class="h3">Bike repair hour</h2><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>18:30 to 19:30</span><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Bike docks, Cobb Yard</span></p><p class="left">6 places left</p></div><button class="btn btn-green btn-sm" type="button" data-book="bike">Save a spot</button></article>
+        <article class="ev" data-cat="outdoors"><p class="date"><b>6</b><small>Dec</small></p><div><h2 class="h3">Winter planting on the roof</h2><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>10:00 to 12:00</span><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Rooftop garden</span></p><p class="left">11 places left</p></div><button class="btn btn-green btn-sm" type="button" data-book="planting">Save a spot</button></article>
+        <article class="ev" data-cat="kids"><p class="date"><b>7</b><small>Dec</small></p><div><h2 class="h3">Story time in the lodge</h2><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>10:30 to 11:15</span><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>The Lodge</span></p><p class="left">For ages 3 to 6, 9 places left</p></div><button class="btn btn-green btn-sm" type="button" data-book="stories">Save a spot</button></article>
+        <article class="ev" data-cat="workshop"><p class="date"><b>10</b><small>Dec</small></p><div><h2 class="h3">Mending circle</h2><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>19:00 to 21:00</span><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>The Lodge</span></p><p class="left">Bring one thing to fix, 4 places left</p></div><button class="btn btn-green btn-sm" type="button" data-book="mending">Save a spot</button></article>
+        <article class="ev" data-cat="outdoors kids"><p class="date"><b>13</b><small>Dec</small></p><div><h2 class="h3">Lantern walk along the canal</h2><p class="meta"><span><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>16:30 to 17:30</span><span><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Meet at Wren Row</span></p><p class="left">Lanterns provided, 20 places left</p></div><button class="btn btn-green btn-sm" type="button" data-book="lanterns">Save a spot</button></article>
+      </div>
+      <p class="empty" data-empty="events" hidden>No events of this kind yet. <a class="link" href="#/contact">Suggest one</a>.</p>
+  </section>
+  <section class="sec" id="book" aria-labelledby="book-title">
+    <div class="narrow">
+      <div class="panel">
+        <div class="sec-head"><h2 class="h2" id="book-title">Save a spot</h2><p>We send a reminder the evening before. Plans change: cancel from the app or reply to the reminder.</p></div>
+        <form class="form" data-form="booking" novalidate>
+          <div class="field"><label for="b-event">Event</label><select class="input" id="b-event" name="event" required aria-describedby="b-event-e"><option value="">Choose an event</option><option value="bike">Bike repair hour, 2 December</option><option value="planting">Winter planting, 6 December</option><option value="stories">Story time, 7 December</option><option value="mending">Mending circle, 10 December</option><option value="lanterns">Lantern walk, 13 December</option></select><span class="error" id="b-event-e" aria-live="polite"></span></div>
+          <div class="row2">
+            <div class="field"><label for="b-name">Your name</label><input class="input" id="b-name" name="name" autocomplete="name" required aria-describedby="b-name-e"><span class="error" id="b-name-e" aria-live="polite"></span></div>
+            <div class="field"><label for="b-email">Email</label><input class="input" id="b-email" name="email" type="email" autocomplete="email" required aria-describedby="b-email-e"><span class="error" id="b-email-e" aria-live="polite"></span></div>
+          </div>
+          <div class="field"><span class="legend" id="b-people-l">People coming</span><div class="stepper" role="group" aria-labelledby="b-people-l"><button type="button" data-step="-1" aria-label="One fewer"><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg></button><output id="b-people" aria-live="polite">1</output><button type="button" data-step="1" aria-label="One more"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button></div><input type="hidden" name="people" value="1"></div>
+          <button class="btn btn-green" type="submit">Save my spot</button>
+        </form>
+        <div class="success" data-success="booking" hidden role="status"><span class="disc"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><h3 class="h3">See you there, <span data-echo="name">neighbour</span></h3><p class="muted">Your spot is saved. The reminder comes the evening before.</p><button class="btn btn-soft" type="button" data-reset>Save another spot</button></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== NEWS ===================== -->
+<div data-view="news">
+  <section class="band" style="padding-bottom:calc(var(--lift) + 240px)" aria-labelledby="news-title">
+    <div class="rise"><h1 class="h1" id="news-title">Newsroom</h1><p class="band-sub">Notices from the front desk and stories from the people who live here.</p></div>
+  </section>
+  <section class="lift" style="margin-top:calc(-1 * (var(--arch) + var(--lift) + 200px))" aria-label="Featured">
+    <div class="feature" id="feature">
+      <a class="slide is-current" href="#/post?p=market"><svg class="art p-amber" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Market stalls with fruit and a person between them"><use href="#a-market"/></svg><p class="caption"><b>The Saturday market turns one</b>Forty Saturdays, nine stalls and a queue that moved into the app. <span>Read</span></p></a>
+      <a class="slide" href="#/post?p=hall"><svg class="art p-teal" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Three neighbours around a table"><use href="#a-hall"/></svg><p class="caption"><b>Your residents' association, now in the app</b>Votes, minutes and the next meeting date in one place. <span>Read</span></p></a>
+    </div>
+    <div class="dots" id="dots" role="group" aria-label="Featured stories"></div>
+  </section>
+  <section class="sec tight" aria-labelledby="all-title">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="h2" id="all-title">Latest updates</h2></div>
+      <div class="chips" data-chips="news" role="group" aria-label="Filter stories">
+        <button class="chip" type="button" data-value="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-value="notices" aria-pressed="false">Notices</button>
+        <button class="chip" type="button" data-value="updates" aria-pressed="false">Updates</button>
+        <button class="chip" type="button" data-value="stories" aria-pressed="false">Stories</button>
+        <button class="chip" type="button" data-value="safety" aria-pressed="false">Safety</button>
+      </div>
+      <p class="count" data-count="news" data-one="story" data-many="stories" aria-live="polite">7 stories</p>
+      <div class="stories" id="story-list" data-list="news">
+        <a class="story" href="#/post?p=laundry" data-cat="updates" data-post="laundry"><svg class="art p-blue" viewBox="0 0 360 200" role="img" aria-label="Two washing machines and a phone showing a booking"><use href="#a-laundry"/></svg><div class="story-body"><time datetime="2026-11-18">18 November 2026</time><h3>The laundry room now books by the half hour</h3><div class="tags"><span class="tag">Updates</span><span class="tag">Spaces</span></div></div></a>
+        <a class="story" href="#/post?p=fire" data-cat="notices safety" data-post="fire"><svg class="art p-amber" viewBox="0 0 360 200" role="img" aria-label="Three neighbours around a table"><use href="#a-hall"/></svg><div class="story-body"><time datetime="2026-11-12">12 November 2026</time><h3>Fire door checks on 2 December: what to expect</h3><div class="tags"><span class="tag">Notices</span><span class="tag">Safety</span></div></div></a>
+        <a class="story" href="#/post?p=lockers" data-cat="notices" data-post="lockers"><svg class="art p-green" viewBox="0 0 360 200" role="img" aria-label="A wall of parcel lockers with one open"><use href="#a-parcel"/></svg><div class="story-body"><time datetime="2026-11-05">5 November 2026</time><h3>Parcel lockers move to the Ferrier Lane lobby</h3><div class="tags"><span class="tag">Notices</span></div></div></a>
+        <a class="story" href="#/post?p=roof" data-cat="stories" data-post="roof"><svg class="art p-teal" viewBox="0 0 360 200" role="img" aria-label="Two neighbours between planters on a rooftop"><use href="#a-roof"/></svg><div class="story-body"><time datetime="2026-10-29">29 October 2026</time><h3>Forty beds, one roof: a season in the garden</h3><div class="tags"><span class="tag">Stories</span></div></div></a>
+        <a class="story" href="#/post?p=bikes" data-cat="updates" data-post="bikes"><svg class="art p-blue" viewBox="0 0 360 200" role="img" aria-label="A bicycle on a map with a route and a pin"><use href="#a-bike"/></svg><div class="story-body"><time datetime="2026-10-21">21 October 2026</time><h3>Twelve new bike docks behind Cobb Yard</h3><div class="tags"><span class="tag">Updates</span><span class="tag">Getting around</span></div></div></a>
+        <a class="story" href="#/post?p=market" data-cat="stories" data-post="market"><svg class="art p-amber" viewBox="0 0 360 200" role="img" aria-label="Market stalls with fruit and a person between them"><use href="#a-market"/></svg><div class="story-body"><time datetime="2026-10-14">14 October 2026</time><h3>The Saturday market turns one</h3><div class="tags"><span class="tag">Stories</span></div></div></a>
+        <a class="story" href="#/post?p=hall" data-cat="updates" data-post="hall"><svg class="art p-teal" viewBox="0 0 360 200" role="img" aria-label="Three neighbours around a table"><use href="#a-hall"/></svg><div class="story-body"><time datetime="2026-10-02">2 October 2026</time><h3>Your residents' association, now in the app</h3><div class="tags"><span class="tag">Updates</span></div></div></a>
+      </div>
+      <p class="empty" data-empty="news" hidden>No stories here yet.</p>
+      <nav class="pager" data-pager="news" aria-label="Pages" hidden></nav>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== POST ===================== -->
+<div data-view="post">
+  <div class="band thin" aria-hidden="true"></div>
+  <article class="lift sheet post">
+    <a class="link back" href="#/news"><svg class="i flip" aria-hidden="true"><use href="#i-chev"/></svg>Newsroom</a>
+    <h1 class="h1" id="post-title">The laundry room now books by the half hour</h1>
+    <div class="meta" style="gap:12px"><time class="stamp" id="post-date" datetime="2026-11-18">18 November 2026</time><span class="tags" id="post-tags"><span class="tag">Updates</span><span class="tag">Spaces</span></span></div>
+    <svg class="art p-blue" id="post-art" viewBox="0 0 360 200" role="img" aria-label="Two washing machines and a phone showing a booking"><use href="#a-laundry"/></svg>
+    <div class="prose" id="post-body">
+      <p>From Monday, the ten machines on the ground floor of Ferrier Lane book in half-hour slots instead of whole hours. Most washes take forty minutes, so the old hour left machines standing empty.</p>
+      <p>Open Services, choose Laundry room and pick a time. When your load finishes, the app sends one notification, and if you have not collected it twenty minutes later, the next person can move it to the clean shelf.</p>
+      <h2>What stays the same</h2>
+      <ul><li>One credit a load, washer or dryer.</li><li>The room is open from 7:00 to 22:00.</li><li>Detergent is still on the shelf by the door.</li></ul>
+      <p>Tell us how the first weeks go: reply to this story from the app, or <a href="#/contact">write to the front desk</a>.</p>
+    </div>
+  </article>
+  <section class="sec tight" aria-labelledby="more-title">
+    <div class="wrap"><div class="sec-head"><h2 class="h2" id="more-title">More stories</h2></div><div class="stories" id="more-stories"><p class="empty"><a class="link" href="#/news">Back to the newsroom</a></p></div></div>
+  </section>
+</div>
+
+<!-- ===================== HELP ===================== -->
+<div data-view="help">
+  <section class="band lifted" aria-labelledby="help-title">
+    <div class="rise">
+      <h1 class="h1" id="help-title">Help centre</h1>
+      <div class="band-search"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><label class="sr-only" for="help-q">Search help</label><input id="help-q" type="search" placeholder="Search" data-search="help" autocomplete="off"></div>
+    </div>
+  </section>
+  <section class="lift" aria-label="Topics">
+    <div class="cats" data-chips="help" role="group" aria-label="Topics">
+      <button class="cat" type="button" data-value="account" aria-pressed="false" style="--c:var(--c-green)"><svg class="i" aria-hidden="true"><use href="#i-key"/></svg><strong>Your account</strong><span>Signing in, your flat, and adding the people you live with.</span></button>
+      <button class="cat" type="button" data-value="booking" aria-pressed="false" style="--c:var(--c-blue)"><svg class="i" aria-hidden="true"><use href="#i-cal"/></svg><strong>Booking</strong><span>Rooms, tools, bikes and the car: how slots and credits work.</span></button>
+      <button class="cat" type="button" data-value="payments" aria-pressed="false" style="--c:var(--c-amber)"><svg class="i" aria-hidden="true"><use href="#i-card"/></svg><strong>Payments</strong><span>Membership, receipts, refunds and paying at the desk.</span></button>
+      <button class="cat" type="button" data-value="safety" aria-pressed="false" style="--c:var(--c-coral)"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg><strong>Safety</strong><span>House rules, reporting a problem and what we do about it.</span></button>
+    </div>
+  </section>
+  <section class="sec tight" aria-labelledby="faq-title">
+    <div class="narrow">
+      <div class="sec-head"><h2 class="h2" id="faq-title">Common questions</h2><p class="count" data-count="help" data-one="answer" data-many="answers" aria-live="polite" style="margin-bottom:0">10 answers</p></div>
+      <div data-list="help">
+        <details class="qa" data-cat="account"><summary>How do I sign in the first time?<span class="tag">Account</span><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p class="ans">Enter your flat number and the six-letter code from your welcome letter. Lost the letter? The front desk can print a new code on weekday mornings.</p></details>
+        <details class="qa" data-cat="account"><summary>Can the people I live with use my account?<span class="tag">Account</span><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p class="ans">Everyone in the flat can have their own sign-in. On the Household plan they also share your credits; on the others each person books with their own.</p></details>
+        <details class="qa" data-cat="account"><summary>I am moving out. What happens to my account?<span class="tag">Account</span><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p class="ans">Tell the front desk your moving date. Your bookings after that date are cancelled and your plan stops on the same day.</p></details>
+        <details class="qa" data-cat="booking"><summary>How far ahead can I book?<span class="tag">Booking</span><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p class="ans">The laundry and bikes open seven days ahead, the guest room and the car thirty days ahead, and rooftop beds at the start of each season.</p></details>
+        <details class="qa" data-cat="booking"><summary>What if I cannot make my slot?<span class="tag">Booking</span><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p class="ans">Cancel in the app up to an hour before and the credit comes back. Later than that, the credit is used, so someone else can take the slot.</p></details>
+        <details class="qa" data-cat="booking"><summary>Something I borrowed is broken.<span class="tag">Booking</span><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p class="ans">Put it back on the shelf with the red tag and report it from the booking. Things break; there is no charge for ordinary wear.</p></details>
+        <details class="qa" data-cat="payments"><summary>When am I charged for membership?<span class="tag">Payments</span><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p class="ans">On the day you join and then on the same date each month or year. Your receipts are under Account, Payments.</p></details>
+        <details class="qa" data-cat="payments"><summary>Can I pay in cash?<span class="tag">Payments</span><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p class="ans">Yes, at the front desk from 9:00 to 12:00 on weekdays. You get a printed receipt and the credits appear within the hour.</p></details>
+        <details class="qa" data-cat="safety"><summary>How do I report a problem in a shared space?<span class="tag">Safety</span><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p class="ans">Use Report on the space's page, with a photo if you can. For anything dangerous, call the out-of-hours line printed in every lobby first.</p></details>
+        <details class="qa" data-cat="safety"><summary>Who can see my name on a booking?<span class="tag">Safety</span><svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></summary><p class="ans">Only the front desk. Other residents see that a slot is taken, never by whom.</p></details>
+      </div>
+      <p class="empty" data-empty="help" hidden>No answer matches “<span data-echo-q></span>”. <a class="link" href="#/contact">Ask the front desk</a> and we will reply within a working day.</p>
+      <div class="panel" style="margin-top:40px;text-align:center"><h2 class="h3">Still stuck?</h2><p class="muted" style="margin:8px 0 18px">The front desk answers messages within a working day.</p><a class="btn btn-green" href="#/contact">Contact us</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<div data-view="about">
+  <section class="band lifted" aria-labelledby="about-title">
+    <div class="rise"><h1 class="h1" id="about-title">About Pebbleway</h1><p class="band-sub">Made by the people who run the front desk, for the people who live upstairs.</p></div>
+  </section>
+  <section class="lift narrow" aria-label="Why we exist">
+    <div class="panel reveal"><p class="statement">Larch Quarter has a laundry, a roof, a tool shelf and twelve hundred homes. We built one small app so that sharing them takes a minute, not a notice board and a phone call.</p></div>
+  </section>
+  <section class="sec" aria-labelledby="story-title">
+    <div class="wrap split">
+      <div><h2 class="h2" id="story-title">How it started</h2><p class="muted" style="margin-top:12px">Four dates that explain most of what the app does today.</p></div>
+      <ol class="tl">
+        <li class="reveal"><b>2019</b>The residents' association opens the tool shelf in a broom cupboard. Borrowing is a paper list on the door.</li>
+        <li class="reveal"><b>2022</b>The laundry booking sheet fills up by Monday lunchtime. Ines Okafor writes the first version of the app over a winter.</li>
+        <li class="reveal"><b>2024</b>Parcel lockers arrive in the lobby and the app starts opening them.</li>
+        <li class="reveal"><b>2026</b>Most homes in the quarter use the app every week. The front desk still answers every message by hand.</li>
+      </ol>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0" aria-labelledby="team-title">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="h2" id="team-title">The front desk</h2><p>Four people, all of them neighbours.</p></div>
+      <ul class="people">
+        <li class="person reveal"><span class="avatar" style="--c:var(--c-green)" aria-hidden="true">IO</span><strong>Ines Okafor</strong><span>Started the app</span></li>
+        <li class="person reveal"><span class="avatar" style="--c:var(--c-blue)" aria-hidden="true">TB</span><strong>Tomas Brell</strong><span>Front desk, mornings</span></li>
+        <li class="person reveal"><span class="avatar" style="--c:var(--c-amber)" aria-hidden="true">HR</span><strong>Hana Reyes</strong><span>Events and the market</span></li>
+        <li class="person reveal"><span class="avatar" style="--c:var(--c-coral)" aria-hidden="true">JM</span><strong>Joss Mendel</strong><span>Repairs and the tool library</span></li>
+      </ul>
+    </div>
+  </section>
+  <section class="band cap" aria-labelledby="visit-title">
+    <h2 class="h1" id="visit-title">Come and say hello</h2>
+    <p class="band-sub">The Lodge, 2 Ferrier Lane. Weekdays 9:00 to 12:00, Saturdays during the market.</p>
+    <div class="btn-row" style="margin-top:32px"><a class="btn btn-white" href="#/contact">Contact the front desk</a></div>
+  </section>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div data-view="contact">
+  <div class="band thin" aria-hidden="true"></div>
+  <section class="lift sheet prose" aria-labelledby="contact-title">
+    <h1 class="h1" id="contact-title">Contact us</h1>
+    <h2>Help with the app</h2>
+    <p>Most answers are in the <a href="#/help">help centre</a>. If yours is not, send the form below and the front desk replies within a working day.</p>
+    <h2>Something broken</h2>
+    <p>Report it from the <a href="#/services?cat=home">repairs desk</a> in the app, with a photo, so it reaches the right person. For anything dangerous, call the out-of-hours line printed in every lobby.</p>
+    <h2>Visit the front desk</h2>
+    <p>The Lodge, 2 Ferrier Lane, Larch Quarter. Weekdays 9:00 to 12:00. Phone 020 7946 0381, email <a href="mailto:hello@pebbleway.example">hello@pebbleway.example</a>.</p>
+    <h2>Residents' association</h2>
+    <p>Meetings are on the first Tuesday of the month in the lodge. Minutes and votes are in the <a href="#/news">newsroom</a>.</p>
+  </section>
+  <section class="sec tight" aria-labelledby="write-title">
+    <div class="narrow">
+      <div class="panel">
+        <div class="sec-head"><h2 class="h2" id="write-title">Write to the front desk</h2></div>
+        <form class="form" data-form="contact" novalidate>
+          <div class="row2">
+            <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-e"><span class="error" id="c-name-e" aria-live="polite"></span></div>
+            <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-e"><span class="error" id="c-email-e" aria-live="polite"></span></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="c-phone">Phone (optional)</label><input class="input" id="c-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9+\(\)\-\s]{7,20}" aria-describedby="c-phone-e"><span class="error" id="c-phone-e" aria-live="polite"></span></div>
+            <div class="field"><label for="c-flat">Flat or house</label><input class="input" id="c-flat" name="flat" placeholder="For example 4B Ferrier Lane" aria-describedby="c-flat-e"><span class="error" id="c-flat-e" aria-live="polite"></span></div>
+          </div>
+          <div class="field"><label for="c-topic">Topic</label><select class="input" id="c-topic" name="topic" required aria-describedby="c-topic-e"><option value="">Choose a topic</option><option>The app</option><option>Booking</option><option>Membership and payments</option><option>Events</option><option>Something else</option></select><span class="error" id="c-topic-e" aria-live="polite"></span></div>
+          <div class="field"><label for="c-msg">Message</label><textarea class="input" id="c-msg" name="message" maxlength="600" required aria-describedby="c-msg-e"></textarea><span class="error" id="c-msg-e" aria-live="polite"></span><span class="hint" data-counter="c-msg">0 / 600</span></div>
+          <button class="btn btn-green" type="submit">Send message</button>
+        </form>
+        <div class="success" data-success="contact" hidden role="status"><span class="disc"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><h3 class="h3">Thanks, <span data-echo="name">neighbour</span></h3><p class="muted">Your message is with the front desk. Expect a reply within a working day.</p><button class="btn btn-soft" type="button" data-reset>Send another</button></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== GET THE APP ===================== -->
+<div data-view="get">
+  <section class="band" aria-labelledby="get-title">
+    <div class="rise">
+      <h1 class="h1" id="get-title">Get Pebbleway</h1>
+      <p class="band-sub">On every screen in your home. Sign in once with your flat number and the code from your welcome letter.</p>
+      <ul class="orbs" id="devices" aria-label="Devices">
+        <li><a class="orb" href="#signup"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Phone</a></li>
+        <li><a class="orb" href="#signup"><svg class="i" aria-hidden="true"><use href="#i-tablet"/></svg>Tablet</a></li>
+        <li><a class="orb" href="#signup"><svg class="i" aria-hidden="true"><use href="#i-laptop"/></svg>Computer</a></li>
+        <li><a class="orb" href="#signup"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg>Web</a></li>
+      </ul>
+    </div>
+  </section>
+  <section class="sec tight" id="signup" aria-labelledby="signup-title">
+    <div class="wrap split">
+      <div class="phone reveal" aria-hidden="true"><div class="screen"><div class="screen-band">Good morning, Flat 4B<small>Laundry is free until 10:30</small></div><div class="screen-grid"><i style="--c:var(--c-blue)"></i><i style="--c:var(--c-green)"></i><i style="--c:var(--c-amber)"></i><i style="--c:var(--c-coral)"></i><i style="--c:var(--c-teal)"></i><i style="--c:var(--c-green)"></i><i style="--c:var(--c-amber)"></i><i style="--c:var(--c-blue)"></i></div><div class="screen-card"></div><div class="screen-card"></div></div></div>
+      <div class="panel">
+        <h2 class="h2" id="signup-title">Create your account</h2>
+        <p class="muted" style="margin:8px 0 24px">It takes a minute. We check your flat against the residents' list before your first booking.</p>
+        <form class="form" data-form="signup" novalidate>
+          <div class="field"><label for="s-name">Full name</label><input class="input" id="s-name" name="name" autocomplete="name" required aria-describedby="s-name-e"><span class="error" id="s-name-e" aria-live="polite"></span></div>
+          <div class="field"><label for="s-email">Email</label><input class="input" id="s-email" name="email" type="email" autocomplete="email" required aria-describedby="s-email-e"><span class="error" id="s-email-e" aria-live="polite"></span></div>
+          <div class="row2">
+            <div class="field"><label for="s-street">Building</label><select class="input" id="s-street" name="building" required aria-describedby="s-street-e"><option value="">Choose</option><option>Ferrier Lane</option><option>Cobb Yard</option><option>Wren Row</option><option>Quill Street</option></select><span class="error" id="s-street-e" aria-live="polite"></span></div>
+            <div class="field"><label for="s-flat">Flat number</label><input class="input" id="s-flat" name="flat" required aria-describedby="s-flat-e"><span class="error" id="s-flat-e" aria-live="polite"></span></div>
+          </div>
+          <fieldset class="field"><legend class="legend" style="margin-bottom:6px">Membership</legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="plan" value="neighbour" required aria-describedby="s-plan-e"><span><b>Neighbour</b>Free</span></label>
+              <label class="opt"><input type="radio" name="plan" value="resident" aria-describedby="s-plan-e"><span><b>Resident</b>£6 a month</span></label>
+              <label class="opt"><input type="radio" name="plan" value="household" aria-describedby="s-plan-e"><span><b>Household</b>£11 a month</span></label>
+            </div>
+            <span class="error" id="s-plan-e" aria-live="polite"></span>
+          </fieldset>
+          <div class="field"><label class="check"><input type="checkbox" name="terms" required aria-describedby="s-terms-e"><span>I live in Larch Quarter and agree to the <a class="link" href="#/legal">house rules and privacy notice</a>.</span></label><span class="error" id="s-terms-e" aria-live="polite"></span></div>
+          <button class="btn btn-green" type="submit">Create account</button>
+        </form>
+        <div class="success" data-success="signup" hidden role="status"><span class="disc"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><h3 class="h3">Welcome, <span data-echo="name">neighbour</span></h3><p class="muted">Check your email for a link to open the app. The front desk confirms your flat within a working day.</p><button class="btn btn-soft" type="button" data-reset>Start again</button></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0" aria-labelledby="steps-title">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="h2" id="steps-title">Three steps to your first booking</h2></div>
+      <ol class="grid3">
+        <li class="card reveal"><span class="step-n">1</span><h3 class="h3">Install</h3><p>Choose your device above, or open the web version on any computer.</p></li>
+        <li class="card reveal"><span class="step-n">2</span><h3 class="h3">Sign in</h3><p>Use your flat number and the code from your welcome letter.</p></li>
+        <li class="card reveal"><span class="step-n">3</span><h3 class="h3">Book</h3><p>Pick a room, a tool or a bike, and a time. That is all.</p></li>
+      </ol>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="legal">
+  <div class="band thin" aria-hidden="true"></div>
+  <section class="lift sheet prose" aria-labelledby="legal-title">
+    <h1 class="h1" id="legal-title">House rules and privacy</h1>
+    <p class="muted">Last updated 1 November 2026. Sample text: replace it with your own, checked by someone qualified.</p>
+    <h2>House rules</h2>
+    <ul><li>Leave shared spaces as you found them, and on time for the next person.</li><li>Report anything broken; do not try to fix shared equipment yourself.</li><li>Bookings are for residents and their guests, not for resale.</li></ul>
+    <h2>What we collect</h2>
+    <p>Your name, email, flat and building, your bookings and your payments. We use them to run the services you book and to contact you about them.</p>
+    <h2>Who sees it</h2>
+    <p>The front desk team. We never sell your details, and other residents never see who made a booking.</p>
+    <h2>Your choices</h2>
+    <p>You can download or delete your account from the app at any time, or ask the front desk to do it for you.</p>
+    <h2>Contact</h2>
+    <p>Questions about this notice: <a href="mailto:hello@pebbleway.example">hello@pebbleway.example</a>.</p>
+  </section>
+  <div class="sec" style="padding-top:0"></div>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="band lifted" aria-labelledby="nf-title"><div class="rise"><h1 class="h1" id="nf-title">This page has moved out</h1><p class="band-sub">The link may be old, or the address has a typo.</p></div></section>
+  <section class="lift narrow notfound" aria-label="Where to go next">
+    <div class="panel" style="text-align:center"><span class="disc" style="--c:var(--c-amber)"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span><p class="muted" style="margin-bottom:20px">Try one of these instead.</p><div class="btn-row"><a class="btn btn-green" href="#/">Home</a><a class="btn btn-soft" href="#/services">Services</a><a class="btn btn-soft" href="#/help">Help centre</a></div></div>
+  </section>
+  <div class="sec" style="padding-top:0"></div>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <nav class="foot-links" aria-label="Footer">
+    <a href="#/services">Services</a><a href="#/membership">Membership</a><a href="#/events">Events</a><a href="#/news">Newsroom</a><a href="#/help">Help centre</a><a href="#/about">About</a><a href="#/contact">Contact us</a><a href="#/legal">House rules and privacy</a>
+  </nav>
+  <p class="copy">© 2026 Pebbleway, run with the Larch Quarter residents' association.</p>
+  <div class="socials"><a href="mailto:hello@pebbleway.example" aria-label="Email the front desk"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg></a><a href="#/news" aria-label="Newsroom"><svg class="i" aria-hidden="true"><use href="#i-rss"/></svg></a><a href="#/contact" aria-label="Find the front desk"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></a></div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks one ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function syncThemeButton() {
+    const dark = currentTheme() === "dark";
+    themeButton.setAttribute("aria-label", `Switch to ${dark ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", dark ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("pebbleway-theme");
+  if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+  syncThemeButton();
+  systemDark.addEventListener("change", syncThemeButton);
+  new MutationObserver(syncThemeButton).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    store.set("pebbleway-theme", next);
+  });
+
+  /* ---------- Filters: chips + search + live count + empty state (+ pages) over any list ---------- */
+  const filters = {};
+  function makeFilter(name, perPage = 0) {
+    const list = $(`[data-list="${name}"]`);
+    if (!list) return;
+    const items = $$(":scope > [data-cat]", list);
+    const chips = $$(`[data-chips="${name}"] [data-value]`);
+    const input = $(`[data-search="${name}"]`);
+    const count = $(`[data-count="${name}"]`);
+    const empty = $(`[data-empty="${name}"]`);
+    const pager = $(`[data-pager="${name}"]`);
+    let cat = "all";
+    let page = 1;
+    function apply() {
+      const q = (input?.value || "").trim().toLowerCase();
+      const shown = items.filter((el) => (cat === "all" || el.dataset.cat.split(" ").includes(cat)) && (!q || el.textContent.toLowerCase().includes(q)));
+      const pages = perPage ? Math.max(1, Math.ceil(shown.length / perPage)) : 1;
+      page = Math.min(page, pages);
+      items.forEach((el) => { el.hidden = true; });
+      shown.forEach((el, i) => { el.hidden = perPage ? Math.floor(i / perPage) + 1 !== page : false; });
+      chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.value === cat)));
+      if (count) count.textContent = `${shown.length} ${shown.length === 1 ? count.dataset.one : count.dataset.many}`;
+      if (empty) { empty.hidden = shown.length > 0; const echo = $("[data-echo-q]", empty); if (echo) echo.textContent = input?.value.trim() || ""; }
+      if (pager) {
+        pager.hidden = pages < 2;
+        pager.innerHTML = "";
+        const add = (label, target, extra = {}) => {
+          const b = document.createElement("button");
+          b.type = "button";
+          Object.assign(b, extra);
+          if (typeof label === "string") b.textContent = label; else b.append(label);
+          if (target === page && !extra.className) b.setAttribute("aria-current", "page");
+          b.addEventListener("click", () => { page = target; apply(); list.scrollIntoView({ block: "start", behavior: reduced.matches ? "auto" : "smooth" }); });
+          pager.append(b);
+        };
+        const arrow = (flip) => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("class", `i${flip ? " flip" : ""}`); s.setAttribute("aria-hidden", "true"); const u = document.createElementNS("http://www.w3.org/2000/svg", "use"); u.setAttribute("href", "#i-chev"); s.append(u); return s; };
+        add(arrow(true), page - 1, { className: "arrow", disabled: page === 1, ariaLabel: "Previous page" });
+        for (let n = 1; n <= pages; n++) add(String(n), n);
+        add(arrow(false), page + 1, { className: "arrow", disabled: page === pages, ariaLabel: "Next page" });
+      }
+    }
+    chips.forEach((chip) => chip.addEventListener("click", () => {
+      cat = chip.dataset.value === cat && name === "help" ? "all" : chip.dataset.value;
+      page = 1;
+      apply();
+    }));
+    input?.addEventListener("input", () => { page = 1; apply(); });
+    filters[name] = { set(value) { cat = value; page = 1; apply(); } };
+    apply();
+  }
+  makeFilter("services");
+  makeFilter("events");
+  makeFilter("news", 4);
+  makeFilter("help");
+
+  /* ---------- Stories: the newsroom list is the single source; home and "More stories" clone it ---------- */
+  const storyCards = $$("#story-list > .story");
+  function cloneStories(target, cards) {
+    target.replaceChildren(...cards.map((card) => { const c = card.cloneNode(true); c.hidden = false; c.removeAttribute("data-cat"); return c; }));
+  }
+  cloneStories($("#home-stories"), storyCards.slice(0, 3));
+
+  /* ---------- Post: card gives title, date, tags and picture; POSTS gives the body ---------- */
+  const POSTS = {
+    fire: ["On Tuesday 2 December an inspector checks every fire door in Ferrier Lane and Cobb Yard, starting at 9:00 on the top floors.", "You do not need to be home. The inspector only opens doors to stairs and corridors, never to flats.", "## If a door fails", "We fix it within the week and post the dates here. Doors that close slowly are the most common problem, and the easiest to fix.", "Questions? Ask Joss Mendel at the front desk or reply to this story from the app."],
+    lockers: ["The parcel lockers are moving from the old post room to the Ferrier Lane lobby on 10 November, so they are open all day and lit at night.", "Nothing changes for you: couriers leave parcels in a locker, you get a code, and the door opens with your phone.", "## On moving day", "Lockers are closed from 8:00 to 14:00. Parcels that arrive in those hours wait at the front desk with your flat number on them."],
+    roof: ["Forty raised beds, a waiting list of sixty and a hose that reaches all but one corner: this was the first full season on the roof.", "Hana Reyes kept a list of what grew. Tomatoes and beans did well everywhere; lettuce only in the shade by the water tank.", "## Next season", "Beds for spring open in the app on 1 February, one per Resident or Household plan. The table for twelve stays bookable all winter."],
+    bikes: ["There are now twenty-four covered bike docks behind Cobb Yard, up from twelve, and two cargo bikes for the weekly shop.", "Docks are free to use. The cargo bikes book like any other space, one credit for up to three hours.", "## Locks", "Each dock has a hoop for your own lock. The cargo bikes unlock from the app and lock again when you end the booking."],
+    market: ["A year ago nine stalls set up in Cobb Yard on a wet Saturday. Forty Saturdays later the queue for bread has moved into the app.", "Pre-orders close on Thursday at 22:00. On Saturday your bag waits at the green stall with your name on it.", "## What is new", "A coffee stall joins in December, and the market runs until 13:00 instead of noon."],
+    hall: ["The residents' association now posts its agendas, minutes and votes in the app, next to the notices.", "Every household gets one vote. Voting stays open for a week after each meeting, so you can take part without coming in.", "## Next meeting", "First Tuesday of the month at 19:00 in the lodge. The agenda goes up the Friday before."],
+  };
+  const postBody = $("#post-body");
+  POSTS.laundry = postBody.innerHTML;
+  function renderPost(id) {
+    const card = storyCards.find((c) => c.dataset.post === id) || storyCards[0];
+    const key = card.dataset.post;
+    $("#post-title").textContent = $("h3", card).textContent;
+    const time = $("time", card);
+    $("#post-date").textContent = time.textContent;
+    $("#post-date").setAttribute("datetime", time.getAttribute("datetime"));
+    $("#post-tags").replaceChildren(...$$(".tag", card).map((t) => t.cloneNode(true)));
+    $("#post-art").replaceWith($(".art", card).cloneNode(true));
+    $(".post .art").id = "post-art";
+    const body = POSTS[key];
+    if (typeof body === "string") postBody.innerHTML = body;
+    else postBody.replaceChildren(...body.map((line) => { const el = document.createElement(line.startsWith("## ") ? "h2" : "p"); el.textContent = line.replace(/^## /, ""); return el; }));
+    cloneStories($("#more-stories"), storyCards.filter((c) => c !== card).slice(0, 2));
+  }
+
+  /* ---------- Featured carousel: dots, swipe-free, no autoplay ---------- */
+  const slides = $$("#feature .slide");
+  const dots = $("#dots");
+  let slideAt = 0;
+  function showSlide(n) {
+    slideAt = (n + slides.length) % slides.length;
+    slides.forEach((s, i) => { s.hidden = i !== slideAt; s.classList.toggle("is-current", i === slideAt); });
+    $$("button", dots).forEach((d, i) => d.setAttribute("aria-current", String(i === slideAt)));
+  }
+  slides.forEach((s, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("aria-label", `Show featured story ${i + 1}`);
+    b.addEventListener("click", () => showSlide(i));
+    dots.append(b);
+  });
+  showSlide(0);
+
+  /* ---------- Membership: monthly or yearly prices ---------- */
+  $$("[data-billing]").forEach((button) => button.addEventListener("click", () => {
+    const key = button.dataset.billing;
+    $$("[data-billing]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    $$("[data-view='membership'] [data-m]").forEach((el) => { el.textContent = el.dataset[key]; });
+  }));
+
+  /* ---------- Events: "Save a spot" fills the form; people stepper ---------- */
+  $$("[data-book]").forEach((button) => button.addEventListener("click", () => {
+    $("#b-event").value = button.dataset.book;
+    $("#b-event").dispatchEvent(new Event("change"));
+    $("#book").scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    $("#b-name").focus({ preventScroll: true });
+  }));
+  const people = $("#b-people");
+  $$("[data-step]").forEach((button) => button.addEventListener("click", () => {
+    const n = Math.min(6, Math.max(1, Number(people.value || people.textContent) + Number(button.dataset.step)));
+    people.value = String(n);
+    $("[name=people]").value = String(n);
+  }));
+
+  /* ---------- Character counters ---------- */
+  $$("[data-counter]").forEach((hint) => {
+    const field = document.getElementById(hint.dataset.counter);
+    const update = () => { hint.textContent = `${field.value.length} / ${field.maxLength}`; };
+    field.addEventListener("input", update);
+    update();
+  });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "Pebbleway: one app for life in Larch Quarter", services: "Services · Pebbleway", membership: "Membership · Pebbleway", events: "Events · Pebbleway", news: "Newsroom · Pebbleway", post: "Newsroom · Pebbleway", help: "Help centre · Pebbleway", about: "About · Pebbleway", contact: "Contact us · Pebbleway", get: "Get the app · Pebbleway", legal: "House rules and privacy · Pebbleway", "404": "Page not found · Pebbleway" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query), anchor: "" };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    current?.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name];
+    const section = name === "post" ? "news" : name;
+    $$(".nav a, .menu a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === section) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "services" && p.get("cat")) filters.services.set(p.get("cat"));
+    if (name === "help" && p.get("cat")) filters.help.set(p.get("cat"));
+    if (name === "post") renderPost(p.get("p"));
+    if (name === "get" && p.get("plan")) { const radio = $(`[name=plan][value="${p.get("plan")}"]`); if (radio) radio.checked = true; }
+    const at = p.get("at") && document.getElementById(p.get("at"));
+    if (at) requestAnimationFrame(() => at.scrollIntoView());
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  let lastHash = null;
+  function go(hash) {
+    lastHash = hash;
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); closeMenu(); go(href); return; }
+    const target = href.length > 1 && document.querySelector(href);
+    if (!target) return;
+    event.preventDefault();
+    closeMenu();
+    target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    if (target.id === "main") target.focus({ preventScroll: true });
+  });
+  const onHash = () => { if (location.hash !== lastHash) { lastHash = location.hash; show(parse(location.hash)); } };
+  window.addEventListener("popstate", onHash);
+  window.addEventListener("hashchange", onHash);
+
+  /* ---------- Header: shadow after scrolling; the menu opens in the flow, under the bar ---------- */
+  const header = $(".site-header");
+  const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  const menuButton = $("#menu-btn");
+  const menu = $("#menu");
+  function setMenu(open) {
+    menu.hidden = !open;
+    menuButton.setAttribute("aria-expanded", String(open));
+    menuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    $("use", menuButton).setAttribute("href", open ? "#i-x" : "#i-menu");
+  }
+  function closeMenu() { if (!menu.hidden) setMenu(false); }
+  menuButton.addEventListener("click", () => setMenu(menu.hidden));
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !menu.hidden) { setMenu(false); menuButton.focus(); } });
+  matchMedia("(min-width: 1180px)").addEventListener("change", closeMenu);
+
+  /* ---------- Reveal: keyframes on entry; visible without JS; timed fallback ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    $$(".reveal:not(.is-in)", scope).forEach((el) => (io && !reduced.matches ? io.observe(el) : el.classList.add("is-in")));
+  }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  /* A pattern attribute is compiled with the regular-expression v flag: escape ( ) [ ] { } / - | inside a character class, as in #c-phone. */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", patternMismatch: "Please use digits, spaces and + ( ) - only." };
+  const special = { radio: "Please choose one.", checkbox: "Please tick this box to continue.", "select-one": "Please choose one." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error || !error.classList.contains("error")) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (problem === "valueMissing" && special[field.type]) || messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input:not([type=hidden]), select, textarea", form);
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value && field.type !== "radio" && field.type !== "checkbox") checkField(field); });
+      field.addEventListener("input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+      field.addEventListener("change", () => { if (field.type === "radio" || field.type === "checkbox" || field.tagName === "SELECT") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before "submit" fires, so the button's click runs it too (Enter clicks it). */
+    const button = $("[type=submit]", form);
+    const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+    const send = () => {
+      if (button.disabled) return;
+      const results = fields.map(checkField);
+      if (!results.every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      setTimeout(() => {
+        $$("[data-echo]", success).forEach((el) => { el.textContent = form.elements[el.dataset.echo]?.value.trim().split(" ")[0] || el.textContent; });
+        form.hidden = true;
+        success.hidden = false;
+        button.disabled = false;
+        $("[data-reset]", success)?.focus();
+      }, 500);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+    $("[data-reset]", success)?.addEventListener("click", () => {
+      form.reset();
+      fields.forEach((f) => f.removeAttribute("aria-invalid"));
+      $$(".error", form).forEach((e) => { e.textContent = ""; });
+      $$("textarea", form).forEach((t) => t.dispatchEvent(new Event("input")));
+      if (people && form.contains(people)) { people.value = "1"; $("[name=people]").value = "1"; }
+      success.hidden = true;
+      form.hidden = false;
+      fields[0].focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  const start = parse(location.hash);
+  lastHash = location.hash;
+  show(start, { scroll: false });
+  if (start.anchor) document.querySelector(start.anchor)?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

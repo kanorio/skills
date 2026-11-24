@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<rect width="1200" height="630" fill="#ffffff"/>
+<rect y="560" width="1200" height="70" fill="#1c1c1c"/>
+<rect x="372" y="214" width="420" height="132" fill="#1c1c1c"/>
+<text x="582" y="309" fill="#ffffff" font-family="Source Sans 3, Segoe UI, Arial, sans-serif" font-size="84" font-weight="800" letter-spacing="14" text-anchor="middle">CALVER</text>
+<rect x="804" y="316" width="30" height="30" fill="#b3261e"/>
+<text x="600" y="424" fill="#3b3b3b" font-family="Literata, Georgia, serif" font-size="34" text-anchor="middle">News from Calvermouth and the Calver Valley</text>
+</svg>

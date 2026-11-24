@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 90" width="1600" height="900">
+<defs>
+<linearGradient id="s" x2="0" y2="1"><stop offset="0" stop-color="#a9bccb"/><stop offset="1" stop-color="#e4e6e1"/></linearGradient>
+<linearGradient id="g" x2="0" y2="1"><stop offset="0" stop-color="#8f9470"/><stop offset="1" stop-color="#6b6a4e"/></linearGradient>
+<radialGradient id="v" cx=".5" cy=".45" r=".8"><stop offset=".55" stop-opacity="0"/><stop offset="1" stop-opacity=".35"/></radialGradient>
+<filter id="n" x="0" y="0" width="1" height="1"><feTurbulence type="fractalNoise" baseFrequency="2.2" seed="31"/><feColorMatrix values="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 .08"/></filter>
+</defs>
+<rect width="160" height="90" fill="url(#s)"/>
+<path d="M0 46h8v-5l4-3 4 3v5h6v-5l4-3 4 3v5h6v-5l4-3 4 3v5h6v-5l4-3 4 3v5h40v6H0z" fill="#a7a59c"/>
+<g stroke="#3b3e44" stroke-width=".9" fill="none"><path d="M128 50V10M128 12h28M128 12h-14M120 12l8-6 8 6"/><path d="M128 18l10-6M128 24l10-12M128 30l10-18" stroke-width=".4"/></g>
+<path d="M146 12v10" stroke="#3b3e44" stroke-width=".3"/>
+<rect x="144" y="22" width="4" height="3" fill="#b8392d"/>
+<path d="M30 52V34l10-6v6l10-6v6l10-6v6l10-6v6l10-6v6l10-6v24z" fill="#7a5a45"/>
+<g fill="#c8d4dc" opacity=".85"><path d="M31 34l9-5.4V34zM41 34l9-5.4V34zM51 34l9-5.4V34zM61 34l9-5.4V34zM71 34l9-5.4V34zM81 34l9-5.4V34z"/></g>
+<g fill="#3a2c22"><rect x="36" y="40" width="8" height="12"/><rect x="52" y="40" width="8" height="12"/><rect x="68" y="40" width="8" height="12"/><rect x="84" y="40" width="8" height="12"/></g>
+<path d="M0 50h160v40H0z" fill="url(#g)"/>
+<g stroke="#4e4033" stroke-width="1.2"><path d="M54 52L8 90M62 52L40 90M98 52l22 38M106 52l48 38"/></g>
+<g stroke="#8a6a4f" stroke-width=".7"><path d="M56 55h8M51 60h12M45 66h16M38 73h20M28 82h26M97 55h9M99 60h11M102 66h14M106 73h18M111 82h26"/></g>
+<g fill="#5a6a3e"><path d="M70 90l2-6 2 6zM80 86l1.6-5 1.6 5zM130 70l2-5 2 5zM10 66l2-5 2 5zM86 74l1.6-5 1.6 5z"/></g>
+<g fill="#2b2a26"><path d="M80 54h2.4v8H80z"/><circle cx="81.2" cy="52.6" r="1.3"/><path d="M84.6 55h2.4v7h-2.4z"/><circle cx="85.8" cy="53.7" r="1.2"/></g>
+<path d="M78.6 56.6l-3 2" stroke="#2b2a26" stroke-width=".6"/>
+<rect x="73" y="57.6" width="3" height="2.2" fill="#f2efe6"/>
+<rect width="160" height="90" fill="url(#v)"/>
+<rect width="160" height="90" filter="url(#n)"/>
+</svg>

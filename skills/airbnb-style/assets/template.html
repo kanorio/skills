@@ -1,0 +1,1892 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Saltbirch: quiet places to stay on the Corrin Coast</title>
+<meta name="description" content="Cabins, sea cottages and farm stays in Wren Valley, on the Corrin Coast and in the Hollin Hills, plus small experiences hosted by the people who live there.">
+<meta property="og:title" content="Saltbirch: quiet places to stay on the Corrin Coast">
+<meta property="og:description" content="Cabins, sea cottages and farm stays, plus small experiences hosted by the people who live there.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/figtree-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font ---------- */
+@font-face { font-family: "Figtree"; src: url("fonts/figtree-latin-wght.woff2") format("woff2"); font-weight: 300 900; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: light (default, follows the system setting) ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);
+  --surface: oklch(97.5% 0 0);          /* soft gray bands, hover fills */
+  --surface-2: oklch(94.5% 0 0);        /* the open search bar, date ranges */
+  --raised: oklch(100% 0 0);            /* popovers, cards on gray, the booking card */
+  --text: oklch(25% 0 0);
+  --text-muted: oklch(52.4% 0 0);
+  --border: oklch(89.7% 0 0);
+  --border-strong: oklch(72% 0 0);
+  --accent: oklch(58% 0.21 16);         /* the one coral: search orb, main action, saved hearts */
+  --accent-text: oklch(100% 0 0);
+  --accent-ink: oklch(58% 0.21 16);     /* coral used as text */
+  --accent-grad: linear-gradient(90deg, oklch(59% 0.215 20), oklch(52% 0.205 0));
+  --ink: oklch(25% 0 0);
+  --ink-text: oklch(100% 0 0);
+  --error: oklch(50% 0.17 35);
+  --error-bg: oklch(97.5% 0.015 35);
+  --scrim: oklch(0% 0 0 / 0.5);
+  --shadow-pill: 0 3px 12px oklch(0% 0 0 / 0.1), 0 1px 2px oklch(0% 0 0 / 0.08);
+  --shadow-card: 0 6px 16px oklch(0% 0 0 / 0.12);
+  --shadow-overlay: 0 8px 28px oklch(0% 0 0 / 0.28);
+
+  --font: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-display: clamp(2.5rem, 2rem + 2vw, 4rem);
+  --fs-h1: clamp(1.625rem, 1.3rem + 0.9vw, 2rem);
+  --fs-h2: 1.375rem;
+  --fs-h3: 1rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+
+  --r-control: 8px;
+  --r-pill: 999px;
+  --r-card: 12px;
+  --r-media: 12px;
+  --r-panel: 24px;
+
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  --gutter: clamp(24px, 5.5vw, 80px);
+  --max: 1760px;
+  --header-h: 80px;
+}
+
+/* ---------- Tokens: dark, from the system setting or the toggle ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: oklch(18% 0.004 30); --surface: oklch(22% 0.005 30); --surface-2: oklch(27% 0.006 30); --raised: oklch(23% 0.005 30);
+    --text: oklch(96% 0.003 30); --text-muted: oklch(74% 0.004 30); --border: oklch(34% 0.005 30); --border-strong: oklch(52% 0.005 30);
+    --accent-ink: oklch(70% 0.17 16); --ink: oklch(96% 0.003 30); --ink-text: oklch(18% 0.004 30);
+    --error: oklch(72% 0.15 35); --error-bg: oklch(24% 0.035 35); --scrim: oklch(0% 0 0 / 0.7);
+    --shadow-pill: 0 3px 12px oklch(0% 0 0 / 0.5); --shadow-card: 0 6px 16px oklch(0% 0 0 / 0.5); --shadow-overlay: 0 8px 28px oklch(0% 0 0 / 0.7);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(18% 0.004 30); --surface: oklch(22% 0.005 30); --surface-2: oklch(27% 0.006 30); --raised: oklch(23% 0.005 30);
+  --text: oklch(96% 0.003 30); --text-muted: oklch(74% 0.004 30); --border: oklch(34% 0.005 30); --border-strong: oklch(52% 0.005 30);
+  --accent-ink: oklch(70% 0.17 16); --ink: oklch(96% 0.003 30); --ink-text: oklch(18% 0.004 30);
+  --error: oklch(72% 0.15 35); --error-bg: oklch(24% 0.035 35); --scrim: oklch(0% 0 0 / 0.7);
+  --shadow-pill: 0 3px 12px oklch(0% 0 0 / 0.5); --shadow-card: 0 6px 16px oklch(0% 0 0 / 0.5); --shadow-overlay: 0 8px 28px oklch(0% 0 0 / 0.7);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 24px); }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+h1, h2, h3, p, figure, blockquote { margin: 0; }
+.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.i-sm { width: 16px; height: 16px; }
+.i-lg { width: 24px; height: 24px; }
+.i.fill { fill: currentColor; stroke: none; }
+:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+.skip { position: absolute; left: 16px; top: -80px; z-index: 99; padding: 10px 16px; border-radius: var(--r-control); background: var(--ink); color: var(--ink-text); }
+.skip:focus { top: 16px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+.narrow { max-width: calc(1120px + 2 * var(--gutter)); }
+.muted { color: var(--text-muted); }
+.small { font-size: var(--fs-small); }
+.h1 { font-size: var(--fs-h1); font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
+.h2 { font-size: var(--fs-h2); font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; }
+.h3 { font-size: var(--fs-h3); font-weight: 600; line-height: 1.35; }
+.display { font-size: var(--fs-display); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; }
+.link { padding: 0; border: 0; background: none; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.rule { border: 0; border-top: 1px solid var(--border); margin: 0; }
+main > [data-view] { padding-bottom: 80px; }
+main > [data-view="home"] { padding-bottom: 0; }
+.js [data-view]:not(.is-active) { display: none; }
+.js [data-view].is-active { animation: view-in var(--dur-slow) var(--ease) both; }
+
+/* ---------- Buttons, chips and round controls ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 24px; border: 1px solid transparent; border-radius: var(--r-control); font-size: 1rem; font-weight: 600; line-height: 1.2; text-decoration: none; transition: transform var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease); }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--accent-grad); color: var(--accent-text); }
+.btn-ink { background: var(--ink); color: var(--ink-text); }
+.btn-outline { border-color: var(--text); background: transparent; color: var(--text); }
+.btn-outline:hover { background: var(--surface); }
+.btn-block { width: 100%; }
+.btn:disabled { opacity: 0.6; cursor: progress; }
+.round { display: inline-grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--text); text-decoration: none; transition: background-color var(--dur-fast), transform var(--dur-fast); }
+.round:hover { background: var(--surface); }
+.round.bordered { border: 1px solid var(--border); background: var(--raised); }
+.round.bordered:hover:not(:disabled) { border-color: var(--text); box-shadow: var(--shadow-pill); }
+.round.sm { width: 32px; height: 32px; }
+.round:disabled { opacity: 0.35; cursor: default; }
+.chip { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 8px 16px; border: 1px solid var(--border); border-radius: var(--r-pill); background: var(--raised); font-size: var(--fs-small); font-weight: 500; text-decoration: none; white-space: nowrap; transition: border-color var(--dur-fast); }
+.chip:hover { border-color: var(--text); }
+.chip[aria-pressed="true"] { border-color: var(--text); background: var(--surface); box-shadow: inset 0 0 0 1px var(--text); }
+.chip-box { min-height: 48px; border-radius: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.count { display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--ink); color: var(--ink-text); font-size: 11px; font-weight: 700; }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; background: var(--bg); border-bottom: 1px solid var(--border); }
+.header-bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; height: var(--header-h); }
+.logo { display: inline-flex; align-items: center; gap: 8px; justify-self: start; color: var(--accent-ink); text-decoration: none; }
+.logo-mark { width: 32px; height: 32px; }
+.logo-word { font-size: 1.375rem; font-weight: 700; letter-spacing: -0.03em; }
+.header-center { display: flex; justify-content: center; min-width: 0; }
+.tabs { display: flex; gap: 4px; }
+.tabs a { position: relative; display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: var(--r-pill); color: var(--text-muted); font-weight: 500; text-decoration: none; transition: color var(--dur-fast), background-color var(--dur-fast); }
+.tabs a:hover { color: var(--text); background: var(--surface); }
+.tabs a[aria-current="page"] { color: var(--text); font-weight: 600; }
+.tabs a[aria-current="page"]::after { content: ""; position: absolute; left: 16px; right: 16px; bottom: 0; height: 2px; border-radius: 2px; background: var(--text); }
+.mini-search { display: none; align-items: center; gap: 14px; height: 48px; padding: 0 8px 0 24px; border: 1px solid var(--border); border-radius: var(--r-pill); background: var(--raised); box-shadow: var(--shadow-pill); font-size: var(--fs-small); font-weight: 600; }
+.mini-search .sep { width: 1px; height: 24px; background: var(--border); }
+.orb-sm { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: var(--accent-text); }
+.site-header.is-compact .tabs { display: none; }
+.site-header.is-compact .mini-search { display: flex; animation: pop var(--dur-base) var(--ease) both; }
+.m-search { display: none; }
+.header-actions { display: flex; align-items: center; justify-self: end; gap: 4px; }
+.text-btn { padding: 11px 14px; border-radius: var(--r-pill); font-size: var(--fs-small); font-weight: 600; text-decoration: none; white-space: nowrap; }
+.text-btn:hover { background: var(--surface); }
+.saved-link { position: relative; }
+.saved-link .count { position: absolute; top: 0; right: -2px; background: var(--accent); color: var(--accent-text); }
+.menu-pill { display: flex; align-items: center; gap: 10px; height: 42px; margin-left: 4px; padding: 5px 5px 5px 12px; border: 1px solid var(--border); border-radius: var(--r-pill); background: var(--raised); transition: box-shadow var(--dur-fast); }
+.menu-pill:hover { box-shadow: var(--shadow-pill); }
+.avatar { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--text-muted); color: var(--bg); }
+
+/* ---------- Menu (dropdown on desktop, sheet on phones) ---------- */
+dialog { max-height: calc(100dvh - 48px); width: min(780px, calc(100vw - 32px)); padding: 0; border: 0; border-radius: var(--r-panel); background: var(--raised); color: var(--text); box-shadow: var(--shadow-overlay); overflow: hidden; }
+dialog::backdrop { background: var(--scrim); }
+dialog[open] { display: flex; flex-direction: column; animation: pop var(--dur-base) var(--ease) both; }
+.menu { position: fixed; inset: calc(var(--header-h) - 6px) var(--gutter) auto auto; width: 260px; margin: 0; padding: 8px 0; border-radius: 12px; }
+.menu::backdrop { background: transparent; }
+.menu-links a, .menu-links button { display: block; width: 100%; padding: 12px 18px; border: 0; background: none; font-size: var(--fs-small); text-align: left; text-decoration: none; }
+.menu-links a:hover { background: var(--surface); }
+.menu-links strong { font-weight: 600; }
+.menu-links .muted { display: block; margin-top: 2px; font-size: 12px; }
+.menu-links hr { margin: 8px 0; border: 0; border-top: 1px solid var(--border); }
+.menu-close { display: none; }
+
+/* ---------- Search bar (the signature) ---------- */
+.hero { padding-block: 28px 20px; text-align: center; }
+.hero-title { margin-bottom: 22px; font-size: var(--fs-h1); font-weight: 600; line-height: 1.2; letter-spacing: -0.015em; }
+.search { position: relative; display: flex; align-items: stretch; max-width: 880px; height: 68px; margin: 0 auto; border: 1px solid var(--border); border-radius: var(--r-pill); background: var(--raised); box-shadow: var(--shadow-pill); text-align: left; transition: background-color var(--dur-base); }
+.search.is-open { border-color: transparent; background: var(--surface-2); }
+.seg { position: relative; display: flex; flex: 1 1 0; flex-direction: column; justify-content: center; min-width: 0; padding: 0 24px; border: 0; border-radius: var(--r-pill); background: transparent; text-align: left; cursor: pointer; transition: background-color var(--dur-fast); }
+.seg ~ .seg::before { content: ""; position: absolute; left: 0; top: 20px; bottom: 20px; width: 1px; background: var(--border); }
+.seg:hover { background: var(--surface-2); }
+.search.is-open .seg:hover { background: var(--border); }
+.seg.is-on, .search.is-open .seg.is-on:hover { background: var(--raised); box-shadow: var(--shadow-card); }
+.seg.is-on::before, .seg:hover::before, .search.is-open .seg::before { opacity: 0; }
+.seg-where { flex-grow: 1.5; padding-left: 32px; }
+.seg-label { font-size: 12px; font-weight: 600; }
+.seg-value { overflow: hidden; color: var(--text-muted); font-size: var(--fs-small); white-space: nowrap; text-overflow: ellipsis; }
+.seg input { width: 100%; padding: 0; border: 0; background: transparent; font-size: var(--fs-small); outline: 0; }
+.seg input::placeholder { color: var(--text-muted); opacity: 1; }
+.orb { display: inline-flex; flex: none; align-items: center; align-self: center; justify-content: center; gap: 8px; height: 50px; min-width: 50px; margin: 0 9px 0 4px; padding: 0 15px; border: 0; border-radius: var(--r-pill); background: var(--accent-grad); color: var(--accent-text); font-weight: 600; }
+.orb span { display: none; }
+.search.is-open .orb { padding-inline: 18px 22px; }
+.search.is-open .orb span { display: inline; }
+.panel { position: absolute; top: calc(100% + 12px); z-index: 20; padding: 24px; border-radius: 32px; background: var(--raised); box-shadow: var(--shadow-overlay); animation: pop var(--dur-base) var(--ease) both; }
+#p-where { left: 0; width: min(440px, 100%); padding: 16px; }
+#p-when { left: 0; right: 0; padding: 28px 32px; }
+#p-who { right: 0; width: min(420px, 100%); padding: 8px 32px; }
+.panel-title { padding: 8px 8px 12px; font-size: 12px; font-weight: 600; }
+.dest { display: flex; align-items: center; gap: 16px; width: 100%; padding: 8px; border: 0; border-radius: 12px; background: none; text-align: left; }
+.dest:hover, .dest:focus-visible { background: var(--surface); }
+.dest-i { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 10px; background: var(--surface-2); flex: none; }
+.dest strong { display: block; font-weight: 500; }
+.dest .muted { display: block; font-size: var(--fs-small); }
+.guest-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--border); }
+.guest-row:last-child { border-bottom: 0; }
+.guest-row strong { display: block; font-weight: 600; }
+.stepper { display: flex; align-items: center; gap: 14px; }
+.step { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 1px solid var(--border-strong); border-radius: 50%; background: var(--raised); color: var(--text-muted); }
+.step:hover:not(:disabled) { border-color: var(--text); color: var(--text); }
+.step:disabled { opacity: 0.3; cursor: not-allowed; }
+.stepper output { min-width: 18px; text-align: center; }
+
+/* ---------- Calendar ---------- */
+.cal { position: relative; }
+.cal-nav { position: absolute; inset: 0 0 auto; display: flex; justify-content: space-between; pointer-events: none; }
+.cal-nav button { pointer-events: auto; }
+.cal-months { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
+.cal-title { margin-bottom: 14px; font-size: 1rem; font-weight: 600; line-height: 32px; text-align: center; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); row-gap: 2px; }
+.dow { padding-bottom: 8px; color: var(--text-muted); font-size: 12px; font-weight: 600; text-align: center; }
+.cell { display: grid; place-items: center; }
+.day { width: 100%; max-width: 44px; aspect-ratio: 1; padding: 0; border: 1px solid transparent; border-radius: 50%; background: none; font-size: var(--fs-small); font-weight: 600; }
+.day:hover:not(:disabled) { border-color: var(--text); }
+.day:disabled { color: var(--text-muted); opacity: 0.45; cursor: default; }
+.day.booked { text-decoration: line-through; }
+.cell.mid { background: var(--surface-2); }
+.cell.start.has-end { background: linear-gradient(90deg, transparent 50%, var(--surface-2) 50%); }
+.cell.end { background: linear-gradient(90deg, var(--surface-2) 50%, transparent 50%); }
+.cell.start .day, .cell.end .day { background: var(--ink); color: var(--ink-text); }
+
+/* ---------- Categories, rows and rails ---------- */
+.cats { display: flex; gap: 32px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.cats::-webkit-scrollbar { display: none; }
+.cat { display: flex; flex: none; flex-direction: column; align-items: center; gap: 6px; padding: 6px 0 12px; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--text-muted); font-size: 12px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: color var(--dur-fast), border-color var(--dur-fast); }
+.cat:hover { color: var(--text); border-bottom-color: var(--border); }
+.cat[aria-pressed="true"] { color: var(--text); border-bottom-color: var(--text); }
+.home-cats { display: flex; justify-content: center; padding-top: 8px; border-bottom: 1px solid var(--border); }
+.row { padding-top: 40px; }
+html:not(.js) .needs-js { display: none; }
+.row-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.row-head a { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+.row-head a:hover { text-decoration: underline; }
+.rail-nav { display: flex; gap: 8px; }
+.rail { display: grid; grid-auto-columns: calc((100% - 3 * 24px) / 4); grid-auto-flow: column; gap: 24px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.rail::-webkit-scrollbar { display: none; }
+.rail > * { scroll-snap-align: start; }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px 24px; }
+.grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+/* ---------- Listing card (photo first) ---------- */
+.card { position: relative; min-width: 0; }
+.card-media { position: relative; overflow: hidden; aspect-ratio: 20 / 19; border-radius: var(--r-media); background: var(--surface-2); cursor: pointer; }
+.card.tall .card-media { aspect-ratio: 4 / 5; }
+.card-media > img, .slides img { width: 100%; height: 100%; object-fit: cover; }
+.slides { display: flex; height: 100%; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.slides::-webkit-scrollbar { display: none; }
+.slides img { flex: 0 0 100%; scroll-snap-align: start; }
+.badge { position: absolute; top: 12px; left: 12px; padding: 5px 11px; border-radius: var(--r-pill); background: oklch(100% 0 0 / 0.96); color: oklch(25% 0 0); font-size: var(--fs-small); font-weight: 600; box-shadow: 0 1px 3px oklch(0% 0 0 / 0.18); }
+.save { position: absolute; top: 10px; right: 10px; z-index: 2; display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 0; background: none; }
+.save .i { width: 26px; height: 26px; fill: oklch(0% 0 0 / 0.45); stroke: oklch(100% 0 0); stroke-width: 2; transition: transform var(--dur-fast) var(--ease); }
+.save:hover .i { transform: scale(1.08); }
+.save[aria-pressed="true"] .i { fill: var(--accent); animation: beat var(--dur-slow) var(--ease); }
+.slide-btn { position: absolute; top: 50%; z-index: 2; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 50%; background: oklch(100% 0 0 / 0.94); color: oklch(25% 0 0); box-shadow: 0 1px 4px oklch(0% 0 0 / 0.22); opacity: 0; translate: 0 -50%; transition: opacity var(--dur-fast), transform var(--dur-fast); }
+.slide-btn.prev { left: 10px; }
+.slide-btn.next { right: 10px; }
+.card:hover .slide-btn, .slide-btn:focus-visible { opacity: 1; }
+.slide-btn:hover { transform: scale(1.06); }
+.slide-btn:disabled { visibility: hidden; }
+.dots { position: absolute; bottom: 12px; left: 50%; display: flex; gap: 5px; translate: -50% 0; pointer-events: none; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: oklch(100% 0 0 / 0.6); transition: background-color var(--dur-fast); }
+.dots i.on { background: oklch(100% 0 0); }
+.card-link { display: block; padding-top: 12px; color: inherit; text-decoration: none; }
+.card-title { display: flex; justify-content: space-between; gap: 8px; font-size: 0.9375rem; font-weight: 600; line-height: 1.35; }
+.card-title > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rating { display: inline-flex; flex: none; align-items: center; gap: 4px; font-weight: 400; }
+.rating .i, .price .i { width: 12px; height: 12px; }
+.card-link p { color: var(--text-muted); font-size: 0.9375rem; line-height: 1.35; }
+.card-link .price { margin-top: 4px; color: var(--text); }
+.price { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.price strong { font-weight: 600; }
+.card-link:hover .card-title > span:first-child { text-decoration: underline; }
+
+/* ---------- Home bands ---------- */
+.host-band { display: grid; grid-template-columns: 1fr 1fr; align-items: center; overflow: hidden; border-radius: var(--r-card); background: var(--surface); }
+.host-band img { width: 100%; height: 100%; max-height: 420px; aspect-ratio: 16 / 10; object-fit: cover; }
+.host-band .copy { display: grid; gap: 16px; justify-items: start; padding: clamp(24px, 5vw, 72px); }
+.inspire { margin-top: 64px; padding: 48px 0 8px; background: var(--surface); }
+.itabs { display: flex; gap: 28px; margin-top: 12px; overflow-x: auto; border-bottom: 1px solid var(--border); scrollbar-width: none; }
+.itab { padding: 12px 0; border: 0; border-bottom: 2px solid transparent; background: none; color: var(--text-muted); font-size: var(--fs-small); font-weight: 600; white-space: nowrap; }
+.itab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--text); }
+.ipanel { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 24px; padding: 32px 0; }
+.js .ipanel:not(.is-active) { display: none; }
+.ipanel a { font-size: var(--fs-small); text-decoration: none; }
+.ipanel a strong { display: block; font-weight: 600; }
+.ipanel a span { color: var(--text-muted); }
+.ipanel a:hover strong { text-decoration: underline; }
+
+/* ---------- Stays list, filters and map ---------- */
+.toolbar { position: sticky; top: var(--header-h); z-index: 15; background: var(--bg); border-bottom: 1px solid var(--border); }
+.toolbar-row { display: flex; align-items: center; gap: 24px; padding-top: 10px; }
+.toolbar-row .cats { flex: 1; }
+.toolbar-row .chip-box { margin-bottom: 10px; }
+.results-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; padding: 24px 0 20px; }
+.results-head .chips { align-items: center; }
+.layout { display: grid; gap: 24px; }
+.layout.with-map { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+.layout.with-map .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.map-pane { position: sticky; top: calc(var(--header-h) + 96px); display: none; aspect-ratio: 3 / 4; overflow: hidden; border-radius: var(--r-card); background: var(--surface); }
+.layout.with-map .map-pane { display: block; animation: view-in var(--dur-slow) var(--ease) both; }
+.map-pane > img { width: 100%; height: 100%; object-fit: cover; }
+.pin { position: absolute; padding: 5px 10px; border-radius: var(--r-pill); background: var(--raised); color: var(--text); font-size: var(--fs-small); font-weight: 700; text-decoration: none; box-shadow: 0 1px 6px oklch(0% 0 0 / 0.28); translate: -50% -50%; transition: transform var(--dur-fast) var(--ease), background-color var(--dur-fast); }
+.pin:hover, .pin.is-hot { z-index: 2; background: var(--ink); color: var(--ink-text); transform: scale(1.1); }
+.map-toggle { position: sticky; bottom: 24px; z-index: 12; display: flex; justify-content: center; margin-top: 32px; pointer-events: none; }
+.map-toggle .btn { border-radius: var(--r-pill); box-shadow: var(--shadow-card); pointer-events: auto; }
+.empty { padding: 56px 24px; border: 1px dashed var(--border-strong); border-radius: var(--r-card); text-align: center; }
+.empty .btn { margin-top: 16px; }
+.dlg-head { display: grid; grid-template-columns: 40px 1fr 40px; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--border); text-align: center; }
+.dlg-body { flex: 1; min-height: 0; padding: 8px 24px; overflow: auto; }
+.dlg-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 24px; border-top: 1px solid var(--border); }
+.photo-tour { display: grid; gap: 8px; padding: 16px; }
+.photo-tour .two { gap: 8px; }
+.photo-tour img { width: 100%; border-radius: var(--r-control); }
+.fsec { padding: 24px 0; border-bottom: 1px solid var(--border); }
+.fsec:last-child { border-bottom: 0; }
+.fsec > .h2 { margin-bottom: 16px; }
+.seg-ctl { display: grid; grid-template-columns: repeat(3, 1fr); padding: 4px; border: 1px solid var(--border); border-radius: 12px; }
+.seg-ctl button { min-height: 44px; border: 0; border-radius: 9px; background: none; font-weight: 500; }
+.seg-ctl button[aria-pressed="true"] { background: var(--ink); color: var(--ink-text); }
+
+/* ---------- Stay detail ---------- */
+.stay-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 16px; padding: 24px 0; }
+.head-actions { display: flex; gap: 4px; }
+.head-actions button { display: inline-flex; align-items: center; gap: 8px; padding: 8px 10px; border: 0; border-radius: var(--r-control); background: none; font-size: var(--fs-small); font-weight: 600; text-decoration: underline; }
+.head-actions button:hover { background: var(--surface); }
+.head-actions [aria-pressed="true"] .i { fill: var(--accent); stroke: var(--accent); }
+.mosaic { position: relative; display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 8px; aspect-ratio: 2.3 / 1; overflow: hidden; border-radius: var(--r-card); }
+.mosaic img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: filter var(--dur-fast); }
+.mosaic img:hover { filter: brightness(0.88); }
+.mosaic img:first-child { grid-row: span 2; }
+.all-photos { position: absolute; right: 24px; bottom: 24px; display: inline-flex; align-items: center; gap: 8px; padding: 7px 15px; border: 1px solid var(--ink); border-radius: var(--r-control); background: var(--raised); font-size: var(--fs-small); font-weight: 600; }
+.photo-count { display: none; }
+.mosaic-wrap { position: relative; }
+.stay-body { display: grid; grid-template-columns: minmax(0, 1fr) 372px; gap: clamp(32px, 7vw, 96px); }
+.stay-main > section { padding: 32px 0; border-bottom: 1px solid var(--border); }
+.stay-main > section:first-child { padding-top: 32px; }
+.facts { margin-top: 4px; }
+.loved { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 24px; margin-top: 24px; padding: 18px 24px; border: 1px solid var(--border); border-radius: var(--r-card); }
+.loved-title { display: flex; align-items: center; gap: 4px; font-size: 1.125rem; font-weight: 700; line-height: 1.05; text-align: center; }
+.sprig { width: 18px; height: 36px; color: var(--text); }
+.sprig.r { transform: scaleX(-1); }
+.loved .num { padding-left: 24px; border-left: 1px solid var(--border); text-align: center; }
+.loved .num strong { display: block; font-size: 1.375rem; font-weight: 600; line-height: 1.1; }
+.stars { display: block; width: 54px; height: 11px; fill: currentColor; }
+.loved .stars { margin: 3px auto 0; }
+.host-row { display: flex; align-items: center; gap: 16px; }
+.av { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: oklch(100% 0 0); font-weight: 600; flex: none; }
+.av.c1 { background: oklch(46% 0.08 160); } .av.c2 { background: oklch(48% 0.12 30); } .av.c3 { background: oklch(45% 0.1 260); } .av.c4 { background: oklch(48% 0.09 80); } .av.c5 { background: oklch(44% 0.12 330); }
+.highlights { display: grid; gap: 24px; }
+.hl { display: grid; grid-template-columns: 28px 1fr; gap: 20px; }
+.hl .i { width: 26px; height: 26px; }
+.clamp { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 4; }
+.more { display: inline-flex; align-items: center; gap: 4px; margin-top: 16px; }
+.sleep { display: grid; grid-template-columns: repeat(2, minmax(0, 220px)); gap: 16px; margin-top: 20px; }
+.sleep img { aspect-ratio: 4 / 3; margin-bottom: 12px; border-radius: var(--r-card); object-fit: cover; }
+.amen { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; margin: 20px 0 28px; padding: 0; list-style: none; }
+.amen li { display: flex; align-items: center; gap: 16px; }
+.amen li .i { width: 24px; height: 24px; }
+.amen .off { color: var(--text-muted); text-decoration: line-through; }
+.book-card { position: sticky; top: calc(var(--header-h) + 32px); margin-top: 32px; padding: 24px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--raised); box-shadow: var(--shadow-card); }
+.book-price { display: flex; align-items: baseline; gap: 4px; margin-bottom: 20px; }
+.book-price strong { font-size: 1.375rem; font-weight: 600; }
+.box { position: relative; display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 16px; border: 1px solid var(--border-strong); border-radius: var(--r-control); }
+.box-cell { display: block; min-width: 0; padding: 10px 12px; border: 0; background: none; font-size: var(--fs-small); text-align: left; text-decoration: none; }
+.box-cell + .box-cell { border-left: 1px solid var(--border-strong); }
+.box-cell.full { display: flex; grid-column: 1 / -1; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-strong); border-left: 0; }
+.box-cell b { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.guest-pop { position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 5; padding: 4px 16px; border-radius: var(--r-control); background: var(--raised); box-shadow: var(--shadow-overlay); animation: pop var(--dur-base) var(--ease) both; }
+.note { margin: 12px 0 20px; color: var(--text-muted); font-size: var(--fs-small); text-align: center; }
+.lines { display: grid; gap: 12px; }
+.line { display: flex; justify-content: space-between; gap: 12px; }
+.line span:first-child { text-decoration: underline; }
+.total { display: flex; justify-content: space-between; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); font-weight: 600; }
+.rate-hero { display: grid; justify-items: center; gap: 8px; padding: 8px 0 32px; text-align: center; }
+.rate-big { display: flex; align-items: center; gap: 4px; font-size: clamp(4rem, 3rem + 3vw, 5.5rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+.rate-big .sprig { width: 40px; height: 80px; }
+.scores { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+.score { display: grid; gap: 4px; padding: 0 16px; border-left: 1px solid var(--border); font-size: var(--fs-small); }
+.score:first-child { border-left: 0; padding-left: 0; }
+.score strong { font-size: 1.125rem; font-weight: 600; }
+.score .i { width: 28px; height: 28px; margin-top: 12px; }
+.reviews { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 64px; padding: 40px 0 32px; }
+.review { display: grid; gap: 10px; }
+.who { display: flex; align-items: center; gap: 12px; }
+.who strong { display: block; font-weight: 600; }
+.review .meta { display: flex; align-items: center; gap: 6px; font-size: var(--fs-small); font-weight: 600; }
+.map-box { position: relative; overflow: hidden; margin-top: 20px; border-radius: var(--r-card); aspect-ratio: 2.2 / 1; }
+.map-box img { width: 100%; height: 100%; object-fit: cover; }
+.home-pin { position: absolute; left: 26%; top: 64%; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: oklch(58% 0.21 16 / 0.2); translate: -50% -50%; }
+.home-pin span { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--accent-text); box-shadow: var(--shadow-card); }
+.host-grid { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 48px 64px; align-items: start; margin-top: 24px; }
+.host-card { display: grid; grid-template-columns: 1.3fr 1fr; align-items: center; gap: 16px; padding: 28px; border-radius: var(--r-panel); background: var(--raised); box-shadow: var(--shadow-overlay); }
+.host-id { display: grid; justify-items: center; gap: 8px; text-align: center; }
+.host-id .av { width: 104px; height: 104px; font-size: 2.5rem; }
+.host-stats { display: grid; }
+.host-stats div { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.host-stats div:last-child { border-bottom: 0; }
+.host-stats strong { display: block; font-size: 1.375rem; font-weight: 700; line-height: 1.1; }
+.know { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 20px; }
+.know ul { display: grid; gap: 10px; margin: 12px 0 0; padding: 0; list-style: none; }
+.reserve-bar { display: none; }
+
+/* ---------- Pages, forms and the booking request ---------- */
+.page-head { padding: 40px 0 28px; }
+.page-head p { max-width: 40em; margin-top: 8px; }
+.two-col { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: clamp(32px, 7vw, 96px); align-items: start; }
+.back { margin: 32px 0 8px -10px; }
+.trip-row { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; }
+.trip-row strong { display: block; font-weight: 600; }
+.summary { position: sticky; top: calc(var(--header-h) + 32px); padding: 24px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--raised); }
+.sum-top { display: grid; grid-template-columns: 124px 1fr; gap: 16px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+.sum-top img { width: 124px; height: 106px; border-radius: var(--r-control); object-fit: cover; }
+.form { display: grid; }
+.field { position: relative; margin-bottom: 28px; }
+.field > label { position: absolute; top: 8px; left: 13px; z-index: 1; color: var(--text-muted); font-size: 12px; pointer-events: none; }
+.field input, .field select, .field textarea { display: block; width: 100%; min-height: 58px; padding: 26px 12px 8px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--raised); font-size: 1rem; appearance: none; }
+.field textarea { min-height: 132px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--text); box-shadow: inset 0 0 0 1px var(--text); outline: 0; }
+.field [aria-invalid="true"] { border-color: var(--error); background: var(--error-bg); box-shadow: inset 0 0 0 1px var(--error); }
+.field .chev { position: absolute; top: 21px; right: 14px; pointer-events: none; }
+.error { position: absolute; top: calc(100% + 5px); left: 0; display: flex; align-items: center; gap: 6px; color: var(--error); font-size: 12px; font-weight: 500; line-height: 1.3; }
+.error:empty { display: none; }
+.error::before { content: "!"; display: grid; place-items: center; width: 14px; height: 14px; border-radius: 50%; background: var(--error); color: var(--bg); font-size: 10px; font-weight: 700; flex: none; }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
+.check, .field > .check { position: static; display: flex; align-items: flex-start; gap: 12px; color: var(--text); font-size: var(--fs-small); pointer-events: auto; cursor: pointer; }
+.check input, .field .check input { display: inline-block; width: 22px; height: 22px; min-height: 0; margin: 0; padding: 0; border: 0; accent-color: var(--text); appearance: auto; flex: none; }
+.form > .btn { justify-self: start; }
+.fine { margin-top: 12px; color: var(--text-muted); font-size: 12px; }
+.success { display: grid; justify-items: center; gap: 10px; padding: 40px 24px; border: 1px solid var(--border); border-radius: var(--r-card); text-align: center; animation: pop var(--dur-slow) var(--ease) both; }
+.tick { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--ink); color: var(--ink-text); }
+.ref { padding: 4px 12px; border-radius: var(--r-pill); background: var(--surface-2); font-size: var(--fs-small); font-weight: 600; }
+.inline-form { display: flex; gap: 12px; align-items: flex-start; }
+.inline-form .field { flex: 1; margin-bottom: 24px; }
+.estimate { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; padding: 48px 0 56px; }
+.earn { margin: 20px 0 4px; color: var(--accent-ink); font-size: clamp(3.25rem, 2.5rem + 3.5vw, 5.5rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+.range { display: grid; gap: 8px; margin-top: 24px; font-size: var(--fs-small); }
+.range input { width: 100%; accent-color: var(--text); }
+.estimate .field { max-width: 320px; margin-top: 16px; }
+.estimate img { width: 100%; aspect-ratio: 1; border-radius: var(--r-panel); object-fit: cover; }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; padding: 48px 0; border-top: 1px solid var(--border); }
+.steps .i { width: 32px; height: 32px; margin-bottom: 16px; }
+.steps p { margin-top: 6px; color: var(--text-muted); }
+.post-card { display: block; text-decoration: none; }
+.post-card img { aspect-ratio: 3 / 2; margin-bottom: 14px; border-radius: var(--r-card); object-fit: cover; }
+.post-card .tag { color: var(--text-muted); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.post-card h2 { margin: 6px 0 4px; }
+.post-card:hover h2 { text-decoration: underline; }
+.article { max-width: 720px; margin: 0 auto; }
+.article .byline { display: flex; align-items: center; gap: 12px; margin: 20px 0 28px; }
+.article > img { width: 100%; aspect-ratio: 16 / 9; margin-bottom: 32px; border-radius: var(--r-card); object-fit: cover; }
+.prose p, .prose ul { margin: 0 0 20px; font-size: 1.0625rem; line-height: 1.7; }
+.prose h2 { margin: 36px 0 12px; }
+.prose blockquote { margin: 28px 0; padding-left: 20px; border-left: 3px solid var(--accent); font-size: 1.25rem; font-weight: 500; line-height: 1.5; }
+.letter { margin-top: 48px; padding: 32px; border-radius: var(--r-card); background: var(--surface); }
+.letter p { margin: 6px 0 20px; }
+.help-search { position: relative; max-width: 560px; margin-top: 20px; }
+.help-search .i { position: absolute; top: 50%; left: 20px; translate: 0 -50%; }
+.help-search input { width: 100%; height: 56px; padding: 0 20px 0 52px; border: 1px solid var(--border); border-radius: var(--r-pill); background: var(--raised); box-shadow: var(--shadow-pill); font-size: 1rem; }
+.help-search input:focus { border-color: var(--text); outline: 0; }
+.faq { margin-top: 24px; }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; justify-content: space-between; gap: 16px; padding: 20px 0; font-weight: 600; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .i { transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .i { transform: rotate(180deg); }
+.faq details p { padding-bottom: 20px; color: var(--text-muted); }
+.wide-img { width: 100%; aspect-ratio: 21 / 8; margin: 8px 0 40px; border-radius: var(--r-card); object-fit: cover; }
+.cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.cols p { margin-top: 8px; color: var(--text-muted); }
+.team { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 24px; }
+.legal { max-width: 720px; }
+.legal h2 { margin: 28px 0 8px; }
+.notfound { display: grid; justify-items: center; gap: 16px; padding: 80px 0 40px; text-align: center; }
+.notfound img { width: min(360px, 80%); border-radius: var(--r-panel); }
+
+/* ---------- Footer, phone tab bar and toast ---------- */
+.site-footer { border-top: 1px solid var(--border); background: var(--surface); }
+.foot-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding: 48px 0; }
+.foot-cols h2 { margin-bottom: 14px; font-size: var(--fs-small); font-weight: 600; }
+.foot-cols ul { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.foot-cols a { font-size: var(--fs-small); text-decoration: none; }
+.foot-cols a:hover { text-decoration: underline; }
+.foot-bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; padding: 24px 0; border-top: 1px solid var(--border); font-size: var(--fs-small); }
+.foot-bar nav { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.foot-bar a { text-decoration: none; }
+.foot-bar a:hover { text-decoration: underline; }
+.toast { position: fixed; bottom: 24px; left: 24px; z-index: 60; display: flex; align-items: center; gap: 16px; padding: 14px 18px; border-radius: 12px; background: var(--ink); color: var(--ink-text); box-shadow: var(--shadow-overlay); font-size: var(--fs-small); font-weight: 600; animation: toast-in var(--dur-slow) var(--ease) both; }
+.toast a { color: inherit; }
+
+/* ---------- Motion (keyframes, so they also play on first load) ---------- */
+@keyframes view-in { from { opacity: 0; transform: translateY(8px); } }
+@keyframes pop { from { opacity: 0; transform: translateY(-4px) scale(0.98); } }
+@keyframes beat { 40% { transform: scale(1.28); } }
+@keyframes toast-in { from { opacity: 0; transform: translateY(16px); } }
+@keyframes sheet-in { from { transform: translateY(100%); } }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1127px) {
+  .rail { grid-auto-columns: calc((100% - 2 * 24px) / 3); }
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ipanel { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .text-btn { display: none; }
+  .scores { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 24px; }
+  .score:nth-child(4) { border-left: 0; padding-left: 0; }
+}
+@media (max-width: 949px) {
+  .grid, .layout.with-map .grid, .grid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .layout.with-map { grid-template-columns: 1fr; }
+  .layout.with-map .grid-wrap { display: none; }
+  .map-pane { position: relative; top: 0; }
+  .stay-body, .two-col, .host-grid { grid-template-columns: 1fr; }
+  .book-side { display: none; }
+  .summary { position: static; }
+  .reserve-bar { position: sticky; bottom: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-inline: calc(-1 * var(--gutter)); padding: 14px var(--gutter); border-top: 1px solid var(--border); background: var(--bg); }
+  .reserve-bar .small { text-decoration: underline; }
+  .estimate { grid-template-columns: 1fr; }
+  .estimate img { aspect-ratio: 16 / 9; }
+}
+@media (max-width: 743px) {
+  :root { --header-h: 76px; }
+  .header-bar { grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; }
+  .logo-word, .tabs, .saved-link, .menu-pill .avatar, .site-header.is-compact .mini-search { display: none; }
+  .header-actions { gap: 0; }
+  .menu-pill { justify-content: center; width: 40px; height: 40px; margin: 0; padding: 0; border: 0; background: none; }
+  .m-search { display: flex; align-items: center; gap: 12px; width: 100%; min-width: 0; height: 54px; padding: 0 18px; border: 1px solid var(--border); border-radius: var(--r-pill); background: var(--raised); box-shadow: var(--shadow-pill); text-align: left; }
+  .m-search strong { display: block; font-size: var(--fs-small); font-weight: 600; }
+  .m-search > span { min-width: 0; }
+  .m-search > span > span { display: block; overflow: hidden; color: var(--text-muted); font-size: 12px; white-space: nowrap; text-overflow: ellipsis; }
+  .hero { padding-block: 20px 8px; text-align: left; }
+  .hero-title { font-size: 1.5rem; }
+  .search { flex-direction: column; height: auto; padding: 8px; border-radius: 24px; }
+  .seg { min-height: 60px; padding: 10px 16px; border-radius: 16px; }
+  .seg-where { padding-left: 16px; }
+  .seg ~ .seg::before { inset: 0 16px auto; width: auto; height: 1px; }
+  .orb { width: 100%; height: 50px; margin: 8px 0 0; border-radius: 12px; }
+  .orb span { display: inline; }
+  .panel, #p-where, #p-when, #p-who { position: static; width: auto; margin: 4px 0; padding: 12px; border-radius: 16px; box-shadow: none; border: 1px solid var(--border); }
+  #p-who { padding: 0 16px; }
+  .cal-months { grid-template-columns: 1fr; }
+  .cal-month + .cal-month { display: none; }
+  .home-cats { justify-content: flex-start; }
+  .cats { gap: 24px; }
+  .rail { grid-auto-columns: 78%; gap: 16px; }
+  .rail.tall-rail { grid-auto-columns: 62%; }
+  .row-head .rail-nav { display: none; }
+  .grid, .layout.with-map .grid, .grid.three { grid-template-columns: 1fr; }
+  .host-band { grid-template-columns: 1fr; }
+  .ipanel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .toolbar-row { gap: 12px; }
+  .toolbar-row .chip-box { padding: 8px 12px; }
+  .toolbar-row .chip-box span:not(.count) { display: none; }
+  .mosaic { display: flex; aspect-ratio: 4 / 3; margin-inline: calc(-1 * var(--gutter)); border-radius: 0; gap: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .mosaic img { flex: 0 0 100%; scroll-snap-align: start; }
+  .all-photos { display: none; }
+  .photo-count { position: absolute; right: 12px; bottom: 12px; display: block; padding: 3px 10px; border-radius: 6px; background: oklch(0% 0 0 / 0.6); color: oklch(100% 0 0); font-size: 12px; font-weight: 600; }
+  .loved { grid-template-columns: auto 1fr 1fr; gap: 12px; padding: 14px 16px; }
+  .loved > p.small { display: none; }
+  .loved .num { padding-left: 12px; }
+  .amen, .reviews, .know, .cols, .team, .steps, .two, .foot-cols { grid-template-columns: 1fr; }
+  .scores { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .score:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .score:nth-child(4) { border-left: 1px solid var(--border); padding-left: 16px; }
+  .host-card { grid-template-columns: 1fr 1fr; }
+  .inline-form { flex-direction: column; align-items: stretch; }
+  dialog:not(.menu) { width: 100vw; max-width: 100vw; max-height: 92dvh; margin: auto 0 0; border-radius: 24px 24px 0 0; }
+  dialog:not(.menu)[open] { animation: sheet-in var(--dur-slow) var(--ease) both; }
+  .menu { inset: auto 0 0; width: 100vw; max-width: 100vw; padding: 16px 0 24px; border-radius: 24px 24px 0 0; animation: sheet-in var(--dur-slow) var(--ease) both; }
+  .menu::backdrop { background: var(--scrim); }
+  .menu-close { display: grid; margin: 0 12px 4px auto; }
+  .toast { right: 16px; bottom: 16px; left: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header" id="top">
+  <div class="wrap header-bar">
+    <a class="logo" href="#/" aria-label="Saltbirch home"><svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><use href="#mark"/></svg><span class="logo-word">Saltbirch</span></a>
+    <div class="header-center">
+      <nav class="tabs" aria-label="Main">
+        <a href="#/stays"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>Stays</a>
+        <a href="#/experiences"><svg class="i i-lg" aria-hidden="true"><use href="#i-compass"/></svg>Experiences</a>
+      </nav>
+      <button class="mini-search" type="button" data-open-search><span data-out="where">Anywhere</span><span class="sep"></span><span data-out="dates">Any week</span><span class="sep"></span><span class="muted" data-out="guests">Add guests</span><span class="orb-sm"><svg class="i i-sm" aria-hidden="true"><use href="#i-search"/></svg></span><span class="sr">Change your search</span></button>
+      <button class="m-search" type="button" data-open-search><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><span><strong>Where to?</strong><span><span data-out="dates">Any week</span> · <span data-out="guests">Add guests</span></span></span></button>
+    </div>
+    <div class="header-actions">
+      <a class="text-btn" href="#/host">Host with us</a>
+      <button class="round" type="button" id="theme-toggle" aria-label="Switch to dark colors"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="round saved-link" href="#/saved" aria-label="Saved stays"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg><span class="count" data-saved-count hidden>0</span></a>
+      <button class="menu-pill" type="button" data-open="menu" aria-label="Open menu"><svg class="i i-sm" aria-hidden="true"><use href="#i-menu"/></svg><span class="avatar"><svg class="i i-sm" aria-hidden="true"><use href="#i-user"/></svg></span></button>
+    </div>
+  </div>
+</header>
+
+<dialog class="menu" id="menu" aria-label="Menu">
+  <button class="round menu-close" type="button" data-close aria-label="Close menu"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button>
+  <nav class="menu-links" aria-label="More">
+    <a href="#/saved">Saved stays</a>
+    <a href="#/journal">Journal</a>
+    <a href="#/help">Help</a>
+    <hr>
+    <a href="#/host"><strong>Host with us</strong><span class="muted">Earn from a cabin, a cottage or a spare room.</span></a>
+    <hr>
+    <a href="#/about">About Saltbirch</a>
+    <a href="#/help?at=contact">Contact us</a>
+  </nav>
+</dialog>
+
+<main id="main">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <h1 class="hero-title" id="hero-title">Quiet places to stay on the Corrin Coast</h1>
+    <div class="search" role="search" aria-label="Search stays">
+      <label class="seg seg-where"><span class="seg-label">Where</span><input id="s-where" type="text" placeholder="Search places" autocomplete="off" aria-controls="p-where" aria-expanded="false"></label>
+      <div class="panel" id="p-where" hidden>
+        <p class="panel-title">Places we look after</p>
+        <button class="dest" type="button" data-where="wren"><span class="dest-i"><svg class="i i-lg" aria-hidden="true"><use href="#c-tree"/></svg></span><span><strong>Wren Valley</strong><span class="muted">Cabins and treehouses along the river</span></span></button>
+        <button class="dest" type="button" data-where="corrin"><span class="dest-i"><svg class="i i-lg" aria-hidden="true"><use href="#i-waves"/></svg></span><span><strong>Corrin Coast</strong><span class="muted">Cottages and sauna houses above the sea</span></span></button>
+        <button class="dest" type="button" data-where="hollin"><span class="dest-i"><svg class="i i-lg" aria-hidden="true"><use href="#c-farm"/></svg></span><span><strong>Hollin Hills</strong><span class="muted">Farm stays and lofts in the hills</span></span></button>
+        <button class="dest" type="button" data-where=""><span class="dest-i"><svg class="i i-lg" aria-hidden="true"><use href="#i-map"/></svg></span><span><strong>Anywhere</strong><span class="muted">Every stay in all three places</span></span></button>
+      </div>
+      <button class="seg" type="button" data-panel="p-when"><span class="seg-label">Check in</span><span class="seg-value" data-out="in">Add date</span></button>
+      <button class="seg" type="button" data-panel="p-when"><span class="seg-label">Check out</span><span class="seg-value" data-out="out">Add date</span></button>
+      <div class="panel" id="p-when" hidden><div class="cal" data-calendar></div></div>
+      <button class="seg" type="button" data-panel="p-who"><span class="seg-label">Who</span><span class="seg-value" data-out="guests">Add guests</span></button>
+      <div class="panel" id="p-who" hidden><div data-guests-ui></div></div>
+      <button class="orb" type="button" data-search-go><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><span>Search</span></button>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <nav class="cats home-cats" aria-label="Kinds of stay">
+      <a class="cat" href="#/stays"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>All stays</a>
+      <a class="cat" href="#/stays?type=cabin"><svg class="i i-lg" aria-hidden="true"><use href="#c-cabin"/></svg>Cabins</a>
+      <a class="cat" href="#/stays?type=coast"><svg class="i i-lg" aria-hidden="true"><use href="#i-waves"/></svg>By the sea</a>
+      <a class="cat" href="#/stays?type=farm"><svg class="i i-lg" aria-hidden="true"><use href="#c-farm"/></svg>Farm stays</a>
+      <a class="cat" href="#/stays?type=treehouse"><svg class="i i-lg" aria-hidden="true"><use href="#c-tree"/></svg>Treehouses</a>
+      <a class="cat" href="#/stays?type=tiny"><svg class="i i-lg" aria-hidden="true"><use href="#c-tiny"/></svg>Tiny homes</a>
+      <a class="cat" href="#/stays?type=sauna"><svg class="i i-lg" aria-hidden="true"><use href="#i-steam"/></svg>Saunas</a>
+    </nav>
+  </div>
+
+  <section class="wrap row needs-js" aria-labelledby="h-love">
+    <div class="row-head">
+      <h2 class="h2" id="h-love"><a href="#/stays">Stays guests love <svg class="i i-sm" aria-hidden="true"><use href="#i-right"/></svg></a></h2>
+      <div class="rail-nav"><button class="round sm bordered" type="button" data-rail="-1" aria-controls="rail-stays" aria-label="Scroll back" disabled><svg class="i i-sm" aria-hidden="true"><use href="#i-left"/></svg></button><button class="round sm bordered" type="button" data-rail="1" aria-controls="rail-stays" aria-label="Scroll forward"><svg class="i i-sm" aria-hidden="true"><use href="#i-right"/></svg></button></div>
+    </div>
+    <div class="rail" id="rail-stays" data-from="#stays-grid" data-ids="pinecone gull orchard canopy stillwater lantern">
+    </div>
+  </section>
+
+  <section class="wrap row needs-js" aria-labelledby="h-exp">
+    <div class="row-head">
+      <h2 class="h2" id="h-exp"><a href="#/experiences">Experiences with local hosts <svg class="i i-sm" aria-hidden="true"><use href="#i-right"/></svg></a></h2>
+      <div class="rail-nav"><button class="round sm bordered" type="button" data-rail="-1" aria-controls="rail-exp" aria-label="Scroll back" disabled><svg class="i i-sm" aria-hidden="true"><use href="#i-left"/></svg></button><button class="round sm bordered" type="button" data-rail="1" aria-controls="rail-exp" aria-label="Scroll forward"><svg class="i i-sm" aria-hidden="true"><use href="#i-right"/></svg></button></div>
+    </div>
+    <div class="rail tall-rail" id="rail-exp" data-from="#exp-grid" data-ids="bread kayak pottery forage">
+    </div>
+  </section>
+
+  <section class="wrap row" aria-labelledby="h-host">
+    <div class="host-band">
+      <img src="images/living.svg" alt="A sitting room with a sofa and a lit wood stove" width="600" height="570">
+      <div class="copy">
+        <h2 class="h1" id="h-host">Have a cabin, a cottage or a spare room?</h2>
+        <p class="muted">We handle the bookings, the cleaning rota and the welcome notes, so you can keep living next door.</p>
+        <a class="btn btn-ink" href="#/host">Host with us</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="inspire" aria-labelledby="h-ideas">
+    <div class="wrap">
+      <h2 class="h2" id="h-ideas">Ideas for your next weekend</h2>
+      <div class="itabs" role="tablist" aria-label="Ideas">
+        <button class="itab" type="button" role="tab" id="t-sea" aria-controls="ip-sea" aria-selected="true">By the sea</button>
+        <button class="itab" type="button" role="tab" id="t-valley" aria-controls="ip-valley" aria-selected="false" tabindex="-1">In the valley</button>
+        <button class="itab" type="button" role="tab" id="t-hills" aria-controls="ip-hills" aria-selected="false" tabindex="-1">In the hills</button>
+      </div>
+      <div class="ipanel is-active" id="ip-sea" role="tabpanel" aria-labelledby="t-sea">
+        <a href="#/stay"><strong>Gull Rock Cottage</strong><span>Cottage above the bay</span></a>
+        <a href="#/stays?type=sauna"><strong>Lantern Sauna House</strong><span>Sauna by the water</span></a>
+        <a href="#/experiences?type=water"><strong>Sea caves</strong><span>Paddle with Anouk</span></a>
+        <a href="#/experiences?type=water"><strong>Night swim</strong><span>Sauna and cold water</span></a>
+        <a href="#/journal"><strong>Fernley harbour</strong><span>Cafés and the ferry</span></a>
+        <a href="#/stays?type=coast"><strong>All coast stays</strong><span>Cottages and saunas</span></a>
+      </div>
+      <div class="ipanel" id="ip-valley" role="tabpanel" aria-labelledby="t-valley">
+        <a href="#/stay"><strong>Pinecone A-frame</strong><span>Cabin with a sauna</span></a>
+        <a href="#/stays?type=treehouse"><strong>The Canopy</strong><span>Treehouse for two</span></a>
+        <a href="#/stays?type=tiny"><strong>Stillwater Cabin</strong><span>Tiny home on a lake</span></a>
+        <a href="#/post"><strong>The river path</strong><span>A weekend walk</span></a>
+        <a href="#/experiences?type=outdoors"><strong>Foraging walk</strong><span>With Noor</span></a>
+        <a href="#/stays?where=wren"><strong>All valley stays</strong><span>Wren Valley</span></a>
+      </div>
+      <div class="ipanel" id="ip-hills" role="tabpanel" aria-labelledby="t-hills">
+        <a href="#/stays?type=farm"><strong>Orchard Barn</strong><span>Farm stay for six</span></a>
+        <a href="#/stays?where=hollin"><strong>Fireside Loft</strong><span>Loft with a stove</span></a>
+        <a href="#/stays?where=hollin"><strong>The Bakehouse Rooms</strong><span>Rooms above a bakery</span></a>
+        <a href="#/experiences?type=food"><strong>Bread morning</strong><span>With Tobin</span></a>
+        <a href="#/experiences?type=food"><strong>Farm supper</strong><span>At the long table</span></a>
+        <a href="#/stays?where=hollin"><strong>All hill stays</strong><span>Hollin Hills</span></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== STAYS (list, filters, map) ===================== -->
+<div data-view="stays">
+  <div class="toolbar">
+    <div class="wrap toolbar-row">
+      <div class="cats" id="stays-cats" role="group" aria-label="Kinds of stay">
+        <button class="cat" type="button" data-filter="all" aria-pressed="true"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>All stays</button>
+        <button class="cat" type="button" data-filter="cabin" aria-pressed="false"><svg class="i i-lg" aria-hidden="true"><use href="#c-cabin"/></svg>Cabins</button>
+        <button class="cat" type="button" data-filter="coast" aria-pressed="false"><svg class="i i-lg" aria-hidden="true"><use href="#i-waves"/></svg>By the sea</button>
+        <button class="cat" type="button" data-filter="farm" aria-pressed="false"><svg class="i i-lg" aria-hidden="true"><use href="#c-farm"/></svg>Farm stays</button>
+        <button class="cat" type="button" data-filter="treehouse" aria-pressed="false"><svg class="i i-lg" aria-hidden="true"><use href="#c-tree"/></svg>Treehouses</button>
+        <button class="cat" type="button" data-filter="tiny" aria-pressed="false"><svg class="i i-lg" aria-hidden="true"><use href="#c-tiny"/></svg>Tiny homes</button>
+        <button class="cat" type="button" data-filter="sauna" aria-pressed="false"><svg class="i i-lg" aria-hidden="true"><use href="#i-steam"/></svg>Saunas</button>
+      </div>
+      <button class="chip chip-box" type="button" data-open="filters"><svg class="i i-sm" aria-hidden="true"><use href="#i-sliders"/></svg><span>Filters</span><span class="count" data-filter-count hidden>0</span></button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="results-head">
+      <h1 class="h2" data-stays-count>8 stays</h1>
+      <div class="chips"><button class="chip" type="button" data-where-clear hidden><span data-out="where">Anywhere</span><svg class="i i-sm" aria-hidden="true"><use href="#i-x"/></svg><span class="sr">Clear place</span></button><span class="muted small">Prices are per night before taxes</span></div>
+    </div>
+    <div class="layout" id="stays-layout">
+      <div class="grid-wrap">
+        <div class="grid" id="stays-grid">
+          <article class="card" data-id="pinecone" data-name="Pinecone A-frame" data-region="wren" data-tags="cabin sauna" data-guests="4" data-beds="2" data-place="whole" data-amen="wifi kitchen stove sauna parking" data-price="186" data-cleaning="60"><div class="card-media"><div class="slides"><img src="images/cabin-dusk.svg" alt="An A-frame cabin among pine trees at dusk" width="600" height="570"><img src="images/living.svg" alt="A living room with a wood stove" width="600" height="570"><img src="images/bedroom.svg" alt="A bedroom with a window onto the trees" width="600" height="570"></div><span class="badge">Loved by guests</span><button class="save" type="button" data-save="pinecone" aria-label="Save Pinecone A-frame" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></button></div><a class="card-link" href="#/stay"><h3 class="card-title"><span>Cabin in Wren Valley</span><span class="rating"><svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.96</span></h3><p>Pinecone A-frame</p><p>2 bedrooms · sauna</p><p class="price"><strong>$186</strong> night</p></a></article>
+          <article class="card" data-id="gull" data-name="Gull Rock Cottage" data-region="corrin" data-tags="coast" data-guests="4" data-beds="2" data-place="whole" data-amen="wifi kitchen parking pets" data-price="214" data-cleaning="70"><div class="card-media"><div class="slides"><img src="images/cottage-sea.svg" alt="A white cottage on a green cliff above the sea" width="600" height="570"><img src="images/kitchen.svg" alt="A bright kitchen with an arched window" width="600" height="570"><img src="images/bedroom.svg" alt="A bedroom with linen bedding" width="600" height="570"></div><span class="badge">Sea view</span><button class="save" type="button" data-save="gull" aria-label="Save Gull Rock Cottage" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></button></div><a class="card-link" href="#/stay"><h3 class="card-title"><span>Cottage on the Corrin Coast</span><span class="rating"><svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.91</span></h3><p>Gull Rock Cottage</p><p>2 bedrooms · pets welcome</p><p class="price"><strong>$214</strong> night</p></a></article>
+          <article class="card" data-id="orchard" data-name="Orchard Barn" data-region="hollin" data-tags="farm" data-guests="6" data-beds="3" data-place="whole" data-amen="wifi kitchen parking pets" data-price="168" data-cleaning="80"><div class="card-media"><div class="slides"><img src="images/farmhouse.svg" alt="A red barn and a farmhouse in golden fields" width="600" height="570"><img src="images/kitchen.svg" alt="A farmhouse kitchen table" width="600" height="570"><img src="images/living.svg" alt="A sitting room with a stove" width="600" height="570"></div><button class="save" type="button" data-save="orchard" aria-label="Save Orchard Barn" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></button></div><a class="card-link" href="#/stay"><h3 class="card-title"><span>Farm stay in the Hollin Hills</span><span class="rating"><svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.88</span></h3><p>Orchard Barn</p><p>3 bedrooms · sleeps 6</p><p class="price"><strong>$168</strong> night</p></a></article>
+          <article class="card" data-id="canopy" data-name="The Canopy" data-region="wren" data-tags="treehouse" data-guests="2" data-beds="1" data-place="whole" data-amen="wifi stove" data-price="142" data-cleaning="40"><div class="card-media"><div class="slides"><img src="images/treehouse.svg" alt="A wooden treehouse with a ladder in a leafy tree" width="600" height="570"><img src="images/bedroom.svg" alt="A small bedroom with a window" width="600" height="570"></div><span class="badge">Loved by guests</span><button class="save" type="button" data-save="canopy" aria-label="Save The Canopy" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></button></div><a class="card-link" href="#/stay"><h3 class="card-title"><span>Treehouse in Wren Valley</span><span class="rating"><svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.97</span></h3><p>The Canopy</p><p>1 bedroom · wood stove</p><p class="price"><strong>$142</strong> night</p></a></article>
+          <article class="card" data-id="stillwater" data-name="Stillwater Cabin" data-region="wren" data-tags="tiny sauna" data-guests="2" data-beds="1" data-place="whole" data-amen="wifi kitchen sauna" data-price="129" data-cleaning="40"><div class="card-media"><div class="slides"><img src="images/lake-cabin.svg" alt="A small black cabin with a jetty on a calm lake" width="600" height="570"><img src="images/bedroom.svg" alt="A bedroom with linen bedding" width="600" height="570"></div><span class="badge">New</span><button class="save" type="button" data-save="stillwater" aria-label="Save Stillwater Cabin" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></button></div><a class="card-link" href="#/stay"><h3 class="card-title"><span>Tiny home in Wren Valley</span><span class="rating"><svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.85</span></h3><p>Stillwater Cabin</p><p>1 bedroom · lake sauna</p><p class="price"><strong>$129</strong> night</p></a></article>
+          <article class="card" data-id="lantern" data-name="Lantern Sauna House" data-region="corrin" data-tags="cabin sauna coast" data-guests="3" data-beds="1" data-place="whole" data-amen="kitchen stove sauna parking" data-price="158" data-cleaning="50"><div class="card-media"><div class="slides"><img src="images/sauna-night.svg" alt="A lit sauna hut by the water at night" width="600" height="570"><img src="images/living.svg" alt="A sitting room with a stove" width="600" height="570"></div><button class="save" type="button" data-save="lantern" aria-label="Save Lantern Sauna House" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></button></div><a class="card-link" href="#/stay"><h3 class="card-title"><span>Sauna house on the Corrin Coast</span><span class="rating"><svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.93</span></h3><p>Lantern Sauna House</p><p>1 bedroom · sleeps 3</p><p class="price"><strong>$158</strong> night</p></a></article>
+          <article class="card" data-id="fireside" data-name="Fireside Loft" data-region="hollin" data-tags="tiny" data-guests="2" data-beds="1" data-place="whole" data-amen="wifi kitchen stove pets" data-price="112" data-cleaning="35"><div class="card-media"><div class="slides"><img src="images/living.svg" alt="A loft sitting room with a lit wood stove" width="600" height="570"><img src="images/bedroom.svg" alt="A bedroom with a window onto the trees" width="600" height="570"><img src="images/kitchen.svg" alt="A small kitchen with an arched window" width="600" height="570"></div><button class="save" type="button" data-save="fireside" aria-label="Save Fireside Loft" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></button></div><a class="card-link" href="#/stay"><h3 class="card-title"><span>Loft in the Hollin Hills</span><span class="rating"><svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.90</span></h3><p>Fireside Loft</p><p>1 bedroom · dogs welcome</p><p class="price"><strong>$112</strong> night</p></a></article>
+          <article class="card" data-id="bakehouse" data-name="The Bakehouse Rooms" data-region="hollin" data-tags="farm" data-guests="2" data-beds="1" data-place="room" data-amen="wifi parking" data-price="98" data-cleaning="0"><div class="card-media"><div class="slides"><img src="images/kitchen.svg" alt="A shared kitchen with bowls of fruit" width="600" height="570"><img src="images/farmhouse.svg" alt="The farm and its fields" width="600" height="570"></div><button class="save" type="button" data-save="bakehouse" aria-label="Save The Bakehouse Rooms" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></button></div><a class="card-link" href="#/stay"><h3 class="card-title"><span>Room on a farm in the Hollin Hills</span><span class="rating"><svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.86</span></h3><p>The Bakehouse Rooms</p><p>1 room · breakfast included</p><p class="price"><strong>$98</strong> night</p></a></article>
+        </div>
+        <div class="empty" data-stays-empty hidden><h2 class="h3">No exact matches</h2><p class="muted">Try fewer filters or another part of the coast.</p><button class="btn btn-outline" type="button" data-clear-all>Clear all filters</button></div>
+      </div>
+      <div class="map-pane" aria-label="Map of the stays">
+        <img src="images/map.svg" alt="Map of the Hollin Hills, Wren Valley and the Corrin Coast" width="900" height="1200">
+        <a class="pin" data-for="pinecone" href="#/stay" style="left:31%;top:60%">$186</a>
+        <a class="pin" data-for="gull" href="#/stay" style="left:72%;top:40%">$214</a>
+        <a class="pin" data-for="orchard" href="#/stay" style="left:36%;top:17%">$168</a>
+        <a class="pin" data-for="canopy" href="#/stay" style="left:46%;top:70%">$142</a>
+        <a class="pin" data-for="stillwater" href="#/stay" style="left:15%;top:50%">$129</a>
+        <a class="pin" data-for="lantern" href="#/stay" style="left:64%;top:76%">$158</a>
+        <a class="pin" data-for="fireside" href="#/stay" style="left:58%;top:22%">$112</a>
+        <a class="pin" data-for="bakehouse" href="#/stay" style="left:16%;top:30%">$98</a>
+      </div>
+    </div>
+    <div class="map-toggle"><button class="btn btn-ink" type="button" data-map-toggle aria-pressed="false"><span>Show map</span><svg class="i" aria-hidden="true"><use href="#i-map"/></svg></button></div>
+  </div>
+</div>
+
+<!-- ===================== STAY (one listing; every card points here) ===================== -->
+<div data-view="stay">
+  <div class="wrap narrow">
+    <div class="stay-head">
+      <h1 class="h1">Pinecone A-frame by the river</h1>
+      <div class="head-actions">
+        <button type="button" data-share><svg class="i i-sm" aria-hidden="true"><use href="#i-share"/></svg>Share</button>
+        <button type="button" data-save="pinecone" aria-pressed="false" aria-label="Save Pinecone A-frame"><svg class="i i-sm" aria-hidden="true"><use href="#i-heart"/></svg>Save</button>
+      </div>
+    </div>
+    <div class="mosaic-wrap">
+      <div class="mosaic" data-open="photos">
+        <img src="images/cabin-dusk.svg" alt="The A-frame among pine trees at dusk" width="600" height="570">
+        <img src="images/living.svg" alt="The living room and wood stove" width="600" height="570">
+        <img src="images/bedroom.svg" alt="The main bedroom" width="600" height="570">
+        <img src="images/kitchen.svg" alt="The kitchen table under the arched window" width="600" height="570">
+        <img src="images/sauna-night.svg" alt="The sauna by the river at night" width="600" height="570">
+      </div>
+      <button class="all-photos" type="button" data-open="photos"><svg class="i i-sm" aria-hidden="true"><use href="#i-grid"/></svg>Show all photos</button>
+      <span class="photo-count" data-photo-count aria-hidden="true">1 / 5</span>
+    </div>
+
+    <div class="stay-body">
+      <div class="stay-main">
+        <section>
+          <h2 class="h2">Entire cabin in Wren Valley</h2>
+          <p class="facts">4 guests · 2 bedrooms · 3 beds · 1 bath</p>
+          <div class="loved">
+            <p class="loved-title"><svg class="sprig" viewBox="0 0 32 64" aria-hidden="true"><use href="#sprig"/></svg>Loved<br>by guests<svg class="sprig r" viewBox="0 0 32 64" aria-hidden="true"><use href="#sprig"/></svg></p>
+            <p class="small">Guests rate this cabin among our calmest and best-kept places.</p>
+            <div class="num"><strong>4.96</strong><svg class="stars" viewBox="0 0 120 24" aria-hidden="true"><use href="#stars5"/></svg></div>
+            <div class="num"><strong>128</strong><span class="small">reviews</span></div>
+          </div>
+        </section>
+        <section class="host-row">
+          <span class="av c1" aria-hidden="true">M</span>
+          <div><h2 class="h3">Hosted by Mirela</h2><p class="muted small">Seasoned host · 6 years hosting</p></div>
+        </section>
+        <section class="highlights">
+          <div class="hl"><svg class="i" aria-hidden="true"><use href="#i-key"/></svg><div><h3 class="h3">Self check-in</h3><p class="muted small">The key is in the lockbox by the door from 3 pm.</p></div></div>
+          <div class="hl"><svg class="i" aria-hidden="true"><use href="#i-flame"/></svg><div><h3 class="h3">Wood stove and sauna</h3><p class="muted small">Firewood is stacked by the porch. The sauna takes 40 minutes to heat.</p></div></div>
+          <div class="hl"><svg class="i" aria-hidden="true"><use href="#i-cal"/></svg><div><h3 class="h3">Free cancellation for 48 hours</h3><p class="muted small">Change your mind within two days of booking and get every cent back.</p></div></div>
+        </section>
+        <section>
+          <p class="clamp" id="about-stay">A small A-frame on a bend of the Wren, ten minutes on foot from the river path. Downstairs is one warm room: a kitchen with a long oak table, a sofa that faces the stove, and a glass wall onto the pines. Upstairs, under the roof, are two bedrooms with linen bedding and wool blankets. The wood-fired sauna sits on the bank, with a ladder into a slow, deep pool. Mirela lives in the farmhouse up the lane and leaves bread, eggs and a hand-drawn map of the walks on the table.</p>
+          <button class="link more" type="button" data-more="about-stay" aria-expanded="false">Show more <svg class="i i-sm" aria-hidden="true"><use href="#i-right"/></svg></button>
+        </section>
+        <section>
+          <h2 class="h2">Where you'll sleep</h2>
+          <div class="sleep">
+            <div><img src="images/bedroom.svg" alt="Bedroom one with a double bed" width="600" height="570"><h3 class="h3">Bedroom 1</h3><p class="muted small">1 double bed</p></div>
+            <div><img src="images/treehouse.svg" alt="The loft bedroom window onto the trees" width="600" height="570"><h3 class="h3">Loft bedroom</h3><p class="muted small">2 single beds</p></div>
+          </div>
+        </section>
+        <section>
+          <h2 class="h2">What this place offers</h2>
+          <ul class="amen">
+            <li><svg class="i" aria-hidden="true"><use href="#i-waves"/></svg>River access</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-steam"/></svg>Wood-fired sauna</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-flame"/></svg>Wood stove</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-pot"/></svg>Kitchen</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-wifi"/></svg>Wifi</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-car"/></svg>Free parking on the lane</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-key"/></svg>Self check-in</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Long stays allowed</li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Smoke alarm</li>
+            <li class="off"><svg class="i" aria-hidden="true"><use href="#i-paw"/></svg>Pets</li>
+          </ul>
+          <button class="btn btn-outline" type="button" data-open="amenities">Show all 18 amenities</button>
+        </section>
+        <section id="dates">
+          <h2 class="h2" data-out="nights-title">5 nights in Wren Valley</h2>
+          <p class="muted small" data-out="range">Choose your dates</p>
+          <div class="cal" data-calendar data-booked style="margin-top:24px"></div>
+          <p style="margin-top:16px;text-align:right"><button class="link small" type="button" data-clear-dates>Clear dates</button></p>
+        </section>
+      </div>
+      <aside class="book-side" aria-label="Book this stay">
+        <div class="book-card" data-price-card data-price="186" data-cleaning="60" data-max-guests="4">
+          <p class="book-price" data-has-dates hidden><strong>$186</strong> night</p>
+          <p class="book-price" data-no-dates><strong class="h2">Add dates for prices</strong></p>
+          <div class="box">
+            <a class="box-cell" href="#dates"><b>Check-in</b><span data-out="in">Add date</span></a>
+            <a class="box-cell" href="#dates"><b>Checkout</b><span data-out="out">Add date</span></a>
+            <button class="box-cell full" type="button" data-toggle="guest-pop" aria-expanded="false"><span><b>Guests</b><span data-out="guests">Add guests</span></span><svg class="i i-sm" aria-hidden="true"><use href="#i-down"/></svg></button>
+            <div class="guest-pop" id="guest-pop" hidden><div data-guests-ui="2"></div><p class="fine" style="margin-bottom:12px">This place has room for 4 guests, not counting infants. Pets are not allowed.</p></div>
+          </div>
+          <a class="btn btn-primary btn-block" href="#/book?for=pinecone" data-reserve>Reserve</a>
+          <div data-has-dates hidden>
+            <p class="note">You won't be charged yet</p>
+            <div class="lines">
+              <p class="line"><span data-l="base-label">$186 x 5 nights</span><span data-l="base">$930</span></p>
+              <p class="line" data-l="clean-line"><span>Cleaning fee</span><span data-l="clean">$60</span></p>
+              <p class="line"><span>Service fee</span><span data-l="fee">$112</span></p>
+            </div>
+            <p class="total"><span>Total before taxes</span><span data-l="total">$1,102</span></p>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <section class="stay-reviews" id="reviews" style="padding-top:48px">
+      <div class="rate-hero">
+        <p class="rate-big"><svg class="sprig" viewBox="0 0 32 64" aria-hidden="true"><use href="#sprig"/></svg>4.96<svg class="sprig r" viewBox="0 0 32 64" aria-hidden="true"><use href="#sprig"/></svg></p>
+        <h2 class="h2">Loved by guests</h2>
+        <p class="muted" style="max-width:30em">One of our most loved places, going by ratings, reviews and how often guests come back.</p>
+      </div>
+      <div class="scores">
+        <div class="score"><span>Cleanliness</span><strong>5.0</strong><svg class="i" aria-hidden="true"><use href="#i-sparkle"/></svg></div>
+        <div class="score"><span>Accuracy</span><strong>4.9</strong><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></div>
+        <div class="score"><span>Check-in</span><strong>5.0</strong><svg class="i" aria-hidden="true"><use href="#i-key"/></svg></div>
+        <div class="score"><span>Communication</span><strong>5.0</strong><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg></div>
+        <div class="score"><span>Location</span><strong>4.9</strong><svg class="i" aria-hidden="true"><use href="#i-map"/></svg></div>
+        <div class="score"><span>Value</span><strong>4.8</strong><svg class="i" aria-hidden="true"><use href="#i-tag"/></svg></div>
+      </div>
+      <div class="reviews" id="review-list">
+        <article class="review"><div class="who"><span class="av c2" aria-hidden="true">H</span><div><strong>Hana</strong><span class="muted small">Stayed 3 nights with a friend</span></div></div><p class="meta"><svg class="stars" viewBox="0 0 120 24" aria-hidden="true"><use href="#stars5"/></svg>· October</p><p>The sauna by the river was the best part of the trip. We swam, warmed up, swam again, then ate Mirela's bread by the stove.</p></article>
+        <article class="review"><div class="who"><span class="av c3" aria-hidden="true">L</span><div><strong>Lukas</strong><span class="muted small">Stayed 5 nights with family</span></div></div><p class="meta"><svg class="stars" viewBox="0 0 120 24" aria-hidden="true"><use href="#stars5"/></svg>· September</p><p>Exactly as the photos show. The children slept in the loft and woke up to woodpeckers. Clear instructions and a very kind host.</p></article>
+        <article class="review"><div class="who"><span class="av c4" aria-hidden="true">S</span><div><strong>Sofie</strong><span class="muted small">Stayed 2 nights</span></div></div><p class="meta"><svg class="stars" viewBox="0 0 120 24" aria-hidden="true"><use href="#stars5"/></svg>· August</p><p>Quiet in the best way. No signal down by the water, so bring a book. The bed upstairs is very comfortable.</p></article>
+        <article class="review"><div class="who"><span class="av c5" aria-hidden="true">K</span><div><strong>Kwame</strong><span class="muted small">Stayed 4 nights</span></div></div><p class="meta"><svg class="stars" viewBox="0 0 120 24" aria-hidden="true"><use href="#stars5"/></svg>· July</p><p>The lane is narrow and unpaved for the last kilometre, so take it slowly. Worth every bump.</p></article>
+        <article class="review" hidden><div class="who"><span class="av c1" aria-hidden="true">R</span><div><strong>Ruth</strong><span class="muted small">Stayed 7 nights</span></div></div><p class="meta"><svg class="stars" viewBox="0 0 120 24" aria-hidden="true"><use href="#stars5"/></svg>· June</p><p>A week of walking, reading and early nights. The map on the table was more useful than any app.</p></article>
+        <article class="review" hidden><div class="who"><span class="av c2" aria-hidden="true">D</span><div><strong>Priya</strong><span class="muted small">Stayed 2 nights with a partner</span></div></div><p class="meta"><svg class="stars" viewBox="0 0 120 24" aria-hidden="true"><use href="#stars5"/></svg>· May</p><p>Small, warm and well thought out. We already booked again for the autumn.</p></article>
+      </div>
+      <button class="btn btn-outline" type="button" data-more-reviews>Show all 128 reviews</button>
+    </section>
+
+    <section style="padding-top:48px;margin-top:48px;border-top:1px solid var(--border)">
+      <h2 class="h2">Where you'll be</h2>
+      <p style="margin-top:8px">Wren Valley, Corrin Coast</p>
+      <div class="map-box"><img src="images/map.svg" alt="Map of the valley with the cabin marked by the river" width="900" height="1200"><span class="home-pin" aria-hidden="true"><span><svg class="i" aria-hidden="true"><use href="#i-home"/></svg></span></span></div>
+      <p class="muted" style="margin-top:20px;max-width:44em">Ten minutes on foot from the river path. The nearest shop and café are in Fernley, 4 km away; the train stops at Fernley twice an hour.</p>
+    </section>
+
+    <section style="padding-top:48px;margin-top:48px;border-top:1px solid var(--border)">
+      <h2 class="h2">Meet your host</h2>
+      <div class="host-grid">
+        <div class="host-card">
+          <div class="host-id"><span class="av c1" aria-hidden="true">M</span><h3 class="h2">Mirela</h3><p class="small">Seasoned host</p></div>
+          <div class="host-stats"><div><strong>212</strong>Reviews</div><div><strong>4.95</strong>Rating</div><div><strong>6</strong>Years hosting</div></div>
+        </div>
+        <div>
+          <p>Mirela grew up in the farmhouse up the lane and built the A-frame with her brother. She keeps bees, knows every swimming spot on the river and answers messages within the hour.</p>
+          <p class="muted small" style="margin-top:16px">Speaks English and Dutch · Lives in Wren Valley</p>
+          <a class="btn btn-ink" href="#/help?topic=stay" style="margin-top:24px">Message Mirela</a>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top:48px;margin-top:48px;border-top:1px solid var(--border)">
+      <h2 class="h2">Things to know</h2>
+      <div class="know">
+        <div><h3 class="h3">House rules</h3><ul class="small"><li>Check-in after 3 pm</li><li>Checkout before 11 am</li><li>4 guests at most</li></ul></div>
+        <div><h3 class="h3">Safety and property</h3><ul class="small"><li>Smoke and carbon monoxide alarms</li><li>Unfenced river bank</li><li>Sauna for adults or supervised children</li></ul></div>
+        <div><h3 class="h3">Cancellation</h3><ul class="small"><li>Free cancellation for 48 hours</li><li>Half back until 7 days before check-in</li><li><a class="link" href="#/terms">Read the full policy</a></li></ul></div>
+      </div>
+    </section>
+
+    <div class="reserve-bar">
+      <div><p><strong>$186</strong> night</p><p class="small" data-out="dates">Any week</p></div>
+      <a class="btn btn-primary" href="#/book?for=pinecone" data-reserve>Reserve</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== EXPERIENCES ===================== -->
+<div data-view="experiences">
+  <div class="wrap">
+    <div class="page-head">
+      <h1 class="h1">Experiences</h1>
+      <p class="muted">Small groups, real places, hosted by the people who know them best. Most run on weekend mornings.</p>
+    </div>
+    <div class="chips" role="group" aria-label="Kinds of experience" style="margin-bottom:28px">
+      <button class="chip" type="button" data-exp="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-exp="food" aria-pressed="false">Food</button>
+      <button class="chip" type="button" data-exp="water" aria-pressed="false">Water</button>
+      <button class="chip" type="button" data-exp="craft" aria-pressed="false">Craft</button>
+      <button class="chip" type="button" data-exp="outdoors" aria-pressed="false">Outdoors</button>
+    </div>
+    <div class="grid" id="exp-grid">
+      <article class="card tall" data-id="bread" data-name="Wood-fired bread morning" data-kind="food" data-price="48" data-unit="guest"><div class="card-media"><img src="images/exp-bread.svg" alt="Two loaves cooling in front of a wood-fired oven" width="480" height="600"><span class="badge">Popular</span></div><a class="card-link" href="#/book?for=bread"><h3 class="card-title"><span>Wood-fired bread morning</span></h3><p>Hosted by Tobin · 3 hours</p><p class="price"><strong>From $48</strong> / guest · <svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.98</p></a></article>
+      <article class="card tall" data-id="kayak" data-name="Paddle to the sea caves" data-kind="water" data-price="65" data-unit="guest"><div class="card-media"><img src="images/exp-kayak.svg" alt="Two kayaks on clear water beside a cliff" width="480" height="600"></div><a class="card-link" href="#/book?for=kayak"><h3 class="card-title"><span>Paddle to the sea caves</span></h3><p>Hosted by Anouk · 4 hours</p><p class="price"><strong>From $65</strong> / guest · <svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.95</p></a></article>
+      <article class="card tall" data-id="pottery" data-name="Throw a bowl in the barn studio" data-kind="craft" data-price="55" data-unit="guest"><div class="card-media"><img src="images/exp-pottery.svg" alt="A clay pot on a wheel below shelves of bowls" width="480" height="600"><span class="badge">Small group</span></div><a class="card-link" href="#/book?for=pottery"><h3 class="card-title"><span>Throw a bowl in the barn studio</span></h3><p>Hosted by Ilse · 2.5 hours</p><p class="price"><strong>From $55</strong> / guest · <svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.97</p></a></article>
+      <article class="card tall" data-id="forage" data-name="Shore and woodland foraging" data-kind="outdoors" data-price="40" data-unit="guest"><div class="card-media"><img src="images/exp-forage.svg" alt="A basket of mushrooms and greens on moss" width="480" height="600"></div><a class="card-link" href="#/book?for=forage"><h3 class="card-title"><span>Shore and woodland foraging</span></h3><p>Hosted by Noor · 3 hours</p><p class="price"><strong>From $40</strong> / guest · <svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.92</p></a></article>
+      <article class="card tall" data-id="sauna" data-name="Night sauna and cold swim" data-kind="water" data-price="35" data-unit="guest"><div class="card-media"><img src="images/sauna-night.svg" alt="A lit sauna hut by the water at night" width="600" height="570"></div><a class="card-link" href="#/book?for=sauna"><h3 class="card-title"><span>Night sauna and cold swim</span></h3><p>Hosted by Mirela · 2 hours</p><p class="price"><strong>From $35</strong> / guest · <svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.96</p></a></article>
+      <article class="card tall" data-id="supper" data-name="Long-table farm supper" data-kind="food" data-price="72" data-unit="guest"><div class="card-media"><img src="images/farmhouse.svg" alt="The farm at golden hour, where supper is served" width="600" height="570"><span class="badge">Fridays</span></div><a class="card-link" href="#/book?for=supper"><h3 class="card-title"><span>Long-table farm supper</span></h3><p>Hosted by Joost · 3 hours</p><p class="price"><strong>From $72</strong> / guest · <svg class="i fill" aria-hidden="true"><use href="#i-star"/></svg>4.94</p></a></article>
+    </div>
+    <div class="empty" data-exp-empty hidden><h2 class="h3">Nothing here this season</h2><p class="muted">Try another kind of experience.</p></div>
+  </div>
+</div>
+
+<!-- ===================== BOOK (request to book) ===================== -->
+<div data-view="book">
+  <div class="wrap narrow">
+    <a class="round back" href="#/stay" aria-label="Back to the stay"><svg class="i" aria-hidden="true"><use href="#i-left"/></svg></a>
+    <h1 class="h1" style="margin-bottom:32px">Request to book</h1>
+    <div class="two-col">
+      <div>
+        <h2 class="h2">Your trip</h2>
+        <div class="trip-row"><div><strong>Dates</strong><span data-trip-dates>Choose your dates</span></div><a class="link" href="#/stay?at=dates">Edit</a></div>
+        <div class="trip-row"><div><strong>Guests</strong><span data-out="guests">Add guests</span></div><a class="link" href="#/stay?at=dates">Edit</a></div>
+        <hr class="rule" style="margin:16px 0 32px">
+        <h2 class="h2" style="margin-bottom:20px">Your details</h2>
+        <form class="form" data-form="booking" novalidate>
+          <div class="two">
+            <div class="field"><label for="b-first">First name</label><input id="b-first" name="first" required autocomplete="given-name" aria-describedby="b-first-e"><p class="error" id="b-first-e"></p></div>
+            <div class="field"><label for="b-last">Last name</label><input id="b-last" name="last" required autocomplete="family-name" aria-describedby="b-last-e"><p class="error" id="b-last-e"></p></div>
+          </div>
+          <div class="field"><label for="b-email">Email</label><input id="b-email" name="email" type="email" required autocomplete="email" aria-describedby="b-email-e"><p class="error" id="b-email-e"></p></div>
+          <div class="field"><label for="b-arrive">Arriving around</label><select id="b-arrive" name="arrival"><option>3 pm to 5 pm</option><option>5 pm to 7 pm</option><option>7 pm to 9 pm</option><option>Later than 9 pm</option></select><svg class="i i-sm chev" aria-hidden="true"><use href="#i-down"/></svg></div>
+          <div class="field"><label for="b-msg">Message to your host</label><textarea id="b-msg" name="message" required minlength="20" aria-describedby="b-msg-e" placeholder="Who's coming, and what brings you here?"></textarea><p class="error" id="b-msg-e"></p></div>
+          <div class="field"><label class="check"><input type="checkbox" required aria-describedby="b-rules-e">I agree to the house rules and the cancellation policy.</label><p class="error" id="b-rules-e"></p></div>
+          <button class="btn btn-primary" type="submit">Request to book</button>
+          <p class="fine">You won't be charged until your host accepts. They reply within a day.</p>
+        </form>
+        <div class="success" data-success="booking" hidden role="status">
+          <span class="tick"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <h2 class="h2">Request sent</h2>
+          <p class="muted">Your host will reply to <strong data-echo="email">you</strong>, usually within a few hours.</p>
+          <span class="ref" data-ref>Reference 0000</span>
+          <a class="btn btn-outline" href="#/stays" style="margin-top:12px">Keep browsing</a>
+        </div>
+      </div>
+      <aside class="summary" id="book-summary" data-price-card data-price="186" data-cleaning="60" aria-label="Price summary">
+        <div class="sum-top"><img src="images/cabin-dusk.svg" alt="An A-frame cabin among pine trees at dusk" width="600" height="570" data-s="img"><div><p class="h3" data-s="title">Pinecone A-frame</p><p class="muted small" data-s="kind">Cabin in Wren Valley</p><p class="small rating" data-s="rating"><svg class="i fill i-sm" aria-hidden="true"><use href="#i-star"/></svg>4.96</p></div></div>
+        <h2 class="h2" style="margin:24px 0 16px">Price details</h2>
+        <p class="muted" data-no-dates>Choose your dates to see the total.</p>
+        <div data-has-dates hidden>
+          <div class="lines">
+            <p class="line"><span data-l="base-label">$186 x 5 nights</span><span data-l="base">$930</span></p>
+            <p class="line" data-l="clean-line"><span>Cleaning fee</span><span data-l="clean">$60</span></p>
+            <p class="line"><span>Service fee</span><span data-l="fee">$112</span></p>
+          </div>
+          <p class="total"><span>Total (USD)</span><span data-l="total">$1,102</span></p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SAVED ===================== -->
+<div data-view="saved">
+  <div class="wrap">
+    <div class="page-head"><h1 class="h1">Saved</h1><p class="muted">Places you've hearted, kept on this device.</p></div>
+    <div class="grid" id="saved-grid"></div>
+    <div class="empty" data-saved-empty><svg class="i i-lg" aria-hidden="true" style="margin:0 auto 12px;width:40px;height:40px"><use href="#i-heart"/></svg><h2 class="h3">Nothing saved yet</h2><p class="muted">Tap the heart on any stay to keep it here.</p><a class="btn btn-outline" href="#/stays">Explore stays</a></div>
+  </div>
+</div>
+
+<!-- ===================== HOST WITH US (sign-up) ===================== -->
+<div data-view="host">
+  <div class="wrap narrow">
+    <section class="estimate" aria-labelledby="host-title">
+      <div>
+        <h1 class="display" id="host-title">Your place could host someone's slow weekend</h1>
+        <p class="earn" data-earn>$1,488</p>
+        <p class="muted" data-earn-note>8 nights at $186 a night</p>
+        <div class="range"><label for="h-nights">Nights booked in a month</label><input id="h-nights" type="range" min="1" max="30" value="8"></div>
+        <div class="field"><label for="h-kind">Kind of place</label><select id="h-kind"><option data-price="186" selected>Cabin</option><option data-price="210">Cottage</option><option data-price="160">Farm stay</option><option data-price="95">Room in a home</option></select><svg class="i i-sm chev" aria-hidden="true"><use href="#i-down"/></svg></div>
+        <p class="fine">An estimate from what similar places on our coast earned last year, before fees. Your earnings depend on your dates, price and reviews.</p>
+      </div>
+      <img src="images/treehouse.svg" alt="A treehouse with warm windows in a leafy tree" width="600" height="570">
+    </section>
+    <section class="steps" aria-label="How hosting works">
+      <div><svg class="i" aria-hidden="true"><use href="#i-chat"/></svg><h2 class="h3">1. Tell us about it</h2><p>Send the form below. We visit within two weeks, take the photos and write the listing with you.</p></div>
+      <div><svg class="i" aria-hidden="true"><use href="#i-cal"/></svg><h2 class="h3">2. Choose your dates</h2><p>Open as many or as few nights as you like. Block dates any time from your calendar.</p></div>
+      <div><svg class="i" aria-hidden="true"><use href="#i-key"/></svg><h2 class="h3">3. Welcome guests</h2><p>We handle questions, cleaning and keys. You get paid the day after each guest checks in.</p></div>
+    </section>
+    <section style="max-width:640px" aria-labelledby="host-form-title">
+      <h2 class="h1" id="host-form-title" style="margin-bottom:24px">Tell us about your place</h2>
+      <form class="form" data-form="host" novalidate>
+        <div class="two">
+          <div class="field"><label for="h-name">Your name</label><input id="h-name" required autocomplete="name" aria-describedby="h-name-e"><p class="error" id="h-name-e"></p></div>
+          <div class="field"><label for="h-email">Email</label><input id="h-email" type="email" required autocomplete="email" aria-describedby="h-email-e"><p class="error" id="h-email-e"></p></div>
+        </div>
+        <div class="field"><label for="h-where">Where is it?</label><select id="h-where"><option>Wren Valley</option><option>Corrin Coast</option><option>Hollin Hills</option><option>Somewhere nearby</option></select><svg class="i i-sm chev" aria-hidden="true"><use href="#i-down"/></svg></div>
+        <div class="field"><label for="h-about">About the place</label><textarea id="h-about" required minlength="20" aria-describedby="h-about-e" placeholder="How many beds, what's nearby, anything unusual"></textarea><p class="error" id="h-about-e"></p></div>
+        <div class="field"><label class="check"><input type="checkbox" required aria-describedby="h-own-e">I own this place or have permission to host it.</label><p class="error" id="h-own-e"></p></div>
+        <button class="btn btn-ink" type="submit">Send</button>
+      </form>
+      <div class="success" data-success="host" hidden role="status"><span class="tick"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><h3 class="h2">Thanks, we'll be in touch</h3><p class="muted">Someone from the team will call or email within three working days to arrange a visit.</p></div>
+    </section>
+  </div>
+</div>
+
+<!-- ===================== JOURNAL (blog) ===================== -->
+<div data-view="journal">
+  <div class="wrap">
+    <div class="page-head"><h1 class="h1">Journal</h1><p class="muted">Walks, recipes and small discoveries from the coast and the hills.</p></div>
+    <div class="grid three">
+      <a class="post-card" href="#/post"><img src="images/cabin-dusk.svg" alt="The A-frame at dusk" width="600" height="570"><span class="tag">Field notes</span><h2 class="h2">A weekend on the river path</h2><p class="muted small">March 2 · 6 min read</p></a>
+      <a class="post-card" href="#/post"><img src="images/sauna-night.svg" alt="A sauna hut by the water at night" width="600" height="570"><span class="tag">Guides</span><h2 class="h2">What to pack for a sauna stay</h2><p class="muted small">February 14 · 4 min read</p></a>
+      <a class="post-card" href="#/post"><img src="images/exp-bread.svg" alt="Fresh loaves by a wood-fired oven" width="480" height="600"><span class="tag">Food</span><h2 class="h2">Bread, butter and the Hollin Hills</h2><p class="muted small">January 28 · 5 min read</p></a>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== POST ===================== -->
+<div data-view="post">
+  <div class="wrap">
+    <article class="article">
+      <a class="round back" href="#/journal" aria-label="Back to the journal"><svg class="i" aria-hidden="true"><use href="#i-left"/></svg></a>
+      <p class="muted small" style="font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-top:8px">Field notes</p>
+      <h1 class="display" style="margin-top:8px">A weekend on the river path</h1>
+      <div class="byline"><span class="av c3" aria-hidden="true">J</span><div><strong>Jonah Prior</strong><p class="muted small">March 2 · 6 min read</p></div></div>
+      <img src="images/cabin-dusk.svg" alt="The A-frame among pines at dusk" width="600" height="570">
+      <div class="prose">
+        <p>The river path runs eleven kilometres from Fernley to the old mill, and nobody walks all of it in one go. You don't need to. Here is how we spend two slow days on it.</p>
+        <h2 class="h2">Saturday: the lower bend</h2>
+        <p>Start at the station and follow the water upstream. After an hour the path drops to a gravel beach where the river slows and turns green. Swim if the sun is out, then walk up through the pines to the cabin.</p>
+        <blockquote>Bring less than you think. The valley has everything else.</blockquote>
+        <h2 class="h2">Sunday: the mill and back</h2>
+        <ul><li>Leave early: the mist sits on the water until nine.</li><li>The mill café opens at ten and sells out of buns by noon.</li><li>Take the high path home for the view over the coast.</li></ul>
+        <p>Back at the cabin, light the sauna before you leave in the morning and it will be ready when you return.</p>
+      </div>
+      <div class="letter">
+        <h2 class="h2">One letter a month</h2>
+        <p class="muted">New places, open dates and a walk worth taking. No more than that.</p>
+        <form class="inline-form" data-form="newsletter" novalidate>
+          <div class="field"><label for="n-email">Email</label><input id="n-email" type="email" required autocomplete="email" aria-describedby="n-email-e"><p class="error" id="n-email-e"></p></div>
+          <button class="btn btn-ink" type="submit" style="min-height:58px">Subscribe</button>
+        </form>
+        <div class="success" data-success="newsletter" hidden role="status"><span class="tick"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><p><strong>You're on the list.</strong> The next letter goes out on the first of the month.</p></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<!-- ===================== HELP (FAQ and contact) ===================== -->
+<div data-view="help">
+  <div class="wrap narrow">
+    <div class="page-head">
+      <h1 class="display">How can we help?</h1>
+      <div class="help-search"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg><label class="sr" for="help-q">Search help</label><input id="help-q" type="search" placeholder="Search how-tos and answers"></div>
+    </div>
+    <div class="chips" role="group" aria-label="Topics">
+      <button class="chip" type="button" data-topic-filter="all" aria-pressed="true">All topics</button>
+      <button class="chip" type="button" data-topic-filter="booking" aria-pressed="false">Booking</button>
+      <button class="chip" type="button" data-topic-filter="stay" aria-pressed="false">Your stay</button>
+      <button class="chip" type="button" data-topic-filter="hosting" aria-pressed="false">Hosting</button>
+    </div>
+    <div class="faq">
+      <details data-topic="booking"><summary>When am I charged?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Only when your host accepts the request. Until then nothing leaves your account.</p></details>
+      <details data-topic="booking"><summary>Can I cancel?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Yes. Cancel within 48 hours of booking for a full refund, or until 7 days before check-in for half.</p></details>
+      <details data-topic="stay"><summary>How do I get the key?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Most places have a lockbox. The code arrives by email the morning of your check-in.</p></details>
+      <details data-topic="stay"><summary>Are pets welcome?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>In some places. Use the Pets welcome filter, and tell your host what kind of pet is coming.</p></details>
+      <details data-topic="hosting"><summary>What does hosting cost?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Listing is free. We keep a share of each booking to pay for cleaning, photos and guest support.</p></details>
+      <details data-topic="hosting"><summary>Do I have to live nearby?<svg class="i" aria-hidden="true"><use href="#i-down"/></svg></summary><p>No, but someone has to be within half an hour of the place in case a guest needs help.</p></details>
+    </div>
+    <div class="empty" data-help-empty hidden style="margin-top:24px"><h2 class="h3">No answers match that</h2><p class="muted">Try another word, or write to us below.</p></div>
+
+    <section id="contact" style="max-width:640px;padding-top:56px" aria-labelledby="contact-title">
+      <h2 class="h1" id="contact-title">Still need help?</h2>
+      <p class="muted" style="margin:8px 0 24px">We answer every message within a day, usually much sooner.</p>
+      <form class="form" data-form="contact" novalidate>
+        <div class="two">
+          <div class="field"><label for="c-name">Name</label><input id="c-name" required autocomplete="name" aria-describedby="c-name-e"><p class="error" id="c-name-e"></p></div>
+          <div class="field"><label for="c-email">Email</label><input id="c-email" type="email" required autocomplete="email" aria-describedby="c-email-e"><p class="error" id="c-email-e"></p></div>
+        </div>
+        <div class="field"><label for="c-topic">Topic</label><select id="c-topic"><option value="booking">A booking</option><option value="stay">A stay or a host</option><option value="hosting">Hosting with us</option><option value="other">Something else</option></select><svg class="i i-sm chev" aria-hidden="true"><use href="#i-down"/></svg></div>
+        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" required minlength="10" aria-describedby="c-msg-e"></textarea><p class="error" id="c-msg-e"></p></div>
+        <button class="btn btn-ink" type="submit">Send message</button>
+      </form>
+      <div class="success" data-success="contact" hidden role="status"><span class="tick"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><h3 class="h2">Message sent</h3><p class="muted">We'll reply to the address you gave within a day.</p></div>
+    </section>
+  </div>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<div data-view="about">
+  <div class="wrap narrow">
+    <div class="page-head"><h1 class="display">Eight places, looked after by the people next door</h1><p class="muted">Saltbirch started in 2019 with one cabin in Wren Valley. Every place we list is within an hour of our office in Fernley, and every host lives close by.</p></div>
+    <img class="wide-img" src="images/farmhouse.svg" alt="The farm in the Hollin Hills at golden hour" width="600" height="570">
+    <div class="cols">
+      <div><svg class="i i-lg" aria-hidden="true"><use href="#i-check"/></svg><h2 class="h3" style="margin-top:12px">We visit every place</h2><p>We stay a night before a place goes live, and again every spring.</p></div>
+      <div><svg class="i i-lg" aria-hidden="true"><use href="#i-chat"/></svg><h2 class="h3" style="margin-top:12px">A person answers</h2><p>Messages go to someone on the coast, not a call centre.</p></div>
+      <div><svg class="i i-lg" aria-hidden="true"><use href="#i-tag"/></svg><h2 class="h3" style="margin-top:12px">One clear price</h2><p>The total you see before you book is the total you pay.</p></div>
+    </div>
+    <h2 class="h2" style="margin-top:56px">The team</h2>
+    <div class="team">
+      <div class="who"><span class="av c1" aria-hidden="true">M</span><div><strong>Mirela Vos</strong><span class="muted small">Founder and host</span></div></div>
+      <div class="who"><span class="av c3" aria-hidden="true">J</span><div><strong>Jonah Prior</strong><span class="muted small">Guest support</span></div></div>
+      <div class="who"><span class="av c4" aria-hidden="true">S</span><div><strong>Saskia Lund</strong><span class="muted small">Houses and cleaning</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PRIVACY and TERMS ===================== -->
+<div data-view="privacy">
+  <div class="wrap narrow legal">
+    <div class="page-head"><h1 class="h1">Privacy</h1><p class="muted">Last updated March 1</p></div>
+    <p>We collect what we need to arrange your stay: your name, email, dates and the messages you send your host. We share them only with that host and the people who clean and look after the place.</p>
+    <h2 class="h2">What stays on your device</h2><p>Your saved places and colour preference are kept in your browser, not on our servers.</p>
+    <h2 class="h2">Your choices</h2><p>Ask us at hello@saltbirch.example to see, correct or delete what we hold about you.</p>
+  </div>
+</div>
+<div data-view="terms">
+  <div class="wrap narrow legal">
+    <div class="page-head"><h1 class="h1">Terms</h1><p class="muted">Last updated March 1</p></div>
+    <p>When your host accepts a request, you have a booking with them. We arrange it, take the payment and pass it on after check-in.</p>
+    <h2 class="h2">Cancellation</h2><p>Cancel within 48 hours of booking for a full refund. After that, cancel until 7 days before check-in for half. Later cancellations are not refunded unless the host can rebook the dates.</p>
+    <h2 class="h2">Looking after the place</h2><p>Leave it as you found it. Damage beyond normal wear is charged at cost, and your host will show you what happened first.</p>
+  </div>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <div class="wrap">
+    <section class="notfound">
+      <img src="images/lake-cabin.svg" alt="A small cabin on a calm lake" width="600" height="570">
+      <h1 class="h1">We can't find that page</h1>
+      <p class="muted">The link may be old, or the place may no longer be listed.</p>
+      <div class="chips" style="justify-content:center"><a class="btn btn-ink" href="#/">Go home</a><a class="btn btn-outline" href="#/stays">See all stays</a></div>
+    </section>
+  </div>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-cols">
+      <div><h2>Support</h2><ul><li><a href="#/help">Help</a></li><li><a href="#/help?topic=booking">Cancellation options</a></li><li><a href="#/help?at=contact">Contact us</a></li></ul></div>
+      <div><h2>Hosting</h2><ul><li><a href="#/host">Host with us</a></li><li><a href="#/help?topic=hosting">Hosting questions</a></li><li><a href="#/experiences">Run an experience</a></li></ul></div>
+      <div><h2>Saltbirch</h2><ul><li><a href="#/about">About</a></li><li><a href="#/journal">Journal</a></li><li><a href="#/saved">Saved stays</a></li></ul></div>
+    </div>
+    <div class="foot-bar">
+      <nav aria-label="Legal"><span>© 2027 Saltbirch Stays Ltd</span><a href="#/privacy">Privacy</a><a href="#/terms">Terms</a></nav>
+      <span>English (US) · $ USD</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== Dialogs ===================== -->
+<dialog id="filters" aria-labelledby="filters-title">
+  <div class="dlg-head"><button class="round" type="button" data-close aria-label="Close filters"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button><h2 class="h3" id="filters-title">Filters</h2><span></span></div>
+  <div class="dlg-body">
+    <section class="fsec"><h3 class="h2">Type of place</h3><div class="seg-ctl" role="group" aria-label="Type of place"><button type="button" data-place="any" aria-pressed="true">Any type</button><button type="button" data-place="whole" aria-pressed="false">Whole place</button><button type="button" data-place="room" aria-pressed="false">Room</button></div></section>
+    <section class="fsec"><h3 class="h2">Price per night</h3><div class="two"><div class="field"><label for="f-min">Minimum ($)</label><input id="f-min" type="number" min="0" step="10" inputmode="numeric" placeholder="0"></div><div class="field"><label for="f-max">Maximum ($)</label><input id="f-max" type="number" min="0" step="10" inputmode="numeric" placeholder="Any"></div></div></section>
+    <section class="fsec"><h3 class="h2">Bedrooms</h3><div class="chips" role="group" aria-label="Bedrooms"><button class="chip" type="button" data-beds="0" aria-pressed="true">Any</button><button class="chip" type="button" data-beds="1" aria-pressed="false">1+</button><button class="chip" type="button" data-beds="2" aria-pressed="false">2+</button><button class="chip" type="button" data-beds="3" aria-pressed="false">3+</button></div></section>
+    <section class="fsec"><h3 class="h2">Amenities</h3><div class="chips" role="group" aria-label="Amenities">
+      <button class="chip" type="button" data-amen="wifi" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-wifi"/></svg>Wifi</button>
+      <button class="chip" type="button" data-amen="kitchen" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-pot"/></svg>Kitchen</button>
+      <button class="chip" type="button" data-amen="stove" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-flame"/></svg>Wood stove</button>
+      <button class="chip" type="button" data-amen="sauna" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-steam"/></svg>Sauna</button>
+      <button class="chip" type="button" data-amen="pets" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-paw"/></svg>Pets welcome</button>
+      <button class="chip" type="button" data-amen="parking" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg>Free parking</button>
+    </div></section>
+  </div>
+  <div class="dlg-foot"><button class="link" type="button" data-clear-all>Clear all</button><button class="btn btn-ink" type="button" data-close data-show-count>Show 8 stays</button></div>
+</dialog>
+
+<dialog id="amenities" aria-labelledby="amen-title">
+  <div class="dlg-head"><button class="round" type="button" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button><h2 class="h3" id="amen-title">What this place offers</h2><span></span></div>
+  <div class="dlg-body">
+    <section class="fsec"><h3 class="h3">Outdoors</h3><ul class="amen"><li><svg class="i" aria-hidden="true"><use href="#i-waves"/></svg>River access and swimming pool</li><li><svg class="i" aria-hidden="true"><use href="#i-steam"/></svg>Wood-fired sauna</li><li><svg class="i" aria-hidden="true"><use href="#c-tree"/></svg>Hammock under the pines</li><li><svg class="i" aria-hidden="true"><use href="#i-car"/></svg>Free parking on the lane</li></ul></section>
+    <section class="fsec"><h3 class="h3">Inside</h3><ul class="amen"><li><svg class="i" aria-hidden="true"><use href="#i-flame"/></svg>Wood stove and firewood</li><li><svg class="i" aria-hidden="true"><use href="#i-pot"/></svg>Full kitchen and oven</li><li><svg class="i" aria-hidden="true"><use href="#i-wifi"/></svg>Wifi, 50 Mbps</li><li><svg class="i" aria-hidden="true"><use href="#i-bed"/></svg>Linen, towels and blankets</li><li><svg class="i" aria-hidden="true"><use href="#i-sparkle"/></svg>Washing machine</li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Long stays allowed</li></ul></section>
+    <section class="fsec"><h3 class="h3">Safety</h3><ul class="amen"><li><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Smoke alarm</li><li><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Carbon monoxide alarm</li><li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>First aid kit</li><li><svg class="i" aria-hidden="true"><use href="#i-key"/></svg>Lockbox self check-in</li></ul></section>
+    <section class="fsec"><h3 class="h3">Not included</h3><ul class="amen"><li class="off"><svg class="i" aria-hidden="true"><use href="#i-paw"/></svg>Pets</li><li class="off"><svg class="i" aria-hidden="true"><use href="#i-sparkle"/></svg>Air conditioning</li><li class="off"><svg class="i" aria-hidden="true"><use href="#i-grid"/></svg>Television</li><li class="off"><svg class="i" aria-hidden="true"><use href="#i-steam"/></svg>Dryer</li></ul></section>
+  </div>
+</dialog>
+
+<dialog id="photos" aria-labelledby="photos-title">
+  <div class="dlg-head"><button class="round" type="button" data-close aria-label="Close photos"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button><h2 class="h3" id="photos-title">Photo tour</h2><span></span></div>
+  <div class="dlg-body photo-tour">
+    <img src="images/cabin-dusk.svg" alt="The A-frame among pine trees at dusk" width="600" height="570" loading="lazy">
+    <div class="two"><img src="images/living.svg" alt="The living room and wood stove" width="600" height="570" loading="lazy"><img src="images/bedroom.svg" alt="The main bedroom" width="600" height="570" loading="lazy"></div>
+    <div class="two"><img src="images/kitchen.svg" alt="The kitchen table under the arched window" width="600" height="570" loading="lazy"><img src="images/sauna-night.svg" alt="The sauna by the river at night" width="600" height="570" loading="lazy"></div>
+  </div>
+</dialog>
+
+<div class="toast" role="status" aria-live="polite" hidden><span data-toast-text>Saved</span><a href="#/saved" data-toast-link>View saved</a></div>
+
+<!-- ===================== SVG sprite: brand mark, ornament and icons ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="mark" viewBox="0 0 32 32"><path d="M16 5.5C22.5 9.5 24.5 16 20.5 22.5Q16 27.5 11.5 22.5C7.5 16 9.5 9.5 16 5.5ZM16 10V27.5M16 16.5L19.5 13.5M16 21L12.5 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="sprig" viewBox="0 0 32 64"><path d="M22 62C11 50 8 30 17 4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path fill="currentColor" d="M16.5 10c-6 .5-9.5-2.5-10.5-6.5 5-.5 9.5 1.5 10.5 6.5zM14 22c-6 1-10-1.5-11.5-5.5 5-1 10 .5 11.5 5.5zM13 34.5c-6 1.5-10.5-.5-12.5-4.5 5-1.5 10.5-.5 12.5 4.5zM14.5 47c-5.5 2.5-10.5 1-13-2.5 5-2.5 10.5-2 13 2.5zM17.5 16c5-2.5 7-6.5 6.5-11-5 1-7.5 5.5-6.5 11zM16 29.5c5-2 8-5.5 8.5-10-5 0-8.5 4-8.5 10zM17 43c5-1 8.5-4.5 10-9-5-.5-9 3-10 9z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></symbol>
+    <symbol id="stars5" viewBox="0 0 120 24"><use href="#i-star" width="24" height="24"/><use href="#i-star" x="24" width="24" height="24"/><use href="#i-star" x="48" width="24" height="24"/><use href="#i-star" x="72" width="24" height="24"/><use href="#i-star" x="96" width="24" height="24"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5.5 19.5a6.5 6.5 0 0 1 13 0"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6L6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M14.5 5.5L8 12l6.5 6.5"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M9.5 5.5L16 12l-6.5 6.5"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M5.5 9.5L12 16l6.5-6.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3.5M7.5 8L12 3.5 16.5 8M5 12v8h14v-8"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4.5 4.5h4v4h-4zM10 4.5h4v4h-4zM15.5 4.5h4v4h-4zM4.5 10h4v4h-4zM10 10h4v4h-4zM15.5 10h4v4h-4zM4.5 15.5h4v4h-4zM10 15.5h4v4h-4zM15.5 15.5h4v4h-4z"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4.5L3.5 6.5v13L9 17.5l6 2 5.5-2v-13L15 6.5zM9 4.5v13M15 6.5v13"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8.5 6.5h11M8.5 12h11M8.5 17.5h11M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M6 12h12"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15.5" r="4"/><path d="M11 12.5l8-8M16 7.5l2.5 2.5M13.8 9.7l2 2"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c-3.6 0-6.5-2.6-6.5-6.2 0-4.3 4.3-6 4.5-10.8 3.5 2 7.5 6 7.5 10.8 0 3.6-2.6 6.2-5.5 6.2z"/><path d="M12 21c-1.6 0-3-1.3-3-3 0-2 2-3 2-5 1.5 1 4 3 4 5 0 1.7-1.3 3-3 3z"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3 9.5a13 13 0 0 1 18 0M6 13a8.5 8.5 0 0 1 12 0M9 16.5a4 4 0 0 1 6 0M12 19.5h.01"/></symbol>
+    <symbol id="i-pot" viewBox="0 0 24 24"><path d="M4.5 10h15v6.5a3.5 3.5 0 0 1-3.5 3.5H8a3.5 3.5 0 0 1-3.5-3.5zM2.5 10h19M9 7V5M15 7V5M12 6.5V3.5"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 16.5V12l2-5h10l2 5v4.5zM5 16.5V19h3v-2.5M16 16.5V19h3v-2.5M5 12h14M8.5 14h.01M15.5 14h.01"/></symbol>
+    <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="6.5" cy="10.5" r="1.8"/><circle cx="10" cy="6.5" r="1.8"/><circle cx="14.5" cy="6.5" r="1.8"/><circle cx="18" cy="10.5" r="1.8"/><path d="M12 12.5c-3 0-5.5 3.5-5.5 5.5 0 1.5 1.3 2.5 2.8 2.2 1-.2 1.8-.7 2.7-.7s1.7.5 2.7.7c1.5.3 2.8-.7 2.8-2.2 0-2-2.5-5.5-5.5-5.5z"/></symbol>
+    <symbol id="i-steam" viewBox="0 0 24 24"><path d="M8 20c-1.5-2 1.5-3.5 0-5.5S8 11 8 9M12 20c-1.5-2 1.5-3.5 0-5.5S12 11 12 9M16 20c-1.5-2 1.5-3.5 0-5.5S16 11 16 9M5 5.5h14"/></symbol>
+    <symbol id="i-waves" viewBox="0 0 24 24"><path d="M3 8.5c2 0 2-1.5 4.5-1.5S9.5 8.5 12 8.5s2-1.5 4.5-1.5 2 1.5 4.5 1.5M3 13.5c2 0 2-1.5 4.5-1.5s2 1.5 4.5 1.5 2-1.5 4.5-1.5 2 1.5 4.5 1.5M3 18.5c2 0 2-1.5 4.5-1.5s2 1.5 4.5 1.5 2-1.5 4.5-1.5 2 1.5 4.5 1.5"/></symbol>
+    <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3 18.5V6M3 14h18v4.5M21 14v-2.5A2.5 2.5 0 0 0 18.5 9H11v5"/><circle cx="7" cy="11" r="2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.5l7 2.5v5.5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 11L12 4l8.5 7M6 9.5V20h12V9.5M10 20v-5h4v5"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4.5 5.5h15v10h-8l-4.5 4v-4H4.5z"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3.5 12.5V4.5h8l9 9-8 8zM8 8h.01"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3.5l1.8 5.2 5.2 1.8-5.2 1.8L12 17.5l-1.8-5.2L5 10.5l5.2-1.8zM18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></symbol>
+    <symbol id="c-cabin" viewBox="0 0 24 24"><path d="M12 3.5L3.5 20.5h17zM9.5 20.5v-5h5v5"/></symbol>
+    <symbol id="c-farm" viewBox="0 0 24 24"><path d="M3.5 20.5V10L12 4.5l8.5 5.5v10.5zM9 20.5v-6h6v6M9 14.5l6 6M15 14.5l-6 6"/></symbol>
+    <symbol id="c-tree" viewBox="0 0 24 24"><path d="M12 20.5v-6M12 3.5c3.5 0 6 2.5 6 5.5s-2.5 5-6 5-6-2-6-5 2.5-5.5 6-5.5zM8 20.5h8"/></symbol>
+    <symbol id="c-tiny" viewBox="0 0 24 24"><path d="M4.5 20.5V9h15v11.5M3 9h18M7.5 12.5h4v4h-4zM15 12.5v8"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (selector, scope = document) => scope.querySelector(selector);
+  const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+  const icon = (id) => `<svg class="i i-sm" aria-hidden="true"><use href="#${id}"/></svg>`;
+  const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+  const money = (n) => "$" + Math.round(n).toLocaleString("en-US");
+
+  /* ---------- Rails clone their cards from the listing grids, so each listing is written once ---------- */
+  $$("[data-from]").forEach((rail) => rail.append(...rail.dataset.ids.split(" ").map((id) => $(`${rail.dataset.from} [data-id="${id}"]`)?.cloneNode(true)).filter(Boolean)));
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: light by default (follows the system), dark behind the toggle ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light colors" : "Switch to dark colors");
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const savedTheme = store.get("saltbirch-theme");
+  applyTheme(savedTheme === "light" || savedTheme === "dark" ? savedTheme : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("saltbirch-theme", next);
+  });
+
+  /* ---------- Trip: one shared state for the search bar, calendars, steppers and prices ---------- */
+  const PLACES = { wren: "Wren Valley", corrin: "Corrin Coast", hollin: "Hollin Hills" };
+  const DAY = 86400000;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const addDays = (date, n) => new Date(date.getFullYear(), date.getMonth(), date.getDate() + n);
+  const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const fromIso = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+  const fmt = (d, options) => d.toLocaleDateString("en-US", options);
+  const short = (d) => fmt(d, { month: "short", day: "numeric" });
+  const trip = { in: addDays(today, 14), out: addDays(today, 19), where: "", guests: { adults: 2, children: 0, infants: 0, pets: 0 } };
+  const nights = () => (trip.in && trip.out ? Math.round((trip.out - trip.in) / DAY) : 0);
+  const people = () => trip.guests.adults + trip.guests.children;
+  const GUESTS = [
+    ["adults", "Adults", "Ages 13 or above"],
+    ["children", "Children", "Ages 2 to 12"],
+    ["infants", "Infants", "Under 2"],
+    ["pets", "Pets", "Bringing a service animal?"],
+  ];
+  $$("[data-guests-ui]").forEach((box) => {
+    const rows = GUESTS.slice(0, box.dataset.guestsUi === "2" ? 3 : 4);
+    box.innerHTML = rows.map(([key, label, note]) => `<div class="guest-row"><div><strong>${label}</strong><span class="muted small">${note}</span></div><div class="stepper" data-guest="${key}"><button class="step" type="button" data-step="-1" aria-label="Fewer ${label.toLowerCase()}">${icon("i-minus")}</button><output aria-live="polite">0</output><button class="step" type="button" data-step="1" aria-label="More ${label.toLowerCase()}">${icon("i-plus")}</button></div></div>`).join("");
+  });
+  function limits(key, stepper) {
+    const cap = Number(stepper.closest("[data-max-guests]")?.dataset.maxGuests || 16);
+    if (key === "adults") return [1, cap - trip.guests.children];
+    if (key === "children") return [0, cap - trip.guests.adults];
+    return [0, key === "pets" ? 3 : 5];
+  }
+  function renderTrip() {
+    const guestText = plural(people(), "guest") + (trip.guests.infants ? `, ${plural(trip.guests.infants, "infant")}` : "") + (trip.guests.pets ? `, ${plural(trip.guests.pets, "pet")}` : "");
+    const out = {
+      where: PLACES[trip.where] || "Anywhere",
+      in: trip.in ? short(trip.in) : "Add date",
+      out: trip.out ? short(trip.out) : "Add date",
+      dates: trip.in && trip.out ? `${short(trip.in)} – ${short(trip.out)}` : "Any week",
+      guests: guestText,
+      range: trip.in && trip.out ? `${fmt(trip.in, { month: "short", day: "numeric", year: "numeric" })} – ${fmt(trip.out, { month: "short", day: "numeric", year: "numeric" })}` : "Add your travel dates for exact prices",
+      "nights-title": nights() ? `${plural(nights(), "night")} in Wren Valley` : trip.in ? "Select checkout date" : "Select check-in date",
+    };
+    $$("[data-out]").forEach((el) => { el.textContent = out[el.dataset.out] ?? el.textContent; });
+    $$(".stepper").forEach((stepper) => {
+      const key = stepper.dataset.guest;
+      const [min, max] = limits(key, stepper);
+      $("output", stepper).textContent = trip.guests[key];
+      const [less, more] = $$(".step", stepper);
+      less.disabled = trip.guests[key] <= min;
+      more.disabled = trip.guests[key] >= max;
+    });
+    $$("[data-calendar]").forEach(renderCalendar);
+    updatePrices();
+  }
+  document.addEventListener("click", (event) => {
+    const step = event.target.closest(".step");
+    if (!step) return;
+    const stepper = step.closest(".stepper");
+    const key = stepper.dataset.guest;
+    const [min, max] = limits(key, stepper);
+    trip.guests[key] = Math.min(max, Math.max(min, trip.guests[key] + Number(step.dataset.step)));
+    renderTrip();
+  });
+
+  /* ---------- Calendars: two months on wide screens, one on phones; [data-booked] strikes out taken nights ---------- */
+  const isBooked = (d) => (d.getDate() * 7 + d.getMonth() * 3) % 17 === 0;
+  function renderCalendar(cal) {
+    if (!cal._start) { const s = trip.in || today; cal._start = new Date(s.getFullYear(), s.getMonth(), 1); }
+    const booked = "booked" in cal.dataset;
+    let html = `<div class="cal-nav"><button class="round sm bordered" type="button" data-cal="-1" aria-label="Previous month">${icon("i-left")}</button><button class="round sm bordered" type="button" data-cal="1" aria-label="Next month">${icon("i-right")}</button></div><div class="cal-months">`;
+    for (let m = 0; m < 2; m++) {
+      const first = new Date(cal._start.getFullYear(), cal._start.getMonth() + m, 1);
+      const count = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
+      html += `<div class="cal-month"><h3 class="cal-title">${fmt(first, { month: "long", year: "numeric" })}</h3><div class="cal-grid">${["S", "M", "T", "W", "T", "F", "S"].map((l) => `<span class="dow" aria-hidden="true">${l}</span>`).join("")}${"<span></span>".repeat(first.getDay())}`;
+      for (let day = 1; day <= count; day++) {
+        const d = new Date(first.getFullYear(), first.getMonth(), day);
+        const t = +d;
+        const start = trip.in && +trip.in === t;
+        const end = trip.out && +trip.out === t;
+        const mid = trip.in && trip.out && t > +trip.in && t < +trip.out;
+        const taken = booked && isBooked(d);
+        const off = d < today || taken;
+        const cls = [start && "start", start && trip.out && "has-end", end && "end", mid && "mid"].filter(Boolean).join(" ");
+        html += `<span class="cell ${cls}"><button class="day${taken ? " booked" : ""}" type="button" data-date="${iso(d)}" aria-pressed="${Boolean(start || end)}" aria-label="${fmt(d, { weekday: "long", month: "long", day: "numeric" })}${off ? ", unavailable" : ""}"${off ? " disabled" : ""}>${day}</button></span>`;
+      }
+      html += "</div></div>";
+    }
+    cal.innerHTML = html + "</div>";
+    $("[data-cal='-1']", cal).disabled = cal._start <= new Date(today.getFullYear(), today.getMonth(), 1);
+  }
+  document.addEventListener("click", (event) => {
+    const nav = event.target.closest("[data-cal]");
+    if (nav) {
+      const cal = nav.closest("[data-calendar]");
+      cal._start = new Date(cal._start.getFullYear(), cal._start.getMonth() + Number(nav.dataset.cal), 1);
+      renderCalendar(cal);
+      $(`[data-cal="${nav.dataset.cal}"]`, cal).focus();
+      return;
+    }
+    const day = event.target.closest(".day");
+    if (!day || day.disabled) return;
+    const cal = day.closest("[data-calendar]");
+    const d = fromIso(day.dataset.date);
+    const crossesBooked = () => { for (let x = addDays(trip.in, 1); x < d; x = addDays(x, 1)) if (isBooked(x)) return true; return false; };
+    if (!trip.in || trip.out || d <= trip.in || ("booked" in cal.dataset && crossesBooked())) { trip.in = d; trip.out = null; }
+    else trip.out = d;
+    renderTrip();
+    $(`[data-date="${day.dataset.date}"]`, cal)?.focus();
+    if (trip.out && cal.closest("#p-when")) openPanel("p-who", $("[data-panel='p-who']"));
+  });
+  $("[data-clear-dates]").addEventListener("click", () => { trip.in = null; trip.out = null; renderTrip(); });
+
+  /* ---------- Search bar: segments open panels; the orb runs the search ---------- */
+  const search = $(".search");
+  const whereInput = $("#s-where");
+  function openPanel(id, segment) {
+    $$(".panel", search).forEach((panel) => { panel.hidden = panel.id !== id; });
+    $$(".seg", search).forEach((seg) => seg.classList.toggle("is-on", Boolean(id) && seg === segment));
+    $$("[data-panel]", search).forEach((b) => b.setAttribute("aria-expanded", String(b === segment)));
+    whereInput.setAttribute("aria-expanded", String(id === "p-where"));
+    search.classList.toggle("is-open", Boolean(id));
+  }
+  search.addEventListener("click", (event) => {
+    const seg = event.target.closest("[data-panel]");
+    if (seg) openPanel(seg.dataset.panel, seg);
+    const dest = event.target.closest(".dest");
+    if (dest) {
+      trip.where = dest.dataset.where;
+      whereInput.value = PLACES[trip.where] || "";
+      renderTrip();
+      openPanel("p-when", $("[data-panel='p-when']"));
+    }
+  });
+  whereInput.addEventListener("focus", () => openPanel("p-where", whereInput.closest(".seg")));
+  whereInput.addEventListener("input", () => {
+    const q = whereInput.value.trim().toLowerCase();
+    trip.where = Object.keys(PLACES).find((key) => q && PLACES[key].toLowerCase().includes(q)) || "";
+    $$(".dest", search).forEach((dest) => { dest.hidden = Boolean(q) && !dest.textContent.toLowerCase().includes(q); });
+    renderTrip();
+  });
+  whereInput.addEventListener("keydown", (event) => { if (event.key === "Enter") runSearch(); });
+  document.addEventListener("pointerdown", (event) => {
+    if (!search.contains(event.target)) openPanel(null);
+    const pop = $("#guest-pop");
+    if (!pop.hidden && !event.target.closest(".box")) toggleGuests(false);
+  });
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape") { openPanel(null); toggleGuests(false); } });
+  function runSearch() {
+    const query = new URLSearchParams();
+    if (trip.where) query.set("where", trip.where);
+    if (people() > 1) query.set("guests", people());
+    openPanel(null);
+    go(`#/stays${query.toString() ? `?${query}` : ""}`);
+  }
+  $("[data-search-go]").addEventListener("click", runSearch);
+  $$("[data-open-search]").forEach((button) => button.addEventListener("click", () => {
+    if (current?.dataset.view !== "home") go("#/");
+    window.scrollTo({ top: 0, behavior: "instant" });
+    requestAnimationFrame(() => whereInput.focus({ preventScroll: true }));
+  }));
+
+  /* ---------- Header: the search bar folds into the header once it scrolls away (home only) ---------- */
+  const header = $(".site-header");
+  let heroVisible = true;
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(([entry]) => { heroVisible = entry.isIntersecting; syncHeader(); }, { rootMargin: "-80px 0px 0px 0px" }).observe(search);
+  }
+  function syncHeader() { header.classList.toggle("is-compact", current?.dataset.view === "home" && !heroVisible); }
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Saltbirch: quiet places to stay on the Corrin Coast",
+    stays: "Stays · Saltbirch",
+    stay: "Pinecone A-frame · Saltbirch",
+    experiences: "Experiences · Saltbirch",
+    book: "Request to book · Saltbirch",
+    saved: "Saved · Saltbirch",
+    host: "Host with us · Saltbirch",
+    journal: "Journal · Saltbirch",
+    post: "A weekend on the river path · Saltbirch",
+    help: "Help · Saltbirch",
+    about: "About · Saltbirch",
+    privacy: "Privacy · Saltbirch",
+    terms: "Terms · Saltbirch",
+    "404": "Page not found · Saltbirch",
+  };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.body.dataset.page = name;
+    document.title = titles[name] || titles.home;
+    $$(".tabs a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "stays") {
+      Object.assign(filters, { type: p.get("type") || "all", where: PLACES[p.get("where")] ? p.get("where") : "", guests: Number(p.get("guests")) || 0 });
+      applyStays();
+    }
+    if (name === "experiences") applyExp(p.get("type") || "all");
+    if (name === "book") fillSummary(p.get("for"));
+    if (name === "saved") renderSaved();
+    if (name === "help") {
+      const topic = p.get("topic");
+      if (topic && $(`#c-topic option[value="${CSS.escape(topic)}"]`)) $("#c-topic").value = topic;
+      helpTopic = $(`[data-topic-filter="${CSS.escape(topic || "all")}"]`) ? topic || "all" : "all";
+      filterHelp();
+    }
+    syncHeader();
+    const at = p.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function go(hash) {
+    $$("dialog[open]").forEach((d) => d.close());
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); go(href); }
+    else if (href.length > 1) {
+      const target = document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Dialogs: filters, photos, amenities, menu ---------- */
+  document.addEventListener("click", (event) => {
+    const opener = event.target.closest("[data-open]");
+    if (opener) { const dialog = document.getElementById(opener.dataset.open); if (dialog && !dialog.open) dialog.showModal(); return; }
+    const closer = event.target.closest("[data-close]");
+    if (closer) closer.closest("dialog").close();
+    else if (event.target instanceof HTMLDialogElement) event.target.close();
+  });
+
+  /* ---------- Cards: photo carousels, whole-photo links, hearts ---------- */
+  function syncSlides(track) {
+    const media = track.parentElement;
+    const index = track.clientWidth ? Math.round(track.scrollLeft / track.clientWidth) : 0;
+    $$(".dots i", media).forEach((dot, i) => dot.classList.toggle("on", i === index));
+    const [prev, next] = $$(".slide-btn", media);
+    if (prev) { prev.disabled = index === 0; next.disabled = index >= track.children.length - 1; }
+  }
+  $$(".slides").forEach((track) => {
+    if (track.children.length < 2) return;
+    track.parentElement.insertAdjacentHTML("beforeend", `<button class="slide-btn prev" type="button" data-slide="-1" aria-label="Previous photo">${icon("i-left")}</button><button class="slide-btn next" type="button" data-slide="1" aria-label="Next photo">${icon("i-right")}</button><span class="dots" aria-hidden="true">${"<i></i>".repeat(track.children.length)}</span>`);
+    syncSlides(track);
+  });
+  function syncRail(rail) {
+    $$(`[aria-controls="${rail.id}"]`).forEach((b) => {
+      b.disabled = Number(b.dataset.rail) < 0 ? rail.scrollLeft < 4 : rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4;
+    });
+  }
+  document.addEventListener("scroll", (event) => {
+    const el = event.target;
+    if (!(el instanceof Element)) return;
+    if (el.classList.contains("slides")) syncSlides(el);
+    else if (el.classList.contains("rail")) syncRail(el);
+    else if (el.classList.contains("mosaic")) $("[data-photo-count]").textContent = `${Math.round(el.scrollLeft / el.clientWidth) + 1} / ${el.children.length}`;
+  }, true);
+  let saved = new Set((store.get("saltbirch-saved") || "").split(",").filter(Boolean));
+  const toastBox = $(".toast");
+  let toastTimer;
+  function toast(text, withLink) {
+    $("[data-toast-text]", toastBox).textContent = text;
+    $("[data-toast-link]", toastBox).hidden = !withLink;
+    toastBox.hidden = true;
+    void toastBox.offsetWidth;
+    toastBox.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toastBox.hidden = true; }, 3600);
+  }
+  function syncSaved() {
+    $$("[data-save]").forEach((b) => b.setAttribute("aria-pressed", String(saved.has(b.dataset.save))));
+    const count = $("[data-saved-count]");
+    count.textContent = saved.size;
+    count.hidden = saved.size === 0;
+  }
+  function renderSaved() {
+    const grid = $("#saved-grid");
+    grid.replaceChildren(...[...saved].map((id) => $(`#stays-grid [data-id="${CSS.escape(id)}"]`)?.cloneNode(true)).filter(Boolean));
+    $$("[hidden]", grid).forEach((el) => { if (el.matches(".card")) el.hidden = false; });
+    $$(".slides", grid).forEach((track) => { track.scrollLeft = 0; syncSlides(track); });
+    $("[data-saved-empty]").hidden = grid.children.length > 0;
+  }
+  document.addEventListener("click", (event) => {
+    const slide = event.target.closest("[data-slide]");
+    if (slide) { const track = $(".slides", slide.parentElement); track.scrollBy({ left: track.clientWidth * Number(slide.dataset.slide) }); return; }
+    const rail = event.target.closest("[data-rail]");
+    if (rail) { const el = document.getElementById(rail.getAttribute("aria-controls")); el.scrollBy({ left: el.clientWidth * Number(rail.dataset.rail) }); return; }
+    const heart = event.target.closest("[data-save]");
+    if (heart) {
+      const id = heart.dataset.save;
+      const name = heart.getAttribute("aria-label").replace(/^Save /, "");
+      if (saved.has(id)) { saved.delete(id); toast(`Removed ${name}`, false); }
+      else { saved.add(id); toast(`Saved ${name}`, true); }
+      store.set("saltbirch-saved", [...saved].join(","));
+      syncSaved();
+      if (current?.dataset.view === "saved") renderSaved();
+      return;
+    }
+    const media = event.target.closest(".card-media");
+    if (media && !event.target.closest("button")) { const link = $(".card-link", media.parentElement); if (link) go(link.getAttribute("href")); }
+  });
+
+  /* ---------- Stays: categories, filters dialog, place chip, map ---------- */
+  const filters = { type: "all", where: "", guests: 0, min: 0, max: 0, place: "any", beds: 0, amen: new Set() };
+  function applyStays() {
+    let shown = 0;
+    $$("#stays-grid > [data-id]").forEach((card) => {
+      const d = card.dataset;
+      const ok = (filters.type === "all" || d.tags.split(" ").includes(filters.type))
+        && (!filters.where || d.region === filters.where)
+        && (!filters.guests || Number(d.guests) >= filters.guests)
+        && (!filters.min || Number(d.price) >= filters.min)
+        && (!filters.max || Number(d.price) <= filters.max)
+        && (filters.place === "any" || d.place === filters.place)
+        && (!filters.beds || Number(d.beds) >= filters.beds)
+        && [...filters.amen].every((a) => d.amen.split(" ").includes(a));
+      card.hidden = !ok;
+      const pin = $(`.pin[data-for="${d.id}"]`);
+      if (pin) pin.hidden = !ok;
+      if (ok) shown += 1;
+    });
+    $("[data-stays-empty]").hidden = shown > 0;
+    $("[data-stays-count]").textContent = plural(shown, "stay") + (filters.where ? ` in ${PLACES[filters.where]}` : "");
+    $("[data-show-count]").textContent = `Show ${plural(shown, "stay")}`;
+    $$("#stays-cats [data-filter]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === filters.type)));
+    $$("button[data-place]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.place === filters.place)));
+    $$("button[data-beds]").forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.beds) === filters.beds)));
+    $$("button[data-amen]").forEach((b) => b.setAttribute("aria-pressed", String(filters.amen.has(b.dataset.amen))));
+    const active = (filters.min || filters.max ? 1 : 0) + (filters.place !== "any" ? 1 : 0) + (filters.beds ? 1 : 0) + filters.amen.size;
+    const count = $("[data-filter-count]");
+    count.textContent = active;
+    count.hidden = active === 0;
+    $("[data-where-clear]").hidden = !filters.where;
+  }
+  document.addEventListener("click", (event) => {
+    // Buttons only: the cards carry the same data attributes for filtering
+    const b = event.target.closest("button[data-filter], button[data-place], button[data-beds], button[data-amen], [data-clear-all], [data-where-clear]");
+    if (!b) return;
+    if (b.dataset.filter) filters.type = b.dataset.filter;
+    else if (b.dataset.place) filters.place = b.dataset.place;
+    else if (b.dataset.beds) filters.beds = Number(b.dataset.beds);
+    else if (b.dataset.amen) { if (filters.amen.has(b.dataset.amen)) filters.amen.delete(b.dataset.amen); else filters.amen.add(b.dataset.amen); }
+    else if ("whereClear" in b.dataset) { filters.where = ""; trip.where = ""; whereInput.value = ""; renderTrip(); }
+    else {
+      Object.assign(filters, { type: "all", where: "", guests: 0, min: 0, max: 0, place: "any", beds: 0 });
+      filters.amen.clear();
+      $("#f-min").value = "";
+      $("#f-max").value = "";
+    }
+    applyStays();
+  });
+  $("#f-min").addEventListener("input", (e) => { filters.min = Number(e.target.value) || 0; applyStays(); });
+  $("#f-max").addEventListener("input", (e) => { filters.max = Number(e.target.value) || 0; applyStays(); });
+  const mapButton = $("[data-map-toggle]");
+  mapButton.addEventListener("click", () => {
+    const on = $("#stays-layout").classList.toggle("with-map");
+    mapButton.setAttribute("aria-pressed", String(on));
+    mapButton.innerHTML = `<span>${on ? "Show list" : "Show map"}</span><svg class="i" aria-hidden="true"><use href="#${on ? "i-list" : "i-map"}"/></svg>`;
+  });
+  $("#stays-grid").addEventListener("mouseover", (event) => {
+    const card = event.target.closest("[data-id]");
+    $$(".pin").forEach((pin) => pin.classList.toggle("is-hot", Boolean(card) && pin.dataset.for === card.dataset.id));
+  });
+
+  /* ---------- Experiences filter ---------- */
+  function applyExp(kind) {
+    const known = $(`[data-exp="${CSS.escape(kind)}"]`) ? kind : "all";
+    $$("[data-exp]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.exp === known)));
+    let shown = 0;
+    $$("#exp-grid > [data-id]").forEach((card) => { card.hidden = known !== "all" && card.dataset.kind !== known; if (!card.hidden) shown += 1; });
+    $("[data-exp-empty]").hidden = shown > 0;
+  }
+  $$("[data-exp]").forEach((b) => b.addEventListener("click", () => applyExp(b.dataset.exp)));
+
+  /* ---------- Stay page: show more, all reviews, guests popover, share ---------- */
+  $("[data-more]").addEventListener("click", (event) => {
+    const button = event.currentTarget;
+    const open = $(`#${button.dataset.more}`).classList.toggle("clamp") === false;
+    button.setAttribute("aria-expanded", String(open));
+    button.firstChild.textContent = open ? "Show less " : "Show more ";
+  });
+  $("[data-more-reviews]").addEventListener("click", (event) => { $$("#review-list [hidden]").forEach((r) => { r.hidden = false; }); event.currentTarget.hidden = true; });
+  function toggleGuests(force) {
+    const pop = $("#guest-pop");
+    const open = force ?? pop.hidden;
+    pop.hidden = !open;
+    $("[data-toggle='guest-pop']").setAttribute("aria-expanded", String(open));
+  }
+  $("[data-toggle='guest-pop']").addEventListener("click", () => toggleGuests());
+  $("[data-share]").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(location.href); toast("Link copied", false); }
+    catch { toast("Copy the address bar to share this place", false); }
+  });
+
+  /* ---------- Prices: booking card and request summary ---------- */
+  function updatePrices() {
+    $$("[data-price-card]").forEach((card) => {
+      const price = Number(card.dataset.price);
+      const perGuest = card.dataset.unit === "guest";
+      const has = perGuest ? Boolean(trip.in) : nights() > 0;
+      $$("[data-has-dates]", card).forEach((el) => { el.hidden = !has; });
+      $$("[data-no-dates]", card).forEach((el) => { el.hidden = has; });
+      if (!has) return;
+      const qty = perGuest ? people() : nights();
+      const base = price * qty;
+      const clean = Number(card.dataset.cleaning || 0);
+      const fee = Math.round(base * 0.12);
+      const set = (key, text) => $$(`[data-l="${key}"]`, card).forEach((el) => { el.textContent = text; });
+      set("base-label", `${money(price)} x ${plural(qty, perGuest ? "guest" : "night")}`);
+      set("base", money(base));
+      set("clean", money(clean));
+      set("fee", money(fee));
+      set("total", money(base + clean + fee));
+      $$("[data-l='clean-line']", card).forEach((el) => { el.hidden = !clean; });
+    });
+    $$("[data-reserve]").forEach((a) => { a.textContent = nights() ? "Reserve" : "Check availability"; a.setAttribute("href", nights() ? "#/book?for=pinecone" : "#dates"); });
+    const summary = $("#book-summary");
+    $("[data-trip-dates]").textContent = summary.dataset.unit === "guest"
+      ? (trip.in ? fmt(trip.in, { weekday: "long", month: "short", day: "numeric" }) : "Choose a date")
+      : (trip.in && trip.out ? `${short(trip.in)} – ${short(trip.out)} · ${plural(nights(), "night")}` : "Choose your dates");
+  }
+  function fillSummary(id) {
+    const source = (id && $(`#stays-grid [data-id="${CSS.escape(id)}"], #exp-grid [data-id="${CSS.escape(id)}"]`)) || $('#stays-grid [data-id="pinecone"]');
+    const summary = $("#book-summary");
+    summary.dataset.price = source.dataset.price;
+    summary.dataset.cleaning = source.dataset.cleaning || "0";
+    summary.dataset.unit = source.dataset.unit || "night";
+    const img = $("img", source);
+    const thumb = $("[data-s='img']", summary);
+    thumb.src = img.getAttribute("src");
+    thumb.alt = img.alt;
+    $("[data-s='title']", summary).textContent = source.dataset.name;
+    $("[data-s='kind']", summary).textContent = $(".card-link p", source).textContent;
+    const rating = $(".rating, .price", source).textContent.match(/\d\.\d\d/);
+    $("[data-s='rating']", summary).lastChild.textContent = rating ? rating[0] : "";
+    if (source.dataset.unit !== "guest") $("[data-s='kind']", summary).textContent = $(".card-title span", source).textContent;
+    updatePrices();
+  }
+
+  /* ---------- Home: idea tabs (arrow keys move between them) ---------- */
+  $$("[role='tablist']").forEach((list) => {
+    const tabs = $$("[role='tab']", list);
+    const select = (tab) => tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).classList.toggle("is-active", on);
+    });
+    tabs.forEach((t) => t.addEventListener("click", () => select(t)));
+    list.addEventListener("keydown", (event) => {
+      const i = tabs.indexOf(document.activeElement);
+      const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+      if (i < 0 || !step) return;
+      event.preventDefault();
+      const next = tabs[(i + step + tabs.length) % tabs.length];
+      next.focus();
+      select(next);
+    });
+  });
+
+  /* ---------- Help: search and topics filter the answers ---------- */
+  let helpTopic = "all";
+  function filterHelp() {
+    const q = $("#help-q").value.trim().toLowerCase();
+    let shown = 0;
+    $$(".faq details").forEach((item) => {
+      const ok = (helpTopic === "all" || item.dataset.topic === helpTopic) && (!q || item.textContent.toLowerCase().includes(q));
+      item.hidden = !ok;
+      if (ok) shown += 1;
+    });
+    $$("[data-topic-filter]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.topicFilter === helpTopic)));
+    $("[data-help-empty]").hidden = shown > 0;
+  }
+  $("#help-q").addEventListener("input", filterHelp);
+  $$("[data-topic-filter]").forEach((b) => b.addEventListener("click", () => { helpTopic = b.dataset.topicFilter; filterHelp(); }));
+
+  /* ---------- Host: earnings estimate ---------- */
+  function estimate() {
+    const n = Number($("#h-nights").value);
+    const price = Number($("#h-kind").selectedOptions[0].dataset.price);
+    $("[data-earn]").textContent = money(n * price);
+    $("[data-earn-note]").textContent = `${plural(n, "night")} at ${money(price)} a night`;
+  }
+  $("#h-nights").addEventListener("input", estimate);
+  $("#h-kind").addEventListener("change", estimate);
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "This is required.", typeMismatch: "Enter a valid email address.", tooShort: "Please write a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (field.type === "checkbox" ? "Tick this box to continue." : messages[problem]) : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input[aria-describedby], textarea[aria-describedby]", form);
+    fields.forEach((field) => field.addEventListener(field.type === "checkbox" ? "change" : "blur", () => checkField(field)));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+        const email = $("input[type=email]", form);
+        if (success) {
+          $$("[data-echo='email']", success).forEach((el) => { el.textContent = email?.value || "you"; });
+          $$("[data-ref]", success).forEach((el) => { el.textContent = `Reference ${String(Date.now()).slice(-6)}`; });
+          success.hidden = false;
+        }
+      }, 600);
+    });
+  });
+
+  /* ---------- Start ---------- */
+  const rangeBooked = () => { for (let x = trip.in; x <= trip.out; x = addDays(x, 1)) if (isBooked(x)) return true; return false; };
+  while (rangeBooked()) { trip.in = addDays(trip.in, 1); trip.out = addDays(trip.out, 1); }
+  $$(".rail").forEach(syncRail);
+  window.addEventListener("resize", () => $$(".rail").forEach(syncRail));
+  syncSaved();
+  renderTrip();
+  estimate();
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

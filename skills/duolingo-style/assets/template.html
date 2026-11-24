@@ -1,0 +1,1393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Mossberry: little language lessons for kids</title>
+<meta name="description" content="Ten-minute Spanish, French, Mandarin and more for kids aged 5 to 11, with a fox called Momo, a path to follow and progress reports for grown-ups.">
+<meta property="og:title" content="Mossberry: little language lessons for kids">
+<meta property="og:description" content="Ten-minute language lessons for kids aged 5 to 11, with a path to follow and progress reports for grown-ups.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/fredoka-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/nunito-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "Fredoka"; src: url("fonts/fredoka-latin-wght.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+@font-face { font-family: "Nunito"; src: url("fonts/nunito-latin-wght.woff2") format("woff2"); font-weight: 200 1000; font-display: swap; }
+
+/* ---------- Tokens: light-dark(light, dark); the theme follows color-scheme ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(100% 0 0), oklch(21.5% 0.02 236));
+  --surface: light-dark(oklch(100% 0 0), oklch(23.5% 0.021 236));
+  --surface-2: light-dark(oklch(97.2% 0.006 240), oklch(26.5% 0.024 236));
+  --text: light-dark(oklch(39% 0.008 250), oklch(94% 0.006 236));
+  --text-muted: light-dark(oklch(51% 0.01 250), oklch(76% 0.016 236));
+  --border: light-dark(oklch(91.5% 0.006 250), oklch(35% 0.022 236));
+  --border-strong: light-dark(oklch(85% 0.008 250), oklch(42% 0.024 236));
+  --heading: light-dark(oklch(62% 0.19 139), oklch(80% 0.2 135));
+  --accent: light-dark(oklch(77% 0.21 135), oklch(78% 0.2 135));
+  --accent-edge: light-dark(oklch(64% 0.19 138), oklch(60% 0.17 139));
+  --accent-text: light-dark(oklch(29% 0.08 142), oklch(24% 0.07 145));
+  --accent-soft: light-dark(oklch(94% 0.08 132), oklch(31% 0.07 140));
+  --accent-ink: light-dark(oklch(45% 0.15 140), oklch(84% 0.17 135));
+  --link: light-dark(oklch(55% 0.15 245), oklch(79% 0.12 235));
+  --sky: light-dark(oklch(73% 0.15 235), oklch(75% 0.14 235));
+  --sky-edge: light-dark(oklch(61% 0.15 240), oklch(60% 0.14 240));
+  --sky-text: light-dark(oklch(30% 0.09 245), oklch(25% 0.08 245));
+  --sky-soft: light-dark(oklch(95.5% 0.035 230), oklch(30% 0.06 240));
+  --sky-ink: light-dark(oklch(48% 0.14 245), oklch(82% 0.11 235));
+  --sun: oklch(86% 0.17 88);
+  --sun-edge: oklch(75% 0.16 75);
+  --sun-soft: light-dark(oklch(96.5% 0.06 95), oklch(31% 0.06 85));
+  --tangerine: oklch(76% 0.17 58);
+  --tangerine-ink: light-dark(oklch(55% 0.16 50), oklch(80% 0.15 62));
+  --berry: oklch(69% 0.2 24);
+  --berry-edge: oklch(57% 0.2 25);
+  --berry-soft: light-dark(oklch(95.5% 0.03 20), oklch(30% 0.07 22));
+  --berry-ink: light-dark(oklch(50% 0.19 25), oklch(80% 0.13 25));
+  --grape: oklch(73% 0.15 310);
+  --grape-soft: light-dark(oklch(95.5% 0.035 310), oklch(30% 0.06 310));
+  --navy: light-dark(oklch(29% 0.1 274), oklch(30% 0.11 277));
+  --navy-2: light-dark(oklch(36% 0.11 274), oklch(36% 0.12 277));
+  --navy-text: oklch(97% 0.01 274);
+  --navy-muted: oklch(83% 0.04 274);
+  --hill: light-dark(oklch(77% 0.21 135), oklch(48% 0.14 142));
+  --hill-text: light-dark(oklch(28% 0.08 142), oklch(97% 0.02 130));
+  --focus: light-dark(oklch(58% 0.16 245), oklch(78% 0.13 235));
+  --error: light-dark(oklch(52% 0.2 25), oklch(76% 0.15 25));
+
+  --font-display: "Fredoka", "Nunito", ui-rounded, "Arial Rounded MT Bold", system-ui, sans-serif;
+  --font: "Nunito", ui-rounded, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-display: clamp(2.5rem, 1.5rem + 3.6vw, 4.25rem);
+  --fs-h1: clamp(2.25rem, 1.6rem + 2.4vw, 3.25rem);
+  --fs-h2: clamp(2rem, 1.4rem + 2.2vw, 3rem);
+  --fs-h3: 1.375rem;
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+
+  --r-control: 14px;
+  --r-card: 16px;
+  --r-media: 16px;
+  --edge: 4px;
+  --shadow-card: 0 var(--edge) 0 var(--border);
+  --shadow-overlay: 0 18px 40px -12px light-dark(oklch(25% 0.05 250 / 0.28), oklch(0% 0 0 / 0.6));
+
+  --dur-press: 90ms;
+  --dur-fast: 150ms;
+  --dur-base: 260ms;
+  --dur-slow: 520ms;
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --page: 1120px;
+  --prose: 680px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); line-height: 1.6; font-weight: 500; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.12; text-wrap: balance; font-family: var(--font-display); font-weight: 600; }
+p, li { text-wrap: pretty; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 8px; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 100; }
+.skip:focus { top: 12px; }
+.wrap { width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.prose { width: min(100% - 2 * var(--gutter), var(--prose)); margin-inline: auto; }
+.muted { color: var(--text-muted); }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.icon { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.icon-sm { width: 18px; height: 18px; }
+.game { width: 26px; height: 26px; flex: none; }
+
+/* ---------- Type ---------- */
+.display { font-size: var(--fs-display); color: var(--heading); letter-spacing: -0.01em; line-height: 1.04; }
+.title { font-size: var(--fs-h2); color: var(--heading); letter-spacing: -0.005em; }
+.h1 { font-size: var(--fs-h1); color: var(--heading); }
+.h3 { font-size: var(--fs-h3); font-weight: 600; line-height: 1.25; }
+.lead { font-size: clamp(1.125rem, 1rem + 0.4vw, 1.25rem); color: var(--text-muted); line-height: 1.55; max-width: 34em; }
+.label { font-size: 0.8125rem; font-weight: 850; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+
+/* ---------- Buttons (signature: the pressable 3D button) ---------- */
+.btn {
+  --edge-c: var(--accent-edge);
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-block-size: 50px; padding: 0 24px; margin-bottom: var(--edge);
+  border: 0; border-radius: var(--r-control); background: var(--accent); color: var(--accent-text);
+  font: inherit; font-size: 0.9375rem; font-weight: 850; letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none; text-align: center; line-height: 1.15;
+  cursor: pointer; box-shadow: 0 var(--edge) 0 var(--edge-c);
+  transition: transform var(--dur-press) linear, box-shadow var(--dur-press) linear, filter var(--dur-fast) var(--ease);
+}
+.btn:hover { filter: brightness(1.06) saturate(1.06); }
+.btn:active { transform: translateY(var(--edge)); box-shadow: 0 0 0 var(--edge-c); }
+.btn-2 { --edge-c: var(--border); background: var(--surface); color: var(--link); box-shadow: inset 0 0 0 2px var(--border), 0 var(--edge) 0 var(--edge-c); }
+.btn-2:hover { filter: none; background: var(--surface-2); }
+.btn-2:active { box-shadow: inset 0 0 0 2px var(--border), 0 0 0 var(--edge-c); }
+.btn-sky { --edge-c: var(--sky-edge); background: var(--sky); color: var(--sky-text); }
+.btn-berry { --edge-c: var(--berry-edge); background: var(--berry); color: oklch(25% 0.09 25); }
+.btn-white { --edge-c: oklch(78% 0.05 274); background: oklch(100% 0 0); color: oklch(29% 0.1 274); }
+.btn-sm { min-block-size: 40px; padding: 0 16px; font-size: 0.8125rem; border-radius: 12px; }
+.btn-block { inline-size: 100%; }
+.btn[disabled] { --edge-c: var(--border-strong); background: var(--border); color: var(--text-muted); cursor: not-allowed; filter: none; transform: none; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 14px 12px; align-items: center; }
+.text-link { color: var(--link); font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+.text-link:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+.icon-btn { inline-size: 44px; block-size: 44px; display: inline-grid; place-items: center; border-radius: 12px; border: 0; background: transparent; color: var(--text-muted); cursor: pointer; }
+.icon-btn:hover { background: var(--surface-2); color: var(--text); }
+
+/* ---------- 3D cards, tags, word bubbles ---------- */
+.card { background: var(--surface); border: 2px solid var(--border); border-bottom-width: calc(var(--edge) + 2px); border-radius: var(--r-card); }
+a.card { text-decoration: none; transition: background-color var(--dur-fast) var(--ease); }
+a.card:hover { background: var(--surface-2); }
+.tag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 8px; font-size: 0.8125rem; font-weight: 850; letter-spacing: 0.04em; text-transform: uppercase; background: var(--sky-soft); color: var(--sky-ink); }
+.tag.green { background: var(--accent-soft); color: var(--accent-ink); }
+.tag.berry { background: var(--berry-soft); color: var(--berry-ink); }
+.word { --c: var(--sky); --e: var(--sky-edge); position: relative; display: inline-grid; place-items: center; min-inline-size: 52px; block-size: 38px; padding: 0 10px; border-radius: 10px; background: var(--c); box-shadow: 0 3px 0 var(--e); color: oklch(22% 0.05 250); font-family: var(--font-display); font-weight: 600; font-size: 0.9375rem; letter-spacing: 0; text-transform: none; white-space: nowrap; }
+.word::after { content: ""; position: absolute; left: 10px; bottom: -8px; border: 6px solid transparent; border-top-color: var(--e); border-left-color: var(--e); }
+.word.big { block-size: 64px; padding: 0 18px; font-size: 1.5rem; border-radius: 14px; box-shadow: 0 5px 0 var(--e); }
+.c-green { --c: var(--accent); --e: var(--accent-edge); }
+.c-berry { --c: var(--berry); --e: var(--berry-edge); }
+.c-sun { --c: var(--sun); --e: var(--sun-edge); }
+.c-grape { --c: var(--grape); --e: oklch(62% 0.16 305); }
+.c-tangerine { --c: var(--tangerine); --e: oklch(64% 0.17 52); }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; background: var(--bg); border-bottom: 2px solid transparent; transition: border-color var(--dur-base) var(--ease); }
+.site-header.is-scrolled { border-bottom-color: var(--border); }
+.header-inner { display: flex; align-items: center; gap: 20px; min-block-size: 72px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-weight: 600; font-size: 1.75rem; letter-spacing: -0.01em; color: var(--heading); }
+.brand svg { width: 44px; height: 44px; }
+.nav { display: flex; gap: 2px; margin-left: auto; }
+.nav a { padding: 10px 12px; border-radius: 12px; text-decoration: none; font-size: 0.875rem; font-weight: 850; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); }
+.nav a:hover { color: var(--text); background: var(--surface-2); }
+.nav a[aria-current="page"] { color: var(--sky-ink); background: var(--sky-soft); box-shadow: inset 0 0 0 2px var(--sky); }
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.menu-btn { display: none; }
+@media (max-width: 1000px) {
+  .nav, .header-actions .btn { display: none; }
+  .menu-btn { display: inline-grid; }
+  .header-actions { margin-left: auto; }
+}
+.sheet { border: 0; padding: 0; margin: 0 0 0 auto; inline-size: min(380px, 100%); block-size: 100dvh; max-block-size: 100dvh; background: var(--bg); color: var(--text); box-shadow: var(--shadow-overlay); overscroll-behavior: contain; }
+.sheet::backdrop { background: oklch(20% 0.03 250 / 0.45); }
+.sheet-inner { display: flex; flex-direction: column; gap: 10px; padding: 16px 20px 28px; min-block-size: 100%; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.sheet nav { display: grid; gap: 10px; }
+.sheet nav a { padding: 14px 16px; text-decoration: none; font-weight: 850; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.9375rem; }
+.sheet nav a[aria-current="page"] { border-color: var(--sky); background: var(--sky-soft); color: var(--sky-ink); }
+.sheet img { margin: auto auto 0; width: 150px; }
+
+/* ---------- Views and sections ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+main { min-block-size: 70vh; }
+.section { padding-block: clamp(64px, 9vw, 120px); }
+.band { background: var(--surface-2); }
+.section-head { max-width: 720px; margin: 0 auto clamp(32px, 5vw, 56px); text-align: center; }
+.section-head .lead { margin: 16px auto 0; }
+.page-head { padding-block: clamp(48px, 7vw, 88px) clamp(28px, 4vw, 48px); text-align: center; }
+.page-head .lead { margin: 16px auto 0; }
+.page-head .label { margin-bottom: 12px; }
+
+/* ---------- Hero ---------- */
+.hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(24px, 5vw, 72px); align-items: center; min-block-size: min(660px, calc(100svh - 72px - 86px)); padding-block: 32px; }
+.hero-art img { width: min(100%, 560px); margin-inline: auto; }
+.hero-copy { text-align: center; max-width: 430px; margin-inline: auto; }
+.hero-copy h1 { font-size: clamp(1.875rem, 1.3rem + 1.8vw, 2.625rem); color: var(--text); line-height: 1.2; margin-bottom: 32px; }
+.hero-copy .btn { inline-size: 100%; }
+.hero-copy .btn-row { flex-direction: column; gap: 12px; }
+.hero-note { margin-top: 14px; font-size: var(--fs-small); color: var(--text-muted); }
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; min-block-size: 0; padding-block: 16px 40px; }
+  .hero-art img { width: min(100%, 400px); }
+}
+
+/* ---------- Language strip ---------- */
+.strip { border-block: 2px solid var(--border); }
+.strip-inner { display: flex; align-items: center; gap: 8px; }
+.strip-track { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; flex: 1; padding-block: 18px 22px; }
+.strip-track::-webkit-scrollbar { display: none; }
+.lang { display: inline-flex; align-items: center; gap: 12px; padding: 6px 14px 6px 6px; border-radius: 12px; text-decoration: none; font-size: 0.875rem; font-weight: 850; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; scroll-snap-align: start; }
+.lang:hover { background: var(--surface-2); color: var(--text); }
+.strip-btn { flex: none; }
+@media (max-width: 700px) { .strip-btn { display: none; } }
+
+/* ---------- Feature rows (signature: drawings alternate sides) ---------- */
+.feature { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; padding-block: clamp(40px, 6vw, 72px); }
+.feature.flip > .feature-art { order: -1; }
+.feature-art img { width: min(100%, 440px); margin-inline: auto; }
+.feature p { color: var(--text-muted); max-width: 30em; margin-top: 18px; }
+@media (max-width: 860px) {
+  .feature { grid-template-columns: 1fr; text-align: center; }
+  .feature.flip > .feature-art { order: 0; }
+  .feature p { margin-inline: auto; }
+  .feature-art img { width: min(100%, 340px); }
+}
+
+/* ---------- Lesson preview on home ---------- */
+.preview { max-width: 640px; margin: 0 auto; padding: clamp(20px, 4vw, 32px); }
+.preview .bar { margin-bottom: 24px; }
+.preview .say { margin-bottom: 20px; }
+.preview .choices { margin-bottom: 4px; }
+
+/* ---------- Progress bar, stats ---------- */
+.bar { position: relative; block-size: 16px; border-radius: 99px; background: var(--border); overflow: hidden; flex: 1; }
+.bar > i { position: absolute; inset: 0; border-radius: inherit; background: var(--accent); transform-origin: left; transform: scaleX(var(--p, 0)); transition: transform var(--dur-slow) var(--ease-bounce); }
+.bar > i::after { content: ""; position: absolute; inset: 4px 10px auto; block-size: 4px; border-radius: 99px; background: oklch(100% 0 0 / 0.38); }
+.bar.sun > i { background: var(--sun); }
+.stats { display: flex; justify-content: space-between; gap: 12px; padding: 4px 4px 0; }
+.stat { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-weight: 600; font-size: 1.125rem; }
+.stat.flame { color: var(--tangerine-ink); }
+.stat.gem { color: var(--link); }
+.stat.heart { color: var(--berry-ink); }
+
+/* ---------- Quotes ---------- */
+.quotes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 900px) { .quotes { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; } }
+.quote { margin: 0; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+.quote blockquote { margin: 0; font-size: 1.0625rem; }
+.quote figcaption { display: flex; align-items: center; gap: 12px; margin-top: auto; font-size: var(--fs-small); color: var(--text-muted); }
+.quote strong { display: block; color: var(--text); font-weight: 850; }
+.avatar { --c: var(--sky); inline-size: 44px; block-size: 44px; border-radius: 50%; display: grid; place-items: center; flex: none; background: var(--c); color: oklch(22% 0.05 250); font-family: var(--font-display); font-weight: 600; font-size: 1rem; }
+
+/* ---------- Navy band ---------- */
+.navy { background: var(--navy); color: var(--navy-text); }
+.navy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.navy .title { color: var(--navy-text); }
+.shine { background: linear-gradient(90deg, var(--accent), var(--sky) 55%, var(--grape)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.navy-grid p { color: var(--navy-muted); max-width: 30em; margin-top: 18px; }
+.navy-grid ul { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 10px; }
+.navy-grid li { display: flex; gap: 10px; align-items: center; font-weight: 700; }
+.navy li .icon { color: var(--accent); }
+@media (max-width: 860px) { .navy-grid { grid-template-columns: 1fr; text-align: center; } .navy-grid p { margin-inline: auto; } .navy-grid ul { justify-items: center; } .navy-grid .btn-row { justify-content: center; } .navy-art { order: -1; } .navy-art img { width: min(100%, 360px); margin-inline: auto; } }
+
+/* ---------- Finale and footer (signature: the green hill) ---------- */
+.finale { padding-top: clamp(72px, 10vw, 128px); text-align: center; }
+.finale .btn { min-inline-size: min(330px, 100%); margin-top: 32px; }
+.finale img { width: min(100%, 520px); margin: 28px auto -64px; position: relative; z-index: 1; }
+.hill { display: block; inline-size: 100%; block-size: clamp(60px, 9vw, 120px); fill: var(--hill); margin-bottom: -1px; }
+.site-footer { background: var(--hill); color: var(--hill-text); padding-block: 40px 32px; font-size: 0.9375rem; }
+.footer-grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 32px; }
+.footer-grid .brand { color: var(--hill-text); }
+.footer-grid h2 { font-family: var(--font); font-size: 1rem; font-weight: 900; margin-bottom: 12px; }
+.footer-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.footer-grid a { text-decoration: none; font-weight: 700; opacity: 0.88; }
+.footer-grid a:hover { opacity: 1; text-decoration: underline; }
+.footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 40px; padding-top: 20px; border-top: 2px solid color-mix(in oklch, var(--hill-text) 22%, transparent); font-size: var(--fs-small); font-weight: 700; }
+.site-footer :focus-visible { outline-color: var(--hill-text); }
+@media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-grid > :first-child { grid-column: 1 / -1; } }
+
+/* ---------- Chips and filters ---------- */
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 32px; }
+.chip { position: relative; display: inline-flex; align-items: center; min-block-size: 44px; padding: 0 16px; border-radius: 12px; border: 2px solid var(--border); border-bottom-width: 4px; background: var(--surface); color: var(--text-muted); font: inherit; font-size: 0.8125rem; font-weight: 850; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+.chip:hover { background: var(--surface-2); }
+.chip[aria-pressed="true"], .chip:has(input:checked) { border-color: var(--sky); background: var(--sky-soft); color: var(--sky-ink); }
+.chip input, .choice input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+.chip:has(input:focus-visible), .choice:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 3px; }
+.count { text-align: center; color: var(--text-muted); font-size: var(--fs-small); margin: -16px 0 24px; }
+.empty { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+
+/* ---------- Course cards ---------- */
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 960px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .cards { grid-template-columns: 1fr; } }
+.course-card { display: flex; flex-direction: column; gap: 14px; padding: 22px; }
+.course-card .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.course-card p { margin: 0; color: var(--text-muted); font-size: 0.9375rem; }
+.course-card .meta { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: auto; padding-top: 6px; font-size: var(--fs-small); font-weight: 800; color: var(--text-muted); }
+.course-card .meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* ---------- Course path (signature: round stops on a winding path) ---------- */
+.course-head { display: flex; align-items: center; gap: 18px; padding-block: 40px 8px; }
+.course-head .h1 { color: var(--text); font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem); }
+.course-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: clamp(32px, 5vw, 64px); align-items: start; padding-block: 24px 96px; }
+.unit { --c: var(--accent); --e: var(--accent-edge); --t: var(--accent-text); display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; border-radius: var(--r-card); background: var(--c); color: var(--t); box-shadow: 0 var(--edge) 0 var(--e); }
+.unit.sky { --c: var(--sky); --e: var(--sky-edge); --t: var(--sky-text); }
+.unit .label { color: inherit; opacity: 0.85; }
+.unit h2 { font-size: 1.5rem; margin-top: 2px; }
+.unit .btn { --edge-c: var(--e); background: var(--c); color: var(--t); box-shadow: inset 0 0 0 2px var(--e), 0 var(--edge) 0 var(--e); flex: none; }
+.path { position: relative; list-style: none; margin: 0; padding: 48px 0 64px; display: grid; justify-items: center; gap: 26px; }
+.stop { --k: 1; position: relative; transform: translateX(calc(var(--x, 0px) * var(--k))); }
+.stop.current { margin-block: 44px 8px; }
+@media (max-width: 560px) { .stop { --k: 0.55; } }
+.node { --c: var(--accent); --e: var(--accent-edge); position: relative; display: grid; place-items: center; inline-size: 76px; block-size: 68px; border: 0; border-radius: 50%; background: var(--c); color: oklch(100% 0 0); box-shadow: 0 8px 0 var(--e); cursor: pointer; transition: transform var(--dur-press) linear, box-shadow var(--dur-press) linear; }
+.node:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--e); }
+.node svg { width: 34px; height: 34px; }
+.node .icon { stroke-width: 3.2; }
+.node .game { width: 44px; height: 44px; }
+.node.locked { --c: var(--border); --e: var(--border-strong); color: var(--text-muted); }
+.ring { position: absolute; left: 50%; top: 50%; width: 104px; height: 104px; max-width: none; transform: translate(-50%, -46%); fill: none; stroke-width: 7; pointer-events: none; }
+.ring circle { stroke: var(--border); }
+.ring circle + circle { stroke: var(--accent); stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; }
+.start-tip { position: absolute; bottom: calc(100% + 26px); left: 50%; translate: -50% 0; padding: 8px 14px; border: 2px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--accent-ink); font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.875rem; white-space: nowrap; animation: bob 1.4s var(--ease) infinite alternate; pointer-events: none; }
+.start-tip::after { content: ""; position: absolute; top: 100%; left: 50%; width: 12px; height: 12px; background: var(--surface); border: solid var(--border); border-width: 0 2px 2px 0; transform: translate(-50%, -5px) rotate(45deg); }
+.path-col { position: relative; }
+.path-art { position: absolute; width: 150px; pointer-events: none; }
+@media (max-width: 560px) { .path-art { display: none; } }
+.stop:has(.pop:not([hidden])) { z-index: 6; }
+.pop { position: absolute; top: calc(100% + 18px); left: 50%; z-index: 5; translate: -50% 0; inline-size: min(290px, 78vw); padding: 18px; border-radius: var(--r-card); background: var(--accent); color: var(--accent-text); box-shadow: 0 var(--edge) 0 var(--accent-edge); text-align: left; animation: pop var(--dur-base) var(--ease-bounce); }
+.pop::before { content: ""; position: absolute; bottom: 100%; left: 50%; translate: -50% 0; border: 10px solid transparent; border-bottom-color: var(--accent); }
+.pop.is-locked::before { border-bottom-color: var(--border); }
+.pop.is-locked { background: var(--surface); color: var(--text-muted); border: 2px solid var(--border); box-shadow: var(--shadow-card); }
+.pop h3 { font-size: 1.25rem; margin-bottom: 4px; color: inherit; }
+.pop p { margin: 0 0 14px; font-size: 0.9375rem; font-weight: 700; }
+.pop .btn { --edge-c: oklch(85% 0.03 140); background: oklch(100% 0 0); color: oklch(45% 0.15 140); }
+.pop.is-locked .btn { display: none; }
+.side { position: sticky; top: 96px; display: grid; gap: 20px; }
+@media (max-width: 900px) { .course-grid { grid-template-columns: 1fr; } .side { position: static; } }
+.side .card { padding: 20px; }
+.side .h3 { margin-bottom: 8px; }
+.side p { margin: 0; color: var(--text-muted); font-size: 0.9375rem; }
+.goal { display: flex; align-items: center; gap: 12px; margin-top: 14px; font-weight: 800; color: var(--text-muted); font-size: var(--fs-small); }
+
+/* ---------- Lesson (signature: answer tiles and the check bar) ---------- */
+.lesson { width: min(100% - 2 * var(--gutter), 760px); margin-inline: auto; padding-top: 28px; min-block-size: calc(100svh - 72px - 124px); }
+.lesson-top { display: flex; align-items: center; gap: 16px; }
+.lesson-top .stat { flex: none; }
+.lesson h1 { margin: 28px 0 0; font-family: var(--font); font-size: 0.8125rem; font-weight: 850; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sky-ink); }
+.q { padding-block: 16px 40px; }
+.q-prompt { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem); color: var(--text); margin-bottom: 28px; }
+.say { display: flex; align-items: flex-end; gap: 14px; margin-bottom: 28px; }
+.say svg { width: 96px; height: 96px; flex: none; }
+.bubble { position: relative; padding: 14px 18px; border: 2px solid var(--border); border-radius: var(--r-card); background: var(--surface); font-weight: 700; font-size: 1.125rem; }
+.bubble::before { content: ""; position: absolute; left: -9px; bottom: 18px; width: 16px; height: 16px; background: var(--surface); border: solid var(--border); border-width: 0 0 2px 2px; transform: rotate(45deg); }
+.choices { display: grid; gap: 12px; }
+.choices.pics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.choice { position: relative; display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 2px solid var(--border); border-bottom-width: 4px; border-radius: var(--r-card); background: var(--surface); font-weight: 750; cursor: pointer; transition: background-color var(--dur-fast) var(--ease); }
+.choice:hover { background: var(--surface-2); }
+.pics .choice { flex-direction: column; padding: 18px 12px 14px; text-align: center; }
+.pics .choice svg { width: min(96px, 100%); height: auto; aspect-ratio: 1; }
+.key { inline-size: 30px; block-size: 30px; display: grid; place-items: center; flex: none; border: 2px solid var(--border); border-radius: 8px; font-size: 0.875rem; font-weight: 850; color: var(--text-muted); }
+.choice:has(input:checked) { border-color: var(--sky); background: var(--sky-soft); color: var(--sky-ink); }
+.choice:has(input:checked) .key { border-color: var(--sky); color: var(--sky-ink); }
+.choices .choice.is-right { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-ink); animation: pop var(--dur-base) var(--ease-bounce); }
+.choices .choice.is-wrong { border-color: var(--berry); background: var(--berry-soft); color: var(--berry-ink); }
+@media (max-width: 520px) { .choices.pics { gap: 8px; } .pics .choice { padding: 12px 6px 10px; font-size: 0.9375rem; } }
+.check-bar { display: none; border-top: 2px solid var(--border); transition: background-color var(--dur-base) var(--ease); }
+.js .check-bar { display: block; }
+.check-inner { width: min(100% - 2 * var(--gutter), 760px); margin-inline: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; padding-block: 24px 28px; min-block-size: 120px; }
+.check-inner .btn { min-inline-size: 160px; }
+@media (max-width: 560px) { .check-inner .btn { inline-size: 100%; } }
+.feedback { display: flex; align-items: center; gap: 14px; font-weight: 800; }
+.feedback .mark-ico { inline-size: 56px; block-size: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); flex: none; }
+.feedback strong { display: block; font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; }
+.check-bar.is-right { background: var(--accent-soft); color: var(--accent-ink); border-color: transparent; }
+.check-bar.is-wrong { background: var(--berry-soft); color: var(--berry-ink); border-color: transparent; }
+.done { text-align: center; padding-block: 24px 96px; }
+.done img { width: 200px; margin: 0 auto 8px; }
+.done .display { color: var(--tangerine-ink); }
+.tally { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 28px 0 36px; }
+.tally div { --c: var(--sun); inline-size: 140px; border: 2px solid var(--c); border-radius: var(--r-card); overflow: hidden; }
+.tally span { display: block; padding: 4px; background: var(--c); color: oklch(22% 0.05 250); font-size: 0.75rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
+@media (max-width: 520px) { .tally { gap: 8px; } .tally div { inline-size: 104px; } }
+.tally strong { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 4px; font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; }
+
+/* ---------- Pricing ---------- */
+.switch { display: inline-flex; gap: 8px; padding: 6px; border-radius: 16px; background: var(--surface-2); margin: 0 auto 40px; }
+.switch button { min-block-size: 44px; padding: 0 18px; border-radius: 12px; border: 2px solid transparent; background: transparent; color: var(--text-muted); font: inherit; font-size: 0.8125rem; font-weight: 850; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+.switch button[aria-pressed="true"] { background: var(--surface); color: var(--sky-ink); border-color: var(--sky); }
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+@media (max-width: 900px) { .plans { grid-template-columns: 1fr; max-width: 460px; margin-inline: auto; } }
+.plan { display: flex; flex-direction: column; padding: 28px; }
+.plan .h3 { font-size: 1.625rem; }
+.plan .amount { font-family: var(--font-display); font-weight: 600; font-size: 2.75rem; line-height: 1; margin: 18px 0 6px; }
+.plan .per { font-size: var(--fs-small); color: var(--text-muted); min-block-size: 2.8em; font-weight: 700; }
+.plan ul { list-style: none; padding: 0; margin: 20px 0 28px; display: grid; gap: 12px; font-size: 0.9375rem; font-weight: 700; }
+.plan li { display: flex; gap: 10px; align-items: flex-start; }
+.plan li .icon { color: var(--accent-ink); margin-top: 1px; }
+.plan .btn { margin-top: auto; }
+.plan.navy { border-color: var(--navy-2); }
+.plan.navy .per, .plan.navy p { color: var(--navy-muted); }
+.plan.is-picked { outline: 4px solid var(--sky); outline-offset: 4px; }
+.table-scroll { position: relative; overflow-x: auto; margin-top: 64px; }
+.compare { inline-size: 100%; min-inline-size: 560px; border-collapse: separate; border-spacing: 0; font-size: 0.9375rem; }
+.compare th, .compare td { padding: 14px 12px; border-bottom: 2px solid var(--border); text-align: center; }
+.compare th:first-child, .compare td:first-child { text-align: left; font-weight: 750; }
+.compare thead th { font-family: var(--font-display); font-weight: 600; font-size: 1.125rem; }
+.compare .icon { margin-inline: auto; color: var(--accent-ink); }
+
+/* ---------- Forms ---------- */
+.form-card { padding: clamp(22px, 4vw, 36px); }
+.form-grid { display: grid; gap: 6px; }
+.field { display: grid; gap: 8px; align-content: start; }
+.field > label, .field > .field-label { font-weight: 850; font-size: 0.9375rem; }
+.input, .select, .textarea { inline-size: 100%; min-block-size: 52px; padding: 12px 16px; border-radius: 14px; border: 2px solid var(--border); background: var(--surface-2); color: var(--text); font: inherit; font-size: 1rem; font-weight: 650; transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease); }
+.textarea { min-block-size: 140px; resize: vertical; }
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--sky); background: var(--surface); }
+.input:user-invalid, .textarea:user-invalid, [aria-invalid="true"] { border-color: var(--error); }
+.error { min-block-size: 1.5rem; font-size: var(--fs-small); font-weight: 800; color: var(--error); }
+.check { display: flex; gap: 12px; align-items: flex-start; font-weight: 700; font-size: 0.9375rem; }
+.check input { inline-size: 22px; block-size: 22px; margin: 2px 0 0; accent-color: var(--accent-edge); flex: none; }
+.choices.langs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.choices.goals .choice span:last-child { margin-left: auto; color: var(--text-muted); font-weight: 700; font-size: var(--fs-small); }
+.chips.left { justify-content: flex-start; margin-bottom: 0; }
+.success { text-align: center; padding: 12px 0 4px; }
+.success img { width: 170px; margin: 0 auto 12px; }
+.success .h3 { color: var(--heading); font-size: 1.75rem; margin-bottom: 8px; }
+.signup-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: start; padding-bottom: 96px; }
+.perks { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 18px; }
+.perks li { display: flex; gap: 14px; align-items: flex-start; }
+.perks strong { display: block; font-weight: 850; }
+.perks span { color: var(--text-muted); font-size: 0.9375rem; }
+.perks .game { width: 36px; height: 36px; }
+.inline-form { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; max-width: 520px; margin: 24px auto 0; }
+.inline-form .field { flex: 1 1 240px; text-align: left; }
+
+/* ---------- Blog and article ---------- */
+.feature-post { display: grid; grid-template-columns: 1fr 1.1fr; overflow: hidden; margin-bottom: 20px; }
+.feature-post .post-body { padding: clamp(24px, 4vw, 40px); align-self: center; }
+@media (max-width: 800px) { .feature-post { grid-template-columns: 1fr; } }
+.post-cover { --c: var(--sky-soft); display: grid; place-items: center; background: var(--c); min-block-size: 180px; }
+.post-cover img { width: min(70%, 260px); }
+.post-cover .game { width: 64px; height: 64px; }
+.post-card { overflow: hidden; display: flex; flex-direction: column; }
+.post-card .post-body { padding: 20px 22px 24px; display: grid; gap: 10px; }
+.post-body .h3 { color: var(--text); }
+.post-body .tag { justify-self: start; }
+.post-body p { margin: 0; color: var(--text-muted); font-size: 0.9375rem; }
+.post-meta { font-size: var(--fs-small); color: var(--text-muted); font-weight: 750; }
+.letter { margin-top: 64px; padding: clamp(24px, 5vw, 48px); text-align: center; background: var(--sun-soft); border-color: var(--sun); }
+.article-head { padding-block: clamp(48px, 7vw, 80px) 28px; }
+.article-head h1 { font-size: var(--fs-h1); color: var(--text); margin: 14px 0 16px; }
+.byline { display: flex; align-items: center; gap: 12px; margin-top: 24px; font-size: var(--fs-small); color: var(--text-muted); font-weight: 700; }
+.byline strong { color: var(--text); display: block; }
+.article { padding-bottom: 96px; font-size: 1.125rem; line-height: 1.7; }
+.article h2 { font-size: 1.75rem; color: var(--heading); margin: 48px 0 14px; }
+.article blockquote { margin: 36px 0; padding: 0; font-family: var(--font-display); font-weight: 500; font-size: 1.625rem; line-height: 1.35; color: var(--text); }
+.article ul { padding-left: 0; list-style: none; display: grid; gap: 10px; }
+.article li { display: flex; gap: 10px; }
+.article li .icon { color: var(--accent-ink); margin-top: 4px; }
+.article table { inline-size: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.9375rem; border: 2px solid var(--border); border-radius: var(--r-card); overflow: hidden; }
+.article th, .article td { text-align: left; padding: 12px 14px; border-bottom: 2px solid var(--border); }
+.article tr:last-child td { border-bottom: 0; }
+.article th { background: var(--surface-2); font-weight: 850; }
+.tip { margin: 32px 0; }
+
+/* ---------- FAQ, about, contact, legal ---------- */
+.faq-group { max-width: 760px; margin: 0 auto 48px; }
+.faq-group h2 { font-size: 1.75rem; color: var(--heading); margin-bottom: 18px; }
+.faq { display: grid; gap: 12px; }
+.faq details { padding: 0; }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; cursor: pointer; font-weight: 850; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { color: var(--text-muted); transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(180deg); }
+.faq details p { padding: 0 20px 20px; margin: 0; color: var(--text-muted); }
+.help { max-width: 760px; margin: 0 auto; padding: 28px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; background: var(--sky-soft); border-color: var(--sky); }
+.help .h3 { color: var(--sky-ink); }
+.help p { margin: 4px 0 0; }
+.values { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 860px) { .values { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; } }
+.value { padding: 26px; }
+.value .game { width: 48px; height: 48px; margin-bottom: 14px; }
+.value p { margin: 8px 0 0; color: var(--text-muted); }
+.team { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; text-align: center; }
+@media (max-width: 860px) { .team { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.team .avatar { inline-size: 88px; block-size: 88px; font-size: 1.75rem; margin: 0 auto 12px; box-shadow: 0 5px 0 var(--e, oklch(0% 0 0 / 0.12)); }
+.team strong { display: block; font-weight: 850; }
+.team span { color: var(--text-muted); font-size: var(--fs-small); font-weight: 700; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
+.split img { width: min(100%, 420px); margin-inline: auto; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+.contact-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: start; padding-bottom: 96px; }
+@media (max-width: 900px) { .signup-grid, .contact-grid { grid-template-columns: 1fr; } }
+.contact-list { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 14px; }
+.contact-list li { display: flex; gap: 14px; align-items: flex-start; padding: 16px; }
+.contact-list .icon { color: var(--link); margin-top: 2px; }
+.contact-list strong { display: block; font-weight: 850; }
+.legal { padding-bottom: 96px; }
+.legal h2 { font-size: 1.375rem; color: var(--text); margin: 36px 0 10px; }
+.notfound { text-align: center; padding-block: 56px 112px; }
+.notfound img { width: min(320px, 80%); margin: 0 auto 16px; }
+.notfound .btn-row { justify-content: center; margin-top: 28px; }
+
+/* ---------- Motion ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(18px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes pop { 0% { transform: scale(0.94); } 60% { transform: scale(1.03); } 100% { transform: none; } }
+@keyframes bob { to { transform: translateY(-6px); } }
+@keyframes slide-up { from { transform: translateY(100%); } to { transform: none; } }
+.js .reveal { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease-bounce) both; animation-delay: calc(var(--i, 0) * 80ms); }
+.js .check-bar.is-right, .js .check-bar.is-wrong { animation: slide-up var(--dur-base) var(--ease); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .start-tip { animation: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip btn btn-sm" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M5 9l7 7 7-7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3.5 7l8.5 6 8.5-6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-kid" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5 21v-1.5A5.5 5.5 0 0 1 10.5 14h3a5.5 5.5 0 0 1 5.5 5.5V21"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></symbol>
+  <symbol id="g-flame" viewBox="0 0 32 32"><path fill="#ff9a1f" d="M16 2c5 6 10 9 10 16a10 10 0 0 1-20 0c0-5 3-7 5-10 1 3 2 4 3 4 0-4 0-7 2-10z"/><path fill="#ffd84a" d="M16 17c2 3 4 4 4 7a4 4 0 0 1-8 0c0-3 2-4 4-7z"/></symbol>
+  <symbol id="g-gem" viewBox="0 0 32 32"><path fill="#2ab0f2" d="M16 3l12 9-5 17H9L4 12z"/><path fill="#9fe0ff" d="M16 3l12 9-12 4-12-4z"/><path fill="#1288c8" d="M16 16l12-4-5 17z" opacity=".6"/></symbol>
+  <symbol id="g-heart" viewBox="0 0 32 32"><path fill="#ff5a5a" d="M16 28C5 21 2 15 4 10s9-6 12 0c3-6 10-5 12 0s-1 11-12 18z"/><ellipse cx="10" cy="11" rx="3" ry="2.2" fill="#ffb3b3"/></symbol>
+  <symbol id="g-bolt" viewBox="0 0 32 32"><path fill="#ffc61a" stroke="#ffc61a" stroke-width="2" stroke-linejoin="round" d="M18 3L6 18h9l-2 11 13-16h-9z"/></symbol>
+  <symbol id="g-star" viewBox="0 0 32 32"><path fill="#ffc61a" stroke="#ffc61a" stroke-width="3" stroke-linejoin="round" d="M16 4l3.6 7.4 8.1 1.1-5.9 5.6 1.5 8L16 22.3l-7.3 3.8 1.5-8-5.9-5.6 8.1-1.1z"/></symbol>
+  <symbol id="g-chest" viewBox="0 0 32 32"><rect x="4" y="14" width="24" height="14" rx="3" fill="#b8632a"/><path fill="#d77c34" d="M4 14c0-8 24-8 24 0z"/><rect x="4" y="13" width="24" height="3" fill="#e8a400"/><rect x="13" y="11" width="6" height="8" rx="2" fill="#ffc61a"/></symbol>
+  <symbol id="g-trophy" viewBox="0 0 32 32"><path fill="#ffc61a" d="M9 4h14l-1 10c-1 4-11 4-12 0z"/><path fill="none" stroke="#e8a400" stroke-width="2.5" stroke-linecap="round" d="M9 7H5c0 5 3 6 5 6M23 7h4c0 5-3 6-5 6"/><rect x="14" y="17" width="4" height="5" fill="#e8a400"/><rect x="9" y="22" width="14" height="5" rx="2" fill="#b8632a"/></symbol>
+  <symbol id="p-apple" viewBox="0 0 64 64"><circle cx="24" cy="36" r="17" fill="#ff5a5a"/><circle cx="40" cy="36" r="17" fill="#ff5a5a"/><ellipse cx="22" cy="30" rx="4" ry="6" fill="#ffb3b3"/><path d="M32 20l3-10" stroke="#7a4a2a" stroke-width="4" stroke-linecap="round"/><ellipse cx="42" cy="13" rx="8" ry="4.5" fill="#6ccb1c" transform="rotate(-25 42 13)"/></symbol>
+  <symbol id="p-bread" viewBox="0 0 64 64"><path fill="#e7a85a" d="M8 34C4 14 60 14 56 34l-3 18H11z"/><path fill="#f6cd8c" d="M13 32c-2-11 40-11 38 0z"/><path d="M22 28l-3 8M32 27v9M42 28l3 8" stroke="#e7a85a" stroke-width="3" stroke-linecap="round"/></symbol>
+  <symbol id="p-milk" viewBox="0 0 64 64"><path fill="#2ab0f2" d="M18 20l14-12 14 12z"/><rect x="18" y="20" width="28" height="38" rx="5" fill="#fff" stroke="#2ab0f2" stroke-width="4"/><rect x="23" y="34" width="18" height="12" rx="3" fill="#9fe0ff"/></symbol>
+  <symbol id="mark" viewBox="0 0 140 140"><g transform="translate(70 222)"><path d="M-50 -150 L -58 -206 C -59 -214, -52 -218, -46 -213 L -8 -176 Z" fill="#ff8a1f"/><path d="M50 -150 L 58 -206 C 59 -214, 52 -218, 46 -213 L 8 -176 Z" fill="#ff8a1f"/><path d="M-48 -160 L -52 -198 L -24 -172 Z" fill="#3b2b2a" opacity=".85"/><path d="M48 -160 L 52 -198 L 24 -172 Z" fill="#3b2b2a" opacity=".85"/><path d="M-62 -140 C -62 -176, -34 -192, 0 -192 C 34 -192, 62 -176, 62 -140 C 62 -108, 34 -88, 0 -88 C -34 -88, -62 -108, -62 -140 Z" fill="#ff8a1f"/><path d="M-60 -132 C -44 -138, -18 -130, 0 -114 C 18 -130, 44 -138, 60 -132 C 56 -104, 32 -88, 0 -88 C -32 -88, -56 -104, -60 -132 Z" fill="#fff3e0"/><ellipse cx="-22" cy="-146" rx="15" ry="18" fill="#fff"/><ellipse cx="22" cy="-146" rx="15" ry="18" fill="#fff"/><circle cx="-20" cy="-143" r="8.5" fill="#3b2b2a"/><circle cx="24" cy="-143" r="8.5" fill="#3b2b2a"/><circle cx="-17" cy="-147" r="3" fill="#fff"/><circle cx="27" cy="-147" r="3" fill="#fff"/><ellipse cx="-40" cy="-118" rx="8" ry="5" fill="#ff9db4" opacity=".7"/><ellipse cx="40" cy="-118" rx="8" ry="5" fill="#ff9db4" opacity=".7"/><path d="M-9 -122 Q 0 -129 9 -122 Q 0 -110 -9 -122 Z" fill="#3b2b2a"/><path d="M-7 -106 Q 0 -99 7 -106" fill="none" stroke="#3b2b2a" stroke-width="3" stroke-linecap="round"/></g></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#/" aria-label="Mossberry home"><svg aria-hidden="true"><use href="#mark"/></svg>mossberry</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/courses">Courses</a>
+      <a href="#/try">Try a lesson</a>
+      <a href="#/pricing">Pricing</a>
+      <a href="#/blog">For parents</a>
+      <a href="#/faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark theme"><svg class="icon"><use href="#i-moon"/></svg></button>
+      <a class="btn btn-sm" href="#/signup">Start free</a>
+      <button class="icon-btn menu-btn" id="menu-open" type="button" aria-label="Open menu" aria-controls="menu"><svg class="icon"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-inner">
+    <div class="sheet-top">
+      <a class="brand" href="#/"><svg aria-hidden="true"><use href="#mark"/></svg>mossberry</a>
+      <button class="icon-btn" id="menu-close" type="button" aria-label="Close menu"><svg class="icon"><use href="#i-close"/></svg></button>
+    </div>
+    <nav aria-label="Mobile">
+      <a class="card" href="#/courses">Courses</a>
+      <a class="card" href="#/try">Try a lesson</a>
+      <a class="card" href="#/pricing">Pricing</a>
+      <a class="card" href="#/blog">For parents</a>
+      <a class="card" href="#/faq">FAQ</a>
+      <a class="card" href="#/about">About us</a>
+    </nav>
+    <a class="btn btn-block" href="#/signup">Start free</a>
+    <img src="illustrations/fox.svg" alt="" width="240" height="280">
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ================= HOME ================= -->
+<div data-view="home">
+  <section class="wrap hero-grid">
+    <div class="hero-art"><img src="illustrations/hero.svg" alt="Momo the fox waving next to three kids, a lesson tablet and floating gems" width="560" height="480"></div>
+    <div class="hero-copy">
+      <h1>The playful way for kids to learn a new language.</h1>
+      <div class="btn-row">
+        <a class="btn" href="#/signup">Get started</a>
+        <a class="btn btn-2" href="#/try">Try a lesson first</a>
+      </div>
+      <p class="hero-note">Free to start. Ages 5 to 11. No ads, ever.</p>
+    </div>
+  </section>
+
+  <nav class="strip" aria-label="Languages">
+    <div class="wrap strip-inner">
+      <button class="icon-btn strip-btn" type="button" data-strip="-1" aria-label="Scroll languages left"><svg class="icon"><use href="#i-left"/></svg></button>
+      <div class="strip-track" data-strip-track>
+        <a class="lang" href="#/course?lang=spanish"><span class="word c-berry">Hola</span>Spanish</a>
+        <a class="lang" href="#/course?lang=french"><span class="word">Salut</span>French</a>
+        <a class="lang" href="#/course?lang=mandarin"><span class="word c-sun">Ni hao</span>Mandarin</a>
+        <a class="lang" href="#/course?lang=japanese"><span class="word c-grape">Ohayo</span>Japanese</a>
+        <a class="lang" href="#/course?lang=korean"><span class="word c-green">Annyeong</span>Korean</a>
+        <a class="lang" href="#/course?lang=english"><span class="word c-tangerine">Hello</span>English</a>
+        <a class="lang" href="#/course?lang=italian"><span class="word c-berry">Ciao</span>Italian</a>
+        <a class="lang" href="#/course?lang=german"><span class="word c-sun">Hallo</span>German</a>
+      </div>
+      <button class="icon-btn strip-btn" type="button" data-strip="1" aria-label="Scroll languages right"><svg class="icon"><use href="#i-right"/></svg></button>
+    </div>
+  </nav>
+
+  <section class="wrap section" aria-label="How Mossberry works">
+    <div class="feature reveal">
+      <div><h2 class="title">ten minutes a day.</h2><p>Each lesson is a handful of picture questions, a little story and a song. Short enough for the bus, long enough to stick.</p><a class="text-link" href="#/try">Try one now <svg class="icon icon-sm"><use href="#i-arrow"/></svg></a></div>
+      <div class="feature-art"><img src="illustrations/lesson.svg" alt="A child picks the picture of an apple on a lesson screen" width="460" height="400" decoding="async"></div>
+    </div>
+    <div class="feature flip reveal">
+      <div><h2 class="title">a path, not a pile.</h2><p>Lessons line up on one winding path, so your child always knows what comes next. Every few stops there is a treasure chest.</p><a class="text-link" href="#/course?lang=spanish">See a course path <svg class="icon icon-sm"><use href="#i-arrow"/></svg></a></div>
+      <div class="feature-art"><img src="illustrations/path.svg" alt="A child hops along round lesson stops towards a trophy" width="460" height="400" decoding="async"></div>
+    </div>
+    <div class="feature reveal">
+      <div><h2 class="title">streaks that stick.</h2><p>Momo keeps count of the days in a row. Miss one and a streak freeze saves it, because habits should be kind.</p></div>
+      <div class="feature-art"><img src="illustrations/streak.svg" alt="Momo the fox cheers next to a big flame and a week of finished days" width="460" height="400" decoding="async"></div>
+    </div>
+    <div class="feature flip reveal">
+      <div><h2 class="title">grown-ups see it all.</h2><p>A short weekly note shows the new words, the time spent and the next goal. No dashboards to decode.</p><a class="text-link" href="#/blog">Read our notes for parents <svg class="icon icon-sm"><use href="#i-arrow"/></svg></a></div>
+      <div class="feature-art"><img src="illustrations/parents.svg" alt="A parent and child look at a weekly progress chart" width="460" height="400" decoding="async"></div>
+    </div>
+  </section>
+
+  <section class="band section">
+    <div class="wrap">
+      <div class="section-head"><h2 class="title">this is what a lesson looks like.</h2><p class="lead">Tap the picture, check the answer, hear a cheer. The full lesson takes about three minutes.</p></div>
+      <div class="card preview reveal" aria-hidden="true">
+        <div class="bar" style="--p:.35"><i></i></div>
+        <div class="say"><svg><use href="#mark"/></svg><div class="bubble">Which one is <b>la manzana</b>?</div></div>
+        <div class="choices pics">
+          <div class="choice"><svg><use href="#p-milk"/></svg>la leche</div>
+          <div class="choice" style="border-color:var(--sky);background:var(--sky-soft);color:var(--sky-ink)"><svg><use href="#p-apple"/></svg>la manzana</div>
+          <div class="choice"><svg><use href="#p-bread"/></svg>el pan</div>
+        </div>
+      </div>
+      <div class="btn-row" style="justify-content:center;margin-top:36px"><a class="btn" href="#/try">Try this lesson</a></div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="section-head"><h2 class="title">what families say.</h2></div>
+    <div class="quotes">
+      <figure class="card quote reveal" style="--i:0"><blockquote>“Our daughter asks for her fox lesson before breakfast. Six weeks in she counts to twenty in French and corrects my accent.”</blockquote><figcaption><span class="avatar" style="--c:var(--sun)">HO</span><span><strong>Hana Okafor</strong>Parent of two, ages 6 and 9</span></figcaption></figure>
+      <figure class="card quote reveal" style="--i:1"><blockquote>“The weekly note is the only school-ish email I actually read. It tells me which words to use at dinner.”</blockquote><figcaption><span class="avatar" style="--c:var(--accent)">DF</span><span><strong>Diego Ferraz</strong>Parent, Spanish at home</span></figcaption></figure>
+      <figure class="card quote reveal" style="--i:2"><blockquote>“I use it as a warm-up with my class. Ten minutes, everyone involved, and nobody wants to stop at the chest.”</blockquote><figcaption><span class="avatar" style="--c:var(--grape)">LM</span><span><strong>Lena Marsh</strong>Year 3 teacher</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="navy section">
+    <div class="wrap navy-grid">
+      <div>
+        <h2 class="title">mossberry <span class="shine">family</span></h2>
+        <p>One plan for up to four kids, each with their own path, streak and fox. Offline lessons for the car and a weekly note for every child.</p>
+        <ul>
+          <li><svg class="icon"><use href="#i-check"/></svg>Up to four learners</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Lessons that work offline</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>A weekly note per child</li>
+        </ul>
+        <div class="btn-row"><a class="btn btn-white" href="#/pricing?plan=family">Try family free for 14 days</a></div>
+      </div>
+      <div class="navy-art"><img src="illustrations/family.svg" alt="Two kids and Momo the fox cheer together" width="480" height="380" decoding="async"></div>
+    </div>
+  </section>
+
+  <section class="wrap finale">
+    <h2 class="display">learn a language<br>with momo.</h2>
+    <a class="btn" href="#/signup">Get started</a>
+    <img src="illustrations/cta.svg" alt="" width="520" height="300" decoding="async">
+  </section>
+</div>
+
+<!-- ================= COURSES ================= -->
+<div data-view="courses">
+  <section class="wrap page-head">
+    <p class="label">Courses</p>
+    <h1 class="h1">pick a language.</h1>
+    <p class="lead">Every course is a path of short lessons, written for one age group and voiced by native speakers.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="chips" role="group" aria-label="Filter by age">
+      <button class="chip" type="button" data-age="all" aria-pressed="true">All ages</button>
+      <button class="chip" type="button" data-age="5-7" aria-pressed="false">Ages 5 to 7</button>
+      <button class="chip" type="button" data-age="8-11" aria-pressed="false">Ages 8 to 11</button>
+    </div>
+    <p class="count" data-count aria-live="polite">Showing 6 courses</p>
+    <div class="cards" data-courses>
+      <a class="card course-card" href="#/course?lang=spanish" data-ages="5-7"><div class="top"><span class="word big c-berry">Hola</span><span class="tag">Ages 5 to 7</span></div><h2 class="h3">Spanish for little ones</h2><p>Greetings, colors, animals and food, with songs between every unit.</p><div class="meta"><span><svg class="icon icon-sm"><use href="#i-book"/></svg>6 units</span><span><svg class="icon icon-sm"><use href="#i-clock"/></svg>10 min lessons</span></div></a>
+      <a class="card course-card" href="#/course?lang=french" data-ages="5-7"><div class="top"><span class="word big">Salut</span><span class="tag">Ages 5 to 7</span></div><h2 class="h3">French first words</h2><p>Two hundred everyday words through picture games and short stories.</p><div class="meta"><span><svg class="icon icon-sm"><use href="#i-book"/></svg>5 units</span><span><svg class="icon icon-sm"><use href="#i-clock"/></svg>8 min lessons</span></div></a>
+      <a class="card course-card" href="#/course?lang=mandarin" data-ages="8-11"><div class="top"><span class="word big c-sun">Ni hao</span><span class="tag green">Ages 8 to 11</span></div><h2 class="h3">Mandarin sounds and signs</h2><p>Tones, first characters and how to say what you like and want.</p><div class="meta"><span><svg class="icon icon-sm"><use href="#i-book"/></svg>8 units</span><span><svg class="icon icon-sm"><use href="#i-clock"/></svg>12 min lessons</span></div></a>
+      <a class="card course-card" href="#/course?lang=japanese" data-ages="8-11"><div class="top"><span class="word big c-grape">Ohayo</span><span class="tag green">Ages 8 to 11</span></div><h2 class="h3">Japanese with kana</h2><p>Hiragana in small batches, everyday phrases and a school-day story.</p><div class="meta"><span><svg class="icon icon-sm"><use href="#i-book"/></svg>7 units</span><span><svg class="icon icon-sm"><use href="#i-clock"/></svg>12 min lessons</span></div></a>
+      <a class="card course-card" href="#/course?lang=english" data-ages="5-7"><div class="top"><span class="word big c-tangerine">Hello</span><span class="tag">Ages 5 to 7</span></div><h2 class="h3">English for starters</h2><p>Phonics, first sentences and the words kids need at playtime.</p><div class="meta"><span><svg class="icon icon-sm"><use href="#i-book"/></svg>6 units</span><span><svg class="icon icon-sm"><use href="#i-clock"/></svg>10 min lessons</span></div></a>
+      <a class="card course-card" href="#/course?lang=italian" data-ages="8-11"><div class="top"><span class="word big c-green">Ciao</span><span class="tag green">Ages 8 to 11</span></div><h2 class="h3">Italian on holiday</h2><p>Ordering food, asking the way and making friends at the beach.</p><div class="meta"><span><svg class="icon icon-sm"><use href="#i-book"/></svg>5 units</span><span><svg class="icon icon-sm"><use href="#i-clock"/></svg>10 min lessons</span></div></a>
+    </div>
+    <p class="empty" data-empty hidden>No courses for that age yet. Try another filter.</p>
+  </section>
+</div>
+
+<!-- ================= COURSE (the path) ================= -->
+<div data-view="course">
+  <section class="wrap course-head">
+    <span class="word big c-berry" data-course-word>Hola</span>
+    <div><p class="label">Course · Ages 5 to 7</p><h1 class="h1"><span data-course-name>Spanish</span> for little ones</h1></div>
+  </section>
+  <div class="wrap course-grid">
+    <div class="path-col">
+      <div class="unit">
+        <div><p class="label">Unit 1 · 5 lessons</p><h2>say hello</h2></div>
+        <a class="btn btn-sm" href="#/post"><svg class="icon icon-sm"><use href="#i-book"/></svg>Guide</a>
+      </div>
+      <ol class="path" aria-label="Unit 1 lessons">
+        <li class="stop"><button class="node" type="button" data-title="Hello and goodbye" data-text="Lesson 1 of 5. Finished with a perfect score." aria-label="Lesson 1, finished"><svg class="icon"><use href="#i-check"/></svg></button></li>
+        <li class="stop" style="--x:-64px"><button class="node" type="button" data-title="What is your name?" data-text="Lesson 2 of 5. Finished." aria-label="Lesson 2, finished"><svg class="icon"><use href="#i-check"/></svg></button></li>
+        <li class="stop current" style="--x:-100px"><span class="start-tip">Start</span><svg class="ring" viewBox="0 0 104 104" aria-hidden="true"><circle cx="52" cy="52" r="46"/><circle cx="52" cy="52" r="46" pathLength="100" stroke-dasharray="40 100"/></svg><button class="node" type="button" data-title="How do you feel?" data-text="Lesson 3 of 5. Two of five parts done." data-current aria-label="Lesson 3, current lesson"><svg><use href="#i-star"/></svg></button></li>
+        <li class="stop" style="--x:-64px"><button class="node locked" type="button" data-title="Numbers to ten" data-text="Finish the lessons above to unlock this one." data-locked aria-label="Lesson 4, locked"><svg class="icon"><use href="#i-lock"/></svg></button></li>
+        <li class="stop"><button class="node locked" type="button" data-title="Treasure chest" data-text="Reach this chest to open it. It holds gems and a new sticker." data-locked aria-label="Treasure chest, locked"><svg class="game"><use href="#g-chest"/></svg></button></li>
+        <li class="stop" style="--x:64px"><button class="node locked" type="button" data-title="My family" data-text="Finish the lessons above to unlock this one." data-locked aria-label="Lesson 5, locked"><svg class="icon"><use href="#i-lock"/></svg></button></li>
+        <li class="stop" style="--x:100px"><button class="node locked" type="button" data-title="Unit review" data-text="A short review of unit 1. Get a trophy for your shelf." data-locked aria-label="Unit review, locked"><svg class="game"><use href="#g-trophy"/></svg></button></li>
+      </ol>
+      <img class="path-art" src="illustrations/fox.svg" alt="" width="240" height="280" style="right:2%;top:250px">
+      <div class="unit sky">
+        <div><p class="label">Unit 2 · 6 lessons</p><h2>colors and animals</h2></div>
+        <a class="btn btn-sm" href="#/post"><svg class="icon icon-sm"><use href="#i-book"/></svg>Guide</a>
+      </div>
+      <ol class="path" aria-label="Unit 2 lessons">
+        <li class="stop"><button class="node locked" type="button" data-title="Red, blue, green" data-text="Finish unit 1 to unlock this one." data-locked aria-label="Unit 2 lesson 1, locked"><svg class="icon"><use href="#i-lock"/></svg></button></li>
+        <li class="stop" style="--x:64px"><button class="node locked" type="button" data-title="At the farm" data-text="Finish unit 1 to unlock this one." data-locked aria-label="Unit 2 lesson 2, locked"><svg class="icon"><use href="#i-lock"/></svg></button></li>
+        <li class="stop" style="--x:100px"><button class="node locked" type="button" data-title="My pet" data-text="Finish unit 1 to unlock this one." data-locked aria-label="Unit 2 lesson 3, locked"><svg class="icon"><use href="#i-lock"/></svg></button></li>
+      </ol>
+      <div class="pop" id="stop-pop" role="status" hidden><h3 data-pop-title>Lesson</h3><p data-pop-text></p><a class="btn btn-sm btn-block" href="#/try">Start +10 XP</a></div>
+    </div>
+    <aside class="side" aria-label="Your progress">
+      <div class="stats">
+        <span class="stat flame"><svg class="game"><use href="#g-flame"/></svg>4<span class="sr-only"> day streak</span></span>
+        <span class="stat gem"><svg class="game"><use href="#g-gem"/></svg>120<span class="sr-only"> gems</span></span>
+        <span class="stat heart"><svg class="game"><use href="#g-heart"/></svg>5<span class="sr-only"> hearts</span></span>
+      </div>
+      <div class="card"><h2 class="h3">daily goal</h2><p>Ten minutes, or about two lessons.</p><div class="goal"><div class="bar sun" style="--p:.6"><i></i></div><span>12 / 20 XP</span></div></div>
+      <div class="card"><h2 class="h3">this unit</h2><p>Greetings, names and how you feel. Five short lessons, one story and a chest at the end.</p></div>
+      <a class="btn btn-2 btn-block" href="#/courses">All courses</a>
+    </aside>
+  </div>
+</div>
+
+<!-- ================= TRY A LESSON ================= -->
+<div data-view="try">
+  <div class="lesson">
+    <div class="lesson-top">
+      <a class="icon-btn" href="#/course?lang=spanish" aria-label="Leave the lesson"><svg class="icon"><use href="#i-close"/></svg></a>
+      <div class="bar" data-progress style="--p:.05" role="progressbar" aria-label="Lesson progress" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0"><i></i></div>
+      <span class="stat heart"><svg class="game"><use href="#g-heart"/></svg><span data-hearts>5</span><span class="sr-only"> hearts</span></span>
+    </div>
+    <h1>Spanish · Unit 1 · Lesson 3</h1>
+    <div data-quiz>
+      <div class="q" data-answer="apple" data-right="la manzana">
+        <h2 class="q-prompt" id="q1">Which one is “the apple”?</h2>
+        <div class="choices pics" role="radiogroup" aria-labelledby="q1">
+          <label class="choice"><input type="radio" name="q1" value="milk"><svg aria-hidden="true"><use href="#p-milk"/></svg>la leche</label>
+          <label class="choice"><input type="radio" name="q1" value="apple"><svg aria-hidden="true"><use href="#p-apple"/></svg>la manzana</label>
+          <label class="choice"><input type="radio" name="q1" value="bread"><svg aria-hidden="true"><use href="#p-bread"/></svg>el pan</label>
+        </div>
+      </div>
+      <div class="q" data-answer="hi" data-right="Hi, how are you?">
+        <h2 class="q-prompt" id="q2">What does Momo say?</h2>
+        <div class="say"><svg aria-hidden="true"><use href="#mark"/></svg><p class="bubble" lang="es">Hola, ¿cómo estás?</p></div>
+        <div class="choices" role="radiogroup" aria-labelledby="q2">
+          <label class="choice"><input type="radio" name="q2" value="night"><span class="key">1</span>Good night, see you</label>
+          <label class="choice"><input type="radio" name="q2" value="hi"><span class="key">2</span>Hi, how are you?</label>
+          <label class="choice"><input type="radio" name="q2" value="thanks"><span class="key">3</span>Thank you very much</label>
+        </div>
+      </div>
+      <div class="q" data-answer="dias" data-right="días">
+        <h2 class="q-prompt" id="q3">Fill in the gap: “Buenos ___” means good morning.</h2>
+        <div class="choices" role="radiogroup" aria-labelledby="q3">
+          <label class="choice"><input type="radio" name="q3" value="noches"><span class="key">1</span>noches</label>
+          <label class="choice"><input type="radio" name="q3" value="gatos"><span class="key">2</span>gatos</label>
+          <label class="choice"><input type="radio" name="q3" value="dias"><span class="key">3</span>días</label>
+        </div>
+      </div>
+    </div>
+    <div class="done" data-done hidden>
+      <img src="illustrations/fox.svg" alt="" width="240" height="280">
+      <h2 class="display">lesson complete!</h2>
+      <div class="tally">
+        <div><span>Total XP</span><strong><svg class="game"><use href="#g-bolt"/></svg><b data-xp>30</b></strong></div>
+        <div style="--c:var(--accent)"><span>Accuracy</span><strong data-acc>100%</strong></div>
+        <div style="--c:var(--tangerine)"><span>Streak</span><strong><svg class="game"><use href="#g-flame"/></svg>5 days</strong></div>
+      </div>
+      <div class="btn-row" style="justify-content:center"><a class="btn" href="#/course?lang=spanish">Continue</a><button class="btn btn-2" type="button" data-restart>Try again</button></div>
+    </div>
+  </div>
+  <div class="check-bar" data-check-bar>
+    <div class="check-inner">
+      <div class="feedback" role="status" aria-live="polite"><span class="mark-ico" hidden><svg class="icon"><use href="#i-check"/></svg></span><div><strong data-fb-title></strong><span data-fb-text></span></div></div>
+      <button class="btn" type="button" data-check disabled>Check</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PRICING ================= -->
+<div data-view="pricing">
+  <section class="wrap page-head">
+    <p class="label">Pricing</p>
+    <h1 class="h1">one fox, three plans.</h1>
+    <p class="lead">Start free and stay free as long as you like. Upgrade for more languages, offline lessons and the weekly note.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:96px;text-align:center">
+    <div class="switch" role="group" aria-label="Billing period"><button type="button" data-billing="monthly" aria-pressed="true">Monthly</button><button type="button" data-billing="yearly" aria-pressed="false">Yearly, save 30%</button></div>
+    <div class="plans" style="text-align:left">
+      <div class="card plan" data-plan="free">
+        <h2 class="h3">Free</h2><p class="muted" style="margin:6px 0 0">For trying it out.</p>
+        <div class="amount">$0</div><div class="per">forever</div>
+        <ul><li><svg class="icon"><use href="#i-check"/></svg>One language</li><li><svg class="icon"><use href="#i-check"/></svg>One lesson a day</li><li><svg class="icon"><use href="#i-check"/></svg>Streaks and stickers</li></ul>
+        <a class="btn btn-2" href="#/signup?plan=free">Start free</a>
+      </div>
+      <div class="card plan" data-plan="plus">
+        <h2 class="h3">Plus</h2><p class="muted" style="margin:6px 0 0">For one curious kid.</p>
+        <div class="amount" data-monthly="$6.99" data-yearly="$4.99">$6.99</div><div class="per" data-monthly="per month" data-yearly="per month, billed $59.88 a year">per month</div>
+        <ul><li><svg class="icon"><use href="#i-check"/></svg>Every language</li><li><svg class="icon"><use href="#i-check"/></svg>Unlimited lessons and hearts</li><li><svg class="icon"><use href="#i-check"/></svg>Weekly note for grown-ups</li></ul>
+        <a class="btn" href="#/signup?plan=plus">Choose Plus</a>
+      </div>
+      <div class="card plan navy" data-plan="family">
+        <h2 class="h3">Family</h2><p style="margin:6px 0 0">For up to four kids.</p>
+        <div class="amount" data-monthly="$9.99" data-yearly="$7.49">$9.99</div><div class="per" data-monthly="per month" data-yearly="per month, billed $89.88 a year">per month</div>
+        <ul><li><svg class="icon"><use href="#i-check"/></svg>Everything in Plus</li><li><svg class="icon"><use href="#i-check"/></svg>Four learners, one bill</li><li><svg class="icon"><use href="#i-check"/></svg>Offline lessons</li></ul>
+        <a class="btn btn-white" href="#/signup?plan=family">Choose Family</a>
+      </div>
+    </div>
+    <div class="table-scroll" style="text-align:left">
+      <table class="compare">
+        <caption class="sr-only">What each plan includes</caption>
+        <thead><tr><th scope="col">Feature</th><th scope="col">Free</th><th scope="col">Plus</th><th scope="col">Family</th></tr></thead>
+        <tbody>
+          <tr><td>Languages</td><td>1</td><td>All 8</td><td>All 8</td></tr>
+          <tr><td>Lessons per day</td><td>1</td><td>Unlimited</td><td>Unlimited</td></tr>
+          <tr><td>Weekly note</td><td><span class="sr-only">Not included</span><span aria-hidden="true">–</span></td><td><svg class="icon" role="img" aria-label="Included"><use href="#i-check"/></svg></td><td><svg class="icon" role="img" aria-label="Included"><use href="#i-check"/></svg></td></tr>
+          <tr><td>Offline lessons</td><td><span class="sr-only">Not included</span><span aria-hidden="true">–</span></td><td><span class="sr-only">Not included</span><span aria-hidden="true">–</span></td><td><svg class="icon" role="img" aria-label="Included"><use href="#i-check"/></svg></td></tr>
+          <tr><td>Learners</td><td>1</td><td>1</td><td>Up to 4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:32px"><a class="text-link" href="#/faq?at=billing">Questions about billing <svg class="icon icon-sm"><use href="#i-arrow"/></svg></a></p>
+  </section>
+</div>
+
+<!-- ================= SIGN UP ================= -->
+<div data-view="signup">
+  <section class="wrap page-head">
+    <p class="label">Get started</p>
+    <h1 class="h1">make a learner profile.</h1>
+    <p class="lead">It takes a minute. A grown-up sets it up, then the fox takes over.</p>
+  </section>
+  <section class="wrap signup-grid">
+    <div class="card form-card">
+      <form class="form-grid" data-form="signup" novalidate>
+        <div class="field"><label for="s-email">Grown-up's email</label><input class="input" id="s-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="s-email-error"><span class="error" id="s-email-error"></span></div>
+        <div class="field"><label for="s-name">Child's first name</label><input class="input" id="s-name" name="child" type="text" autocomplete="off" required aria-describedby="s-name-error"><span class="error" id="s-name-error"></span></div>
+        <div class="field" role="radiogroup" aria-labelledby="s-age-label"><span class="field-label" id="s-age-label">Age</span>
+          <div class="chips left"><label class="chip"><input type="radio" name="age" value="5-6" required data-msg="Pick an age group." aria-describedby="s-age-error">5 to 6</label><label class="chip"><input type="radio" name="age" value="7-8">7 to 8</label><label class="chip"><input type="radio" name="age" value="9-11">9 to 11</label></div>
+          <span class="error" id="s-age-error"></span></div>
+        <div class="field" role="radiogroup" aria-labelledby="s-lang-label"><span class="field-label" id="s-lang-label">First language to learn</span>
+          <div class="choices langs">
+            <label class="choice"><input type="radio" name="lang" value="spanish" required data-msg="Pick a language." aria-describedby="s-lang-error"><span class="word c-berry">Hola</span>Spanish</label>
+            <label class="choice"><input type="radio" name="lang" value="french"><span class="word">Salut</span>French</label>
+            <label class="choice"><input type="radio" name="lang" value="mandarin"><span class="word c-sun">Ni hao</span>Mandarin</label>
+            <label class="choice"><input type="radio" name="lang" value="japanese"><span class="word c-grape">Ohayo</span>Japanese</label>
+          </div>
+          <span class="error" id="s-lang-error"></span></div>
+        <div class="field" role="radiogroup" aria-labelledby="s-goal-label"><span class="field-label" id="s-goal-label">Daily goal</span>
+          <div class="choices goals">
+            <label class="choice"><input type="radio" name="goal" value="5"><span>5 minutes a day</span><span>Easy</span></label>
+            <label class="choice"><input type="radio" name="goal" value="10" checked><span>10 minutes a day</span><span>Steady</span></label>
+            <label class="choice"><input type="radio" name="goal" value="15"><span>15 minutes a day</span><span>Keen</span></label>
+          </div>
+          <span class="error"></span></div>
+        <div class="field"><label class="check"><input type="checkbox" name="consent" required data-msg="Please tick this box to continue." aria-describedby="s-consent-error"><span>I am the child's parent or guardian and I agree to the <a href="#/terms">terms</a>.</span></label><span class="error" id="s-consent-error"></span></div>
+        <button class="btn btn-block" type="submit">Create free profile</button>
+      </form>
+      <div class="success" data-success="signup" role="status" hidden>
+        <img src="illustrations/fox.svg" alt="" width="240" height="280">
+        <h2 class="h3">you're all set!</h2>
+        <p class="muted"><span data-echo="child">Your child</span>'s first lesson is ready. We sent a welcome note to <span data-echo="email">your inbox</span>.</p>
+        <a class="btn" href="#/try">Start lesson one</a>
+      </div>
+    </div>
+    <div>
+      <ul class="perks">
+        <li><svg class="game"><use href="#g-flame"/></svg><div><strong>A habit, not homework</strong><span>Ten minutes a day, with a streak that forgives a missed day.</span></div></li>
+        <li><svg class="game"><use href="#g-gem"/></svg><div><strong>Rewards that mean something</strong><span>Gems buy stickers and outfits for the fox. Nothing for sale.</span></div></li>
+        <li><svg class="game"><use href="#g-heart"/></svg><div><strong>Safe by default</strong><span>No ads, no chat with strangers, and a grown-up controls the account.</span></div></li>
+      </ul>
+      <img src="illustrations/lesson.svg" alt="" width="460" height="400" decoding="async" style="width:min(100%,360px)">
+    </div>
+  </section>
+</div>
+
+<!-- ================= BLOG ================= -->
+<div data-view="blog">
+  <section class="wrap page-head">
+    <p class="label">For parents</p>
+    <h1 class="h1">notes for grown-ups.</h1>
+    <p class="lead">Short, practical pieces on raising kids with more than one language, from our teachers and from families.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="chips" role="group" aria-label="Filter by topic">
+      <button class="chip" type="button" data-topic="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-topic="habits" aria-pressed="false">Habits</button>
+      <button class="chip" type="button" data-topic="home" aria-pressed="false">Languages at home</button>
+      <button class="chip" type="button" data-topic="teachers" aria-pressed="false">From teachers</button>
+    </div>
+    <div data-posts>
+      <a class="card feature-post" href="#/post" data-topic="habits"><div class="post-cover" style="--c:var(--accent-soft)"><img src="illustrations/streak.svg" alt="" width="460" height="400" decoding="async"></div><div class="post-body"><span class="tag green">Habits</span><h2 class="h3" style="font-size:1.875rem;margin:12px 0">The ten-minute habit</h2><p>Why short, daily practice beats a long Saturday session, and how to make it stick without a fight.</p><p class="post-meta" style="margin-top:14px">Ines Calloway · 6 min read</p></div></a>
+      <div class="cards">
+        <a class="card post-card" href="#/post" data-topic="home"><div class="post-cover" style="--c:var(--sun-soft)"><svg class="game"><use href="#g-star"/></svg></div><div class="post-body"><span class="tag">Languages at home</span><h2 class="h3">Bilingual at breakfast</h2><p>Five phrases to use before school, in any language.</p><span class="post-meta">4 min read</span></div></a>
+        <a class="card post-card" href="#/post" data-topic="habits"><div class="post-cover" style="--c:var(--berry-soft)"><svg class="game"><use href="#g-heart"/></svg></div><div class="post-body"><span class="tag green">Habits</span><h2 class="h3">When they want to quit</h2><p>What to say on day twelve, when the novelty wears off.</p><span class="post-meta">5 min read</span></div></a>
+        <a class="card post-card" href="#/post" data-topic="teachers"><div class="post-cover" style="--c:var(--grape-soft)"><svg class="game"><use href="#g-trophy"/></svg></div><div class="post-body"><span class="tag berry">From teachers</span><h2 class="h3">Songs that stick</h2><p>Why melody helps memory, and three songs we use in class.</p><span class="post-meta">3 min read</span></div></a>
+      </div>
+    </div>
+    <p class="empty" data-empty hidden>Nothing here yet. Try another topic.</p>
+    <div class="card letter">
+      <h2 class="title" style="font-size:2rem">one letter a month.</h2>
+      <p class="muted" style="margin:10px auto 0;max-width:30em">New notes, printable word cards and the occasional song. Unsubscribe in one click.</p>
+      <form class="inline-form" data-form="newsletter" novalidate>
+        <div class="field"><label class="sr-only" for="n-email">Email</label><input class="input" id="n-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required aria-describedby="n-email-error"><span class="error" id="n-email-error"></span></div>
+        <button class="btn" type="submit">Subscribe</button>
+      </form>
+      <p class="success" data-success="newsletter" role="status" hidden><strong>Thanks, you're on the list.</strong> The next letter arrives on the first of the month.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ================= POST ================= -->
+<div data-view="post">
+  <article>
+    <header class="prose article-head">
+      <a class="text-link" href="#/blog"><svg class="icon icon-sm" style="transform:scaleX(-1)"><use href="#i-arrow"/></svg>All notes</a>
+      <h1>The ten-minute habit</h1>
+      <p class="lead">Short, daily practice beats a long weekend session. Here is how to make it stick without a fight.</p>
+      <div class="byline"><span class="avatar" style="--c:var(--sun)">IC</span><span><strong>Ines Calloway</strong>Founder and former primary teacher · 6 min read</span></div>
+    </header>
+    <div class="prose article">
+      <p>Children forget fast and remember fast. A word met on Monday and again on Tuesday is far more likely to stay than the same word met five times on a Saturday. That is the whole idea behind a ten-minute lesson.</p>
+      <h2>pick a time, not a goal</h2>
+      <p>"Every day" is a wish. "After brushing teeth" is a plan. Tie the lesson to something that already happens, and it will happen too.</p>
+      <ul>
+        <li><svg class="icon"><use href="#i-check"/></svg>Right after breakfast, before shoes go on.</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>In the car on the way to practice.</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>As the last thing before the bedtime story.</li>
+      </ul>
+      <div class="say tip"><svg aria-hidden="true"><use href="#mark"/></svg><p class="bubble">A missed day is fine. A streak freeze covers it, and nobody loses their fox.</p></div>
+      <h2>a week that works</h2>
+      <div class="table-scroll" style="margin:0">
+        <table><thead><tr><th scope="col">Day</th><th scope="col">What to do</th><th scope="col">Time</th></tr></thead>
+        <tbody><tr><td>Monday to Thursday</td><td>One new lesson</td><td>10 min</td></tr><tr><td>Friday</td><td>Review and a song</td><td>10 min</td></tr><tr><td>Weekend</td><td>A story, read together</td><td>15 min</td></tr></tbody></table>
+      </div>
+      <blockquote>“The best lesson is the one that actually happens.”</blockquote>
+      <h2>let them teach you</h2>
+      <p>Ask your child to teach you the word of the day. Getting it wrong on purpose is allowed, and very effective.</p>
+      <p><a class="text-link" href="#/blog">Read more notes <svg class="icon icon-sm"><use href="#i-arrow"/></svg></a></p>
+    </div>
+  </article>
+</div>
+
+<!-- ================= FAQ ================= -->
+<div data-view="faq">
+  <section class="wrap page-head">
+    <p class="label">Help</p>
+    <h1 class="h1">questions, answered.</h1>
+    <p class="lead">The things parents ask us most. Something missing? Write to us.</p>
+  </section>
+  <section class="wrap" style="padding-bottom:96px">
+    <div class="faq-group" id="lessons"><h2>lessons</h2><div class="faq">
+      <details class="card"><summary>How long is a lesson?<svg class="icon"><use href="#i-down"/></svg></summary><p>About three minutes, made of five to eight short questions. Most kids do two or three a day.</p></details>
+      <details class="card"><summary>Does my child need to read?<svg class="icon"><use href="#i-down"/></svg></summary><p>Not for the 5 to 7 courses. Every word is spoken aloud and most answers are pictures.</p></details>
+      <details class="card"><summary>Who writes the lessons?<svg class="icon"><use href="#i-down"/></svg></summary><p>Primary teachers who speak the language at home, then native speakers record the audio.</p></details>
+    </div></div>
+    <div class="faq-group" id="safety"><h2>accounts and safety</h2><div class="faq">
+      <details class="card"><summary>Are there ads or chats?<svg class="icon"><use href="#i-down"/></svg></summary><p>No ads, and no way to message other users. Leaderboards show first names only, and you can turn them off.</p></details>
+      <details class="card"><summary>What do you store about my child?<svg class="icon"><use href="#i-down"/></svg></summary><p>A first name, an age group and lesson progress. Nothing else. Read the <a class="text-link" href="#/privacy">privacy policy</a>.</p></details>
+    </div></div>
+    <div class="faq-group" id="billing"><h2>plans and billing</h2><div class="faq">
+      <details class="card"><summary>Can we stay on the free plan?<svg class="icon"><use href="#i-down"/></svg></summary><p>Yes, for as long as you like. The free plan has one language and one lesson a day.</p></details>
+      <details class="card"><summary>How do I cancel?<svg class="icon"><use href="#i-down"/></svg></summary><p>From the grown-up settings, in two taps. You keep access until the end of the period you paid for.</p></details>
+    </div></div>
+    <div class="card help"><div><h2 class="h3">still wondering?</h2><p class="muted">A real person answers within one school day.</p></div><a class="btn btn-sky" href="#/contact">Ask us</a></div>
+  </section>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<div data-view="about">
+  <section class="wrap page-head">
+    <p class="label">About us</p>
+    <h1 class="h1">made by teachers, drawn with care.</h1>
+    <p class="lead">We started in a classroom with a puppet fox and a box of picture cards. The cards became an app; the fox stayed.</p>
+  </section>
+  <section class="wrap section" style="padding-top:24px">
+    <div class="split">
+      <img src="illustrations/family.svg" alt="Two kids and Momo the fox cheer together" width="480" height="380" decoding="async">
+      <div><h2 class="title">small steps, every day.</h2><p class="muted" style="margin-top:18px">Kids learn a language the way they learn a song: a little at a time, again and again, with someone cheering. Mossberry is built around that, from the length of a lesson to the sound the chest makes.</p></div>
+    </div>
+  </section>
+  <section class="band section">
+    <div class="wrap">
+      <div class="section-head"><h2 class="title">what we promise.</h2></div>
+      <div class="values">
+        <div class="card value reveal" style="--i:0"><svg class="game"><use href="#g-heart"/></svg><h3 class="h3">kind, always</h3><p>No timers that shout, no shame for mistakes. Wrong answers come back later, gently.</p></div>
+        <div class="card value reveal" style="--i:1"><svg class="game"><use href="#g-star"/></svg><h3 class="h3">real teaching</h3><p>Every lesson is planned by a teacher and checked by a native speaker.</p></div>
+        <div class="card value reveal" style="--i:2"><svg class="game"><use href="#g-gem"/></svg><h3 class="h3">no tricks</h3><p>No ads, no in-app purchases for kids, and no selling of anyone's data.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="wrap section">
+    <div class="section-head"><h2 class="title">the team.</h2></div>
+    <div class="team">
+      <div><span class="avatar" style="--c:var(--sun);--e:var(--sun-edge)">IC</span><strong>Ines Calloway</strong><span>Founder, former teacher</span></div>
+      <div><span class="avatar" style="--c:var(--sky);--e:var(--sky-edge)">TB</span><strong>Tomasz Bell</strong><span>Learning design</span></div>
+      <div><span class="avatar" style="--c:var(--berry);--e:var(--berry-edge)">RA</span><strong>Ruth Adeyemi</strong><span>Illustration</span></div>
+      <div><span class="avatar" style="--c:var(--accent);--e:var(--accent-edge)">WL</span><strong>Wen Li</strong><span>Mandarin and Japanese</span></div>
+    </div>
+    <div class="btn-row" style="justify-content:center;margin-top:48px"><a class="btn btn-2" href="#/contact">Write to us</a></div>
+  </section>
+</div>
+
+<!-- ================= CONTACT ================= -->
+<div data-view="contact">
+  <section class="wrap page-head">
+    <p class="label">Contact</p>
+    <h1 class="h1">say hello.</h1>
+    <p class="lead">Questions about lessons, schools or your account. We answer within one school day.</p>
+  </section>
+  <section class="wrap contact-grid">
+    <div class="card form-card">
+      <form class="form-grid" data-form="contact" novalidate>
+        <div class="field"><label for="c-name">Your name</label><input class="input" id="c-name" name="name" type="text" autocomplete="name" required aria-describedby="c-name-error"><span class="error" id="c-name-error"></span></div>
+        <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="c-email-error"><span class="error" id="c-email-error"></span></div>
+        <div class="field"><label for="c-topic">Topic</label><select class="select" id="c-topic" name="topic"><option value="lessons">Lessons and courses</option><option value="account">My account</option><option value="schools">Schools and classes</option><option value="other">Something else</option></select><span class="error"></span></div>
+        <div class="field"><label for="c-message">Message</label><textarea class="textarea" id="c-message" name="message" required minlength="10" aria-describedby="c-message-error"></textarea><span class="error" id="c-message-error"></span></div>
+        <button class="btn btn-block" type="submit">Send message</button>
+      </form>
+      <div class="success" data-success="contact" role="status" hidden><img src="illustrations/fox.svg" alt="" width="240" height="280"><h2 class="h3">message sent!</h2><p class="muted">Thanks for writing. We will reply within one school day.</p></div>
+    </div>
+    <div>
+      <ul class="contact-list">
+        <li class="card"><svg class="icon"><use href="#i-mail"/></svg><div><strong>Email</strong>hello@mossberry.example</div></li>
+        <li class="card"><svg class="icon"><use href="#i-clock"/></svg><div><strong>Hours</strong>Monday to Friday, 8 am to 4 pm</div></li>
+        <li class="card"><svg class="icon"><use href="#i-kid"/></svg><div><strong>Schools</strong>Class plans for teachers, free for the first term.</div></li>
+      </ul>
+      <img src="illustrations/parents.svg" alt="" width="460" height="400" decoding="async" style="width:min(100%,340px)">
+    </div>
+  </section>
+</div>
+
+<!-- ================= LEGAL ================= -->
+<div data-view="privacy">
+  <section class="prose page-head" style="text-align:left"><p class="label">Legal</p><h1 class="h1">privacy policy</h1><p class="lead" style="margin-inline:0">Last updated 1 September. Sample text: replace it with your own policy.</p></section>
+  <section class="prose legal">
+    <h2>What we collect</h2><p>A grown-up's email, a child's first name and age group, and lesson progress. We do not collect photos, voice recordings or location.</p>
+    <h2>How we use it</h2><p>To run lessons, show progress and send the weekly note. We never sell data or show ads.</p>
+    <h2>Your choices</h2><p>Download or delete a learner profile at any time from the grown-up settings, or write to hello@mossberry.example.</p>
+  </section>
+</div>
+<div data-view="terms">
+  <section class="prose page-head" style="text-align:left"><p class="label">Legal</p><h1 class="h1">terms of use</h1><p class="lead" style="margin-inline:0">Last updated 1 September. Sample text: replace it with your own terms.</p></section>
+  <section class="prose legal">
+    <h2>Accounts</h2><p>A parent or guardian creates and controls each account. Children use Mossberry under their supervision.</p>
+    <h2>Plans</h2><p>Paid plans renew until cancelled. Cancel at any time; access continues until the end of the paid period.</p>
+    <h2>Content</h2><p>Lessons, drawings and the fox are ours. Printables may be copied for home and classroom use.</p>
+    <p class="muted">Mossberry Learning Ltd.</p>
+  </section>
+</div>
+
+<!-- ================= 404 ================= -->
+<div data-view="404">
+  <section class="wrap notfound">
+    <img src="illustrations/lost.svg" alt="Momo the fox looks puzzled at a map" width="360" height="320">
+    <h1 class="h1">this page wandered off.</h1>
+    <p class="lead" style="margin:14px auto 0">The link may be old, or the fox took a wrong turn.</p>
+    <div class="btn-row"><a class="btn" href="#/">Go home</a><a class="btn btn-2" href="#/courses">See courses</a></div>
+  </section>
+</div>
+
+</main>
+
+<svg class="hill" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 120V72C180 20 360 8 540 44s330 86 540 52 270-84 360-70v122z"/></svg>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a class="brand" href="#/"><svg aria-hidden="true"><use href="#mark"/></svg>mossberry</a><p style="margin-top:12px;max-width:22em;font-weight:700">Little language lessons for kids aged 5 to 11.</p></div>
+      <div><h2>Learn</h2><ul><li><a href="#/courses">Courses</a></li><li><a href="#/try">Try a lesson</a></li><li><a href="#/pricing">Pricing</a></li></ul></div>
+      <div><h2>Grown-ups</h2><ul><li><a href="#/blog">For parents</a></li><li><a href="#/faq">FAQ</a></li><li><a href="#/contact">Contact</a></li></ul></div>
+      <div><h2>Company</h2><ul><li><a href="#/about">About us</a></li><li><a href="#/privacy">Privacy</a></li><li><a href="#/terms">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Mossberry Learning Ltd.</span><span>Made for curious kids</span></div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (sel, scope = document) => scope.querySelector(sel);
+  const $$ = (sel, scope = document) => [...scope.querySelectorAll(sel)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("mossberry-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("mossberry-theme", next);
+  });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "Mossberry: little language lessons for kids", courses: "Courses · Mossberry", course: "Course path · Mossberry", try: "Try a lesson · Mossberry", pricing: "Pricing · Mossberry", signup: "Get started · Mossberry", blog: "For parents · Mossberry", post: "The ten-minute habit · Mossberry", faq: "FAQ · Mossberry", about: "About · Mossberry", contact: "Contact · Mossberry", privacy: "Privacy · Mossberry", terms: "Terms · Mossberry", "404": "Page not found · Mossberry" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    current?.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    $$(".nav a, .sheet nav a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "courses") filterCourses(p.get("age") || "all");
+    if (name === "course") showCourse(p.get("lang"));
+    if (name === "try") quiz.reset();
+    if (name === "pricing") pickPlan(p.get("plan"));
+    if (name === "signup" && p.get("lang")) { const r = $(`input[name="lang"][value="${p.get("lang")}"]`); if (r) r.checked = true; }
+    if (name === "contact" && p.get("topic")) { const s = $("#c-topic"); if ($(`option[value="${p.get("topic")}"]`, s)) s.value = p.get("topic"); }
+    const at = p.get("at") && current.querySelector(`#${CSS.escape(p.get("at"))}`);
+    if (at) setTimeout(() => at.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = $(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); target.focus?.({ preventScroll: true }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header and mobile menu ---------- */
+  const header = $(".site-header");
+  const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+
+  /* ---------- Reveal (keyframes after the class lands; visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) { $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in"))); }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Language strip arrows ---------- */
+  const track = $("[data-strip-track]");
+  $$("[data-strip]").forEach((b) => b.addEventListener("click", () => track.scrollBy({ left: Number(b.dataset.strip) * 320, behavior: "smooth" })));
+
+  /* ---------- Course filter ---------- */
+  function filterCourses(age) {
+    let shown = 0;
+    $$("[data-age]").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.age === age)));
+    $$("[data-courses] [data-ages]").forEach((card) => { const match = age === "all" || card.dataset.ages === age; card.hidden = !match; shown += match; });
+    $("[data-count]").textContent = `Showing ${shown} course${shown === 1 ? "" : "s"}`;
+    $("[data-view='courses'] [data-empty]").hidden = shown > 0;
+  }
+  $$("[data-age]").forEach((chip) => chip.addEventListener("click", () => filterCourses(chip.dataset.age)));
+
+  /* ---------- Course path: name from ?lang=, stop popover ---------- */
+  const courses = { spanish: ["Spanish", "Hola", "c-berry"], french: ["French", "Salut", ""], mandarin: ["Mandarin", "Ni hao", "c-sun"], japanese: ["Japanese", "Ohayo", "c-grape"], korean: ["Korean", "Annyeong", "c-green"], english: ["English", "Hello", "c-tangerine"], italian: ["Italian", "Ciao", "c-berry"], german: ["German", "Hallo", "c-sun"] };
+  const pop = $("#stop-pop");
+  function showCourse(lang) {
+    const [name, word, color] = courses[lang] || courses.spanish;
+    $("[data-course-name]").textContent = name;
+    const w = $("[data-course-word]");
+    w.textContent = word;
+    w.className = `word big ${color}`;
+    titles.course = `${name} course · Mossberry`;
+    document.title = titles.course;
+    pop.hidden = true;
+  }
+  $$(".node").forEach((node) => node.addEventListener("click", () => {
+    const stop = node.closest(".stop");
+    const open = !pop.hidden && pop.parentElement === stop;
+    $$(".node[aria-expanded]").forEach((n) => n.removeAttribute("aria-expanded"));
+    if (open) { pop.hidden = true; return; }
+    stop.append(pop);
+    $("[data-pop-title]", pop).textContent = node.dataset.title;
+    $("[data-pop-text]", pop).textContent = node.dataset.text;
+    pop.classList.toggle("is-locked", "locked" in node.dataset);
+    pop.hidden = false;
+    node.setAttribute("aria-expanded", "true");
+  }));
+  document.addEventListener("click", (event) => { if (!pop.hidden && !event.target.closest(".stop")) pop.hidden = true; });
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !pop.hidden) pop.hidden = true; });
+
+  /* ---------- Lesson: pick, check, continue, finish ---------- */
+  const quiz = (() => {
+    const view = views.get("try");
+    const steps = $$(".q", view);
+    const bar = $("[data-check-bar]", view);
+    const button = $("[data-check]", view);
+    const progress = $("[data-progress]", view);
+    const hearts = $("[data-hearts]", view);
+    const fbTitle = $("[data-fb-title]", view);
+    const fbText = $("[data-fb-text]", view);
+    const fbIcon = $(".mark-ico", view);
+    let index = 0, checked = false, right = 0;
+    const picked = () => $("input:checked", steps[index]);
+    function setProgress(n) { progress.style.setProperty("--p", Math.max(0.05, n / steps.length)); progress.setAttribute("aria-valuenow", n); }
+    function render() {
+      steps.forEach((s, i) => { s.hidden = i !== index; });
+      checked = false;
+      bar.className = "check-bar";
+      fbTitle.textContent = ""; fbText.textContent = ""; fbIcon.hidden = true;
+      button.className = "btn";
+      button.textContent = "Check";
+      button.disabled = !picked();
+    }
+    function reset() {
+      index = 0; right = 0;
+      hearts.textContent = "5";
+      $$("input", view).forEach((input) => { input.checked = false; input.disabled = false; });
+      $$(".choice", view).forEach((c) => c.classList.remove("is-right", "is-wrong"));
+      $("[data-quiz]", view).hidden = false;
+      $("[data-done]", view).hidden = true;
+      bar.hidden = false;
+      setProgress(0);
+      render();
+    }
+    view.addEventListener("change", () => { if (!checked) button.disabled = !picked(); });
+    view.addEventListener("keydown", (event) => {
+      if (event.isComposing || !/^[1-3]$/.test(event.key) || checked) return;
+      const input = $$("input", steps[index])[Number(event.key) - 1];
+      if (input) { input.checked = true; input.focus(); button.disabled = false; }
+    });
+    button.addEventListener("click", () => {
+      const step = steps[index];
+      if (!checked) {
+        const choice = picked();
+        if (!choice) return;
+        const ok = choice.value === step.dataset.answer;
+        checked = true;
+        right += ok;
+        $$("input", step).forEach((input) => { input.disabled = true; });
+        choice.closest(".choice").classList.add(ok ? "is-right" : "is-wrong");
+        if (!ok) { hearts.textContent = String(Math.max(0, Number(hearts.textContent) - 1)); $(`input[value="${step.dataset.answer}"]`, step).closest(".choice").classList.add("is-right"); }
+        bar.className = `check-bar ${ok ? "is-right" : "is-wrong"}`;
+        fbIcon.hidden = false;
+        $("use", fbIcon).setAttribute("href", ok ? "#i-check" : "#i-close");
+        fbTitle.textContent = ok ? "Nicely done!" : "Not quite.";
+        fbText.textContent = ok ? "" : `Correct answer: ${step.dataset.right}`;
+        button.className = ok ? "btn" : "btn btn-berry";
+        button.textContent = "Continue";
+        setProgress(index + 1);
+        return;
+      }
+      index += 1;
+      if (index < steps.length) { render(); $("input", steps[index])?.focus(); return; }
+      $("[data-quiz]", view).hidden = true;
+      bar.hidden = true;
+      $("[data-xp]", view).textContent = String(right * 10);
+      $("[data-acc]", view).textContent = `${Math.round((right / steps.length) * 100)}%`;
+      $("[data-done]", view).hidden = false;
+      $("[data-done] .btn", view).focus();
+    });
+    $("[data-restart]", view).addEventListener("click", reset);
+    return { reset };
+  })();
+
+  /* ---------- Pricing ---------- */
+  function setBilling(period) {
+    $$("[data-billing]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.billing === period)));
+    $$(`[data-${period}]`).forEach((el) => { el.textContent = el.dataset[period]; });
+  }
+  $$("[data-billing]").forEach((b) => b.addEventListener("click", () => setBilling(b.dataset.billing)));
+  function pickPlan(plan) { $$("[data-plan]").forEach((card) => card.classList.toggle("is-picked", card.dataset.plan === plan)); }
+
+  /* ---------- Blog topics ---------- */
+  $$("[data-topic]").filter((el) => el.matches("button")).forEach((chip) => chip.addEventListener("click", () => {
+    const topic = chip.dataset.topic;
+    let shown = 0;
+    $$("button[data-topic]").forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
+    $$("[data-posts] [data-topic]").forEach((post) => { const match = topic === "all" || post.dataset.topic === topic; post.hidden = !match; shown += match; });
+    $("[data-view='blog'] [data-empty]").hidden = shown > 0;
+  }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please write a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (problem === "valueMissing" && field.dataset.msg) || messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = () => [...form.elements].filter((el) => el.getAttribute("aria-describedby"));
+    fields().forEach((field) => field.addEventListener(/radio|checkbox/.test(field.type) ? "change" : "blur", () => checkField(field)));
+    form.addEventListener("change", (event) => { const first = form.elements[event.target.name]?.[0]; if (event.target.type === "radio" && first?.getAttribute("aria-describedby")) checkField(first); });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames (the live demo, AI tool previews) block native submission before the submit event fires,
+       so the submit button runs the handler; Enter in a field clicks that button (implicit submission). */
+    const send = () => {
+      const all = fields();
+      const valid = all.map(checkField).every(Boolean);
+      if (!valid) { all.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      const button = $("[type=submit]", form);
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        $$("[data-echo]", form.parentElement).forEach((el) => { const v = form.elements[el.dataset.echo]?.value.trim(); if (v) el.textContent = v; });
+        form.hidden = true;
+        const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+        if (success) { success.hidden = false; success.setAttribute("tabindex", "-1"); success.focus(); }
+      }, 500);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    $("[type=submit]", form).addEventListener("click", (event) => { event.preventDefault(); send(); });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

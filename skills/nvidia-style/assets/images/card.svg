@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" preserveAspectRatio="xMidYMid slice">
+<defs>
+<radialGradient id="bg" cx="55%" cy="45%" r="62%"><stop offset="0" stop-color="#282828"/><stop offset=".55" stop-color="#0a0a0a"/><stop offset="1" stop-color="#000"/></radialGradient>
+<linearGradient id="shroud" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a4a4a"/><stop offset=".5" stop-color="#262626"/><stop offset="1" stop-color="#121212"/></linearGradient>
+<linearGradient id="edge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c2c2c"/><stop offset="1" stop-color="#0c0c0c"/></linearGradient>
+<pattern id="fins" width="10" height="40" patternUnits="userSpaceOnUse" patternTransform="skewX(-28)"><rect width="4" height="40" fill="#303030"/></pattern>
+<radialGradient id="shadow"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+<filter id="glow" x="-1" y="-1" width="3" height="3"><feGaussianBlur stdDeviation="8"/></filter>
+</defs>
+<rect width="1600" height="1000" fill="url(#bg)"/>
+<ellipse cx="820" cy="760" rx="600" ry="60" fill="url(#shadow)"/>
+<path d="M300 560 1200 330 1330 400 430 640z" fill="url(#shroud)"/>
+<path d="M430 640 1330 400V470L430 712z" fill="url(#edge)"/>
+<path d="M470 655 1290 436V462L470 683z" fill="url(#fins)"/>
+<path d="M300 560 430 640V712L300 632z" fill="#161616"/>
+<g fill="#0c0c0c" stroke="#3a3a3a" stroke-width="3"><ellipse cx="620" cy="520" rx="140" ry="62" transform="rotate(-14 620 520)"/><ellipse cx="960" cy="432" rx="140" ry="62" transform="rotate(-14 960 432)"/></g>
+<g fill="none" stroke="#2a2a2a" stroke-width="10"><ellipse cx="620" cy="520" rx="96" ry="42" transform="rotate(-14 620 520)"/><ellipse cx="960" cy="432" rx="96" ry="42" transform="rotate(-14 960 432)"/></g>
+<g fill="#1d1d1d"><circle cx="620" cy="520" r="22"/><circle cx="960" cy="432" r="22"/></g>
+<path d="M436 638 1326 402" stroke="#79bb00" stroke-width="5"/>
+<path d="M436 638 1326 402" stroke="#9be01a" stroke-width="16" opacity=".45" filter="url(#glow)"/>
+<path d="M300 560 1200 330 1330 400" fill="none" stroke="#d4d4d4" stroke-opacity=".5" stroke-width="2.5"/>
+<path d="M1330 470V400" stroke="#8a8a8a" stroke-opacity=".5" stroke-width="2"/>
+<path d="M600 720h160v20H600z" fill="#7a5f1c" opacity=".7" transform="rotate(-14.4 600 720)"/>
+</svg>

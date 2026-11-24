@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Moonwake: tide times for people who walk the shore</title>
+<meta name="description" content="Moonwake is a free, open-source tide app for phones, tablets and computers. It works offline, needs no account and never tracks you.">
+<meta property="og:title" content="Moonwake: tide times for people who walk the shore">
+<meta property="og:description" content="A free, open-source tide app for phones, tablets and computers.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/host-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font ---------- */
+@font-face { font-family: "Host Grotesk"; src: url("fonts/host-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 300 800; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens (light) ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: oklch(100% 0 0);
+  --surface: oklch(96.6% 0.017 240);
+  --surface-2: oklch(97.6% 0.004 250);
+  --text: oklch(27% 0.012 250);
+  --text-muted: oklch(52% 0.014 250);
+  --border: oklch(91.5% 0.007 250);
+  --border-strong: oklch(66% 0.014 250);
+  --accent: oklch(52% 0.13 245);
+  --accent-hover: oklch(44% 0.13 248);
+  --accent-text: oklch(100% 0 0);
+  --rule: oklch(60% 0.13 240);
+  --focus: oklch(58% 0.16 245);
+  --danger: oklch(50% 0.18 25);
+  --ok: oklch(55% 0.12 160);
+  --frame: oklch(24% 0.01 250);
+  --shadow-card: 0 1px 2px oklch(25% 0.02 250 / 0.06), 0 6px 18px oklch(25% 0.03 250 / 0.08);
+  --shadow-overlay: 0 14px 36px oklch(25% 0.03 250 / 0.16);
+  --sticker-shadow: oklch(25% 0.03 250 / 0.2);
+  --scr-bg: oklch(100% 0 0); --scr-panel: oklch(95.5% 0.02 235); --scr-ink: oklch(28% 0.02 250); --scr-muted: oklch(68% 0.015 250); --scr-line: oklch(92% 0.01 250); --scr-accent: oklch(58% 0.14 240); --scr-sea: oklch(84% 0.07 230);
+
+  --font: "Host Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --display: clamp(2.25rem, 1.9rem + 1.4vw, 2.75rem);
+  --h1: clamp(1.5rem, 1.35rem + 0.6vw, 1.75rem);
+  --h2: 1.25rem;
+  --h3: 1.0625rem;
+  --r-control: 8px; --r-card: 12px; --r-media: 18px; --r-pill: 999px;
+  --dur-fast: 120ms; --dur-base: 200ms; --dur-slow: 520ms; --ease: cubic-bezier(0.25, 0.7, 0.25, 1);
+  --wrap: 1100px;
+  --gutter: clamp(16px, 4vw, 32px);
+}
+
+/* ---------- Tokens (dark): follows the system until the toggle is used ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: oklch(21.5% 0.02 255); --surface: oklch(27.5% 0.035 250); --surface-2: oklch(24.5% 0.022 255); --text: oklch(93% 0.006 250); --text-muted: oklch(73% 0.014 250);
+    --border: oklch(33% 0.022 255); --border-strong: oklch(55% 0.025 255); --accent: oklch(76% 0.115 238); --accent-hover: oklch(85% 0.09 235); --accent-text: oklch(20% 0.03 255);
+    --rule: oklch(68% 0.12 238); --focus: oklch(76% 0.13 238); --danger: oklch(74% 0.14 25); --ok: oklch(76% 0.12 160); --frame: oklch(13% 0.01 250);
+    --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.3), 0 8px 22px oklch(0% 0 0 / 0.3); --shadow-overlay: 0 14px 36px oklch(0% 0 0 / 0.5); --sticker-shadow: oklch(0% 0 0 / 0.45);
+    --scr-bg: oklch(24% 0.022 255); --scr-panel: oklch(29.5% 0.035 250); --scr-ink: oklch(93% 0.006 250); --scr-muted: oklch(62% 0.02 250); --scr-line: oklch(34% 0.022 255); --scr-accent: oklch(74% 0.12 238); --scr-sea: oklch(46% 0.09 238);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: oklch(21.5% 0.02 255); --surface: oklch(27.5% 0.035 250); --surface-2: oklch(24.5% 0.022 255); --text: oklch(93% 0.006 250); --text-muted: oklch(73% 0.014 250);
+  --border: oklch(33% 0.022 255); --border-strong: oklch(55% 0.025 255); --accent: oklch(76% 0.115 238); --accent-hover: oklch(85% 0.09 235); --accent-text: oklch(20% 0.03 255);
+  --rule: oklch(68% 0.12 238); --focus: oklch(76% 0.13 238); --danger: oklch(74% 0.14 25); --ok: oklch(76% 0.12 160); --frame: oklch(13% 0.01 250);
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.3), 0 8px 22px oklch(0% 0 0 / 0.3); --shadow-overlay: 0 14px 36px oklch(0% 0 0 / 0.5); --sticker-shadow: oklch(0% 0 0 / 0.45);
+  --scr-bg: oklch(24% 0.022 255); --scr-panel: oklch(29.5% 0.035 250); --scr-ink: oklch(93% 0.006 250); --scr-muted: oklch(62% 0.02 250); --scr-line: oklch(34% 0.022 255); --scr-accent: oklch(74% 0.12 238); --scr-sea: oklch(46% 0.09 238);
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+/* A device screen that always shows the app's dark theme */
+.scr-dark { --scr-bg: oklch(24% 0.022 255); --scr-panel: oklch(29.5% 0.035 250); --scr-ink: oklch(93% 0.006 250); --scr-muted: oklch(62% 0.02 250); --scr-line: oklch(34% 0.022 255); --scr-accent: oklch(74% 0.12 238); --scr-sea: oklch(46% 0.09 238); }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.6 var(--font); -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { line-height: 1.25; text-wrap: balance; }
+p { text-wrap: pretty; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+button { font: inherit; color: inherit; }
+img, svg { max-width: 100%; }
+.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vertical-align: -4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 10; background: var(--accent); color: var(--accent-text); padding: 10px 16px; border-radius: var(--r-control); }
+.skip:focus { top: 12px; }
+.muted { color: var(--text-muted); }
+.more::after { content: " \00BB"; }
+
+/* ---------- Header: text tabs, no logo ---------- */
+.top { border-bottom: 1px solid var(--border); background: var(--bg); }
+.top-in { max-width: 1180px; margin: 0 auto; padding: 0 var(--gutter); height: 56px; display: flex; justify-content: space-between; gap: 12px; }
+.tabs { position: relative; display: flex; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs a { position: relative; display: flex; align-items: center; padding: 0 13px; font-weight: 500; white-space: nowrap; }
+.tabs a:hover { text-decoration: none; background: var(--surface-2); }
+.tabs a:focus-visible { outline-offset: -3px; }
+.tabs a[aria-current="page"]::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; background: var(--accent); }
+.top-act { display: flex; align-items: center; gap: 4px; flex: none; }
+.top-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 10px; font-weight: 500; }
+.icon-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 50%; background: none; color: var(--text-muted); cursor: pointer; transition: background var(--dur-fast), color var(--dur-fast); }
+.icon-btn:hover { background: var(--surface-2); color: var(--accent); }
+@media (max-width: 640px) { .top-in { padding: 0 6px; } .top-link { display: none; } .tabs a { padding: 0 9px; font-size: 0.9375rem; } }
+
+/* ---------- Views ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.js [data-view].is-active { animation: fade var(--dur-base) var(--ease); }
+main { min-height: 70vh; }
+
+/* ---------- Stickers: die-cut white edge and a soft shadow, drawn with CSS so every symbol gets it ---------- */
+.sticker { display: block; filter: drop-shadow(2.5px 0 0 #fff) drop-shadow(-2.5px 0 0 #fff) drop-shadow(0 2.5px 0 #fff) drop-shadow(0 -2.5px 0 #fff) drop-shadow(0 6px 8px var(--sticker-shadow)); transition: transform var(--dur-base) var(--ease); }
+
+/* ---------- Home: round mark, name, news rail ---------- */
+.hero { display: grid; grid-template-columns: 1fr minmax(0, 480px) 1fr; gap: 24px; max-width: 1200px; margin: 0 auto; padding: 44px var(--gutter) 16px; align-items: start; }
+.hero-main { grid-column: 2; text-align: center; }
+.logo { display: block; width: 124px; height: 124px; margin: 0 auto 14px; }
+.name { margin: 0; font-size: var(--display); font-weight: 500; letter-spacing: -0.015em; line-height: 1.1; }
+.tagline { margin: 8px 0 0; font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); font-weight: 300; color: var(--text-muted); }
+.rail { grid-column: 3; justify-self: start; max-width: 250px; border-left: 2px solid var(--rule); padding: 2px 0 2px 18px; font-size: 0.9375rem; line-height: 1.45; }
+.rail h2 { margin: 0 0 12px; font-size: 1.125rem; font-weight: 600; }
+.rail ul { list-style: none; margin: 0; padding: 0; }
+.rail li { margin-bottom: 14px; }
+.rail li:last-child { margin-bottom: 0; }
+.rail strong { display: block; font-size: 0.875rem; font-weight: 600; }
+@media (max-width: 980px) {
+  .hero { grid-template-columns: minmax(0, 1fr); padding-top: 32px; }
+  .hero-main, .rail { grid-column: 1; }
+  .rail { justify-self: center; width: min(100%, 420px); max-width: none; }
+}
+
+/* ---------- Home: devices with platform text links ---------- */
+.devices { max-width: 940px; margin: 0 auto; padding: 40px var(--gutter) 8px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px 40px; }
+.dev { margin: 0; display: grid; justify-items: center; align-content: end; gap: 22px; }
+.dev.wide { grid-column: 1 / -1; }
+.dev figcaption { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 72px; }
+.dl { display: inline-flex; align-items: center; gap: 10px; font-size: 1.0625rem; }
+.dl b { font-weight: 600; }
+.pair { display: flex; align-items: flex-end; justify-content: center; }
+.pair > * + * { margin-left: -34px; }
+.pair > .front { position: relative; z-index: 1; }
+.phone, .tablet, .laptop .scr { overflow: hidden; background: var(--scr-bg); border: 6px solid var(--frame); box-shadow: 0 0 0 1px var(--border), var(--shadow-card); }
+.phone { width: 128px; aspect-ratio: 180 / 370; border-radius: 26px; }
+.tablet { width: 216px; aspect-ratio: 300 / 400; border-radius: 20px; border-width: 8px; }
+.phone svg, .tablet svg, .laptop svg { display: block; width: 100%; height: 100%; }
+.laptop { width: 300px; }
+.laptop .scr { aspect-ratio: 480 / 300; border-width: 8px 8px 12px; border-radius: 12px 12px 0 0; }
+.laptop::after { content: ""; display: block; height: 10px; margin: 0 -9%; border-radius: 0 0 12px 12px; background: var(--frame); box-shadow: 0 0 0 1px var(--border); }
+.laptop + .laptop { width: 250px; margin-left: -20px; }
+.only-sm { display: none; }
+@media (max-width: 700px) {
+  .devices { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+  .dev.wide .laptop { width: 190px; }
+  .dev.wide .laptop + .laptop { width: 150px; margin-left: -12px; }
+  .only-sm { display: flex; justify-content: center; padding: 28px var(--gutter) 0; }
+}
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 22px; border: 0; border-radius: var(--r-pill); background: var(--accent); color: var(--accent-text); font-weight: 600; cursor: pointer; transition: background var(--dur-fast); }
+.btn:hover { background: var(--accent-hover); color: var(--accent-text); text-decoration: none; }
+.btn:disabled { opacity: 0.7; cursor: progress; }
+
+/* ---------- Home: news cards and the sticker grid ---------- */
+.news { max-width: 840px; margin: 0 auto; padding: 72px var(--gutter) 16px; }
+.sec-title { margin: 0 0 28px; text-align: center; font-size: 1.625rem; font-weight: 600; color: var(--accent); }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 44px 36px; }
+.card { display: flex; flex-direction: column; gap: 6px; }
+.card > a { display: grid; gap: 14px; color: var(--accent); }
+.card > a:hover { text-decoration: none; }
+.card > a:hover .card-t { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.card > a:hover .sticker { transform: rotate(-6deg) scale(1.06); }
+.card .card-t { margin: 0; font-size: 1.1875rem; font-weight: 600; line-height: 1.35; color: inherit; }
+.card p { margin: 0; }
+.card time { color: var(--text-muted); font-size: 0.9375rem; }
+.cover { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 10; overflow: hidden; border-radius: var(--r-media); background: var(--tone); box-shadow: inset 0 0 44px oklch(20% 0.06 260 / 0.28); }
+.cover::before { content: ""; position: absolute; right: 9%; top: 12%; width: 18%; aspect-ratio: 1; border-radius: 50%; background: oklch(100% 0 0 / 0.4); }
+.cover::after { content: ""; position: absolute; inset: auto -10% -46% -10%; height: 70%; border-radius: 50%; background: oklch(100% 0 0 / 0.22); }
+.cover .sticker { position: relative; z-index: 1; width: 40%; height: auto; aspect-ratio: 1; }
+.tone-dusk { --tone: linear-gradient(160deg, oklch(70% 0.11 300), oklch(74% 0.13 35)); }
+.tone-day { --tone: linear-gradient(160deg, oklch(86% 0.07 220), oklch(66% 0.13 245)); }
+.tone-night { --tone: linear-gradient(160deg, oklch(42% 0.1 270), oklch(28% 0.07 255)); }
+.tone-sand { --tone: linear-gradient(160deg, oklch(93% 0.06 90), oklch(78% 0.11 60)); }
+.tone-sea { --tone: linear-gradient(160deg, oklch(84% 0.08 185), oklch(58% 0.1 215)); }
+.tone-dawn { --tone: linear-gradient(160deg, oklch(93% 0.05 75), oklch(80% 0.08 220)); }
+@media (max-width: 640px) { .cards { grid-template-columns: minmax(0, 1fr); } }
+.why { max-width: 1000px; margin: 0 auto; padding: 72px var(--gutter) 80px; text-align: center; }
+.why-title { margin: 0 0 40px; font-size: 1.625rem; font-weight: 600; }
+.why-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 32px; margin: 0; padding: 0; list-style: none; }
+.why .sticker { width: 136px; height: 136px; margin: 0 auto 10px; }
+.why li:hover .sticker { transform: rotate(-5deg) scale(1.05); }
+.why h3 { margin: 0 0 6px; font-size: 1.75rem; font-weight: 500; color: var(--accent); }
+.why p { max-width: 17em; margin: 0 auto; }
+@media (max-width: 760px) { .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 20px; } .why .sticker { width: 112px; height: 112px; } }
+@media (max-width: 480px) { .why-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Inner pages: a plain document column, an optional sticker beside the title ---------- */
+.page { max-width: var(--wrap); margin: 0 auto; padding: 44px var(--gutter) 96px; display: grid; grid-template-columns: 136px minmax(0, 780px); gap: 32px 44px; justify-content: center; }
+.page.solo { grid-template-columns: minmax(0, 820px); }
+.page-side .sticker { width: 120px; height: 120px; }
+.doc h1 { margin: 0 0 16px; font-size: var(--h1); font-weight: 600; letter-spacing: -0.01em; }
+.doc h2 { margin: 40px 0 12px; font-size: var(--h2); font-weight: 600; scroll-margin-top: 16px; }
+.doc h3 { margin: 28px 0 8px; font-size: var(--h3); font-weight: 600; scroll-margin-top: 16px; }
+.doc p, .doc li { max-width: 70ch; }
+.doc ul:not([class]), .doc ol:not([class]) { padding-left: 1.3em; }
+.doc li { margin-bottom: 6px; }
+.lead { font-size: 1.125rem; color: var(--text-muted); margin-top: 0; }
+.note { margin: 18px 0; padding: 12px 16px; border-left: 3px solid var(--rule); border-radius: 4px 8px 8px 4px; background: var(--surface); }
+.note p { margin: 0; }
+.note p + p { margin-top: 6px; }
+.rule { margin: 36px 0; border: 0; border-top: 1px solid var(--border); }
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { margin: 0 0 10px; }
+.links a { display: inline-flex; align-items: center; gap: 10px; }
+.back { display: inline-flex; align-items: center; gap: 4px; font-weight: 500; }
+@media (max-width: 860px) { .page { grid-template-columns: minmax(0, 1fr); padding-top: 32px; } .page-side { display: none; } }
+
+/* FAQ */
+.search { position: relative; max-width: 460px; margin: 8px 0 8px; }
+.search .i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
+.search .input { padding-left: 42px; }
+.qi h2 { margin: 28px 0 10px; font-size: 1rem; }
+.qa { padding: 2px 0 8px; scroll-margin-top: 16px; }
+.qa h3 { margin: 22px 0 6px; }
+.qa p { margin: 0; }
+.qg > h2 { margin-top: 36px; color: var(--text-muted); font-size: 0.875rem; letter-spacing: 0.02em; }
+.top-jump { font-size: 0.9375rem; }
+
+/* Apps */
+.src { padding: 4px 0 6px; scroll-margin-top: 16px; }
+.src h3 { margin: 24px 0 4px; color: var(--accent); }
+.src p { margin: 0 0 4px; }
+.src-links { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.fp { margin-top: 6px; }
+.fp summary { cursor: pointer; color: var(--accent); width: fit-content; }
+.fp code { display: block; margin-top: 6px; padding: 8px 10px; border-radius: 6px; background: var(--surface-2); overflow-wrap: anywhere; font-size: 0.8125rem; }
+
+/* Filters: blue text buttons, the chosen one filled */
+.seg { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 28px; }
+.seg button { min-height: 40px; padding: 7px 15px; border: 0; border-radius: var(--r-pill); background: none; color: var(--accent); font-weight: 500; cursor: pointer; transition: background var(--dur-fast), color var(--dur-fast); }
+.seg button:hover { background: var(--surface); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); }
+.empty { padding: 24px 0; color: var(--text-muted); }
+
+/* Release notes */
+.rel { padding: 22px 0 10px; border-top: 1px solid var(--border); }
+.rel h2 { margin: 0; color: var(--accent); }
+.rel-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 6px 0 10px; color: var(--text-muted); font-size: 0.9375rem; }
+.tag { display: inline-block; padding: 1px 10px; border-radius: var(--r-pill); background: var(--surface); color: var(--accent); font-size: 0.8125rem; font-weight: 500; }
+
+/* Handbook */
+.page.docs { grid-template-columns: 190px minmax(0, 760px); }
+.toc { position: sticky; top: 16px; align-self: start; font-size: 0.9375rem; }
+.toc p { margin: 0 0 8px; font-weight: 600; }
+.toc ul { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid var(--border); }
+.toc li { margin: 0 0 8px; }
+@media (max-width: 860px) { .page.docs { grid-template-columns: minmax(0, 1fr); } .toc { position: static; } .toc ul { display: flex; flex-wrap: wrap; gap: 4px 18px; } }
+.tablist { display: none; gap: 4px; margin: 12px 0 0; border-bottom: 1px solid var(--border); }
+.js .tablist { display: flex; flex-wrap: wrap; }
+.tablist button { position: relative; min-height: 44px; padding: 0 14px; border: 0; background: none; color: var(--accent); font-weight: 500; cursor: pointer; }
+.tablist button[aria-selected="true"]::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: -1px; height: 3px; border-radius: 3px 3px 0 0; background: var(--accent); }
+.panel { padding-top: 4px; }
+.js .panel-t { display: none; }
+.code { margin: 14px 0; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--surface-2); }
+.code pre { margin: 0; padding: 14px 16px; overflow-x: auto; font: 400 0.875rem/1.65 var(--mono); }
+.code-bar { display: flex; justify-content: space-between; align-items: center; min-height: 38px; padding: 3px 6px 3px 14px; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.8125rem; }
+.copy { display: none; align-items: center; gap: 6px; min-height: 32px; padding: 3px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--accent); font-size: 0.8125rem; font-weight: 500; cursor: pointer; }
+.js .copy { display: inline-flex; }
+.copy .i { width: 15px; height: 15px; }
+code { font-family: var(--mono); font-size: 0.9em; }
+:not(pre) > code { padding: 1px 5px; border-radius: 4px; background: var(--surface-2); }
+.table-wrap { position: relative; overflow-x: auto; margin: 14px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+th, td { padding: 9px 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+th { background: var(--surface-2); font-weight: 600; }
+
+/* Article */
+.post { max-width: 760px; margin: 0 auto; padding: 32px var(--gutter) 96px; }
+.post h1 { margin: 14px 0 8px; font-size: clamp(1.625rem, 1.3rem + 1.3vw, 2.125rem); font-weight: 600; letter-spacing: -0.01em; }
+.post .meta { margin: 0 0 24px; color: var(--text-muted); }
+.post .cover { aspect-ratio: 2 / 1; }
+.post .cover .sticker { width: 26%; }
+.post h2 { margin: 36px 0 10px; font-size: 1.375rem; }
+.post figure { margin: 32px 0; display: grid; justify-items: center; }
+figcaption { margin-top: 10px; color: var(--text-muted); font-size: 0.9375rem; text-align: center; }
+
+/* About */
+.team { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 20px; margin: 18px 0 0; padding: 0; list-style: none; }
+.team li { display: flex; align-items: center; gap: 14px; margin: 0; }
+.av { flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--c); color: #fff; font-weight: 600; letter-spacing: 0.02em; }
+.team p { margin: 0; }
+.team b { display: block; font-weight: 600; }
+.team p span { color: var(--text-muted); font-size: 0.9375rem; }
+.promise { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.promise li { display: flex; gap: 14px; align-items: flex-start; margin: 0; }
+.promise p { margin: 6px 0 0; }
+.dot { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--surface); color: var(--accent); }
+@media (max-width: 640px) { .team { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 400px) { .team { grid-template-columns: minmax(0, 1fr); } }
+
+/* Forms */
+.form { display: grid; gap: 2px; max-width: 560px; margin-top: 22px; }
+.row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
+@media (max-width: 560px) { .row2 { grid-template-columns: minmax(0, 1fr); } }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label, .legend { font-weight: 600; font-size: 0.9375rem; }
+.legend { padding: 0; margin-bottom: 4px; }
+.hint { font-weight: 400; color: var(--text-muted); }
+.input { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--bg); color: var(--text); font: inherit; transition: border-color var(--dur-fast); }
+textarea.input { min-height: 132px; resize: vertical; }
+select.input { appearance: none; padding-right: 36px; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; }
+.input:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; border-color: var(--accent); }
+.input[aria-invalid="true"], fieldset[aria-invalid="true"] .choice input { border-color: var(--danger); }
+.err { min-height: 1.5em; margin: 0; font-size: 0.875rem; line-height: 1.5; color: var(--danger); }
+fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.choices { display: flex; flex-wrap: wrap; gap: 4px 22px; }
+.choice, .field label.choice { display: inline-flex; align-items: center; gap: 9px; min-height: 40px; font-weight: 400; font-size: 1rem; cursor: pointer; }
+.choice input { width: 18px; height: 18px; margin: 0; accent-color: var(--accent); }
+.form .btn { justify-self: start; margin-top: 4px; }
+.inline-form { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0 10px; max-width: 520px; margin: 14px 0 0; }
+.inline-form .field { flex: 1 1 240px; }
+.letter { margin-top: 56px; padding: 24px; border-radius: var(--r-card); background: var(--surface); scroll-margin-top: 16px; }
+.letter h2 { margin: 0 0 4px; font-size: 1.25rem; }
+.letter p { margin: 0; }
+.success { display: grid; justify-items: start; gap: 6px; margin-top: 22px; padding: 22px 24px; border-radius: var(--r-card); background: var(--surface); }
+.success:focus { outline: none; }
+.success h2 { margin: 6px 0 0; font-size: 1.25rem; }
+.success p { margin: 0; }
+.ok-badge { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--ok); color: var(--bg); }
+.ok-badge .i { width: 26px; height: 26px; stroke-width: 2.4; }
+
+/* 404 */
+.lost { max-width: 560px; margin: 0 auto; padding: 72px var(--gutter) 120px; text-align: center; }
+.lost .sticker { width: 160px; height: 160px; margin: 0 auto 18px; }
+.lost h1 { margin: 0 0 8px; font-size: var(--h1); font-weight: 600; }
+.lost .actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 24px; margin-top: 24px; }
+
+/* ---------- Footer ---------- */
+.foot { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter) 40px; }
+.foot-in { display: grid; grid-template-columns: 1.6fr repeat(4, minmax(0, 1fr)); gap: 28px; padding-top: 36px; border-top: 1px solid var(--border); }
+.foot h2 { margin: 0 0 10px; font-size: 0.9375rem; font-weight: 600; }
+.foot p { max-width: 22em; margin: 0; color: var(--text-muted); font-size: 0.875rem; }
+.foot ul { list-style: none; margin: 0; padding: 0; font-size: 0.9375rem; }
+.foot li { margin-bottom: 7px; }
+.foot .legal-line { max-width: none; margin-top: 32px; color: var(--text-muted); font-size: 0.8125rem; }
+@media (max-width: 860px) { .foot-in { grid-template-columns: repeat(2, minmax(0, 1fr)); } .foot-brand { grid-column: 1 / -1; } }
+
+/* ---------- Motion: keyframes only, so entrances play even when the class arrives on load ---------- */
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes pop { 0% { transform: scale(0.6) rotate(-10deg); } 55% { transform: scale(1.08) rotate(3deg); } 100% { transform: none; } }
+.js .reveal { opacity: 0; }
+.js .reveal.is-in { opacity: 1; animation: rise var(--dur-slow) var(--ease) backwards; }
+.js .reveal.is-in .sticker { animation: pop 640ms var(--ease) 90ms backwards; }
+.why-grid .reveal:nth-child(3n + 2) { animation-delay: 70ms; }
+.why-grid .reveal:nth-child(3n) { animation-delay: 140ms; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="top-in">
+    <nav class="tabs" aria-label="Main">
+      <a href="#/">Home</a>
+      <a href="#/faq">FAQ</a>
+      <a href="#/apps">Apps</a>
+      <a href="#/docs">Docs</a>
+      <a href="#/blog">Blog</a>
+    </nav>
+    <div class="top-act">
+      <a class="top-link" href="#/apps?to=source"><svg class="i" aria-hidden="true"><use href="#i-code"/></svg><span>Source code</span></a>
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to dark theme"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="hero">
+    <div class="hero-main">
+      <svg class="logo" viewBox="0 0 120 120" role="img" aria-label="Moonwake logo"><use href="#mark"/></svg>
+      <h1 class="name">Moonwake</h1>
+      <p class="tagline">tide times for people who walk the shore</p>
+    </div>
+    <aside class="rail" aria-labelledby="rail-title">
+      <h2 id="rail-title"><a href="#/blog">Recent news</a></h2>
+      <ul>
+        <li><strong>Nov 12</strong><a href="#/post">Offline packs, a calmer alarm and 40 new harbours</a></li>
+        <li><strong>Oct 3</strong><a href="#/changelog?platform=desktop">The desktop app leaves beta and syncs with your phone</a></li>
+        <li><strong>Aug 21</strong><a href="#/blog?tag=guides">How we check every prediction against real tide gauges</a></li>
+      </ul>
+    </aside>
+  </section>
+
+  <section class="devices" aria-label="Get the app">
+    <figure class="dev">
+      <div class="pair" aria-hidden="true">
+        <div class="phone"><svg viewBox="0 0 180 370"><use href="#scr-places"/></svg></div>
+        <div class="phone front"><svg viewBox="0 0 180 370"><use href="#scr-today"/></svg></div>
+      </div>
+      <figcaption><a class="dl" href="#/apps?to=src-android"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg><span>Moonwake for <b>Android</b></span></a></figcaption>
+    </figure>
+    <figure class="dev">
+      <div class="pair" aria-hidden="true">
+        <div class="phone front"><svg viewBox="0 0 180 370"><use href="#scr-today"/></svg></div>
+        <div class="tablet"><svg viewBox="0 0 300 400"><use href="#scr-tablet"/></svg></div>
+      </div>
+      <figcaption><a class="dl" href="#/apps?to=src-ios"><svg class="i" aria-hidden="true"><use href="#i-tablet"/></svg><span>Moonwake for <b>iPhone</b> / <b>iPad</b></span></a></figcaption>
+    </figure>
+    <figure class="dev wide">
+      <div class="pair" aria-hidden="true">
+        <div class="laptop"><div class="scr"><svg viewBox="0 0 480 300"><use href="#scr-desk"/></svg></div></div>
+        <div class="laptop"><div class="scr scr-dark"><svg viewBox="0 0 480 300"><use href="#scr-desk"/></svg></div></div>
+      </div>
+      <figcaption>
+        <a class="dl" href="#/apps?to=src-desktop"><span>Moonwake for <b>Windows</b> / <b>Linux</b></span></a>
+        <a class="dl" href="#/apps?to=src-desktop"><span>Moonwake for <b>macOS</b></span></a>
+      </figcaption>
+    </figure>
+  </section>
+  <div class="only-sm"><a class="btn" href="#/apps">Browse all apps <svg class="i" aria-hidden="true"><use href="#i-chev"/></svg></a></div>
+
+  <section class="news" aria-labelledby="news-title">
+    <h2 class="sec-title" id="news-title">Recent news</h2>
+    <div class="cards">
+      <article class="card reveal">
+        <a href="#/post"><span class="cover tone-dusk"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-lighthouse"/></svg></span><h3 class="card-t">Offline packs, a calmer alarm and 40 new harbours</h3></a>
+        <p>Version 4.2 downloads a whole coastline for use without signal, softens the reminder sound and adds 40 harbours that readers asked for.</p>
+        <time datetime="2026-11-12">Nov 12, 2026</time>
+      </article>
+      <article class="card reveal">
+        <a href="#/changelog?platform=desktop"><span class="cover tone-day"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-sync"/></svg></span><h3 class="card-t">The desktop app leaves beta</h3></a>
+        <p>Moonwake for Windows, macOS and Linux now keeps your places in step with your phone and prints a month of tides on a single page.</p>
+        <time datetime="2026-10-03">Oct 3, 2026</time>
+      </article>
+    </div>
+  </section>
+
+  <section class="why" aria-labelledby="why-title">
+    <h2 class="why-title" id="why-title">Why Moonwake?</h2>
+    <ul class="why-grid">
+      <li class="reveal"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-boat"/></svg><h3>Simple</h3><p><b>Moonwake</b> shows the next high and low water the moment it opens.</p></li>
+      <li class="reveal"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-shell"/></svg><h3>Private</h3><p><b>Moonwake</b> needs no account and never sends your location anywhere.</p></li>
+      <li class="reveal"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-lighthouse"/></svg><h3>Offline</h3><p><b>Moonwake</b> keeps working on the beach, with or without signal.</p></li>
+      <li class="reveal"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-moon"/></svg><h3>Accurate</h3><p><b>Moonwake</b> follows the moon and checks itself against real gauges.</p></li>
+      <li class="reveal"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-sync"/></svg><h3>Synced</h3><p><b>Moonwake</b> keeps your places in step on every device with one private code.</p></li>
+      <li class="reveal"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-compass"/></svg><h3>Open</h3><p><b>Moonwake</b> has open <a href="#/apps?to=source">source code</a> and open tide data anyone can check.</p></li>
+      <li class="reveal"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-bell"/></svg><h3>Gentle</h3><p><b>Moonwake</b> reminds you before the tide turns, quietly and only once.</p></li>
+      <li class="reveal"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-bottle"/></svg><h3>Shareable</h3><p><b>Moonwake</b> sends a day of tides to friends as a link or a picture.</p></li>
+      <li class="reveal"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-buoy"/></svg><h3>Light</h3><p><b>Moonwake</b> is free, has no ads and weighs less than 12 MB.</p></li>
+    </ul>
+  </section>
+</div>
+
+<!-- ===================== FAQ ===================== -->
+<div data-view="faq">
+  <div class="page">
+    <aside class="page-side" aria-hidden="true"><svg class="sticker" viewBox="0 0 160 160"><use href="#st-shell"/></svg></aside>
+    <article class="doc" data-faq>
+      <h1 id="faq-top">Moonwake FAQ</h1>
+      <div class="note"><p>This FAQ answers the basic questions about Moonwake. For building the app or reading our data files, see the <a href="#/docs">handbook</a>.</p></div>
+      <div class="search" role="search">
+        <svg class="i" aria-hidden="true"><use href="#i-search"/></svg>
+        <label class="sr-only" for="faq-q">Search the FAQ</label>
+        <input class="input" id="faq-q" type="search" placeholder="Search the FAQ" autocomplete="off">
+      </div>
+      <hr class="rule">
+      <div class="qi"><h2>General</h2><ul class="links">
+        <li><a href="#q-what">What is Moonwake?</a></li>
+        <li><a href="#q-who">Who makes it?</a></li>
+        <li><a href="#q-money">How do you pay for it?</a></li>
+        <li><a href="#q-nav">Can I use it to navigate a boat?</a></li>
+      </ul></div>
+      <div class="qi"><h2>Using Moonwake</h2><ul class="links">
+        <li><a href="#q-offline">Does it work without signal?</a></li>
+        <li><a href="#q-place">My beach is missing. Can you add it?</a></li>
+        <li><a href="#q-sync">How does sync work without an account?</a></li>
+        <li><a href="#q-remind">Can it remind me before low tide?</a></li>
+      </ul></div>
+      <div class="qi"><h2>Privacy</h2><ul class="links">
+        <li><a href="#q-location">Do you track my location?</a></li>
+        <li><a href="#q-store">What do you store about me?</a></li>
+      </ul></div>
+      <p class="empty" data-faq-empty hidden>No questions match that search. Try another word, or <a href="#/contact">ask us directly</a>.</p>
+      <hr class="rule">
+      <section class="qg"><h2>General</h2>
+        <div class="qa" id="q-what"><h3>What is Moonwake?</h3><p>Moonwake is a free tide app for phones, tablets and computers. It shows when the water will be high or low at more than 3,000 places, today and for the next twelve months.</p></div>
+        <div class="qa" id="q-who"><h3>Who makes it?</h3><p>Two part-time maintainers and a few dozen volunteers who write code, check data and translate. You can meet them on the <a href="#/about">about page</a>.</p></div>
+        <div class="qa" id="q-money"><h3>How do you pay for it?</h3><p>With donations from the people who use it. There are no ads, no paid tier and no investors, and that will not change.</p></div>
+        <div class="qa" id="q-nav"><h3>Can I use it to navigate a boat?</h3><p>No. Predictions are a guide for walks, fishing and photography. Wind and air pressure can move the water by half a metre, so check official notices before you go to sea.</p></div>
+      </section>
+      <section class="qg"><h2>Using Moonwake</h2>
+        <div class="qa" id="q-offline"><h3>Does it work without signal?</h3><p>Yes. Every saved place keeps a year of predictions on your device. Offline packs add a whole coastline at once.</p></div>
+        <div class="qa" id="q-place"><h3>My beach is missing. Can you add it?</h3><p>Usually. Send us its name and the nearest harbour through the <a href="#/contact?topic=data">contact form</a>, and we will check whether a nearby station covers it.</p></div>
+        <div class="qa" id="q-sync"><h3>How does sync work without an account?</h3><p>Each device shows a sync code. Enter it on your other devices and your places stay in step, encrypted end to end.</p></div>
+        <div class="qa" id="q-remind"><h3>Can it remind me before low tide?</h3><p>Yes. Set a reminder on any place, choose how early, and Moonwake sends one quiet notification. The <a href="#/docs?to=reminders">handbook</a> lists every option.</p></div>
+      </section>
+      <section class="qg"><h2>Privacy</h2>
+        <div class="qa" id="q-location"><h3>Do you track my location?</h3><p>No. Your location is used on your device to find the nearest place and is never sent to us.</p></div>
+        <div class="qa" id="q-store"><h3>What do you store about me?</h3><p>Only the crash reports you choose to send. Read the full <a href="#/privacy">privacy policy</a>.</p></div>
+      </section>
+      <p class="top-jump"><a href="#faq-top">Back to the questions</a></p>
+    </article>
+  </div>
+</div>
+
+<!-- ===================== APPS ===================== -->
+<div data-view="apps">
+  <div class="page">
+    <aside class="page-side" aria-hidden="true"><svg class="sticker" viewBox="0 0 160 160"><use href="#st-boat"/></svg></aside>
+    <article class="doc">
+      <h1>Moonwake apps</h1>
+      <p>Moonwake apps are <b>open source</b> and support <a href="#/docs?to=build">reproducible builds</a>. Anyone can check that the app in their store was built from the <a href="#/apps?to=source">same code</a> we publish.</p>
+      <h2 id="mobile">Mobile apps</h2>
+      <ul class="links">
+        <li><a href="#/apps?to=src-android"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Moonwake for Android</a></li>
+        <li><a href="#/apps?to=src-ios"><svg class="i" aria-hidden="true"><use href="#i-tablet"/></svg>Moonwake for iPhone and iPad</a></li>
+      </ul>
+      <h2>Desktop apps</h2>
+      <ul class="links">
+        <li><a href="#/apps?to=src-desktop"><svg class="i" aria-hidden="true"><use href="#i-laptop"/></svg>Moonwake for Windows and Linux</a></li>
+        <li><a href="#/apps?to=src-desktop"><svg class="i" aria-hidden="true"><use href="#i-laptop"/></svg>Moonwake for macOS</a></li>
+      </ul>
+      <h2>Web app</h2>
+      <ul class="links">
+        <li><a href="#/apps?to=src-web"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg>Moonwake Web, nothing to install</a></li>
+      </ul>
+      <h2>Tide engine</h2>
+      <p><a href="#/apps?to=src-core">Tidecore</a> turns harmonic constants into predictions. It powers every Moonwake app, and you can use it in your own projects.</p>
+      <hr class="rule">
+      <h2 id="source">Source code</h2>
+      <p>The code lets anyone review how predictions are made and <b>verify</b> that the builds in the stores match what we publish.</p>
+      <div class="src" id="src-android">
+        <h3>Moonwake for Android</h3>
+        <p>Kotlin app for phones and tablets running Android 8 or later. Licensed under GPL v3.</p>
+        <p class="src-links"><a class="more" href="#/docs?to=build">Build from source</a><a class="more" href="#/changelog?platform=android">Release notes</a><a class="more" href="#/signup?platform=android">Join the beta</a></p>
+        <details class="fp"><summary>Build fingerprint</summary><code>SHA-256 4f1c 9a7e 02d8 b6c1 77e0 3a95 d41f 6b28 c0e9 5a13 8d72 f4b6 1e09 a3c5 7d28 e6b4</code></details>
+      </div>
+      <div class="src" id="src-ios">
+        <h3>Moonwake for iPhone and iPad</h3>
+        <p>Swift app for iOS and iPadOS 16 or later. Licensed under GPL v3.</p>
+        <p class="src-links"><a class="more" href="#/docs?to=build">Build from source</a><a class="more" href="#/changelog?platform=ios">Release notes</a><a class="more" href="#/signup?platform=ios">Join the beta</a></p>
+      </div>
+      <div class="src" id="src-desktop">
+        <h3>Moonwake Desktop</h3>
+        <p>One app for Windows, macOS and Linux that syncs with your phone. Licensed under GPL v3.</p>
+        <p class="src-links"><a class="more" href="#/docs?to=build">Build from source</a><a class="more" href="#/changelog?platform=desktop">Release notes</a><a class="more" href="#/signup?platform=desktop">Join the beta</a></p>
+      </div>
+      <div class="src" id="src-web">
+        <h3>Moonwake Web</h3>
+        <p>Runs in any modern browser and keeps working offline after the first visit. Licensed under AGPL v3.</p>
+        <p class="src-links"><a class="more" href="#/changelog?platform=web">Release notes</a></p>
+      </div>
+      <div class="src" id="src-core">
+        <h3>Tidecore</h3>
+        <p>The prediction library behind every app, with test data from 120 tide gauges. Licensed under MIT.</p>
+        <p class="src-links"><a class="more" href="#/docs?to=format">Data format</a></p>
+      </div>
+      <hr class="rule">
+      <h2>Translations</h2>
+      <p>Moonwake speaks 31 languages thanks to volunteers. <a class="more" href="#/docs?to=translate">Help translate</a></p>
+    </article>
+  </div>
+</div>
+
+<!-- ===================== HANDBOOK (docs) ===================== -->
+<div data-view="docs">
+  <div class="page docs">
+    <nav class="toc" aria-label="Handbook sections">
+      <p>On this page</p>
+      <ul>
+        <li><a href="#start">Getting started</a></li>
+        <li><a href="#places">Saving places</a></li>
+        <li><a href="#reminders">Reminders</a></li>
+        <li><a href="#offline">Offline packs</a></li>
+        <li><a href="#build">Build from source</a></li>
+        <li><a href="#format">Data format</a></li>
+        <li><a href="#translate">Translating</a></li>
+      </ul>
+    </nav>
+    <article class="doc">
+      <h1>Moonwake handbook</h1>
+      <p class="lead">Everything you can do in Moonwake, and how to build it yourself.</p>
+      <h2 id="start">Getting started</h2>
+      <div class="tablist" role="tablist" aria-label="Platform">
+        <button type="button" role="tab" id="t-and" aria-controls="p-and" aria-selected="true">Android</button>
+        <button type="button" role="tab" id="t-ios" aria-controls="p-ios" aria-selected="false">iPhone and iPad</button>
+        <button type="button" role="tab" id="t-desk" aria-controls="p-desk" aria-selected="false">Desktop</button>
+      </div>
+      <div class="panel" role="tabpanel" id="p-and" aria-labelledby="t-and">
+        <h3 class="panel-t">Android</h3>
+        <ol><li>Install Moonwake from your app store or download the APK from the <a href="#/apps?to=src-android">apps page</a>.</li><li>Allow location once, or type the name of a beach.</li><li>Tap the star to save it. Tides for the next year download in the background.</li></ol>
+      </div>
+      <div class="panel" role="tabpanel" id="p-ios" aria-labelledby="t-ios">
+        <h3 class="panel-t">iPhone and iPad</h3>
+        <ol><li>Install Moonwake from the App Store.</li><li>Search for a place or use your location.</li><li>Add the widget to your home screen to see the next tide at a glance.</li></ol>
+      </div>
+      <div class="panel" role="tabpanel" id="p-desk" aria-labelledby="t-desk">
+        <h3 class="panel-t">Desktop</h3>
+        <ol><li>Download the installer for Windows, macOS or Linux from the <a href="#/apps?to=src-desktop">apps page</a>.</li><li>Choose <b>Sync with phone</b> and enter the code your phone shows.</li><li>Use <b>Print month</b> to get a whole month of tides on one sheet.</li></ol>
+      </div>
+      <h2 id="places">Saving places</h2>
+      <p>Search by beach, harbour or town. Moonwake picks the nearest tide station and shows how far away it is, so you know how much to trust the times.</p>
+      <div class="note"><p><b>Tip:</b> press and hold a place to pin it to the top of your list.</p></div>
+      <h2 id="reminders">Reminders</h2>
+      <p>Each place can have its own reminders. They are worked out on your device, so they arrive even without signal.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th scope="col">Reminder</th><th scope="col">When it arrives</th><th scope="col">Default</th></tr></thead>
+        <tbody>
+          <tr><td>Before low water</td><td>A set time before the lowest point</td><td>60 minutes</td></tr>
+          <tr><td>Before high water</td><td>A set time before the highest point</td><td>Off</td></tr>
+          <tr><td>Morning summary</td><td>Once a day with all of today's tides</td><td>07:00</td></tr>
+        </tbody>
+      </table></div>
+      <h2 id="offline">Offline packs</h2>
+      <p>An offline pack holds a year of predictions for every place along one coastline, usually 2 to 6 MB. Download packs over Wi-Fi from <b>Settings › Offline packs</b>.</p>
+      <h2 id="build">Build from source</h2>
+      <p>You need Git and a recent JDK. These commands build the Android app:</p>
+      <div class="code"><div class="code-bar"><span>Terminal</span><button class="copy" type="button" data-copy><svg class="i" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre><code>git clone https://code.moonwake.example/moonwake/android
+cd android
+./gradlew assembleRelease</code></pre></div>
+      <p>To check a store build, compare its fingerprint with the one on the <a href="#/apps?to=source">apps page</a>:</p>
+      <div class="code"><div class="code-bar"><span>Terminal</span><button class="copy" type="button" data-copy><svg class="i" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre><code>./scripts/verify-build.sh moonwake-4.2.0.apk</code></pre></div>
+      <h2 id="format">Data format</h2>
+      <p>Every app reads predictions in the same small JSON format, so you can export them and use them anywhere.</p>
+      <div class="code"><div class="code-bar"><span>JSON</span><button class="copy" type="button" data-copy><svg class="i" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button></div><pre><code>{
+  "place": "Gullhaven",
+  "datum": "LAT",
+  "events": [
+    { "type": "high", "time": "2026-11-23T06:12Z", "height": 3.9 },
+    { "type": "low",  "time": "2026-11-23T12:31Z", "height": 0.6 }
+  ]
+}</code></pre></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>place</code></td><td>string</td><td>The name shown in the app</td></tr>
+          <tr><td><code>datum</code></td><td>string</td><td>The level heights are measured from</td></tr>
+          <tr><td><code>events</code></td><td>array</td><td>High and low waters in time order, heights in metres</td></tr>
+        </tbody>
+      </table></div>
+      <h2 id="translate">Translating</h2>
+      <p>Translations live in plain text files, one per language, and every string has a note that explains where it appears. Tell us which language you would like to help with through the <a href="#/contact?topic=translations">contact form</a>.</p>
+    </article>
+  </div>
+</div>
+
+<!-- ===================== RELEASE NOTES (changelog) ===================== -->
+<div data-view="changelog">
+  <div class="page solo">
+    <article class="doc">
+      <h1>Release notes</h1>
+      <p>What changed in each version of Moonwake. Get these by email from the <a href="#/blog?to=letter">news page</a>.</p>
+      <div class="seg" data-filter-bar="rel" role="group" aria-label="Filter by platform">
+        <button type="button" data-f="all" aria-pressed="true">All</button>
+        <button type="button" data-f="android" aria-pressed="false">Android</button>
+        <button type="button" data-f="ios" aria-pressed="false">iPhone and iPad</button>
+        <button type="button" data-f="desktop" aria-pressed="false">Desktop</button>
+        <button type="button" data-f="web" aria-pressed="false">Web</button>
+      </div>
+      <div data-filter-list="rel">
+        <section class="rel" data-tags="android ios desktop">
+          <h2>Moonwake 4.2</h2>
+          <p class="rel-meta"><time datetime="2026-11-12">Nov 12, 2026</time><span class="tag">Android</span><span class="tag">iPhone and iPad</span><span class="tag">Desktop</span></p>
+          <ul><li>Offline packs: download a year of tides for a whole coastline.</li><li>A softer reminder sound, and a new “only once” option.</li><li>40 new harbours suggested by readers.</li><li>Fixed: the widget showed yesterday's tides after midnight on some phones.</li></ul>
+        </section>
+        <section class="rel" data-tags="desktop">
+          <h2>Moonwake Desktop 1.0</h2>
+          <p class="rel-meta"><time datetime="2026-10-03">Oct 3, 2026</time><span class="tag">Desktop</span></p>
+          <ul><li>Sync places with your phone and tablet using a sync code.</li><li>Print a month of tides on a single page.</li><li>Native builds for Windows, macOS and Linux.</li></ul>
+        </section>
+        <section class="rel" data-tags="android ios">
+          <h2>Moonwake 4.1</h2>
+          <p class="rel-meta"><time datetime="2026-09-02">Sep 2, 2026</time><span class="tag">Android</span><span class="tag">iPhone and iPad</span></p>
+          <ul><li>A moon phase strip on the Today screen.</li><li>Larger text option for the tide table.</li><li>Fixed: sync code entry on small screens.</li></ul>
+        </section>
+        <section class="rel" data-tags="web">
+          <h2>Moonwake Web 2.3</h2>
+          <p class="rel-meta"><time datetime="2026-07-15">Jul 15, 2026</time><span class="tag">Web</span></p>
+          <ul><li>Install the web app on your home screen.</li><li>Works offline after the first visit.</li><li>Keyboard shortcuts for the next and previous day.</li></ul>
+        </section>
+        <section class="rel" data-tags="android ios web">
+          <h2>Moonwake 4.0</h2>
+          <p class="rel-meta"><time datetime="2026-05-20">May 20, 2026</time><span class="tag">Android</span><span class="tag">iPhone and iPad</span><span class="tag">Web</span></p>
+          <ul><li>A new prediction engine, Tidecore 2, with fewer errors near river mouths.</li><li>Heights in feet or metres.</li></ul>
+        </section>
+      </div>
+      <p class="empty" data-empty="rel" hidden>No releases for that platform yet.</p>
+    </article>
+  </div>
+</div>
+
+<!-- ===================== NEWS (blog) ===================== -->
+<div data-view="blog">
+  <div class="page solo">
+    <article class="doc">
+      <h1>Moonwake news</h1>
+      <div class="seg" data-filter-bar="blog" role="group" aria-label="Filter by topic">
+        <button type="button" data-f="all" aria-pressed="true">All</button>
+        <button type="button" data-f="releases" aria-pressed="false">Releases</button>
+        <button type="button" data-f="guides" aria-pressed="false">Guides</button>
+        <button type="button" data-f="community" aria-pressed="false">Community</button>
+      </div>
+      <div class="cards" data-filter-list="blog">
+        <article class="card" data-tags="releases"><a href="#/post"><span class="cover tone-dusk"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-lighthouse"/></svg></span><h2 class="card-t">Offline packs, a calmer alarm and 40 new harbours</h2></a><p>Version 4.2 downloads a whole coastline for use without signal and softens the reminder sound.</p><time datetime="2026-11-12">Nov 12, 2026</time></article>
+        <article class="card" data-tags="releases"><a href="#/changelog?platform=desktop"><span class="cover tone-day"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-sync"/></svg></span><h2 class="card-t">The desktop app leaves beta</h2></a><p>Windows, macOS and Linux now keep your places in step with your phone.</p><time datetime="2026-10-03">Oct 3, 2026</time></article>
+        <article class="card" data-tags="guides"><a href="#/post"><span class="cover tone-night"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-moon"/></svg></span><h2 class="card-t">How we check every prediction against real tide gauges</h2></a><p>Each month we compare a year of forecasts with what 120 gauges actually measured.</p><time datetime="2026-08-21">Aug 21, 2026</time></article>
+        <article class="card" data-tags="guides"><a href="#/post"><span class="cover tone-dawn"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-boat"/></svg></span><h2 class="card-t">Read a tide table in five minutes</h2></a><p>High water, low water, range and datum, explained with one beach and one morning.</p><time datetime="2026-07-30">Jul 30, 2026</time></article>
+        <article class="card" data-tags="community"><a href="#/about"><span class="cover tone-sand"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-bottle"/></svg></span><h2 class="card-t">31 languages, and the volunteers behind them</h2></a><p>Meet the people who translate Moonwake on train rides and lunch breaks.</p><time datetime="2026-06-18">Jun 18, 2026</time></article>
+        <article class="card" data-tags="guides"><a href="#/post"><span class="cover tone-sea"><svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-shell"/></svg></span><h2 class="card-t">Spring tides, neap tides and your Sunday walk</h2></a><p>Why the same beach is wide one week and narrow the next.</p><time datetime="2026-05-09">May 9, 2026</time></article>
+      </div>
+      <p class="empty" data-empty="blog" hidden>No posts on that topic yet.</p>
+      <section class="letter" id="letter" aria-labelledby="letter-title">
+        <h2 id="letter-title">Release notes by email</h2>
+        <p class="muted">One short email when a new version ships. Nothing else.</p>
+        <form class="inline-form" data-form="newsletter" novalidate>
+          <div class="field">
+            <label class="sr-only" for="n-email">Email address</label>
+            <input class="input" id="n-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required data-err="n-email-err" aria-describedby="n-email-err">
+            <p class="err" id="n-email-err" aria-live="polite"></p>
+          </div>
+          <button class="btn" type="submit">Subscribe</button>
+        </form>
+        <div class="success" data-success="newsletter" tabindex="-1" hidden>
+          <span class="ok-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <h2>You're on the list</h2>
+          <p>The next release notes will arrive in your inbox. Every email has a one-click unsubscribe link.</p>
+        </div>
+      </section>
+    </article>
+  </div>
+</div>
+
+<!-- ===================== POST ===================== -->
+<div data-view="post">
+  <article class="post doc">
+    <a class="back" href="#/blog"><svg class="i" aria-hidden="true"><use href="#i-back"/></svg>Moonwake news</a>
+    <h1>Offline packs, a calmer alarm and 40 new harbours</h1>
+    <p class="meta"><time datetime="2026-11-12">Nov 12, 2026</time> · Ines Okafor</p>
+    <span class="cover tone-dusk"><svg class="sticker" viewBox="0 0 160 160" role="img" aria-label="A lighthouse sticker"><use href="#st-lighthouse"/></svg></span>
+    <p>Moonwake 4.2 is out for phones, tablets and computers. It is the update readers asked for most: tides that work far from any signal, an alarm that does not make you jump, and a long list of harbours that were missing.</p>
+    <h2>Offline packs</h2>
+    <p>Until now, Moonwake kept a year of predictions only for the places you saved. An offline pack downloads every place along a coastline at once, so a new beach on a walking holiday is already there when you arrive. Most packs are between 2 and 6 MB.</p>
+    <figure>
+      <div class="phone"><svg viewBox="0 0 180 370" aria-hidden="true"><use href="#scr-places"/></svg></div>
+      <figcaption>Places from an offline pack, ready without signal.</figcaption>
+    </figure>
+    <h2>A calmer alarm</h2>
+    <p>The reminder sound is now a soft, rising tone instead of a beep. You can also mark a reminder as <b>only once</b>, for the day you want to cross to an island and back.</p>
+    <h2>40 new harbours</h2>
+    <p>Readers sent us 212 suggestions this year. We added the 40 that have a reliable station nearby, including:</p>
+    <ul><li>Ferry Steps and the north side of Crane Bay</li><li>Six small harbours along the western islands</li><li>Two river mouths where the old predictions were often late</li></ul>
+    <div class="note"><p>Predictions are a guide for walks, fishing and photography, not for navigation. Weather can move the water by half a metre.</p></div>
+    <p>Update from your app store, or <a href="#/apps">get Moonwake</a> for another device. The full list of changes is in the <a href="#/changelog">release notes</a>.</p>
+  </article>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<div data-view="about">
+  <div class="page">
+    <aside class="page-side" aria-hidden="true"><svg class="sticker" viewBox="0 0 160 160"><use href="#st-compass"/></svg></aside>
+    <article class="doc">
+      <h1>About Moonwake</h1>
+      <p>Moonwake started in 2019 as a weekend project by a lifeguard who was tired of tide tables printed in tiny type on the back of a ferry timetable. Today it is a small open-source project used on beaches in more than 40 countries.</p>
+      <h2>What we promise</h2>
+      <ul class="promise">
+        <li><span class="dot"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><p>No ads, no tracking and no account, now or later.</p></li>
+        <li><span class="dot"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><p>Open code and open data, so anyone can check how a prediction was made.</p></li>
+        <li><span class="dot"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><p>Predictions compared with real measurements every month, with the results published.</p></li>
+      </ul>
+      <h2>The people behind Moonwake</h2>
+      <ul class="team">
+        <li><span class="av" style="--c:oklch(50% 0.13 245)" aria-hidden="true">IO</span><p><b>Ines Okafor</b><span>Maintainer</span></p></li>
+        <li><span class="av" style="--c:oklch(50% 0.12 170)" aria-hidden="true">RD</span><p><b>Rafael Dumont</b><span>Android</span></p></li>
+        <li><span class="av" style="--c:oklch(52% 0.15 30)" aria-hidden="true">HL</span><p><b>Hanna Lind</b><span>iPhone and iPad</span></p></li>
+        <li><span class="av" style="--c:oklch(48% 0.13 300)" aria-hidden="true">KA</span><p><b>Kofi Asante</b><span>Tide data</span></p></li>
+        <li><span class="av" style="--c:oklch(50% 0.1 210)" aria-hidden="true">YM</span><p><b>Yuki Morita</b><span>Desktop and web</span></p></li>
+        <li><span class="av" style="--c:oklch(50% 0.12 75)" aria-hidden="true">SI</span><p><b>Sana Iqbal</b><span>Translations</span></p></li>
+      </ul>
+      <h2>Support the project</h2>
+      <p>Moonwake is paid for by donations. You can also help by <a href="#/signup">testing beta versions</a>, <a href="#/docs?to=translate">translating</a> or <a href="#/contact?topic=data">telling us about a missing beach</a>.</p>
+      <h2 id="press">Press</h2>
+      <p>For interviews and screenshots, write to <a href="mailto:hello@moonwake.example">hello@moonwake.example</a>.</p>
+    </article>
+  </div>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div data-view="contact">
+  <div class="page">
+    <aside class="page-side" aria-hidden="true"><svg class="sticker" viewBox="0 0 160 160"><use href="#st-bottle"/></svg></aside>
+    <article class="doc">
+      <h1>Contact support</h1>
+      <div class="note"><p>Most answers are already in the <a href="#/faq">FAQ</a>. If yours is not, write to us and a volunteer will reply within a few days.</p></div>
+      <form class="form" data-form="contact" novalidate>
+        <div class="row2">
+          <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required data-err="c-name-err" aria-describedby="c-name-err"><p class="err" id="c-name-err" aria-live="polite"></p></div>
+          <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required data-err="c-email-err" aria-describedby="c-email-err"><p class="err" id="c-email-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field"><label for="c-topic">Topic</label>
+          <select class="input" id="c-topic" name="topic" required data-err="c-topic-err" data-msg="Please choose a topic." aria-describedby="c-topic-err">
+            <option value="">Choose one</option>
+            <option value="app">Something in the app is not working</option>
+            <option value="data">A missing place or a wrong tide</option>
+            <option value="translations">Translations</option>
+            <option value="press">Press</option>
+            <option value="other">Something else</option>
+          </select><p class="err" id="c-topic-err" aria-live="polite"></p></div>
+        <div class="field"><label for="c-msg">Message <span class="hint">(which device and version, if it is about the app)</span></label><textarea class="input" id="c-msg" name="message" minlength="20" required data-err="c-msg-err" aria-describedby="c-msg-err"></textarea><p class="err" id="c-msg-err" aria-live="polite"></p></div>
+        <button class="btn" type="submit">Send message</button>
+      </form>
+      <div class="success" data-success="contact" tabindex="-1" hidden>
+        <span class="ok-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+        <h2>Thanks, your message is on its way</h2>
+        <p>A volunteer usually replies within three days. Meanwhile, the <a href="#/docs">handbook</a> may already have the answer.</p>
+      </div>
+    </article>
+  </div>
+</div>
+
+<!-- ===================== BETA SIGNUP ===================== -->
+<div data-view="signup">
+  <div class="page">
+    <aside class="page-side" aria-hidden="true"><svg class="sticker" viewBox="0 0 160 160"><use href="#st-buoy"/></svg></aside>
+    <article class="doc">
+      <h1>Join the beta</h1>
+      <p>Beta versions arrive a week or two before everyone else gets them. In return, tell us what breaks.</p>
+      <ul><li>A new build roughly every two weeks.</li><li>A short form in the app for reporting problems.</li><li>Leave whenever you like and go back to the regular version.</li></ul>
+      <form class="form" data-form="signup" novalidate>
+        <div class="field"><label for="s-email">Email</label><input class="input" id="s-email" name="email" type="email" autocomplete="email" required data-err="s-email-err" aria-describedby="s-email-err"><p class="err" id="s-email-err" aria-live="polite"></p></div>
+        <fieldset data-err="s-plat-err" data-msg="Please choose a platform." aria-describedby="s-plat-err">
+          <legend class="legend">Platform</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="platform" value="android">Android</label>
+            <label class="choice"><input type="radio" name="platform" value="ios">iPhone or iPad</label>
+            <label class="choice"><input type="radio" name="platform" value="desktop">Desktop</label>
+          </div>
+          <p class="err" id="s-plat-err" aria-live="polite"></p>
+        </fieldset>
+        <div class="field"><label class="choice"><input type="checkbox" name="agree" required data-err="s-agree-err" data-msg="Please tick this box to continue." aria-describedby="s-agree-err">I understand that beta versions can have bugs.</label><p class="err" id="s-agree-err" aria-live="polite"></p></div>
+        <button class="btn" type="submit">Join the beta</button>
+      </form>
+      <div class="success" data-success="signup" tabindex="-1" hidden>
+        <span class="ok-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span>
+        <h2>Welcome aboard</h2>
+        <p>We will email you a link to the next beta build. Thank you for helping.</p>
+      </div>
+    </article>
+  </div>
+</div>
+
+<!-- ===================== PRIVACY (legal) ===================== -->
+<div data-view="privacy">
+  <div class="page solo">
+    <article class="doc">
+      <h1>Privacy policy</h1>
+      <p class="muted">Last updated November 1, 2026</p>
+      <div class="note"><p><b>In short:</b> Moonwake does not collect personal data. Your places and settings stay on your devices.</p></div>
+      <h2>What stays on your device</h2>
+      <p>Saved places, reminders and settings are stored only on the device where you create them. Your location is used on the device to find the nearest place and is never sent to us.</p>
+      <h2>Sync</h2>
+      <p>If you turn on sync, your saved places are encrypted on your device before they leave it. Our server stores the encrypted data and cannot read it. Turning sync off deletes it from the server within 24 hours.</p>
+      <h2>Crash reports</h2>
+      <p>When the app crashes it asks whether to send a report. A report contains the app version, device model and what the app was doing, and no personal data. Reports are deleted after 90 days.</p>
+      <h2>This website</h2>
+      <p>This website sets no cookies and loads nothing from other sites. Messages sent through the contact form are kept for one year and then deleted.</p>
+      <h2>Contact</h2>
+      <p>Questions about privacy: <a href="mailto:hello@moonwake.example">hello@moonwake.example</a>.</p>
+    </article>
+  </div>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="lost">
+    <svg class="sticker" viewBox="0 0 160 160" aria-hidden="true"><use href="#st-bottle"/></svg>
+    <h1>This page drifted out to sea</h1>
+    <p class="muted">The link may be old, or the page has moved.</p>
+    <div class="actions"><a class="btn" href="#/">Back to the home page</a><a class="more" href="#/faq">Read the FAQ</a></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand"><h2>Moonwake</h2><p>Moonwake is a free, open-source tide app for phones, tablets and computers, made by volunteers and paid for by donations.</p></div>
+    <div><h2>About</h2><ul><li><a href="#/faq">FAQ</a></li><li><a href="#/about">About</a></li><li><a href="#/privacy">Privacy</a></li><li><a href="#/about?to=press">Press</a></li></ul></div>
+    <div><h2>Apps</h2><ul><li><a href="#/apps?to=src-android">Android</a></li><li><a href="#/apps?to=src-ios">iPhone and iPad</a></li><li><a href="#/apps?to=src-desktop">Desktop</a></li><li><a href="#/apps?to=src-web">Web</a></li></ul></div>
+    <div><h2>Project</h2><ul><li><a href="#/docs">Handbook</a></li><li><a href="#/changelog">Release notes</a></li><li><a href="#/apps?to=source">Source code</a></li><li><a href="#/signup">Beta</a></li></ul></div>
+    <div><h2>Help</h2><ul><li><a href="#/contact">Contact</a></li><li><a href="#/blog">News</a></li><li><a href="#/docs?to=translate">Translate</a></li></ul></div>
+  </div>
+  <p class="legal-line">© 2026 Moonwake Project. Tide predictions are not for navigation.</p>
+</footer>
+
+<!-- ===================== SVG SPRITE: mark, icons, stickers, device screens ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="mark-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4fb4ee"/><stop offset="1" stop-color="#2479cc"/></linearGradient>
+  </defs>
+  <symbol id="mark" viewBox="0 0 120 120">
+    <circle cx="60" cy="60" r="60" fill="url(#mark-fill)"/>
+    <path d="M58.6 27A27 27 0 1 0 84.8 64.8A23 23 0 0 1 58.6 27Z" fill="#fff"/>
+    <path d="M33 94c9-7 18-7 27 0s18 7 27 0" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="i-tablet" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="10" rx="1.5"/><path d="M2.5 19h19"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6A1.5 1.5 0 0 0 14 4.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></symbol>
+
+  <!-- Stickers: flat objects, a few fixed colours; the die-cut edge comes from the .sticker class -->
+  <symbol id="st-boat" viewBox="0 0 160 160">
+    <path d="M80 24 44 98h36z" fill="#ff8a65"/><path d="M80 24l38 74H80z" fill="#e8674a"/>
+    <path d="M80 14v12" stroke="#23395b" stroke-width="4" stroke-linecap="round"/><path d="M82 13l15 5.5L82 24z" fill="#23395b"/>
+    <path d="M18 98h124l-22 32H40z" fill="#ffd25e"/><path d="M80 98h62l-22 32H80z" fill="#f4b23c"/>
+    <path d="M20 132c10-6 20-6 30 0s20 6 30 0 20-6 30 0 20 6 30 0v12H20z" fill="#5bb8ea"/>
+  </symbol>
+  <symbol id="st-shell" viewBox="0 0 160 160">
+    <path d="M80 132c-30 0-54-22-56-52-1-22 18-50 56-52 38 2 57 30 56 52-2 30-26 52-56 52z" fill="#ffab91"/>
+    <path d="M80 126V36M80 126 54 42M80 126l26-84M80 126 34 64M80 126l46-62" stroke="#f3866b" stroke-width="5" stroke-linecap="round"/>
+    <path d="M62 124h36l-6 14H68z" fill="#e8735a"/>
+    <circle cx="80" cy="86" r="21" fill="#fff4e0"/><circle cx="80" cy="81" r="6.5" fill="#23395b"/><path d="M75.5 84h9l3 14h-15z" fill="#23395b"/>
+  </symbol>
+  <symbol id="st-lighthouse" viewBox="0 0 160 160">
+    <path d="M98 44 150 28v36zM62 44 10 28v36z" fill="#ffe08a" opacity=".8"/>
+    <path d="M28 140c4-16 20-24 52-24s48 8 52 24z" fill="#8a9bb0"/><path d="M80 116c32 0 48 8 52 24H80z" fill="#76879c"/>
+    <path d="M65 116 70 54h20l5 62z" fill="#f4f7fb"/><path d="M80 54h10l5 62H80z" fill="#d9e2ec"/>
+    <path d="M68.7 70h22.6l.9 11H67.8zM66.9 92h26.2l1 12H66z" fill="#ef5b5b"/>
+    <rect x="66" y="38" width="28" height="17" rx="3" fill="#ffd25e"/><path d="M62 40 80 22l18 18z" fill="#23395b"/>
+    <rect x="75" y="104" width="10" height="12" rx="5" fill="#23395b"/>
+  </symbol>
+  <symbol id="st-moon" viewBox="0 0 160 160">
+    <circle cx="80" cy="64" r="44" fill="#ffd25e"/><path d="M80 20a44 44 0 0 1 0 88 60 60 0 0 0 0-88z" fill="#f4b23c"/>
+    <circle cx="64" cy="50" r="8" fill="#f4b23c"/><circle cx="94" cy="78" r="6" fill="#e9a52f"/><circle cx="66" cy="82" r="4.5" fill="#f4b23c"/>
+    <path d="M14 116c11-8 22-8 33 0s22 8 33 0 22-8 33 0 22 8 33 0v26H14z" fill="#3c9be0"/>
+    <path d="M14 130c11-6 22-6 33 0s22 6 33 0 22-6 33 0 22 6 33 0v12H14z" fill="#2a78c2"/>
+  </symbol>
+  <symbol id="st-sync" viewBox="0 0 160 160">
+    <circle cx="80" cy="80" r="58" fill="#e3f2fd"/>
+    <path d="M43.6 73.6A37 37 0 0 1 98.5 48" fill="none" stroke="#2f8fdc" stroke-width="13" stroke-linecap="round"/><path d="M111 55 104 38.5 93 57.5z" fill="#2f8fdc"/>
+    <path d="M116.4 86.4A37 37 0 0 1 61.5 112" fill="none" stroke="#25b3a0" stroke-width="13" stroke-linecap="round"/><path d="M49 105 56 121.5 67 102.5z" fill="#25b3a0"/>
+    <path d="M64 82c5.3-5 10.7-5 16 0s10.7 5 16 0" fill="none" stroke="#23395b" stroke-width="5" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="st-compass" viewBox="0 0 160 160">
+    <circle cx="80" cy="22" r="9" fill="none" stroke="#23395b" stroke-width="6"/>
+    <circle cx="80" cy="84" r="56" fill="#23395b"/><circle cx="80" cy="84" r="46" fill="#fff4e0"/>
+    <path d="M80 44v8M80 116v8M40 84h8M112 84h8" stroke="#23395b" stroke-width="5" stroke-linecap="round"/>
+    <g transform="rotate(28 80 84)"><path d="M80 48l12 36H68z" fill="#ef5b5b"/><path d="M80 120 68 84h24z" fill="#8a9bb0"/></g>
+    <circle cx="80" cy="84" r="6" fill="#23395b"/>
+  </symbol>
+  <symbol id="st-bell" viewBox="0 0 160 160">
+    <circle cx="80" cy="26" r="7" fill="#f4b23c"/>
+    <path d="M80 30c-22 0-36 18-36 40v22l-12 18h96l-12-18V70c0-22-14-40-36-40z" fill="#ffd25e"/><path d="M80 30c22 0 36 18 36 40v22l12 18H80z" fill="#f4b23c"/>
+    <circle cx="80" cy="120" r="11" fill="#e8674a"/>
+    <path d="M20 58c-6 8-6 20 0 28M140 58c6 8 6 20 0 28M31 64c-3 5-3 11 0 16M129 64c3 5 3 11 0 16" fill="none" stroke="#5bb8ea" stroke-width="5" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="st-bottle" viewBox="0 0 160 160">
+    <g transform="rotate(-24 84 78)">
+      <rect x="40" y="58" width="76" height="42" rx="19" fill="#a8e6dc"/><rect x="112" y="70" width="18" height="18" rx="4" fill="#a8e6dc"/><rect x="126" y="67" width="13" height="24" rx="4" fill="#c58b52"/>
+      <rect x="54" y="68" width="46" height="22" rx="11" fill="#fff4e0"/><path d="M63 75h28M63 82h18" stroke="#c7b08a" stroke-width="3" stroke-linecap="round"/>
+      <path d="M50 66h52" stroke="#fff" stroke-opacity=".75" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <path d="M14 122c11-7 22-7 33 0s22 7 33 0 22-7 33 0 22 7 33 0v20H14z" fill="#5bb8ea"/>
+  </symbol>
+  <symbol id="st-buoy" viewBox="0 0 160 160">
+    <circle cx="80" cy="80" r="56" fill="none" stroke="#c58b52" stroke-width="4" stroke-dasharray="9 7"/>
+    <circle cx="80" cy="80" r="44" fill="none" stroke="#f4f7fb" stroke-width="24"/>
+    <circle cx="80" cy="80" r="44" fill="none" stroke="#ef5b5b" stroke-width="24" stroke-dasharray="34.56 34.56" transform="rotate(-22 80 80)"/>
+    <circle cx="80" cy="80" r="32" fill="none" stroke="#c9d4e0" stroke-width="2"/>
+  </symbol>
+
+  <!-- Device screens: original app UI in the page's own tokens, so they follow the theme -->
+  <symbol id="scr-chart" viewBox="0 0 156 120">
+    <rect width="156" height="120" rx="14" style="fill:var(--scr-panel)"/>
+    <path d="M0 90C28 20 50 18 74 60S126 124 156 48v58a14 14 0 0 1-14 14H14A14 14 0 0 1 0 106z" style="fill:var(--scr-sea)"/>
+    <path d="M0 90C28 20 50 18 74 60S126 124 156 48" fill="none" stroke-width="2.5" style="stroke:var(--scr-accent)"/>
+    <path d="M50 8v104" stroke-dasharray="3 4" opacity=".6" style="stroke:var(--scr-accent)"/>
+    <circle cx="50" cy="33" r="5" stroke="#fff" stroke-width="2" style="fill:var(--scr-accent)"/>
+    <text x="58" y="25" style="fill:var(--scr-ink);font:600 11px var(--font)">4.1 m</text>
+  </symbol>
+  <symbol id="scr-row" viewBox="0 0 180 40">
+    <circle cx="30" cy="20" r="13" style="fill:var(--c,#5bb8ea)"/>
+    <path d="M23 21c2.3-3 4.7-3 7 0s4.7 3 7 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+    <rect x="52" y="11" width="76" height="7" rx="3.5" opacity=".85" style="fill:var(--scr-ink)"/>
+    <rect x="52" y="24" width="52" height="6" rx="3" opacity=".7" style="fill:var(--scr-muted)"/>
+    <rect x="140" y="12" width="26" height="6" rx="3" opacity=".7" style="fill:var(--scr-muted)"/>
+    <path d="M52 39.5h128" style="stroke:var(--scr-line)"/>
+  </symbol>
+  <symbol id="scr-today" viewBox="0 0 180 370">
+    <rect width="180" height="370" style="fill:var(--scr-bg)"/>
+    <text x="16" y="46" style="fill:var(--scr-ink);font:600 16px var(--font)">Gullhaven</text>
+    <text x="16" y="63" style="fill:var(--scr-muted);font:500 10px var(--font)">Today · spring tide</text>
+    <use href="#scr-chart" x="12" y="78" width="156" height="120"/>
+    <g style="fill:var(--scr-ink);font:600 11px var(--font)"><text x="16" y="230">06:12</text><text x="16" y="260">12:31</text><text x="16" y="290">18:40</text><text x="16" y="320">00:52</text></g>
+    <g style="fill:var(--scr-muted);font:400 11px var(--font)"><text x="60" y="230">High</text><text x="60" y="260">Low</text><text x="60" y="290">High</text><text x="60" y="320">Low</text></g>
+    <g text-anchor="end" style="fill:var(--scr-ink);font:500 11px var(--font)"><text x="164" y="230">3.9 m</text><text x="164" y="260">0.6 m</text><text x="164" y="290">4.1 m</text><text x="164" y="320">0.4 m</text></g>
+    <path d="M16 242.5h148M16 272.5h148M16 302.5h148" style="stroke:var(--scr-line)"/>
+    <rect y="334" width="180" height="36" style="fill:var(--scr-panel)"/>
+    <g style="fill:var(--scr-muted)"><circle cx="72" cy="352" r="5"/><circle cx="108" cy="352" r="5"/><circle cx="144" cy="352" r="5"/></g><circle cx="36" cy="352" r="5" style="fill:var(--scr-accent)"/>
+  </symbol>
+  <symbol id="scr-places" viewBox="0 0 180 370">
+    <rect width="180" height="370" style="fill:var(--scr-bg)"/>
+    <text x="16" y="46" style="fill:var(--scr-ink);font:600 16px var(--font)">Places</text>
+    <rect x="12" y="58" width="156" height="24" rx="12" style="fill:var(--scr-panel)"/>
+    <use href="#scr-row" y="94" width="180" height="40" style="--c:#2f8fdc"/>
+    <use href="#scr-row" y="134" width="180" height="40" style="--c:#25b3a0"/>
+    <use href="#scr-row" y="174" width="180" height="40" style="--c:#ef7b5b"/>
+    <use href="#scr-row" y="214" width="180" height="40" style="--c:#8f6bd8"/>
+    <use href="#scr-row" y="254" width="180" height="40" style="--c:#f2b33d"/>
+    <use href="#scr-row" y="294" width="180" height="40" style="--c:#4aa8d8"/>
+    <circle cx="146" cy="340" r="16" style="fill:var(--scr-accent)"/><path d="M146 333v14M139 340h14" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="scr-tablet" viewBox="0 0 300 400">
+    <rect width="300" height="400" style="fill:var(--scr-bg)"/>
+    <rect width="104" height="400" style="fill:var(--scr-panel)"/>
+    <text x="12" y="30" style="fill:var(--scr-ink);font:600 12px var(--font)">Places</text>
+    <use href="#scr-row" y="44" width="104" height="23" style="--c:#2f8fdc"/>
+    <use href="#scr-row" y="70" width="104" height="23" style="--c:#25b3a0"/>
+    <use href="#scr-row" y="96" width="104" height="23" style="--c:#ef7b5b"/>
+    <use href="#scr-row" y="122" width="104" height="23" style="--c:#8f6bd8"/>
+    <use href="#scr-row" y="148" width="104" height="23" style="--c:#f2b33d"/>
+    <text x="118" y="34" style="fill:var(--scr-ink);font:600 15px var(--font)">Gullhaven</text>
+    <text x="118" y="50" style="fill:var(--scr-muted);font:500 9px var(--font)">Today · spring tide</text>
+    <use href="#scr-chart" x="116" y="62" width="172" height="132"/>
+    <g style="fill:var(--scr-sea)"><circle cx="130" cy="222" r="8"/><circle cx="156" cy="222" r="8"/><circle cx="182" cy="222" r="8"/><circle cx="234" cy="222" r="8"/><circle cx="260" cy="222" r="8"/></g>
+    <circle cx="208" cy="222" r="8" style="fill:var(--scr-accent)"/>
+    <g style="fill:var(--scr-ink);font:600 11px var(--font)"><text x="118" y="264">06:12</text><text x="118" y="292">12:31</text><text x="118" y="320">18:40</text></g>
+    <g text-anchor="end" style="fill:var(--scr-muted);font:500 11px var(--font)"><text x="286" y="264">3.9 m</text><text x="286" y="292">0.6 m</text><text x="286" y="320">4.1 m</text></g>
+    <path d="M118 274.5h170M118 302.5h170" style="stroke:var(--scr-line)"/>
+  </symbol>
+  <symbol id="scr-desk" viewBox="0 0 480 300">
+    <rect width="480" height="300" style="fill:var(--scr-bg)"/>
+    <rect width="480" height="22" style="fill:var(--scr-panel)"/>
+    <circle cx="12" cy="11" r="4" fill="#ef6b5b"/><circle cx="25" cy="11" r="4" fill="#f4c04c"/><circle cx="38" cy="11" r="4" fill="#5cc171"/>
+    <rect y="22" width="140" height="278" opacity=".6" style="fill:var(--scr-panel)"/>
+    <use href="#scr-row" y="34" width="140" height="31" style="--c:#2f8fdc"/>
+    <use href="#scr-row" y="66" width="140" height="31" style="--c:#25b3a0"/>
+    <use href="#scr-row" y="98" width="140" height="31" style="--c:#ef7b5b"/>
+    <use href="#scr-row" y="130" width="140" height="31" style="--c:#8f6bd8"/>
+    <use href="#scr-row" y="162" width="140" height="31" style="--c:#f2b33d"/>
+    <use href="#scr-row" y="194" width="140" height="31" style="--c:#4aa8d8"/>
+    <text x="156" y="50" style="fill:var(--scr-ink);font:600 15px var(--font)">Gullhaven</text>
+    <text x="156" y="66" style="fill:var(--scr-muted);font:500 9px var(--font)">This week</text>
+    <use href="#scr-chart" x="154" y="78" width="200" height="154"/>
+    <g style="fill:var(--scr-ink);font:600 10px var(--font)"><text x="370" y="94">Mon</text><text x="370" y="122">Tue</text><text x="370" y="150">Wed</text><text x="370" y="178">Thu</text><text x="370" y="206">Fri</text></g>
+    <g opacity=".75" style="fill:var(--scr-sea)"><rect x="400" y="86" width="64" height="8" rx="4"/><rect x="400" y="114" width="56" height="8" rx="4"/><rect x="400" y="142" width="46" height="8" rx="4"/><rect x="400" y="170" width="38" height="8" rx="4"/><rect x="400" y="198" width="50" height="8" rx="4"/></g>
+  </symbol>
+</svg>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (selector, scope = document) => scope.querySelector(selector);
+  const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: the system setting until the toggle is used ---------- */
+  const THEME_KEY = "moonwake-theme";
+  const toggle = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    toggle.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    $("use", toggle).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get(THEME_KEY);
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  systemDark.addEventListener("change", (event) => { if (!store.get(THEME_KEY)) applyTheme(event.matches ? "dark" : "light"); });
+  toggle.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set(THEME_KEY, next);
+  });
+
+  /* ---------- Router: #/view?key=value; ?to=<id> scrolls to a section of that view ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Moonwake: tide times for people who walk the shore", faq: "FAQ · Moonwake", apps: "Apps · Moonwake", docs: "Handbook · Moonwake",
+    changelog: "Release notes · Moonwake", blog: "News · Moonwake", post: "Offline packs, a calmer alarm and 40 new harbours · Moonwake",
+    about: "About · Moonwake", contact: "Contact support · Moonwake", signup: "Join the beta · Moonwake", privacy: "Privacy policy · Moonwake", "404": "Page not found · Moonwake",
+  };
+  /* Which header tab is underlined for views that have no tab of their own */
+  const tabOf = { post: "blog", changelog: "apps", signup: "apps", contact: "faq" };
+  const hooks = {
+    blog: (params) => setFilter("blog", params.get("tag")),
+    changelog: (params) => setFilter("rel", params.get("platform")),
+    contact: (params) => { const select = $("#c-topic"); const topic = params.get("topic"); if (topic && select.querySelector(`option[value="${CSS.escape(topic)}"]`)) select.value = topic; },
+    signup: (params) => { const radio = $(`input[name="platform"][value="${CSS.escape(params.get("platform") || "")}"]`); if (radio) radio.checked = true; },
+  };
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    const tab = tabOf[name] || name;
+    $$(".tabs a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === tab) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    hooks[name]?.(route.params);
+    const to = route.params.get("to");
+    const target = to && current.querySelector(`#${CSS.escape(to)}`);
+    if (target) target.scrollIntoView({ block: "start" });
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); go(href); return; }
+    const target = href.length > 1 && current && current.querySelector(href);
+    if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Reveal: keyframes, observer, and a timed fallback ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -6% 0px" }) : null;
+  function observeReveals(scope) { $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in"))); }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Filters (news topics, release platforms) ---------- */
+  function setFilter(group, value) {
+    const bar = $(`[data-filter-bar="${group}"]`);
+    if (!value || !$(`[data-f="${CSS.escape(value)}"]`, bar)) value = "all";
+    $$("[data-f]", bar).forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.f === value)));
+    let shown = 0;
+    $$(`[data-filter-list="${group}"] > [data-tags]`).forEach((item) => {
+      const match = value === "all" || item.dataset.tags.split(" ").includes(value);
+      item.hidden = !match;
+      if (match) shown += 1;
+    });
+    $(`[data-empty="${group}"]`).hidden = shown > 0;
+  }
+  $$("[data-filter-bar]").forEach((bar) => bar.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-f]");
+    if (button) setFilter(bar.dataset.filterBar, button.dataset.f);
+  }));
+
+  /* ---------- FAQ search: filters the question list and the answers together ---------- */
+  const faq = $("[data-faq]");
+  $("#faq-q").addEventListener("input", (event) => {
+    const query = event.target.value.trim().toLowerCase();
+    let shown = 0;
+    $$(".qa", faq).forEach((qa) => {
+      const match = !query || qa.textContent.toLowerCase().includes(query);
+      qa.hidden = !match;
+      $(`a[href="#${qa.id}"]`, faq).parentElement.hidden = !match;
+      if (match) shown += 1;
+    });
+    $$(".qi, .qg", faq).forEach((group) => { group.hidden = !$$("li:not([hidden]), .qa:not([hidden])", group).length; });
+    $("[data-faq-empty]", faq).hidden = shown > 0;
+  });
+
+  /* ---------- Tabs (handbook platforms): arrow keys move between tabs ---------- */
+  $$("[role=tablist]").forEach((list) => {
+    const tabs = $$("[role=tab]", list);
+    const select = (tab) => tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => select(tab));
+      tab.addEventListener("keydown", (event) => {
+        const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+        if (!step) return;
+        event.preventDefault();
+        const next = tabs[(index + step + tabs.length) % tabs.length];
+        select(next);
+        next.focus();
+      });
+    });
+    select(tabs[0]);
+  });
+
+  /* ---------- Copy buttons on code blocks (clipboard may be blocked in a frame: fall back to selecting) ---------- */
+  $$("[data-copy]").forEach((button) => button.addEventListener("click", async () => {
+    const code = $("code", button.closest(".code"));
+    const label = $("span", button);
+    let copied = false;
+    try { await navigator.clipboard.writeText(code.textContent); copied = true; } catch {
+      try { const range = document.createRange(); range.selectNodeContents(code); const selection = getSelection(); selection.removeAllRanges(); selection.addRange(range); copied = document.execCommand("copy"); } catch { copied = false; }
+    }
+    label.textContent = copied ? "Copied" : "Selected";
+    setTimeout(() => { label.textContent = "Copy"; }, 1800);
+  }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const MESSAGES = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please write a little more (20 characters at least)." };
+  function check(field) {
+    let problem = "";
+    if (field.tagName === "FIELDSET") { if (!field.querySelector(":checked")) problem = field.dataset.msg; }
+    else {
+      const key = Object.keys(MESSAGES).find((k) => field.validity[k]);
+      if (key) problem = (key === "valueMissing" && field.dataset.msg) || MESSAGES[key];
+    }
+    document.getElementById(field.dataset.err).textContent = problem;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("[data-err]", form);
+    fields.forEach((field) => {
+      field.addEventListener(field.tagName === "FIELDSET" || field.type === "checkbox" || field.tagName === "SELECT" ? "change" : "blur", () => check(field));
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before the submit event fires, so the submit button runs the handler;
+       Enter in a field clicks that button (implicit submission). */
+    const button = $("[type=submit]", form);
+    const send = () => {
+      const valid = fields.map(check).every(Boolean);
+      if (!valid) {
+        const first = fields.find((f) => f.getAttribute("aria-invalid") === "true");
+        (first.tagName === "FIELDSET" ? $("input", first) : first).focus();
+        return;
+      }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+        success.hidden = false;
+        success.focus();
+      }, 500);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

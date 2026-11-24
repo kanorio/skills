@@ -1,0 +1,1231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Kestrova: procurement software for mid-sized companies</title>
+<meta name="description" content="Kestrova puts sourcing, contracts, invoices and supplier risk in one workspace, with an assistant that does the legwork and asks before it acts.">
+<meta property="og:title" content="Kestrova: buy better, with less legwork">
+<meta property="og:description" content="Procurement software for mid-sized companies.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/radio-canada-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font ---------- */
+@font-face { font-family: "Radio Canada"; src: url("fonts/radio-canada-latin-wght.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+
+/* ---------- Tokens: light by default, following the system; each color is light-dark(light, dark) ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(100% 0 0), oklch(16.5% 0.03 278));
+  --layer: light-dark(oklch(97.3% 0.008 285), oklch(21% 0.035 278));
+  --layer-2: light-dark(oklch(94.4% 0.014 285), oklch(25.5% 0.04 278));
+  --card: light-dark(oklch(100% 0 0), oklch(22% 0.036 278));
+  --text: light-dark(oklch(25% 0.035 262), oklch(96.5% 0.008 285));
+  --text-2: light-dark(oklch(46% 0.03 264), oklch(79% 0.025 282));
+  --border: light-dark(oklch(91.5% 0.012 282), oklch(31% 0.04 278));
+  --border-2: light-dark(oklch(74% 0.02 272), oklch(48% 0.04 278));
+  --accent: light-dark(oklch(51% 0.19 259), oklch(73% 0.14 256));
+  --accent-hover: light-dark(oklch(45% 0.19 261), oklch(80% 0.11 256));
+  --accent-text: light-dark(oklch(100% 0 0), oklch(17% 0.04 270));
+  --link: light-dark(oklch(49% 0.19 259), oklch(78% 0.12 256));
+  --tint: light-dark(oklch(95% 0.03 290), oklch(28% 0.07 285));
+  --tint-text: light-dark(oklch(43% 0.17 290), oklch(87% 0.07 295));
+  --focus: light-dark(oklch(49% 0.19 259), oklch(87% 0.09 256));
+  --danger: light-dark(oklch(52% 0.2 25), oklch(73% 0.16 22));
+  --success: light-dark(oklch(50% 0.13 155), oklch(77% 0.15 155));
+  --warn: light-dark(oklch(48% 0.12 65), oklch(83% 0.12 80));
+  /* the gradient band: indigo-blue low on the left, violet high on the right */
+  --g-blue: light-dark(oklch(44% 0.2 263), oklch(31% 0.15 266));
+  --g-indigo: light-dark(oklch(43% 0.21 282), oklch(29% 0.15 284));
+  --g-violet: light-dark(oklch(55% 0.22 303), oklch(39% 0.18 303));
+  --grad: radial-gradient(60% 95% at 95% 0%, var(--g-violet), transparent 72%), linear-gradient(200deg, var(--g-violet) 0%, var(--g-indigo) 40%, var(--g-blue) 100%);
+  --num: linear-gradient(100deg, light-dark(oklch(52% 0.22 303), oklch(80% 0.11 303)), var(--link));
+  --on-grad: oklch(100% 0 0);
+  --shadow-card: 0 1px 2px light-dark(oklch(30% 0.05 280 / 0.06), oklch(0% 0 0 / 0.3)), 0 14px 32px -18px light-dark(oklch(30% 0.1 280 / 0.28), oklch(0% 0 0 / 0.7));
+  --shadow-float: 0 2px 6px light-dark(oklch(25% 0.1 285 / 0.1), oklch(0% 0 0 / 0.35)), 0 32px 64px -26px light-dark(oklch(25% 0.18 285 / 0.5), oklch(0% 0 0 / 0.75));
+
+  --font: "Radio Canada", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-display: clamp(2.375rem, 1.5rem + 2.6vw, 3.75rem);
+  --fs-h1: clamp(2.125rem, 1.55rem + 1.7vw, 3.125rem);
+  --fs-h2: clamp(1.625rem, 1.3rem + 1vw, 2.25rem);
+  --fs-h3: 1.1875rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --r-control: 8px;
+  --r-card: 16px;
+  --r-media: 16px;
+  --r-panel: 20px;
+  --r-block: 28px;
+  --r-pill: 999px;
+  --dur-fast: 140ms;
+  --dur-base: 260ms;
+  --dur-slow: 560ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --page: 1240px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --gap: clamp(16px, 2.4vw, 32px);
+  --sec: clamp(64px, 8vw, 120px);
+  --hh: 64px;
+}
+/* The toggle (and the preview tool) pin one theme with data-theme on <html> */
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--hh) + 16px); }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.2; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+::selection { background: var(--tint); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.skip { position: absolute; left: 8px; top: -60px; z-index: 100; padding: 12px 16px; border-radius: var(--r-control); background: var(--accent); color: var(--accent-text); }
+.skip:focus { top: 8px; }
+.wrap { position: relative; width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.muted { color: var(--text-2); }
+
+/* ---------- Type: bold display, medium section heads, chevron links ---------- */
+.display { font-size: var(--fs-display); font-weight: 600; line-height: 1.08; letter-spacing: -0.015em; }
+.h1 { font-size: var(--fs-h1); font-weight: 600; line-height: 1.12; letter-spacing: -0.01em; max-width: 20em; }
+.h2 { font-size: var(--fs-h2); font-weight: 500; line-height: 1.18; }
+.h3 { font-size: var(--fs-h3); font-weight: 600; line-height: 1.3; }
+.lead { font-size: clamp(1.0625rem, 0.98rem + 0.4vw, 1.3125rem); line-height: 1.5; max-width: 38em; color: var(--text-2); }
+.label { margin-bottom: 16px; font-size: 0.875rem; font-weight: 600; color: var(--text-2); }
+/* Small glyphs drawn by CSS masks, so the markup stays plain: chevron after links, check before list items, arrow on selects and questions */
+.link::after, .checks li::before, .pick::after, .acc summary::after { content: ""; flex: none; width: 18px; height: 18px; background: currentColor; -webkit-mask: var(--glyph) center / contain no-repeat; mask: var(--glyph) center / contain no-repeat; }
+.link::after { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E"); margin-left: 2px; transition: transform var(--dur-fast) var(--ease); }
+.checks li::before { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E"); width: 20px; height: 20px; margin-top: 2px; background: var(--link); }
+.pick::after, .acc summary::after { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); }
+.link { display: inline-flex; align-items: center; color: var(--link); font-weight: 600; text-decoration: none; }
+.link:hover, a:hover .link { text-decoration: underline; text-underline-offset: 3px; }
+.link:hover::after, a:hover .link::after { transform: translateX(3px); }
+.link-lg { font-size: 1.1875rem; }
+.text-link { color: var(--link); font-weight: 600; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: var(--r-pill); background: var(--tint); color: var(--tint-text); font-size: 0.75rem; font-weight: 600; line-height: 1.5; white-space: nowrap; }
+.chip .icon { width: 14px; height: 14px; }
+.st-ok { background: color-mix(in oklch, var(--success) 14%, transparent); color: var(--success); }
+.st-warn { background: color-mix(in oklch, oklch(80% 0.15 75) 26%, transparent); color: var(--warn); }
+
+/* ---------- Buttons: 8px corners; white on the gradient ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 20px; border: 1px solid transparent; border-radius: var(--r-control); background: none; font-size: 0.9375rem; font-weight: 600; line-height: 1.2; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.btn .icon { width: 18px; height: 18px; }
+.btn-primary { background: var(--accent); color: var(--accent-text); }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-secondary { border-color: var(--link); color: var(--link); }
+.btn-secondary:hover { background: var(--tint); }
+.btn-light { background: var(--on-grad); color: oklch(42% 0.2 268); }
+.btn-light:hover { background: oklch(94% 0.03 285); }
+.btn-outline-light { border-color: oklch(100% 0 0 / 0.75); color: var(--on-grad); }
+.btn-outline-light:hover { background: oklch(100% 0 0 / 0.14); }
+.btn-ghost { color: var(--link); }
+.btn-ghost:hover { background: var(--tint); }
+.btn-sm { min-height: 36px; padding: 0 14px; font-size: 0.875rem; }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---------- Header: white bar, nav pills, one blue action ---------- */
+.hd { position: sticky; top: 0; z-index: 30; background: color-mix(in oklch, var(--bg) 92%, transparent); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+.hd-in { display: flex; align-items: center; gap: 8px; height: var(--hh); }
+.brand { display: inline-flex; align-items: center; gap: 10px; margin-right: 20px; font-size: 1.1875rem; font-weight: 700; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; }
+.brand svg { flex: none; width: 28px; height: 28px; }
+.nav { display: flex; gap: 2px; }
+.nav a { padding: 8px 12px; border-radius: var(--r-control); font-size: 0.9375rem; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease); }
+.nav a:hover { background: var(--layer-2); }
+.nav a[aria-current="page"] { background: var(--tint); color: var(--tint-text); }
+.hd-act { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+.hd-link { padding: 8px 10px; font-size: 0.9375rem; font-weight: 600; color: var(--link); text-decoration: none; white-space: nowrap; }
+.hd-link:hover { text-decoration: underline; }
+.icon-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: var(--r-pill); background: none; color: var(--text); cursor: pointer; transition: background-color var(--dur-fast) var(--ease); }
+.icon-btn:hover { background: var(--layer-2); }
+.menu-btn { display: none; }
+.sheet { margin: 0; padding: 0 0 24px; border: 0; border-radius: 0 var(--r-panel) var(--r-panel) 0; inline-size: min(340px, 100% - 32px); block-size: 100dvh; max-block-size: 100dvh; background: var(--bg); color: var(--text); box-shadow: var(--shadow-float); }
+.sheet::backdrop { background: oklch(20% 0.05 280 / 0.5); }
+.sheet-top { display: flex; align-items: center; justify-content: space-between; height: var(--hh); padding: 0 12px 0 20px; border-bottom: 1px solid var(--border); }
+.sheet nav { display: grid; gap: 2px; padding: 12px; }
+.sheet nav a { padding: 12px; border-radius: var(--r-control); font-weight: 500; text-decoration: none; }
+.sheet nav a:hover, .sheet nav a[aria-current="page"] { background: var(--tint); color: var(--tint-text); }
+.sheet .btn { margin: 8px 24px 0; width: calc(100% - 48px); }
+@media (max-width: 1079px) { .nav { display: none; } .menu-btn { display: inline-grid; margin-left: -8px; } }
+@media (max-width: 559px) { .hd-link { display: none; } .brand { margin-right: 0; } }
+@media (max-width: 479px) { .hd-act .btn { display: none; } }
+
+/* ---------- Views: all render in order without JS ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.sec { padding-block: var(--sec); }
+.sec-b { padding-bottom: var(--sec); }
+.sh { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 40px; margin-bottom: 40px; }
+.sh > div { max-width: 46rem; }
+.sh p { margin: 12px 0 0; font-size: 1.0625rem; color: var(--text-2); }
+.g { display: grid; gap: var(--gap); }
+.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1023px) { .g3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 639px) { .g3 { grid-template-columns: minmax(0, 1fr); } }
+.phead { position: relative; overflow: clip; padding-block: clamp(40px, 6vw, 88px) clamp(40px, 5vw, 64px); margin-bottom: clamp(24px, 4vw, 48px); background: linear-gradient(180deg, var(--tint), transparent); }
+.phead .lead { margin: 20px 0 0; }
+.phead .btn-row { margin-top: 32px; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; font-size: 0.875rem; color: var(--text-2); }
+.crumbs li + li::before { content: "/"; margin-right: 8px; }
+.crumbs a { color: var(--link); text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+
+/* ---------- Gradient hero with the floating product card (signature) ---------- */
+.hero { position: relative; overflow: clip; background: var(--grad); color: var(--on-grad); }
+.hero-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(40px, 5vw, 80px); align-items: center; padding-block: clamp(48px, 7vw, 108px) clamp(64px, 8vw, 120px); }
+.hero .lead { margin: 24px 0 36px; color: oklch(100% 0 0 / 0.9); }
+.hero-art { position: relative; isolation: isolate; justify-self: end; width: min(100%, 580px); }
+@media (max-width: 959px) { .hero-in { grid-template-columns: minmax(0, 1fr); } .hero-art { justify-self: start; margin-top: 28px; } }
+
+/* A product card floats in a frosted bezel; small panels, avatars and a star overlap its edges */
+.ui { position: relative; display: grid; grid-template-columns: 52px minmax(0, 1fr); border-radius: var(--r-panel); background: var(--card); color: var(--text); box-shadow: var(--shadow-float); font-size: 0.8125rem; line-height: 1.4; }
+.ui::before { content: ""; position: absolute; z-index: -1; inset: -12px; border: 1px solid oklch(100% 0 0 / 0.5); border-radius: calc(var(--r-panel) + 12px); background: oklch(100% 0 0 / 0.2); }
+.ui-rail { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 0; border-right: 1px solid var(--border); }
+.ui-rail span { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; color: var(--text-2); }
+.ui-rail .icon { width: 17px; height: 17px; }
+.ui-rail .on, .ui-input i { background: linear-gradient(135deg, oklch(62% 0.2 303), oklch(54% 0.2 262)); color: var(--on-grad); }
+.ui-main { min-width: 0; padding: 12px 16px 16px; }
+.ui-bar { display: flex; align-items: center; gap: 8px; padding-bottom: 10px; border-bottom: 1px solid var(--border); font-weight: 600; }
+.ui-bar span:last-child { display: flex; gap: 10px; margin-left: auto; color: var(--text-2); }
+.ui-bar .icon { width: 16px; height: 16px; }
+.ui-time { margin: 10px 0 8px; font-size: 0.6875rem; text-align: center; color: var(--text-2); }
+.bubble { width: fit-content; max-width: 80%; margin: 0 0 10px auto; padding: 8px 12px; border-radius: 14px 14px 4px 14px; background: var(--tint); color: var(--tint-text); font-weight: 500; }
+.ui-msg { margin: 0 0 10px; color: var(--text-2); }
+.ui-res { padding: 12px; border: 1px solid var(--border); border-radius: 14px; }
+.ui-res-top, .mini-row { display: flex; align-items: center; gap: 10px; }
+.ui-res b, .mini b { display: block; font-size: 0.8125rem; }
+.ui-res small, .mini small { display: block; color: var(--text-2); }
+.ico-tile { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--tint); color: var(--tint-text); }
+.ico-tile .icon { width: 18px; height: 18px; }
+.ui-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; }
+.ui-chips .chip { font-size: 0.6875rem; padding: 1px 8px; }
+.ui-btn { margin-left: auto; padding: 3px 10px; border: 1px solid var(--link); border-radius: 6px; color: var(--link); font-size: 0.6875rem; font-weight: 600; }
+.ui-input { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 6px 6px 6px 12px; border: 1px solid var(--border-2); border-radius: 12px; color: var(--text-2); }
+.ui-input i { display: grid; place-items: center; width: 30px; height: 30px; margin-left: auto; border-radius: 9px; }
+.ui-input .icon { width: 16px; height: 16px; }
+.note { position: absolute; top: -22px; right: -18px; display: flex; align-items: center; gap: 10px; padding: 10px 16px 10px 10px; border-radius: 14px; background: var(--card); color: var(--text); box-shadow: var(--shadow-float); font-size: 0.75rem; line-height: 1.35; }
+.note b { display: block; font-size: 0.8125rem; }
+.av { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, oklch(72% 0.14 303), oklch(58% 0.17 262)); color: var(--on-grad); font-size: 0.8125rem; font-weight: 700; box-shadow: 0 0 0 3px var(--card); }
+.a2 { background: linear-gradient(135deg, oklch(78% 0.12 220), oklch(56% 0.18 270)); }
+.a3 { background: linear-gradient(135deg, oklch(80% 0.11 50), oklch(60% 0.19 310)); }
+.av-float { position: absolute; left: -18px; bottom: -20px; width: 50px; height: 50px; }
+@media (max-width: 559px) { .note { right: 4px; top: -50px; } .av-float { left: 4px; bottom: -26px; } .ui { grid-template-columns: 44px minmax(0, 1fr); } }
+
+/* Glossy four-point stars: the only ornament */
+.star, .spark { position: absolute; pointer-events: none; }
+.star { filter: drop-shadow(0 14px 18px oklch(30% 0.18 290 / 0.35)); }
+.spark { fill: none; stroke: oklch(100% 0 0 / 0.85); stroke-width: 1.2; stroke-linejoin: round; }
+.s-hero { width: clamp(84px, 9vw, 120px); right: -36px; bottom: -92px; }
+.s-hero2 { width: 40px; right: -46px; top: 38%; }
+.s-sw { width: clamp(80px, 10vw, 140px); right: 7%; bottom: 10%; }
+.s-ws { width: clamp(64px, 7vw, 100px); right: 4%; bottom: 6%; }
+.s-cta { width: clamp(80px, 9vw, 120px); right: 3%; top: -44px; }
+.s-cta2 { width: 36px; right: 19%; bottom: 18%; }
+.s-ph { width: clamp(70px, 9vw, 128px); right: max(24px, 9vw); top: 22%; }
+@media (max-width: 799px) { .s-ph { width: 56px; top: 16px; right: 16px; } .s-hero2, .s-cta, .ws-art .star { display: none; } }
+
+/* ---------- Media frames: a soft-focus scene stands in for a photograph ---------- */
+.scene { position: relative; overflow: hidden; isolation: isolate; margin: 0; border-radius: var(--r-media); background: radial-gradient(60% 70% at 16% 18%, var(--s3), transparent 70%), radial-gradient(55% 65% at 88% 28%, var(--s2), transparent 72%), radial-gradient(90% 80% at 50% 112%, var(--s1), transparent 76%), linear-gradient(160deg, var(--s3), var(--s1)); }
+.scene::after { content: ""; position: absolute; z-index: -1; right: -16%; bottom: -40%; width: 70%; aspect-ratio: 1; border: 1px solid oklch(100% 0 0 / 0.5); border-radius: 50%; box-shadow: 0 0 0 30px oklch(100% 0 0 / 0.08), 0 0 0 60px oklch(100% 0 0 / 0.05); }
+.scene > img { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.t1 { --s1: light-dark(oklch(76% 0.11 292), oklch(42% 0.15 292)); --s2: light-dark(oklch(83% 0.08 255), oklch(40% 0.13 258)); --s3: light-dark(oklch(95% 0.03 312), oklch(27% 0.07 300)); }
+.t2 { --s1: light-dark(oklch(78% 0.1 245), oklch(40% 0.12 248)); --s2: light-dark(oklch(88% 0.07 195), oklch(42% 0.09 200)); --s3: light-dark(oklch(96% 0.02 230), oklch(26% 0.05 250)); }
+.t3 { --s1: light-dark(oklch(76% 0.12 315), oklch(40% 0.15 315)); --s2: light-dark(oklch(88% 0.08 45), oklch(45% 0.1 40)); --s3: light-dark(oklch(96% 0.03 60), oklch(27% 0.06 330)); }
+.t4 { --s1: oklch(46% 0.2 270); --s2: oklch(60% 0.2 302); --s3: oklch(56% 0.16 250); }
+.mini { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: min(80%, 300px); padding: 12px; border-radius: 14px; background: var(--card); color: var(--text); box-shadow: var(--shadow-float); font-size: 0.75rem; line-height: 1.35; text-align: left; }
+.mini-row + .mini-row { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+.mini-row .chip { margin-left: auto; }
+.mini .bubble { margin-bottom: 8px; }
+.logo-chip { position: absolute; left: 20px; bottom: 20px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 12px; background: var(--card); color: var(--text); box-shadow: var(--shadow-card); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.logo-chip svg { width: 20px; height: 20px; fill: var(--accent); }
+.logo-chip.static { position: static; margin-bottom: 20px; }
+.on-media { position: absolute; left: 16px; top: 16px; background: var(--card); color: var(--text); }
+
+/* ---------- Home sections ---------- */
+/* Story switcher: a ruled list on the left, one large frame on the right (signature) */
+.switch { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--gap); align-items: stretch; }
+.sw-list li { border-left: 3px solid var(--border); }
+.sw-list li.is-on { border-left-color: var(--accent); }
+.sw-btn { display: block; width: 100%; padding: 14px 16px; border: 0; border-radius: 0 var(--r-control) var(--r-control) 0; background: none; font-size: 1.0625rem; font-weight: 600; line-height: 1.35; text-align: left; cursor: pointer; transition: background-color var(--dur-fast) var(--ease); }
+.sw-btn:hover { background: var(--layer); }
+.is-on > .sw-btn { color: var(--link); }
+.sw-body { padding: 0 16px 18px; color: var(--text-2); }
+.sw-body p { margin-bottom: 10px; }
+.js .sw-list li:not(.is-on) .sw-body { display: none; }
+.sw-media { min-height: 440px; }
+.sw-fig { left: auto; right: 20px; top: 20px; translate: none; width: auto; min-width: 180px; }
+.sw-fig b { margin: 2px 0; font-size: 2rem; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; background: var(--num); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.sw-fig span { color: var(--text-2); }
+.swap { animation: fade var(--dur-base) var(--ease); }
+@media (max-width: 859px) { .switch { grid-template-columns: minmax(0, 1fr); } .sw-media { min-height: 300px; order: -1; } }
+.ws { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 64px); align-items: center; margin-top: 40px; }
+.ws-art { display: grid; place-items: center; min-height: 420px; padding: clamp(24px, 5vw, 56px) clamp(16px, 4vw, 48px); }
+.ws-links > div + div { margin-top: 36px; }
+.ws-links p { margin: 10px 0 0; color: var(--text-2); }
+@media (max-width: 859px) { .ws { grid-template-columns: minmax(0, 1fr); } .ws-art { min-height: 0; } }
+.ui-t { width: 100%; max-width: 560px; padding: 16px; border-radius: var(--r-panel); background: var(--card); color: var(--text); box-shadow: var(--shadow-float); font-size: 0.8125rem; }
+.ui-t-h { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.9375rem; font-weight: 600; }
+.ui-t-h .chip { margin-left: auto; }
+.ui-row { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 4px; border-top: 1px solid var(--border); }
+.ui-row small { display: block; color: var(--text-2); }
+@media (max-width: 479px) { .ui-row { grid-template-columns: minmax(0, 1fr) auto; } .ui-row > span:nth-child(2) { display: none; } }
+.cards2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px var(--gap); }
+.fc .scene { aspect-ratio: 2 / 1; margin-bottom: 20px; }
+.fc p { margin: 8px 0 12px; color: var(--text-2); }
+@media (max-width: 719px) { .cards2 { grid-template-columns: minmax(0, 1fr); gap: 40px; } .fc .scene { aspect-ratio: 16 / 10; } }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); margin: 0; }
+.stats div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 8px; padding: 28px 24px; border-radius: var(--r-card); background: var(--layer); }
+.stats dt { color: var(--text-2); }
+.stats dd { margin: 0; font-size: clamp(2.5rem, 1.8rem + 2vw, 3.5rem); font-weight: 600; line-height: 1; letter-spacing: -0.02em; background: var(--num); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@media (max-width: 799px) { .stats { grid-template-columns: minmax(0, 1fr); } }
+
+/* Cards: white, rounded, a scene on top; the whole card is the link */
+.card { position: relative; display: flex; flex-direction: column; height: 100%; overflow: hidden; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--card); text-decoration: none; transition: box-shadow var(--dur-base) var(--ease), transform var(--dur-base) var(--ease); }
+a.card:hover { box-shadow: var(--shadow-card); transform: translateY(-3px); }
+.card > .scene { aspect-ratio: 16 / 9; border-radius: 0; }
+.card .logo-chip { left: 14px; bottom: 14px; padding: 8px 12px; font-size: 0.75rem; }
+.card-b { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; flex: 1; padding: 18px 20px 20px; }
+.card-b p { margin: 0; color: var(--text-2); }
+.card-b .link { margin-top: auto; padding-top: 8px; }
+.card-b .fig { font-size: 1.5rem; font-weight: 600; line-height: 1.1; color: var(--link); }
+.card-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+.card-row > .scene { aspect-ratio: auto; min-height: 220px; }
+.card-row .card-b { justify-content: center; padding: clamp(20px, 3vw, 40px); }
+@media (max-width: 719px) { .card-row { grid-template-columns: minmax(0, 1fr); } .card-row > .scene { min-height: 180px; } }
+
+/* Gradient block: closes pages and carries the flagship event */
+.cta { position: relative; overflow: clip; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 28px 40px; padding: clamp(32px, 5vw, 64px); border-radius: var(--r-block); background: var(--grad); color: var(--on-grad); }
+.cta p { max-width: 36em; margin: 12px 0 0; color: oklch(100% 0 0 / 0.9); }
+.cta .chip { margin-bottom: 14px; background: oklch(100% 0 0 / 0.18); color: var(--on-grad); }
+.cta .btn-row { position: relative; z-index: 1; }
+@media (max-width: 799px) { .cta { grid-template-columns: minmax(0, 1fr); } }
+.ev-facts { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 20px; font-weight: 500; }
+.ev-facts li { display: flex; align-items: center; gap: 8px; }
+
+/* ---------- Pills: tabs and filters in one rounded track ---------- */
+.pills { position: relative; display: inline-flex; gap: 4px; max-width: 100%; padding: 4px; overflow-x: auto; border-radius: var(--r-pill); background: var(--layer-2); scrollbar-width: none; }
+.pill { flex: none; padding: 8px 16px; border: 0; border-radius: var(--r-pill); background: none; color: var(--text-2); font-size: 0.9375rem; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.pill:hover { color: var(--text); }
+.pill[aria-selected="true"], .pill[aria-pressed="true"] { background: var(--card); color: var(--link); box-shadow: var(--shadow-card); }
+.pill:focus-visible { outline-offset: -2px; }
+.tpanel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(24px, 5vw, 72px); align-items: center; padding-top: 40px; }
+.tpanel .lead { margin: 16px 0 20px; }
+.tp-art { aspect-ratio: 4 / 3; }
+@media (max-width: 859px) { .tpanel { grid-template-columns: minmax(0, 1fr); } .tp-art { order: -1; aspect-ratio: 16 / 10; } }
+.checks { margin-bottom: 24px; }
+.checks li { display: flex; gap: 10px; padding: 6px 0; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: 16px 24px; margin-bottom: 32px; }
+.count { margin: 0 0 0 auto; padding-bottom: 10px; font-size: 0.875rem; color: var(--text-2); }
+.empty { padding: 48px 16px; border-radius: var(--r-card); background: var(--layer); text-align: center; }
+.empty p { margin-bottom: 8px; }
+
+/* ---------- Plans and questions ---------- */
+.plan { display: flex; flex-direction: column; padding: 28px 24px 24px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--card); }
+.plan.featured { border: 2px solid transparent; background: linear-gradient(var(--card), var(--card)) padding-box, linear-gradient(135deg, oklch(60% 0.21 303), var(--accent)) border-box; box-shadow: var(--shadow-card); }
+.plan-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.plan > p { margin: 8px 0 0; color: var(--text-2); }
+.plan > .price { margin-top: 20px; color: var(--text); font-size: 2.5rem; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; }
+.price small { display: block; margin-top: 6px; font-size: 0.875rem; font-weight: 400; letter-spacing: 0; color: var(--text-2); }
+.plan .checks { margin: 20px 0 28px; padding-top: 16px; border-top: 1px solid var(--border); }
+.plan .btn { margin-top: auto; }
+.acc { display: grid; gap: 12px; max-width: 54rem; }
+.acc details { border-radius: var(--r-card); background: var(--layer); }
+.acc summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; border-radius: var(--r-card); font-weight: 600; list-style: none; cursor: pointer; }
+.acc summary::-webkit-details-marker { display: none; }
+.acc summary:hover { background: var(--layer-2); }
+.acc summary::after { transition: transform var(--dur-base) var(--ease); }
+.acc details[open] summary::after { transform: rotate(180deg); }
+.acc details p { margin: 0; padding: 0 56px 20px 20px; color: var(--text-2); }
+
+/* ---------- Events, people, offices ---------- */
+.evs { display: grid; gap: 12px; }
+.ev { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) auto; align-items: center; gap: 12px 24px; padding: 16px 20px 16px 16px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--card); }
+.ev h3 { margin-top: 6px; }
+.ev p { margin: 4px 0 0; color: var(--text-2); font-size: 0.9375rem; }
+.date { display: grid; place-items: center; padding: 10px 0; border-radius: 12px; background: var(--tint); color: var(--tint-text); font-size: 0.75rem; font-weight: 600; line-height: 1.15; text-transform: uppercase; }
+.date b { font-size: 1.75rem; }
+@media (max-width: 639px) { .ev { grid-template-columns: 4.5rem minmax(0, 1fr); } .ev .btn { grid-column: 2; justify-self: start; } }
+.split2 { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 64px); align-items: start; }
+.split2.rev { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+@media (max-width: 859px) { .split2, .split2.rev { grid-template-columns: minmax(0, 1fr); } }
+.vcard { padding: 24px; border-radius: var(--r-card); background: var(--layer); }
+.vcard .ico-tile { width: 44px; height: 44px; margin-bottom: 20px; border-radius: 12px; }
+.vcard p { margin: 8px 0 0; color: var(--text-2); }
+.tl { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
+.tl::before { content: ""; position: absolute; top: 7px; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), oklch(60% 0.21 303)); }
+.tl li { position: relative; padding-top: 32px; }
+.tl li::before { content: ""; position: absolute; top: 0; left: 0; width: 16px; height: 16px; border: 3px solid var(--accent); border-radius: 50%; background: var(--bg); }
+.tl b { display: block; margin-bottom: 6px; font-size: 1.5rem; font-weight: 600; }
+.tl p { margin: 0; color: var(--text-2); }
+@media (max-width: 799px) { .tl { grid-template-columns: minmax(0, 1fr); gap: 24px; } .tl::before { top: 0; bottom: 0; left: 7px; right: auto; width: 2px; height: auto; } .tl li { padding: 0 0 0 36px; } }
+.people { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.person { display: flex; align-items: center; gap: 16px; padding: 20px; border-radius: var(--r-card); background: var(--layer); }
+.person .av { width: 64px; height: 64px; font-size: 1.125rem; box-shadow: 0 0 0 4px var(--bg); }
+.person p { margin: 2px 0 0; font-size: 0.9375rem; color: var(--text-2); }
+@media (max-width: 1023px) { .people { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 639px) { .people { grid-template-columns: minmax(0, 1fr); } }
+.lines li { display: flex; gap: 12px; padding: 10px 0; }
+.lines .icon { margin-top: 2px; color: var(--link); }
+.steps { counter-reset: step; margin-bottom: 32px; }
+.steps li { position: relative; padding: 0 0 20px 48px; }
+.steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: -4px; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--tint); color: var(--tint-text); font-weight: 700; }
+.steps b { display: block; }
+.steps span { color: var(--text-2); }
+.quote { max-width: 56rem; margin: 0 auto; text-align: center; }
+.quote blockquote { margin: 0 0 24px; font-size: clamp(1.375rem, 1.1rem + 1vw, 2rem); font-weight: 500; line-height: 1.3; }
+.quote figcaption { display: inline-flex; align-items: center; gap: 12px; color: var(--text-2); text-align: left; }
+
+/* ---------- Article, story and legal ---------- */
+.byline { display: flex; align-items: center; gap: 12px; margin-top: 28px; font-size: 0.9375rem; }
+.byline small { display: block; color: var(--text-2); }
+.art-hero { aspect-ratio: 21 / 8; margin-bottom: clamp(32px, 5vw, 64px); }
+@media (max-width: 639px) { .art-hero { aspect-ratio: 4 / 3; } }
+.doc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: clamp(24px, 4vw, 64px); align-items: start; }
+.doc.rev { grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); }
+.toc, .aside { position: sticky; top: calc(var(--hh) + 32px); }
+.toc a { display: block; padding: 8px 14px; border-left: 3px solid var(--border); font-size: 0.9375rem; color: var(--text-2); text-decoration: none; }
+.toc a:hover { border-left-color: var(--accent); color: var(--text); }
+.aside { padding: 24px; border-radius: var(--r-card); background: var(--layer); }
+.aside .btn { width: 100%; margin-top: 8px; }
+@media (max-width: 1023px) { .doc, .doc.rev { grid-template-columns: minmax(0, 1fr); } .toc, .aside { position: static; } }
+.facts { margin: 0 0 16px; }
+.facts div { padding: 10px 0; border-top: 1px solid var(--border); }
+.facts dt { font-size: 0.8125rem; color: var(--text-2); }
+.facts dd { display: flex; flex-wrap: wrap; gap: 6px; margin: 2px 0 0; font-weight: 500; }
+.prose { max-width: 44rem; font-size: 1.0625rem; line-height: 1.65; }
+.prose h2 { margin: 48px 0 14px; font-size: 1.625rem; font-weight: 500; }
+.prose h2:first-child { margin-top: 0; }
+.prose a:not(.btn) { color: var(--link); }
+.prose ul { margin: 0 0 1em; }
+.prose li { position: relative; margin: 8px 0; padding-left: 22px; }
+.prose li::before { content: ""; position: absolute; left: 4px; top: 0.62em; width: 7px; height: 7px; border-radius: 2px; background: var(--accent); rotate: 45deg; }
+.prose blockquote { margin: 40px 0; padding: 24px 28px; border-left: 3px solid var(--accent); border-radius: 0 var(--r-card) var(--r-card) 0; background: var(--layer); font-size: 1.3125rem; font-weight: 500; line-height: 1.4; }
+.prose blockquote p { margin-bottom: 10px; }
+.prose cite { font-size: 0.875rem; font-style: normal; font-weight: 400; color: var(--text-2); }
+.prose figure { margin: 40px 0; }
+.prose figure .scene { aspect-ratio: 16 / 9; }
+figcaption { margin-top: 10px; font-size: 0.875rem; color: var(--text-2); }
+.tbl-wrap { position: relative; overflow-x: auto; margin: 28px 0; border: 1px solid var(--border); border-radius: var(--r-card); }
+.tbl { width: 100%; min-width: 32rem; border-collapse: collapse; font-size: 0.9375rem; }
+.tbl th { padding: 12px 16px; background: var(--layer); font-weight: 600; text-align: left; }
+.tbl td { padding: 12px 16px; border-top: 1px solid var(--border); }
+.callout { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 40px; padding: 24px; border-radius: var(--r-card); background: var(--tint); }
+.callout p { margin: 4px 0 0; font-size: 1rem; color: var(--text-2); }
+
+/* ---------- Forms: outlined fields, errors in a reserved line ---------- */
+.fcard { padding: clamp(20px, 3vw, 36px); border: 1px solid var(--border); border-radius: var(--r-panel); background: var(--card); box-shadow: var(--shadow-card); }
+.form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 20px; }
+.fld { display: grid; gap: 6px; align-content: start; min-width: 0; margin: 0; padding: 0; border: 0; }
+.fld.full { grid-column: 1 / -1; }
+.fld > label:not(.check), .fld > legend { padding: 0; font-size: 0.875rem; font-weight: 600; }
+.in { width: 100%; height: 44px; padding: 0 14px; border: 1px solid var(--border-2); border-radius: var(--r-control); background: var(--bg); font-size: 0.9375rem; transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+.in:hover { border-color: var(--text-2); }
+.in:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 28%, transparent); }
+.in[aria-invalid="true"] { border-color: var(--danger); box-shadow: 0 0 0 3px color-mix(in oklch, var(--danger) 18%, transparent); }
+textarea.in { height: auto; min-height: 120px; padding: 12px 14px; resize: vertical; }
+.pick { position: relative; }
+select.in { appearance: none; padding-right: 40px; cursor: pointer; }
+.pick::after { position: absolute; right: 12px; top: 13px; background: var(--text-2); pointer-events: none; }
+.err { min-height: 1.25rem; font-size: 0.8125rem; line-height: 1.25rem; color: var(--danger); }
+.check { display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; cursor: pointer; }
+.check input { flex: none; width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--accent); }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt { position: relative; }
+.opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.opt span { display: inline-flex; padding: 8px 16px; border: 1px solid var(--border-2); border-radius: var(--r-pill); font-size: 0.9375rem; font-weight: 500; transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
+.opt input:checked + span { border-color: var(--accent); background: var(--tint); color: var(--tint-text); }
+.opt input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
+.opt input[aria-invalid="true"] + span { border-color: var(--danger); }
+.form .btn { justify-self: start; margin-top: 8px; }
+.search { position: relative; width: min(100%, 20rem); }
+.search .icon { position: absolute; left: 12px; top: 12px; width: 18px; height: 18px; color: var(--text-2); }
+.search .in { padding-left: 40px; }
+.ok { display: flex; gap: 14px; padding: 20px; border: 1px solid color-mix(in oklch, var(--success) 40%, transparent); border-radius: var(--r-card); background: color-mix(in oklch, var(--success) 9%, var(--card)); }
+.ok > .icon { width: 24px; height: 24px; color: var(--success); }
+.ok h2, .ok h3 { font-size: 1.0625rem; font-weight: 600; }
+.ok p { margin: 4px 0 12px; color: var(--text-2); }
+@media (max-width: 639px) { .form { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Footer and the floating contact button ---------- */
+.ft { padding-top: 56px; border-top: 1px solid var(--border); background: var(--layer); }
+.ft a:not(.btn) { color: var(--text-2); text-decoration: none; }
+.ft a:not(.btn):hover { color: var(--link); text-decoration: underline; }
+.ft-top { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px var(--gap); padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+.ft-top .brand { color: var(--text); }
+.ft-intro { max-width: 28rem; margin: 14px 0 0; color: var(--text-2); }
+.news-row { display: flex; gap: 8px; }
+.news-row .in { flex: 1; min-width: 0; }
+.ft-cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); padding-block: 40px; }
+.ft h2 { margin-bottom: 14px; font-size: 0.9375rem; font-weight: 600; }
+.ft li { margin-bottom: 8px; font-size: 0.9375rem; }
+.ft address { font-style: normal; font-size: 0.9375rem; color: var(--text-2); }
+.ft-bot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 20px 32px; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--text-2); }
+.ft-bot ul { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+@media (max-width: 799px) { .ft-top { grid-template-columns: minmax(0, 1fr); } .ft-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 639px) { .ft { padding-bottom: 72px; } }
+.fab { position: fixed; right: 24px; bottom: 24px; z-index: 25; display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px; background: var(--accent); color: var(--accent-text); box-shadow: var(--shadow-float); font-size: 0.9375rem; font-weight: 600; text-decoration: none; transition: background-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.fab:hover { background: var(--accent-hover); transform: translateY(-2px); }
+[data-route="demo"] .fab, [data-route="trial"] .fab { display: none; }
+@media (max-width: 639px) { .fab { right: 16px; bottom: 16px; padding: 14px; border-radius: 50%; } .fab span { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
+
+/* ---------- Motion: keyframes only; the product card rises, stars drift ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+@keyframes pop { from { opacity: 0; transform: translateY(28px) scale(0.96); } }
+@keyframes fade { from { opacity: 0.35; } }
+@keyframes drift { 50% { transform: translateY(-10px) rotate(8deg); } }
+@keyframes bob { 50% { transform: translateY(-6px); } }
+.js .enter { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
+.js .hero-art.enter { animation-name: pop; animation-duration: 800ms; }
+.js .star { animation: drift 9s ease-in-out infinite; }
+.js .note { animation: bob 6s ease-in-out 1.2s infinite; }
+.js .fab { animation: rise var(--dur-slow) var(--ease) 700ms both; }
+.js .reveal:not(.is-in) { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal:not(.is-in) { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="hd">
+  <div class="wrap hd-in">
+    <button class="icon-btn menu-btn" type="button" id="menu-open" aria-label="Open menu" aria-controls="menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    <a class="brand" href="#/" aria-label="Kestrova home"><svg aria-hidden="true"><use href="#mark"/></svg>Kestrova</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/platform">Platform</a>
+      <a href="#/customers">Customers</a>
+      <a href="#/resources">Resources</a>
+      <a href="#/events">Events</a>
+      <a href="#/company">Company</a>
+    </nav>
+    <div class="hd-act">
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to dark theme"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="hd-link" href="#/trial">Free trial</a>
+      <a class="btn btn-primary btn-sm" href="#/demo">Book a demo</a>
+    </div>
+  </div>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-top"><span class="brand"><svg aria-hidden="true"><use href="#mark"/></svg>Kestrova</span><button class="icon-btn" type="button" id="menu-close" aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <nav aria-label="Menu"><a href="#/">Home</a><a href="#/platform">Platform</a><a href="#/customers">Customers</a><a href="#/resources">Resources</a><a href="#/events">Events</a><a href="#/company">Company</a><a href="#/trial">Free trial</a></nav>
+  <a class="btn btn-primary" href="#/demo">Book a demo</a>
+</dialog>
+
+<main id="main" tabindex="-1">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap hero-in">
+      <div>
+        <h1 class="display enter" id="hero-h">Buy from suppliers you trust, without the chase</h1>
+        <p class="lead enter" style="--i:1">Sourcing, contracts, invoices and supplier risk in one workspace, with an assistant that does the legwork and asks before anything leaves the building.</p>
+        <div class="btn-row enter" style="--i:2"><a class="btn btn-light" href="#/demo">Book a demo</a><a class="btn btn-outline-light" href="#/platform">Explore the platform</a></div>
+      </div>
+      <div class="hero-art enter" style="--i:3" role="img" aria-label="Product preview: the assistant builds a supplier shortlist and sends quote requests">
+        <div class="ui">
+          <div class="ui-rail"><span class="on"><svg class="icon"><use href="#i-spark"/></svg></span><span><svg class="icon"><use href="#i-doc"/></svg></span><span><svg class="icon"><use href="#i-receipt"/></svg></span><span><svg class="icon"><use href="#i-chart"/></svg></span></div>
+          <div class="ui-main">
+            <div class="ui-bar"><span>Valve housings, Q1</span><span><svg class="icon"><use href="#i-share"/></svg><svg class="icon"><use href="#i-more"/></svg></span></div>
+            <p class="ui-time">Today, 9:12</p>
+            <p class="bubble">Find suppliers who can ship 4,000 valve housings by March</p>
+            <p class="ui-msg">I checked 212 approved suppliers for capacity, lead time and audit status. Six can deliver on time.</p>
+            <div class="ui-res">
+              <div class="ui-res-top"><span class="ico-tile"><svg class="icon"><use href="#i-doc"/></svg></span><div><b>Shortlist: valve housings</b><small>Owner: Procurement · due 14 Feb</small></div></div>
+              <div class="ui-chips"><span class="chip">6 suppliers</span><span class="chip">3 regions</span><span class="chip st-warn">2 audits due</span><span class="ui-btn">Open shortlist</span></div>
+            </div>
+            <div class="ui-input">Ask about suppliers, contracts or spend<i><svg class="icon"><use href="#i-send"/></svg></i></div>
+          </div>
+        </div>
+        <div class="note"><span class="av a2">AO</span><div><b>Quote requests sent</b>6 suppliers · replies by Friday</div></div>
+        <span class="av av-float a3">IV</span>
+        <svg class="star s-hero" viewBox="0 0 100 100"><use href="#star"/></svg>
+        <svg class="spark s-hero2" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec reveal" aria-labelledby="st-h">
+    <div class="sh"><div><h2 class="h2" id="st-h">Trusted by buying teams that run lean</h2><p>How mid-sized companies cut the time from a request to a signed purchase order.</p></div><a class="link" href="#/customers">All customer stories</a></div>
+    <div class="switch">
+      <ul class="sw-list">
+        <li class="is-on"><button class="sw-btn" type="button" aria-expanded="true" aria-controls="sw-1" data-co="Marlow Pumps" data-tone="t1" data-fig="−71%" data-unit="time to purchase order">Sourcing cycles cut from 41 days to 12</button><div class="sw-body" id="sw-1"><p>Marlow Pumps moved 900 suppliers and every sourcing event into one workspace, and let the assistant draft the shortlists.</p><a class="link" href="#/story">Read the story</a></div></li>
+        <li><button class="sw-btn" type="button" aria-expanded="false" aria-controls="sw-2" data-co="Fernbeck Foods" data-tone="t3" data-fig="91%" data-unit="invoices matched automatically">Nine in ten invoices matched without a person</button><div class="sw-body" id="sw-2"><p>Fernbeck Foods set tolerances once. Now only price changes and short deliveries reach the finance team.</p><a class="link" href="#/customers">Read the story</a></div></li>
+        <li><button class="sw-btn" type="button" aria-expanded="false" aria-controls="sw-3" data-co="Calderon Health" data-tone="t2" data-fig="27" data-unit="clinics on one supplier list">Supplier audits tracked across 27 clinics</button><div class="sw-body" id="sw-3"><p>Certificates, insurance and audit dates live on each supplier record, with reminders 60 days before anything expires.</p><a class="link" href="#/customers">Read the story</a></div></li>
+        <li><button class="sw-btn" type="button" aria-expanded="false" aria-controls="sw-4" data-co="Ostlund Retail" data-tone="t4" data-fig="0" data-unit="renewals missed since go-live">No contract renewal missed in two years</button><div class="sw-body" id="sw-4"><p>Every contract carries its notice period, so renewals arrive with a draft and a price comparison, not a surprise.</p><a class="link" href="#/customers">Read the story</a></div></li>
+      </ul>
+      <figure class="scene t1 sw-media" id="sw-media" aria-hidden="true">
+        <div class="mini sw-fig"><small>Result</small><b id="sw-fig">−71%</b><span id="sw-unit">time to purchase order</span></div>
+        <span class="logo-chip"><svg viewBox="0 0 24 24"><use href="#lg1"/></svg><span id="sw-logo">Marlow Pumps</span></span>
+        <svg class="star s-sw" viewBox="0 0 100 100"><use href="#star"/></svg>
+      </figure>
+    </div>
+  </section>
+
+  <section class="wrap sec-b reveal" aria-labelledby="ws-h">
+    <h2 class="h2" id="ws-h">One workspace for every request, contract and invoice</h2>
+    <div class="ws">
+      <div class="scene t4 ws-art" role="img" aria-label="Product preview: contract renewals due this quarter">
+        <div class="ui-t">
+          <div class="ui-t-h"><span class="ico-tile"><svg class="icon"><use href="#i-sign"/></svg></span>Renewals this quarter<span class="chip">2 need you</span></div>
+          <div class="ui-row"><span>Packaging<small>Lyon · 3-year term</small></span><span>€184,000</span><span class="chip st-warn">In 21 days</span></div>
+          <div class="ui-row"><span>Castings<small>Porto · annual</small></span><span>€96,500</span><span class="chip st-ok">Renewed</span></div>
+          <div class="ui-row"><span>Freight<small>Rotterdam · rolling</small></span><span>€62,000</span><span class="chip">Drafting</span></div>
+        </div>
+        <svg class="star s-ws" viewBox="0 0 100 100"><use href="#star"/></svg>
+      </div>
+      <div class="ws-links">
+        <div><a class="link link-lg" href="#/platform">Explore the workspace</a><p>Requests, approvals, sourcing events, contracts and invoices share one record per supplier, so nobody asks for the same document twice.</p></div>
+        <div><a class="link link-lg" href="#/platform?tab=assistant">See the assistant at work</a><p>Ask for a shortlist, a renewal draft or a spend summary in plain words. It shows its sources and waits for your approval.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec-b reveal" aria-labelledby="ft-h">
+    <div class="sh"><div><h2 class="h2" id="ft-h">From request to payment, with less legwork</h2><p>Modules that work alone or together. Start with the one that hurts most.</p></div></div>
+    <ul class="cards2" data-render="cards"><li class="fc nojs"><div class="scene t1" aria-hidden="true"><div class="mini"><div class="mini-row"><span class="ico-tile"><svg class="icon"><use href="#i-doc"/></svg></span><div><b>6 bids received</b><small>Best price: Porto, 9 days lead</small></div></div></div></div><h3 class="h3">Sourcing</h3><p>Run requests for quotes in days and award with the reasons on record. Contracts, invoices and supplier risk work the same way.</p><a class="link" href="#/platform">See all modules</a></li></ul>
+  </section>
+
+  <section class="wrap sec-b reveal" aria-labelledby="nu-h">
+    <div class="sh"><div><h2 class="h2" id="nu-h">What changes in the first year</h2><p>Median results from customers who measured before and after going live.</p></div></div>
+    <dl class="stats"><div><dt>less time from request to purchase order</dt><dd>58%</dd></div><div><dt>of invoices matched without a person</dt><dd>87%</dd></div><div><dt>weeks from signature to the first live module</dt><dd>6</dd></div></dl>
+  </section>
+
+  <section class="wrap sec-b reveal" aria-labelledby="la-h">
+    <div class="sh"><div><h2 class="h2" id="la-h">Learn, compare, meet us</h2></div><a class="link" href="#/resources">All resources</a></div>
+    <ul class="g g3">
+      <li><a class="card" href="#/article"><div class="scene t2" aria-hidden="true"><span class="chip on-media">Guide</span></div><div class="card-b"><h3 class="h3">A buyer's guide to three-way matching</h3><p>What to match, what to tolerate, and when a person should look.</p><span class="link">Read the guide</span></div></a></li>
+      <li><a class="card" href="#/resources"><div class="scene t4" aria-hidden="true"><span class="chip on-media">Report</span></div><div class="card-b"><h3 class="h3">Mid-market procurement benchmark 2026</h3><p>How 400 buying teams spend their week, and what the fastest ones skip.</p><span class="link">Get the report</span></div></a></li>
+      <li><a class="card" href="#/events"><div class="scene t3" aria-hidden="true"><span class="chip on-media">Event</span></div><div class="card-b"><h3 class="h3">Procurement Live 2027, Lisbon and online</h3><p>Two days with buyers who run lean teams. 18 and 19 March 2027.</p><span class="link">See the programme</span></div></a></li>
+    </ul>
+  </section>
+
+  <section class="wrap sec-b reveal" aria-labelledby="cta-h">
+    <div class="cta"><div><h2 class="h2" id="cta-h">See your own spend in a 30-minute demo</h2><p>Bring one real purchase. We will run it through Kestrova with you and show where the time goes.</p></div><div class="btn-row"><a class="btn btn-light" href="#/demo">Book a demo</a><a class="btn btn-outline-light" href="#/trial">Start a free trial</a></div><svg class="star s-cta" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg><svg class="spark s-cta2" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spark"/></svg></div>
+  </section>
+</div>
+
+<!-- ===================== PLATFORM (tabs, editions, FAQ) ===================== -->
+<div data-view="platform">
+  <section class="phead"><div class="wrap"><ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Platform</li></ol><h1 class="h1">One platform from request to payment</h1><p class="lead">Five modules on one supplier record. Turn on what you need today and add the rest when you are ready.</p><div class="btn-row"><a class="btn btn-primary" href="#/demo">Book a demo</a><a class="btn btn-secondary" href="#/trial">Start a free trial</a></div></div><svg class="star s-ph" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg></section>
+  <section class="wrap sec-b" aria-label="Modules">
+    <div class="pills" role="tablist" aria-label="Modules" data-render="tabs"><button class="pill" type="button" role="tab" id="tab-sourcing" aria-controls="pn-sourcing" aria-selected="true">Sourcing</button></div>
+    <div data-render="panels"><div class="tpanel" role="tabpanel" id="pn-sourcing" aria-labelledby="tab-sourcing"><div><h2 class="h2">Quotes in days, not weeks</h2><p class="lead">Turn a request into a sourcing event in minutes and compare answers line by line. Contracts, invoices, supplier risk and the assistant work on the same supplier record.</p><a class="link" href="#/demo?topic=sourcing">Book a sourcing demo</a></div><div class="scene t1 tp-art" aria-hidden="true"><svg class="star s-ws" viewBox="0 0 100 100"><use href="#star"/></svg></div></div></div>
+  </section>
+
+  <section class="wrap sec-b" aria-labelledby="pl-h">
+    <div class="sh"><div><h2 class="h2" id="pl-h">Editions</h2><p>Every edition includes the assistant, unlimited suppliers and guided onboarding. You pay for people who approve or buy; requesters are free.</p></div>
+      <div class="pills" role="group" aria-label="Billing"><button class="pill" type="button" data-bill="m" aria-pressed="false">Monthly</button><button class="pill" type="button" data-bill="y" aria-pressed="true">Yearly, save 15%</button></div></div>
+    <ul class="g g3">
+      <li class="plan"><h3 class="h3">Team</h3><p>For a buying team of up to ten people.</p><p class="price"><span data-m="$14" data-y="$12">$12</span><small data-per>per user a month, billed yearly</small></p><ul class="checks"><li>Sourcing and invoices</li><li>Up to 3 approval steps</li><li>Email support</li></ul><a class="btn btn-secondary" href="#/trial">Start a free trial</a></li>
+      <li class="plan featured"><div class="plan-top"><h3 class="h3">Business</h3><span class="chip">Most chosen</span></div><p>For several sites, teams and approval paths.</p><p class="price"><span data-m="$28" data-y="$24">$24</span><small data-per>per user a month, billed yearly</small></p><ul class="checks"><li>All five modules</li><li>Unlimited approval rules</li><li>Accounting system connectors</li><li>Chat support, weekdays</li></ul><a class="btn btn-primary" href="#/trial">Start a free trial</a></li>
+      <li class="plan"><h3 class="h3">Enterprise</h3><p>For groups with many entities and their own controls.</p><p class="price">Custom<small>annual agreement</small></p><ul class="checks"><li>Everything in Business</li><li>Single sign-on and audit exports</li><li>A named success manager</li></ul><a class="btn btn-secondary" href="#/demo?topic=pricing">Talk to sales</a></li>
+    </ul>
+  </section>
+
+  <section class="wrap sec-b" aria-labelledby="faq-h">
+    <div class="sh"><div><h2 class="h2" id="faq-h">Questions buyers ask first</h2></div></div>
+    <div class="acc">
+      <details open><summary>How long does it take to go live?</summary><p>Most teams run their first module within six weeks. We import your suppliers and open contracts, connect your accounting system and train the people who approve.</p></details>
+      <details><summary>Do we have to replace our accounting system?</summary><p>No. Approved orders and matched invoices flow into the accounting system you already use, and payments stay where they are today.</p></details>
+      <details><summary>What can the assistant do without us?</summary><p>It can search, compare and draft. Anything that leaves the company, such as a quote request, an award or a renewal, waits for a person with the right permission.</p></details>
+      <details><summary>Where is our data stored?</summary><p>You choose the region when you sign up. Data stays in that region, and you can export everything at any time.</p></details>
+      <details><summary>Can suppliers use it too?</summary><p>Yes, free of charge. Suppliers answer quotes, upload documents and check payment status through a simple portal.</p></details>
+    </div>
+  </section>
+
+</div>
+
+<!-- ===================== CUSTOMERS (filters) ===================== -->
+<div data-view="customers">
+  <section class="phead"><div class="wrap"><ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Customers</li></ol><h1 class="h1">Customer stories</h1><p class="lead">Mid-sized companies in six industries, each measured against the way they worked before.</p></div><svg class="star s-ph" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg></section>
+  <section class="wrap sec-b" aria-label="Customer stories">
+    <div class="toolbar">
+      <div class="pills" role="group" aria-label="Industry"><button class="pill" type="button" data-ind="all" aria-pressed="true">All</button><button class="pill" type="button" data-ind="manufacturing" aria-pressed="false">Manufacturing</button><button class="pill" type="button" data-ind="food" aria-pressed="false">Food</button><button class="pill" type="button" data-ind="health" aria-pressed="false">Healthcare</button><button class="pill" type="button" data-ind="retail" aria-pressed="false">Retail</button><button class="pill" type="button" data-ind="logistics" aria-pressed="false">Logistics</button><button class="pill" type="button" data-ind="public" aria-pressed="false">Public sector</button></div>
+      <div class="fld"><label for="c-reg">Region</label><div class="pick"><select class="in" id="c-reg"><option value="all">All regions</option><option value="eu">Europe</option><option value="apac">Asia Pacific</option><option value="na">North America</option></select></div></div>
+      <p class="count" id="c-count" aria-live="polite">8 stories</p>
+    </div>
+    <ul class="g g3" id="c-list" data-render="stories"><li class="nojs"><a class="card" href="#/story"><div class="scene t1" aria-hidden="true"><span class="logo-chip"><svg viewBox="0 0 24 24"><use href="#lg1"/></svg>Marlow Pumps</span></div><div class="card-b"><span class="chip">Manufacturing · Europe</span><h2 class="h3">Sourcing cycles cut from 41 days to 12</h2><p>And seven more stories from food, healthcare, retail, logistics and the public sector.</p><span class="link">Read the story</span></div></a></li></ul>
+    <div class="empty" id="c-empty" hidden><p>No story matches both filters yet.</p><button class="btn btn-ghost" type="button" data-reset="customers">Clear filters</button></div>
+  </section>
+  <section class="wrap sec-b" aria-label="Customer quote">
+    <figure class="quote"><blockquote>“Our buyers stopped chasing paperwork. They spend the week talking to suppliers again.”</blockquote><figcaption><span class="av a3">HP</span><span>Head of procurement, Fernbeck Foods<br>(placeholder quote)</span></figcaption></figure>
+  </section>
+</div>
+
+<!-- ===================== STORY ===================== -->
+<div data-view="story">
+  <article>
+    <header class="phead"><div class="wrap"><ol class="crumbs"><li><a href="#/">Home</a></li><li><a href="#/customers">Customers</a></li><li aria-current="page">Marlow Pumps</li></ol><span class="logo-chip static"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#lg1"/></svg>Marlow Pumps</span><h1 class="h1">Marlow Pumps cut sourcing cycles from 41 days to 12</h1><p class="lead">A pump maker with three plants and a buying team of seven wanted to stop losing orders to slow quotes.</p></div></header>
+    <div class="wrap">
+      <dl class="stats" style="margin-bottom:clamp(40px,6vw,72px)"><div><dt>days from request to purchase order</dt><dd>12</dd></div><div><dt>suppliers on one record</dt><dd>900</dd></div><div><dt>weeks to go live</dt><dd>5</dd></div></dl>
+      <div class="doc rev">
+        <div class="prose">
+          <h2 id="s-challenge">The challenge</h2>
+          <p>Quotes were requested by email from whichever suppliers a buyer remembered, copied into spreadsheets and compared by hand. One sourcing round took six weeks.</p>
+          <h2 id="s-change">What changed</h2>
+          <ul><li>All 900 suppliers were imported with their categories, certificates and past prices.</li><li>Every request now becomes a sourcing event from a template, sent to a shortlist the assistant drafts.</li><li>Bids are compared on one screen, and awards go to the plant manager for approval in two clicks.</li></ul>
+          <figure><div class="scene t3" aria-hidden="true"><div class="mini"><div class="mini-row"><span class="ico-tile"><svg class="icon"><use href="#i-chart"/></svg></span><div><b>Average sourcing cycle</b><small>41 days → 12 days</small></div></div></div></div><figcaption>Placeholder for a photograph: the buying team at the main plant.</figcaption></figure>
+          <h2 id="s-result">The result</h2>
+          <p>Within a quarter, the average cycle fell to twelve days, and buyers spend their time negotiating instead of chasing.</p>
+          <blockquote><p>We used to win the order and then lose the margin waiting for quotes. That gap is gone.</p><cite>Purchasing director, Marlow Pumps (placeholder quote)</cite></blockquote>
+        </div>
+        <aside class="aside" aria-labelledby="ag-h"><h2 class="label" id="ag-h">At a glance</h2><dl class="facts"><div><dt>Industry</dt><dd>Manufacturing</dd></div><div><dt>Region</dt><dd>Europe, 3 plants</dd></div><div><dt>Team</dt><dd>7 buyers, 40 requesters</dd></div><div><dt>Modules</dt><dd><span class="chip">Sourcing</span><span class="chip">Contracts</span><span class="chip">Assistant</span></dd></div></dl><a class="btn btn-primary" href="#/demo?topic=sourcing">Plan a rollout like this</a></aside>
+      </div>
+    </div>
+  </article>
+  <section class="wrap sec" aria-labelledby="nx-h"><h2 class="label" id="nx-h">Next story</h2><a class="card card-row" href="#/customers"><div class="scene t3" aria-hidden="true"><span class="logo-chip"><svg viewBox="0 0 24 24"><use href="#lg2"/></svg>Fernbeck Foods</span></div><div class="card-b"><span class="chip">Food · Europe</span><h3 class="h2">Nine in ten invoices matched without a person</h3><span class="link">Read the story</span></div></a></section>
+</div>
+
+<!-- ===================== RESOURCES (filter and search) ===================== -->
+<div data-view="resources">
+  <section class="phead"><div class="wrap"><ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Resources</li></ol><h1 class="h1">Resources</h1><p class="lead">Guides, reports and recorded webinars for people who buy for a living, written with the teams who use Kestrova every day.</p></div><svg class="star s-ph" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg></section>
+  <section class="wrap sec-b" aria-label="Featured">
+    <a class="card card-row" href="#/article"><div class="scene t1" aria-hidden="true"><div class="mini"><div class="mini-row"><span class="ico-tile"><svg class="icon"><use href="#i-receipt"/></svg></span><div><b>Order · receipt · invoice</b><small>Within 2% tolerance</small></div><span class="chip st-ok">Matched</span></div></div></div><div class="card-b"><span class="chip">Guide · 11 min</span><h2 class="h2">A buyer's guide to three-way matching</h2><p>What to match, which tolerances to set, and when a person should look before an invoice is paid.</p><span class="link">Read the guide</span></div></a>
+  </section>
+  <section class="wrap sec-b" aria-label="All resources">
+    <div class="toolbar">
+      <div class="pills" role="group" aria-label="Type"><button class="pill" type="button" data-type="all" aria-pressed="true">All</button><button class="pill" type="button" data-type="guide" aria-pressed="false">Guides</button><button class="pill" type="button" data-type="report" aria-pressed="false">Reports</button><button class="pill" type="button" data-type="webinar" aria-pressed="false">Webinars</button><button class="pill" type="button" data-type="article" aria-pressed="false">Articles</button></div>
+      <div class="search"><label class="sr-only" for="r-q">Search resources</label><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input class="in" id="r-q" type="search" placeholder="Search resources" autocomplete="off"></div>
+      <p class="count" id="r-count" aria-live="polite">9 resources</p>
+    </div>
+    <ul class="g g3" id="r-list" data-render="posts"><li class="nojs"><a class="card" href="#/article"><div class="scene t2" aria-hidden="true"><span class="chip on-media">Guide</span></div><div class="card-b"><h2 class="h3">A buyer's guide to three-way matching</h2><p>Plus eight more guides, reports, webinars and articles.</p><span class="link">Read more</span></div></a></li></ul>
+    <div class="empty" id="r-empty" hidden><p>Nothing matches that search.</p><button class="btn btn-ghost" type="button" data-reset="resources">Show all resources</button></div>
+  </section>
+</div>
+
+<!-- ===================== ARTICLE ===================== -->
+<div data-view="article">
+  <article>
+    <header class="phead"><div class="wrap"><ol class="crumbs"><li><a href="#/">Home</a></li><li><a href="#/resources">Resources</a></li><li aria-current="page">Guide</li></ol><span class="chip">Guide · Invoices</span><h1 class="h1" style="margin-top:16px">A buyer's guide to three-way matching</h1><p class="lead">What to match, which tolerances to set, and when a person should look before an invoice is paid.</p><div class="byline"><span class="av a2">AO</span><div>Amara Okoye<small>Head of customer success · 12 November 2026 · 11 min read</small></div></div></div></header>
+    <div class="wrap sec-b">
+      <div class="scene t1 art-hero" aria-hidden="true"><div class="mini"><div class="mini-row"><span class="ico-tile"><svg class="icon"><use href="#i-receipt"/></svg></span><div><b>Invoice 7710</b><small>Order 4471 · goods received 9 Nov</small></div><span class="chip st-ok">Matched</span></div></div><svg class="star s-ws" viewBox="0 0 100 100"><use href="#star"/></svg></div>
+      <div class="doc">
+        <nav class="toc" aria-label="On this page"><h2 class="label">On this page</h2><a href="#a-what">What it is</a><a href="#a-match">What to compare</a><a href="#a-tol">Tolerances</a><a href="#a-person">When a person looks</a></nav>
+        <div class="prose">
+          <h2 id="a-what">What three-way matching is</h2>
+          <p>Before an invoice is paid, three documents are compared: the purchase order that says what you agreed to buy, the goods receipt that says what arrived, and the invoice that says what the supplier wants to be paid. When all three agree, the invoice can be paid without anyone opening it.</p>
+          <h2 id="a-match">What to compare</h2>
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th scope="col">Field</th><th scope="col">Order</th><th scope="col">Receipt</th><th scope="col">Invoice</th></tr></thead><tbody><tr><td>Quantity</td><td>Yes</td><td>Yes</td><td>Yes</td></tr><tr><td>Unit price</td><td>Yes</td><td>No</td><td>Yes</td></tr><tr><td>Delivery date</td><td>Yes</td><td>Yes</td><td>No</td></tr><tr><td>Tax and freight</td><td>Sometimes</td><td>No</td><td>Yes</td></tr></tbody></table></div>
+          <h2 id="a-tol">Tolerances that keep the queue short</h2>
+          <ul><li>A price tolerance of one to two percent absorbs rounding and currency moves.</li><li>A quantity tolerance only where partial deliveries are normal, such as bulk materials.</li><li>No tolerance at all for new suppliers in their first three months.</li></ul>
+          <blockquote><p>Set tolerances by category, not by habit. Freight is not the same risk as packaging.</p><cite>Amara Okoye</cite></blockquote>
+          <h2 id="a-person">When a person should look</h2>
+          <p>Send an invoice to a person when the price changed, when goods were short, when bank details changed recently, or when the supplier is new. Everything else can flow straight to payment on the agreed terms.</p>
+          <div class="callout"><div><b>Try it on your own invoices</b><p>Upload last month's invoices and see how many would match.</p></div><a class="btn btn-primary" href="#/trial">Start a free trial</a></div>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+
+<!-- ===================== EVENTS (registration) ===================== -->
+<div data-view="events">
+  <section class="phead"><div class="wrap"><ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Events</li></ol><h1 class="h1">Events and webinars</h1><p class="lead">Short webinars on one problem at a time, small roundtables in our offices, and one flagship event a year.</p></div><svg class="star s-ph" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg></section>
+  <section class="wrap sec-b" aria-labelledby="sm-h">
+    <div class="cta"><div><span class="chip">Flagship event</span><h2 class="h2" id="sm-h">Procurement Live 2027</h2><p>Two days with buyers who run lean teams: real rollouts, honest numbers and a hands-on lab for the assistant.</p><ul class="ev-facts"><li><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg>18 and 19 March 2027</li><li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Lisbon and online</li><li><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg>Free for customers</li></ul></div><div class="btn-row"><button class="btn btn-light" type="button" data-ev="summit">Register</button><a class="btn btn-outline-light" href="#/resources">Last year's talks</a></div><svg class="star s-cta" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg></div>
+  </section>
+  <section class="wrap sec-b" aria-labelledby="up-h">
+    <div class="sh"><div><h2 class="h2" id="up-h">Webinars and roundtables</h2></div></div>
+    <ul class="evs">
+      <li class="ev"><span class="date">Dec<b>09</b></span><div><span class="chip">Online · 45 min</span><h3 class="h3">Invoice matching in an afternoon</h3><p>Set tolerances, connect your inbox and watch the queue shrink.</p></div><button class="btn btn-secondary btn-sm" type="button" data-ev="matching">Register</button></li>
+      <li class="ev"><span class="date">Jan<b>14</b></span><div><span class="chip">Online · 45 min</span><h3 class="h3">Supplier risk for teams of one</h3><p>The five documents worth tracking, and the reminders that make it painless.</p></div><button class="btn btn-secondary btn-sm" type="button" data-ev="risk">Register</button></li>
+      <li class="ev"><span class="date">Feb<b>04</b></span><div><span class="chip">In person · Singapore</span><h3 class="h3">Roundtable: buying across Asia Pacific</h3><p>Twelve heads of procurement, one long table and no slides.</p></div><button class="btn btn-secondary btn-sm" type="button" data-ev="roundtable">Register</button></li>
+    </ul>
+  </section>
+  <section class="wrap sec-b" id="register" aria-labelledby="rg-h">
+    <div class="split2 rev">
+      <div><h2 class="h2" id="rg-h">Register</h2><p class="lead" style="margin-top:12px">Pick an event and we will send a calendar invitation and the joining details. Recordings go to everyone who registers.</p></div>
+      <div class="fcard">
+        <form class="form" data-form="event" novalidate>
+          <div class="fld full"><label for="e-event">Event</label><div class="pick"><select class="in" id="e-event" name="event" required aria-describedby="e-event-err"><option value="">Choose an event</option><option value="summit">Procurement Live 2027, 18 and 19 March</option><option value="matching">Invoice matching in an afternoon, 9 December</option><option value="risk">Supplier risk for teams of one, 14 January</option><option value="roundtable">Roundtable, Singapore, 4 February</option></select></div><span class="err" id="e-event-err"></span></div>
+          <div class="fld"><label for="e-name">Full name</label><input class="in" id="e-name" name="name" autocomplete="name" required aria-describedby="e-name-err"><span class="err" id="e-name-err"></span></div>
+          <div class="fld"><label for="e-email">Work email</label><input class="in" id="e-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email-err"><span class="err" id="e-email-err"></span></div>
+          <div class="fld full"><label for="e-co">Company</label><input class="in" id="e-co" name="company" autocomplete="organization" required aria-describedby="e-co-err"><span class="err" id="e-co-err"></span></div>
+          <fieldset class="fld full"><legend>How will you join?</legend><div class="opts"><label class="opt"><input type="radio" name="join" value="person" required aria-describedby="e-join-err"><span>In person</span></label><label class="opt"><input type="radio" name="join" value="online" aria-describedby="e-join-err"><span>Online</span></label></div><span class="err" id="e-join-err"></span></fieldset>
+          <div class="fld full"><label class="check"><input type="checkbox" name="consent" required aria-describedby="e-consent-err">Send me the recording and slides by email.</label><span class="err" id="e-consent-err"></span></div>
+          <button class="btn btn-primary" type="submit">Register</button>
+        </form>
+        <div class="ok" data-success="event" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-ok"/></svg><div><h3>You are registered</h3><p>The invitation is on its way. Add it to your calendar so the reminder reaches you.</p><button class="btn btn-ghost btn-sm" type="button" data-again>Register for another event</button></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== COMPANY (about, values, timeline, people, offices) ===================== -->
+<div data-view="company">
+  <section class="phead"><div class="wrap"><ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Company</li></ol><h1 class="h1">Software for companies that buy like big ones, with teams like small ones</h1><p class="lead">Kestrova was started by two buyers who spent more time chasing documents than suppliers. We build the tool they wanted.</p></div><svg class="star s-ph" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg></section>
+  <section class="wrap sec-b" aria-labelledby="val-h">
+    <div class="sh"><div><h2 class="h2" id="val-h">How we build</h2></div></div>
+    <ul class="g g3">
+      <li class="vcard"><span class="ico-tile"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg></span><h3 class="h3">Ask before acting</h3><p>Automation drafts and suggests. People decide anything that leaves the company.</p></li>
+      <li class="vcard"><span class="ico-tile"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg></span><h3 class="h3">Show the source</h3><p>Every number links to the order, contract or invoice it came from.</p></li>
+      <li class="vcard"><span class="ico-tile"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg></span><h3 class="h3">Small teams first</h3><p>If a buying team of three can run it without a consultant, everyone can.</p></li>
+    </ul>
+  </section>
+  <section class="wrap sec-b" aria-labelledby="tl-h">
+    <div class="sh"><div><h2 class="h2" id="tl-h">Our story so far</h2></div></div>
+    <ol class="tl">
+      <li><b>2017</b><p>Founded in Lisbon by two former buyers, with one customer and a shared office.</p></li>
+      <li><b>2020</b><p>Invoices and contracts join sourcing; the hundredth customer goes live.</p></li>
+      <li><b>2023</b><p>Offices open in Singapore and Toronto to serve customers in their own hours.</p></li>
+      <li><b>2026</b><p>The assistant ships in every edition, with approvals built in from day one.</p></li>
+    </ol>
+  </section>
+  <section class="wrap sec-b" aria-labelledby="team-h">
+    <div class="sh"><div><h2 class="h2" id="team-h">Leadership</h2></div></div>
+    <ul class="people" data-render="team"><li class="person nojs"><span class="av" aria-hidden="true">IV</span><div><h3 class="h3">Ines Varga</h3><p>Chief executive, Lisbon</p></div></li></ul>
+  </section>
+  <section class="wrap sec-b" aria-labelledby="off-h">
+    <div class="sh"><div><h2 class="h2" id="off-h">Offices</h2></div><a class="link" href="#/demo?topic=careers">We are hiring in all three</a></div>
+    <ul class="g g3">
+      <li class="vcard"><span class="ico-tile"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg></span><h3 class="h3">Lisbon</h3><p>Rua das Flores 18, 1200-195 Lisbon, Portugal</p></li>
+      <li class="vcard"><span class="ico-tile"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg></span><h3 class="h3">Singapore</h3><p>12 Marina View, #20-01, Singapore 018961</p></li>
+      <li class="vcard"><span class="ico-tile"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg></span><h3 class="h3">Toronto</h3><p>220 King Street West, Toronto, ON M5H 1K4, Canada</p></li>
+    </ul>
+  </section>
+</div>
+
+<!-- ===================== DEMO (contact sales) ===================== -->
+<div data-view="demo">
+  <section class="phead"><div class="wrap"><ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Book a demo</li></ol><h1 class="h1">Book a demo</h1><p class="lead">Thirty minutes with a product specialist, built around one purchase your team made recently.</p></div><svg class="star s-ph" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg></section>
+  <section class="wrap sec-b" aria-label="Demo request">
+    <div class="split2">
+      <div class="fcard">
+        <form class="form" data-form="contact" novalidate>
+          <div class="fld"><label for="d-first">First name</label><input class="in" id="d-first" name="first" autocomplete="given-name" required aria-describedby="d-first-err"><span class="err" id="d-first-err"></span></div>
+          <div class="fld"><label for="d-last">Last name</label><input class="in" id="d-last" name="last" autocomplete="family-name" required aria-describedby="d-last-err"><span class="err" id="d-last-err"></span></div>
+          <div class="fld"><label for="d-email">Work email</label><input class="in" id="d-email" name="email" type="email" autocomplete="email" required aria-describedby="d-email-err"><span class="err" id="d-email-err"></span></div>
+          <div class="fld"><label for="d-co">Company</label><input class="in" id="d-co" name="company" autocomplete="organization" required aria-describedby="d-co-err"><span class="err" id="d-co-err"></span></div>
+          <div class="fld"><label for="d-size">Company size</label><div class="pick"><select class="in" id="d-size" name="size" required aria-describedby="d-size-err"><option value="">Choose one</option><option>Under 100 people</option><option>100 to 499</option><option>500 to 1,999</option><option>2,000 or more</option></select></div><span class="err" id="d-size-err"></span></div>
+          <div class="fld"><label for="d-topic">Interested in</label><div class="pick"><select class="in" id="d-topic" name="topic" aria-describedby="d-topic-err"><option value="all">The whole platform</option><option value="sourcing">Sourcing</option><option value="contracts">Contracts</option><option value="invoices">Invoices</option><option value="risk">Supplier risk</option><option value="assistant">The assistant</option><option value="pricing">Pricing and Enterprise</option><option value="careers">Working at Kestrova</option></select></div><span class="err" id="d-topic-err"></span></div>
+          <div class="fld full"><label for="d-msg">What should we show you?</label><textarea class="in" id="d-msg" name="message" minlength="10" required aria-describedby="d-msg-err" placeholder="For example: how a request for quotes works with our approval rules"></textarea><span class="err" id="d-msg-err"></span></div>
+          <div class="fld full"><label class="check"><input type="checkbox" name="consent" required aria-describedby="d-consent-err">I agree that Kestrova may contact me about this request.</label><span class="err" id="d-consent-err"></span></div>
+          <button class="btn btn-primary" type="submit">Request a demo</button>
+        </form>
+        <div class="ok" data-success="contact" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-ok"/></svg><div><h2>Thank you, we have your request</h2><p>A specialist will email you within one working day to pick a time.</p><button class="btn btn-ghost btn-sm" type="button" data-again>Send another request</button></div></div>
+      </div>
+      <aside>
+        <h2 class="h3" style="margin-bottom:20px">What happens next</h2>
+        <ol class="steps"><li><b>We reply within a working day</b><span>with two or three times that suit your region.</span></li><li><b>You bring one real purchase</b><span>and we run it through Kestrova together.</span></li><li><b>You get a written plan</b><span>with modules, timeline and a price.</span></li></ol>
+        <h2 class="h3" style="margin-bottom:8px">Prefer to talk now?</h2>
+        <ul class="lines"><li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><a class="text-link" href="mailto:sales@kestrova.example">sales@kestrova.example</a></li><li><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>Chat on weekdays, 8:00 to 20:00 local time</li></ul>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== TRIAL (sign up) ===================== -->
+<div data-view="trial">
+  <section class="phead"><div class="wrap"><ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Free trial</li></ol><h1 class="h1">Start your free trial</h1><p class="lead">Thirty days of the Business edition for your whole team. No card needed, and nothing to install.</p></div><svg class="star s-ph" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg></section>
+  <section class="wrap sec-b" aria-label="Create a workspace">
+    <div class="split2">
+      <div class="fcard">
+        <form class="form" data-form="signup" novalidate>
+          <div class="fld full"><label for="t-email">Work email</label><input class="in" id="t-email" name="email" type="email" autocomplete="email" required aria-describedby="t-email-err"><span class="err" id="t-email-err"></span></div>
+          <div class="fld"><label for="t-name">Full name</label><input class="in" id="t-name" name="name" autocomplete="name" required aria-describedby="t-name-err"><span class="err" id="t-name-err"></span></div>
+          <div class="fld"><label for="t-co">Company</label><input class="in" id="t-co" name="company" autocomplete="organization" required aria-describedby="t-co-err"><span class="err" id="t-co-err"></span></div>
+          <fieldset class="fld full"><legend>How many people buy or approve?</legend><div class="opts"><label class="opt"><input type="radio" name="team" value="1-5" required aria-describedby="t-team-err"><span>1 to 5</span></label><label class="opt"><input type="radio" name="team" value="6-20" aria-describedby="t-team-err"><span>6 to 20</span></label><label class="opt"><input type="radio" name="team" value="21-100" aria-describedby="t-team-err"><span>21 to 100</span></label><label class="opt"><input type="radio" name="team" value="100+" aria-describedby="t-team-err"><span>More than 100</span></label></div><span class="err" id="t-team-err"></span></fieldset>
+          <div class="fld full"><label class="check"><input type="checkbox" name="terms" required aria-describedby="t-terms-err"><span>I accept the <a class="text-link" href="#terms">terms of service</a>.</span></label><span class="err" id="t-terms-err"></span></div>
+          <button class="btn btn-primary" type="submit">Create my workspace</button>
+        </form>
+        <div class="ok" data-success="signup" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-ok"/></svg><div><h2>Check your inbox</h2><p>We sent a link to open your workspace. It works for 24 hours.</p><button class="btn btn-ghost btn-sm" type="button" data-again>Use a different email</button></div></div>
+      </div>
+      <aside class="aside" aria-labelledby="inc-h">
+        <h2 class="label" id="inc-h">Included in your trial</h2>
+        <ul class="checks"><li>All five modules and the assistant</li><li>Up to 25 people, unlimited suppliers</li><li>Sample data, or import your own</li></ul>
+        <a class="link" href="#/demo">Want to see it first? Book a demo</a>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="legal">
+  <section class="phead"><div class="wrap"><ol class="crumbs"><li><a href="#/">Home</a></li><li aria-current="page">Privacy and terms</li></ol><h1 class="h1">Privacy and terms</h1><p class="lead">Last updated 1 November 2026. Placeholder text: replace it with your own policies, reviewed by a lawyer.</p></div></section>
+  <section class="wrap sec-b" aria-label="Policies">
+    <div class="doc">
+      <nav class="toc" aria-label="On this page"><h2 class="label">On this page</h2><a href="#privacy">Privacy</a><a href="#data">Your data</a><a href="#terms">Terms of service</a><a href="#contact-legal">Contact</a></nav>
+      <div class="prose">
+        <h2 id="privacy">Privacy</h2>
+        <p>We use the details you send through our forms to answer your request, run your trial or register you for an event. We do not sell personal data.</p>
+        <h2 id="data">Your data</h2>
+        <ul><li>Product data stays in the region you chose at sign-up.</li><li>You can export or delete your workspace at any time.</li></ul>
+        <h2 id="terms">Terms of service</h2>
+        <p>Subscriptions renew for the period you chose unless cancelled before the renewal date. Fees are charged in advance.</p>
+        <h2 id="contact-legal">Contact</h2>
+        <p>Questions about privacy or these terms: <a href="mailto:privacy@kestrova.example">privacy@kestrova.example</a>.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="wrap sec" style="text-align:center">
+    <svg class="star" viewBox="0 0 100 100" aria-hidden="true" style="position:static;width:120px;margin:0 auto 24px"><use href="#star"/></svg>
+    <h1 class="h1" style="margin-inline:auto">This page is not in the catalogue</h1>
+    <p class="lead" style="margin:20px auto 32px">The link may be old, or the page has moved. These are the pages people look for most.</p>
+    <div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="#/">Go to the home page</a><a class="btn btn-secondary" href="#/platform">See the platform</a></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-top">
+      <div><a class="brand" href="#/" aria-label="Kestrova home"><svg aria-hidden="true"><use href="#mark"/></svg>Kestrova</a><p class="ft-intro">Procurement software for mid-sized companies, from Lisbon, Singapore and Toronto.</p></div>
+      <div>
+        <form data-form="newsletter" novalidate>
+          <div class="fld"><label for="n-email">The buyer's brief, once a month</label><div class="news-row"><input class="in" id="n-email" name="email" type="email" autocomplete="email" placeholder="Work email" required aria-describedby="n-email-err"><button class="btn btn-primary" type="submit">Subscribe</button></div><span class="err" id="n-email-err"></span></div>
+        </form>
+        <div class="ok" data-success="newsletter" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-ok"/></svg><div><h3>You are subscribed</h3><p>The next brief arrives on the first Tuesday of the month.</p></div></div>
+      </div>
+    </div>
+    <div class="ft-cols">
+      <div><h2>Platform</h2><ul><li><a href="#/platform?tab=sourcing">Sourcing</a></li><li><a href="#/platform?tab=contracts">Contracts</a></li><li><a href="#/platform?tab=invoices">Invoices</a></li><li><a href="#/platform?tab=risk">Supplier risk</a></li><li><a href="#/platform?tab=assistant">Assistant</a></li></ul></div>
+      <div><h2>Customers</h2><ul><li><a href="#/customers">Stories</a></li><li><a href="#/story">Marlow Pumps</a></li><li><a href="#/events">Events</a></li></ul></div>
+      <div><h2>Learn</h2><ul><li><a href="#/resources">Resources</a></li><li><a href="#/article">Matching guide</a></li><li><a href="#/platform">Editions and prices</a></li></ul></div>
+      <div><h2>Company</h2><ul><li><a href="#/company">About us</a></li><li><a href="#/demo">Contact sales</a></li><li><a href="#/trial">Free trial</a></li><li><a href="mailto:hello@kestrova.example">hello@kestrova.example</a></li></ul></div>
+    </div>
+    <div class="ft-bot"><span>© 2026 Kestrova Software, Lda.</span><ul><li><a href="#/legal">Privacy</a></li><li><a href="#terms">Terms</a></li><li><a href="#/company">Offices</a></li></ul></div>
+  </div>
+</footer>
+
+<a class="fab" href="#/demo"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><span>Talk to us</span></a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="sg" x1="0.12" y1="0.08" x2="0.88" y2="0.95"><stop offset="0" stop-color="#f6f0ff"/><stop offset="0.45" stop-color="#cdb6f6"/><stop offset="1" stop-color="#7656d8"/></linearGradient>
+    <radialGradient id="sh" cx="0.36" cy="0.3" r="0.4"><stop offset="0" stop-color="#fff" stop-opacity="0.95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9a5be0"/><stop offset="1" stop-color="#2f62e0"/></linearGradient>
+    <symbol id="star" viewBox="0 0 100 100"><path d="M50 6C53 35 65 47 94 50C65 53 53 65 50 94C47 65 35 53 6 50C35 47 47 35 50 6Z" fill="url(#sg)" stroke="url(#sg)" stroke-width="7" stroke-linejoin="round"/><path d="M50 6C53 35 65 47 94 50C65 53 53 65 50 94C47 65 35 53 6 50C35 47 47 35 50 6Z" fill="url(#sh)"/></symbol>
+    <symbol id="mark" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="url(#mg)"/><path d="M16 6c.8 6.2 3.8 9.2 10 10-6.2.8-9.2 3.8-10 10-.8-6.2-3.8-9.2-10-10 6.2-.8 9.2-3.8 10-10z" fill="#fff"/></symbol>
+    <symbol id="lg1" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10H12z"/></symbol>
+    <symbol id="lg2" viewBox="0 0 24 24"><path d="M12 2l10 19H2z"/></symbol>
+    <symbol id="lg3" viewBox="0 0 24 24"><path d="M12 2l8.7 5v10L12 22l-8.7-5V7z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3c.8 5.4 3.6 8.2 9 9-5.4.8-8.2 3.6-9 9-.8-5.4-3.6-8.2-9-9 5.4-.8 8.2-3.6 9-9z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-7l-5 4v-4H6a2 2 0 0 1-2-2z"/><path d="M8 9h8M8 12.5h5"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5z"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></symbol>
+    <symbol id="i-sign" viewBox="0 0 24 24"><path d="M4 20h16M6 16l9.5-9.5a2.1 2.1 0 0 1 3 3L9 19H6z"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16M7 16v-5M12 16V7M17 16v-8"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2 .7 3 2.8 3 6"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.2 10.8l7.6-3.6M8.2 13.2l7.6 3.6"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks one ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("kestrova-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("kestrova-theme", next);
+  });
+
+  /* ---------- Data: replace with the brief's own; the lists below are drawn from it ---------- */
+  const INDUSTRY = { manufacturing: "Manufacturing", food: "Food", health: "Healthcare", retail: "Retail", logistics: "Logistics", public: "Public sector" };
+  const REGION = { eu: "Europe", apac: "Asia Pacific", na: "North America" };
+  const STORIES = [
+    { co: "Marlow Pumps", ind: "manufacturing", reg: "eu", tone: "t1", title: "Sourcing cycles cut from 41 days to 12", fig: "−71%", unit: "time to purchase order" },
+    { co: "Fernbeck Foods", ind: "food", reg: "eu", tone: "t3", title: "Nine in ten invoices matched without a person", fig: "91%", unit: "matched automatically" },
+    { co: "Calderon Health", ind: "health", reg: "na", tone: "t2", title: "Supplier audits tracked across 27 clinics", fig: "27", unit: "clinics, one supplier list" },
+    { co: "Ostlund Retail", ind: "retail", reg: "eu", tone: "t4", title: "No contract renewal missed in two years", fig: "0", unit: "missed renewals" },
+    { co: "Pellam Logistics", ind: "logistics", reg: "apac", tone: "t1", title: "Spend under management up from 52% to 88%", fig: "88%", unit: "spend under management" },
+    { co: "Riverby Council", ind: "public", reg: "eu", tone: "t2", title: "Tenders published in half the time", fig: "−50%", unit: "time to publish a tender" },
+    { co: "Tamsin Labs", ind: "health", reg: "apac", tone: "t3", title: "One approved supplier list for four sites", fig: "4", unit: "sites, one list" },
+    { co: "Greyhaven Tools", ind: "manufacturing", reg: "na", tone: "t4", title: "Payment terms extended by 14 days on average", fig: "+14", unit: "days on payment terms" },
+  ];
+  const TYPE = { guide: "Guide", report: "Report", webinar: "Webinar", article: "Article" };
+  const POSTS = [
+    { title: "A buyer's guide to three-way matching", type: "guide", meta: "11 min read", tone: "t2" },
+    { title: "Mid-market procurement benchmark 2026", type: "report", meta: "24 pages", tone: "t4" },
+    { title: "Supplier risk for teams of one", type: "webinar", meta: "42 min recording", tone: "t1" },
+    { title: "Why approval chains slow down, and how to shorten them", type: "article", meta: "6 min read", tone: "t3" },
+    { title: "Writing a sourcing brief suppliers can answer", type: "guide", meta: "9 min read", tone: "t1" },
+    { title: "What an assistant should never approve on its own", type: "article", meta: "7 min read", tone: "t2" },
+    { title: "Contract renewals: a 90-day calendar", type: "guide", meta: "8 min read", tone: "t3" },
+    { title: "Moving off spreadsheets in one quarter", type: "webinar", meta: "38 min recording", tone: "t4" },
+    { title: "Payment terms that keep suppliers on side", type: "article", meta: "5 min read", tone: "t1" },
+  ];
+  const TEAM = [
+    { name: "Ines Varga", role: "Chief executive", city: "Lisbon" },
+    { name: "Theo Lindqvist", role: "Chief technology officer", city: "Lisbon" },
+    { name: "Amara Okoye", role: "Head of customer success", city: "Toronto" },
+    { name: "Kenji Mori", role: "Head of product", city: "Singapore" },
+    { name: "Lucía Ferreira", role: "Chief financial officer", city: "Lisbon" },
+    { name: "Noor Rahman", role: "Head of design", city: "Singapore" },
+  ];
+  /* Modules: each entry is one platform tab and panel; the first four are also the home cards. ui rows: [icon, title, detail, chip, chip tone] */
+  const MODULES = [
+    { id: "sourcing", name: "Sourcing", tone: "t1", title: "Quotes in days, not weeks", lead: "Turn a request into a sourcing event in minutes and compare answers line by line.", card: "Run requests for quotes in days, compare bids side by side and award with the reasons on record.", points: ["Templates for goods, services and public tenders", "Bids compared on price, lead time and terms", "Award decisions recorded with their reasons"], cta: "Book a sourcing demo", ui: [["doc", "6 bids received", "Best price: Porto, 9 days lead"], ["check", "Award ready for approval", "2 approvers · due today"]] },
+    { id: "contracts", name: "Contracts", tone: "t3", title: "Renewals that start themselves", lead: "Every contract in one library, with its owner, value and notice period.", card: "Every contract in one library with its owner, value and notice period, and renewals that start themselves.", points: ["Notice periods tracked, reminders sent to the owner", "Clause library and approval rules per contract type", "E-signature with the signed copy filed automatically"], cta: "Book a contracts demo", ui: [["sign", "Renewal in 30 days", "Packaging, Lyon · reminder on"], ["spark", "Draft ready", "3 cheaper offers attached"]] },
+    { id: "invoices", name: "Invoices", tone: "t2", title: "Only the invoices that need a person", lead: "Orders, deliveries and invoices are matched as they arrive, within the tolerances you set.", card: "Order, delivery and invoice are matched as they arrive. People only see the ones that do not add up.", points: ["Invoices read from email and supplier portals", "Tolerances by amount, category and supplier", "Spend reports by category, site and supplier"], cta: "Book an invoices demo", ui: [["receipt", "148 invoices today", "135 matched · 13 to review", "91%", "st-ok"]] },
+    { id: "risk", name: "Supplier risk", tone: "t4", title: "Know your suppliers before they surprise you", lead: "Certificates, insurance and audits on one record per supplier.", card: "Certificates, insurance and audits on each supplier record, with reminders long before anything lapses.", points: ["Expiry reminders 60, 30 and 7 days ahead", "Supplier self-service for documents and bank details", "Risk notes visible wherever the supplier appears"], cta: "Book a supplier risk demo", ui: [["shield", "Certificate expires 2 Mar", "Castings, Porto · audit booked", "Due", "st-warn"]] },
+    { id: "assistant", name: "Assistant", tone: "t1", title: "An assistant that asks before it acts", lead: "Every answer links to its sources, and nothing is sent without approval.", card: "Ask in plain words. It drafts, compares and reminds, and never sends without you.", points: ["Works across sourcing, contracts, invoices and risk", "Respects each person's permissions", "A full log of what it drafted and who approved it"], cta: "See the assistant live", ask: "Which contracts renew before June?", ui: [["spark", "Seven contracts, €612,000", "Two have cheaper offers"]] },
+  ];
+  const initials = (name) => name.split(" ").map((w) => w[0]).join("").slice(0, 2);
+  const glyph = (i) => `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#lg${(i % 3) + 1}"/></svg>`;
+  const star = '<svg class="star s-ws" viewBox="0 0 100 100"><use href="#star"/></svg>';
+  const mini = (m) => `<div class="mini">${m.ask ? `<p class="bubble">${esc(m.ask)}</p>` : ""}${m.ui.map(([icon, title, sub, chip, tone = ""]) => `<div class="mini-row"><span class="ico-tile"><svg class="icon"><use href="#i-${icon}"/></svg></span><div><b>${esc(title)}</b><small>${esc(sub)}</small></div>${chip ? `<span class="chip ${tone}">${esc(chip)}</span>` : ""}</div>`).join("")}</div>`;
+  const RENDER = {
+    tabs: () => MODULES.map((m, i) => `<button class="pill" type="button" role="tab" id="tab-${m.id}" aria-controls="pn-${m.id}" aria-selected="${i === 0}">${esc(m.name)}</button>`),
+    panels: () => MODULES.map((m) => `<div class="tpanel" role="tabpanel" id="pn-${m.id}" aria-labelledby="tab-${m.id}"><div><h2 class="h2">${esc(m.title)}</h2><p class="lead">${esc(m.lead)}</p><ul class="checks">${m.points.map((p) => `<li>${esc(p)}</li>`).join("")}</ul><a class="link" href="#/demo?topic=${m.id}">${esc(m.cta)}</a></div><div class="scene ${m.tone} tp-art" aria-hidden="true">${mini(m)}${star}</div></div>`),
+    cards: () => MODULES.slice(0, 4).map((m) => `<li class="fc"><div class="scene ${m.tone}" aria-hidden="true">${mini(m)}</div><h3 class="h3">${esc(m.name)}</h3><p>${esc(m.card)}</p><a class="link" href="#/platform?tab=${m.id}">Learn more</a></li>`),
+    stories: () => STORIES.map((s, i) => `<li data-ind="${s.ind}" data-reg="${s.reg}"><a class="card" href="#/story"><div class="scene ${s.tone}" aria-hidden="true"><span class="logo-chip">${glyph(i)}${esc(s.co)}</span></div><div class="card-b"><span class="chip">${INDUSTRY[s.ind]} · ${REGION[s.reg]}</span><h2 class="h3">${esc(s.title)}</h2><p><span class="fig">${esc(s.fig)}</span> ${esc(s.unit)}</p><span class="link">Read the story</span></div></a></li>`),
+    posts: () => POSTS.map((p) => `<li data-type="${p.type}" data-text="${esc(p.title.toLowerCase())}"><a class="card" href="#/article"><div class="scene ${p.tone}" aria-hidden="true"><span class="chip on-media">${TYPE[p.type]}</span></div><div class="card-b"><h2 class="h3">${esc(p.title)}</h2><p>${esc(p.meta)}</p><span class="link">${p.type === "webinar" ? "Watch the recording" : p.type === "report" ? "Get the report" : "Read more"}</span></div></a></li>`),
+    team: () => TEAM.map((t, i) => `<li class="person"><span class="av${i % 3 ? ` a${(i % 3) + 1}` : ""}" aria-hidden="true">${initials(t.name)}</span><div><h3 class="h3">${esc(t.name)}</h3><p>${esc(t.role)}, ${esc(t.city)}</p></div></li>`),
+  };
+  $$("[data-render]").forEach((list) => { list.innerHTML = RENDER[list.dataset.render]().join(""); });
+
+  /* ---------- Filters: every list shows a live count and an empty state ---------- */
+  function filterList(list, test, countEl, noun, emptyEl) {
+    let shown = 0;
+    [...list.children].forEach((li) => { li.hidden = !test(li); if (!li.hidden) shown++; });
+    countEl.textContent = `${shown} ${shown === 1 ? noun[0] : noun[1]}`;
+    emptyEl.hidden = shown > 0;
+  }
+  const cust = { ind: "all" };
+  const regSelect = $("#c-reg");
+  function filterStories() {
+    $$("button[data-ind]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.ind === cust.ind)));
+    filterList($("#c-list"), (li) => (cust.ind === "all" || li.dataset.ind === cust.ind) && (regSelect.value === "all" || li.dataset.reg === regSelect.value), $("#c-count"), ["story", "stories"], $("#c-empty"));
+  }
+  $$("button[data-ind]").forEach((b) => b.addEventListener("click", () => { cust.ind = b.dataset.ind; filterStories(); }));
+  regSelect.addEventListener("change", filterStories);
+
+  const res = { type: "all" };
+  const query = $("#r-q");
+  function filterPosts() {
+    const q = query.value.trim().toLowerCase();
+    $$("button[data-type]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.type === res.type)));
+    filterList($("#r-list"), (li) => (res.type === "all" || li.dataset.type === res.type) && (!q || li.dataset.text.includes(q)), $("#r-count"), ["resource", "resources"], $("#r-empty"));
+  }
+  $$("button[data-type]").forEach((b) => b.addEventListener("click", () => { res.type = b.dataset.type; filterPosts(); }));
+  query.addEventListener("input", filterPosts);
+  $$("[data-reset]").forEach((b) => b.addEventListener("click", () => {
+    if (b.dataset.reset === "customers") { cust.ind = "all"; regSelect.value = "all"; filterStories(); }
+    if (b.dataset.reset === "resources") { res.type = "all"; query.value = ""; filterPosts(); }
+  }));
+  filterStories();
+  filterPosts();
+
+  /* ---------- Story switcher: one item open, the frame follows it ---------- */
+  const swItems = $$(".sw-list li");
+  const swMedia = $("#sw-media");
+  function pickStory(item) {
+    swItems.forEach((li) => { const on = li === item; li.classList.toggle("is-on", on); $(".sw-btn", li).setAttribute("aria-expanded", String(on)); });
+    const d = $(".sw-btn", item).dataset;
+    swMedia.className = `scene sw-media ${d.tone}`;
+    $("#sw-logo").textContent = d.co;
+    $("#sw-fig").textContent = d.fig;
+    $("#sw-unit").textContent = d.unit;
+    void swMedia.offsetWidth;
+    swMedia.classList.add("swap");
+  }
+  swItems.forEach((li) => $(".sw-btn", li).addEventListener("click", () => pickStory(li)));
+
+  /* ---------- Tabs (modules): arrow keys move between tabs ---------- */
+  const tabs = $$("[role=tab]");
+  function selectTab(tab) {
+    tabs.forEach((t) => { const on = t === tab; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; $("#" + t.getAttribute("aria-controls")).hidden = !on; });
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => selectTab(tab));
+    tab.addEventListener("keydown", (event) => {
+      const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+      if (!step) return;
+      const next = tabs[(i + step + tabs.length) % tabs.length];
+      selectTab(next);
+      next.focus();
+    });
+  });
+  selectTab(tabs[0]);
+
+  /* ---------- Billing toggle: prices switch between monthly and yearly ---------- */
+  $$("[data-bill]").forEach((b) => b.addEventListener("click", () => {
+    const yearly = b.dataset.bill === "y";
+    $$("[data-bill]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    $$("[data-m]").forEach((p) => { p.textContent = yearly ? p.dataset.y : p.dataset.m; });
+    $$("[data-per]").forEach((p) => { p.textContent = `per user a month, billed ${yearly ? "yearly" : "monthly"}`; });
+  }));
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "Kestrova: procurement software for mid-sized companies", platform: "Platform and editions · Kestrova", customers: "Customer stories · Kestrova", story: "Marlow Pumps customer story · Kestrova", resources: "Resources · Kestrova", article: "A buyer's guide to three-way matching · Kestrova", events: "Events and webinars · Kestrova", company: "Company · Kestrova", demo: "Book a demo · Kestrova", trial: "Free trial · Kestrova", legal: "Privacy and terms · Kestrova", "404": "Page not found · Kestrova" };
+  const parent = { story: "customers", article: "resources" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, q = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(q), anchor: "" };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    root.dataset.route = name;
+    document.title = titles[name] || titles.home;
+    $$(".nav a, .sheet nav a").forEach((a) => {
+      const target = parse(a.getAttribute("href")).view;
+      if (target === name || target === parent[name]) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "platform") selectTab((p.get("tab") && $(`#tab-${CSS.escape(p.get("tab"))}`)) || tabs[0]);
+    if (name === "demo" && p.get("topic")) { const s = $("#d-topic"); if (s.querySelector(`option[value="${CSS.escape(p.get("topic"))}"]`)) s.value = p.get("topic"); }
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); if (menu.open) menu.close(); go(href); return; }
+    const target = href.length > 1 && document.getElementById(href.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    if (menu.open) menu.close();
+    /* a section ID on another view (the footer's Terms link): open that view first, then scroll */
+    const view = target.closest("[data-view]");
+    if (view && view !== current) go(view.dataset.view === "home" ? "#/" : `#/${view.dataset.view}`);
+    target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    if (target.id === "main") target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Mobile menu ---------- */
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+
+  /* ---------- Reveal: keyframes on entry; content stays visible without JS; timed fallback ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in")));
+  }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Events: Register picks the event in the form and moves there ---------- */
+  $$("[data-ev]").forEach((b) => b.addEventListener("click", () => {
+    $("#e-event").value = b.dataset.ev;
+    $("#register").scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    $("#e-name").focus({ preventScroll: true });
+  }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please add a little more detail." };
+  const missing = { checkbox: "Please confirm to continue.", radio: "Please choose one.", "select-one": "Please choose one." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (problem === "valueMissing" && missing[field.type]) || messages[problem] : "";
+    const group = field.type === "radio" ? $$(`[name="${field.name}"]`, field.form) : [field];
+    group.forEach((f) => f.setAttribute("aria-invalid", String(Boolean(problem))));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input, select, textarea", form).filter((f) => f.hasAttribute("aria-describedby"));
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value && field.type !== "radio" && field.type !== "checkbox") checkField(field); });
+      field.addEventListener(field.type === "radio" || field.type === "checkbox" || field.tagName === "SELECT" ? "change" : "input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before "submit" fires, so the button's click runs it too (Enter clicks it). */
+    const button = $("[type=submit]", form);
+    const label = button.innerHTML;
+    const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+    const send = () => {
+      if (button.disabled) return;
+      if (!fields.map(checkField).every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        success.hidden = false;
+        button.disabled = false;
+        button.innerHTML = label;
+      }, 600);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+    $("[data-again]", success)?.addEventListener("click", () => {
+      form.reset();
+      fields.forEach((f) => f.removeAttribute("aria-invalid"));
+      $$(".err", form).forEach((e) => { e.textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      fields[0].focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  const start = parse(location.hash);
+  show(start, { scroll: false });
+  if (start.anchor) document.getElementById(start.anchor.slice(1))?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

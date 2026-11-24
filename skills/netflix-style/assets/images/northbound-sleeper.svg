@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" width="320" height="180">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#070c1c"/><stop offset="1" stop-color="#2b3a5e"/></linearGradient>
+<radialGradient id="moon"><stop offset="0" stop-color="#f4f0e2" stop-opacity=".5"/><stop offset="1" stop-color="#f4f0e2" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="320" height="180" fill="url(#sky)"/>
+<circle cx="214" cy="46" r="40" fill="url(#moon)"/>
+<circle cx="214" cy="46" r="16" fill="#f4f0e2"/>
+<path d="M0 98l40-26 30 18 36-30 44 34 40-24 50 30 40-22 40 20v12H0z" fill="#3a4870"/>
+<path d="M60 80l10 10-6 2zM106 60l12 10-8 3z" fill="#dfe6f2" opacity=".8"/>
+<rect y="104" width="320" height="76" fill="#d4dbe8"/>
+<path d="M0 132c80-8 200-8 320 2v46H0z" fill="#b9c3d6"/>
+<rect x="34" y="94" width="246" height="16" rx="3" fill="#121a2f"/>
+<path d="M280 94h12c6 0 10 6 10 16h-22z" fill="#121a2f"/>
+<g fill="#ffd27a"><rect x="42" y="98" width="10" height="5"/><rect x="58" y="98" width="10" height="5"/><rect x="82" y="98" width="10" height="5"/><rect x="98" y="98" width="10" height="5"/><rect x="122" y="98" width="10" height="5"/><rect x="138" y="98" width="10" height="5"/><rect x="162" y="98" width="10" height="5"/><rect x="178" y="98" width="10" height="5"/><rect x="202" y="98" width="10" height="5"/><rect x="218" y="98" width="10" height="5"/><rect x="242" y="98" width="10" height="5"/><rect x="258" y="98" width="10" height="5"/></g>
+<path d="M302 104l18-4v8z" fill="#fff3c4" opacity=".8"/>
+<path d="M0 112h320" stroke="#6b768f" stroke-width="1.5"/>
+<path d="M40 116h200" stroke="#ffd27a" stroke-width="2" opacity=".25"/>
+</svg>

@@ -1,0 +1,1531 @@
+<!doctype html>
+<html lang="en" data-rise="bad">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Pricemere: what Wrenhaven pays, checked every week</title>
+<meta name="description" content="Pricemere is an independent, reader-funded price desk for Wrenhaven: groceries, rent, fares and bills in six neighbourhoods, checked every week.">
+<meta property="og:title" content="Pricemere: what Wrenhaven pays, checked every week">
+<meta property="og:description" content="Groceries, rent, fares and bills in six neighbourhoods, checked every week and published in full.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/sora-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/rethink-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts: a wide geometric face for headlines and big numbers, a compact grotesque for text, tables and interface ---------- */
+@font-face { font-family: "Sora"; src: url("fonts/sora-latin-wght-normal.woff2") format("woff2"); font-weight: 100 800; font-display: swap; }
+@font-face { font-family: "Rethink Sans"; src: url("fonts/rethink-sans-latin-wght-normal.woff2") format("woff2"); font-weight: 400 800; font-display: swap; }
+
+/* ---------- Tokens, light: white canvas, hairline cards, an ink hero ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);
+  --surface: oklch(100% 0 0);
+  --surface-2: oklch(96.6% 0.003 265);   /* code chips, search, pill tabs, table head */
+  --surface-3: oklch(92.8% 0.005 265);   /* the chosen pill tab, chip hover */
+  --text: oklch(19% 0.006 265);
+  --soft: oklch(36% 0.008 265);          /* summaries and article text */
+  --text-muted: oklch(49% 0.012 265);    /* units, meta, axis labels */
+  --border: oklch(91.5% 0.004 265);      /* card outlines and row hairlines */
+  --field: oklch(63% 0.01 265);          /* input and outline-button edges (3:1) */
+  --accent: oklch(52% 0.2 264);          /* links, "See all" chevrons, focus */
+  --accent-text: oklch(100% 0 0);
+  --accent-soft: oklch(95.4% 0.025 264);
+  --ink: oklch(13% 0.01 270);            /* the hero and the email band, in both themes */
+  --ink-text: oklch(98% 0 0);
+  --ink-muted: oklch(78% 0.01 265);
+  --btn: var(--ink); --btn-text: var(--ink-text);
+  --green: oklch(48% 0.12 165);
+  --red: oklch(52% 0.2 25);
+  --amber: oklch(54% 0.14 62);
+  --c1: oklch(56% 0.19 264); --c2: oklch(70% 0.15 70); --c3: oklch(58% 0.19 300); --c4: oklch(70% 0.11 210); --c5: oklch(78% 0.01 265);
+  --danger: oklch(52% 0.2 25);
+  --ok: oklch(48% 0.12 165);
+  --display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --body: "Rethink Sans", ui-sans-serif, system-ui, sans-serif;
+  --max: 1320px;
+  --gutter: clamp(16px, 3vw, 40px);
+  --r-control: 10px;
+  --r-card: 16px;
+  --r-media: 12px;
+  --r-pill: 999px;
+  --shadow-overlay: 0 24px 64px oklch(10% 0.01 265 / 0.28);
+  --dur-fast: 120ms;
+  --dur: 220ms;
+  --dur-slow: 700ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  /* The chevron and the tick are masks, so links and lists carry no icon markup */
+  --chev: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23000%27 stroke-width=%272.6%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27m9 5 7 7-7 7%27/%3E%3C/svg%3E");
+  --tick: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%23000%27 stroke-width=%272.4%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27m5 12.5 4.5 4.5L19 7%27/%3E%3C/svg%3E");
+}
+/* ---------- Tokens, dark: near-black canvas; the ink goes one step darker ---------- */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(15% 0.007 265);
+  --surface: oklch(18.5% 0.008 265);
+  --surface-2: oklch(23% 0.009 265);
+  --surface-3: oklch(29% 0.01 265);
+  --text: oklch(95% 0.003 265);
+  --soft: oklch(84% 0.006 265);
+  --text-muted: oklch(72% 0.01 265);
+  --border: oklch(28.5% 0.009 265);
+  --field: oklch(55% 0.012 265);
+  --accent: oklch(72% 0.14 262);
+  --accent-text: oklch(14% 0.01 265);
+  --accent-soft: oklch(28% 0.06 264);
+  --ink: oklch(9.5% 0.01 270);
+  --btn: oklch(97% 0 0); --btn-text: oklch(14% 0.01 265);
+  --amber: oklch(76% 0.14 70);
+  --c1: oklch(66% 0.17 264); --c5: oklch(50% 0.01 265);
+  --danger: oklch(72% 0.17 25);
+  --ok: oklch(76% 0.14 165);
+  --shadow-overlay: 0 24px 64px oklch(0% 0 0 / 0.6);
+}
+/* Gain and loss. data-rise="bad" on <html> (prices, waiting times) colours a rise red; leave it out and a rise is green */
+[data-theme="dark"], .ink { --green: oklch(76% 0.14 165); --red: oklch(70% 0.18 22); }
+:root, .ink { --up: var(--green); --down: var(--red); }
+[data-rise="bad"], [data-rise="bad"] .ink { --up: var(--red); --down: var(--green); }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; padding: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.sprite { display: none; }
+.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 50; padding: 10px 14px; border-radius: var(--r-control); background: var(--btn); color: var(--btn-text); font-weight: 600; }
+.skip:focus { top: 12px; }
+.wrap { width: min(100% - 2 * var(--gutter), var(--max)); margin-inline: auto; }
+.tbl, .q-v, .chg, .num { font-variant-numeric: tabular-nums; }
+.muted { color: var(--text-muted); }
+html:not(.js) .js-only { display: none; }
+
+/* ---------- Header: ink over the hero, white once the hero has scrolled away ---------- */
+.top { position: sticky; top: 0; z-index: 20; height: 64px; display: flex; align-items: center; gap: 8px; padding-inline: var(--gutter); background: var(--bg); border-bottom: 1px solid var(--border); transition: background-color var(--dur), color var(--dur), border-color var(--dur); }
+.top.on-ink { background: var(--ink); color: var(--ink-text); border-color: transparent; }
+.brand { display: inline-flex; align-items: center; gap: 10px; margin-right: 18px; font: 700 1.3125rem/1 var(--display); letter-spacing: -0.03em; white-space: nowrap; }
+.mark { width: 30px; height: 30px; color: var(--text); --cut: var(--bg); }
+.on-ink .mark { color: var(--ink-text); --cut: var(--ink); }
+.find { display: inline-flex; align-items: center; gap: 10px; height: 40px; width: 230px; padding: 0 14px; border-radius: var(--r-pill); background: var(--surface-2); color: var(--text-muted); font-size: 0.9375rem; white-space: nowrap; }
+.find:hover { background: var(--surface-3); }
+.on-ink .find { background: oklch(100% 0 0 / 0.1); color: var(--ink-muted); }
+kbd { margin-left: auto; padding: 4px 7px; border-radius: 6px; border: 1px solid currentColor; font: 600 0.75rem/1 var(--body); opacity: 0.7; }
+.nav { display: flex; gap: 2px; margin-left: 12px; }
+.nav a { padding: 8px 12px; font-weight: 600; font-size: 0.9688rem; white-space: nowrap; transition: color var(--dur-fast); }
+.nav a:hover, .nav a[aria-current="page"] { color: var(--accent); }
+.on-ink .nav a:hover, .on-ink .nav a[aria-current="page"] { color: oklch(80% 0.11 262); }
+.top-end { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+.icon-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; }
+.icon-btn:hover { background: var(--surface-2); }
+.on-ink .icon-btn:hover { background: oklch(100% 0 0 / 0.1); }
+#theme-toggle .i-sun, [data-theme="dark"] #theme-toggle .i-moon, .menu-btn, .find-ico { display: none; }
+[data-theme="dark"] #theme-toggle .i-sun { display: block; }
+@media (max-width: 1099px) { .nav { display: none; } .menu-btn { display: inline-grid; } }
+@media (max-width: 767px) { .find, .top .btn { display: none; } .find-ico { display: inline-grid; } .brand { margin-right: 0; } }
+
+/* ---------- Buttons, links, pill tabs and chips ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 22px; border-radius: var(--r-pill); background: var(--btn); color: var(--btn-text); font-weight: 650; white-space: nowrap; transition: transform var(--dur-fast) var(--ease), opacity var(--dur-fast); }
+.btn:hover { opacity: 0.88; }
+.btn:active { transform: scale(0.98); }
+.btn.sm { height: 38px; padding: 0 16px; font-size: 0.9375rem; }
+.btn .icon { width: 18px; height: 18px; }
+.btn-o { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1px var(--field); }
+.btn-o:hover { opacity: 1; background: var(--surface-2); }
+.btn-o[aria-pressed="true"] .icon { fill: var(--amber); stroke: var(--amber); }
+.on-ink .btn, .ink .btn { background: var(--ink-text); color: var(--ink); }
+.more { display: inline-flex; align-items: center; gap: 2px; color: var(--accent); font-weight: 600; }
+.more::after, .sec-h a::after, .card-h a::after, .menu-nav a::after { content: ""; width: 0.85em; height: 0.85em; flex: none; background: currentColor; mask: var(--chev) center / contain no-repeat; transition: transform var(--dur-fast) var(--ease); }
+.more:hover::after, .sec-h a:hover::after, .card-h a:hover::after { transform: translateX(3px); }
+.tabs, .chips, .seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.tabs button, .seg button { height: 38px; padding: 0 16px; border-radius: var(--r-control); font-weight: 600; color: var(--soft); }
+.seg button { height: 32px; padding: 0 12px; font-size: 0.875rem; }
+.tabs button:hover, .seg button:hover { color: var(--text); background: var(--surface-2); }
+.tabs button[aria-pressed="true"], .seg button[aria-pressed="true"] { background: var(--surface-3); color: var(--text); }
+.chips button { height: 36px; padding: 0 16px; border-radius: var(--r-pill); background: var(--surface-2); font-weight: 600; font-size: 0.9375rem; }
+.chips button:hover { background: var(--surface-3); }
+.chips button[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+.chips small { margin-left: 4px; opacity: 0.7; }
+
+/* ---------- Quotes: round badge, name and code chip on the left; tabular number, small unit and coloured change on the right ---------- */
+.badge { display: inline-grid; place-items: center; width: 36px; height: 36px; flex: none; border-radius: 50%; background: oklch(58% 0.13 var(--h, 264)); color: oklch(100% 0 0); font: 700 0.8125rem/1 var(--display); letter-spacing: -0.02em; }
+.badge .icon { stroke-width: 2; }
+.badge.lg { width: 56px; height: 56px; font-size: 1.125rem; }
+.badge.lg .icon { width: 30px; height: 30px; }
+.code { display: inline-block; padding: 3px 7px; border-radius: 6px; background: var(--surface-2); font: 700 0.6875rem/1.2 var(--body); letter-spacing: 0.03em; white-space: nowrap; }
+.ink .code { background: oklch(100% 0 0 / 0.12); }
+.flag { margin-left: 3px; color: var(--amber); font: 700 0.625rem/1 var(--body); vertical-align: super; }
+.chg { font-weight: 600; white-space: nowrap; }
+.up { color: var(--up); }
+.down { color: var(--down); }
+.flat { color: var(--text-muted); }
+.u { margin-left: 3px; color: var(--text-muted); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.ink .u { color: var(--ink-muted); }
+.quotes > li + li { border-top: 1px solid var(--border); }
+.q { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 12px 0; }
+.q-n { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.q-n b { display: block; font-weight: 600; line-height: 1.25; }
+.q-n .code { margin-top: 4px; }
+.q-v { text-align: right; line-height: 1.3; }
+.q-v b { font-weight: 600; font-size: 1.0625rem; }
+.q-v .chg { display: block; font-size: 1.0625rem; }
+.q:hover .q-n b { color: var(--accent); }
+
+/* ---------- Charts: an area fading to nothing under a 2px line, axis on the right, a pulsing dot on the last value ---------- */
+.plot { position: relative; height: 300px; margin: 18px 64px 30px 0; color: var(--up); touch-action: pan-y; }
+.plot[data-dir="down"] { color: var(--down); }
+.plot[data-dir="flat"] { color: var(--accent); }
+.plot svg { width: 100%; height: 100%; overflow: visible; }
+.plot .line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.js .is-active .plot svg { animation: reveal 1s var(--ease) both; }
+.js .is-active .plot .last { animation: fade 0.3s var(--ease) 0.9s both; }
+@keyframes reveal { from { clip-path: inset(0 100% 0 0); } }
+@keyframes fade { from { opacity: 0; } }
+.yl, .xl { position: absolute; color: var(--text-muted); font-size: 0.75rem; white-space: nowrap; pointer-events: none; }
+.yl { left: calc(100% + 10px); transform: translateY(-50%); }
+.xl { top: calc(100% + 8px); transform: translateX(-50%); }
+.xl.s { transform: none; }
+.xl.e { transform: translateX(-100%); }
+.gl { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--border); }
+.dot { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 4px var(--surface); pointer-events: none; }
+.dot.last::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid currentColor; opacity: 0; animation: ping 2.4s var(--ease) infinite; }
+@keyframes ping { 0% { transform: scale(0.4); opacity: 0.7; } 80%, 100% { transform: scale(1.4); opacity: 0; } }
+.cross { position: absolute; top: 0; bottom: 0; border-left: 1px dashed var(--field); pointer-events: none; }
+.tip { position: absolute; top: -6px; transform: translate(-50%, -100%); padding: 5px 9px; border-radius: 8px; background: var(--ink); color: var(--ink-text); font-size: 0.8125rem; font-weight: 600; white-space: nowrap; pointer-events: none; }
+.spark { width: 100%; height: 40px; overflow: visible; color: var(--up); }
+.spark[data-dir="down"] { color: var(--down); }
+.spark[data-dir="flat"] { color: var(--text-muted); }
+.spark path { fill: none; stroke: currentColor; stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+.spark path + path { stroke: none; fill: currentColor; opacity: 0.09; }
+
+/* ---------- Cards ---------- */
+.card { position: relative; padding: 20px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--surface); }
+.card-h { font: 600 1.125rem/1.3 var(--display); letter-spacing: -0.01em; }
+.card-h a, .sec-h a { display: inline-flex; align-items: center; gap: 2px; }
+.card > .more { margin-top: 14px; }
+.cc-head { display: flex; gap: 14px; align-items: flex-start; }
+.cc-name { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-weight: 600; font-size: 1.125rem; }
+.cc-val { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-top: 2px; }
+.cc-val b { font: 600 clamp(1.75rem, 1.4rem + 1vw, 2.25rem)/1.1 var(--display); letter-spacing: -0.02em; }
+.cc-val .chg { font-size: 1.125rem; }
+.cc-sub { color: var(--text-muted); font-size: 0.875rem; }
+.cc-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; }
+.live { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); font-size: 0.8125rem; font-weight: 500; }
+.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); animation: pulse 2s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 oklch(60% 0.13 165 / 0.5); } 70%, 100% { box-shadow: 0 0 0 8px oklch(60% 0.13 165 / 0); } }
+/* Share bar (parts of a whole) and two-colour progress bars */
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 14px 0 10px; font-size: 0.8125rem; color: var(--text-muted); }
+.legend li, .key li { display: flex; align-items: center; gap: 6px; }
+.legend b { display: block; color: var(--text); font-size: 1rem; font-weight: 600; }
+.legend i, .key i { width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--c1)); }
+.share, .bar { display: flex; gap: 2px; height: 10px; border-radius: var(--r-pill); overflow: hidden; }
+.share span, .bar span { background: var(--c, var(--c1)); }
+.bars > li { padding: 12px 0; }
+.bars > li + li { border-top: 1px solid var(--border); }
+.bars .row { display: flex; justify-content: space-between; gap: 12px; }
+.bars .row b { font-weight: 600; }
+.bar { gap: 0; height: 6px; margin-top: 8px; background: var(--surface-2); }
+.key { display: flex; justify-content: center; gap: 16px; margin-top: 8px; color: var(--text-muted); font-size: 0.75rem; }
+
+/* ---------- Hero: ink, one huge headline, a search pill and a glass quote card over a glowing line ---------- */
+.hero { position: relative; margin-top: -64px; padding-top: 64px; overflow: hidden; background: var(--ink); color: var(--ink-text); isolation: isolate; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background: radial-gradient(oklch(100% 0 0 / 0.08) 1px, transparent 1.6px) 0 0 / 28px 28px; mask-image: linear-gradient(transparent, #000 30%, #000 60%, transparent); }
+.hero::after { content: ""; position: absolute; z-index: -2; right: -10%; top: 10%; width: 60%; height: 80%; background: radial-gradient(closest-side, oklch(45% 0.16 262 / 0.45), transparent); }
+.hero-in { display: grid; grid-template-columns: 1.25fr 1fr; gap: 48px; align-items: center; min-height: 600px; padding: 72px 0 140px; }
+.pill-live { padding: 6px 12px 6px 10px; border-radius: var(--r-pill); background: oklch(100% 0 0 / 0.08); color: var(--ink-muted); font-size: 0.875rem; }
+.pill-live::before { --ok: oklch(76% 0.14 165); }
+.hero-h { margin-top: 22px; font: 700 clamp(2.6rem, 1.3rem + 4.4vw, 5.25rem)/1.02 var(--display); letter-spacing: -0.045em; text-wrap: balance; }
+.grad { background: linear-gradient(90deg, oklch(72% 0.16 262), oklch(82% 0.13 190) 60%, oklch(84% 0.15 160)); background-clip: text; color: transparent; }
+.hero-p { max-width: 34rem; margin-top: 22px; color: var(--ink-muted); font-size: 1.1875rem; line-height: 1.5; }
+.hero-find { display: flex; align-items: center; gap: 12px; width: min(100%, 520px); height: 60px; margin-top: 32px; padding: 0 22px; border-radius: var(--r-pill); background: oklch(100% 0 0); color: oklch(45% 0.012 265); font-size: 1.0625rem; box-shadow: 0 10px 40px oklch(45% 0.16 262 / 0.35); }
+.hero-find .icon { width: 22px; height: 22px; color: oklch(19% 0.006 265); }
+.hero-find kbd { border-color: oklch(85% 0.005 265); }
+.hero-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.hero-chips a { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px 0 6px; border-radius: var(--r-pill); background: oklch(100% 0 0 / 0.08); font-size: 0.9375rem; font-weight: 600; }
+.hero-chips a:hover { background: oklch(100% 0 0 / 0.16); }
+.hero-chips .badge { width: 26px; height: 26px; font-size: 0.6875rem; }
+.hero-card { padding: 24px; border-radius: 24px; border: 1px solid oklch(100% 0 0 / 0.16); background: oklch(100% 0 0 / 0.05); backdrop-filter: blur(10px); animation: rise 0.9s var(--ease) 0.15s both; }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+.hero-card .cc-val b { font-size: clamp(2.25rem, 1.8rem + 1.6vw, 3.25rem); }
+.hero-card .cc-sub { color: var(--ink-muted); }
+.hero-card .spark { height: 96px; margin: 18px 0 8px; }
+.hero-card .quotes { margin-top: 12px; border-top: 1px solid oklch(100% 0 0 / 0.12); }
+.hero-card .quotes > li + li { border-color: oklch(100% 0 0 / 0.12); }
+.hero-card .q { padding: 10px 0; }
+.hero-card .q-v .chg { display: inline; margin-left: 10px; font-size: 1rem; }
+.hero-card .more { margin-top: 14px; color: oklch(80% 0.11 262); }
+.horizon { position: absolute; left: 0; bottom: 0; z-index: -1; width: 100%; height: 46%; pointer-events: none; }
+.horizon .glow { filter: blur(10px); opacity: 0.55; }
+@media (max-width: 959px) { .hero-in { grid-template-columns: 1fr; gap: 36px; min-height: 0; padding: 48px 0 110px; } }
+
+/* ---------- Home sections ---------- */
+.sec { margin-top: 72px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin-bottom: 22px; }
+.sec-h { font: 600 clamp(1.5rem, 1.2rem + 0.9vw, 2rem)/1.2 var(--display); letter-spacing: -0.025em; }
+.g-sum { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 24px; }
+.g-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 24px; }
+.g-3 .plot { height: 120px; margin: 14px 0 6px; }
+.g-3 .plot :is(.yl, .xl, .gl) { display: none; }
+@media (max-width: 1023px) { .g-sum { grid-template-columns: 1fr; } .g-3 { grid-template-columns: 1fr 1fr; } .g-3 > :last-child { grid-column: 1 / -1; } }
+@media (max-width: 639px) { .g-3 { grid-template-columns: 1fr; } .plot { height: 220px; margin-right: 56px; } .xq { display: none; } .sec { margin-top: 56px; } }
+/* Tiles: a sideways row of quote cards with a round arrow */
+.rail { position: relative; }
+.tiles { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 60px) / 4); gap: 20px; padding: 2px; margin: -2px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.tiles::-webkit-scrollbar { display: none; }
+.tiles > li { scroll-snap-align: start; }
+.tile { display: block; height: 100%; padding: 16px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--surface); transition: border-color var(--dur-fast), transform var(--dur) var(--ease); }
+.tile:hover { border-color: var(--field); transform: translateY(-2px); }
+.tile-v { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-top: 14px; }
+.tile-v b { font: 600 1.25rem/1.2 var(--display); }
+.tile .spark { margin-top: 10px; }
+.nudge { position: absolute; right: -22px; top: 50%; translate: 0 -50%; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--surface); box-shadow: 0 2px 12px oklch(20% 0.01 265 / 0.18), 0 0 0 1px var(--border); }
+.nudge:hover { background: var(--surface-2); }
+@media (max-width: 1023px) { .tiles { grid-auto-columns: calc((100% - 20px) / 2.2); } .nudge { right: 0; } }
+@media (max-width: 639px) { .tiles { grid-auto-columns: 78%; } }
+/* Chart cards: a chart picture with a corner flag, a title, two lines, then author and reactions */
+.ideas, .stories { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 28px; }
+.idea { display: flex; flex-direction: column; }
+.idea-img { position: relative; display: block; border-radius: var(--r-media); overflow: hidden; border: 1px solid var(--border); }
+.idea-img img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; transition: transform var(--dur-slow) var(--ease); }
+.idea:hover .idea-img img { transform: scale(1.03); }
+.corner { position: absolute; left: 10px; top: 0; display: grid; place-items: center; width: 30px; height: 34px; background: var(--c1); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%); }
+.corner .mark { width: 18px; height: 18px; margin-top: -4px; color: oklch(100% 0 0); --cut: var(--c1); }
+.idea-img .badge { position: absolute; left: 10px; bottom: 10px; width: 28px; height: 28px; font-size: 0.6875rem; box-shadow: 0 0 0 2px oklch(100% 0 0 / 0.9); }
+.idea h3 { margin-top: 14px; font: 600 1.125rem/1.35 var(--display); letter-spacing: -0.01em; }
+.idea h3 a:hover, .stories a:hover b { color: var(--accent); }
+.idea p { margin-top: 8px; color: var(--soft); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.idea footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 14px; }
+.by { font-size: 0.875rem; font-weight: 500; }
+.by small { display: block; color: var(--text-muted); font-size: 0.8125rem; font-weight: 400; }
+.acts { display: flex; align-items: center; gap: 8px; }
+.cmt { display: inline-flex; align-items: center; gap: 6px; padding: 0 8px; }
+.useful { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px; border-radius: var(--r-control); border: 1px solid var(--border); font-weight: 600; font-variant-numeric: tabular-nums; }
+.useful:hover { border-color: var(--field); }
+.useful[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.useful[aria-pressed="true"] .icon { animation: pop 0.4s var(--ease); }
+@keyframes pop { 50% { transform: scale(1.3); } }
+/* Top stories: three columns of headlines under a small badge, time and desk */
+.stories { gap: 32px 40px; }
+.stories .meta { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.875rem; }
+.stories .badge { width: 20px; height: 20px; font-size: 0.5625rem; }
+.stories .badge .icon { width: 12px; height: 12px; }
+.stories b { display: block; margin-top: 6px; font-weight: 600; font-size: 1.0625rem; line-height: 1.4; }
+@media (max-width: 1023px) { .ideas, .stories { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 639px) { .ideas, .stories { grid-template-columns: 1fr; } }
+/* The email band: ink, rounded, one field */
+.band { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; margin-top: 88px; padding: clamp(28px, 4vw, 56px); border-radius: 28px; overflow: hidden; isolation: isolate; background: var(--ink); color: var(--ink-text); }
+.band::after { content: ""; position: absolute; z-index: -1; left: -10%; bottom: -60%; width: 70%; height: 140%; background: radial-gradient(closest-side, oklch(50% 0.13 190 / 0.35), transparent); }
+.band h2 { font: 700 clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem)/1.1 var(--display); letter-spacing: -0.035em; }
+.band p { margin-top: 12px; color: var(--ink-muted); }
+.inline { display: flex; align-items: flex-start; gap: 8px; }
+.band .input { background: oklch(100% 0 0 / 0.08); border-color: oklch(100% 0 0 / 0.3); color: var(--ink-text); }
+.band .input::placeholder { color: var(--ink-muted); }
+.band .err { color: oklch(76% 0.15 25); }
+.band .done { background: oklch(100% 0 0 / 0.06); border-color: oklch(100% 0 0 / 0.16); }
+@media (max-width: 799px) { .band { grid-template-columns: 1fr; } .inline { flex-direction: column; align-items: stretch; } }
+
+/* ---------- Inner pages ---------- */
+.page { padding-top: 28px; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 6px; color: var(--text-muted); font-size: 0.875rem; }
+.crumbs a:hover { color: var(--accent); }
+.crumbs li + li::before { content: "/"; margin-right: 6px; opacity: 0.6; }
+.ph { padding: 16px 0 28px; }
+.h1 { font: 700 clamp(2rem, 1.5rem + 1.8vw, 3.25rem)/1.08 var(--display); letter-spacing: -0.035em; text-wrap: balance; }
+.lead { max-width: 44rem; margin-top: 14px; color: var(--soft); font-size: 1.125rem; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+.stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; min-width: 0; }
+@media (max-width: 1023px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin: 18px 0 16px; }
+.filter { position: relative; width: min(100%, 300px); }
+.filter .icon { position: absolute; left: 14px; top: 14px; color: var(--text-muted); }
+.filter .input { padding-left: 42px; border-radius: var(--r-pill); background: var(--surface-2); border-color: transparent; }
+.count, .note { color: var(--text-muted); font-size: 0.875rem; }
+.note { margin-top: 14px; }
+.empty { padding: 40px 20px; text-align: center; color: var(--text-muted); }
+/* Tables: a sticky first column, right-aligned numbers, sortable headings */
+.tbl-wrap { position: relative; overflow-x: auto; border: 1px solid var(--border); border-radius: var(--r-card); }
+.tbl { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.tbl th, .tbl td { padding: 12px 14px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--border); }
+.tbl tbody tr:last-child > * { border-bottom: 0; }
+.tbl thead th { background: var(--surface-2); color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; }
+.tbl th:first-child, .tbl .tl { text-align: left; }
+.tbl tbody th { font-weight: 400; }
+.tbl tbody tr:hover > * { background: var(--surface-2); }
+.tbl .sticky { position: sticky; left: 0; z-index: 1; background: var(--surface); }
+.tbl thead .sticky { background: var(--surface-2); }
+.tbl .q-n { gap: 10px; }
+.tbl .q-n .badge { width: 30px; height: 30px; font-size: 0.6875rem; }
+.tbl .q-n > span:last-child { display: flex; align-items: center; gap: 8px; }
+.tbl .q-n .code { margin: 0; }
+.tbl .spark { width: 110px; height: 30px; margin-left: auto; }
+.sort { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
+.sort .icon { width: 14px; height: 14px; opacity: 0; }
+[aria-sort] .sort .icon { opacity: 1; }
+[aria-sort="descending"] .sort .icon { transform: rotate(180deg); }
+.star { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: var(--text-muted); }
+.star:hover { color: var(--text); background: var(--surface-3); }
+.star[aria-pressed="true"] { color: var(--amber); }
+.star[aria-pressed="true"] .icon { fill: currentColor; }
+.tag { display: inline-block; padding: 3px 8px; border-radius: var(--r-pill); background: var(--accent-soft); color: var(--accent); font-size: 0.75rem; font-weight: 700; }
+.rel { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
+.rel .bar { width: 120px; margin: 0; }
+/* Item page */
+.it-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; padding: 16px 0 6px; }
+.it-name { display: flex; align-items: center; gap: 16px; }
+.it-name .h1 { font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem); }
+.it-name p { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 6px; color: var(--text-muted); font-size: 0.9375rem; }
+.it-acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.it-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 12px 0 24px; }
+.it-price b { font: 600 clamp(2.5rem, 2rem + 2vw, 3.75rem)/1 var(--display); letter-spacing: -0.03em; }
+.it-price .chg { font-size: 1.25rem; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+.stats div { padding: 12px 0; border-bottom: 1px solid var(--border); }
+.stats dt { color: var(--text-muted); font-size: 0.8125rem; }
+.stats dd { font-weight: 600; font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
+/* Article */
+.art { max-width: 760px; margin-inline: auto; }
+.art .h1 { margin-top: 14px; }
+.byline { display: flex; align-items: center; gap: 12px; margin-top: 20px; color: var(--text-muted); font-size: 0.9375rem; }
+.byline b { color: var(--text); font-weight: 600; }
+.av { display: inline-grid; place-items: center; width: 40px; height: 40px; flex: none; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font: 700 0.875rem/1 var(--display); }
+.art figure { margin: 28px 0; }
+.art figure img { width: 100%; border-radius: var(--r-media); border: 1px solid var(--border); }
+figcaption { margin-top: 10px; color: var(--text-muted); font-size: 0.875rem; }
+.prose { color: var(--soft); font-size: 1.125rem; line-height: 1.7; }
+.prose > * + * { margin-top: 1.1em; }
+.prose h2 { margin-top: 1.8em; color: var(--text); font: 600 1.5rem/1.25 var(--display); letter-spacing: -0.02em; }
+.prose a:not(.embed), .check a, .faq p a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.prose blockquote { padding-left: 20px; border-left: 3px solid var(--accent); color: var(--text); font: 500 1.375rem/1.45 var(--display); }
+cite { display: block; margin-top: 8px; color: var(--text-muted); font: 400 0.9375rem var(--body); }
+.embed { display: block; max-width: 420px; padding: 4px 18px; border: 1px solid var(--border); border-radius: var(--r-card); color: var(--text); }
+.figs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.figs div { padding: 16px; border-radius: var(--r-card); background: var(--surface-2); font-size: 0.875rem; }
+.figs b { display: block; color: var(--text); font: 600 1.75rem/1.1 var(--display); }
+@media (max-width: 559px) { .figs { grid-template-columns: 1fr; } }
+.art-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 40px; padding: 20px 0; border-block: 1px solid var(--border); }
+/* ---------- Forms: labels above 48px fields; errors float in reserved space, so nothing moves ---------- */
+.form { display: grid; gap: 4px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+@media (max-width: 559px) { .row2 { grid-template-columns: 1fr; } }
+.field { position: relative; display: grid; gap: 6px; padding-bottom: 22px; }
+.field label { font-weight: 600; font-size: 0.9375rem; }
+.field label small { color: var(--text-muted); font-weight: 400; }
+.input { width: 100%; height: 48px; padding: 0 14px; border: 1px solid var(--field); border-radius: var(--r-control); background: var(--surface); }
+textarea.input { height: auto; min-height: 120px; padding: 12px 14px; resize: vertical; }
+select.input { appearance: none; padding-right: 40px; background: linear-gradient(45deg, transparent 50%, currentColor 50%) calc(100% - 20px) 21px / 5px 5px no-repeat, linear-gradient(135deg, currentColor 50%, transparent 50%) calc(100% - 15px) 21px / 5px 5px no-repeat, var(--surface); }
+.input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.input[aria-invalid="true"] { border-color: var(--danger); }
+.err { position: absolute; left: 0; bottom: 2px; color: var(--danger); font-size: 0.8125rem; font-weight: 500; }
+.check { display: flex; gap: 10px; align-items: flex-start; color: var(--soft); }
+.field .check { font-weight: 400; }
+.check input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--accent); flex: none; }
+.done { padding: 24px; border-radius: var(--r-card); border: 1px solid var(--border); background: var(--surface-2); }
+.done h3 { display: flex; align-items: center; gap: 10px; font: 600 1.25rem/1.3 var(--display); }
+.done h3 .icon { color: var(--ok); width: 24px; height: 24px; stroke-width: 2.4; }
+.done p { margin-top: 8px; color: var(--soft); }
+.band .done p { color: var(--ink-muted); }
+.steps { counter-reset: s; display: grid; gap: 16px; margin-top: 14px; color: var(--soft); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 32px 1fr; gap: 12px; }
+.steps li::before { content: counter(s); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--surface-2); color: var(--text); font: 700 0.875rem/1 var(--display); }
+.steps b { display: block; color: var(--text); }
+/* Support tiers */
+.tiers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 24px; }
+.tier { display: flex; flex-direction: column; gap: 16px; padding: 28px; }
+.tier.best { border: 2px solid var(--text); }
+.tier .tag { position: absolute; top: -12px; left: 24px; background: var(--text); color: var(--bg); }
+.tier h2 { font: 600 1.375rem/1.2 var(--display); }
+.price { font: 700 2.5rem/1 var(--display); letter-spacing: -0.03em; }
+.price small { margin-left: 4px; color: var(--text-muted); font: 500 0.9375rem var(--body); letter-spacing: 0; }
+.ticks { display: grid; gap: 10px; color: var(--soft); }
+.ticks li { display: flex; gap: 10px; }
+.ticks li::before { content: ""; width: 20px; height: 20px; flex: none; margin-top: 2px; background: var(--ok); mask: var(--tick) center / contain no-repeat; }
+.tier .btn { margin-top: auto; }
+@media (max-width: 1023px) { .tiers { grid-template-columns: 1fr; max-width: 520px; } }
+/* About, contact, legal, 404 */
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.facts div { padding-top: 16px; border-top: 2px solid var(--text); color: var(--soft); }
+.facts b { display: block; margin-bottom: 8px; color: var(--text); font: 700 clamp(2rem, 1.6rem + 1.4vw, 3rem)/1 var(--display); letter-spacing: -0.03em; }
+@media (max-width: 799px) { .facts { grid-template-columns: 1fr 1fr; } }
+.people { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
+.people li, .ways li { display: flex; gap: 12px; align-items: center; }
+.people b, .ways b { display: block; }
+.people span { color: var(--text-muted); font-size: 0.875rem; }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; font-weight: 600; font-size: 1.0625rem; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { transition: transform var(--dur) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(180deg); }
+.faq p { padding-bottom: 18px; color: var(--soft); }
+.ways { display: grid; gap: 16px; margin-top: 14px; }
+.ways li { align-items: flex-start; }
+.ways .icon { margin-top: 2px; color: var(--text-muted); }
+.ways a { color: var(--accent); }
+.legal { max-width: 760px; }
+.nf { display: grid; justify-items: start; gap: 16px; padding: 64px 0; }
+.nf b { font: 700 clamp(5rem, 3rem + 8vw, 9rem)/1 var(--display); letter-spacing: -0.05em; }
+
+/* ---------- Dialogs: search (/ or ⌘K) and the small-screen menu ---------- */
+dialog { padding: 0; border: 0; color: var(--text); background: var(--surface); box-shadow: var(--shadow-overlay); }
+dialog::backdrop { background: oklch(10% 0.01 265 / 0.5); }
+dialog[open] { animation: pop-in var(--dur) var(--ease); }
+@keyframes pop-in { from { opacity: 0; transform: translateY(-8px) scale(0.98); } }
+.dlg { width: min(640px, 100% - 32px); margin: 72px auto auto; border-radius: 20px; }
+.dlg-top { display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 18px; border-bottom: 1px solid var(--border); }
+.dlg-top .input { border: 0; height: 44px; padding: 0; font-size: 1.125rem; box-shadow: none; }
+.dlg-body { padding: 8px 18px 18px; overflow: auto; max-height: min(520px, 100vh - 200px); }
+.mini-h { margin: 14px 0 4px; color: var(--text-muted); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.results .q { padding: 10px 8px; margin: 0 -8px; border-radius: var(--r-control); }
+.results .q:hover, .results .q:focus-visible { background: var(--surface-2); }
+.menu { width: min(380px, 100%); height: 100%; max-height: none; margin: 0 0 0 auto; }
+.menu-top { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 12px 0 20px; border-bottom: 1px solid var(--border); }
+.menu-nav { padding: 12px 20px; }
+.menu-nav a { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); font: 600 1.125rem/1.3 var(--display); }
+.menu-nav a[aria-current="page"] { color: var(--accent); }
+.menu .btn { margin: 12px 20px; width: calc(100% - 40px); }
+
+/* ---------- Footer ---------- */
+.foot { margin-top: 96px; border-top: 1px solid var(--border); }
+.foot-in { display: grid; grid-template-columns: 1.4fr repeat(3, minmax(0, 1fr)); gap: 32px; padding: 48px 0 32px; }
+.foot-in p { max-width: 30ch; margin-top: 14px; color: var(--soft); }
+.foot h2 { margin-bottom: 10px; font-size: 0.9375rem; font-weight: 700; }
+.foot li a { display: inline-block; padding: 5px 0; color: var(--soft); }
+.foot li a:hover { color: var(--accent); }
+.fine { padding: 20px 0 32px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8125rem; }
+@media (max-width: 799px) { .foot-in { grid-template-columns: 1fr 1fr; } .foot-in > :first-child { grid-column: 1 / -1; } }
+
+/* ---------- Views (hash routes) ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+.js [data-view].is-active { animation: view-in var(--dur) var(--ease) both; }
+@keyframes view-in { from { opacity: 0; transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .live::before, .dot.last::after { animation: none; }
+}
+</style>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-mark" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" style="fill: currentColor; stroke: none"/><path d="M7 21.5 13 15l4.5 4.5L25 11" style="fill: none; stroke: var(--cut); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4.5 5.5h15v10h-8l-4.5 3.5v-3.5H4.5z"/><path d="M8.5 9.5h7M8.5 12h4.5"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 17.5h6M10 20.5h4M12 3.5a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1.1 2V17.5h5V16.3c.1-.8.5-1.5 1.1-2A6 6 0 0 0 12 3.5Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-2-1.3-2 1.3-2-1.3-2 1.3-2-1.3-2 1.3z"/><path d="M9 8h6M9 11.5h6M9 15h3.5"/></symbol>
+  <symbol id="i-basket" viewBox="0 0 24 24"><path d="M3.5 9.5h17l-1.8 9a1.5 1.5 0 0 1-1.5 1.2H6.8a1.5 1.5 0 0 1-1.5-1.2zM8 9.5 11 4M16 9.5 13 4M9.5 13v3.5M14.5 13v3.5"/></symbol>
+  <symbol id="i-house" viewBox="0 0 24 24"><path d="M4 11 12 4.5l8 6.5M6 9.5v10h12v-10M10 19.5v-5h4v5"/></symbol>
+  <symbol id="i-bus" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="14" rx="2.5"/><path d="M5 11h14M8 17.5v2.5M16 17.5v2.5M8.5 14.5h.01M15.5 14.5h.01"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5.5 13.5H12L11 21l7.5-10.5H12z"/></symbol>
+  <symbol id="i-cup" viewBox="0 0 24 24"><path d="M5 8.5h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5v2M11 3.5v2"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top" id="top">
+  <a class="brand" href="#/" aria-label="Pricemere, home"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg>Pricemere</a>
+  <button class="find" type="button" data-search aria-haspopup="dialog"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>Search prices<kbd>/</kbd></button>
+  <nav class="nav" aria-label="Main">
+    <a href="#/prices">Prices</a>
+    <a href="#/charts">Charts</a>
+    <a href="#/support">Support us</a>
+    <a href="#/about">About</a>
+  </nav>
+  <div class="top-end">
+    <button class="icon-btn find-ico" type="button" data-search aria-label="Search prices" aria-haspopup="dialog"><svg class="icon"><use href="#i-search"/></svg></button>
+    <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark theme"><svg class="icon i-moon"><use href="#i-moon"/></svg><svg class="icon i-sun"><use href="#i-sun"/></svg></button>
+    <a class="btn sm" href="#/report">Report a price</a>
+    <button class="icon-btn menu-btn" id="menu-open" type="button" aria-label="Open menu" aria-haspopup="dialog"><svg class="icon"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+
+<dialog class="dlg" id="search" aria-label="Search prices, neighbourhoods and charts">
+  <div class="dlg-top">
+    <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+    <label class="sr-only" for="q">Search prices, neighbourhoods and charts</label>
+    <input class="input" id="q" type="search" placeholder="Search eggs, rent, bus fare…" autocomplete="off">
+    <button class="icon-btn" type="button" data-close aria-label="Close search"><svg class="icon"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="dlg-body">
+    <p class="mini-h" id="q-status" aria-live="polite">Biggest movers this week</p>
+    <ul class="results" id="results"></ul>
+  </div>
+</dialog>
+
+<dialog class="menu" id="menu" aria-label="Menu">
+  <div class="menu-top">
+    <span class="brand"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg>Pricemere</span>
+    <button class="icon-btn" type="button" data-close aria-label="Close menu"><svg class="icon"><use href="#i-close"/></svg></button>
+  </div>
+  <nav class="menu-nav" aria-label="All pages">
+    <a href="#/">Home</a>
+    <a href="#/prices">Prices</a>
+    <a href="#/charts">Charts</a>
+    <a href="#/support">Support us</a>
+    <a href="#/about">About</a>
+    <a href="#/contact">Contact</a>
+  </nav>
+  <a class="btn" href="#/report">Report a price</a>
+</dialog>
+
+<main id="main">
+
+<!-- ======================= HOME ======================= -->
+<div data-view="home">
+  <section class="hero ink" aria-labelledby="hero-h">
+    <div class="wrap hero-in">
+      <div>
+        <p class="pill-live live">Week 47 · 412 prices checked</p>
+        <h1 class="hero-h" id="hero-h">What Wrenhaven pays, <span class="grad">checked every week.</span></h1>
+        <p class="hero-p">An independent, reader-funded price desk. We track groceries, rent, fares and bills in six neighbourhoods and publish every number.</p>
+        <button class="hero-find" type="button" data-search aria-haspopup="dialog"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>Search eggs, rent, bus fare…<kbd>/</kbd></button>
+        <ul class="hero-chips" aria-label="Popular prices">
+          <li><a href="#/item?id=eggs"><span class="badge" style="--h:40" aria-hidden="true">Eg</span>Eggs</a></li>
+          <li><a href="#/item?id=rent1"><span class="badge" style="--h:262" aria-hidden="true">1B</span>1-bed rent</a></li>
+          <li><a href="#/item?id=bus"><span class="badge" style="--h:200" aria-hidden="true">Bf</span>Bus fare</a></li>
+          <li><a href="#/item?id=flatwhite"><span class="badge" style="--h:55" aria-hidden="true">Fw</span>Flat white</a></li>
+        </ul>
+      </div>
+      <aside class="hero-card" aria-label="This week's basket">
+        <div class="cc-head">
+          <span class="badge lg" style="--h:262" aria-hidden="true"><svg class="icon"><use href="#i-basket"/></svg></span>
+          <div>
+            <p class="cc-name">Wrenhaven basket <span class="code">BSKT</span></p>
+            <p class="cc-val"><span><b>112.4</b><span class="u">pts</span></span><span class="chg up">+0.60%</span></p>
+            <p class="cc-sub">This week · 40 items, January 2024 = 100</p>
+          </div>
+        </div>
+        <svg class="spark" data-spark="i:basket" data-days="365" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <ul class="quotes">
+          <li><a class="q" href="#/prices?cat=food"><span class="q-n"><b>Groceries</b></span><span class="q-v"><b>118.9</b><span class="chg up">+1.20%</span></span></a></li>
+          <li><a class="q" href="#/prices?cat=home"><span class="q-n"><b>Housing</b></span><span class="q-v"><b>109.7</b><span class="chg up">+0.10%</span></span></a></li>
+          <li><a class="q" href="#/prices?cat=power"><span class="q-n"><b>Energy</b></span><span class="q-v"><b>96.8</b><span class="chg down">−0.90%</span></span></a></li>
+        </ul>
+        <a class="more" href="#/about?at=method">How the basket works</a>
+      </aside>
+    </div>
+    <svg class="horizon" viewBox="0 0 1440 300" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="hz" x1="0" x2="1"><stop offset="0" stop-color="oklch(60% 0.2 264)" stop-opacity="0"/><stop offset="0.35" stop-color="oklch(62% 0.2 264)"/><stop offset="1" stop-color="oklch(82% 0.14 170)"/></linearGradient><linearGradient id="hzf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="oklch(60% 0.18 240)" stop-opacity="0.22"/><stop offset="1" stop-color="oklch(60% 0.18 240)" stop-opacity="0"/></linearGradient><path id="hzl" d="M0 250C90 246 140 222 220 228S340 196 430 204 560 170 650 182 790 132 880 146 1010 104 1100 116 1240 62 1330 70 1410 40 1440 36"/></defs>
+      <path d="M0 250C90 246 140 222 220 228S340 196 430 204 560 170 650 182 790 132 880 146 1010 104 1100 116 1240 62 1330 70 1410 40 1440 36V300H0Z" fill="url(#hzf)"/>
+      <use class="glow" href="#hzl" fill="none" stroke="url(#hz)" stroke-width="10"/>
+      <use href="#hzl" fill="none" stroke="url(#hz)" stroke-width="2.5"/>
+    </svg>
+  </section>
+
+  <div class="wrap">
+    <section class="sec" aria-labelledby="wk-h">
+      <div class="sec-head"><h2 class="sec-h" id="wk-h"><a href="#/prices">This week</a></h2><p class="live">Updated Fri 20 Nov, 9:00</p></div>
+      <div class="g-sum">
+        <article class="card" aria-labelledby="big-h">
+          <div class="cc-head">
+            <span class="badge lg" style="--h:262" aria-hidden="true"><svg class="icon"><use href="#i-basket"/></svg></span>
+            <div>
+              <h3 class="cc-name" id="big-h">Wrenhaven basket <span class="code">BSKT</span></h3>
+              <p class="cc-val"><span><b>112.4</b><span class="u">pts</span></span><span class="chg up">+0.60%</span><span class="cc-sub" data-range-note>+6.10% past year</span></p>
+            </div>
+          </div>
+          <div class="plot" data-chart="i:basket" data-range="1Y" role="img" aria-label="Wrenhaven basket over the past year"></div>
+          <div class="cc-foot">
+            <div class="seg" role="group" aria-label="Chart range"><button type="button" data-range="1M" aria-pressed="false">1M</button><button type="button" data-range="6M" aria-pressed="false">6M</button><button type="button" data-range="1Y" aria-pressed="true">1Y</button><button type="button" data-range="5Y" aria-pressed="false">5Y</button></div>
+            <a class="more" href="#/charts">Read this week's charts</a>
+          </div>
+        </article>
+        <section class="card" aria-labelledby="idx-h">
+          <h3 class="card-h" id="idx-h">Indexes</h3>
+          <ul class="quotes">
+            <li><a class="q" href="#/prices?cat=food"><span class="q-n"><span class="badge" style="--h:70" aria-hidden="true"><svg class="icon"><use href="#i-basket"/></svg></span><span><b>Groceries</b><span class="code">GROC</span></span></span><span class="q-v"><b>118.9</b><span class="u">pts</span><span class="chg up">+1.20%</span></span></a></li>
+            <li><a class="q" href="#/prices?cat=home"><span class="q-n"><span class="badge" style="--h:262" aria-hidden="true"><svg class="icon"><use href="#i-house"/></svg></span><span><b>Housing</b><span class="code">HOUS</span></span></span><span class="q-v"><b>109.7</b><span class="u">pts</span><span class="chg up">+0.10%</span></span></a></li>
+            <li><a class="q" href="#/prices?cat=move"><span class="q-n"><span class="badge" style="--h:200" aria-hidden="true"><svg class="icon"><use href="#i-bus"/></svg></span><span><b>Transport</b><span class="code">MOVE</span></span></span><span class="q-v"><b>104.2</b><span class="u">pts</span><span class="chg down">−0.40%</span></span></a></li>
+            <li><a class="q" href="#/prices?cat=power"><span class="q-n"><span class="badge" style="--h:300" aria-hidden="true"><svg class="icon"><use href="#i-bolt"/></svg></span><span><b>Energy</b><span class="code">ENGY</span></span></span><span class="q-v"><b>96.8</b><span class="u">pts</span><span class="chg down">−0.90%</span></span></a></li>
+            <li><a class="q" href="#/prices?cat=out"><span class="q-n"><span class="badge" style="--h:25" aria-hidden="true"><svg class="icon"><use href="#i-cup"/></svg></span><span><b>Eating out</b><span class="code">OUT</span></span></span><span class="q-v"><b>114.6</b><span class="u">pts</span><span class="chg up">+0.50%</span></span></a></li>
+          </ul>
+          <a class="more" href="#/prices">See all 20 prices</a>
+        </section>
+      </div>
+
+      <div class="g-3">
+        <section class="card" aria-labelledby="pay-h">
+          <h3 class="card-h" id="pay-h">Where a month's pay goes</h3>
+          <ul class="legend">
+            <li><i style="--c:var(--c1)"></i><span>Rent<b>41%</b></span></li>
+            <li><i style="--c:var(--c2)"></i><span>Food<b>18%</b></span></li>
+            <li><i style="--c:var(--c3)"></i><span>Transport<b>9%</b></span></li>
+            <li><i style="--c:var(--c4)"></i><span>Energy<b>6%</b></span></li>
+            <li><i style="--c:var(--c5)"></i><span>Rest<b>26%</b></span></li>
+          </ul>
+          <div class="share" role="img" aria-label="Rent 41%, food 18%, transport 9%, energy 6%, everything else 26% of median take-home pay"><span style="--c:var(--c1);width:41%"></span><span style="--c:var(--c2);width:18%"></span><span style="--c:var(--c3);width:9%"></span><span style="--c:var(--c4);width:6%"></span><span style="--c:var(--c5);width:26%"></span></div>
+          <ul class="quotes" style="margin-top:12px">
+            <li><a class="q" href="#/item?id=rent1"><span class="q-n"><span class="badge" style="--h:262" aria-hidden="true">1B</span><span><b>Rent, 1-bed flat</b><span class="code">R1BD</span></span></span><span class="q-v"><b>1,420</b><span class="u">USD</span><span class="chg up">+0.20%</span></span></a></li>
+            <li><a class="q" href="#/item?id=eggs"><span class="q-n"><span class="badge" style="--h:40" aria-hidden="true">Eg</span><span><b>Eggs</b><span class="code">EGG12</span></span></span><span class="q-v"><b>4.86</b><span class="u">USD</span><span class="chg up">+3.20%</span></span></a></li>
+          </ul>
+          <a class="more" href="#/about?at=method">How we measure</a>
+        </section>
+        <section class="card" aria-labelledby="fuel-h">
+          <h3 class="card-h" id="fuel-h"><a href="#/prices?cat=power">Fuel and energy</a></h3>
+          <div class="plot" data-chart="fuel" data-range="1Y" role="img" aria-label="Petrol price over the past year"></div>
+          <ul class="quotes">
+            <li><a class="q" href="#/item?id=fuel"><span class="q-n"><span class="badge" style="--h:20" aria-hidden="true">Pt</span><span><b>Petrol</b><span class="code">FUEL</span></span></span><span class="q-v"><b>1.62</b><span class="u">USD / litre</span><span class="chg down">−1.80%</span></span></a></li>
+            <li><a class="q" href="#/item?id=kwh"><span class="q-n"><span class="badge" style="--h:190" aria-hidden="true">kW</span><span><b>Electricity</b><span class="code">KWH</span></span></span><span class="q-v"><b>0.312</b><span class="u">USD / kWh</span><span class="chg flat">0.00%</span></span></a></li>
+            <li><a class="q" href="#/item?id=gas"><span class="q-n"><span class="badge" style="--h:50" aria-hidden="true">Gs</span><span><b>Heating gas</b><span class="code">GAS</span></span></span><span class="q-v"><b>0.112</b><span class="u">USD / kWh</span><span class="chg up">+2.10%</span></span></a></li>
+          </ul>
+          <a class="more" href="#/prices?cat=power">See all energy</a>
+        </section>
+        <section class="card" aria-labelledby="rent-h">
+          <h3 class="card-h" id="rent-h"><a href="#/item?id=rent1">Rent by neighbourhood</a></h3>
+          <ul class="bars">
+            <li><div class="row"><b>Old Quay</b><span class="num">1,610 <span class="chg up">+6.80%</span></span></div><div class="bar" role="img" aria-label="Rent 46% and basket 18% of take-home pay"><span style="width:46%"></span><span style="--c:var(--c2);width:18%"></span></div></li>
+            <li><div class="row"><b>Hollins Hill</b><span class="num">1,525 <span class="chg up">+7.90%</span></span></div><div class="bar" role="img" aria-label="Rent 44% and basket 18% of take-home pay"><span style="width:44%"></span><span style="--c:var(--c2);width:18%"></span></div></li>
+            <li><div class="row"><b>Ferrow End</b><span class="num">1,210 <span class="chg up">+2.90%</span></span></div><div class="bar" role="img" aria-label="Rent 35% and basket 16% of take-home pay"><span style="width:35%"></span><span style="--c:var(--c2);width:16%"></span></div></li>
+          </ul>
+          <ul class="key"><li><i></i>Rent, share of pay</li><li><i style="--c:var(--c2)"></i>Weekly basket</li></ul>
+          <a class="more" href="#/item?id=rent1">Rent in every neighbourhood</a>
+        </section>
+      </div>
+    </section>
+
+    <section class="sec js-only" aria-labelledby="mv-h">
+      <div class="sec-head"><h2 class="sec-h" id="mv-h"><a href="#/prices?sort=w">Biggest movers</a></h2></div>
+      <div class="rail">
+        <ol class="tiles" id="movers"><!-- built from ITEMS: the ten biggest weekly changes --></ol>
+        <button class="nudge" type="button" data-nudge="movers" aria-label="Show more movers"><svg class="icon"><use href="#i-next"/></svg></button>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="ch-h">
+      <div class="sec-head">
+        <h2 class="sec-h" id="ch-h"><a href="#/charts">Charts of the week</a></h2>
+        <div class="tabs js-only" role="group" aria-label="Order charts"><button type="button" data-sort-ideas="pick" aria-pressed="true">Editors' picks</button><button type="button" data-sort-ideas="useful" aria-pressed="false">Most useful</button></div>
+      </div>
+      <div class="ideas" id="ideas-home">
+        <article class="idea"><a class="idea-img" href="#/chart"><img src="images/chart-eggs.svg" alt="Line chart of egg prices rising inside a channel" width="640" height="360"></a><h3><a href="#/chart">Eggs are up 18% in a year. Two shops kept them under $4</a></h3><p>Fourteen stores, ninety days of shelf checks, and one farm that explains the gap.</p><footer><span class="by">by Ines Varela<small>1 day ago</small></span></footer></article>
+        <article class="idea"><a class="idea-img" href="#/chart"><img src="images/chart-rent.svg" alt="Bar chart of median one-bedroom rent by neighbourhood" width="640" height="360"></a><h3><a href="#/chart">Rent climbs fastest near the new tram stops</a></h3><p>Listings within ten minutes' walk of the Line 3 stops rose 9.4%, against 5.8% for the whole city.</p><footer><span class="by">by Tomas Reyes<small>2 days ago</small></span></footer></article>
+        <article class="idea"><a class="idea-img" href="#/chart"><img src="images/chart-fares.svg" alt="Step chart of transit fares since 2021" width="640" height="360"></a><h3><a href="#/chart">One fare rise in five years, three for the monthly pass</a></h3><p>A step chart of every change since 2021, and when the pass stops paying for itself.</p><footer><span class="by">by Priya Nair<small>3 days ago</small></span></footer></article>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="st-h">
+      <div class="sec-head"><h2 class="sec-h" id="st-h"><a href="#/charts">Top stories</a></h2></div>
+      <ul class="stories">
+        <li><a href="#/chart"><span class="meta"><span class="badge" style="--h:40" aria-hidden="true">Eg</span>3 hours ago · Price desk</span><b>Eggs rise for a third week as two Saltmarsh shops run short</b></a></li>
+        <li><a href="#/item?id=bus"><span class="meta"><span class="badge" style="--h:200" aria-hidden="true">Bf</span>6 hours ago · City hall</span><b>Council confirms the single fare stays at $2.40 until June</b></a></li>
+        <li><a href="#/item?id=fuel"><span class="meta"><span class="badge" style="--h:20" aria-hidden="true">Pt</span>8 hours ago · Price desk</span><b>Petrol drops below $1.65 a litre for the first time since March</b></a></li>
+        <li><a href="#/item?id=room"><span class="meta"><span class="badge" style="--h:280" aria-hidden="true">Rm</span>1 day ago · Housing</span><b>Rooms in Hollins Hill pass $800 a month in new listings</b></a></li>
+        <li><a href="#/report"><span class="meta"><span class="badge" style="--h:150" aria-hidden="true"><svg class="icon"><use href="#i-receipt"/></svg></span>1 day ago · Readers</span><b>61 readers sent receipts this week, the most since we started</b></a></li>
+        <li><a href="#/about?at=method"><span class="meta"><span class="badge" style="--h:230" aria-hidden="true">Mi</span>3 days ago · Corrections</span><b>Correction: last week's milk price for Ferrow End</b></a></li>
+      </ul>
+    </section>
+
+    <section class="band ink" id="newsletter" aria-labelledby="nl-h">
+      <div>
+        <h2 id="nl-h">The Friday basket, in your inbox.</h2>
+        <p>Every Friday at nine: the five prices that moved most, one chart, and nothing else. Free, and you can leave with one click.</p>
+      </div>
+      <div>
+        <form class="form" data-form="newsletter" novalidate>
+          <div class="inline">
+            <div class="field" style="flex:1">
+              <label class="sr-only" for="nl-email">Email address</label>
+              <input class="input" id="nl-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" aria-describedby="nl-email-err">
+              <p class="err" id="nl-email-err" aria-live="polite"></p>
+            </div>
+            <button class="btn" type="submit" style="height:48px">Get the email</button>
+          </div>
+        </form>
+        <div class="done" data-success="newsletter" hidden>
+          <h3><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>You're on the list</h3>
+          <p>The next Friday basket arrives on Friday at nine. Nothing was sent from this demo: connect a real email service to deliver it.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ======================= PRICES ======================= -->
+<div data-view="prices" class="wrap page">
+  <div class="ph">
+    <h1 class="h1">Everyday prices in Wrenhaven</h1>
+    <p class="lead">Twenty things most households buy, checked every week at shops, cafés, listings and bills across the city. Sort by any column; tap a row for its full history.</p>
+  </div>
+  <div class="chips js-only" role="group" aria-label="Category">
+    <button type="button" data-cat="all" aria-pressed="true">All</button><button type="button" data-cat="food" aria-pressed="false">Groceries</button><button type="button" data-cat="home" aria-pressed="false">Housing</button><button type="button" data-cat="move" aria-pressed="false">Transport</button><button type="button" data-cat="power" aria-pressed="false">Energy</button><button type="button" data-cat="out" aria-pressed="false">Eating out</button><button type="button" data-cat="watch" aria-pressed="false">Watching<small id="watch-n">0</small></button>
+  </div>
+  <div class="toolbar js-only">
+    <div class="filter"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><label class="sr-only" for="pq">Filter prices</label><input class="input" id="pq" type="search" placeholder="Filter by name or code" autocomplete="off"></div>
+    <p class="count" id="p-count" aria-live="polite">20 prices</p>
+  </div>
+  <div class="tbl-wrap">
+    <table class="tbl" id="ptable">
+      <thead><tr>
+        <th class="sticky" scope="col"><button class="sort" type="button" data-sort="name">Item<svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></button></th>
+        <th scope="col"><button class="sort" type="button" data-sort="price">Price<svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></button></th>
+        <th scope="col"><button class="sort" type="button" data-sort="w">1 week<svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></button></th>
+        <th scope="col"><button class="sort" type="button" data-sort="y">1 year<svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></button></th>
+        <th scope="col">12 weeks</th>
+        <th scope="col" class="tl">Category</th>
+        <th scope="col"><button class="sort" type="button" data-sort="places">Checked at<svg class="icon" aria-hidden="true"><use href="#i-up"/></svg></button></th>
+        <th scope="col"><span class="sr-only">Watch</span></th>
+      </tr></thead>
+      <tbody id="prows">
+        <tr><th class="sticky" scope="row"><a class="q-n" href="#/item?id=eggs"><span class="badge" style="--h:40" aria-hidden="true">Eg</span><span><b>Eggs<sup class="flag">R</sup></b><span class="code">EGG12</span></span></a></th><td><b>4.86</b><span class="u">/ dozen</span></td><td><span class="chg up">+3.20%</span></td><td><span class="chg up">+18.40%</span></td><td></td><td class="tl">Groceries</td><td>14</td><td></td></tr>
+        <tr><th class="sticky" scope="row"><a class="q-n" href="#/item?id=milk"><span class="badge" style="--h:230" aria-hidden="true">Mi</span><span><b>Milk</b><span class="code">MLK2L</span></span></a></th><td><b>2.74</b><span class="u">/ 2 litres</span></td><td><span class="chg down">−0.70%</span></td><td><span class="chg up">+4.10%</span></td><td></td><td class="tl">Groceries</td><td>16</td><td></td></tr>
+        <tr><th class="sticky" scope="row"><a class="q-n" href="#/item?id=bread"><span class="badge" style="--h:60" aria-hidden="true">Lo</span><span><b>Sandwich loaf</b><span class="code">LOAF</span></span></a></th><td><b>3.42</b><span class="u">/ 800 g</span></td><td><span class="chg up">+0.30%</span></td><td><span class="chg up">+6.20%</span></td><td></td><td class="tl">Groceries</td><td>15</td><td></td></tr>
+        <tr><th class="sticky" scope="row"><a class="q-n" href="#/item?id=apples"><span class="badge" style="--h:145" aria-hidden="true">Ap</span><span><b>Apples<sup class="flag">R</sup></b><span class="code">APL1K</span></span></a></th><td><b>3.95</b><span class="u">/ kg</span></td><td><span class="chg down">−2.40%</span></td><td><span class="chg down">−3.10%</span></td><td></td><td class="tl">Groceries</td><td>12</td><td></td></tr>
+        </tbody>
+    </table>
+    <p class="empty" id="p-empty" hidden>No prices match. Clear the filter or pick another category.</p>
+  </div>
+  <p class="note"><sup class="flag">R</sup> includes prices readers reported. Red means it costs more than before, green that it costs less. Last checked Friday 20 November 2026.</p>
+</div>
+
+<!-- ======================= ITEM ======================= -->
+<div data-view="item" class="wrap page">
+  <ol class="crumbs"><li><a href="#/prices">Prices</a></li><li><a id="it-cat" href="#/prices?cat=food">Groceries</a></li><li id="it-crumb">Eggs</li></ol>
+  <div class="it-head">
+    <div class="it-name">
+      <span class="badge lg" id="it-badge" style="--h:40" aria-hidden="true">Eg</span>
+      <div><h1 class="h1" id="it-name">Eggs</h1><p><span class="code" id="it-code">EGG12</span><span id="it-places">Checked at 14 places in Wrenhaven</span></p></div>
+    </div>
+    <div class="it-acts">
+      <button class="btn btn-o sm js-only" type="button" id="it-watch" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-star"/></svg>Watch</button>
+      <a class="btn sm" id="it-report" href="#/report?item=eggs">Report a price</a>
+    </div>
+  </div>
+  <p class="it-price"><span><b id="it-price">4.86</b><span class="u" id="it-unit">USD / dozen</span></span><span class="chg up" id="it-chg">+0.15 (+3.20%)</span><span class="cc-sub">this week · Fri 20 Nov</span></p>
+  <div class="two">
+    <div class="stack">
+      <section class="card" aria-label="Price history">
+        <div class="cc-foot">
+          <div class="seg" role="group" aria-label="Chart range"><button type="button" data-range="1M" aria-pressed="false">1M</button><button type="button" data-range="6M" aria-pressed="false">6M</button><button type="button" data-range="1Y" aria-pressed="true">1Y</button><button type="button" data-range="5Y" aria-pressed="false">5Y</button></div>
+          <span class="cc-sub" data-range-note>+18.40% past year</span>
+        </div>
+        <div class="plot" id="it-plot" data-chart="eggs" data-range="1Y" role="img" aria-label="Eggs over the past year"></div>
+      </section>
+      <section class="card" aria-labelledby="by-h">
+        <h2 class="card-h" id="by-h">By neighbourhood</h2>
+        <div class="tbl-wrap" style="margin-top:14px">
+          <table class="tbl">
+            <thead><tr><th scope="col">Neighbourhood</th><th scope="col">Price</th><th scope="col">Against the city</th></tr></thead>
+            <tbody id="it-areas"><tr><th scope="row">Saltmarsh</th><td>4.31</td><td><span class="chg down">−11.30%</span></td></tr><tr><th scope="row">Ferrow End</th><td>4.58</td><td><span class="chg down">−5.80%</span></td></tr><tr><th scope="row">Old Quay</th><td>5.19</td><td><span class="chg up">+6.80%</span></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <div class="stack">
+      <section class="card" aria-labelledby="ks-h">
+        <h2 class="card-h" id="ks-h">Key numbers</h2>
+        <dl class="stats" id="it-stats"><div><dt>52-week low</dt><dd>4.05</dd></div><div><dt>52-week high</dt><dd>4.86</dd></div><div><dt>1-year change</dt><dd class="up">+18.40%</dd></div><div><dt>Places checked</dt><dd>14</dd></div></dl>
+      </section>
+      <section class="card" aria-labelledby="ab-h">
+        <h2 class="card-h" id="ab-h">About this number</h2>
+        <p class="muted" style="margin-top:10px">The middle shelf price we found this week, across every place we checked. Offers that need a loyalty card are left out. Readers' receipts count once we can match them to a shop.</p>
+        <a class="more" style="margin-top:12px" href="#/about?at=method">How we collect prices</a>
+      </section>
+    </div>
+  </div>
+  <section class="sec" aria-labelledby="rel-h">
+    <div class="sec-head"><h2 class="sec-h" id="rel-h">Also in <span id="rel-cat">Groceries</span></h2></div>
+    <ol class="tiles" id="related"></ol>
+  </section>
+</div>
+
+<!-- ======================= CHARTS (list) ======================= -->
+<div data-view="charts" class="wrap page">
+  <div class="ph">
+    <h1 class="h1">Charts</h1>
+    <p class="lead">One question, one chart, a few paragraphs. Written by our desk and by readers who sent in enough receipts to see a pattern.</p>
+  </div>
+  <div class="toolbar js-only">
+    <div class="tabs" role="group" aria-label="Order charts"><button type="button" data-order="pick" aria-pressed="true">Editors' picks</button><button type="button" data-order="useful" aria-pressed="false">Most useful</button><button type="button" data-order="new" aria-pressed="false">Newest</button></div>
+    <div class="chips" role="group" aria-label="Topic"><button type="button" data-topic="all" aria-pressed="true">All</button><button type="button" data-topic="food" aria-pressed="false">Groceries</button><button type="button" data-topic="home" aria-pressed="false">Housing</button><button type="button" data-topic="move" aria-pressed="false">Transport</button><button type="button" data-topic="power" aria-pressed="false">Energy</button></div>
+  </div>
+  <div class="ideas" id="ideas-all"><!-- built from IDEAS --></div>
+  <p class="empty" id="ideas-empty" hidden>No charts on that topic yet.</p>
+</div>
+
+<!-- ======================= CHART (article) ======================= -->
+<div data-view="chart" class="wrap page">
+  <article class="art">
+    <ol class="crumbs"><li><a href="#/charts">Charts</a></li><li><a href="#/prices?cat=food">Groceries</a></li></ol>
+    <h1 class="h1">Eggs are up 18% in a year. Two shops kept them under $4</h1>
+    <div class="byline"><span class="av" aria-hidden="true">IV</span><span><b>Ines Varela</b><br>Price desk · Thursday 19 November 2026 · 4 min read</span></div>
+    <figure>
+      <img src="images/chart-eggs.svg" alt="Line chart of the price of a dozen eggs over 90 days, rising from about $4.10 to $4.86 inside a channel, with a level at $4.00" width="640" height="360">
+      <figcaption>Middle shelf price of a dozen eggs across fourteen stores, last 90 days. The green line marks $4.00.</figcaption>
+    </figure>
+    <div class="prose">
+      <p>A dozen eggs cost $4.86 at the middle of Wrenhaven's shelves this week, up from $4.10 a year ago. That is the biggest yearly rise of anything in our basket, and it has not slowed: this was the third week in a row of increases.</p>
+      <a class="embed" href="#/item?id=eggs"><span class="q"><span class="q-n"><span class="badge" style="--h:40" aria-hidden="true">Eg</span><span><b>Eggs</b><span class="code">EGG12</span></span></span><span class="q-v"><b>4.86</b><span class="u">USD</span><span class="chg up">+3.20%</span></span></span></a>
+      <div class="figs"><div><b>+18.4%</b><span>in a year</span></div><div><b>14</b><span>stores checked</span></div><div><b>2</b><span>still under $4</span></div></div>
+      <h2>Where they are still under $4</h2>
+      <p>Two shops in Saltmarsh kept a dozen below four dollars all autumn. Both buy from the same farm on the edge of town and sell the eggs loose, so there is no carton price to pass on.</p>
+      <blockquote>“We put the price on a chalkboard every Monday. It has gone up twice since summer, ten cents each time.”<cite>Shop owner, Saltmarsh</cite></blockquote>
+      <h2>What happens next</h2>
+      <p>Wholesale prices usually ease after the winter. We will keep checking every week; if you see eggs for less, <a href="#/report?item=eggs">report the price</a> and we will add it once we can match it to a shop.</p>
+    </div>
+    <div class="art-foot">
+      <span class="muted">Was this chart useful?</span>
+      <span class="acts"><span class="cmt"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>12 comments</span><button class="useful js-only" type="button" data-useful="eggs-shops" data-count="48" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg><span>48</span><span class="sr-only">found this useful</span></button></span>
+    </div>
+  </article>
+</div>
+
+<!-- ======================= REPORT A PRICE ======================= -->
+<div data-view="report" class="wrap page">
+  <div class="ph">
+    <h1 class="h1">Report a price</h1>
+    <p class="lead">Paid something different from our number? Tell us where and how much. One price takes a minute.</p>
+  </div>
+  <div class="two">
+    <section class="card" aria-label="Price report form">
+      <form class="form" data-form="report" novalidate>
+        <div class="row2">
+          <div class="field"><label for="r-item">What did you buy?</label><select class="input" id="r-item" name="item" required aria-describedby="r-item-err"><option value="">Choose an item</option><option value="eggs">Eggs, dozen</option><option value="milk">Milk, 2 litres</option><option value="bread">Sandwich loaf, 800 g</option><option value="apples">Apples, kg</option><option value="beans">Coffee beans, 250 g</option><option value="rice">Rice, kg</option><option value="butter">Butter, 250 g</option><option value="fuel">Petrol, litre</option><option value="flatwhite">Flat white</option><option value="lunch">Lunch special</option><option value="pizza">Pizza, large</option><option value="other">Something else</option></select><p class="err" id="r-item-err" aria-live="polite"></p></div>
+          <div class="field"><label for="r-price">Price paid <small>(USD)</small></label><input class="input" id="r-price" name="price" type="number" min="0.01" step="0.01" inputmode="decimal" required placeholder="4.29" aria-describedby="r-price-err"><p class="err" id="r-price-err" aria-live="polite"></p></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="r-shop">Shop or café</label><input class="input" id="r-shop" name="shop" required autocomplete="off" placeholder="Name and street" aria-describedby="r-shop-err"><p class="err" id="r-shop-err" aria-live="polite"></p></div>
+          <div class="field"><label for="r-area">Neighbourhood</label><select class="input" id="r-area" name="area" required aria-describedby="r-area-err"><option value="">Choose one</option><option>Old Quay</option><option>Hollins Hill</option><option>Lantern Row</option><option>Saltmarsh</option><option>Brackenford</option><option>Ferrow End</option></select><p class="err" id="r-area-err" aria-live="polite"></p></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="r-date">Date</label><input class="input" id="r-date" name="date" type="date" required max="2026-11-20" aria-describedby="r-date-err"><p class="err" id="r-date-err" aria-live="polite"></p></div>
+          
+        </div>
+        <div class="field"><label class="check"><input type="checkbox" name="ok" required aria-describedby="r-ok-err">The price is real and I paid it in the last month.</label><p class="err" id="r-ok-err" aria-live="polite"></p></div>
+        <div><button class="btn" type="submit">Send the price</button></div>
+      </form>
+      <div class="done" data-success="report" hidden>
+        <h3><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Thanks, we have your price</h3>
+        <p>We match each report to a shop before it counts, usually by Friday. Nothing was sent from this demo: connect a form service to receive reports.</p>
+      </div>
+    </section>
+    <div class="stack">
+      <section class="card" aria-labelledby="rn-h"><h2 class="card-h" id="rn-h">What happens next</h2><ol class="steps"><li><span><b>We match it</b>to a shop we already check.</span></li><li><span><b>A volunteer confirms</b>the shelf price on their next visit.</span></li><li><span><b>It counts</b>in Friday's numbers, marked <sup class="flag">R</sup>.</span></li></ol></section>
+      <section class="card" aria-labelledby="rw-h"><h2 class="card-h" id="rw-h">This week</h2><p class="cc-val"><span><b>61</b><span class="u">reports</span></span><span class="chg flat">from 44 readers</span></p><p class="muted" style="margin-top:8px">Most reported: eggs, the lunch special and petrol.</p></section>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= SUPPORT ======================= -->
+<div data-view="support" class="wrap page">
+  <div class="ph">
+    <h1 class="h1">Keep the numbers free</h1>
+    <p class="lead">No ads, no shop pays us, and every price stays free to read. Readers fund the volunteers' bus fares, the receipts we buy and one part-time editor.</p>
+  </div>
+  <div class="seg js-only" role="group" aria-label="Billing"><button type="button" data-bill="m" aria-pressed="true">Monthly</button><button type="button" data-bill="y" aria-pressed="false">Yearly, two months free</button></div>
+  <div class="tiers">
+    <section class="card tier" aria-labelledby="t1"><h2 id="t1">Reader</h2><p class="price">$0<small>always</small></p><ul class="ticks"><li>Every price and chart</li><li>The Friday email</li><li>Report prices</li></ul><a class="btn btn-o" href="#/?at=newsletter">Get the email</a></section>
+    <section class="card tier best" aria-labelledby="t2"><span class="tag">Most chosen</span><h2 id="t2">Supporter</h2><p class="price" data-m="$5" data-y="$50">$5<small data-per>a month</small></p><ul class="ticks"><li>Everything for readers</li><li>A monthly call with the desk</li><li>Your name in the yearly report</li></ul><a class="btn" href="#/support?tier=supporter&amp;at=join">Become a supporter</a></section>
+    <section class="card tier" aria-labelledby="t3"><h2 id="t3">Partner</h2><p class="price" data-m="$40" data-y="$400">$40<small data-per>a month</small></p><ul class="ticks"><li>For schools, libraries and newsrooms</li><li>Every series as a spreadsheet</li><li>One workshop a year</li></ul><a class="btn btn-o" href="#/support?tier=partner&amp;at=join">Become a partner</a></section>
+  </div>
+  <section class="card" id="join" style="max-width:720px;margin:32px auto 0" aria-labelledby="join-h">
+    <h2 class="card-h" id="join-h">Join in a minute</h2>
+    <form class="form" data-form="signup" novalidate style="margin-top:16px">
+      <div class="row2">
+        <div class="field"><label for="s-name">Name</label><input class="input" id="s-name" name="name" required autocomplete="name" aria-describedby="s-name-err"><p class="err" id="s-name-err" aria-live="polite"></p></div>
+        <div class="field"><label for="s-email">Email</label><input class="input" id="s-email" name="email" type="email" required autocomplete="email" aria-describedby="s-email-err"><p class="err" id="s-email-err" aria-live="polite"></p></div>
+      </div>
+      <div class="field"><label for="s-tier">Level</label><select class="input" id="s-tier" name="tier" required aria-describedby="s-tier-err"><option value="">Choose a level</option><option value="supporter">Supporter</option><option value="partner">Partner</option></select><p class="err" id="s-tier-err" aria-live="polite"></p></div>
+      <div class="field"><label class="check"><input type="checkbox" name="terms" required aria-describedby="s-ok-err">I have read the <a href="#/privacy">privacy notice</a>.</label><p class="err" id="s-ok-err" aria-live="polite"></p></div>
+      <div><button class="btn" type="submit">Continue</button></div>
+    </form>
+    <div class="done" data-success="signup" hidden><h3><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Thank you for keeping it free</h3><p>We will email you a link to finish. Nothing was sent from this demo: connect a payment and membership service to take part.</p></div>
+  </section>
+</div>
+
+<!-- ======================= ABOUT ======================= -->
+<div data-view="about" class="wrap page">
+  <div class="ph">
+    <h1 class="h1">About Pricemere</h1>
+    <p class="lead">We started in 2021 with a notebook and one supermarket. Now a small desk and a few dozen volunteers check what Wrenhaven pays for the things it buys every week.</p>
+  </div>
+  <div class="facts"><div><b>412</b>prices checked each week</div><div><b>38</b>volunteers</div><div><b>6</b>neighbourhoods</div><div><b>2021</b>first basket</div></div>
+  <div class="two" style="margin-top:56px">
+    <section id="method" aria-labelledby="m-h">
+      <h2 class="sec-h" id="m-h">How we measure</h2>
+      <div class="prose" style="margin-top:14px">
+        <p>Volunteers visit the same shops, cafés and petrol stations every week and note the shelf price of the same item in the same size. Rents come from new listings, bills from published tariffs. Readers' receipts count once we can match them to a shop, marked <sup class="flag">R</sup>.</p>
+        <p>The basket is forty items weighted by what a typical household spends, set to 100 in January 2024. <span class="chg up">Red</span> means something costs more than before, <span class="chg down">green</span> that it costs less. Mistakes are fixed in place and listed in the next Friday email.</p>
+      </div>
+      <ul class="legend"><li><i style="--c:var(--c1)"></i><span>Housing<b>44%</b></span></li><li><i style="--c:var(--c2)"></i><span>Groceries<b>27%</b></span></li><li><i style="--c:var(--c3)"></i><span>Transport<b>13%</b></span></li><li><i style="--c:var(--c4)"></i><span>Energy<b>9%</b></span></li><li><i style="--c:var(--c5)"></i><span>Eating out<b>7%</b></span></li></ul>
+      <div class="share" role="img" aria-label="Basket weights: housing 44%, groceries 27%, transport 13%, energy 9%, eating out 7%"><span style="--c:var(--c1);width:44%"></span><span style="--c:var(--c2);width:27%"></span><span style="--c:var(--c3);width:13%"></span><span style="--c:var(--c4);width:9%"></span><span style="--c:var(--c5);width:7%"></span></div>
+    </section>
+    <section class="card" aria-labelledby="desk-h">
+      <h2 class="card-h" id="desk-h">The desk</h2>
+      <ul class="people"><li><span class="av" aria-hidden="true">IV</span><p><b>Ines Varela</b><span>Editor</span></p></li><li><span class="av" aria-hidden="true">TR</span><p><b>Tomas Reyes</b><span>Housing</span></p></li><li><span class="av" aria-hidden="true">PN</span><p><b>Priya Nair</b><span>Volunteers</span></p></li><li><span class="av" aria-hidden="true">OB</span><p><b>Ola Brandt</b><span>Data</span></p></li></ul>
+    </section>
+  </div>
+  <section class="faq" id="faq" aria-labelledby="faq-h" style="max-width:820px;margin-top:56px">
+    <h2 class="sec-h" id="faq-h">Questions</h2>
+    <details><summary>Does any shop pay you?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>No. Readers and partners fund us. We do not take advertising or sponsorship from anyone whose prices we track.</p></details>
+    <details><summary>Can I use your numbers?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Yes. Quote them with a link to the page. Schools, libraries and newsrooms can get every series as a spreadsheet as partners.</p></details>
+    <details><summary>Why is my receipt different?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>We publish the middle shelf price, so half the places we check are cheaper. Loyalty-card offers are left out.</p></details>
+    <details><summary>How do I report a mistake?<svg class="icon" aria-hidden="true"><use href="#i-down"/></svg></summary><p>Write to us from the <a href="#/contact?topic=correction">contact page</a> and we will fix it within a working day.</p></details>
+  </section>
+</div>
+
+<!-- ======================= CONTACT ======================= -->
+<div data-view="contact" class="wrap page">
+  <div class="ph">
+    <h1 class="h1">Contact the desk</h1>
+    <p class="lead">Corrections, data requests and press questions. We answer within two working days.</p>
+  </div>
+  <div class="two">
+    <section class="card" aria-label="Contact form">
+      <form class="form" data-form="contact" novalidate>
+        <div class="row2">
+          <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" required autocomplete="name" aria-describedby="c-name-err"><p class="err" id="c-name-err" aria-live="polite"></p></div>
+          <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" required autocomplete="email" aria-describedby="c-email-err"><p class="err" id="c-email-err" aria-live="polite"></p></div>
+        </div>
+        <div class="field"><label for="c-topic">Topic</label><select class="input" id="c-topic" name="topic" required aria-describedby="c-topic-err"><option value="">Choose a topic</option><option value="correction">A correction</option><option value="data">A data request</option><option value="press">Press</option><option value="other">Something else</option></select><p class="err" id="c-topic-err" aria-live="polite"></p></div>
+        <div class="field"><label for="c-msg">Message</label><textarea class="input" id="c-msg" name="message" rows="5" minlength="20" required aria-describedby="c-msg-err"></textarea><p class="err" id="c-msg-err" aria-live="polite"></p></div>
+        <div><button class="btn" type="submit">Send message</button></div>
+      </form>
+      <div class="done" data-success="contact" hidden><h3><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Message received</h3><p>We answer within two working days. Nothing was sent from this demo: connect a form service to receive messages.</p></div>
+    </section>
+    <section class="card" aria-labelledby="ways-h">
+      <h2 class="card-h" id="ways-h">Other ways</h2>
+      <ul class="ways"><li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><p><b>Email</b><a href="mailto:desk@pricemere.example">desk@pricemere.example</a></p></li><li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><p><b>Desk</b>Room 4, 12 Mill Lane, Wrenhaven</p></li><li><svg class="icon" aria-hidden="true"><use href="#i-receipt"/></svg><p><b>A price, not a message?</b><a href="#/report">Report a price</a></p></li></ul>
+    </section>
+  </div>
+</div>
+
+<!-- ======================= PRIVACY ======================= -->
+<div data-view="privacy" class="wrap page">
+  <div class="legal">
+    <div class="ph"><h1 class="h1">Privacy notice</h1><p class="lead">Last updated 1 November 2026.</p></div>
+    <div class="prose">
+      <p>Pricemere keeps as little about you as it can. This notice says what we collect, why, and how to have it removed.</p>
+      <h2>What we collect</h2>
+      <p>Your email address if you sign up for the Friday email or join as a supporter; the price, shop, date and neighbourhood when you report a price; your name and message when you write to us. We do not use advertising trackers.</p>
+      <h2>Why</h2>
+      <p>To send the email you asked for, to check reported prices, and to answer you. Reports are published only as part of a middle price, never with your name.</p>
+      <h2>Your choices</h2>
+      <p>Every email has a one-click unsubscribe link. To see or delete what we hold, write to <a href="mailto:desk@pricemere.example">desk@pricemere.example</a> and we will reply within a month.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= 404 ======================= -->
+<div data-view="404" class="wrap page">
+  <div class="nf">
+    <b aria-hidden="true">404</b>
+    <h1 class="h1">This page is not on our list</h1>
+    <p class="lead">The link may be old, or the item may have a new code. Search for it, or start from this week's prices.</p>
+    <div class="it-acts"><button class="btn" type="button" data-search>Search prices</button><a class="btn btn-o" href="#/prices">See all prices</a></div>
+  </div>
+</div>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div><a class="brand" href="#/"><svg class="mark" aria-hidden="true"><use href="#i-mark"/></svg>Pricemere</a><p>What Wrenhaven pays, checked every week. Independent and reader-funded since 2021.</p></div>
+    <div><h2>Prices</h2><ul><li><a href="#/prices">Everyday prices</a></li><li><a href="#/report">Report a price</a></li></ul></div>
+    <div><h2>Read</h2><ul><li><a href="#/charts">Charts</a></li><li><a href="#/about?at=method">How we measure</a></li></ul></div>
+    <div><h2>Pricemere</h2><ul><li><a href="#/about">About</a></li><li><a href="#/support">Support us</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/privacy">Privacy</a></li></ul></div>
+  </div>
+  <p class="wrap fine">© 2026 Pricemere. Middle shelf prices from places we checked in Wrenhaven; they are not offers from any shop.</p>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const BRAND = "Pricemere";
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+  const loadSet = (key) => { try { return new Set(JSON.parse(store.get(key) || "[]")); } catch { return new Set(); } };
+  const saveSet = (key, set) => store.set(key, JSON.stringify([...set]));
+
+  /* ---------- Theme: the system setting is the default; the toggle remembers a choice ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to light theme" : "Switch to dark theme");
+  }
+  const saved = store.get("pricemere-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("pricemere-theme", next);
+  });
+  systemDark.addEventListener("change", (event) => { if (!store.get("pricemere-theme")) applyTheme(event.matches ? "dark" : "light"); });
+
+  /* ---------- Content as data. The HTML keeps the first screen of every view so it reads without JavaScript;
+     the script rebuilds what changes (tables, tiles, charts, the item page). Picture paths are written out in full. ---------- */
+  const TODAY = new Date(2026, 10, 20);
+  const CATS = { all: "Basket", food: "Groceries", home: "Housing", move: "Transport", power: "Energy", out: "Eating out" };
+  const IMAGES = {
+    eggs: ["images/chart-eggs.svg", "Line chart of egg prices rising inside a channel"],
+    rent: ["images/chart-rent.svg", "Bar chart of median one-bedroom rent by neighbourhood"],
+    fares: ["images/chart-fares.svg", "Step chart of transit fares since 2021"],
+    coffee: ["images/chart-coffee.svg", "Weekly price ranges of coffee beans drawn as candles"],
+    energy: ["images/chart-energy.svg", "Two lines: electricity falling and heating gas rising"],
+    basket: ["images/chart-basket.svg", "Area chart of the basket index with its average"],
+  };
+  // id: [name, code, category, unit, price now, 1-week %, 1-year %, % in the 4 years before that, wiggle, places checked, badge hue, badge letters, fixed price (1 = changes in steps), reader reports]
+  const ITEMS = {
+    eggs: ["Eggs", "EGG12", "food", "dozen", 4.86, 3.2, 18.4, 22, 0.035, 14, 40, "Eg", 0, 1],
+    milk: ["Milk", "MLK2L", "food", "2 litres", 2.74, -0.7, 4.1, 15, 0.02, 16, 230, "Mi", 0, 0],
+    bread: ["Sandwich loaf", "LOAF", "food", "800 g", 3.42, 0.3, 6.2, 18, 0.015, 15, 60, "Lo", 0, 0],
+    apples: ["Apples", "APL1K", "food", "kg", 3.95, -2.4, -3.1, 9, 0.05, 12, 145, "Ap", 0, 1],
+    beans: ["Coffee beans", "BEAN", "food", "250 g", 8.9, 1.1, 22.6, 14, 0.04, 9, 30, "Cb", 0, 0],
+    rice: ["Rice", "RICE1K", "food", "kg", 2.15, -0.5, 2, 11, 0.02, 13, 85, "Ri", 0, 0],
+    butter: ["Butter", "BTR", "food", "250 g", 3.6, 0.8, 9.7, 30, 0.03, 14, 95, "Bu", 0, 1],
+    rent1: ["Rent, 1-bed flat", "R1BD", "home", "month", 1420, 0.2, 5.8, 21, 0.012, 212, 262, "1B", 0, 0],
+    rent2: ["Rent, 2-bed flat", "R2BD", "home", "month", 1880, -0.1, 4.9, 19, 0.012, 164, 250, "2B", 0, 0],
+    room: ["Room in a shared house", "ROOM", "home", "month", 760, 0.6, 7.3, 24, 0.015, 96, 280, "Rm", 0, 1],
+    bus: ["Bus fare, single", "BUS", "move", "trip", 2.4, 0, 9.1, 10, 0, 1, 200, "Bf", 1, 0],
+    pass: ["Transit pass", "PASS", "move", "month", 78, 0, 4, 18, 0, 1, 215, "Tp", 1, 0],
+    fuel: ["Petrol", "FUEL", "move", "litre", 1.62, -1.8, -6.4, 12, 0.06, 11, 20, "Pt", 0, 0],
+    bike: ["Bike service", "BIKE", "move", "basic", 55, 0, 10, 20, 0, 7, 170, "Bk", 1, 1],
+    kwh: ["Electricity", "KWH", "power", "kWh", 0.312, 0, -2.5, 38, 0, 3, 190, "kW", 1, 0],
+    gas: ["Heating gas", "GAS", "power", "kWh", 0.112, 2.1, 12, 45, 0.04, 3, 50, "Gs", 0, 0],
+    flatwhite: ["Flat white", "FLTW", "out", "cup", 4.2, 0, 7.7, 16, 0, 18, 55, "Fw", 1, 0],
+    lunch: ["Lunch special", "LNCH", "out", "plate", 13.5, 1.5, 6.3, 21, 0.02, 12, 15, "Ls", 0, 1],
+    pizza: ["Pizza, large", "PIZZ", "out", "pie", 19, -0.5, 3.3, 17, 0.02, 8, 25, "Pz", 0, 0],
+    cinema: ["Cinema ticket", "CINE", "out", "adult", 14, 0, 3.7, 12, 0, 4, 300, "Ci", 1, 0],
+  };
+  const item = (id) => {
+    const [name, code, cat, unit, price, w, y, y4, vol, places, hue, mark, step, reader] = ITEMS[id];
+    return { id, name, code, cat, unit, price, w, y, y4, vol, places, hue, mark, step, reader, dec: price >= 100 ? 0 : price < 1 ? 3 : 2 };
+  };
+  // Indexes: [name, points now, 1-week %, 1-year %, % in the 4 years before, wiggle]
+  const INDEXES = { basket: ["Wrenhaven basket", 112.4, 0.6, 6.1, 12, 0.012] };
+  // Neighbourhoods and how their prices compare with the city's middle price
+  const AREAS = { "Old Quay": 1.068, "Hollins Hill": 1.041, "Lantern Row": 1.012, "Brackenford": 0.975, "Ferrow End": 0.942, Saltmarsh: 0.887 };
+  // Charts: [id, title, summary, author, topic, picture, days ago, comments, found useful, editors' pick order (0 = not a pick), item]
+  const IDEAS = [
+    ["eggs-shops", "Eggs are up 18% in a year. Two shops kept them under $4", "Fourteen stores, ninety days of shelf checks, and one farm that explains the gap.", "Ines Varela", "food", "eggs", 1, 12, 48, 1, "eggs"],
+    ["tram-rent", "Rent climbs fastest near the new tram stops", "Listings within ten minutes' walk of the Line 3 stops rose 9.4%, against 5.8% for the whole city.", "Tomas Reyes", "home", "rent", 2, 31, 120, 2, "rent1"],
+    ["fare-steps", "One fare rise in five years, three for the monthly pass", "A step chart of every change since 2021, and when the pass stops paying for itself.", "Priya Nair", "move", "fares", 3, 8, 64, 3, "pass"],
+    ["bean-range", "Coffee beans: the weekly range is wider than the trend", "Same bag, same shop, five prices in one month. Offers now move the price more than the harvest does.", "Ola Brandt", "food", "coffee", 4, 19, 87, 0, "beans"],
+    ["two-rates", "Electricity got cheaper this autumn. Heating gas did not", "Two unit rates from the same three suppliers, moving in opposite directions since September.", "Mei Tanaka", "power", "energy", 5, 22, 95, 4, "gas"],
+    ["basket-112", "The basket at 112: what moved it, and what barely did", "Forty items since January 2024. Groceries did most of the climbing; transport hardly moved.", "Ines Varela", "all", "basket", 6, 40, 150, 0, ""],
+  ];
+
+  /* ---------- Numbers ---------- */
+  const fmt = (value, dec = 2) => value.toLocaleString("en-US", { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  const dirOf = (value) => (value > 0.004 ? "up" : value < -0.004 ? "down" : "flat");
+  const pct = (value) => (value > 0.004 ? "+" : value < -0.004 ? "−" : "") + fmt(Math.abs(value)) + "%";
+  const chg = (value) => `<span class="chg ${dirOf(value)}">${pct(value)}</span>`;
+  const day = (date, withYear) => date.toLocaleDateString("en-GB", { day: "numeric", month: "short", ...(withYear ? { year: "numeric" } : {}) });
+
+  /* ---------- Price histories: one value a day for five years, drawn from seeded noise so every view agrees.
+     The anchors are the numbers in the data (today, a week ago, a year ago, five years ago). Replace this with real series. ---------- */
+  const DAYS = 1826;
+  const histories = new Map();
+  function random(seed) {
+    let s = seed >>> 0;
+    return () => {
+      s = (s + 0x6d2b79f5) >>> 0;
+      let t = Math.imul(s ^ (s >>> 15), s | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function specOf(key) {
+    if (key.startsWith("i:")) { const [, v, w, y, y4, vol] = INDEXES[key.slice(2)]; return { now: v, w, y, y4, vol, dec: 1, unit: "pts" }; }
+    const it = item(key);
+    return { now: it.price, w: it.w, y: it.y, y4: it.y4, vol: it.vol, step: it.step, dec: it.dec, unit: `USD / ${it.unit}` };
+  }
+  function daily(key) {
+    if (histories.has(key)) return histories.get(key);
+    const { now, w, y, y4, vol, step } = specOf(key);
+    const next = random([...key].reduce((h, c) => Math.imul(h ^ c.charCodeAt(0), 16777619), 2166136261));
+    const anchors = [[0, now / (1 + y / 100) / (1 + y4 / 100)], [DAYS - 366, now / (1 + y / 100)], [DAYS - 8, now / (1 + w / 100)], [DAYS - 1, now]];
+    const out = [];
+    for (let k = 0; k < 3; k++) {
+      const [i0, a] = anchors[k];
+      const [i1, b] = anchors[k + 1];
+      const len = i1 - i0;
+      const walk = [0];
+      for (let i = 1; i <= len; i++) walk.push(walk[i - 1] + next() - 0.5);
+      const drift = walk[len];
+      const peak = Math.max(...walk.map((v, i) => Math.abs(v - (drift * i) / len))) || 1;
+      const amp = vol * Math.min(1, Math.sqrt(len / 365));
+      for (let i = k ? 1 : 0; i <= len; i++) {
+        const t = i / len;
+        out.push(step ? (t < 0.6 ? a : b) : (a + (b - a) * t) * (1 + (amp * (walk[i] - drift * t)) / peak));
+      }
+    }
+    histories.set(key, out);
+    return out;
+  }
+  const RANGES = { "1M": [30, 1, "past month"], "6M": [182, 2, "past 6 months"], "1Y": [365, 4, "past year"], "5Y": [1825, 20, "past 5 years"] };
+  function slice(key, days, every) {
+    const all = daily(key);
+    const start = DAYS - 1 - days;
+    const idx = [];
+    for (let i = DAYS - 1; i > start; i -= every) idx.unshift(i);
+    idx.unshift(start);
+    return { vals: idx.map((i) => all[i]), dates: idx.map((i) => new Date(TODAY.getTime() - (DAYS - 1 - i) * 864e5)) };
+  }
+
+  /* ---------- Drawing: area and line in a 100 x 100 box stretched to the card; labels, dot and crosshair are HTML ---------- */
+  const pathOf = (vals, lo, hi, height) => vals.map((v, i) => `${i ? "L" : "M"}${((i / (vals.length - 1)) * 100).toFixed(1)} ${(height - ((v - lo) / (hi - lo)) * height).toFixed(1)}`).join("");
+  function drawSparks(scope = document) {
+    $$("svg[data-spark]", scope).forEach((svg) => {
+      const { vals } = slice(svg.dataset.spark, Number(svg.dataset.days || 84), svg.dataset.days ? 4 : 2);
+      const lo = Math.min(...vals), hi = Math.max(...vals), pad = (hi - lo) * 0.1 || hi * 0.05;
+      const line = pathOf(vals, lo - pad, hi + pad, 40);
+      svg.dataset.dir = dirOf(((vals.at(-1) - vals[0]) / vals[0]) * 100);
+      svg.innerHTML = `<path d="${line}"/><path d="${line}L100 40L0 40Z"/>`;
+    });
+  }
+  let gradients = 0;
+  function drawChart(box) {
+    const key = box.dataset.chart;
+    const [days, every, label] = RANGES[box.dataset.range];
+    const { vals, dates } = slice(key, days, every);
+    const { dec, unit } = specOf(key);
+    const min = Math.min(...vals), max = Math.max(...vals), pad = (max - min) * 0.12 || max * 0.02;
+    const lo = min - pad, hi = max + pad;
+    const id = `g${++gradients}`;
+    const line = pathOf(vals, lo, hi, 100);
+    const change = ((vals.at(-1) - vals[0]) / vals[0]) * 100;
+    box.dataset.dir = dirOf(change);
+    const ys = [0.15, 0.38, 0.62, 0.85].map((f) => `<span class="gl" style="top:${f * 100}%"></span><span class="yl" style="top:${f * 100}%">${fmt(hi - f * (hi - lo), dec)}</span>`).join("");
+    const xs = [0, 0.25, 0.5, 0.75, 1].map((f) => {
+      const d = dates[Math.round(f * (dates.length - 1))];
+      const text = days > 400 ? d.getFullYear() : days > 40 ? d.toLocaleDateString("en-GB", { month: "short", ...(f % 1 ? {} : { year: "numeric" }) }) : day(d);
+      return `<span class="xl${f === 0 ? " s" : f === 1 ? " e" : f === 0.5 ? "" : " xq"}" style="left:${f * 100}%">${text}</span>`;
+    }).join("");
+    box.innerHTML = `${ys}<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity="0.24"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs><path d="${line}L100 100L0 100Z" fill="url(#${id})"/><path class="line" d="${line}" vector-effect="non-scaling-stroke"/></svg>${xs}<span class="dot last" style="left:100%;top:${(1 - (vals.at(-1) - lo) / (hi - lo)) * 100}%"></span><span class="cross" hidden></span><span class="dot" data-hover hidden></span><span class="tip" hidden></span>`;
+    box.setAttribute("aria-label", `${specName(key)}, ${label}: from ${fmt(vals[0], dec)} to ${fmt(vals.at(-1), dec)} ${unit}`);
+    const note = box.closest(".card")?.querySelector("[data-range-note]");
+    if (note) { note.textContent = `${pct(change)} ${label}`; note.className = `cc-sub ${dirOf(change)}`; }
+    const [cross, dot, tip] = [$(".cross", box), $("[data-hover]", box), $(".tip", box)];
+    box.onpointermove = (event) => {
+      const r = box.getBoundingClientRect();
+      const i = Math.max(0, Math.min(vals.length - 1, Math.round(((event.clientX - r.left) / r.width) * (vals.length - 1))));
+      const x = (i / (vals.length - 1)) * 100;
+      cross.style.left = dot.style.left = `${x}%`;
+      dot.style.top = `${(1 - (vals[i] - lo) / (hi - lo)) * 100}%`;
+      tip.style.left = `clamp(60px, ${x}%, calc(100% - 60px))`;
+      tip.textContent = `${fmt(vals[i], dec)} · ${day(dates[i], true)}`;
+      cross.hidden = dot.hidden = tip.hidden = false;
+    };
+    box.onpointerleave = () => { cross.hidden = dot.hidden = tip.hidden = true; };
+  }
+  const specName = (key) => (key.startsWith("i:") ? INDEXES[key.slice(2)][0] : item(key).name);
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest(".seg [data-range]");
+    if (!button) return;
+    const card = button.closest(".card");
+    $$("[data-range]", button.parentElement).forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    const box = $(".plot", card);
+    box.dataset.range = button.dataset.range;
+    drawChart(box);
+  });
+
+  /* ---------- Shared pieces ---------- */
+  const badge = (it) => `<span class="badge" style="--h:${it.hue}" aria-hidden="true">${it.mark}</span>`;
+  const flag = (it) => (it.reader ? '<sup class="flag" title="Includes reader reports">R</sup>' : "");
+  const nameCell = (it) => `<span class="q-n">${badge(it)}<span><b>${it.name}${flag(it)}</b><span class="code">${it.code}</span></span></span>`;
+  const tile = (it) => `<li><a class="tile" href="#/item?id=${it.id}">${nameCell(it)}<span class="tile-v"><span><b>${fmt(it.price, it.dec)}</b><span class="u">USD / ${it.unit}</span></span>${chg(it.w)}</span><svg class="spark" data-spark="${it.id}" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"></svg></a></li>`;
+  const ids = Object.keys(ITEMS);
+  const watch = loadSet("pricemere-watch");
+  const useful = loadSet("pricemere-useful");
+
+  /* Biggest movers this week, and the round arrow that pages the row */
+  $("#movers").innerHTML = ids.map(item).sort((a, b) => Math.abs(b.w) - Math.abs(a.w)).slice(0, 10).map(tile).join("");
+  $$("[data-nudge]").forEach((button) => button.addEventListener("click", () => {
+    const row = document.getElementById(button.dataset.nudge);
+    const end = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
+    row.scrollTo({ left: end ? 0 : row.scrollLeft + row.clientWidth * 0.9, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }));
+
+  /* Chart cards */
+  const ago = (d) => (d === 1 ? "1 day ago" : `${d} days ago`);
+  function ideaCard([id, title, text, author, , pic, days, comments, count, , itemId]) {
+    const [src, alt] = IMAGES[pic];
+    const mine = useful.has(id);
+    return `<article class="idea"><a class="idea-img" href="#/chart"><img src="${src}" alt="${alt}" width="640" height="360"><span class="corner" aria-hidden="true"><svg class="mark"><use href="#i-mark"/></svg></span>${itemId ? badge(item(itemId)) : ""}</a><h3><a href="#/chart">${title}</a></h3><p>${text}</p><footer><span class="by">by ${author}<small>${ago(days)}</small></span><span class="acts"><span class="cmt"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>${comments}<span class="sr-only">comments</span></span><button class="useful" type="button" data-useful="${id}" data-count="${count}" aria-pressed="${mine}"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg><span>${count + (mine ? 1 : 0)}</span><span class="sr-only">found this useful</span></button></span></footer></article>`;
+  }
+  const order = { pick: (a, b) => (a[9] || 99) - (b[9] || 99), useful: (a, b) => b[8] - a[8], new: (a, b) => a[6] - b[6] };
+  function homeIdeas(by) { $("#ideas-home").innerHTML = [...IDEAS].sort(order[by]).slice(0, 3).map(ideaCard).join(""); }
+  homeIdeas("pick");
+  $$("[data-sort-ideas]").forEach((button) => button.addEventListener("click", () => {
+    $$("[data-sort-ideas]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    homeIdeas(button.dataset.sortIdeas);
+  }));
+  const ideaState = { order: "pick", topic: "all" };
+  function allIdeas() {
+    const list = IDEAS.filter((x) => ideaState.topic === "all" || x[4] === ideaState.topic).sort(order[ideaState.order]);
+    $("#ideas-all").innerHTML = list.map(ideaCard).join("");
+    $("#ideas-empty").hidden = list.length > 0;
+  }
+  $$("[data-order], [data-topic]").forEach((button) => button.addEventListener("click", () => {
+    const key = button.dataset.order ? "order" : "topic";
+    $$(`[data-${key}]`).forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    ideaState[key] = button.dataset[key];
+    allIdeas();
+  }));
+  allIdeas();
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-useful]");
+    if (!button) return;
+    const on = button.getAttribute("aria-pressed") !== "true";
+    on ? useful.add(button.dataset.useful) : useful.delete(button.dataset.useful);
+    saveSet("pricemere-useful", useful);
+    button.setAttribute("aria-pressed", String(on));
+    button.querySelector("span").textContent = Number(button.dataset.count) + (on ? 1 : 0);
+  });
+
+  /* ---------- Prices table: category chips, a filter, sortable columns and a watch star ---------- */
+  const table = { cat: "all", q: "", sort: "", dir: 1 };
+  function priceRow(it) {
+    return `<tr><th class="sticky" scope="row"><a class="q-n" href="#/item?id=${it.id}">${badge(it)}<span><b>${it.name}${flag(it)}</b><span class="code">${it.code}</span></span></a></th><td><b>${fmt(it.price, it.dec)}</b><span class="u">/ ${it.unit}</span></td><td>${chg(it.w)}</td><td>${chg(it.y)}</td><td><svg class="spark" data-spark="${it.id}" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"></svg></td><td class="tl">${CATS[it.cat]}</td><td>${it.places}</td><td><button class="star" type="button" data-watch="${it.id}" aria-pressed="${watch.has(it.id)}" aria-label="Watch ${it.name}"><svg class="icon"><use href="#i-star"/></svg></button></td></tr>`;
+  }
+  function renderTable() {
+    const q = table.q.toLowerCase();
+    let list = ids.map(item).filter((it) => (table.cat === "all" || it.cat === table.cat || (table.cat === "watch" && watch.has(it.id))) && (!q || `${it.name} ${it.code} ${CATS[it.cat]}`.toLowerCase().includes(q)));
+    if (table.sort) list.sort((a, b) => (table.sort === "name" ? a.name.localeCompare(b.name) : a[table.sort] - b[table.sort]) * table.dir);
+    $("#prows").innerHTML = list.map(priceRow).join("");
+    drawSparks($("#prows"));
+    $("#p-empty").hidden = list.length > 0;
+    $("#p-count").textContent = `${list.length} ${list.length === 1 ? "price" : "prices"}`;
+    $("#watch-n").textContent = watch.size;
+    $$("#ptable thead th").forEach((th) => {
+      const key = $("[data-sort]", th)?.dataset.sort;
+      if (key && key === table.sort) th.setAttribute("aria-sort", table.dir > 0 ? "ascending" : "descending"); else th.removeAttribute("aria-sort");
+    });
+  }
+  function setCat(cat) {
+    table.cat = CATS[cat] || cat === "watch" ? cat : "all";
+    $$("[data-cat]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cat === table.cat)));
+    renderTable();
+  }
+  $$("[data-cat]").forEach((button) => button.addEventListener("click", () => setCat(button.dataset.cat)));
+  $("#pq").addEventListener("input", (event) => { table.q = event.target.value.trim(); renderTable(); });
+  $$("#ptable [data-sort]").forEach((button) => button.addEventListener("click", () => {
+    const key = button.dataset.sort;
+    table.dir = table.sort === key ? -table.dir : key === "name" ? 1 : -1;
+    table.sort = key;
+    renderTable();
+  }));
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-watch]");
+    if (!button) return;
+    const id = button.dataset.watch;
+    watch.has(id) ? watch.delete(id) : watch.add(id);
+    saveSet("pricemere-watch", watch);
+    $$(`[data-watch="${id}"]`).forEach((b) => b.setAttribute("aria-pressed", String(watch.has(id))));
+    $("#watch-n").textContent = watch.size;
+    if (table.cat === "watch") renderTable();
+  });
+
+  /* ---------- Item page: every part comes from ITEMS and its history ---------- */
+  function setItem(id) {
+    const it = item(ITEMS[id] ? id : "eggs");
+    const all = daily(it.id);
+    const year = all.slice(DAYS - 366);
+    const city = it.price;
+    $("#it-badge").style.setProperty("--h", it.hue);
+    $("#it-badge").textContent = it.mark;
+    $("#it-name").innerHTML = it.name + flag(it);
+    $("#it-crumb").textContent = it.name;
+    $("#it-cat").textContent = CATS[it.cat];
+    $("#it-cat").setAttribute("href", `#/prices?cat=${it.cat}`);
+    $("#it-code").textContent = it.code;
+    $("#it-places").textContent = `Checked at ${it.places} ${it.places === 1 ? "place" : "places"} in Wrenhaven`;
+    $("#it-price").textContent = fmt(it.price, it.dec);
+    $("#it-unit").textContent = `USD / ${it.unit}`;
+    const before = all[DAYS - 8];
+    $("#it-chg").className = `chg ${dirOf(it.w)}`;
+    $("#it-chg").textContent = `${it.price - before >= 0 ? "+" : "−"}${fmt(Math.abs(it.price - before), it.dec)} (${pct(it.w)})`;
+    $("#it-report").setAttribute("href", `#/report?item=${it.id}`);
+    $("#it-watch").dataset.watch = it.id;
+    $("#it-watch").setAttribute("aria-pressed", String(watch.has(it.id)));
+    $("#it-stats").innerHTML = [["52-week low", fmt(Math.min(...year), it.dec)], ["52-week high", fmt(Math.max(...year), it.dec)], ["1-year change", pct(it.y), dirOf(it.y)], ["5-year change", pct(((it.price - all[0]) / all[0]) * 100), dirOf(it.price - all[0])], ["Year average", fmt(year.reduce((s, v) => s + v, 0) / year.length, it.dec)], ["Places checked", it.places]]
+      .map(([k, v, c]) => `<div><dt>${k}</dt><dd${c ? ` class="${c}"` : ""}>${v}</dd></div>`).join("");
+    const rows = Object.entries(AREAS).map(([name, level]) => [name, it.step ? city : city * level]).sort((a, b) => a[1] - b[1]);
+    const top = rows.at(-1)[1];
+    $("#it-areas").innerHTML = rows.map(([name, v], i) => `<tr><th scope="row">${name}${i === 0 && !it.step ? ' <span class="tag">Lowest</span>' : ""}</th><td>${fmt(v, it.dec)}</td><td><span class="rel">${chg(((v - city) / city) * 100)}<span class="bar"><span style="width:${(v / top) * 100}%"></span></span></span></td></tr>`).join("");
+    $("#rel-cat").textContent = CATS[it.cat];
+    $("#related").innerHTML = ids.map(item).filter((x) => x.cat === it.cat && x.id !== it.id).slice(0, 4).map(tile).join("");
+    drawSparks($("#related"));
+    const box = $("#it-plot");
+    box.dataset.chart = it.id;
+    drawChart(box);
+    return it.name;
+  }
+
+  /* ---------- Support: monthly or yearly ---------- */
+  $$("[data-bill]").forEach((button) => button.addEventListener("click", () => {
+    const yearly = button.dataset.bill === "y";
+    $$("[data-bill]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    $$(".price[data-m]").forEach((p) => { p.firstChild.textContent = yearly ? p.dataset.y : p.dataset.m; $("[data-per]", p).textContent = yearly ? "a year" : "a month"; });
+  }));
+
+  /* ---------- Search (/ or ⌘K) and the small-screen menu ---------- */
+  const searchBox = $("#search"), menu = $("#menu"), query = $("#q");
+  function search() {
+    const term = query.value.trim().toLowerCase();
+    const found = term ? ids.map(item).filter((it) => `${it.name} ${it.code} ${CATS[it.cat]} ${it.unit}`.toLowerCase().includes(term)) : ids.map(item).sort((a, b) => Math.abs(b.w) - Math.abs(a.w)).slice(0, 5);
+    const ideas = term ? IDEAS.filter((x) => `${x[1]} ${x[2]}`.toLowerCase().includes(term)) : [];
+    const html = found.map((it) => `<li><a class="q" href="#/item?id=${it.id}">${nameCell(it)}<span class="q-v"><b>${fmt(it.price, it.dec)}</b><span class="u">USD / ${it.unit}</span>${chg(it.w)}</span></a></li>`).join("")
+      + ideas.map((x) => `<li><a class="q" href="#/chart"><span class="q-n"><span class="badge" style="--h:264" aria-hidden="true"><svg class="icon"><use href="#i-chat"/></svg></span><b>${x[1]}</b></span></a></li>`).join("");
+    $("#results").innerHTML = html || `<li class="muted" style="padding:12px 0">Nothing matches “${query.value.replace(/[<&]/g, "")}”. Try eggs, rent or bus.</li>`;
+    const count = found.length + ideas.length;
+    $("#q-status").textContent = term ? `${count} ${count === 1 ? "result" : "results"}` : "Biggest movers this week";
+  }
+  query.addEventListener("input", search);
+  const openSearch = () => { if (menu.open) menu.close(); search(); searchBox.showModal(); query.focus(); };
+  $$("[data-search]").forEach((button) => button.addEventListener("click", openSearch));
+  document.addEventListener("keydown", (event) => {
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName);
+    if ((event.key === "/" && !typing) || (event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey))) { event.preventDefault(); if (!searchBox.open) openSearch(); }
+  });
+  $("#menu-open").addEventListener("click", () => { menu.showModal(); $(".menu-nav a", menu).focus(); });
+  $$("[data-close]").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()));
+  [searchBox, menu].forEach((d) => d.addEventListener("click", (event) => { if (event.target === d) d.close(); }));
+
+  /* ---------- Header: ink while the hero is under it ---------- */
+  const top = $("#top"), hero = $(".hero");
+  function ink() { top.classList.toggle("on-ink", root.dataset.page === "home" && window.scrollY < hero.offsetHeight - top.offsetHeight); }
+  window.addEventListener("scroll", ink, { passive: true });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: `${BRAND}: what Wrenhaven pays, checked every week`,
+    prices: "Everyday prices",
+    charts: "Charts",
+    chart: "Eggs are up 18% in a year",
+    report: "Report a price",
+    support: "Support us",
+    about: "About",
+    contact: "Contact",
+    privacy: "Privacy notice",
+    "404": "Page not found",
+  };
+  const preselect = (id, value) => { const field = document.getElementById(id); if (value && [...field.options].some((o) => o.value === value)) field.value = value; };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, q = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(q) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current !== views.get(name)) {
+      current?.classList.remove("is-active");
+      current = views.get(name);
+      current.classList.add("is-active");
+    }
+    root.dataset.page = name;
+    let title = titles[name];
+    if (name === "item") title = setItem(route.params.get("id"));
+    if (name === "prices") { if (route.params.get("sort")) { table.sort = route.params.get("sort"); table.dir = -1; } setCat(route.params.get("cat") || "all"); }
+    if (name === "report") preselect("r-item", route.params.get("item"));
+    if (name === "contact") preselect("c-topic", route.params.get("topic"));
+    if (name === "support") preselect("s-tier", route.params.get("tier"));
+    $$(".plot", current).forEach((box) => { if (name !== "item") drawChart(box); });
+    document.title = name === "home" ? title : `${title} | ${BRAND}`;
+    const section = { item: "prices", chart: "charts" }[name] ?? name;
+    $$(".nav a, .menu-nav a").forEach((a) => {
+      const href = a.getAttribute("href").slice(2);
+      if (href === (section === "home" ? "" : section)) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const at = route.params.get("at");
+    const target = at && document.getElementById(at);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    ink();
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    $$("dialog[open]").forEach((d) => d.close());
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      go(href);
+    } else if (href.length > 1) {
+      const target = document.querySelector(href);
+      if (target) { event.preventDefault(); target.setAttribute("tabindex", "-1"); target.scrollIntoView({ block: "start" }); target.focus({ preventScroll: true }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = {
+    valueMissing: "Please fill this in.",
+    typeMismatch: "Please enter a valid email address, like name@example.com.",
+    tooShort: "Please write a little more (20 characters or more).",
+    rangeUnderflow: "The price has to be more than zero.",
+    rangeOverflow: "Pick a date up to this week.",
+    stepMismatch: "Use cents at most, like 4.29.",
+    badInput: "Please enter a number.",
+  };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (field.type === "checkbox" ? "Please tick this box to continue." : field.tagName === "SELECT" ? "Choose one option." : messages[problem]) : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("[aria-describedby]", form);
+    fields.forEach((field) => field.addEventListener(field.type === "checkbox" || field.tagName === "SELECT" ? "change" : "blur", () => { if (field.value || field.type === "checkbox" || field.tagName === "SELECT") checkField(field); }));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`) || form.closest("section").querySelector(`[data-success="${form.dataset.form}"]`);
+        if (success) { success.hidden = false; success.setAttribute("tabindex", "-1"); success.focus({ preventScroll: true }); }
+      }, 500);
+    });
+  });
+
+  /* ---------- Start ---------- */
+  $$("[data-useful]").forEach((b) => { if (useful.has(b.dataset.useful)) { b.setAttribute("aria-pressed", "true"); b.querySelector("span").textContent = Number(b.dataset.count) + 1; } });
+  drawSparks();
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

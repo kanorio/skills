@@ -1,0 +1,1295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Obra: a waterfront museum of design and the moving image</title>
+<meta name="description" content="Exhibitions, films, talks and workshops about how things are made and seen. Open Tuesday to Sunday at the end of Ferry Pier.">
+<meta property="og:title" content="Obra: a waterfront museum of design and the moving image">
+<meta property="og:description" content="Exhibitions, films, talks and workshops about how things are made and seen. Open Tuesday to Sunday at the end of Ferry Pier.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/outfit-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font ---------- */
+@font-face {
+  font-family: "Outfit";
+  src: url("fonts/outfit-latin-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Stripe colors are registered so a theme change fades instead of jumping ---------- */
+@property --s1 { syntax: "<color>"; inherits: true; initial-value: oklch(57% 0.19 32); }
+@property --s2 { syntax: "<color>"; inherits: true; initial-value: oklch(57% 0.2 2); }
+@property --s3 { syntax: "<color>"; inherits: true; initial-value: oklch(55.5% 0.135 248); }
+
+/* ---------- Tokens: day (light) ---------- */
+:root {
+  color-scheme: light;
+  --s1: oklch(57% 0.19 32);        /* vermilion: left stripe */
+  --s2: oklch(57% 0.2 2);          /* rose: middle stripe */
+  --s3: oklch(55.5% 0.135 248);    /* cobalt: right stripe */
+  --bg: var(--s2);
+  --surface: oklch(21% 0.025 285); /* ink: plates, the menu panel, option lists */
+  --text: oklch(100% 0 0);
+  --text-muted: oklch(100% 0 0);   /* no gray text on mid-tone stripes: hierarchy comes from size */
+  --border: oklch(100% 0 0);
+  --accent: oklch(100% 0 0);
+  --accent-text: oklch(21% 0.025 285);
+  --plate: oklch(21% 0.025 285);
+  --plate-text: oklch(100% 0 0);
+  --signal: oklch(89% 0.165 96);
+  --signal-text: oklch(21% 0.025 285);
+  --focus: oklch(89% 0.165 96);
+  --stripes: linear-gradient(90deg, var(--s1) 0 33.333%, var(--s2) 33.333% 66.667%, var(--s3) 66.667% 100%);
+
+  --font: "Outfit", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-display: clamp(3.25rem, 1rem + 7.4vw, 8.5rem);
+  --fs-h1: clamp(2.375rem, 1.1rem + 3.6vw, 4.5rem);
+  --fs-h2: clamp(1.875rem, 1rem + 2.4vw, 3.25rem);
+  --fs-h3: clamp(1.5rem, 1.05rem + 1.3vw, 2.25rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+
+  --r-control: 50%;
+  --r-pill: 999px;
+  --r-card: 0px;
+  --r-media: 0px;
+  --line: 1.5px;
+  --hair: 1px;
+
+  --dur-fast: 160ms;
+  --dur-base: 280ms;
+  --dur-slow: 700ms;
+  --dur-draw: 1800ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --cell: clamp(16px, 2.6vw, 40px);
+  --header-h: 76px;
+  transition: --s1 var(--dur-slow) var(--ease), --s2 var(--dur-slow) var(--ease), --s3 var(--dur-slow) var(--ease);
+}
+
+/* ---------- Tokens: night (dark), from the system setting or the toggle ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --s1: oklch(34% 0.12 32);
+    --s2: oklch(32% 0.115 358);
+    --s3: oklch(32% 0.085 248);
+    --surface: oklch(15% 0.02 285);
+    --text: oklch(97% 0.006 70);
+    --text-muted: oklch(84% 0.012 70);
+    --border: oklch(84% 0.012 70);
+    --accent: oklch(97% 0.006 70);
+    --accent-text: oklch(15% 0.02 285);
+    --plate: oklch(15% 0.02 285);
+    --plate-text: oklch(97% 0.006 70);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --s1: oklch(34% 0.12 32);
+  --s2: oklch(32% 0.115 358);
+  --s3: oklch(32% 0.085 248);
+  --surface: oklch(15% 0.02 285);
+  --text: oklch(97% 0.006 70);
+  --text-muted: oklch(84% 0.012 70);
+  --border: oklch(84% 0.012 70);
+  --accent: oklch(97% 0.006 70);
+  --accent-text: oklch(15% 0.02 285);
+  --plate: oklch(15% 0.02 285);
+  --plate-text: oklch(97% 0.006 70);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 16px); }
+body {
+  margin: 0;
+  min-block-size: 100vh;
+  background: var(--bg);
+  background-image: var(--stripes);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3, h4 { margin: 0; font-weight: 400; line-height: 1.05; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+ul { margin: 0; padding: 0; list-style: none; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 16px; background: var(--plate); color: var(--plate-text); }
+.skip:focus { top: 12px; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.icon { inline-size: 22px; block-size: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.icon-lg { inline-size: clamp(28px, 3vw, 44px); block-size: clamp(28px, 3vw, 44px); stroke-width: 1.25; }
+
+/* ---------- Type ---------- */
+.display { font-size: var(--fs-display); letter-spacing: -0.045em; line-height: 0.92; }
+.h1 { font-size: var(--fs-h1); letter-spacing: -0.03em; line-height: 1.02; }
+.h2 { font-size: var(--fs-h2); letter-spacing: -0.025em; line-height: 1.05; }
+.h3 { font-size: var(--fs-h3); letter-spacing: -0.02em; line-height: 1.1; }
+.lead { font-size: clamp(1.1875rem, 1rem + 0.6vw, 1.5rem); line-height: 1.4; max-width: 34em; }
+.small { font-size: var(--fs-small); font-weight: 500; }
+.kicker { font-size: var(--fs-small); font-weight: 500; letter-spacing: 0.01em; margin: 0 0 14px; }
+
+/* ---------- The stripe grid: every layout snaps to the three background stripes ---------- */
+.tri { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.tri > * { padding-inline: var(--cell); min-inline-size: 0; }
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: 1 / -1; }
+.col-2 { grid-column: 2; }
+.col-3 { grid-column: 3; }
+.rule { block-size: var(--hair); background: var(--border); margin-inline: var(--cell); border: 0; }
+@media (max-width: 760px) {
+  .tri { grid-template-columns: minmax(0, 1fr); }
+  .span-2, .col-2, .col-3 { grid-column: auto; }
+}
+
+/* ---------- Plates: text set on solid blocks, the style's labels ---------- */
+.plate {
+  display: inline-block; padding: 0.12em 0.45em 0.16em; background: var(--plate); color: var(--plate-text);
+  font-size: var(--fs-small); font-weight: 500; line-height: 1.45; letter-spacing: 0.005em; text-decoration: none;
+}
+.plate.signal { background: var(--signal); color: var(--signal-text); }
+.plate.s1 { background: var(--s1); color: oklch(100% 0 0); }
+.plate.s2 { background: var(--s2); color: oklch(100% 0 0); }
+.plate.s3 { background: var(--s3); color: oklch(100% 0 0); }
+.plate.big { font-size: clamp(0.9375rem, 0.7rem + 0.55vw, 1.25rem); font-weight: 400; }
+.plates { display: flex; flex-direction: column; align-items: flex-start; }
+
+/* ---------- Oval buttons (signature) and pills ---------- */
+.oval {
+  position: relative; display: inline-grid; place-items: center; min-inline-size: 13.5rem; min-block-size: 4.25rem; padding: 0 2.25rem;
+  border: var(--line) solid var(--text); border-radius: var(--r-control); background: transparent; color: var(--text);
+  font: inherit; font-size: 1.125rem; font-weight: 400; text-decoration: none; text-align: center; cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.oval:hover { background: var(--accent); color: var(--accent-text); }
+.oval:active { transform: scale(0.98); }
+.oval.solid { background: var(--accent); color: var(--accent-text); }
+.oval.solid:hover { background: transparent; color: var(--text); }
+.oval.small { min-inline-size: 8.25rem; min-block-size: 2.875rem; padding: 0 1.4rem; font-size: 1rem; }
+.oval[disabled] { opacity: 0.7; cursor: progress; }
+.center { text-align: center; }
+.center-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; padding-inline: var(--cell); }
+.pill {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-block-size: 44px; padding: 0 18px;
+  border: var(--line) solid var(--text); border-radius: var(--r-pill); background: transparent; color: var(--text);
+  font: inherit; font-size: 0.9375rem; font-weight: 500; cursor: pointer; text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.pill:hover, .pill[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); }
+.arrow-link { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.arrow-link .icon { transition: transform var(--dur-base) var(--ease); }
+.arrow-link:hover .icon { transform: translateX(6px); }
+.text-link { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 40; background: var(--bg); background-image: var(--stripes); }
+.site-header::after { content: ""; position: absolute; inset: auto var(--cell) 0; block-size: var(--hair); background: var(--border); opacity: 0; transition: opacity var(--dur-base) var(--ease); }
+.site-header.is-scrolled::after { opacity: 1; }
+.header-inner { display: flex; align-items: center; gap: 28px; min-block-size: var(--header-h); padding-inline: var(--cell); }
+.brand { display: inline-flex; align-items: center; color: var(--text); text-decoration: none; }
+.brand-mark { block-size: 28px; inline-size: auto; aspect-ratio: 1320 / 420; fill: currentColor; stroke: none; }
+.nav { display: flex; gap: 4px; margin-inline-start: auto; }
+.nav a { padding: 8px 12px; text-decoration: none; font-size: 1.0625rem; text-underline-offset: 6px; text-decoration-thickness: 1.5px; }
+.nav a:hover, .nav a[aria-current="page"] { text-decoration-line: underline; }
+.header-actions { display: flex; align-items: center; gap: 10px; }
+.round-btn { inline-size: 44px; block-size: 44px; display: inline-grid; place-items: center; border-radius: 50%; border: var(--line) solid var(--text); background: transparent; color: var(--text); cursor: pointer; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.round-btn:hover { background: var(--accent); color: var(--accent-text); }
+.round-btn .icon { inline-size: 20px; block-size: 20px; }
+.menu-btn { display: none; align-items: center; gap: 10px; min-block-size: 44px; padding: 0 4px 0 8px; border: 0; background: transparent; color: var(--text); font: inherit; font-size: 1.0625rem; cursor: pointer; }
+@media (max-width: 900px) {
+  .nav, .header-actions .oval { display: none; }
+  .menu-btn { display: inline-flex; }
+  .header-actions { margin-inline-start: auto; }
+}
+
+/* Full-screen menu: the stripes again, with big link rows */
+.menu { inline-size: 100%; block-size: 100dvh; max-inline-size: none; max-block-size: none; margin: 0; padding: 0; border: 0; background: var(--bg); background-image: var(--stripes); color: var(--text); overscroll-behavior: contain; }
+.menu::backdrop { background: oklch(15% 0.02 285 / 0.5); }
+.menu-top { display: flex; align-items: center; justify-content: space-between; min-block-size: var(--header-h); padding-inline: var(--cell); }
+.menu-links { padding: 24px var(--cell) 40px; }
+.menu-links a { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; border-top: var(--hair) solid var(--border); font-size: clamp(2rem, 1.4rem + 3vw, 3.25rem); letter-spacing: -0.025em; line-height: 1.05; text-decoration: none; }
+.menu-links a:last-of-type { border-bottom: var(--hair) solid var(--border); }
+.menu-foot { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 0 var(--cell) 32px; }
+
+/* ---------- Views ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+main { min-block-size: 70vh; }
+.section { padding-block: clamp(80px, 11vw, 168px); }
+.section-tight { padding-block: clamp(56px, 7vw, 104px); }
+.giant-head { text-align: center; padding-inline: var(--cell); margin-bottom: clamp(40px, 5vw, 72px); }
+.giant-head .sub { margin: 14px 0 0; font-size: var(--fs-small); font-weight: 500; }
+
+/* ---------- Hero with the outlined logotype (signature) ---------- */
+.hero { position: relative; display: grid; grid-template-rows: 1fr auto; min-block-size: calc(100svh - var(--header-h)); }
+.logotype { position: absolute; inset: 8px var(--cell) auto; inline-size: calc(100% - 2 * var(--cell)); block-size: auto; aspect-ratio: 1320 / 420; fill: none; stroke: currentColor; stroke-width: 1.25; pointer-events: none; }
+/* The hero copy draws its outline each time the home view appears (a keyframe animation, so it also runs on first load) */
+.js .logotype.draw path { stroke-dasharray: 1; animation: draw-line var(--dur-draw) var(--ease) 150ms both; }
+@keyframes draw-line { from { stroke-dashoffset: -1; } to { stroke-dashoffset: 0; } }
+.hero-body { position: relative; align-self: end; align-items: end; padding-block: clamp(140px, 22vw, 330px) clamp(40px, 6vw, 88px); }
+.hero h1 { max-width: 13em; }
+.hero-sub { margin: 20px 0 0; max-width: 30em; font-size: clamp(1.0625rem, 0.95rem + 0.4vw, 1.25rem); }
+.hero-side { display: grid; justify-items: start; gap: 28px; }
+.cta-cells { position: relative; }
+.cta-cells a { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-block-size: 76px; padding-block: 16px; font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem); letter-spacing: -0.015em; text-decoration: none; box-shadow: inset 0 var(--hair) 0 var(--border); transition: background-color var(--dur-base) var(--ease); }
+.cta-cells a:hover { background: oklch(15% 0.02 285 / 0.18); }
+.cta-cells a .icon { transition: transform var(--dur-base) var(--ease); }
+.cta-cells a:hover .icon { transform: translateX(6px); }
+/* Portrait screens: the hero shrinks to the logotype plus the copy instead of a full screen */
+@media (orientation: portrait), (max-width: 760px) {
+  .hero { min-block-size: 0; }
+  .hero-body { padding-block: calc((100vw - 2 * var(--cell)) * 0.318 + clamp(36px, 6vw, 64px)) clamp(40px, 6vw, 64px); }
+}
+@media (max-width: 760px) {
+  .logotype { inset-block-start: 12px; }
+  .hero-body { gap: 28px; }
+  .cta-cells a { min-block-size: 64px; }
+}
+
+/* ---------- Exhibition cards: one per stripe ---------- */
+.cards { row-gap: 56px; }
+.xcard { display: flex; flex-direction: column; text-decoration: none; padding-inline: 0 !important; }
+.media { position: relative; overflow: hidden; background: var(--surface); }
+.media img { inline-size: 100%; transition: transform var(--dur-slow) var(--ease); }
+.xcard:hover .media img, .erow:hover .media img { transform: scale(1.035); }
+.media .tag { position: absolute; top: 16px; left: 16px; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; }
+.media .dates { position: absolute; left: 16px; bottom: 16px; }
+.xcard-body { padding: 28px var(--cell) 0; text-align: center; }
+.xcard-body p { margin: 12px auto 0; max-width: 22em; }
+.xcard:hover .h3 { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 6px; }
+
+/* ---------- Event rows: when | picture | what, across the three stripes ---------- */
+.rows { border-bottom: var(--hair) solid transparent; }
+.erow { position: relative; align-items: start; padding-block: clamp(24px, 3vw, 40px); text-decoration: none; }
+.erow::before { content: ""; position: absolute; inset: 0 var(--cell) auto; block-size: var(--hair); background: var(--border); }
+.erow .when .h3 { margin-bottom: 8px; }
+.erow .when p:not(.h3), .erow .what p:not(.h3) { margin: 8px 0 0; font-size: var(--fs-small); font-weight: 500; }
+.erow > .media { padding-inline: 0; margin-inline: var(--cell); }
+.erow .media img { aspect-ratio: 16 / 10; object-fit: cover; }
+.erow .what .plate { margin-top: 14px; }
+.erow:hover .what .h3 { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 6px; }
+@media (max-width: 760px) {
+  .erow { row-gap: 16px; }
+  .erow .media { order: 3; }
+}
+
+/* ---------- Membership band and benefit columns ---------- */
+.benefits > div { text-align: center; padding-block: 8px; }
+.benefits .h3 { margin-bottom: 12px; }
+.benefits p { max-width: 20em; margin-inline: auto; }
+@media (max-width: 760px) { .benefits { row-gap: 40px; } }
+
+/* ---------- Newsletter row ---------- */
+.letter { align-items: start; row-gap: 32px; }
+.ticks li { display: flex; gap: 12px; align-items: flex-start; padding-block: 6px; }
+.ticks .icon { margin-top: 2px; }
+
+/* ---------- Big link rows (signature) ---------- */
+.bigrows { padding-inline: var(--cell); }
+.bigrow { display: flex; align-items: center; gap: 20px; padding-block: clamp(14px, 1.6vw, 22px); border-top: var(--hair) solid var(--border); text-decoration: none; }
+.bigrow:last-child { border-bottom: var(--hair) solid var(--border); }
+.bigrow .label { font-size: clamp(2rem, 1.2rem + 3.6vw, 4.5rem); letter-spacing: -0.035em; line-height: 1; }
+.bigrow .note { font-size: var(--fs-small); font-weight: 500; align-self: flex-end; padding-bottom: 0.5em; }
+.bigrow .icon-lg { margin-inline-start: auto; transition: transform var(--dur-base) var(--ease); }
+.bigrow:hover .icon-lg { transform: translateX(8px); }
+@media (max-width: 760px) { .bigrow .note { display: none; } }
+
+/* ---------- Page heads ---------- */
+.page-head { padding-block: clamp(64px, 9vw, 136px) clamp(40px, 5vw, 72px); }
+.page-head .lead { margin: 22px auto 0; }
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding-inline: var(--cell); margin-bottom: clamp(36px, 4vw, 56px); }
+.empty { text-align: center; padding: 40px var(--cell); }
+
+/* ---------- Detail (exhibition or event) ---------- */
+.detail-head { align-items: end; row-gap: 32px; padding-block: clamp(56px, 7vw, 104px) clamp(32px, 4vw, 56px); }
+.detail-head .plates { margin-bottom: 24px; }
+.facts { display: grid; gap: 0; margin: 0 0 28px; }
+.facts div { display: grid; grid-template-columns: 7.5em 1fr; gap: 12px; padding-block: 12px; border-top: var(--hair) solid var(--border); }
+.facts div:last-child { border-bottom: var(--hair) solid var(--border); }
+.facts dt { font-size: var(--fs-small); font-weight: 500; }
+.facts dd { margin: 0; }
+@media (max-width: 1100px) and (min-width: 761px) { .facts div { grid-template-columns: 1fr; gap: 2px; } }
+.detail-hero { align-items: end; row-gap: 24px; }
+.detail-hero figure { margin: 0; }
+.caption { margin: 12px 0 0; font-size: var(--fs-small); font-weight: 500; }
+.prose-cols p { max-width: 30em; }
+.moves .media { margin-bottom: 22px; }
+.moves .h3 { margin-bottom: 10px; }
+.big-quote { margin: 0; padding-inline: var(--cell); text-align: center; }
+.big-quote blockquote { margin: 0 auto; max-width: 18em; font-size: var(--fs-h1); letter-spacing: -0.03em; line-height: 1.08; }
+.big-quote figcaption { margin-top: 24px; font-size: var(--fs-small); font-weight: 500; }
+@media (max-width: 760px) { .moves { row-gap: 48px; } }
+
+/* ---------- Visit ---------- */
+.info { row-gap: 48px; }
+.info .h3 { margin-bottom: 18px; }
+.hours li, .ways li { padding-block: 10px; border-top: var(--hair) solid var(--border); }
+.hours li:last-child, .ways li:last-child { border-bottom: var(--hair) solid var(--border); }
+.hours span, .ways span { display: block; font-size: var(--fs-small); font-weight: 500; }
+.price-table { inline-size: 100%; border-collapse: collapse; margin-bottom: 28px; }
+.price-table th, .price-table td { padding: 10px 0; border-top: var(--hair) solid var(--border); border-bottom: var(--hair) solid var(--border); text-align: left; font-weight: 400; }
+.price-table td { text-align: right; }
+.faq { padding-inline: var(--cell); max-inline-size: 1100px; margin-inline: auto; }
+.faq details { border-top: var(--hair) solid var(--border); }
+.faq details:last-child { border-bottom: var(--hair) solid var(--border); }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 20px; cursor: pointer; list-style: none; font-size: clamp(1.25rem, 1rem + 0.9vw, 1.75rem); letter-spacing: -0.015em; line-height: 1.2; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(45deg); }
+.faq details p { margin: 0; padding: 0 0 24px; max-width: 46em; }
+
+/* ---------- Membership plans ---------- */
+.switch { display: inline-flex; padding: 4px; border: var(--line) solid var(--text); border-radius: var(--r-pill); }
+.switch button { min-block-size: 40px; padding: 0 18px; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--text); font: inherit; font-size: 0.9375rem; font-weight: 500; cursor: pointer; }
+.switch button[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); }
+.plans { row-gap: 96px; }
+.plan { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.plan > .plate { position: absolute; top: -2.6em; left: 50%; translate: -50% 0; }
+.plan .amount { margin: 18px 0 0; font-size: clamp(3rem, 2rem + 3.2vw, 5.5rem); letter-spacing: -0.045em; line-height: 1; }
+.plan .per { margin: 6px 0 0; font-size: var(--fs-small); font-weight: 500; min-block-size: 1.45em; }
+.plan ul { margin: 28px 0 32px; inline-size: 100%; max-inline-size: 22em; text-align: left; }
+.plan li { display: flex; gap: 12px; padding-block: 10px; border-top: var(--hair) solid var(--border); }
+.plan li:last-child { border-bottom: var(--hair) solid var(--border); }
+.plan li .icon { margin-top: 2px; }
+.plan .oval { margin-top: auto; }
+
+/* ---------- Forms ---------- */
+.form { display: grid; gap: 36px; max-inline-size: 640px; }
+.field { position: relative; display: grid; gap: 8px; align-content: start; }
+.field > label, .legend { font-size: var(--fs-small); font-weight: 500; }
+.input, .select, .textarea {
+  inline-size: 100%; min-block-size: 54px; padding: 12px 22px; border: var(--line) solid var(--text); border-radius: var(--r-pill);
+  background: transparent; color: var(--text); font: inherit; font-size: 1.0625rem;
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.textarea { min-block-size: 160px; border-radius: 28px; resize: vertical; }
+.input:focus, .select:focus, .textarea:focus { outline: none; box-shadow: 0 0 0 3px var(--focus); }
+.input[aria-invalid="true"], .textarea[aria-invalid="true"] { border-color: var(--signal); border-width: 2.5px; }
+.select-wrap { position: relative; }
+.select { appearance: none; padding-inline-end: 52px; cursor: pointer; }
+.select option { background: var(--surface); color: oklch(100% 0 0); }
+.select-wrap .icon { position: absolute; right: 22px; top: 50%; translate: 0 -50%; pointer-events: none; }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: 1rem; }
+.check input { inline-size: 22px; block-size: 22px; margin: 1px 0 0; flex: none; accent-color: var(--accent); }
+/* Errors float in the gap under the field, so showing or clearing one never moves the button being clicked */
+.error:empty { display: none; }
+.error { position: absolute; left: 0; top: calc(100% + 5px); z-index: 1; padding: 1px 10px 2px; background: var(--signal); color: var(--signal-text); font-size: var(--fs-small); font-weight: 500; line-height: 1.45; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 36px 22px; }
+@media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+.inline-form { display: grid; gap: 36px; }
+.success { display: flex; gap: 16px; align-items: flex-start; padding: 22px 26px; border: var(--line) solid var(--text); border-radius: 32px; max-inline-size: 640px; }
+.success p { margin: 6px 0 0; }
+.steps li { display: grid; grid-template-columns: 2.5rem 1fr; gap: 12px; padding-block: 14px; border-top: var(--hair) solid var(--border); }
+.steps li:last-child { border-bottom: var(--hair) solid var(--border); }
+.steps b { font-weight: 400; font-size: 1.5rem; line-height: 1.1; }
+
+/* ---------- About ---------- */
+.numbers > div { text-align: center; }
+.numbers .num { font-size: clamp(3.5rem, 2rem + 5vw, 7.5rem); letter-spacing: -0.05em; line-height: 0.95; }
+.numbers p { margin: 12px auto 0; max-width: 16em; font-size: var(--fs-small); font-weight: 500; }
+.people .erow { align-items: center; }
+.people .erow .what p { font-size: 1rem; font-weight: 400; }
+.initials { inline-size: 64px; block-size: 64px; display: grid; place-items: center; border: var(--line) solid var(--text); border-radius: 50%; font-size: 1.25rem; }
+.names { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 48px; padding-inline: var(--cell); font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); }
+@media (max-width: 760px) {
+  .numbers { row-gap: 40px; }
+  .people .erow { grid-template-columns: calc(64px + var(--cell)) minmax(0, 1fr); column-gap: 16px; row-gap: 2px; align-items: center; }
+  .people .erow > .when { grid-row: span 2; padding-inline-end: 0; }
+  .people .erow > :not(.when) { padding-inline-start: 0; }
+  .people .erow .what p { margin: 0; }
+}
+
+/* ---------- Legal and 404 ---------- */
+.legal { padding-block: clamp(64px, 9vw, 136px); }
+.legal h2 { font-size: 1.5rem; margin: 40px 0 12px; }
+.legal p { max-width: 38em; }
+.notfound { position: relative; padding-block: clamp(48px, 6vw, 88px) clamp(80px, 10vw, 140px); text-align: center; }
+.notfound .logotype { position: relative; inset: auto; margin: 0 auto clamp(32px, 5vw, 64px); }
+.notfound .lead { margin: 20px auto 32px; }
+
+/* ---------- Footer ---------- */
+.site-footer { padding-block: clamp(56px, 7vw, 96px) 40px; }
+.footer-grid { row-gap: 40px; padding-block-start: 40px; }
+.site-footer .rule { margin-bottom: 0; }
+.footer-grid h2 { font-size: var(--fs-small); font-weight: 500; margin-bottom: 14px; }
+.footer-grid li { padding-block: 4px; }
+.footer-grid a { text-decoration: none; }
+.footer-grid a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.footer-brand .brand-mark { block-size: 36px; margin-bottom: 20px; }
+.footer-legal { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 56px; padding-inline: var(--cell); font-size: var(--fs-small); font-weight: 500; }
+.footer-legal a { text-decoration: none; }
+.footer-legal a:hover { text-decoration: underline; }
+.footer-legal span:first-child { margin-inline-end: auto; }
+
+/* ---------- Motion (only with JavaScript; reduced motion removes it) ---------- */
+.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease); }
+.js .reveal.is-in { opacity: 1; transform: none; }
+.js .reveal .plate { clip-path: inset(0 100% 0 0); transition: clip-path var(--dur-slow) var(--ease) 180ms; }
+.js .reveal.is-in .plate { clip-path: inset(0); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; transition-duration: 1ms !important; transition-delay: 0ms !important; scroll-behavior: auto !important; }
+  :root { transition: none; }
+  .js .reveal { transform: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header" id="top">
+  <div class="header-inner">
+    <a class="brand" href="#/" aria-label="Obra home">
+      <svg class="brand-mark" viewBox="0 0 1320 420" aria-hidden="true"><use href="#wordmark"/></svg>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/whats-on">What's on</a>
+      <a href="#/visit">Visit</a>
+      <a href="#/membership">Membership</a>
+      <a href="#/about">About</a>
+    </nav>
+    <div class="header-actions">
+      <button class="round-btn" type="button" id="theme-toggle" aria-label="Switch to night colors">
+        <svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>
+      </button>
+      <a class="oval small" href="#/visit?at=tickets">Tickets</a>
+      <button class="menu-btn" type="button" id="menu-open" aria-controls="menu">
+        Menu <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<dialog class="menu" id="menu" aria-label="Menu">
+  <div class="menu-top">
+    <span class="brand"><svg class="brand-mark" viewBox="0 0 1320 420" aria-hidden="true"><use href="#wordmark"/></svg></span>
+    <button class="round-btn" type="button" id="menu-close" aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+  </div>
+  <nav class="menu-links" aria-label="Menu">
+    <a href="#/whats-on">What's on <svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <a href="#/visit">Visit <svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <a href="#/membership">Membership <svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <a href="#/about">About <svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <a href="#/contact">Contact <svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </nav>
+  <div class="menu-foot">
+    <a class="oval" href="#/visit?at=tickets">Get tickets</a>
+    <span class="plate signal">Open today, 10:00 to 18:00</span>
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="hero" aria-labelledby="hero-title">
+    <svg class="logotype draw" viewBox="0 0 1320 420" aria-hidden="true">
+      <path pathLength="1" vector-effect="non-scaling-stroke" d="M150 0A150 150 0 0 1 300 150V270A150 150 0 0 1 0 270V150A150 150 0 0 1 150 0ZM150 86A64 64 0 0 1 214 150V270A64 64 0 0 1 86 270V150A64 64 0 0 1 150 86Z"/>
+      <path pathLength="1" vector-effect="non-scaling-stroke" d="M340 0H525A103 103 0 0 1 525 206H533A107 107 0 0 1 533 420H340ZM426 68H506A52 52 0 0 1 506 172H426ZM426 240H514A56 56 0 0 1 514 352H426Z"/>
+      <path pathLength="1" vector-effect="non-scaling-stroke" d="M680 0H855A125 125 0 0 1 908 238L980 420H886L830 250H766V420H680ZM766 70H855A55 55 0 0 1 855 180H766Z"/>
+      <path pathLength="1" vector-effect="non-scaling-stroke" d="M1120 0H1220L1320 420H1230L1211 340H1129L1110 420H1020ZM1170 168L1194 270H1146Z"/>
+    </svg>
+    <div class="tri hero-body">
+      <div class="span-2">
+        <h1 class="h1" id="hero-title">A waterfront museum of design and the moving image</h1>
+        <p class="hero-sub">Objects, posters, films and the people who make them, at the end of Ferry Pier.</p>
+      </div>
+      <div class="hero-side">
+        <p class="plates" style="margin:0"><span class="plate signal big">Open today, 10:00 to 18:00</span><span class="plate big">Thursdays until 22:00, free after 18:00</span></p>
+        <a class="oval" href="#/visit?at=tickets">Get tickets</a>
+      </div>
+    </div>
+    <nav class="tri cta-cells" aria-label="Start here">
+      <a href="#/visit">Plan your visit <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a href="#/whats-on">See what's on <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a href="#/membership">Become a member <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </nav>
+  </section>
+
+  <section class="section" id="exhibitions" aria-labelledby="ex-title">
+    <div class="giant-head">
+      <h2 class="display" id="ex-title">Exhibitions</h2>
+      <p class="sub">Now on and opening soon</p>
+    </div>
+    <div class="tri cards">
+      <a class="xcard reveal" href="#/exhibition">
+        <div class="media">
+          <img src="images/soft-machines.svg" width="800" height="600" alt="A wooden rocking chair on a pale floor, with curved lines tracing its rocking motion" decoding="async">
+          <span class="plate tag">Exhibition</span>
+          <span class="plates dates"><span class="plate s2">14 Mar 2027</span><span class="plate s3">30 Aug 2027</span></span>
+        </div>
+        <div class="xcard-body"><h3 class="h3">Soft Machines</h3><p>Furniture that folds, rocks and rolls</p></div>
+      </a>
+      <a class="xcard reveal" href="#/exhibition">
+        <div class="media">
+          <img src="images/signal-noise.svg" width="800" height="600" alt="A dark wall hung with seven bold geometric posters in yellow, red, blue, pink and green" decoding="async">
+          <span class="plate tag">Exhibition</span>
+          <span class="plates dates"><span class="plate s3">2 Apr 2027</span><span class="plate s1">12 Sep 2027</span></span>
+        </div>
+        <div class="xcard-body"><h3 class="h3">Signal and Noise</h3><p>Fifty years of posters from the street</p></div>
+      </a>
+      <a class="xcard reveal" href="#/exhibition">
+        <div class="media">
+          <img src="images/paper-cities.svg" width="800" height="600" alt="White card models of towers, a bridge and low houses on a pale blue table" decoding="async">
+          <span class="plate tag">Collection</span>
+          <span class="plates dates"><span class="plate s1">Ongoing</span><span class="plate signal">Free</span></span>
+        </div>
+        <div class="xcard-body"><h3 class="h3">Paper Cities</h3><p>Architecture models in card and glue</p></div>
+      </a>
+    </div>
+    <div class="center-row" style="margin-top:clamp(48px,6vw,80px)"><a class="oval" href="#/whats-on?type=exhibition">All exhibitions</a></div>
+  </section>
+
+  <section class="section" style="padding-top:0" aria-labelledby="ev-title">
+    <div class="giant-head">
+      <h2 class="display" id="ev-title">Events</h2>
+      <p class="sub">Talks, films and workshops this month</p>
+    </div>
+    <div class="rows">
+      <a class="tri erow reveal" href="#/exhibition">
+        <div class="when"><p class="h3">Sat 20 Mar</p><p>11:00 to 13:00, and two more dates</p></div>
+        <div class="media"><img src="images/family.svg" width="800" height="500" alt="Wooden blocks in red, blue, yellow and green stacked into a small ramp" loading="lazy" decoding="async"></div>
+        <div class="what"><h3 class="h3">Shape Lab: build a chair that moves</h3><p>For families with children aged 5 to 11</p><span class="plate signal">Free with entry</span></div>
+      </a>
+      <a class="tri erow reveal" href="#/exhibition">
+        <div class="when"><p class="h3">Thu 25 Mar</p><p>19:30, Pier Cinema</p></div>
+        <div class="media"><img src="images/screening.svg" width="800" height="500" alt="A cinema screen showing turning gears above dark rows of seats" loading="lazy" decoding="async"></div>
+        <div class="what"><h3 class="h3">Night Films: Machines at Work</h3><p>Four short films about factories, robots and repair</p><span class="plate">Late opening</span></div>
+      </a>
+      <a class="tri erow reveal" href="#/exhibition">
+        <div class="when"><p class="h3">Sat 3 Apr</p><p>14:00 to 17:00, Print Room</p></div>
+        <div class="media"><img src="images/workshop.svg" width="800" height="500" alt="A screen-printing frame, a squeegee and fresh prints drying on a line" loading="lazy" decoding="async"></div>
+        <div class="what"><h3 class="h3">Print in Public: a poster workshop</h3><p>Make a two-colour screen print to take home</p><span class="plate">Members book first</span></div>
+      </a>
+    </div>
+    <div class="center-row" style="margin-top:clamp(48px,6vw,80px)"><a class="oval" href="#/whats-on">All events</a></div>
+  </section>
+
+  <section class="section" style="padding-top:0" aria-labelledby="mem-title">
+    <div class="giant-head">
+      <h2 class="display" id="mem-title">Become a member</h2>
+      <p class="sub">From $30 a year</p>
+    </div>
+    <div class="tri benefits">
+      <div class="reveal"><h3 class="h3">Free entry</h3><p>Every exhibition, as often as you like, all year.</p></div>
+      <div class="reveal"><h3 class="h3">Book first</h3><p>Talks, films and workshops open to members a week early.</p></div>
+      <div class="reveal"><h3 class="h3">Member evenings</h3><p>New shows before they open, with the galleries to yourselves.</p></div>
+    </div>
+    <div class="center-row" style="margin-top:clamp(48px,6vw,80px)"><a class="oval" href="#/membership">Join today</a></div>
+  </section>
+
+  <section class="section-tight" id="letter" aria-labelledby="letter-title">
+    <hr class="rule">
+    <div class="tri letter" style="padding-top:clamp(32px,4vw,56px)">
+      <div><h2 class="h2" id="letter-title">Stay in the loop</h2></div>
+      <ul class="ticks">
+        <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>New exhibitions before they open</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Talks and films worth leaving the house for</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>One email every two weeks, never more</li>
+      </ul>
+      <div>
+        <form class="inline-form" data-form="newsletter" novalidate>
+          <div class="field">
+            <label for="nl-email">Email address</label>
+            <input class="input" id="nl-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="nl-email-error">
+            <span class="error" id="nl-email-error" aria-live="polite"></span>
+          </div>
+          <div><button class="oval small" type="submit">Subscribe</button></div>
+        </form>
+        <div class="success" data-success="newsletter" hidden role="status">
+          <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+          <div><strong style="font-weight:500">You're on the list.</strong><p>The next letter arrives on Friday.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight" style="padding-top:0" aria-label="More">
+    <nav class="bigrows" aria-label="More about your visit">
+      <a class="bigrow" href="#/visit"><span class="label">Plan your visit</span><span class="note">Hours, tickets and getting here</span><svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="bigrow" href="#/visit?at=faq"><span class="label">Questions</span><span class="note">Bags, prams, photos and food</span><svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="bigrow" href="#/contact"><span class="label">Contact us</span><span class="note">Groups, press and hiring a space</span><svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </nav>
+  </section>
+</div>
+
+<!-- ===================== WHAT'S ON ===================== -->
+<div data-view="whats-on">
+  <section class="page-head center">
+    <div style="padding-inline:var(--cell)">
+      <h1 class="display">What's on</h1>
+      <p class="lead">Exhibitions, talks, films and workshops. Most events are free with a ticket for the day.</p>
+    </div>
+  </section>
+  <section style="padding-bottom:clamp(80px,10vw,144px)">
+    <div class="chips" role="group" aria-label="Filter by kind">
+      <button class="pill" type="button" aria-pressed="true" data-filter="all">Everything</button>
+      <button class="pill" type="button" aria-pressed="false" data-filter="exhibition">Exhibitions</button>
+      <button class="pill" type="button" aria-pressed="false" data-filter="talk">Talks</button>
+      <button class="pill" type="button" aria-pressed="false" data-filter="film">Films</button>
+      <button class="pill" type="button" aria-pressed="false" data-filter="workshop">Workshops</button>
+      <button class="pill" type="button" aria-pressed="false" data-filter="family">Families</button>
+    </div>
+    <div class="rows" data-filterable>
+      <a class="tri erow" href="#/exhibition" data-kind="exhibition">
+        <div class="when"><p class="h3">Until 30 Aug</p><p>Gallery 2, Level 1</p></div>
+        <div class="media"><img src="images/soft-machines.svg" width="800" height="600" alt="A wooden rocking chair with curved lines tracing its motion" loading="lazy" decoding="async"></div>
+        <div class="what"><h2 class="h3">Soft Machines</h2><p>Furniture that folds, rocks and rolls</p><span class="plate">Exhibition</span></div>
+      </a>
+      <a class="tri erow" href="#/exhibition" data-kind="exhibition">
+        <div class="when"><p class="h3">From 2 Apr</p><p>Galleries 4 and 5, Level 2</p></div>
+        <div class="media"><img src="images/signal-noise.svg" width="800" height="600" alt="A dark wall hung with bold geometric posters" loading="lazy" decoding="async"></div>
+        <div class="what"><h2 class="h3">Signal and Noise</h2><p>Fifty years of posters from the street</p><span class="plate">Exhibition</span></div>
+      </a>
+      <a class="tri erow" href="#/exhibition" data-kind="exhibition">
+        <div class="when"><p class="h3">Ongoing</p><p>The Long Gallery, Level 0</p></div>
+        <div class="media"><img src="images/paper-cities.svg" width="800" height="600" alt="White card models of towers and houses on a pale blue table" loading="lazy" decoding="async"></div>
+        <div class="what"><h2 class="h3">Paper Cities</h2><p>Architecture models in card and glue</p><span class="plate signal">Free</span></div>
+      </a>
+      <a class="tri erow" href="#/exhibition" data-kind="family">
+        <div class="when"><p class="h3">Sat 20 Mar</p><p>11:00 to 13:00, and two more dates</p></div>
+        <div class="media"><img src="images/family.svg" width="800" height="500" alt="Colourful wooden blocks stacked into a ramp" loading="lazy" decoding="async"></div>
+        <div class="what"><h2 class="h3">Shape Lab: build a chair that moves</h2><p>For families with children aged 5 to 11</p><span class="plate signal">Free with entry</span></div>
+      </a>
+      <a class="tri erow" href="#/exhibition" data-kind="film">
+        <div class="when"><p class="h3">Thu 25 Mar</p><p>19:30, Pier Cinema</p></div>
+        <div class="media"><img src="images/screening.svg" width="800" height="500" alt="A cinema screen showing turning gears above rows of seats" loading="lazy" decoding="async"></div>
+        <div class="what"><h2 class="h3">Night Films: Machines at Work</h2><p>Four short films about factories, robots and repair</p><span class="plate">Late opening</span></div>
+      </a>
+      <a class="tri erow" href="#/exhibition" data-kind="workshop">
+        <div class="when"><p class="h3">Sat 3 Apr</p><p>14:00 to 17:00, Print Room</p></div>
+        <div class="media"><img src="images/workshop.svg" width="800" height="500" alt="A screen-printing frame and prints drying on a line" loading="lazy" decoding="async"></div>
+        <div class="what"><h2 class="h3">Print in Public: a poster workshop</h2><p>Make a two-colour screen print to take home</p><span class="plate">Members book first</span></div>
+      </a>
+      <a class="tri erow" href="#/exhibition" data-kind="talk">
+        <div class="when"><p class="h3">Thu 15 Apr</p><p>18:30, Auditorium</p></div>
+        <div class="media"><img src="images/talk.svg" width="800" height="500" alt="Two chairs, a small table and a floor lamp on a round rug" loading="lazy" decoding="async"></div>
+        <div class="what"><h2 class="h3">In Conversation: Rooms That Move</h2><p>Two furniture designers on homes that change through the day</p><span class="plate">$8, members free</span></div>
+      </a>
+      <a class="tri erow" href="#/exhibition" data-kind="talk">
+        <div class="when"><p class="h3">Sun 18 Apr</p><p>11:00, meet at Gallery 4</p></div>
+        <div class="media"><img src="images/signal-noise.svg" width="800" height="600" alt="Geometric posters on a dark wall" loading="lazy" decoding="async"></div>
+        <div class="what"><h2 class="h3">Curator's Walk: Signal and Noise</h2><p>Forty minutes through the show with the people who made it</p><span class="plate signal">Free with entry</span></div>
+      </a>
+    </div>
+    <p class="empty" data-empty hidden>Nothing of that kind this month. Try another filter.</p>
+  </section>
+</div>
+
+<!-- ===================== DETAIL: EXHIBITION OR EVENT ===================== -->
+<div data-view="exhibition">
+  <section class="tri detail-head">
+    <div class="span-2">
+      <p class="plates" style="flex-direction:row;flex-wrap:wrap"><span class="plate s2 big">14 Mar 2027</span><span class="plate s3 big">30 Aug 2027</span></p>
+      <h1 class="display">Soft Machines</h1>
+      <p class="lead" style="margin-top:24px">Furniture that folds, rocks and rolls: ninety objects that change shape to fit the way we live, from a 1920s steamer chair to a sofa that becomes a bed in one pull.</p>
+    </div>
+    <div>
+      <dl class="facts">
+        <div><dt>Where</dt><dd>Gallery 2, Level 1</dd></div>
+        <div><dt>Tickets</dt><dd>$18, members free</dd></div>
+        <div><dt>Allow</dt><dd>About 75 minutes</dd></div>
+        <div><dt>Access</dt><dd>Step-free, seats in every room</dd></div>
+      </dl>
+      <a class="oval" href="#/visit?at=tickets">Book tickets</a>
+    </div>
+  </section>
+
+  <section class="tri detail-hero">
+    <figure class="span-2" style="padding-inline:0">
+      <div class="media"><img src="images/soft-machines.svg" width="800" height="600" alt="A wooden rocking chair on a pale floor, with curved lines tracing its rocking motion" decoding="async"></div>
+    </figure>
+    <div>
+      <p class="caption">Rocking chair for a small flat, 1964. Bent beech and canvas. Loaned by the Halvorsen family.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="giant-head"><h2 class="h1">Three ways to move</h2></div>
+    <div class="tri moves">
+      <div class="reveal">
+        <div class="media"><img src="images/folding.svg" width="800" height="600" alt="A folding chair shown open and folded flat beside it" loading="lazy" decoding="async"></div>
+        <h3 class="h3">Fold</h3>
+        <p>Chairs, tables and screens that flatten against a wall, made for rooms that have to be three rooms a day.</p>
+      </div>
+      <div class="reveal">
+        <div class="media"><img src="images/soft-machines.svg" width="800" height="600" alt="A rocking chair with motion lines" loading="lazy" decoding="async"></div>
+        <h3 class="h3">Rock</h3>
+        <p>Curved runners and sprung seats, from nursery chairs to a recliner built for a long-haul cockpit.</p>
+      </div>
+      <div class="reveal">
+        <div class="media"><img src="images/rolling.svg" width="800" height="600" alt="A tall cabinet on castors with one door swung open" loading="lazy" decoding="async"></div>
+        <h3 class="h3">Roll</h3>
+        <p>Cabinets, desks and beds on castors that let one floor plan change with the week.</p>
+      </div>
+    </div>
+  </section>
+
+  <figure class="big-quote reveal">
+    <blockquote>“A chair is a machine for sitting that learned to keep still. These ones never did.”</blockquote>
+    <figcaption>Daniel Okafor, curator</figcaption>
+  </figure>
+
+  <section class="section">
+    <div class="giant-head"><h2 class="h1">With the exhibition</h2></div>
+    <div class="rows">
+      <a class="tri erow" href="#/whats-on?type=family">
+        <div class="when"><p class="h3">Sat 20 Mar</p><p>11:00 to 13:00</p></div>
+        <div class="media"><img src="images/family.svg" width="800" height="500" alt="Colourful wooden blocks stacked into a ramp" loading="lazy" decoding="async"></div>
+        <div class="what"><h3 class="h3">Shape Lab: build a chair that moves</h3><p>For families with children aged 5 to 11</p></div>
+      </a>
+      <a class="tri erow" href="#/whats-on?type=talk">
+        <div class="when"><p class="h3">Thu 15 Apr</p><p>18:30, Auditorium</p></div>
+        <div class="media"><img src="images/talk.svg" width="800" height="500" alt="Two chairs, a small table and a floor lamp" loading="lazy" decoding="async"></div>
+        <div class="what"><h3 class="h3">In Conversation: Rooms That Move</h3><p>Two furniture designers on homes that change through the day</p></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="section-tight" style="padding-top:0" aria-label="More">
+    <nav class="bigrows" aria-label="Plan your visit">
+      <a class="bigrow" href="#/visit"><span class="label">Plan your visit</span><span class="note">Hours, tickets and getting here</span><svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="bigrow" href="#/membership"><span class="label">Go free as a member</span><span class="note">From $30 a year</span><svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </nav>
+  </section>
+</div>
+
+<!-- ===================== VISIT ===================== -->
+<div data-view="visit">
+  <section class="page-head center">
+    <div style="padding-inline:var(--cell)">
+      <h1 class="display">Plan your visit</h1>
+      <p class="lead">1 Ferry Pier Road, Harbour District. Tickets are on sale at the door and here, and members always walk straight in.</p>
+    </div>
+  </section>
+
+  <section class="tri info" style="padding-bottom:clamp(64px,8vw,120px)">
+    <div class="reveal">
+      <h2 class="h3">Opening hours</h2>
+      <ul class="hours">
+        <li>Tuesday to Sunday<span>10:00 to 18:00</span></li>
+        <li>Thursday<span>10:00 to 22:00, free after 18:00</span></li>
+        <li>Monday<span>Closed, except public holidays</span></li>
+        <li>Last entry<span>30 minutes before closing</span></li>
+      </ul>
+    </div>
+    <div class="reveal" id="tickets">
+      <h2 class="h3">Tickets</h2>
+      <table class="price-table">
+        <tbody>
+          <tr><th scope="row">Adult</th><td>$18</td></tr>
+          <tr><th scope="row">Student, senior or carer</th><td>$12</td></tr>
+          <tr><th scope="row">Under 18</th><td>Free</td></tr>
+          <tr><th scope="row">Members</th><td>Free</td></tr>
+        </tbody>
+      </table>
+      <a class="oval" href="#/membership">Go free as a member</a>
+    </div>
+    <div class="reveal">
+      <h2 class="h3">Getting here</h2>
+      <ul class="ways">
+        <li>By ferry<span>Pier stop, then a two-minute walk</span></li>
+        <li>By bus<span>Routes 7 and 12 to Ferry Pier Road</span></li>
+        <li>By bike<span>Racks for 80 bikes at the north door</span></li>
+        <li>By car<span>No visitor parking; Harbour Square car park is 400 m away</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-tight" style="padding-top:0">
+    <hr class="rule">
+    <div class="tri benefits" style="padding-top:clamp(40px,5vw,72px)">
+      <div class="reveal"><h2 class="h3">Step-free</h2><p>Every floor by lift and ramp. Wheelchairs and folding stools to borrow at the desk.</p></div>
+      <div class="reveal"><h2 class="h3">Quiet mornings</h2><p>First Sunday of the month, 9:00 to 10:00, with lower lights and sound.</p></div>
+      <div class="reveal"><h2 class="h3">Captions on</h2><p>Every film and talk is captioned. Ask for a hearing loop at any desk.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="giant-head"><h2 class="h1" id="faq-title">Questions</h2></div>
+    <div class="faq">
+      <details><summary>Can I bring a bag or a pram? <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes. Bags larger than a cabin case go in the free lockers on Level 0. Prams are welcome in every gallery.</p></details>
+      <details><summary>Can I take photos? <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Photos without flash are fine for personal use, except where a sign in the room says otherwise.</p></details>
+      <details><summary>Is there somewhere to eat? <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>The Pier Café on Level 0 serves lunch and coffee from 10:00. You can also eat your own food on the terrace.</p></details>
+      <details><summary>Do I need to book in advance? <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Not for the galleries. Workshops and films have limited places, so book those ahead.</p></details>
+      <details><summary>Can schools and groups visit? <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes, with free entry for school groups on weekdays. <a class="text-link" href="#/contact?topic=groups">Write to us</a> two weeks before you come.</p></details>
+    </div>
+  </section>
+
+  <section class="section-tight" style="padding-top:0" aria-label="More">
+    <nav class="bigrows" aria-label="More">
+      <a class="bigrow" href="#/membership"><span class="label">Membership</span><span class="note">Free entry all year</span><svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="bigrow" href="#/contact"><span class="label">Contact us</span><span class="note">Groups, press and hiring a space</span><svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </nav>
+  </section>
+</div>
+
+<!-- ===================== MEMBERSHIP ===================== -->
+<div data-view="membership">
+  <section class="page-head center">
+    <div style="padding-inline:var(--cell)">
+      <h1 class="display">Membership</h1>
+      <p class="lead">Free entry all year, first booking for events, and evenings with the galleries to yourselves.</p>
+    </div>
+  </section>
+  <section style="padding-bottom:clamp(80px,10vw,144px)">
+    <div class="center-row" style="margin-bottom:clamp(40px,5vw,72px)">
+      <div class="switch" role="group" aria-label="Who the card is for">
+        <button type="button" aria-pressed="true" data-cards="one">One adult</button>
+        <button type="button" aria-pressed="false" data-cards="two">Two adults</button>
+      </div>
+    </div>
+    <div class="tri plans">
+      <div class="plan reveal" data-plan="student">
+        <h2 class="h3">Student</h2>
+        <p class="amount" data-one="$30" data-two="$50">$30</p>
+        <p class="per" data-one="a year, one card" data-two="a year, two cards">a year, one card</p>
+        <ul>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Free entry to every exhibition</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Two free film tickets</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>For anyone in full-time study</li>
+        </ul>
+        <a class="oval" href="#/join?tier=student">Join as a student</a>
+      </div>
+      <div class="plan reveal" data-plan="friend">
+        <span class="plate signal">Most chosen</span>
+        <h2 class="h3">Friend</h2>
+        <p class="amount" data-one="$70" data-two="$115">$70</p>
+        <p class="per" data-one="a year, one card" data-two="a year, two cards">a year, one card</p>
+        <ul>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Free entry, plus a guest on Thursdays</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Book events a week early</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Member evenings for new shows</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>10% off in the shop and café</li>
+        </ul>
+        <a class="oval solid" href="#/join?tier=friend">Join as a friend</a>
+      </div>
+      <div class="plan reveal" data-plan="patron">
+        <h2 class="h3">Patron</h2>
+        <p class="amount" data-one="$240" data-two="$380">$240</p>
+        <p class="per" data-one="a year, one card" data-two="a year, two cards">a year, one card</p>
+        <ul>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Everything in Friend</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Bring two guests, any day</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>A private tour with a curator</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Invitations to every opening</li>
+        </ul>
+        <a class="oval" href="#/join?tier=patron">Join as a patron</a>
+      </div>
+    </div>
+  </section>
+  <section class="section-tight" style="padding-top:0">
+    <hr class="rule">
+    <div class="tri benefits" style="padding-top:clamp(40px,5vw,72px)">
+      <div class="reveal"><h2 class="h3">Give it</h2><p>Any membership can be a gift. Choose the start date and we send the card.</p></div>
+      <div class="reveal"><h2 class="h3">Use it today</h2><p>Your card arrives by email within a day. Show it on your phone at the door.</p></div>
+      <div class="reveal"><h2 class="h3">Stop any time</h2><p>Memberships do not renew unless you ask, and we write a month before.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== JOIN (SIGN-UP) ===================== -->
+<div data-view="join">
+  <section class="page-head">
+    <div class="tri" style="row-gap:24px">
+      <div class="span-2"><h1 class="h1">Join Obra</h1><p class="lead" style="margin:20px 0 0">Your card arrives by email within a day. Free entry starts the moment it does.</p></div>
+    </div>
+  </section>
+  <section class="tri" style="padding-bottom:clamp(80px,10vw,144px);row-gap:48px">
+    <div>
+      <h2 class="kicker">What happens next</h2>
+      <ol class="steps" style="margin:0;padding:0;list-style:none">
+        <li><b>1</b><span>Fill in this form. It takes about a minute.</span></li>
+        <li><b>2</b><span>Pay with the secure link we email you.</span></li>
+        <li><b>3</b><span>Show your card on your phone at the door.</span></li>
+      </ol>
+    </div>
+    <div class="span-2">
+      <form class="form" data-form="signup" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="j-tier">Membership</label>
+            <div class="select-wrap">
+              <select class="select" id="j-tier" name="tier"><option value="student">Student, $30</option><option value="friend" selected>Friend, $70</option><option value="patron">Patron, $240</option></select>
+              <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg>
+            </div>
+          </div>
+          <div class="field">
+            <label for="j-cards">Cards</label>
+            <div class="select-wrap">
+              <select class="select" id="j-cards" name="cards"><option value="one">One adult</option><option value="two">Two adults</option></select>
+              <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="field"><label for="j-name">Full name</label><input class="input" id="j-name" name="name" autocomplete="name" required aria-describedby="j-name-error"><span class="error" id="j-name-error" aria-live="polite"></span></div>
+        <div class="field"><label for="j-email">Email</label><input class="input" id="j-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="j-email-error"><span class="error" id="j-email-error" aria-live="polite"></span></div>
+        <label class="check"><input type="checkbox" name="gift"> This membership is a gift</label>
+        <div class="field">
+          <label class="check"><input type="checkbox" name="terms" required aria-describedby="j-terms-error"> I agree to the <a class="text-link" href="#/terms">membership terms</a></label>
+          <span class="error" id="j-terms-error" aria-live="polite"></span>
+        </div>
+        <div><button class="oval solid" type="submit">Join now</button></div>
+      </form>
+      <div class="success" data-success="signup" hidden role="status">
+        <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+        <div><strong style="font-weight:500">Welcome to Obra.</strong><p>We've emailed a payment link and your card to the address you gave.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<div data-view="about">
+  <section class="page-head center">
+    <div style="padding-inline:var(--cell)">
+      <h1 class="display">About Obra</h1>
+      <p class="lead">A public museum for the things people design and the images they make, in a former ferry shed at the end of the pier.</p>
+    </div>
+  </section>
+  <section class="tri prose-cols" style="padding-bottom:clamp(56px,7vw,96px);row-gap:32px">
+    <div class="reveal"><h2 class="h3" style="margin-bottom:16px">The building</h2><p>The old ferry shed was rebuilt in 2019 with three floors of galleries, a 220-seat cinema and a terrace over the water.</p></div>
+    <div class="reveal"><h2 class="h3" style="margin-bottom:16px">The collection</h2><p>Chairs, posters, packaging, type, film and games, collected because they changed how ordinary days look and feel.</p></div>
+    <div class="reveal"><h2 class="h3" style="margin-bottom:16px">The programme</h2><p>Four exhibitions a year, films every night but Monday, and workshops where you make something to take home.</p></div>
+  </section>
+  <section class="tri" style="padding-bottom:clamp(64px,8vw,120px)">
+    <figure class="span-3" style="margin:0">
+      <div class="media"><img src="images/building.svg" width="1500" height="600" alt="A long low museum building with vertical fins, standing on piers over calm water" loading="lazy" decoding="async"></div>
+      <p class="caption">The north face from the ferry, with the cinema screen wall on the right.</p>
+    </figure>
+  </section>
+  <section class="section-tight" style="padding-top:0">
+    <div class="tri numbers">
+      <div class="reveal"><p class="num">4,200</p><p>objects in the collection</p></div>
+      <div class="reveal"><p class="num">11</p><p>galleries over three floors</p></div>
+      <div class="reveal"><p class="num">260</p><p>films a year in the Pier Cinema</p></div>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="people-title">
+    <div class="giant-head"><h2 class="h1" id="people-title">People</h2></div>
+    <div class="rows people">
+      <div class="tri erow"><div class="when"><span class="initials" aria-hidden="true">RL</span></div><div><p class="h3">Rosa Lindgren</p></div><div class="what"><p>Director</p></div></div>
+      <div class="tri erow"><div class="when"><span class="initials" aria-hidden="true">DO</span></div><div><p class="h3">Daniel Okafor</p></div><div class="what"><p>Curator, Design</p></div></div>
+      <div class="tri erow"><div class="when"><span class="initials" aria-hidden="true">MA</span></div><div><p class="h3">Mei Arakawa</p></div><div class="what"><p>Curator, Moving Image</p></div></div>
+      <div class="tri erow"><div class="when"><span class="initials" aria-hidden="true">KH</span></div><div><p class="h3">Kofi Hart</p></div><div class="what"><p>Head of Learning</p></div></div>
+    </div>
+  </section>
+  <section class="section-tight" style="padding-top:0" aria-label="Supporters">
+    <p class="kicker center">Supported by</p>
+    <div class="names"><span>The Harbour Foundation</span><span>Lowell &amp; Rhee Architects</span><span>City Arts Council</span><span>Friends of Obra</span></div>
+  </section>
+  <section class="section-tight" aria-label="More">
+    <nav class="bigrows" aria-label="More">
+      <a class="bigrow" href="#/contact"><span class="label">Contact us</span><span class="note">Groups, press and hiring a space</span><svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="bigrow" href="#/membership"><span class="label">Membership</span><span class="note">Free entry all year</span><svg class="icon icon-lg" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </nav>
+  </section>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div data-view="contact">
+  <section class="page-head center">
+    <div style="padding-inline:var(--cell)">
+      <h1 class="display">Contact</h1>
+      <p class="lead">We answer within two working days. For today's opening hours, see Visit.</p>
+    </div>
+  </section>
+  <section class="tri" style="padding-bottom:clamp(80px,10vw,144px);row-gap:48px">
+    <div>
+      <ul class="ways">
+        <li>Visitor desk<span>+1 555 0140, Tuesday to Sunday</span></li>
+        <li>Email<span>hello@obra.example</span></li>
+        <li>Press<span>press@obra.example</span></li>
+        <li>Address<span>1 Ferry Pier Road, Harbour District</span></li>
+      </ul>
+    </div>
+    <div class="span-2">
+      <form class="form" data-form="contact" novalidate>
+        <div class="form-row">
+          <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-error"><span class="error" id="c-name-error" aria-live="polite"></span></div>
+          <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="c-email-error"><span class="error" id="c-email-error" aria-live="polite"></span></div>
+        </div>
+        <div class="field">
+          <label for="c-topic">About</label>
+          <div class="select-wrap">
+            <select class="select" id="c-topic" name="topic"><option value="question">A question about visiting</option><option value="groups">Schools and groups</option><option value="press">Press</option><option value="hire">Hiring a space</option></select>
+            <svg class="icon" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </div>
+        </div>
+        <div class="field"><label for="c-message">Message</label><textarea class="textarea" id="c-message" name="message" required minlength="10" aria-describedby="c-message-error"></textarea><span class="error" id="c-message-error" aria-live="polite"></span></div>
+        <div><button class="oval solid" type="submit">Send message</button></div>
+      </form>
+      <div class="success" data-success="contact" hidden role="status">
+        <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+        <div><strong style="font-weight:500">Thanks, message received.</strong><p>We'll reply to the address you gave within two working days.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="privacy">
+  <section class="tri legal">
+    <div class="span-2">
+      <h1 class="h1">Privacy</h1>
+      <p class="lead" style="margin-top:20px">What we keep about you, and why, in plain words.</p>
+      <h2>What we keep</h2><p>Your name and email when you book, join or write to us, and the tickets you buy. Nothing else.</p>
+      <h2>Who sees it</h2><p>Only Obra staff, to run your booking or membership and answer your message.</p>
+      <h2>Your choices</h2><p>Unsubscribe from any email with one click, or write to hello@obra.example and we will delete your details.</p>
+    </div>
+  </section>
+</div>
+<div data-view="terms">
+  <section class="tri legal">
+    <div class="span-2">
+      <h1 class="h1">Terms</h1>
+      <p class="lead" style="margin-top:20px">The short version of how tickets and memberships work.</p>
+      <h2>Tickets</h2><p>Tickets are for the date shown. Change the date up to a day before at no cost.</p>
+      <h2>Memberships</h2><p>A membership lasts a year from the day it starts and does not renew unless you ask.</p>
+      <h2>In the galleries</h2><p>Please do not touch the objects unless a sign invites you to.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="notfound">
+    <svg class="logotype" viewBox="0 0 1320 420" aria-hidden="true"><use href="#wordmark"/></svg>
+    <div style="padding-inline:var(--cell)">
+      <h1 class="h1">This room is closed.</h1>
+      <p class="lead">The link may be old, or the show has moved on. Everything on now is one click away.</p>
+      <div class="center-row"><a class="oval solid" href="#/">Go home</a><a class="oval" href="#/whats-on">See what's on</a></div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <hr class="rule">
+  <div class="tri footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="#/" aria-label="Obra home"><svg class="brand-mark" viewBox="0 0 1320 420" aria-hidden="true"><use href="#wordmark"/></svg></a>
+      <p style="margin:0">1 Ferry Pier Road<br>Harbour District</p>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <ul><li><a href="#/whats-on">What's on</a></li><li><a href="#/visit">Plan your visit</a></li><li><a href="#/membership">Membership</a></li></ul>
+    </div>
+    <div>
+      <h2>Obra</h2>
+      <ul><li><a href="#/about">About</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/join">Join</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-legal"><span>© 2027 Obra Museum Trust</span><a href="#/privacy">Privacy</a><a href="#/terms">Terms</a></div>
+</footer>
+
+<!-- ===================== SVG SPRITE: wordmark and icons ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- The wordmark, filled: header, menu, footer and the 404 outline. The hero draws its own inline copy. -->
+    <symbol id="wordmark" viewBox="0 0 1320 420">
+      <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M150 0A150 150 0 0 1 300 150V270A150 150 0 0 1 0 270V150A150 150 0 0 1 150 0ZM150 86A64 64 0 0 1 214 150V270A64 64 0 0 1 86 270V150A64 64 0 0 1 150 86Z"/>
+      <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M340 0H525A103 103 0 0 1 525 206H533A107 107 0 0 1 533 420H340ZM426 68H506A52 52 0 0 1 506 172H426ZM426 240H514A56 56 0 0 1 514 352H426Z"/>
+      <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M680 0H855A125 125 0 0 1 908 238L980 420H886L830 250H766V420H680ZM766 70H855A55 55 0 0 1 855 180H766Z"/>
+      <path fill-rule="evenodd" vector-effect="non-scaling-stroke" d="M1120 0H1220L1320 420H1230L1211 340H1129L1110 420H1020ZM1170 168L1194 270H1146Z"/>
+    </symbol>
+
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M3.5 12h16M13.5 5.5l6.5 6.5-6.5 6.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5l4.5 4.5 10.5-10.5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M6 9.5l6 6 6-6"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: day (light) and night (dark); the system setting is the default ---------- */
+  const themeButton = document.getElementById("theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "dark" ? "Switch to day colors" : "Switch to night colors");
+    themeButton.querySelector("use").setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("obra-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("obra-theme", next);
+  });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map([...document.querySelectorAll("[data-view]")].map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Obra: a waterfront museum of design and the moving image",
+    "whats-on": "What's on · Obra",
+    exhibition: "Soft Machines · Obra",
+    visit: "Plan your visit · Obra",
+    membership: "Membership · Obra",
+    join: "Join · Obra",
+    about: "About · Obra",
+    contact: "Contact · Obra",
+    privacy: "Privacy · Obra",
+    terms: "Terms · Obra",
+    "404": "Page not found · Obra",
+  };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    document.querySelectorAll(".nav a, .menu-links a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (name === "whats-on") applyFilter(route.params.get("type") || "all");
+    if (name === "join") preselect("j-tier", route.params.get("tier"));
+    if (name === "contact") preselect("c-topic", route.params.get("topic"));
+    const at = route.params.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function preselect(id, value) {
+    const select = document.getElementById(id);
+    if (value && select.querySelector(`option[value="${CSS.escape(value)}"]`)) select.value = value;
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header and full-screen menu ---------- */
+  const header = document.querySelector(".site-header");
+  const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  const menu = document.getElementById("menu");
+  document.getElementById("menu-open").addEventListener("click", () => menu.showModal());
+  document.getElementById("menu-close").addEventListener("click", () => menu.close());
+
+  /* ---------- Reveal (content stays visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    scope.querySelectorAll(".reveal:not(.is-in)").forEach((el) => (io ? io.observe(el) : el.classList.add("is-in")));
+  }
+  setTimeout(() => document.querySelectorAll(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- What's on filters ---------- */
+  const chips = document.querySelectorAll("[data-filter]");
+  function applyFilter(kind) {
+    const known = [...chips].some((chip) => chip.dataset.filter === kind);
+    const active = known ? kind : "all";
+    chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.filter === active)));
+    let shown = 0;
+    document.querySelectorAll("[data-filterable] [data-kind]").forEach((row) => {
+      const match = active === "all" || row.dataset.kind === active;
+      row.hidden = !match;
+      if (match) shown += 1;
+    });
+    document.querySelector("[data-empty]").hidden = shown > 0;
+  }
+  chips.forEach((chip) => chip.addEventListener("click", () => applyFilter(chip.dataset.filter)));
+
+  /* ---------- Membership: one or two cards ---------- */
+  document.querySelectorAll("[data-cards]").forEach((button) => button.addEventListener("click", () => {
+    const cards = button.dataset.cards;
+    document.querySelectorAll("[data-cards]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    document.querySelectorAll(`[data-${cards}]`).forEach((el) => { el.textContent = el.dataset[cards]; });
+    const select = document.getElementById("j-cards");
+    if (select) select.value = cards;
+  }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please write a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (field.type === "checkbox" ? "Please tick this box to continue." : messages[problem]) : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  document.querySelectorAll("form[data-form]").forEach((form) => {
+    const fields = [...form.querySelectorAll("input[aria-describedby], textarea[aria-describedby]")];
+    fields.forEach((field) => field.addEventListener(field.type === "checkbox" ? "change" : "blur", () => checkField(field)));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = form.querySelector("[type=submit]");
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        const success = form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`);
+        if (success) success.hidden = false;
+      }, 500);
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

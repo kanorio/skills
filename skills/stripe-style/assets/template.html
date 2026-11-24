@@ -1,0 +1,1395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Quayline: invoices, payments and payouts on one ledger</title>
+<meta name="description" content="Quayline helps businesses that sell to businesses get paid faster, pay suppliers in 40 countries and close the month in days.">
+<meta property="og:title" content="Quayline: invoices, payments and payouts on one ledger">
+<meta property="og:description" content="Financial operations for B2B companies: invoicing, payments, payouts, cards and treasury on one ledger.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/onest-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "Onest"; src: url("fonts/onest-latin-wght.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Source Code Pro"; src: url("fonts/source-code-pro-latin-wght.woff2") format("woff2"); font-weight: 200 900; font-display: swap; }
+
+/* ---------- Tokens: light is the default and follows the system ---------- */
+:root {
+  color-scheme: light;
+  --bg: oklch(100% 0 0);
+  --bg-soft: oklch(98.3% 0.005 250);
+  --surface: oklch(100% 0 0);
+  --surface-2: oklch(97.6% 0.006 255);
+  --text: oklch(27% 0.06 258);
+  --text-soft: oklch(53% 0.05 258);
+  --text-muted: oklch(47% 0.035 258);
+  --border: oklch(92.5% 0.012 258);
+  --border-strong: oklch(86% 0.02 258);
+  --rail: oklch(27% 0.06 258 / 0.09);
+  --accent: oklch(53% 0.245 280);
+  --accent-hover: oklch(46% 0.23 280);
+  --accent-text: oklch(100% 0 0);
+  --accent-soft: oklch(53% 0.245 280 / 0.09);
+  --link: oklch(53% 0.245 280);
+  --navy: oklch(25% 0.07 262);
+ 
+  --success: oklch(55% 0.14 158);
+  --warning: oklch(66% 0.15 65);
+  --danger: oklch(55% 0.21 25);
+  --focus: oklch(53% 0.245 280);
+  --w1: oklch(84% 0.16 75);
+  --w2: oklch(72% 0.2 38);
+  --w3: oklch(67% 0.25 355);
+  --w4: oklch(60% 0.23 300);
+  --w5: oklch(70% 0.15 250);
+  --w6: oklch(89% 0.07 215);
+  --wash-opacity: 1;
+  --numeral: linear-gradient(90deg, var(--w1), var(--w3) 55%, var(--w4));
+  --shadow-card: 0 1px 2px oklch(27% 0.06 258 / 0.06), 0 6px 18px -10px oklch(30% 0.08 265 / 0.2);
+  --shadow-float: 0 32px 64px -24px oklch(30% 0.1 265 / 0.34), 0 16px 32px -16px oklch(0% 0 0 / 0.16);
+
+  --font: "Onest", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Source Code Pro", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --fs-display: clamp(2.25rem, 1.45rem + 2.8vw, 3.5rem);
+  --fs-h1: clamp(2.125rem, 1.45rem + 2.5vw, 3.25rem);
+  --fs-h2: clamp(1.625rem, 1.25rem + 1.5vw, 2.5rem);
+  --fs-h3: 1.125rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+
+  --r-control: 6px;
+  --r-card: 10px;
+  --r-media: 14px;
+  --dur-fast: 150ms;
+  --dur-base: 240ms;
+  --dur-slow: 700ms;
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+
+  --frame: 1200px;
+  --gutter: clamp(0px, 4vw - 12px, 48px);
+  --inset: clamp(20px, 2.6vw, 36px);
+  --sec: clamp(72px, 9vw, 120px);
+  --hh: 68px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: oklch(17.5% 0.035 262); --bg-soft: oklch(20% 0.04 262); --surface: oklch(22.5% 0.042 262); --surface-2: oklch(26% 0.045 262);
+    --text: oklch(96% 0.008 255); --text-soft: oklch(75% 0.045 258); --text-muted: oklch(77% 0.03 258);
+    --border: oklch(100% 0 0 / 0.1); --border-strong: oklch(100% 0 0 / 0.18); --rail: oklch(100% 0 0 / 0.07);
+    --accent: oklch(55% 0.23 282); --accent-hover: oklch(60% 0.22 282); --accent-soft: oklch(66% 0.2 282 / 0.16); --link: oklch(77% 0.13 282);
+    --navy: oklch(13.5% 0.03 262);
+    --success: oklch(74% 0.15 158); --warning: oklch(80% 0.14 75); --danger: oklch(71% 0.18 25); --focus: oklch(76% 0.14 282);
+    --wash-opacity: 0.78;
+    --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.4);
+    --shadow-float: 0 32px 64px -24px oklch(0% 0 0 / 0.65), 0 0 0 1px oklch(100% 0 0 / 0.07);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: oklch(17.5% 0.035 262); --bg-soft: oklch(20% 0.04 262); --surface: oklch(22.5% 0.042 262); --surface-2: oklch(26% 0.045 262);
+  --text: oklch(96% 0.008 255); --text-soft: oklch(75% 0.045 258); --text-muted: oklch(77% 0.03 258);
+  --border: oklch(100% 0 0 / 0.1); --border-strong: oklch(100% 0 0 / 0.18); --rail: oklch(100% 0 0 / 0.07);
+  --accent: oklch(55% 0.23 282); --accent-hover: oklch(60% 0.22 282); --accent-soft: oklch(66% 0.2 282 / 0.16); --link: oklch(77% 0.13 282);
+  --navy: oklch(13.5% 0.03 262);
+  --success: oklch(74% 0.15 158); --warning: oklch(80% 0.14 75); --danger: oklch(71% 0.18 25); --focus: oklch(76% 0.14 282);
+  --wash-opacity: 0.78;
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.4);
+  --shadow-float: 0 32px 64px -24px oklch(0% 0 0 / 0.65), 0 0 0 1px oklch(100% 0 0 / 0.07);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+/* hidden wins over component display rules (cards, panels and forms are flex or grid) */
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 88px; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.12; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+::selection { background: var(--accent-soft); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.skip { position: absolute; left: 12px; top: -48px; padding: 8px 12px; background: var(--accent); color: var(--accent-text); border-radius: var(--r-control); z-index: 100; }
+.skip:focus { top: 12px; }
+.wrap { position: relative; width: min(100% - 2 * var(--gutter), var(--frame)); margin-inline: auto; padding-inline: var(--inset); }
+.icon { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.icon-sm { width: 15px; height: 15px; }
+.num, .mono { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--mono); font-size: 0.8125rem; }
+.muted { color: var(--text-muted); }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Type: thin two-tone headlines (signature) ---------- */
+.display, .h1, .h2 { font-weight: 300; letter-spacing: -0.024em; }
+.display { font-size: var(--fs-display); line-height: 1.06; }
+.h1 { font-size: var(--fs-h1); line-height: 1.08; }
+.h2 { font-size: var(--fs-h2); line-height: 1.14; letter-spacing: -0.018em; }
+.h3 { font-size: var(--fs-h3); font-weight: 500; letter-spacing: -0.008em; line-height: 1.35; }
+.tt span { color: var(--text-soft); }
+.lead { font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem); color: var(--text-muted); line-height: 1.55; max-width: 34em; }
+.kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 0.9375rem; font-weight: 500; color: var(--link); margin-bottom: 18px; }
+.kicker .chip-icon { inline-size: 28px; block-size: 28px; border-radius: 7px; display: grid; place-items: center; color: oklch(100% 0 0); background: linear-gradient(135deg, var(--w5), var(--w4) 55%, var(--w3)); }
+
+/* ---------- Buttons and the hover arrow (signature) ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 2px; min-block-size: 44px; padding: 0 18px; border-radius: var(--r-control); font: inherit; font-size: 0.9375rem; font-weight: 500; text-decoration: none; cursor: pointer; border: 1px solid transparent; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.btn-primary { background: var(--accent); color: var(--accent-text); }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-secondary { background: var(--surface); color: var(--link); border-color: var(--border-strong); }
+.btn-secondary:hover { border-color: var(--link); }
+.btn-sm { min-block-size: 36px; padding: 0 14px; font-size: 0.875rem; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.ar { position: relative; display: inline-block; inline-size: 11px; block-size: 10px; margin-left: 6px; flex: none; }
+.ar::before { content: ""; position: absolute; left: 0; top: 50%; inline-size: 8px; block-size: 1.6px; border-radius: 1px; background: currentColor; transform: translateY(-50%) scaleX(0); transform-origin: left; transition: transform var(--dur-base) var(--ease); }
+.ar::after { content: ""; position: absolute; right: 1px; top: 50%; inline-size: 6px; block-size: 6px; border: solid currentColor; border-width: 1.6px 1.6px 0 0; transform: translate(-3px, -50%) rotate(45deg); transition: transform var(--dur-base) var(--ease); }
+a:hover .ar::before, button:hover .ar::before, a:focus-visible .ar::before { transform: translateY(-50%) scaleX(1); }
+a:hover .ar::after, button:hover .ar::after, a:focus-visible .ar::after { transform: translate(0, -50%) rotate(45deg); }
+.link { display: inline-flex; align-items: center; color: var(--link); font-weight: 500; text-decoration: none; }
+.text-link { color: var(--link); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in oklch, var(--link) 40%, transparent); }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 40; block-size: var(--hh); border-bottom: 1px solid transparent; transition: background-color var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease); }
+.site-header.is-scrolled { background: color-mix(in oklch, var(--bg) 86%, transparent); backdrop-filter: blur(16px) saturate(1.4); border-bottom-color: var(--border); }
+.header-inner { display: flex; align-items: center; gap: 28px; block-size: 100%; }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-weight: 600; font-size: 1.1875rem; letter-spacing: -0.035em; text-decoration: none; }
+.brand svg { inline-size: 26px; block-size: 26px; }
+.nav { display: flex; gap: 2px; margin-right: auto; }
+.nav a { padding: 8px 12px; border-radius: var(--r-control); text-decoration: none; font-size: 0.9375rem; font-weight: 500; }
+.nav a:hover { color: var(--link); }
+.nav a[aria-current="page"] { color: var(--link); }
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.icon-btn { inline-size: 44px; block-size: 44px; display: inline-grid; place-items: center; border-radius: var(--r-control); border: 0; background: transparent; color: var(--text); cursor: pointer; }
+.icon-btn:hover { color: var(--link); }
+.menu-btn { display: none; }
+@media (max-width: 900px) { .nav, .header-actions .btn-secondary { display: none; } .menu-btn { display: inline-grid; } .header-inner { justify-content: space-between; gap: 12px; } .header-actions .btn-primary { display: none; } }
+.sheet { border: 0; padding: 0; margin: 0 0 0 auto; inline-size: min(380px, 100%); block-size: 100dvh; max-block-size: 100dvh; background: var(--surface); color: var(--text); box-shadow: var(--shadow-float); overscroll-behavior: contain; }
+.sheet::backdrop { background: oklch(20% 0.05 262 / 0.45); backdrop-filter: blur(3px); }
+.sheet-inner { display: flex; flex-direction: column; padding: 12px 20px 32px; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.sheet a:not(.btn) { padding: 15px 2px; text-decoration: none; font-weight: 500; font-size: 1.0625rem; border-bottom: 1px solid var(--border); }
+.sheet .btn { margin-top: 14px; }
+
+/* ---------- Views, sections and rails (signature) ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+main { position: relative; min-block-size: 70vh; }
+main::after { content: ""; position: absolute; z-index: 3; inset-block: 0; left: 50%; inline-size: min(100% - 2 * var(--gutter), var(--frame)); transform: translateX(-50%); border-inline: 1px solid var(--rail); pointer-events: none; }
+@media (max-width: 700px) { main::after { display: none; } }
+.sec { position: relative; padding-block: var(--sec); }
+.ruled { padding-top: 0; }
+.ruled > .wrap { border-top: 1px solid var(--rail); padding-top: var(--sec); }
+.soft { background: var(--bg-soft); }
+.sec-head { max-width: 760px; margin-bottom: clamp(36px, 5vw, 60px); }
+.sec-head .lead { margin-top: 18px; }
+.sec-head-row { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(36px, 5vw, 56px); }
+.sec-head-row .h2 { max-width: 24em; }
+
+/* ---------- The wash: one large soft multicolour gradient per view (signature) ---------- */
+.top { position: relative; overflow: clip; margin-top: calc(-1 * var(--hh)); padding-top: calc(var(--hh) + clamp(56px, 8vw, 104px)); }
+.wash { position: absolute; z-index: 0; pointer-events: none; top: -44%; right: -30%; inline-size: 78%; block-size: 170%; transform: rotate(-34deg); opacity: var(--wash-opacity); }
+.wash::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, oklch(100% 0 0 / 0) 0 5px, oklch(100% 0 0 / 0.16) 5px 6px), linear-gradient(90deg, var(--w6) 2%, var(--w5) 16%, var(--w4) 36%, var(--w3) 57%, var(--w2) 77%, var(--w1) 95%); -webkit-mask-image: linear-gradient(90deg, transparent, #000 24%, #000 82%, transparent); mask-image: linear-gradient(90deg, transparent, #000 24%, #000 82%, transparent); animation: drift 28s ease-in-out infinite alternate; }
+@keyframes drift { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+.wash-sm { top: -120%; right: -22%; inline-size: 56%; block-size: 300%; }
+.above { position: relative; z-index: 1; }
+
+/* ---------- Hero ---------- */
+.hero { padding-bottom: clamp(56px, 7vw, 96px); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); gap: clamp(32px, 4vw, 56px); align-items: center; }
+.ticker { display: flex; flex-wrap: wrap; gap: 4px 8px; font-size: 0.875rem; font-weight: 500; margin-bottom: 26px; }
+.ticker .num { color: var(--text-soft); font-weight: 400; }
+.hero .display { margin-bottom: 36px; }
+.hero-art { position: relative; block-size: 500px; }
+.ui { position: absolute; border-radius: var(--r-card); background: var(--surface); box-shadow: var(--shadow-float); font-size: 0.8125rem; overflow: hidden; }
+.ui-dash { top: 44px; right: 0; inline-size: 430px; background: var(--navy); color: oklch(96% 0.01 255); padding: 22px; }
+.ui-dash .lbl { color: oklch(78% 0.04 258); font-size: 0.75rem; }
+.ui-dash .big { font-size: 1.75rem; font-weight: 400; letter-spacing: -0.02em; margin: 4px 0 2px; }
+.ui-dash .up { color: oklch(80% 0.14 158); font-size: 0.75rem; }
+.ui-dash .spark { margin: 14px 0 12px; inline-size: 100%; block-size: 92px; }
+.ui-rows { display: grid; }
+.ui-rows > div { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; padding: 9px 0; border-top: 1px solid oklch(100% 0 0 / 0.1); }
+.ui-rows .amt { font-variant-numeric: tabular-nums; }
+.pill-s { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 999px; font-size: 0.6875rem; font-weight: 500; background: color-mix(in oklch, var(--success) 16%, transparent); color: var(--success); }
+.pill-s.wait { background: color-mix(in oklch, var(--warning) 18%, transparent); color: color-mix(in oklch, var(--warning) 70%, var(--text)); }
+.pill-s.info { background: var(--accent-soft); color: var(--link); }
+.ui-dash .pill-s { color: oklch(82% 0.13 158); }
+.ui-dash .pill-s.wait { color: oklch(85% 0.12 75); }
+.ui-invoice { left: 0; bottom: 0; inline-size: 300px; padding: 20px; }
+.inv-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.inv-logo { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.inv-logo i { inline-size: 22px; block-size: 22px; border-radius: 6px; background: linear-gradient(135deg, var(--w2), var(--w3)); }
+.inv-amt { font-size: 1.625rem; letter-spacing: -0.02em; margin: 2px 0; font-variant-numeric: tabular-nums; }
+.inv-lines { margin: 14px 0; border-top: 1px solid var(--border); }
+.inv-lines div { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.inv-lines div span:last-child { color: var(--text); font-variant-numeric: tabular-nums; }
+.pay-btn { display: flex; justify-content: center; padding: 10px; border-radius: var(--r-control); background: var(--accent); color: var(--accent-text); font-weight: 500; }
+.methods { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.methods span { padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border-strong); font-size: 0.6875rem; color: var(--text-muted); }
+.ui-toast { top: 0; left: 0; display: flex; align-items: center; gap: 10px; padding: 10px 14px 10px 10px; border-radius: 999px; font-weight: 500; }
+.ui-toast .ok { inline-size: 24px; block-size: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--success); color: oklch(100% 0 0); }
+@media (max-width: 1080px) { .ui-dash { inline-size: 380px; } .ui-invoice { inline-size: 270px; } }
+@media (max-width: 900px) {
+  .wash { top: -34%; right: -70%; inline-size: 130%; block-size: 62%; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-art { block-size: auto; display: grid; gap: 14px; padding-top: 8px; }
+  .ui { position: relative; inset: auto; inline-size: auto; }
+  .ui-toast { justify-self: start; }
+  .ui-invoice { margin: -40px 0 0 auto; inline-size: min(300px, 86%); }
+}
+
+/* ---------- Logo row ---------- */
+.logos { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border-block: 1px solid var(--rail); }
+.logos span { display: grid; place-items: center; min-block-size: 84px; padding: 12px; font-size: 1.1875rem; font-weight: 600; letter-spacing: -0.03em; color: var(--text-muted); text-align: center; }
+.logos span:nth-child(2) { font-weight: 300; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.9375rem; }
+.logos span:nth-child(3) { font-family: var(--mono); font-weight: 500; letter-spacing: -0.04em; }
+.logos span:nth-child(5) { font-style: italic; font-weight: 400; }
+.logos span:nth-child(6) { font-weight: 800; letter-spacing: -0.06em; }
+@media (max-width: 760px) { .logos { grid-template-columns: repeat(3, minmax(0, 1fr)); } .logos span { min-block-size: 64px; font-size: 1rem; } }
+
+/* ---------- Bento of products with floating vignettes (signature) ---------- */
+.bento { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+.tile { position: relative; grid-column: span 2; display: flex; flex-direction: column; min-block-size: 400px; padding: 26px 26px 0; border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-card); overflow: hidden; text-decoration: none; isolation: isolate; }
+.tile.w4 { grid-column: span 4; }
+.tile .h3 { font-weight: 400; font-size: 1.3125rem; letter-spacing: -0.015em; max-width: 18em; }
+.tile p { color: var(--text-muted); margin: 8px 0 0; font-size: 0.9375rem; max-width: 30em; }
+.tile .plus { position: absolute; top: 18px; right: 18px; inline-size: 30px; block-size: 30px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--border-strong); color: var(--link); background: var(--surface); transition: transform var(--dur-base) var(--ease); }
+a.tile:hover .plus { transform: rotate(90deg); }
+.tile::after { content: ""; position: absolute; z-index: -1; inset: auto -20% -38% -20%; block-size: 70%; background: radial-gradient(50% 60% at 30% 70%, var(--w3), transparent 70%), radial-gradient(45% 55% at 70% 80%, var(--w1), transparent 70%), radial-gradient(50% 60% at 55% 40%, var(--w4), transparent 72%); opacity: calc(0.62 * var(--wash-opacity)); filter: blur(18px); }
+.tile.cool::after { background: radial-gradient(50% 60% at 30% 70%, var(--w5), transparent 70%), radial-gradient(45% 55% at 75% 75%, var(--w4), transparent 70%), radial-gradient(40% 50% at 55% 40%, var(--w6), transparent 72%); }
+.vig { position: relative; margin-top: auto; padding-top: 28px; block-size: 230px; }
+.vig .ui { font-size: 0.75rem; }
+@media (max-width: 980px) { .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tile { grid-column: span 1; } .tile.w4 { grid-column: span 2; } }
+@media (max-width: 640px) { .bento { grid-template-columns: 1fr; } .tile, .tile.w4 { grid-column: span 1; min-block-size: 0; } .vig { block-size: 220px; } .device { display: none; } }
+.co { left: 24px; bottom: -12px; inline-size: 270px; padding: 16px; }
+.co .row { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; margin-top: 6px; color: var(--text-muted); }
+.co .row.on { border-color: var(--accent); color: var(--text); box-shadow: 0 0 0 1px var(--accent); }
+.co .radio { inline-size: 12px; block-size: 12px; border-radius: 50%; border: 1.5px solid var(--border-strong); flex: none; }
+.co .on .radio { border: 4px solid var(--accent); }
+.device { right: 30px; bottom: -40px; inline-size: 168px; block-size: 250px; border-radius: 22px; background: var(--navy); color: oklch(96% 0.01 255); padding: 26px 16px; text-align: center; border: 6px solid oklch(30% 0.03 262); }
+.device .big { font-size: 1.75rem; margin: 18px 0 6px; font-variant-numeric: tabular-nums; }
+.device .tap { margin: 18px auto 0; inline-size: 64px; block-size: 64px; border-radius: 50%; border: 1.5px dashed oklch(100% 0 0 / 0.4); display: grid; place-items: center; }
+.mini-inv { left: 22px; right: 22px; bottom: 24px; padding: 16px; }
+.steps-line { display: flex; gap: 6px; margin-top: 12px; }
+.steps-line i { flex: 1; block-size: 4px; border-radius: 4px; background: var(--border); }
+.steps-line i.on { background: var(--accent); }
+.rows { display: grid; gap: 0; }
+.rows > div { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.rows > div:last-child { border-bottom: 0; }
+.cc { font-family: var(--mono); font-size: 0.6875rem; padding: 2px 5px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--border); }
+.payouts { left: 20px; right: 20px; bottom: 22px; }
+.card3d { position: absolute; left: 50%; bottom: 18px; inline-size: 250px; aspect-ratio: 1.586; border-radius: 14px; transform: translateX(-50%) rotate(-8deg); padding: 18px; color: oklch(99% 0 0); background: linear-gradient(125deg, var(--w5), var(--w4) 35%, var(--w3) 62%, var(--w1)); box-shadow: var(--shadow-float); overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; font-size: 0.8125rem; transition: transform var(--dur-slow) var(--ease); }
+.card3d::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(115deg, oklch(100% 0 0 / 0) 0 7px, oklch(100% 0 0 / 0.12) 7px 8px); }
+a.tile:hover .card3d { transform: translateX(-50%) rotate(-4deg) translateY(-6px); }
+.chip { inline-size: 34px; block-size: 26px; border-radius: 5px; background: linear-gradient(135deg, oklch(90% 0.05 85), oklch(75% 0.07 80)); }
+.cash { left: 20px; right: 20px; bottom: 22px; padding: 16px; }
+.bars { display: flex; align-items: end; gap: 6px; block-size: 90px; margin-top: 12px; }
+.bars i { flex: 1; border-radius: 3px 3px 0 0; background: linear-gradient(180deg, var(--w4), var(--w5)); opacity: 0.85; }
+
+/* ---------- Navy band: developers and numbers (signature) ---------- */
+.band { position: relative; overflow: clip; background: var(--navy); color: oklch(96% 0.01 255); --text: oklch(96% 0.01 255); --text-soft: oklch(76% 0.05 258); --text-muted: oklch(80% 0.035 258); --border: oklch(100% 0 0 / 0.12); --rail: oklch(100% 0 0 / 0.08); --link: oklch(80% 0.12 282); }
+.band .btn-secondary { background: transparent; color: oklch(96% 0.01 255); border-color: oklch(100% 0 0 / 0.3); }
+.band .btn-secondary:hover { border-color: oklch(100% 0 0 / 0.7); }
+.dev-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+@media (max-width: 900px) { .dev-grid { grid-template-columns: 1fr; } }
+.dev-steps { list-style: none; margin: 32px 0 0; padding: 0; display: grid; gap: 0; counter-reset: s; }
+.dev-steps li { display: grid; grid-template-columns: 34px 1fr; gap: 14px; padding: 16px 0; border-top: 1px solid var(--border); color: var(--text-muted); }
+.dev-steps li::before { counter-increment: s; content: counter(s); inline-size: 26px; block-size: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 0.8125rem; font-weight: 500; color: var(--text); border: 1px solid oklch(100% 0 0 / 0.3); }
+.dev-steps strong { display: block; color: var(--text); font-weight: 500; }
+.code { border-radius: var(--r-card); background: oklch(19% 0.045 264); border: 1px solid oklch(100% 0 0 / 0.1); box-shadow: var(--shadow-float); overflow: hidden; color: oklch(88% 0.02 258); }
+.code-tabs { display: flex; align-items: center; gap: 2px; padding: 6px; border-bottom: 1px solid oklch(100% 0 0 / 0.1); }
+.code-tabs [role="tab"] { min-block-size: 34px; padding: 0 12px; border-radius: 5px; border: 0; background: transparent; color: oklch(78% 0.03 258); font: inherit; font-size: 0.8125rem; cursor: pointer; }
+.code-tabs [role="tab"][aria-selected="true"] { background: oklch(100% 0 0 / 0.1); color: oklch(98% 0 0); }
+.code-tabs .copy { margin-left: auto; color: oklch(78% 0.03 258); inline-size: 36px; block-size: 36px; }
+.code pre { margin: 0; padding: 20px 22px; overflow-x: auto; font-family: var(--mono); font-size: 0.8125rem; line-height: 1.75; }
+.code .k { color: oklch(78% 0.14 300); } .code .s { color: oklch(82% 0.12 160); } .code .c { color: oklch(62% 0.03 258); } .code .f { color: oklch(84% 0.12 75); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(56px, 7vw, 96px); border-top: 1px solid var(--border); }
+.stat { padding: 28px 24px 0 0; }
+.stat + .stat { padding-left: 24px; border-left: 1px solid var(--border); }
+.stat strong { display: block; font-size: clamp(2.5rem, 1.8rem + 2.4vw, 3.75rem); font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; background: var(--numeral); -webkit-background-clip: text; background-clip: text; color: transparent; font-variant-numeric: tabular-nums; }
+.stat span { color: var(--text-muted); font-size: 0.9375rem; }
+@media (max-width: 720px) { .stats { grid-template-columns: 1fr; } .stat + .stat { padding-left: 0; border-left: 0; border-top: 1px solid var(--border); padding-top: 22px; margin-top: 22px; } }
+.band::after { content: ""; position: absolute; left: 50%; bottom: -200px; inline-size: min(1000px, 140%); block-size: 400px; transform: translateX(-50%); background: radial-gradient(closest-side, oklch(72% 0.17 300 / 0.5), oklch(60% 0.2 280 / 0.18) 55%, transparent); pointer-events: none; }
+.burst { position: relative; display: block; inline-size: min(1100px, 100%); block-size: auto; margin: clamp(40px, 6vw, 72px) auto calc(-1 * var(--sec)); }
+
+/* ---------- Stories ---------- */
+.story-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 960px) { .story-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .story-grid { grid-template-columns: 1fr; } }
+.story { display: flex; flex-direction: column; border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-card); overflow: hidden; text-decoration: none; transition: box-shadow var(--dur-base) var(--ease), transform var(--dur-base) var(--ease); }
+a.story:hover { box-shadow: var(--shadow-float); transform: translateY(-2px); }
+.story.feature { grid-column: span 3; display: grid; grid-template-columns: 1.1fr 1fr; }
+@media (max-width: 960px) { .story.feature { grid-column: span 2; grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .story.feature { grid-column: span 1; } }
+.cover { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 9; overflow: hidden; color: oklch(99% 0 0); font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); font-weight: 600; letter-spacing: -0.035em; background: linear-gradient(130deg, var(--c1), var(--c2) 50%, var(--c3)); }
+.cover::before { content: ""; position: absolute; inset: -20%; background: repeating-linear-gradient(100deg, oklch(100% 0 0 / 0) 0 9px, oklch(100% 0 0 / 0.1) 9px 10px); transform: rotate(-8deg); }
+.cover span { position: relative; }
+.feature .cover { aspect-ratio: auto; min-block-size: 300px; }
+.g1 { --c1: var(--w5); --c2: var(--w4); --c3: var(--w3); }
+.g2 { --c1: var(--w1); --c2: var(--w2); --c3: var(--w3); }
+.g3 { --c1: oklch(62% 0.13 200); --c2: var(--w5); --c3: var(--w4); }
+.g4 { --c1: var(--w3); --c2: var(--w4); --c3: oklch(40% 0.15 280); }
+.g5 { --c1: oklch(45% 0.1 250); --c2: var(--w5); --c3: var(--w6); }
+.g6 { --c1: var(--w2); --c2: var(--w1); --c3: oklch(82% 0.12 120); }
+.story-body { display: flex; flex-direction: column; gap: 10px; padding: 22px 24px 24px; flex: 1; }
+.story-body .ind { font-size: 0.8125rem; font-weight: 500; color: var(--link); }
+.story-body .h3 { font-weight: 400; font-size: 1.1875rem; }
+.feature .story-body { padding: clamp(24px, 4vw, 44px); justify-content: center; }
+.feature .story-body .h3 { font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem); font-weight: 300; letter-spacing: -0.02em; }
+.metrics { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 6px 0 4px; }
+.metrics div strong { display: block; font-size: 1.5rem; font-weight: 400; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.metrics div span { font-size: 0.8125rem; color: var(--text-muted); }
+.story .link { margin-top: auto; padding-top: 6px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.filters button { min-block-size: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); font: inherit; font-size: 0.875rem; font-weight: 500; cursor: pointer; }
+.filters button:hover { border-color: var(--link); }
+.filters button[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: var(--bg); }
+.count { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 24px; }
+.empty { padding: 48px 24px; text-align: center; border: 1px dashed var(--border-strong); border-radius: var(--r-card); color: var(--text-muted); }
+
+/* ---------- Closing call to action ---------- */
+.cta-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); align-items: start; }
+@media (max-width: 900px) { .cta-grid { grid-template-columns: 1fr 1fr; } .cta-grid > :first-child { grid-column: 1 / -1; } }
+@media (max-width: 560px) { .cta-grid { grid-template-columns: 1fr; } }
+.cta-grid .lead { margin: 16px 0 28px; }
+.mini { display: grid; gap: 10px; align-content: start; color: var(--text-muted); font-size: 0.9375rem; }
+.mini .ico { inline-size: 38px; block-size: 38px; border-radius: 8px; display: grid; place-items: center; border: 1px solid var(--border); background: var(--surface); color: var(--link); }
+.mini strong { color: var(--text); font-weight: 500; }
+
+/* ---------- Product page ---------- */
+.feat-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 88px); align-items: center; padding-block: clamp(40px, 5vw, 64px); border-top: 1px solid var(--rail); }
+.feat-row:nth-child(even) .feat-art { order: -1; }
+@media (max-width: 860px) { .feat-row { grid-template-columns: 1fr; } .feat-row:nth-child(even) .feat-art { order: 0; } }
+.feat-row .lead { margin-top: 14px; }
+.feat-art { position: relative; border-radius: var(--r-media); padding: clamp(24px, 4vw, 44px); background: var(--bg-soft); border: 1px solid var(--border); overflow: hidden; isolation: isolate; }
+.feat-art::after { content: ""; position: absolute; z-index: -1; inset: 30% -10% -40% 20%; background: radial-gradient(closest-side, var(--w3), transparent), radial-gradient(closest-side at 70% 60%, var(--w1), transparent); opacity: calc(0.35 * var(--wash-opacity)); filter: blur(30px); }
+.feat-art .ui { position: relative; }
+.timeline { list-style: none; margin: 0; padding: 18px; display: grid; gap: 0; }
+.timeline li { display: grid; grid-template-columns: 18px 1fr auto; gap: 12px; align-items: start; padding: 10px 0; position: relative; }
+.timeline li::before { content: ""; inline-size: 10px; block-size: 10px; margin-top: 5px; border-radius: 50%; background: var(--border-strong); box-shadow: 0 0 0 4px var(--surface); }
+.timeline li.done::before { background: var(--success); }
+.timeline li + li::after { content: ""; position: absolute; left: 4.5px; top: -10px; block-size: 24px; border-left: 1px solid var(--border-strong); }
+.timeline small { color: var(--text-muted); }
+.method-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 18px; }
+.method-grid div { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 8px; border: 1px solid var(--border); font-weight: 500; }
+.method-grid .icon { color: var(--link); }
+.specs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rail); }
+.specs div { padding: 28px 28px 28px 0; border-bottom: 1px solid var(--rail); }
+.specs .icon { color: var(--link); margin-bottom: 14px; inline-size: 22px; block-size: 22px; }
+.specs p { color: var(--text-muted); margin: 6px 0 0; font-size: 0.9375rem; }
+@media (max-width: 860px) { .specs { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .specs { grid-template-columns: 1fr; } }
+.page-art { position: relative; margin-top: clamp(40px, 6vw, 72px); block-size: 380px; }
+.page-art .ui-table { left: 0; top: 0; inline-size: 72%; }
+.page-art .ui-invoice { left: auto; right: 0; bottom: 0; }
+.ui-table .rows > div { grid-template-columns: 1.2fr 1fr 0.8fr auto; padding: 12px 18px; }
+.ui-table .head { color: var(--text-muted); font-size: 0.75rem; background: var(--surface-2); }
+@media (max-width: 860px) { .page-art { block-size: auto; display: grid; } .page-art .ui { position: relative; inline-size: 100%; } .page-art .ui-invoice { margin: -40px 0 0 auto; inline-size: min(300px, 88%); } .ui-table .rows > div { grid-template-columns: 1fr auto; } .ui-table .rows > div > :nth-child(2), .ui-table .rows > div > :nth-child(3) { display: none; } }
+
+/* ---------- Pricing ---------- */
+.billing { display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); margin-top: 28px; }
+.billing button { min-block-size: 38px; padding: 0 16px; border-radius: 999px; border: 0; background: transparent; color: var(--text-muted); font: inherit; font-size: 0.875rem; font-weight: 500; cursor: pointer; }
+.billing button[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 960px) { .plans { grid-template-columns: 1fr; max-width: 520px; } }
+.plan { position: relative; display: flex; flex-direction: column; padding: 30px; border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-card); }
+.plan.featured { box-shadow: var(--shadow-float); border-color: transparent; }
+.plan.featured::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1.5px; background: linear-gradient(120deg, var(--w5), var(--w4), var(--w3), var(--w1)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); pointer-events: none; }
+.plan .tag { position: absolute; top: 26px; right: 26px; }
+.plan .price { font-size: 2.5rem; font-weight: 300; letter-spacing: -0.03em; margin: 18px 0 0; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.plan .per { color: var(--text-muted); font-size: var(--fs-small); min-block-size: 3em; margin: 6px 0 0; }
+.plan ul { list-style: none; padding: 0; margin: 24px 0 28px; display: grid; gap: 11px; font-size: 0.9375rem; color: var(--text-muted); }
+.plan li, .ticks li { display: flex; gap: 12px; }
+.plan li::before, .ticks li::before { content: ""; flex: none; inline-size: 11px; block-size: 6px; margin: 7px 2px 0; border: solid var(--link); border-width: 0 0 1.8px 1.8px; transform: rotate(-45deg); }
+.plan .btn { margin-top: auto; }
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border-radius: var(--r-media); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow-card); overflow: hidden; }
+@media (max-width: 860px) { .calc { grid-template-columns: 1fr; } }
+.calc-in { padding: clamp(24px, 4vw, 40px); display: grid; gap: 26px; align-content: start; }
+.calc-out { position: relative; padding: clamp(24px, 4vw, 40px); background: var(--navy); color: oklch(96% 0.01 255); overflow: hidden; isolation: isolate; display: grid; gap: 18px; align-content: start; }
+.calc-out::after { content: ""; position: absolute; z-index: -1; inset: 40% -30% -50% 10%; background: radial-gradient(closest-side, var(--w4), transparent), radial-gradient(closest-side at 70% 40%, var(--w3), transparent); opacity: 0.45; filter: blur(30px); }
+.range-row { display: grid; gap: 10px; }
+.range-row label { display: flex; justify-content: space-between; gap: 12px; font-size: 0.9375rem; font-weight: 500; }
+.range-row output { font-variant-numeric: tabular-nums; color: var(--link); }
+input[type="range"] { inline-size: 100%; accent-color: var(--accent); min-block-size: 28px; }
+.est { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 14px 0; border-bottom: 1px solid oklch(100% 0 0 / 0.14); }
+.est strong { font-size: 1.75rem; font-weight: 300; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.est.best strong { background: var(--numeral); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 400; }
+.est span { color: oklch(80% 0.035 258); font-size: 0.9375rem; }
+.verdict { margin: 0; font-size: 1.0625rem; }
+.fine { font-size: 0.8125rem; color: oklch(76% 0.035 258); margin: 0; }
+.table-scroll { overflow-x: auto; }
+.compare { inline-size: 100%; border-collapse: collapse; font-size: 0.9375rem; text-align: left; min-inline-size: 560px; }
+.compare th, .compare td { padding: 15px 14px; border-bottom: 1px solid var(--border); }
+.compare thead th { font-weight: 500; }
+.compare tbody th { font-weight: 400; color: var(--text-muted); }
+.compare td { font-variant-numeric: tabular-nums; }
+
+/* ---------- FAQ ---------- */
+.faq { max-width: 860px; }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq details:first-child { border-top: 1px solid var(--border); }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 2px; cursor: pointer; font-weight: 500; font-size: 1.0625rem; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { color: var(--link); transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(45deg); }
+.faq details p { margin: 0; padding: 0 2px 22px; color: var(--text-muted); max-width: 62ch; }
+
+/* ---------- Story page ---------- */
+.crumbs { display: flex; gap: 8px; font-size: 0.875rem; color: var(--text-muted); margin-bottom: 22px; }
+.crumbs a { color: var(--link); text-decoration: none; }
+.story-cover { margin-top: clamp(36px, 5vw, 56px); border-radius: var(--r-media); aspect-ratio: 21 / 8; box-shadow: var(--shadow-float); }
+.story-layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+@media (max-width: 860px) { .story-layout { grid-template-columns: 1fr; } .story-cover { aspect-ratio: 16 / 9; } }
+.facts { display: grid; gap: 0; position: sticky; top: 96px; }
+.facts div { padding: 14px 0; border-top: 1px solid var(--border); font-size: 0.9375rem; }
+.facts dt { color: var(--text-muted); font-size: 0.8125rem; margin-bottom: 4px; }
+.facts dd { margin: 0; }
+.facts .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+@media (max-width: 860px) { .facts { position: static; grid-template-columns: 1fr 1fr; column-gap: 20px; } }
+.prose { max-width: 680px; font-size: 1.0625rem; }
+.prose h2 { font-size: 1.625rem; font-weight: 300; letter-spacing: -0.015em; margin: 44px 0 14px; }
+.prose h2:first-child { margin-top: 0; }
+.prose p { color: var(--text-muted); }
+.pull { margin: 36px 0; padding: 4px 0 4px 26px; border-left: 2px solid transparent; border-image: linear-gradient(var(--w1), var(--w3), var(--w4)) 1; }
+.pull p { color: var(--text); font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.625rem); font-weight: 300; letter-spacing: -0.015em; line-height: 1.35; }
+.pull footer { display: flex; align-items: center; gap: 12px; font-size: 0.9375rem; }
+.avatar { inline-size: 40px; block-size: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 600; font-size: 0.8125rem; color: oklch(99% 0 0); background: linear-gradient(135deg, var(--w4), var(--w3)); flex: none; }
+.results { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 32px 0; }
+.results div { padding: 20px; border-radius: var(--r-card); background: var(--bg-soft); border: 1px solid var(--border); }
+.results strong { display: block; font-size: 2rem; font-weight: 300; letter-spacing: -0.03em; background: var(--numeral); -webkit-background-clip: text; background-clip: text; color: transparent; font-variant-numeric: tabular-nums; }
+.results span { font-size: 0.875rem; color: var(--text-muted); }
+@media (max-width: 560px) { .results { grid-template-columns: 1fr; } }
+
+/* ---------- Docs ---------- */
+.search { position: relative; max-width: 560px; margin-top: 30px; }
+.search .icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
+.search .input { padding-left: 42px; min-block-size: 50px; font-size: 1rem; box-shadow: var(--shadow-card); }
+.quick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 860px) { .quick { grid-template-columns: 1fr; } }
+.quick a { display: grid; gap: 8px; padding: 24px; border-radius: var(--r-card); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow-card); text-decoration: none; transition: border-color var(--dur-fast) var(--ease); }
+.quick a:hover { border-color: var(--link); }
+.quick .icon { color: var(--link); inline-size: 22px; block-size: 22px; }
+.quick span { color: var(--text-muted); font-size: 0.9375rem; }
+.quick small { color: var(--text-muted); font-size: 0.8125rem; }
+.docs-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); align-items: start; }
+@media (max-width: 900px) { .docs-grid { grid-template-columns: 1fr; } }
+.guides { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.guides a { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 15px 2px; border-bottom: 1px solid var(--border); text-decoration: none; }
+.guides a:hover { color: var(--link); }
+.guides small { color: var(--text-muted); font-size: 0.8125rem; white-space: nowrap; }
+.ref { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 560px) { .ref { grid-template-columns: 1fr; } }
+.ref a { display: grid; gap: 4px; padding: 14px 16px; border-radius: 8px; border: 1px solid var(--border); text-decoration: none; background: var(--surface); }
+.ref a:hover { border-color: var(--link); }
+.ref code { font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); }
+.verb { font-weight: 600; color: var(--link); margin-right: 6px; }
+.sdks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.sdks span { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border-strong); font-size: 0.875rem; }
+
+/* ---------- Changelog ---------- */
+.log { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px; padding-block: 40px; border-top: 1px solid var(--rail); }
+.log time { font-family: var(--mono); font-size: 0.875rem; color: var(--text-muted); position: sticky; top: 96px; align-self: start; }
+.log h2 { font-size: 1.5rem; font-weight: 300; letter-spacing: -0.015em; margin: 10px 0 10px; }
+.log p { color: var(--text-muted); max-width: 62ch; }
+.log .code { box-shadow: none; margin-top: 18px; }
+@media (max-width: 760px) { .log { grid-template-columns: minmax(0, 1fr); gap: 6px; } .log time { position: static; } }
+
+/* ---------- Forms ---------- */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+@media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+.ticks { list-style: none; padding: 0; margin: 30px 0 0; display: grid; gap: 14px; color: var(--text-muted); }
+.form-card { padding: clamp(24px, 4vw, 36px); border-radius: var(--r-card); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-float); }
+.form-grid { display: grid; gap: 6px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+@media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+.field { display: grid; gap: 6px; align-content: start; }
+.field label { font-size: 0.875rem; font-weight: 500; }
+.input, .select, .textarea { inline-size: 100%; min-block-size: 44px; padding: 9px 12px; border-radius: var(--r-control); border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); font: inherit; font-size: 0.9375rem; box-shadow: 0 1px 1px oklch(27% 0.06 258 / 0.04); transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+.textarea { min-block-size: 120px; resize: vertical; }
+.input::placeholder, .textarea::placeholder { color: var(--text-muted); opacity: 0.75; }
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3px color-mix(in oklch, var(--focus) 25%, transparent); }
+.input:user-invalid, .textarea:user-invalid, [aria-invalid="true"] { border-color: var(--danger); }
+/* errors keep their line reserved, so a blur error never moves the submit button */
+.error { min-block-size: 1.35em; font-size: 0.8125rem; color: var(--danger); line-height: 1.35; }
+.form-card .btn { inline-size: 100%; margin-top: 6px; }
+.fine-print { font-size: 0.8125rem; color: var(--text-muted); margin: 14px 0 0; }
+.success { display: flex; gap: 14px; align-items: flex-start; padding: 20px; border-radius: var(--r-card); border: 1px solid color-mix(in oklch, var(--success) 40%, transparent); background: color-mix(in oklch, var(--success) 8%, var(--surface)); animation: rise var(--dur-slow) var(--ease) both; }
+.success .icon { color: var(--success); margin-top: 3px; }
+.success p { margin: 4px 0 0; color: var(--text-muted); }
+.news-form { display: grid; gap: 8px; }
+.news-form label { font-size: 0.875rem; font-weight: 500; }
+.news-row { display: flex; gap: 8px; }
+.news-row .input { flex: 1; min-inline-size: 0; }
+
+/* ---------- Page head, legal, 404 ---------- */
+.page-head { padding-bottom: clamp(48px, 6vw, 80px); }
+.page-head .lead { margin-top: 20px; }
+.page-head .btn-row { margin-top: 32px; }
+.legal { max-width: 720px; }
+.legal h2 { font-size: 1.25rem; font-weight: 500; margin: 36px 0 10px; }
+.legal p { color: var(--text-muted); }
+.notfound { text-align: center; padding-bottom: clamp(96px, 14vw, 180px); }
+.notfound .code404 { font-family: var(--mono); color: var(--link); margin-bottom: 18px; }
+.notfound .btn-row { justify-content: center; margin-top: 32px; }
+
+/* ---------- Footer ---------- */
+.site-footer { position: relative; background: var(--bg-soft); border-top: 1px solid var(--border); padding-block: 64px 40px; font-size: 0.875rem; }
+.footer-grid { display: grid; grid-template-columns: 1.6fr repeat(4, 1fr); gap: 32px; }
+@media (max-width: 960px) { .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .footer-grid > :first-child { grid-column: 1 / -1; } }
+.footer-grid h4 { font-size: 0.875rem; font-weight: 500; margin: 0 0 14px; }
+.footer-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.footer-grid a:not(.brand) { color: var(--text-muted); text-decoration: none; }
+.footer-grid a:not(.brand):hover { color: var(--link); }
+.footer-news { margin-top: 22px; max-width: 380px; }
+.footer-news .input { min-block-size: 44px; }
+.footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-muted); }
+
+/* ---------- Motion: keyframes, so first-screen entrances play on load ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes float-in { from { opacity: 0; transform: translateY(28px) scale(0.98); } to { opacity: 1; transform: none; } }
+.js .enter { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
+.js .hero-art .ui { animation: float-in 900ms var(--ease) both; animation-delay: calc(240ms + var(--i, 0) * 140ms); }
+.js .reveal { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .wash::before { animation: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#/" aria-label="Quayline home"><svg aria-hidden="true"><use href="#mark"/></svg>Quayline</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/product">Products</a>
+      <a href="#/customers">Customers</a>
+      <a href="#/docs">Developers</a>
+      <a href="#/pricing">Pricing</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to dark theme"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="btn btn-secondary btn-sm" href="#/signup">Sign in</a>
+      <a class="btn btn-primary btn-sm" href="#/contact">Contact sales<i class="ar"></i></a>
+      <button class="icon-btn menu-btn" type="button" id="menu-open" aria-label="Open menu" aria-controls="menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-inner">
+    <div class="sheet-top"><span class="brand"><svg aria-hidden="true"><use href="#mark"/></svg>Quayline</span><button class="icon-btn" type="button" id="menu-close" aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <a href="#/product">Products</a><a href="#/customers">Customers</a><a href="#/docs">Developers</a><a href="#/pricing">Pricing</a><a href="#/signup">Sign in</a>
+    <a class="btn btn-primary" href="#/contact">Contact sales<i class="ar"></i></a>
+  </div>
+</dialog>
+
+<main id="main" tabindex="-1">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="top hero">
+    <div class="wash" aria-hidden="true"></div>
+    <div class="wrap above hero-grid">
+      <div>
+        <p class="ticker enter"><span>Invoices paid on Quayline today:</span> <span class="num" data-count="18204">18,204</span></p>
+        <h1 class="display tt enter" style="--i:1">Invoices, payments and payouts on one ledger. <span>Get paid faster, pay suppliers in 40 countries and close the month in days.</span></h1>
+        <div class="btn-row enter" style="--i:2">
+          <a class="btn btn-primary" href="#/signup">Start now<i class="ar"></i></a>
+          <a class="btn btn-secondary" href="#/contact">Contact sales<i class="ar"></i></a>
+        </div>
+      </div>
+      <div class="hero-art" role="img" aria-label="The Quayline dashboard showing a balance of 1,284,920 dollars and recent payouts, with a paid invoice for 8,450 dollars in front of it">
+        <div class="ui ui-dash" style="--i:0" aria-hidden="true">
+          <div class="lbl">Balance · USD</div>
+          <div class="big num">$1,284,920.18</div>
+          <div class="up">+12.4% vs last month</div>
+          <svg class="spark" viewBox="0 0 400 92" preserveAspectRatio="none"><defs><linearGradient id="sg" x1="0" x2="1"><stop offset="0" stop-color="oklch(84% 0.16 75)"/><stop offset=".55" stop-color="oklch(67% 0.25 355)"/><stop offset="1" stop-color="oklch(60% 0.23 300)"/></linearGradient><linearGradient id="sf" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="oklch(60% 0.23 300)" stop-opacity=".35"/><stop offset="1" stop-color="oklch(60% 0.23 300)" stop-opacity="0"/></linearGradient></defs><path d="M0 74 C40 70 60 52 96 56 S150 70 186 46 S250 40 282 30 S350 22 400 8 V92 H0Z" fill="url(#sf)"/><path d="M0 74 C40 70 60 52 96 56 S150 70 186 46 S250 40 282 30 S350 22 400 8" fill="none" stroke="url(#sg)" stroke-width="2.5"/></svg>
+          <div class="ui-rows">
+            <div><span>Kessler GmbH</span><span class="amt">€12,400.00</span><span class="pill-s">Sent</span></div>
+            <div><span>Hoshino Co.</span><span class="amt">¥1,820,000</span><span class="pill-s wait">Scheduled</span></div>
+            <div><span>Rivera Textiles</span><span class="amt">MX$84,200</span><span class="pill-s">Sent</span></div>
+          </div>
+        </div>
+        <div class="ui ui-invoice" style="--i:1" aria-hidden="true">
+          <div class="inv-top"><span class="inv-logo"><i></i>Brightfield</span><span class="pill-s">Paid</span></div>
+          <div class="muted">Invoice INV-2041 · due Dec 1</div>
+          <div class="inv-amt">$8,450.00</div>
+          <div class="inv-lines"><div><span>Freight, Rotterdam to Lyon</span><span>$7,900.00</span></div><div><span>Fuel surcharge</span><span>$550.00</span></div></div>
+          <div class="pay-btn">Pay $8,450.00</div>
+          <div class="methods"><span>Card</span><span>Bank transfer</span><span>Net 30</span></div>
+        </div>
+        <div class="ui ui-toast" style="--i:2" aria-hidden="true"><span class="ok"><svg class="icon icon-sm"><use href="#i-check"/></svg></span>Payment received from Brightfield</div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Customers">
+    <div class="wrap">
+      <div class="logos"><span>Brightfield</span><span>Copperleaf</span><span>haverly</span><span>Ashgrove</span><span>Northgate</span><span>Tessel</span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="products">
+    <div class="wrap">
+      <div class="sec-head reveal"><h2 class="h2 tt">One ledger for every money movement. <span>Start with invoicing or payments, then add payouts, cards and treasury as you grow. Every module writes to the same records, so finance sees one version of the truth.</span></h2></div>
+      <div class="bento">
+        <a class="tile w4 reveal" href="#/product">
+          <h3 class="h3">Accept payments online, by bank and in person</h3>
+          <p>Cards, bank transfers, direct debit and terms, on a checkout that matches your brand.</p>
+          <span class="plus" aria-hidden="true"><svg class="icon icon-sm"><use href="#i-plus"/></svg></span>
+          <div class="vig" aria-hidden="true">
+            <div class="ui co"><strong>Pay Copperleaf</strong><div class="inv-amt" style="font-size:1.25rem">$2,480.00</div><div class="row on"><span class="radio"></span>Bank transfer</div><div class="row"><span class="radio"></span>Card</div><div class="row"><span class="radio"></span>Net 30 terms</div></div>
+            <div class="ui device"><div class="muted" style="color:inherit;opacity:.7">Ashgrove counter</div><div class="big">$46.50</div><div>Tap, insert or pay by phone</div><div class="tap"><svg class="icon"><use href="#i-wave"/></svg></div></div>
+          </div>
+        </a>
+        <a class="tile cool reveal" href="#/product">
+          <h3 class="h3">Invoices that get paid</h3>
+          <p>Hosted pages, reminders and partial payments.</p>
+          <span class="plus" aria-hidden="true"><svg class="icon icon-sm"><use href="#i-plus"/></svg></span>
+          <div class="vig" aria-hidden="true"><div class="ui mini-inv"><div class="inv-top"><strong>INV-2044</strong><span class="pill-s info">Viewed</span></div><div class="inv-amt">$12,900.00</div><div class="muted">Reminder goes out Nov 28</div><div class="steps-line"><i class="on"></i><i class="on"></i><i></i><i></i></div></div></div>
+        </a>
+        <a class="tile cool reveal" href="#/product">
+          <h3 class="h3">Pay suppliers in 40 countries</h3>
+          <p>Local rails, one approval flow.</p>
+          <span class="plus" aria-hidden="true"><svg class="icon icon-sm"><use href="#i-plus"/></svg></span>
+          <div class="vig" aria-hidden="true"><div class="ui payouts"><div class="rows"><div><span class="cc">DE</span><span>Kessler GmbH</span><span class="num">€12,400</span></div><div><span class="cc">JP</span><span>Hoshino Co.</span><span class="num">¥1.82M</span></div><div><span class="cc">MX</span><span>Rivera Textiles</span><span class="num">MX$84,200</span></div></div></div></div>
+        </a>
+        <a class="tile reveal" href="#/product">
+          <h3 class="h3">Company cards with limits built in</h3>
+          <p>Virtual and physical cards per team or vendor.</p>
+          <span class="plus" aria-hidden="true"><svg class="icon icon-sm"><use href="#i-plus"/></svg></span>
+          <div class="vig" aria-hidden="true"><div class="card3d"><div style="display:flex;justify-content:space-between;align-items:center;position:relative"><span class="chip"></span><strong>Quayline</strong></div><div style="position:relative"><div class="num" style="letter-spacing:.12em">•••• 4821</div><div style="opacity:.85">Marketing · $5,000 / month</div></div></div></div>
+        </a>
+        <a class="tile reveal" href="#/product">
+          <h3 class="h3">Cash and treasury, reconciled</h3>
+          <p>Every account and deposit, matched daily.</p>
+          <span class="plus" aria-hidden="true"><svg class="icon icon-sm"><use href="#i-plus"/></svg></span>
+          <div class="vig" aria-hidden="true"><div class="ui cash"><div class="muted">Cash on hand</div><div class="inv-amt">$3.41M</div><div class="pill-s">2,318 deposits matched</div><div class="bars"><i style="height:38%"></i><i style="height:52%"></i><i style="height:46%"></i><i style="height:64%"></i><i style="height:58%"></i><i style="height:76%"></i><i style="height:88%"></i></div></div></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec band" id="developers">
+    <div class="wrap above">
+      <div class="dev-grid">
+        <div class="reveal">
+          <h2 class="h2 tt">Built for developers, trusted by finance teams. <span>A predictable REST API, typed SDKs and a webhook for every event, with a dashboard your accountants will actually like.</span></h2>
+          <ol class="dev-steps">
+            <li><div><strong>Create an invoice</strong>One call with the customer and line items.</div></li>
+            <li><div><strong>Send it your way</strong>By email, as a link, or inside your own app.</div></li>
+            <li><div><strong>Listen for payment</strong>The invoice.paid event lands the moment money settles.</div></li>
+          </ol>
+          <div class="btn-row" style="margin-top:28px"><a class="btn btn-primary" href="#/docs">Read the docs<i class="ar"></i></a><a class="btn btn-secondary" href="#/changelog">API changelog<i class="ar"></i></a></div>
+        </div>
+        <div class="code reveal" data-tabs>
+          <div class="code-tabs" role="tablist" aria-label="Language">
+            <button type="button" role="tab" aria-selected="true" aria-controls="h-node" id="h-node-t">Node</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="h-py" id="h-py-t" tabindex="-1">Python</button>
+            <button class="icon-btn copy" type="button" data-copy aria-label="Copy code"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-copy"/></svg></button>
+          </div>
+<pre id="h-node" role="tabpanel" aria-labelledby="h-node-t" tabindex="0"><span class="k">const</span> ledger = <span class="f">require</span>(<span class="s">"@quayline/node"</span>)(<span class="s">"qyl_test_51Hx"</span>);
+
+<span class="k">const</span> invoice = <span class="k">await</span> ledger.invoices.<span class="f">create</span>({
+  customer: <span class="s">"cus_brightfield"</span>,
+  due_in_days: <span class="f">30</span>,
+  lines: [{ description: <span class="s">"Freight"</span>, amount: <span class="f">790000</span> }],
+});
+<span class="k">await</span> ledger.invoices.<span class="f">send</span>(invoice.id); <span class="c">// "open"</span></pre>
+<pre id="h-py" role="tabpanel" aria-labelledby="h-py-t" tabindex="0" hidden><span class="k">import</span> quayline
+
+client = quayline.<span class="f">Client</span>(<span class="s">"qyl_test_51Hx"</span>)
+invoice = client.invoices.<span class="f">create</span>(
+    customer=<span class="s">"cus_brightfield"</span>,
+    due_in_days=<span class="f">30</span>,
+    lines=[{<span class="s">"description"</span>: <span class="s">"Freight"</span>, <span class="s">"amount"</span>: <span class="f">790000</span>}],
+)
+client.invoices.<span class="f">send</span>(invoice.id)  <span class="c"># "open"</span></pre>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat reveal"><strong>99.99%</strong><span>API uptime over the last 12 months</span></div>
+        <div class="stat reveal"><strong>180 ms</strong><span>median API response time</span></div>
+        <div class="stat reveal"><strong>40</strong><span>countries for local payouts</span></div>
+      </div>
+    </div>
+    <svg class="burst" viewBox="0 0 1100 300" aria-hidden="true" data-burst><defs><linearGradient id="bg-burst" x1="0" x2="1"><stop offset="0" stop-color="oklch(84% 0.16 75)"/><stop offset=".5" stop-color="oklch(67% 0.25 355)"/><stop offset="1" stop-color="oklch(70% 0.15 250)"/></linearGradient></defs><g stroke="url(#bg-burst)" stroke-linecap="round" fill="none"></g></svg>
+  </section>
+
+  <section class="sec" id="stories">
+    <div class="wrap">
+      <div class="sec-head-row reveal"><h2 class="h2 tt">Finance teams close faster on Quayline. <span>From freight forwarders to software companies, they run billing, collections and payouts on one ledger.</span></h2><a class="btn btn-secondary" href="#/customers">All stories<i class="ar"></i></a></div>
+      <div class="story-grid">
+        <a class="story feature reveal" href="#/story">
+          <div class="cover g1"><span>Brightfield Logistics</span></div>
+          <div class="story-body"><span class="ind">Logistics</span><h3 class="h3">Brightfield cut the time it takes to get paid from 52 days to 19.</h3><div class="metrics"><div><strong>−33 days</strong><span>days sales outstanding</span></div><div><strong>14,000</strong><span>invoices a month</span></div></div><span class="link">Read the story<i class="ar"></i></span></div>
+        </a>
+        <a class="story reveal" href="#/story"><div class="cover g2"><span>Copperleaf</span></div><div class="story-body"><span class="ind">Software</span><h3 class="h3">Annual contracts now bill themselves, renewals included.</h3><span class="link">Read the story<i class="ar"></i></span></div></a>
+        <a class="story reveal" href="#/story"><div class="cover g3"><span>Haverly Health</span></div><div class="story-body"><span class="ind">Healthcare</span><h3 class="h3">2,100 clinicians in six countries, paid every Friday.</h3><span class="link">Read the story<i class="ar"></i></span></div></a>
+        <a class="story reveal" href="#/story"><div class="cover g4"><span>Tessel</span></div><div class="story-body"><span class="ind">Marketplaces</span><h3 class="h3">Embedded payments for 1,800 sellers, launched in six weeks.</h3><span class="link">Read the story<i class="ar"></i></span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec soft ruled" id="start">
+    <div class="wrap">
+      <div class="cta-grid">
+        <div class="reveal"><h2 class="h2">Ready to get started?</h2><p class="lead">Create an account in minutes, or talk to us about volume pricing and a migration plan.</p><div class="btn-row"><a class="btn btn-primary" href="#/signup">Start now<i class="ar"></i></a><a class="btn btn-secondary" href="#/contact">Contact sales<i class="ar"></i></a></div></div>
+        <div class="mini reveal"><span class="ico"><svg class="icon"><use href="#i-tag"/></svg></span><strong>Pricing without surprises</strong>Pay per transaction, or move to a monthly plan when the volume makes sense.<a class="link" href="#/pricing">Pricing details<i class="ar"></i></a></div>
+        <div class="mini reveal"><span class="ico"><svg class="icon"><use href="#i-code"/></svg></span><strong>Live in an afternoon</strong>Send your first invoice from the dashboard or with ten lines of code.<a class="link" href="#/docs">Start building<i class="ar"></i></a></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== PRODUCT ===================== -->
+<div data-view="product">
+  <section class="top page-head">
+    <div class="wash wash-sm" aria-hidden="true"></div>
+    <div class="wrap above">
+      <p class="kicker"><span class="chip-icon"><svg class="icon icon-sm"><use href="#i-doc"/></svg></span>Invoicing</p>
+      <h1 class="h1 tt" style="max-width:15em">Send invoices that pay themselves. <span>Hosted invoice pages, reminders that sound like you and every way your customers like to pay, reconciled to the cent.</span></h1>
+      <div class="btn-row"><a class="btn btn-primary" href="#/signup">Start now<i class="ar"></i></a><a class="btn btn-secondary" href="#/contact">Contact sales<i class="ar"></i></a></div>
+      <div class="page-art" role="img" aria-label="A list of invoices with their status, and a hosted invoice page for 8,450 dollars">
+        <div class="ui ui-table" aria-hidden="true"><div class="rows">
+          <div class="head"><span>Customer</span><span>Invoice</span><span>Due</span><span>Status</span></div>
+          <div><span>Brightfield Logistics</span><span class="num">$8,450.00</span><span class="num">Dec 1</span><span class="pill-s">Paid</span></div>
+          <div><span>Copperleaf</span><span class="num">$12,900.00</span><span class="num">Dec 3</span><span class="pill-s info">Viewed</span></div>
+          <div><span>Ashgrove Provisions</span><span class="num">$2,480.00</span><span class="num">Nov 30</span><span class="pill-s wait">Reminder sent</span></div>
+          <div><span>Northgate Freight</span><span class="num">$31,040.00</span><span class="num">Dec 14</span><span class="pill-s info">Open</span></div>
+          <div><span>Haverly Health</span><span class="num">$6,200.00</span><span class="num">Nov 26</span><span class="pill-s">Paid</span></div>
+        </div></div>
+        <div class="ui ui-invoice" aria-hidden="true">
+          <div class="inv-top"><span class="inv-logo"><i></i>Brightfield</span><span class="pill-s info">Open</span></div>
+          <div class="muted">Amount due Dec 1</div><div class="inv-amt">$8,450.00</div>
+          <div class="inv-lines"><div><span>Freight</span><span>$7,900.00</span></div><div><span>Fuel surcharge</span><span>$550.00</span></div></div>
+          <div class="pay-btn">Pay invoice</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="feat-row reveal">
+        <div><h2 class="h2">Reminders that sound like you</h2><p class="lead">Write the nudges once. Quayline sends them before and after the due date, and stops the moment money arrives.</p><a class="link" href="#/docs">How reminders work<i class="ar"></i></a></div>
+        <div class="feat-art" aria-hidden="true"><div class="ui"><ol class="timeline"><li class="done"><span>Invoice sent</span><small>Nov 3</small></li><li class="done"><span>Viewed by accounts payable</span><small>Nov 4</small></li><li class="done"><span>Friendly reminder</span><small>Nov 28</small></li><li><span>Paid by bank transfer</span><small>Expected Dec 1</small></li></ol></div></div>
+      </div>
+      <div class="feat-row reveal">
+        <div><h2 class="h2">Every way business customers pay</h2><p class="lead">Cards, bank transfers, direct debit, wires and net terms on one hosted page. Your customers pick, your books stay the same.</p><a class="link" href="#/pricing">See the rates<i class="ar"></i></a></div>
+        <div class="feat-art" aria-hidden="true"><div class="ui"><div class="method-grid"><div><svg class="icon"><use href="#i-card"/></svg>Card</div><div><svg class="icon"><use href="#i-bank"/></svg>Bank transfer</div><div><svg class="icon"><use href="#i-refresh"/></svg>Direct debit</div><div><svg class="icon"><use href="#i-globe"/></svg>Wire</div><div><svg class="icon"><use href="#i-clock"/></svg>Net 30 or 60</div><div><svg class="icon"><use href="#i-layers"/></svg>Split payments</div></div></div></div>
+      </div>
+      <div class="feat-row reveal">
+        <div><h2 class="h2">Reconciled to the cent</h2><p class="lead">Each deposit is matched to its invoice automatically, fees and partial payments included, and synced to your accounting system.</p><a class="link" href="#/customers">See how teams close faster<i class="ar"></i></a></div>
+        <div class="feat-art" aria-hidden="true"><div class="ui"><div class="rows"><div><span class="pill-s">Matched</span><span>Deposit · INV-2041</span><span class="num">$8,450.00</span></div><div><span class="pill-s">Matched</span><span>Deposit · INV-2038</span><span class="num">$1,200.00</span></div><div><span class="pill-s wait">Review</span><span>Partial · INV-2033</span><span class="num">$4,000.00</span></div></div></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec ruled">
+    <div class="wrap">
+      <div class="sec-head reveal"><h2 class="h2 tt">Everything an invoice needs. <span>Built for the way B2B companies actually bill.</span></h2></div>
+      <div class="specs">
+        <div class="reveal"><svg class="icon"><use href="#i-spark"/></svg><h3 class="h3">Your brand, your domain</h3><p>Logo, colors and a payment page on your own subdomain.</p></div>
+        <div class="reveal"><svg class="icon"><use href="#i-globe"/></svg><h3 class="h3">30 currencies</h3><p>Invoice in the customer's currency, settle in yours.</p></div>
+        <div class="reveal"><svg class="icon"><use href="#i-doc"/></svg><h3 class="h3">Tax on every line</h3><p>Rates per product and region, with tax IDs on the PDF.</p></div>
+        <div class="reveal"><svg class="icon"><use href="#i-refresh"/></svg><h3 class="h3">Credit notes</h3><p>Correct an invoice without breaking the audit trail.</p></div>
+        <div class="reveal"><svg class="icon"><use href="#i-layers"/></svg><h3 class="h3">Partial payments</h3><p>Accept deposits and installments against one invoice.</p></div>
+        <div class="reveal"><svg class="icon"><use href="#i-sync"/></svg><h3 class="h3">Accounting sync</h3><p>Invoices, payments and fees flow to your general ledger.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== PRICING ===================== -->
+<div data-view="pricing">
+  <section class="top page-head">
+    <div class="wash wash-sm" aria-hidden="true"></div>
+    <div class="wrap above">
+      <h1 class="h1 tt" style="max-width:16em">Pricing that grows with you. <span>Pay per transaction, or move to a monthly plan when your volume makes sense. No setup fees.</span></h1>
+      <div class="billing" role="group" aria-label="Billing period"><button type="button" aria-pressed="true" data-billing="monthly">Monthly</button><button type="button" aria-pressed="false" data-billing="yearly">Yearly · 2 months free</button></div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="plans">
+        <div class="plan" data-plan="standard">
+          <h2 class="h3">Standard</h2><p class="muted" style="margin:6px 0 0">For businesses getting started.</p>
+          <p class="price">2.6% + 30¢</p><p class="per">per card payment. Bank transfers 0.8%, capped at $5.</p>
+          <ul><li>Invoices and payment links</li><li>Cards, bank and direct debit</li><li>Payouts to your bank in 2 days</li></ul>
+          <a class="btn btn-secondary" href="#/signup?plan=standard">Start now<i class="ar"></i></a>
+        </div>
+        <div class="plan featured" data-plan="growth">
+          <span class="pill-s info tag">Most chosen</span>
+          <h2 class="h3">Growth</h2><p class="muted" style="margin:6px 0 0">For teams sending invoices every day.</p>
+          <p class="price" data-monthly="$249" data-yearly="$208">$249</p><p class="per"><span data-monthly="per month" data-yearly="per month, billed yearly">per month</span>, plus 2.2% + 30¢ per card payment. Bank transfers 0.5%, capped at $4.</p>
+          <ul><li>Automatic reminders and dunning</li><li>Supplier payouts in 40 countries</li><li>Accounting sync</li><li>Priority support</li></ul>
+          <a class="btn btn-primary" href="#/signup?plan=growth">Start 30-day trial<i class="ar"></i></a>
+        </div>
+        <div class="plan" data-plan="enterprise">
+          <h2 class="h3">Enterprise</h2><p class="muted" style="margin:6px 0 0">For large volumes and complex setups.</p>
+          <p class="price">Custom</p><p class="per">Volume rates, annual contract.</p>
+          <ul><li>Everything in Growth</li><li>Single sign-on and audit export</li><li>Migration support</li><li>A named account manager</li></ul>
+          <a class="btn btn-secondary" href="#/contact?topic=enterprise">Contact sales<i class="ar"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec ruled">
+    <div class="wrap">
+      <div class="sec-head reveal"><h2 class="h2 tt">Estimate your monthly cost. <span>Move the sliders to compare Standard and Growth for your volume.</span></h2></div>
+      <div class="calc reveal" id="calc">
+        <div class="calc-in">
+          <div class="range-row"><label for="vol">Monthly payment volume <output id="vol-out" for="vol">$200,000</output></label><input type="range" id="vol" min="10000" max="2000000" step="10000" value="200000"></div>
+          <div class="range-row"><label for="avg">Average invoice <output id="avg-out" for="avg">$2,000</output></label><input type="range" id="avg" min="100" max="20000" step="100" value="2000"></div>
+          <div class="range-row"><label for="bank">Paid by bank transfer <output id="bank-out" for="bank">60%</output></label><input type="range" id="bank" min="0" max="100" step="5" value="60"></div>
+        </div>
+        <div class="calc-out" aria-live="polite">
+          <div class="est" data-est="standard"><span>Standard</span><strong id="est-standard">$1,569</strong></div>
+          <div class="est" data-est="growth"><span>Growth</span><strong id="est-growth">$1,432</strong></div>
+          <p class="verdict" id="verdict">Growth saves you about $137 a month.</p>
+          <p class="fine">An estimate from the rates above, before taxes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="sec ruled">
+    <div class="wrap">
+      <div class="table-scroll reveal">
+        <table class="compare">
+          <thead><tr><th scope="col">Compare plans</th><th scope="col">Standard</th><th scope="col">Growth</th><th scope="col">Enterprise</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Card payments</th><td>2.6% + 30¢</td><td>2.2% + 30¢</td><td>Volume rate</td></tr>
+            <tr><th scope="row">Bank transfers</th><td>0.8%, max $5</td><td>0.5%, max $4</td><td>Volume rate</td></tr>
+            <tr><th scope="row">Automatic reminders</th><td>3 per invoice</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Supplier payouts</th><td>Domestic</td><td>40 countries</td><td>40 countries</td></tr>
+            <tr><th scope="row">Single sign-on</th><td>No</td><td>No</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <section class="sec ruled" id="pricing-faq">
+    <div class="wrap">
+      <div class="sec-head reveal"><h2 class="h2">Questions about pricing</h2></div>
+      <div class="faq">
+        <details><summary>Are there setup or monthly minimum fees?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. Standard has no monthly fee at all. Growth adds a flat monthly fee in exchange for lower rates.</p></details>
+        <details><summary>When do I receive my money?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Payouts reach your bank account two business days after a payment settles. Faster payouts are available on Growth.</p></details>
+        <details><summary>Can I switch plans later?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes, at any time from the dashboard. The new rates apply from the next payment.</p></details>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CUSTOMERS ===================== -->
+<div data-view="customers">
+  <section class="top page-head">
+    <div class="wash wash-sm" aria-hidden="true"></div>
+    <div class="wrap above">
+      <h1 class="h1 tt" style="max-width:16em">Stories from businesses that run on Quayline. <span>How finance teams get paid sooner, pay out with less work and close the month faster.</span></h1>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="filters" role="group" aria-label="Filter by industry">
+        <button type="button" aria-pressed="true" data-filter="all">All</button>
+        <button type="button" aria-pressed="false" data-filter="logistics">Logistics</button>
+        <button type="button" aria-pressed="false" data-filter="software">Software</button>
+        <button type="button" aria-pressed="false" data-filter="healthcare">Healthcare</button>
+        <button type="button" aria-pressed="false" data-filter="wholesale">Wholesale</button>
+        <button type="button" aria-pressed="false" data-filter="marketplaces">Marketplaces</button>
+      </div>
+      <p class="count" id="story-count" aria-live="polite">Showing 6 stories</p>
+      <div class="story-grid" id="story-list">
+        <a class="story" data-industry="logistics" href="#/story"><div class="cover g1"><span>Brightfield Logistics</span></div><div class="story-body"><span class="ind">Logistics</span><h2 class="h3">Days sales outstanding down from 52 to 19.</h2><div class="metrics"><div><strong>−33</strong><span>days to get paid</span></div></div><span class="link">Read the story<i class="ar"></i></span></div></a>
+        <a class="story" data-industry="software" href="#/story"><div class="cover g2"><span>Copperleaf</span></div><div class="story-body"><span class="ind">Software</span><h2 class="h3">Annual contracts that bill and renew themselves.</h2><div class="metrics"><div><strong>98%</strong><span>paid on time</span></div></div><span class="link">Read the story<i class="ar"></i></span></div></a>
+        <a class="story" data-industry="healthcare" href="#/story"><div class="cover g3"><span>Haverly Health</span></div><div class="story-body"><span class="ind">Healthcare</span><h2 class="h3">2,100 clinicians in six countries, paid every Friday.</h2><div class="metrics"><div><strong>6</strong><span>payout countries</span></div></div><span class="link">Read the story<i class="ar"></i></span></div></a>
+        <a class="story" data-industry="wholesale" href="#/story"><div class="cover g6"><span>Ashgrove Provisions</span></div><div class="story-body"><span class="ind">Wholesale</span><h2 class="h3">Net 30 terms for 400 restaurant buyers, without the chasing.</h2><div class="metrics"><div><strong>−71%</strong><span>overdue invoices</span></div></div><span class="link">Read the story<i class="ar"></i></span></div></a>
+        <a class="story" data-industry="logistics" href="#/story"><div class="cover g5"><span>Northgate Freight</span></div><div class="story-body"><span class="ind">Logistics</span><h2 class="h3">9,000 deposits a month, matched without a spreadsheet.</h2><div class="metrics"><div><strong>2 days</strong><span>to close the month</span></div></div><span class="link">Read the story<i class="ar"></i></span></div></a>
+        <a class="story" data-industry="marketplaces" href="#/story"><div class="cover g4"><span>Tessel</span></div><div class="story-body"><span class="ind">Marketplaces</span><h2 class="h3">Embedded payments for 1,800 sellers in six weeks.</h2><div class="metrics"><div><strong>6 weeks</strong><span>from contract to launch</span></div></div><span class="link">Read the story<i class="ar"></i></span></div></a>
+      </div>
+      <p class="empty" id="story-empty" hidden>No stories in this industry yet. <a class="text-link" href="#/customers?industry=all">Show all stories</a></p>
+    </div>
+  </section>
+  <section class="sec soft ruled">
+    <div class="wrap">
+      <figure class="pull reveal" style="max-width:860px;margin:0">
+        <p>“We used to spend the first week of every month matching deposits by hand. Now the ledger is right on the first, and we spend that week on forecasting.”</p>
+        <footer><span class="avatar">DO</span><span><strong>Daniel Okafor</strong><br><span class="muted">Head of Finance, Copperleaf</span></span></footer>
+      </figure>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== STORY ===================== -->
+<div data-view="story">
+  <section class="top page-head">
+    <div class="wash wash-sm" aria-hidden="true"></div>
+    <div class="wrap above">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="#/customers">Customers</a><span aria-hidden="true">/</span><span aria-current="page">Brightfield Logistics</span></nav>
+      <h1 class="h1 tt" style="max-width:17em">Brightfield cut the time it takes to get paid from 52 days to 19. <span>How a 300-person freight company moved 14,000 invoices a month onto one ledger.</span></h1>
+      <div class="cover g1 story-cover"><span>Brightfield Logistics</span></div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap story-layout">
+      <dl class="facts">
+        <div><dt>Industry</dt><dd>Logistics</dd></div>
+        <div><dt>Headquarters</dt><dd>Rotterdam, Netherlands</dd></div>
+        <div><dt>Team</dt><dd>300 people, 9 in finance</dd></div>
+        <div><dt>Products used</dt><dd class="tags"><span class="pill-s info">Invoicing</span><span class="pill-s info">Payments</span><span class="pill-s info">Treasury</span></dd></div>
+      </dl>
+      <article class="prose">
+        <h2>The problem</h2>
+        <p>Brightfield sends an invoice for every shipment it moves between ports and warehouses. By last year that meant 14,000 invoices a month, built in three systems and chased by email from a shared inbox.</p>
+        <p>Customers paid by wire, by card and by check, often for several invoices at once, and matching those payments took the finance team most of the first week of every month.</p>
+        <div class="results"><div><strong>19 days</strong><span>to get paid, down from 52</span></div><div><strong>14,000</strong><span>invoices a month, one system</span></div><div><strong>6 hours</strong><span>to close the month</span></div></div>
+        <h2>What changed</h2>
+        <p>Brightfield now creates each invoice from its shipping system through the API the moment a delivery is confirmed. Customers get a hosted page where they can pay by bank transfer or card, or download a PDF for their own approval flow.</p>
+        <figure class="pull"><p>“The day a container is delivered, the invoice is out. The day the money lands, it is matched. Nobody on my team touches a spreadsheet for that anymore.”</p><footer><span class="avatar">SM</span><span><strong>Sofia Marchetti</strong><br><span class="muted">Chief Financial Officer, Brightfield Logistics</span></span></footer></figure>
+        <div class="btn-row" style="margin-top:32px"><a class="btn btn-primary" href="#/contact">Talk to sales<i class="ar"></i></a><a class="btn btn-secondary" href="#/customers">More stories<i class="ar"></i></a></div>
+      </article>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== DOCS ===================== -->
+<div data-view="docs">
+  <section class="top page-head">
+    <div class="wash wash-sm" aria-hidden="true"></div>
+    <div class="wrap above">
+      <p class="kicker"><span class="chip-icon"><svg class="icon icon-sm"><use href="#i-code"/></svg></span>Documentation</p>
+      <h1 class="h1 tt" style="max-width:15em">Build with Quayline. <span>Guides, API reference and SDKs for invoicing, payments and payouts.</span></h1>
+      <div class="search" role="search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><label class="sr-only" for="doc-q">Search the guides</label><input class="input" id="doc-q" type="search" placeholder="Search guides, for example webhooks" autocomplete="off"></div>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="quick">
+        <a href="#/docs" data-guide="quickstart payment card checkout"><svg class="icon" aria-hidden="true"><use href="#i-card"/></svg><h2 class="h3">Accept your first payment</h2><span>Create a payment link or embed checkout.</span><small>10 minutes</small></a>
+        <a href="#/docs" data-guide="invoice api send"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg><h2 class="h3">Send an invoice by API</h2><span>Create, finalize and send from your app.</span><small>15 minutes</small></a>
+        <a href="#/docs" data-guide="payout supplier bank"><svg class="icon" aria-hidden="true"><use href="#i-send"/></svg><h2 class="h3">Pay out to a supplier</h2><span>Verify a bank account and schedule a payout.</span><small>15 minutes</small></a>
+      </div>
+    </div>
+  </section>
+  <section class="sec ruled">
+    <div class="wrap docs-grid">
+      <div>
+        <h2 class="h2" style="margin-bottom:24px">Guides</h2>
+        <ul class="guides" id="guide-list">
+          <li data-guide="webhooks events signature"><a href="#/docs">Receive events with webhooks <small>Core</small></a></li>
+          <li data-guide="idempotent retries requests"><a href="#/docs">Retry requests safely with idempotency keys <small>Core</small></a></li>
+          <li data-guide="test sandbox keys"><a href="#/docs">Test with sandbox keys and test bank accounts <small>Testing</small></a></li>
+          <li data-guide="failed payments dunning reminders"><a href="#/docs">Handle failed payments and reminders <small>Invoicing</small></a></li>
+          <li data-guide="refunds credit notes"><a href="#/docs">Refunds and credit notes <small>Payments</small></a></li>
+          <li data-guide="errors codes"><a href="#/docs">Error codes and how to handle them <small>Reference</small></a></li>
+        </ul>
+        <p class="empty" id="guide-empty" hidden>No guides match that search. Try “invoice” or “payout”.</p>
+      </div>
+      <div>
+        <h2 class="h2" style="margin-bottom:24px">API reference</h2>
+        <div class="ref">
+          <a href="#/docs"><strong>Invoices</strong><code><span class="verb">POST</span>/v1/invoices</code></a>
+          <a href="#/docs"><strong>Payments</strong><code><span class="verb">POST</span>/v1/payments</code></a>
+          <a href="#/docs"><strong>Customers</strong><code><span class="verb">GET</span>/v1/customers</code></a>
+          <a href="#/docs"><strong>Payouts</strong><code><span class="verb">POST</span>/v1/payouts</code></a>
+          <a href="#/docs"><strong>Accounts</strong><code><span class="verb">GET</span>/v1/accounts</code></a>
+          <a href="#/docs"><strong>Events</strong><code><span class="verb">GET</span>/v1/events</code></a>
+        </div>
+        <div class="sdks" aria-label="Official libraries"><span>Node</span><span>Python</span><span>Ruby</span><span>Go</span><span>Java</span><span>PHP</span></div>
+        <p class="muted" style="margin-top:24px">Questions about an integration? <a class="text-link" href="#/contact?topic=integration">Ask our engineers</a> or read the <a class="text-link" href="#/changelog">API changelog</a>.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CHANGELOG ===================== -->
+<div data-view="changelog">
+  <section class="top page-head">
+    <div class="wash wash-sm" aria-hidden="true"></div>
+    <div class="wrap above">
+      <p class="kicker"><span class="chip-icon"><svg class="icon icon-sm"><use href="#i-clock"/></svg></span>API changelog</p>
+      <h1 class="h1 tt" style="max-width:15em">What changed in the API. <span>New endpoints, improvements and deprecations, with at least six months' notice before anything breaks.</span></h1>
+    </div>
+  </section>
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <article class="log reveal" id="v-2026-11"><time datetime="2026-11-12">2026-11-12</time><div><span class="pill-s info">New</span><h2>Partial payments on invoices</h2><p>Invoices accept several payments until the amount due reaches zero. Each payment appears in <code class="mono">invoice.payments</code>.</p><div class="code"><pre><span class="k">GET</span> /v1/invoices/inv_2033
+{ <span class="s">"amount_due"</span>: <span class="f">400000</span>, <span class="s">"amount_paid"</span>: <span class="f">250000</span>, <span class="s">"status"</span>: <span class="s">"partially_paid"</span> }</pre></div></div></article>
+      <article class="log reveal" id="v-2026-10"><time datetime="2026-10-28">2026-10-28</time><div><span class="pill-s">Improved</span><h2>Faster payout scheduling</h2><p>Payouts created before 16:00 in the recipient's time zone now go out the same business day in 22 countries.</p></div></article>
+      <article class="log reveal" id="v-2026-09"><time datetime="2026-09-30">2026-09-30</time><div><span class="pill-s wait">Deprecated</span><h2>The <code class="mono">charge</code> field on payments</h2><p>Use <code class="mono">payment.method_details</code> instead. The old field keeps working until March 31, 2027.</p></div></article>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CONTACT SALES ===================== -->
+<div data-view="contact">
+  <section class="top page-head">
+    <div class="wash wash-sm" aria-hidden="true"></div>
+    <div class="wrap above split">
+      <div>
+        <h1 class="h1 tt">Talk to our sales team. <span>Tell us about your business and we will put together a plan, with volume pricing and a migration path.</span></h1>
+        <ul class="ticks"><li>A reply from a person within one business day</li><li>A walkthrough of the dashboard with your own use case</li><li>Help moving invoices and customers from your current tools</li></ul>
+        <p class="muted" style="margin-top:28px">Already a customer? Write to <a class="text-link" href="mailto:support@quayline.example">support@quayline.example</a>.</p>
+      </div>
+      <div class="form-card">
+        <form class="form-grid" data-form="contact" novalidate>
+          <div class="form-row">
+            <div class="field"><label for="c-name">Full name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-error"><span class="error" id="c-name-error" aria-live="polite"></span></div>
+            <div class="field"><label for="c-email">Work email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="c-email-error"><span class="error" id="c-email-error" aria-live="polite"></span></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label for="c-company">Company</label><input class="input" id="c-company" name="company" autocomplete="organization" required aria-describedby="c-company-error"><span class="error" id="c-company-error" aria-live="polite"></span></div>
+            <div class="field"><label for="c-volume">Monthly volume</label><select class="select" id="c-volume" name="volume"><option>Under $50,000</option><option>$50,000 to $500,000</option><option>$500,000 to $5 million</option><option>More than $5 million</option></select><span class="error" aria-hidden="true"></span></div>
+          </div>
+          <div class="field"><label for="c-topic">Interested in</label><select class="select" id="c-topic" name="topic"><option value="invoicing">Invoicing and payments</option><option value="payouts">Supplier payouts</option><option value="enterprise">Enterprise plan</option><option value="integration">An API integration</option></select><span class="error" aria-hidden="true"></span></div>
+          <div class="field"><label for="c-message">How can we help?</label><textarea class="textarea" id="c-message" name="message" required minlength="10" aria-describedby="c-message-error"></textarea><span class="error" id="c-message-error" aria-live="polite"></span></div>
+          <button class="btn btn-primary" type="submit">Contact sales<i class="ar"></i></button>
+          <p class="fine-print">We use these details only to reply. See the <a class="text-link" href="#/privacy">privacy policy</a>.</p>
+        </form>
+        <div class="success" data-success="contact" hidden role="status"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Thanks, we have your message.</strong><p>Someone from our team will reply within one business day.</p></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== SIGN UP ===================== -->
+<div data-view="signup">
+  <section class="top page-head">
+    <div class="wash wash-sm" aria-hidden="true"></div>
+    <div class="wrap above split">
+      <div>
+        <h1 class="h1 tt">Create your account. <span>Send your first invoice today. Test mode is free, and you only pay when real money moves.</span></h1>
+        <ul class="ticks"><li>No setup fees or monthly minimum on Standard</li><li>Sandbox keys the moment you sign up</li><li>Invite your accountant at no cost</li></ul>
+      </div>
+      <div class="form-card">
+        <form class="form-grid" data-form="signup" novalidate>
+          <div class="field"><label for="s-email">Work email</label><input class="input" id="s-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="s-email-error"><span class="error" id="s-email-error" aria-live="polite"></span></div>
+          <div class="field"><label for="s-name">Full name</label><input class="input" id="s-name" name="name" autocomplete="name" required aria-describedby="s-name-error"><span class="error" id="s-name-error" aria-live="polite"></span></div>
+          <div class="form-row">
+            <div class="field"><label for="s-country">Country</label><select class="select" id="s-country" name="country" autocomplete="country-name"><option>United States</option><option>Canada</option><option>United Kingdom</option><option>Netherlands</option><option>Singapore</option><option>Japan</option></select><span class="error" aria-hidden="true"></span></div>
+            <div class="field"><label for="s-plan">Plan</label><select class="select" id="s-plan" name="plan"><option value="standard">Standard</option><option value="growth">Growth (30-day trial)</option></select><span class="error" aria-hidden="true"></span></div>
+          </div>
+          <div class="field"><label for="s-password">Password</label><input class="input" id="s-password" name="password" type="password" autocomplete="new-password" required minlength="10" aria-describedby="s-password-error"><span class="error" id="s-password-error" aria-live="polite"></span></div>
+          <button class="btn btn-primary" type="submit">Create account<i class="ar"></i></button>
+          <p class="fine-print">By creating an account you agree to the <a class="text-link" href="#/terms">terms</a> and the <a class="text-link" href="#/privacy">privacy policy</a>.</p>
+        </form>
+        <div class="success" data-success="signup" hidden role="status"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Check your inbox.</strong><p>We sent a link to confirm your email and open your dashboard.</p></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="privacy"><section class="top page-head"><div class="wrap above legal"><h1 class="h1">Privacy policy</h1><p class="lead">How Quayline collects, uses and protects information.</p><h2>What we collect</h2><p>Account details, the business and payment information needed to move money, and usage data that keeps the service secure.</p><h2>How we use it</h2><p>To run the service, prevent fraud, meet legal obligations and reply when you contact us. We do not sell personal information.</p><h2>Contact</h2><p>Questions about privacy go to privacy@quayline.example.</p></div></section></div>
+<div data-view="terms"><section class="top page-head"><div class="wrap above legal"><h1 class="h1">Terms of service</h1><p class="lead">The agreement between your business and Quayline.</p><h2>Your account</h2><p>You are responsible for the people you invite and the actions taken with your API keys.</p><h2>Fees</h2><p>Fees are shown on the pricing page and on every statement. We give 30 days' notice before any change.</p><h2>Ending the agreement</h2><p>You can close your account at any time and export your records.</p></div></section></div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="top notfound">
+    <div class="wash wash-sm" aria-hidden="true"></div>
+    <div class="wrap above"><p class="code404">404</p><h1 class="h1 tt">This page took a wrong turn. <span>The link may be old or mistyped.</span></h1><div class="btn-row"><a class="btn btn-primary" href="#/">Go home<i class="ar"></i></a><a class="btn btn-secondary" href="#/docs">Read the docs<i class="ar"></i></a></div></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="#/"><svg aria-hidden="true"><use href="#mark"/></svg>Quayline</a>
+        <div class="footer-news">
+          <form class="news-form" data-form="newsletter" novalidate>
+            <label for="n-email">Product updates for finance teams, once a month</label>
+            <div class="news-row"><input class="input" id="n-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="Work email" aria-describedby="n-email-error"><button class="btn btn-primary" type="submit">Subscribe</button></div>
+            <span class="error" id="n-email-error" aria-live="polite"></span>
+          </form>
+          <div class="success" data-success="newsletter" hidden role="status"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>You are subscribed.</strong><p>The next update arrives at the start of the month.</p></div></div>
+        </div>
+      </div>
+      <div><h4>Products</h4><ul><li><a href="#/product">Invoicing</a></li><li><a href="#products">Payments</a></li><li><a href="#products">Payouts</a></li><li><a href="#products">Cards</a></li><li><a href="#products">Treasury</a></li></ul></div>
+      <div><h4>Developers</h4><ul><li><a href="#/docs">Documentation</a></li><li><a href="#/changelog">API changelog</a></li><li><a href="#developers">Libraries</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#/customers">Customers</a></li><li><a href="#/pricing">Pricing</a></li><li><a href="#/contact">Contact sales</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="#/privacy">Privacy</a></li><li><a href="#/terms">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Quayline Inc.</span><span>Quayline is a software company, not a bank. Banking services are provided by partner banks.</span></div>
+  </div>
+</footer>
+
+<!-- ===================== SVG SPRITE ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="mark-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="oklch(70% 0.15 250)"/><stop offset=".5" stop-color="oklch(60% 0.23 300)"/><stop offset="1" stop-color="oklch(67% 0.25 355)"/></linearGradient>
+    <symbol id="mark" viewBox="0 0 26 26"><rect width="26" height="26" rx="7" fill="url(#mark-g)"/><path d="M7 15.5h12M7 10.5h8" stroke="oklch(100% 0 0)" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h9"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5z"/></symbol>
+    <symbol id="i-bank" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></symbol>
+    <symbol id="i-sync" viewBox="0 0 24 24"><path d="M7 7h11l-3-3M17 17H6l3 3"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M8 8a6 6 0 0 1 0 8M12 5a10 10 0 0 1 0 14M16 3a13 13 0 0 1 0 18"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks one ---------- */
+  const themeButton = document.getElementById("theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    themeButton.querySelector("use").setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("quayline-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("quayline-theme", next);
+  });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map([...document.querySelectorAll("[data-view]")].map((el) => [el.dataset.view, el]));
+  const titles = { home: "Quayline: invoices, payments and payouts on one ledger", product: "Invoicing · Quayline", pricing: "Pricing · Quayline", customers: "Customer stories · Quayline", story: "Brightfield Logistics · Quayline", docs: "Documentation · Quayline", changelog: "API changelog · Quayline", contact: "Contact sales · Quayline", signup: "Create your account · Quayline", privacy: "Privacy policy · Quayline", terms: "Terms of service · Quayline", "404": "Page not found · Quayline" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query), anchor: "" };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    document.querySelectorAll(".nav a, .sheet a:not(.btn)").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "pricing") document.querySelectorAll("[data-plan]").forEach((card) => card.classList.toggle("featured", card.dataset.plan === (p.get("plan") || "growth")));
+    if (name === "signup" && p.get("plan")) document.getElementById("s-plan").value = p.get("plan") === "growth" ? "growth" : "standard";
+    if (name === "contact" && p.get("topic")) { const select = document.getElementById("c-topic"); if (select.querySelector(`option[value="${CSS.escape(p.get("topic"))}"]`)) select.value = p.get("topic"); }
+    if (name === "customers") filterStories(p.get("industry") || "all");
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); if (menu.open) menu.close(); go(href); return; }
+    const target = href.length > 1 && document.querySelector(href);
+    if (!target) return;
+    event.preventDefault();
+    if (menu.open) menu.close();
+    /* a section ID on another view (footer links to #products): open that view first, then scroll */
+    const view = target.closest("[data-view]");
+    if (view && view !== current) go(view.dataset.view === "home" ? "#/" : `#/${view.dataset.view}`);
+    target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    if (target.id === "main") target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header and mobile menu ---------- */
+  const header = document.querySelector(".site-header");
+  const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  const menu = document.getElementById("menu");
+  document.getElementById("menu-open").addEventListener("click", () => menu.showModal());
+  document.getElementById("menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+
+  /* ---------- Reveal: keyframes on entry; content stays visible without JS; timed fallback ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    scope.querySelectorAll(".reveal:not(.is-in)").forEach((el) => (io ? io.observe(el) : el.classList.add("is-in")));
+  }
+  setTimeout(() => document.querySelectorAll(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Ticker: counts up to the figure in the markup ---------- */
+  document.querySelectorAll("[data-count]").forEach((el) => {
+    const target = Number(el.dataset.count);
+    if (reduced.matches) return;
+    const startAt = performance.now();
+    const tick = (now) => {
+      const t = Math.min(1, (now - startAt) / 1600);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - t, 3))).toLocaleString("en-US");
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+
+  /* ---------- Line burst in the navy band (decorative) ---------- */
+  document.querySelectorAll("[data-burst] g").forEach((g) => {
+    let lines = "";
+    for (let i = 0; i < 64; i++) {
+      const a = Math.PI * (0.04 + (0.92 * i) / 63);
+      const r = 230 + ((i * 37) % 60);
+      lines += `<line x1="${(550 + Math.cos(a) * 10).toFixed(1)}" y1="${(300 - Math.sin(a) * 6).toFixed(1)}" x2="${(550 + Math.cos(a) * r * 2).toFixed(1)}" y2="${(300 - Math.sin(a) * r).toFixed(1)}" stroke-width="${i % 3 ? 0.8 : 1.4}" opacity="${(0.35 + ((i * 13) % 10) / 16).toFixed(2)}"/>`;
+    }
+    g.innerHTML = lines;
+  });
+
+  /* ---------- Tabs (code samples) and copy ---------- */
+  document.querySelectorAll("[data-tabs]").forEach((box) => {
+    const tabs = [...box.querySelectorAll("[role=tab]")];
+    const select = (tab) => tabs.forEach((t) => { const on = t === tab; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; document.getElementById(t.getAttribute("aria-controls")).hidden = !on; });
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => select(tab));
+      tab.addEventListener("keydown", (event) => {
+        const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+        if (!step) return;
+        const next = tabs[(i + step + tabs.length) % tabs.length];
+        select(next); next.focus();
+      });
+    });
+    box.querySelector("[data-copy]")?.addEventListener("click", async (event) => {
+      const button = event.currentTarget;
+      const panel = box.querySelector("pre:not([hidden])");
+      try { await navigator.clipboard.writeText(panel.textContent); button.setAttribute("aria-label", "Copied"); }
+      catch { button.setAttribute("aria-label", "Copy is not allowed here"); }
+      setTimeout(() => button.setAttribute("aria-label", "Copy code"), 1500);
+    });
+  });
+
+  /* ---------- Pricing: billing period and the fee estimate ---------- */
+  function setBilling(period) {
+    document.querySelectorAll("[data-billing]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.billing === period)));
+    document.querySelectorAll(`[data-${period}]`).forEach((el) => { el.textContent = el.dataset[period]; });
+    estimate();
+  }
+  document.querySelectorAll("[data-billing]").forEach((b) => b.addEventListener("click", () => setBilling(b.dataset.billing)));
+  const money = (n) => "$" + Math.round(n).toLocaleString("en-US");
+  const rates = {
+    standard: { card: 0.026, fixed: 0.3, bank: 0.008, cap: 5, monthly: 0 },
+    growth: { card: 0.022, fixed: 0.3, bank: 0.005, cap: 4, monthly: 249, yearly: 208 },
+  };
+  function estimate() {
+    const vol = Number(document.getElementById("vol").value);
+    const avg = Number(document.getElementById("avg").value);
+    const bankShare = Number(document.getElementById("bank").value) / 100;
+    document.getElementById("vol-out").textContent = money(vol);
+    document.getElementById("avg-out").textContent = money(avg);
+    document.getElementById("bank-out").textContent = `${Math.round(bankShare * 100)}%`;
+    const count = vol / avg;
+    const yearly = document.querySelector('[data-billing="yearly"]').getAttribute("aria-pressed") === "true";
+    const cost = {};
+    for (const [plan, r] of Object.entries(rates)) {
+      const cards = vol * (1 - bankShare) * r.card + count * (1 - bankShare) * r.fixed;
+      const bank = count * bankShare * Math.min(avg * r.bank, r.cap);
+      cost[plan] = cards + bank + (yearly && r.yearly ? r.yearly : r.monthly);
+      document.getElementById(`est-${plan}`).textContent = money(cost[plan]);
+    }
+    const best = cost.growth < cost.standard ? "growth" : "standard";
+    document.querySelectorAll("[data-est]").forEach((row) => row.classList.toggle("best", row.dataset.est === best));
+    const diff = Math.abs(cost.standard - cost.growth);
+    document.getElementById("verdict").textContent = diff < 1 ? "Both plans cost about the same at this volume." : `${best === "growth" ? "Growth" : "Standard"} saves you about ${money(diff)} a month.`;
+  }
+  ["vol", "avg", "bank"].forEach((id) => document.getElementById(id).addEventListener("input", estimate));
+  estimate();
+
+  /* ---------- Customer stories filter ---------- */
+  function filterStories(industry) {
+    let shown = 0;
+    document.querySelectorAll("#story-list [data-industry]").forEach((card) => {
+      const on = industry === "all" || card.dataset.industry === industry;
+      card.hidden = !on;
+      if (on) shown++;
+    });
+    document.querySelectorAll("[data-filter]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === industry)));
+    document.getElementById("story-count").textContent = `Showing ${shown} ${shown === 1 ? "story" : "stories"}`;
+    document.getElementById("story-empty").hidden = shown > 0;
+  }
+  document.querySelectorAll("[data-filter]").forEach((b) => b.addEventListener("click", () => filterStories(b.dataset.filter)));
+
+  /* ---------- Docs search: filters the guides and quick starts as you type ---------- */
+  const docQuery = document.getElementById("doc-q");
+  docQuery.addEventListener("input", () => {
+    const q = docQuery.value.trim().toLowerCase();
+    let shown = 0;
+    document.querySelectorAll("#guide-list [data-guide], .quick [data-guide]").forEach((item) => {
+      const on = !q || (item.dataset.guide + " " + item.textContent).toLowerCase().includes(q);
+      item.hidden = !on;
+      if (on && item.closest("#guide-list")) shown++;
+    });
+    document.getElementById("guide-empty").hidden = shown > 0;
+  });
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please add a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (problem === "tooShort" && field.type === "password" ? `Use at least ${field.minLength} characters.` : messages[problem]) : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  document.querySelectorAll("form[data-form]").forEach((form) => {
+    const fields = [...form.querySelectorAll("input, textarea")];
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value) checkField(field); });
+      field.addEventListener("input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before "submit" fires, so the button's click runs it too (Enter clicks it). */
+    const button = form.querySelector("[type=submit]");
+    const send = () => {
+      if (button.disabled) return;
+      if (!fields.map(checkField).every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => { form.hidden = true; form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`).hidden = false; }, 600);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+  });
+
+  /* ---------- Start ---------- */
+  const start = parse(location.hash);
+  show(start, { scroll: false });
+  if (start.anchor) document.querySelector(start.anchor)?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

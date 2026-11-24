@@ -1,0 +1,1408 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Halvane: private journeys, composed after dark</title>
+<meta name="description" content="Halvane designs private journeys by sleeper train, boat and seaplane: a night fjord, a lantern-lit old town, an atoll, dunes under stars. Tell us where you want to wake up.">
+<meta property="og:title" content="Halvane: private journeys, composed after dark">
+<meta property="og:description" content="Private journeys by rail, sea and air, planned by one designer from the first enquiry to the last night.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/urbanist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Font: one variable family; thin for display, regular for reading, medium for tracked capitals ---------- */
+@font-face { font-family: "Urbanist"; src: url("fonts/urbanist-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: night teal (dark, the default) ---------- */
+:root {
+  color-scheme: dark;
+  --bg: oklch(22.5% 0.036 228);          /* night teal: the page */
+  --surface: oklch(26.8% 0.042 230);     /* the second band, crumbs, cards on the page */
+  --surface-2: oklch(30.5% 0.046 230);   /* fields, table heads, the pressed segment */
+  --header: oklch(22.5% 0.036 228 / 0.92);
+  --text: oklch(96.5% 0.008 70);
+  --text-muted: oklch(80% 0.024 215);
+  --border: oklch(39% 0.036 228);
+  --accent: oklch(84% 0.085 70);         /* champagne: one main action, active tabs, the current crumb */
+  --accent-text: oklch(22% 0.036 228);
+  --accent-ink: oklch(84% 0.085 70);     /* champagne as text or a line */
+  --pill: oklch(42% 0.03 52);            /* the quiet taupe pill */
+  --pill-text: oklch(97% 0.008 70);
+  --note: oklch(95% 0.014 65);           /* the cream note card that overlaps a photograph */
+  --note-text: oklch(28% 0.045 230);
+  --error: oklch(77% 0.13 32);
+  --focus: oklch(84% 0.085 70);
+  --photo: oklch(18% 0.03 228);
+  /* Fixed in both themes: what sits on photographs and the warm floor */
+  --plum: oklch(35% 0.055 322 / 0.84);
+  --espresso: oklch(25.5% 0.014 45);
+  --espresso-line: oklch(39% 0.016 45);
+  --gold: oklch(84% 0.085 70);
+  --ink-on-photo: oklch(98% 0.006 70);
+  --chev: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%23c9a274' stroke-width='1.4'/%3E%3C/svg%3E");
+  --sans: "Urbanist", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --fs-display: clamp(2.5rem, 1.3rem + 4.2vw, 5.25rem);
+  --fs-h1: clamp(2.125rem, 1.4rem + 2.6vw, 3.75rem);
+  --fs-h2: clamp(1.75rem, 1.3rem + 1.5vw, 2.625rem);
+  --fs-h3: clamp(1.25rem, 1.1rem + 0.45vw, 1.5rem);
+  --fs-word: clamp(2rem, 1.4rem + 1.8vw, 3rem);
+  --fs-body: 1.0625rem;
+  --fs-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --fs-small: 0.9375rem;
+  --fs-label: 0.75rem;
+  --track: 0.28em;
+  --track-wide: 0.42em;
+  --page: 1320px;
+  --gutter: clamp(16px, 4vw, 60px);
+  --sec: clamp(64px, 8vw, 120px);
+  --top-h: 52px;
+  --nav-h: 56px;
+  --r-card: 6px;
+  --r-panel: 12px;
+  --dur-fast: 180ms;
+  --dur-base: 420ms;
+  --dur-slow: 1100ms;
+  --ease: cubic-bezier(0.3, 0, 0.1, 1);
+}
+/* ---------- Tokens: cream (light), only after the toggle ---------- */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(97.6% 0.009 70); --surface: oklch(93.6% 0.019 58); --surface-2: oklch(90.6% 0.024 58);
+  --header: oklch(97.6% 0.009 70 / 0.94);
+  --text: oklch(28.5% 0.045 230); --text-muted: oklch(45% 0.03 230); --border: oklch(84.5% 0.02 60);
+  --accent: oklch(45.5% 0.075 50); --accent-text: oklch(98.5% 0.006 70); --accent-ink: oklch(44% 0.08 50);
+  --pill: oklch(45.5% 0.075 50); --pill-text: oklch(98.5% 0.006 70);
+  --note: oklch(99% 0.004 70); --note-text: oklch(28.5% 0.045 230);
+  --error: oklch(50% 0.17 28); --focus: oklch(44% 0.08 50); --photo: oklch(30% 0.04 228);
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--nav-h) + 16px); }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs-body)/1.7 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: clip; font-variant-numeric: lining-nums; }
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
+h1, h2, h3, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.on-photo :focus-visible { outline-color: var(--gold); }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 60; padding: 12px 18px; border-radius: 999px; background: var(--accent); color: var(--accent-text); }
+.skip:focus { top: 12px; }
+.wrap { width: 100%; max-width: var(--page); margin-inline: auto; padding-inline: var(--gutter); }
+.sec { padding-block: var(--sec); }
+.sec.tight { padding-top: clamp(32px, 4vw, 56px); }
+.band { background: var(--surface); }
+.muted { color: var(--text-muted); }
+.small { font-size: var(--fs-small); }
+.c { text-align: center; }
+.gap { margin-top: 14px; }
+.sub { display: block; margin-top: 8px; }
+.ring.mid, .success p.c { margin-inline: auto; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.js [data-view]:not(.is-active) { display: none; }
+
+/* ---------- Type: thin and large for display, tracked capitals for labels, never bold ---------- */
+.display, .h1, .h2 { font-weight: 300; text-wrap: balance; letter-spacing: -0.005em; }
+.display { font-size: var(--fs-display); font-weight: 200; line-height: 1.04; }
+.h1 { font-size: var(--fs-h1); line-height: 1.1; }
+.h2 { font-size: var(--fs-h2); line-height: 1.15; }
+.h3 { font-size: var(--fs-h3); font-weight: 400; line-height: 1.3; }
+.label, .pill, .crumbs, .tabs button, .count, th, .status, .field label, .cp-small label { font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--track); text-transform: uppercase; line-height: 1.35; }
+.wide { font-size: clamp(1.125rem, 0.8rem + 1.3vw, 2rem); font-weight: 300; letter-spacing: var(--track-wide); text-transform: uppercase; line-height: 1.4; }
+.label { color: var(--accent-ink); margin-bottom: 14px; }
+.lead { font-size: var(--fs-lead); font-weight: 300; line-height: 1.65; max-width: 60ch; }
+.head { margin-bottom: clamp(32px, 4vw, 56px); }
+.head.c .lead { margin-inline: auto; }
+.head .h1, .head .h2 { margin-bottom: 16px; }
+.head-row { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 40px; margin-bottom: clamp(32px, 4vw, 56px); }
+/* The champagne hairline: under every card title, fading in from the left */
+.rule { height: 2px; margin: 18px 0; border: 0; background: linear-gradient(90deg, color-mix(in oklch, var(--text) 16%, transparent), var(--accent-ink)); }
+
+/* ---------- Actions: rounded pills in tracked capitals; champagne once per screen ---------- */
+.pill { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 34px; border: 1px solid transparent; border-radius: 999px; background: var(--pill); color: var(--pill-text); text-decoration: none; white-space: nowrap; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.pill:hover { background: color-mix(in oklch, var(--pill) 82%, white); }
+.pill.gold { background: var(--accent); color: var(--accent-text); }
+.pill.gold:hover { background: color-mix(in oklch, var(--accent) 88%, white); }
+.pill.line { border-color: currentColor; background: transparent; color: inherit; }
+.pill.line:hover { background: color-mix(in oklch, currentColor 10%, transparent); }
+.pill.sm { min-height: 40px; padding: 0 20px; }
+.pill:disabled { opacity: 0.6; cursor: progress; }
+.on-photo .pill:not(.gold, .line) { background: oklch(32% 0.02 52 / 0.78); color: var(--ink-on-photo); backdrop-filter: blur(6px); }
+.on-photo .pill.gold { background: var(--gold); color: oklch(22% 0.036 228); }
+.link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0; border: 0; background: none; color: var(--accent-ink); text-decoration: none; font-weight: 500; }
+.link svg { width: 16px; height: 16px; transition: transform var(--dur-fast) var(--ease); }
+.link:hover svg, a:hover > .link svg { transform: translateX(4px); }
+.on-photo .link { color: var(--gold); }
+.actions { display: flex; flex-wrap: wrap; gap: 14px; }
+.actions.c { justify-content: center; }
+
+/* ---------- Notice bar: one line of news above the header, with its own pager ---------- */
+.notice { background: oklch(19% 0.032 228); color: oklch(94% 0.01 70); font-size: 0.875rem; }
+[data-theme="light"] .notice { background: oklch(28.5% 0.045 230); }
+.notice .wrap { display: flex; align-items: center; gap: 12px; min-height: 40px; }
+.notice-text { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; }
+.notice-text a { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; }
+.notice-text a:hover { text-decoration: underline; }
+.dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px oklch(84% 0.085 70 / 0.2); }
+.notice-pager { display: flex; align-items: center; gap: 2px; font-variant-numeric: tabular-nums; }
+.notice-pager button { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; background: none; color: inherit; }
+.notice-pager svg { width: 14px; height: 14px; }
+.notice-all { padding-left: 14px; border-left: 1px solid oklch(100% 0 0 / 0.25); color: var(--gold); text-decoration: none; white-space: nowrap; }
+@media (max-width: 640px) { .notice-all, .notice-pager span { display: none; } }
+
+/* ---------- Header: a utility row, then the links spread evenly across the page ---------- */
+.site-header { position: sticky; top: calc(-1 * var(--top-h)); z-index: 40; background: var(--header); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+.site-header.compact { top: 0; }
+.top { display: flex; align-items: center; gap: 20px; height: var(--top-h); }
+.brand { display: inline-flex; align-items: center; gap: 12px; flex: none; color: var(--text); text-decoration: none; font-size: 1.125rem; font-weight: 400; letter-spacing: 0.36em; text-transform: uppercase; }
+.brand svg { width: 26px; height: 26px; color: var(--accent-ink); }
+.util { display: flex; align-items: center; gap: 4px; margin-left: auto; font-size: 0.9375rem; }
+.util > a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; text-decoration: none; white-space: nowrap; }
+.util > a + a { border-left: 1px solid var(--border); }
+.util .gold-link { color: var(--accent-ink); }
+.util > a:hover { text-decoration: underline; }
+.icon-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: none; color: var(--text); }
+.icon-btn svg { width: 20px; height: 20px; }
+.icon-btn:hover { background: color-mix(in oklch, var(--text) 8%, transparent); }
+.nav { display: flex; justify-content: space-around; gap: 24px; height: var(--nav-h); overflow: hidden; white-space: nowrap; }
+.nav a { position: relative; display: inline-flex; align-items: center; padding: 0 6px; text-decoration: none; font-size: 1.0625rem; font-weight: 400; transition: color var(--dur-fast) var(--ease); }
+.nav a::after { content: ""; position: absolute; left: 6px; right: 6px; bottom: 10px; height: 1px; background: var(--accent-ink); transform: scaleX(0); transition: transform var(--dur-base) var(--ease); }
+.nav a:hover::after, .nav a[aria-current="page"]::after { transform: none; }
+.nav a[aria-current="page"] { color: var(--accent-ink); }
+#menu-open { display: none; }
+.compact .nav { display: none; }
+.compact #menu-open { display: inline-grid; }
+.compact .util > a { display: none; }
+.sheet { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0; border: 0; background: var(--bg); color: var(--text); }
+.sheet::backdrop { background: oklch(0% 0 0 / 0.6); }
+.sheet[open] { animation: fade var(--dur-base) var(--ease); }
+.sheet-top { display: flex; align-items: center; justify-content: space-between; height: var(--top-h); }
+.sheet-links { padding-block: 16px 24px; }
+.sheet-links a { display: block; padding: 16px 0; font-size: clamp(1.5rem, 1.1rem + 2vw, 2.25rem); font-weight: 300; text-decoration: none; line-height: 1.2; border-bottom: 1px solid var(--border); }
+.sheet-links a[aria-current="page"] { color: var(--accent-ink); }
+.sheet-foot { display: flex; flex-wrap: wrap; gap: 12px; padding-bottom: 40px; }
+
+/* ---------- Pictures ---------- */
+.ph { position: relative; display: block; overflow: hidden; border-radius: var(--r-card); background: var(--photo); aspect-ratio: 4 / 3; }
+.ph img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-slow) var(--ease); }
+a.ph:hover img, a:hover > .ph img { transform: scale(1.04); }
+.ph.sq { aspect-ratio: 1; }
+.ph.wide { aspect-ratio: 16 / 9; }
+
+/* ---------- Hero: a slow slideshow of night photographs; the composer floats in a plum band at the top ---------- */
+.on-photo { color: var(--ink-on-photo); }
+.hero { position: relative; display: grid; grid-template-rows: auto 1fr auto; min-height: clamp(600px, calc(100svh - var(--top-h) - var(--nav-h) - 40px), 880px); overflow: hidden; background: var(--photo); }
+.slides { position: absolute; inset: 0; }
+.slide { position: absolute; inset: 0; display: grid; align-items: end; opacity: 0; visibility: hidden; transition: opacity var(--dur-slow) var(--ease), visibility 0s linear var(--dur-slow); }
+.slide.is-on { opacity: 1; visibility: visible; transition: opacity var(--dur-slow) var(--ease); }
+.slide > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.slide.is-on > img { animation: drift 12s linear both; }
+.slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, oklch(15% 0.03 228 / 0.35), oklch(15% 0.03 228 / 0) 30%, oklch(15% 0.03 228 / 0) 52%, oklch(12% 0.03 228 / 0.78)); }
+.slide-copy { position: relative; z-index: 1; padding-bottom: clamp(104px, 13vh, 140px); }
+.slide-copy .display { max-width: 15ch; margin-bottom: 18px; }
+.slide-copy p { max-width: 52ch; font-size: var(--fs-lead); font-weight: 300; }
+.slide-copy .link { margin-top: 8px; }
+.slide.is-on .slide-copy { animation: rise var(--dur-slow) 0.2s var(--ease) both; }
+.hero-ctl { position: relative; z-index: 2; grid-row: 3; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; padding-bottom: clamp(24px, 4vh, 40px); pointer-events: none; }
+.hero-ctl > * { pointer-events: auto; }
+.place { font-size: clamp(1.25rem, 1rem + 0.8vw, 1.75rem); font-weight: 300; letter-spacing: 0.04em; }
+.ctl { display: flex; align-items: center; background: oklch(12% 0.02 228 / 0.82); font-variant-numeric: tabular-nums; }
+.ctl button { display: grid; place-items: center; width: 48px; height: 44px; padding: 0; border: 0; background: none; color: var(--gold); }
+.ctl button svg { width: 16px; height: 16px; }
+.ctl span { min-width: 72px; padding-inline: 12px; border-left: 1px solid oklch(100% 0 0 / 0.2); text-align: center; font-size: 0.9375rem; }
+/* The composer: two huge thin words with small pickers beside them, a champagne swap, one champagne button */
+.composer { position: relative; z-index: 3; grid-row: 1; display: block; background: var(--plum); backdrop-filter: blur(10px); color: var(--ink-on-photo); }
+.cp-in { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) minmax(150px, 0.8fr) auto; align-items: center; gap: 12px 24px; padding-block: 16px; }
+.cp { position: relative; display: flex; align-items: center; gap: 14px; min-width: 0; padding-bottom: 6px; }
+.cp-word { flex: none; font-size: var(--fs-word); font-weight: 200; line-height: 1; cursor: pointer; }
+.cp select, .cp-small select { min-width: 0; width: 100%; min-height: 44px; padding: 0 28px 0 0; border: 0; border-bottom: 1px solid oklch(100% 0 0 / 0.3); background: transparent var(--chev) no-repeat right 4px center / 12px; color: inherit; font-size: 0.9375rem; appearance: none; cursor: pointer; }
+.cp select option, .cp-small select option { color: oklch(22% 0.036 228); background: oklch(97% 0.01 70); }
+.cp .err { left: 0; bottom: -14px; color: oklch(86% 0.1 40); }
+.cp-swap { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: none; color: var(--gold); transition: transform var(--dur-base) var(--ease); }
+.cp-swap:hover { transform: rotate(180deg); }
+.cp-swap svg { width: 30px; height: 30px; }
+.cp-small { display: grid; gap: 2px; padding: 6px 14px 4px; border-radius: 4px; background: oklch(20% 0.04 322 / 0.75); }
+.cp-small label { color: var(--gold); letter-spacing: 0.12em; }
+.cp-small select { min-height: 32px; border: 0; font-size: 1rem; }
+
+/* ---------- The warm floor: an espresso strip of three circled shortcuts under the hero ---------- */
+.quick { background: var(--espresso); color: oklch(95% 0.01 70); }
+.quick-in { display: grid; grid-template-columns: repeat(3, 1fr); }
+.quick a { display: flex; align-items: center; justify-content: center; gap: 14px; min-height: 76px; padding: 12px 16px; text-decoration: none; font-size: 1.0625rem; }
+.quick a + a { border-left: 1px solid var(--espresso-line); }
+.quick a:hover .ring { background: var(--gold); color: var(--espresso); }
+.ring { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border: 1px solid currentColor; border-radius: 50%; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.ring svg { width: 20px; height: 20px; }
+
+/* ---------- Square place cards on a sideways rail ---------- */
+.rail-wrap { position: relative; }
+.rail { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 4 * 24px) / 5); gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+.rail::-webkit-scrollbar { display: none; }
+.rail > li { scroll-snap-align: start; }
+.sq-card { display: grid; gap: 16px; text-decoration: none; text-align: center; }
+.sq-card span { font-size: 1.0625rem; }
+.rail-btn { position: absolute; top: calc(50% - 40px); display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: none; color: var(--accent-ink); }
+.rail-btn svg { width: 26px; height: 26px; }
+.rail-btn.prev { left: -52px; }
+.rail-btn.next { right: -52px; }
+.rail-btn:disabled { opacity: 0.25; cursor: default; }
+
+/* ---------- Cards: picture, title, the champagne hairline, a sentence ---------- */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(36px, 4vw, 56px) clamp(16px, 2.4vw, 32px); }
+.card .ph { margin-bottom: 22px; }
+.card .h3 a { text-decoration: none; }
+.card .h3 a:hover { text-decoration: underline; }
+.card .meta { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-bottom: 10px; color: var(--text-muted); font-size: var(--fs-small); }
+.card .price { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-top: 14px; }
+.price b { font-weight: 400; color: var(--accent-ink); }
+/* Notes: the journal card, a picture then a small document mark beside the title */
+.note-card .ph { aspect-ratio: 16 / 9; margin-bottom: 18px; }
+.note-title { display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: start; }
+.note-title svg { width: 18px; height: 18px; margin-top: 5px; color: var(--text-muted); }
+.note-title a { font-size: 1.1875rem; font-weight: 400; line-height: 1.45; text-decoration: none; }
+.note-title a:hover { text-decoration: underline; }
+.note-card time { display: block; margin: 10px 0 0 32px; color: var(--text-muted); font-size: var(--fs-small); }
+
+/* ---------- A photograph with a cream note card overlapping its lower edge ---------- */
+.overlap { position: relative; display: grid; min-height: clamp(460px, 52vw, 640px); background: var(--photo); overflow: hidden; }
+.overlap > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.overlap .wrap { position: relative; display: flex; align-items: flex-end; padding-bottom: 0; }
+.note { width: min(100%, 440px); margin-left: clamp(0px, 8vw, 160px); padding: clamp(28px, 3.4vw, 48px); background: var(--note); color: var(--note-text); }
+.note .label { color: oklch(44% 0.08 50); }
+.note .h2 { margin-bottom: 14px; }
+.note p:not(.label) { margin-bottom: 24px; }
+
+/* ---------- Two large picture cards under a wide-tracked line ---------- */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 3vw, 48px); }
+.duo a { display: grid; gap: 22px; text-decoration: none; }
+.duo .ph { aspect-ratio: 3 / 2; }
+.duo .h1 { font-weight: 300; }
+
+/* ---------- Page hero (inner views): one photograph, words centred, a quiet pill ---------- */
+.page-hero { position: relative; display: grid; align-items: end; min-height: clamp(400px, 60vh, 620px); overflow: hidden; background: var(--photo); text-align: center; }
+.page-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: drift 14s linear both; }
+.page-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, oklch(12% 0.03 228 / 0.3), oklch(12% 0.03 228 / 0.5) 45%, oklch(12% 0.03 228 / 0.82)); }
+.page-hero .wrap { position: relative; z-index: 1; display: grid; justify-items: center; gap: 16px; padding-bottom: clamp(48px, 8vh, 80px); animation: rise var(--dur-slow) 0.2s var(--ease) both; }
+.page-hero .h1 { max-width: 22ch; }
+.page-hero .label { color: var(--gold); }
+.page-hero p:not(.label) { max-width: 56ch; font-size: var(--fs-lead); font-weight: 300; }
+/* The crumb bar: a teal strip, triangles between, the current page in champagne */
+.crumbs { background: var(--surface); text-transform: none; letter-spacing: 0.02em; font-size: 1rem; font-weight: 400; }
+.crumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; min-height: 60px; }
+.crumbs li { display: flex; align-items: center; gap: 14px; }
+.crumbs li + li::before { content: ""; border-left: 6px solid currentColor; border-block: 4px solid transparent; opacity: 0.9; }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+.crumbs [aria-current] { color: var(--accent-ink); }
+.page-head { padding-block: clamp(48px, 7vw, 96px) clamp(24px, 3vw, 40px); }
+.page-head .h1 { margin-bottom: 18px; }
+
+/* ---------- Pill tabs and filters: the pressed one filled with champagne ---------- */
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; margin-bottom: clamp(32px, 4vw, 48px); }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.tabs button { min-height: 44px; padding: 0 22px; border: 1px solid var(--border); border-radius: 999px; background: transparent; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
+.tabs button:hover { border-color: var(--accent-ink); }
+.tabs button[aria-pressed="true"], .tabs button[aria-selected="true"] { border-color: var(--accent); background: var(--accent); color: var(--accent-text); }
+.tool-end { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+.select-inline { display: flex; align-items: center; gap: 10px; color: var(--text-muted); font-size: var(--fs-small); }
+.select-inline select { min-height: 44px; padding: 0 36px 0 14px; border: 1px solid var(--border); border-radius: 999px; background: var(--bg) var(--chev) no-repeat right 14px center / 12px; appearance: none; color: var(--text); }
+.count { color: var(--text-muted); }
+.empty { padding: 56px 0; text-align: center; color: var(--text-muted); }
+
+/* ---------- Journey page: facts as a table with champagne heads, days as alternating picture rows ---------- */
+.facts-table { position: relative; overflow-x: auto; }
+table { width: 100%; min-width: 640px; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+thead th { padding: 16px 18px; background: var(--surface-2); color: var(--accent-ink); text-align: left; letter-spacing: 0.12em; }
+td { padding: 18px; border-bottom: 1px solid var(--border); vertical-align: top; }
+td b { font-weight: 400; color: var(--accent-ink); }
+.rows-alt > * { padding-block: clamp(48px, 6vw, 80px); }
+.rows-alt > :nth-child(odd) { background: var(--surface); }
+.split { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 32px clamp(32px, 5vw, 80px); }
+.rows-alt > :nth-child(even) .split > :first-child { order: 2; }
+.rows-alt > :nth-child(even) .split > div:not(.ph) { text-align: right; }
+.split .ph { aspect-ratio: 3 / 2; }
+.split .h2 { margin-bottom: 18px; }
+.split .label { margin-bottom: 10px; }
+
+/* ---------- Departures ---------- */
+.dep { border-top: 1px solid var(--border); }
+.dep li { display: grid; grid-template-columns: 96px 1fr auto auto; align-items: center; gap: 16px clamp(16px, 3vw, 40px); padding: 26px 0; border-bottom: 1px solid var(--border); }
+.date { display: grid; justify-items: start; color: var(--text-muted); font-size: var(--fs-label); letter-spacing: var(--track); text-transform: uppercase; }
+.date b { font-size: 3rem; font-weight: 200; line-height: 1; color: var(--text); letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.dep .h3 { margin-bottom: 4px; }
+.status { padding: 8px 14px; border: 1px solid var(--border); border-radius: 999px; white-space: nowrap; letter-spacing: 0.14em; }
+.status.open { border-color: var(--accent-ink); color: var(--accent-ink); }
+
+/* ---------- Salons: tabs over panels of alternating rows ---------- */
+.js [role="tabpanel"]:not(.is-on) { display: none; }
+.panel-title { padding-block: clamp(32px, 4vw, 56px) clamp(24px, 3vw, 40px); }
+
+/* ---------- The Circle: three tiers, a billing switch, a comparison ---------- */
+.seg { display: inline-flex; padding: 4px; border: 1px solid var(--border); border-radius: 999px; }
+.seg button { min-height: 40px; padding: 0 22px; border: 0; border-radius: 999px; background: none; color: var(--text-muted); font-size: var(--fs-label); font-weight: 500; letter-spacing: var(--track); text-transform: uppercase; }
+.seg button[aria-pressed="true"] { background: var(--surface-2); color: var(--text); }
+.tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2vw, 28px); margin-top: 32px; }
+.tier { display: flex; flex-direction: column; padding: clamp(28px, 3vw, 40px); border: 1px solid var(--border); border-radius: var(--r-panel); background: var(--bg); }
+.tier.pick { border-color: var(--accent-ink); }
+.tier .label { margin-bottom: 8px; }
+.amount { margin-top: 18px; font-size: clamp(2.25rem, 1.8rem + 1.4vw, 3rem); font-weight: 200; line-height: 1; font-variant-numeric: tabular-nums; }
+.amount small { margin-left: 6px; font-size: var(--fs-small); font-weight: 400; color: var(--text-muted); }
+.ticks { display: grid; gap: 12px; margin: 8px 0 28px; }
+.ticks li { display: grid; grid-template-columns: 18px 1fr; gap: 12px; }
+.ticks svg { width: 16px; height: 16px; margin-top: 6px; color: var(--accent-ink); }
+.tier .pill { margin-top: auto; }
+
+/* ---------- Forms: fields on the second band, labels in tracked capitals, errors floating below ---------- */
+.form-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 40px clamp(32px, 6vw, 96px); align-items: start; }
+.form-grid .h1 { margin-bottom: 18px; }
+form { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+.field { position: relative; display: grid; gap: 8px; padding-bottom: 26px; }
+.field.full, form .full { grid-column: 1 / -1; }
+.field label { color: var(--accent-ink); letter-spacing: 0.12em; }
+.field input, .field select, .field textarea { width: 100%; min-height: 52px; padding: 12px 16px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--bg); color: var(--text); font-size: 1rem; transition: border-color var(--dur-fast) var(--ease); }
+.field select { appearance: none; padding-right: 40px; background: var(--bg) var(--chev) no-repeat right 16px center / 12px; }
+.field textarea { min-height: 120px; resize: vertical; }
+.field input:hover, .field select:hover, .field textarea:hover { border-color: var(--text-muted); }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: none; border-color: var(--accent-ink); box-shadow: 0 0 0 1px var(--accent-ink); }
+.field [aria-invalid="true"] { border-color: var(--error); }
+.err { position: absolute; left: 0; bottom: 4px; font-size: 0.8125rem; line-height: 1.3; color: var(--error); }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: var(--fs-small); cursor: pointer; }
+.field .check { color: var(--text); font-size: var(--fs-small); font-weight: 400; letter-spacing: 0; text-transform: none; line-height: 1.5; }
+.field .check input { flex: none; width: 20px; height: 20px; min-height: 0; margin: 2px 0 0; padding: 0; accent-color: var(--accent); }
+.big-pair { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 12px 20px; }
+.big-pair .field label { font-size: var(--fs-word); font-weight: 200; letter-spacing: 0; text-transform: none; color: var(--text); line-height: 1; }
+.big-pair .cp-swap { margin-bottom: 30px; color: var(--accent-ink); }
+.stepper { display: grid; grid-template-columns: 52px 1fr 52px; }
+.stepper button { border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 1.25rem; }
+.stepper button:first-child { border-radius: var(--r-card) 0 0 var(--r-card); }
+.stepper button:last-child { border-radius: 0 var(--r-card) var(--r-card) 0; }
+.stepper input { border-radius: 0; border-inline: 0; text-align: center; -moz-appearance: textfield; }
+.stepper input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.choice { display: flex; flex-wrap: wrap; gap: 8px; border: 0; margin: 0; padding: 0 0 26px; min-width: 0; }
+.choice legend { margin-bottom: 8px; padding: 0; color: var(--accent-ink); font-size: var(--fs-label); font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; }
+.field.choice label { position: relative; color: var(--text); font-size: var(--fs-small); font-weight: 400; letter-spacing: 0; text-transform: none; }
+.field.choice input { position: absolute; opacity: 0; inset: 0; width: 100%; min-height: 0; margin: 0; padding: 0; cursor: pointer; }
+.choice span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border: 1px solid var(--border); border-radius: 999px; }
+.choice input:checked + span { border-color: var(--accent); background: var(--accent); color: var(--accent-text); }
+.choice input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 3px; }
+form .pill { justify-self: start; margin-top: 6px; }
+.success { padding: 32px 0; outline: none; }
+.success .ring { margin-bottom: 20px; color: var(--accent-ink); }
+.success .h2 { margin-bottom: 14px; }
+.success p { margin-bottom: 24px; color: var(--text-muted); max-width: 52ch; }
+.panel { padding: clamp(24px, 3vw, 40px); border: 1px solid var(--border); border-radius: var(--r-panel); background: var(--bg); }
+.contacts { display: grid; gap: 18px; margin-top: 32px; }
+.contacts li { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: center; }
+.contacts .ring { color: var(--accent-ink); }
+.newsletter { display: flex; align-items: flex-start; gap: 12px; max-width: 560px; margin: 32px auto 0; }
+.newsletter .field { flex: 1; padding-bottom: 26px; text-align: left; }
+.newsletter .pill { margin: 0; }
+
+/* ---------- Journal article ---------- */
+.prose-wrap { display: grid; grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr); gap: 48px clamp(32px, 6vw, 96px); }
+.prose > * + * { margin-top: 1.2em; }
+.prose h2 { margin-top: 1.8em; }
+.prose blockquote { margin-block: 1.8em; padding: 8px 0 8px 28px; border-left: 2px solid var(--accent-ink); font-size: var(--fs-h3); font-weight: 300; line-height: 1.5; }
+.prose figure { margin-block: 2em; }
+figcaption { padding-top: 12px; color: var(--text-muted); font-size: var(--fs-small); }
+.aside { align-self: start; padding: 28px; border-radius: var(--r-panel); background: var(--surface); }
+.aside dl > div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: var(--fs-small); }
+.aside dt { color: var(--text-muted); }
+
+/* ---------- FAQ and legal ---------- */
+.faq-group { display: grid; grid-template-columns: 1fr 2fr; gap: 20px clamp(32px, 5vw, 80px); padding: 40px 0; border-top: 1px solid var(--border); }
+details { border-bottom: 1px solid var(--border); }
+summary { display: flex; justify-content: space-between; gap: 24px; align-items: center; min-height: 64px; padding: 16px 0; cursor: pointer; list-style: none; font-size: 1.125rem; }
+summary::-webkit-details-marker { display: none; }
+summary svg { flex: none; width: 16px; height: 16px; color: var(--accent-ink); transition: transform var(--dur-base) var(--ease); }
+details[open] summary svg { transform: rotate(180deg); }
+details p { padding: 0 0 24px; color: var(--text-muted); max-width: 64ch; }
+.legal { max-width: 780px; }
+.legal h2 { margin: 2em 0 0.6em; font-size: 1.25rem; font-weight: 400; }
+.legal p { margin-bottom: 1em; color: var(--text-muted); }
+.notfound { display: grid; place-items: center; min-height: 64vh; text-align: center; }
+.notfound .big { font-size: clamp(5rem, 3rem + 10vw, 10rem); font-weight: 100; line-height: 1; color: var(--accent-ink); }
+
+/* ---------- Footer: the warm espresso floor ---------- */
+.site-footer { background: var(--espresso); color: oklch(92% 0.012 70); padding-block: clamp(56px, 7vw, 88px) 32px; }
+.foot-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 32px; }
+.foot-cols h2 { padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid var(--espresso-line); font-size: 1.0625rem; font-weight: 400; color: oklch(80% 0.014 70); }
+.foot-cols li a { display: inline-block; padding: 7px 0; text-decoration: none; font-size: var(--fs-small); color: oklch(86% 0.012 70); }
+.foot-cols li a:hover { color: var(--gold); }
+.circles { display: flex; gap: 12px; margin-top: 28px; }
+.circles a { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: oklch(32% 0.014 45); }
+.circles a:hover { background: var(--gold); color: var(--espresso); }
+.circles svg { width: 20px; height: 20px; }
+.foot-base { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--espresso-line); font-size: 0.8125rem; color: oklch(76% 0.014 70); }
+.foot-base .brand { color: oklch(92% 0.012 70); font-size: 1rem; }
+.foot-base .brand svg { color: var(--gold); }
+.to-top { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: oklch(62% 0.07 60); color: oklch(98% 0.006 70); }
+.to-top svg { width: 18px; height: 18px; }
+
+/* ---------- Motion: slow cross-fades and a drift, things rise once ---------- */
+@keyframes drift { from { transform: scale(1.07); } to { transform: scale(1); } }
+@keyframes rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.js .reveal { opacity: 0; }
+.js .reveal.in { animation: rise var(--dur-slow) var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal { opacity: 1; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .cp-in { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+  .cp-small { grid-column: 1 / 3; }
+  .rail { grid-auto-columns: calc((100% - 2 * 20px) / 3.2); gap: 20px; }
+  .rail-btn { display: none; }
+}
+@media (max-width: 1024px) {
+  .cards, .tiers { grid-template-columns: repeat(2, 1fr); }
+  .foot-cols { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .dep li { grid-template-columns: 80px 1fr auto; }
+  .dep .status { display: none; }
+}
+@media (max-width: 820px) {
+  .split, .form-grid, .prose-wrap, .faq-group, .duo { grid-template-columns: 1fr; }
+  .rows-alt > :nth-child(even) .split > :first-child { order: 0; }
+  .rows-alt > :nth-child(even) .split > div:not(.ph) { text-align: left; }
+  .quick a { flex-direction: column; gap: 8px; font-size: 0.9375rem; text-align: center; }
+  .note { margin-left: 0; }
+}
+@media (max-width: 640px) {
+  .cards, .tiers { grid-template-columns: 1fr; }
+  form { grid-template-columns: 1fr; }
+  .cp-in { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; padding-block: 12px; }
+  .cp-in > .cp:nth-of-type(2) { grid-column: 1; }
+  .cp-swap { grid-row: 1 / 3; grid-column: 2; transform: rotate(90deg); }
+  .cp-swap:hover { transform: rotate(270deg); }
+  .cp-small { grid-column: 1 / -1; }
+  .composer .pill { grid-column: 1 / -1; justify-self: stretch; min-height: 48px; }
+  .cp-word { width: 2.6em; font-size: 2rem; }
+  .quick-in { grid-template-columns: 1fr; padding-inline: 0; }
+  .quick a { flex-direction: row; justify-content: flex-start; min-height: 60px; padding-inline: var(--gutter); }
+  .quick a + a { border-left: 0; border-top: 1px solid var(--espresso-line); }
+  .rail { grid-auto-columns: 62%; gap: 16px; }
+  .hero { min-height: 760px; }
+  .slide-copy { padding-bottom: 150px; }
+  .hero-ctl { align-items: flex-start; }
+  .dep li { grid-template-columns: 64px 1fr; }
+  .dep li .pill { grid-column: 2; justify-self: start; }
+  .date b { font-size: 2.25rem; }
+  .big-pair { grid-template-columns: 1fr; }
+  .big-pair .cp-swap { display: none; }
+  .newsletter { flex-direction: column; align-items: stretch; }
+  .foot-cols { grid-template-columns: 1fr; }
+  .overlap { min-height: 0; padding-top: 280px; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-mark" viewBox="0 0 32 32"><path d="M19.5 7.5a9 9 0 1 0 5.6 14.6A7.2 7.2 0 1 1 19.5 7.5Z" fill="currentColor"/><circle cx="23" cy="10" r="1.3" fill="currentColor"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></g></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.5A7.5 7.5 0 0 1 9.5 4.5a7.5 7.5 0 1 0 10 10Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M4 17 12 7l8 10Z" fill="currentColor"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3v14H7zM14 5h3v14h-3z" fill="currentColor"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5Z" fill="currentColor"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 32 32"><path d="M5 11h21l-5-5M27 21H6l5 5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 12h18M14 6l7 6-7 6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M4 17h16M6 17a6 6 0 0 1 12 0M12 9V7M10 7h4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/></g></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M5 3.5h14v17H5zM8.5 8h7M8.5 11.5h7M8.5 15h4.5" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3.5 6h17v12h-17zM3.5 6l8.5 7 8.5-7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.5 3.5h3l1.5 4-2 1.5a10 10 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A15.5 15.5 0 0 1 4.5 5.5a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11Z" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="12" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
+</svg>
+
+<div class="notice" role="region" aria-label="Notices">
+  <div class="wrap">
+    <p class="notice-text"><span class="dot" aria-hidden="true"></span><a id="notice-link" href="#/departures?kind=departure">Winter departures to Kestrin Fjord are open: four suites on each sailing.</a></p>
+    <div class="notice-pager"><button type="button" id="notice-prev" aria-label="Previous notice"><svg aria-hidden="true"><use href="#i-prev"/></svg></button><span id="notice-count">1 / 2</span><button type="button" id="notice-next" aria-label="Next notice"><svg aria-hidden="true"><use href="#i-next"/></svg></button></div>
+    <a class="notice-all" href="#/journal">All notes</a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="top wrap">
+    <a class="brand" href="#/" aria-label="Halvane, home"><svg aria-hidden="true"><use href="#i-mark"/></svg>Halvane</a>
+    <div class="util">
+      <a href="#/enquire?at=lookup">Find my request</a>
+      <a class="gold-link" href="#/circle?at=join">Join the Circle</a>
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to light colours"><svg aria-hidden="true"><use href="#i-sun"/></svg></button>
+      <button class="icon-btn" id="menu-open" type="button" aria-label="Open the menu" aria-controls="menu"><svg aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+  <nav class="nav wrap" aria-label="Main">
+    <a href="#/journeys">Journeys</a>
+    <a href="#/departures">Departures</a>
+    <a href="#/salons">Salons</a>
+    <a href="#/circle">The Circle</a>
+    <a href="#/journal">Night notes</a>
+    <a href="#/enquire">Enquire</a>
+  </nav>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="wrap">
+    <div class="sheet-top"><a class="brand" href="#/"><svg aria-hidden="true"><use href="#i-mark"/></svg>Halvane</a><button class="icon-btn" id="menu-close" type="button" aria-label="Close the menu"><svg aria-hidden="true"><use href="#i-close"/></svg></button></div>
+    <nav class="sheet-links" aria-label="Menu">
+      <a href="#/journeys">Journeys</a>
+      <a href="#/departures">Departures</a>
+      <a href="#/salons">Salons</a>
+      <a href="#/circle">The Circle</a>
+      <a href="#/journal">Night notes</a>
+      <a href="#/faq">Questions</a>
+    </nav>
+    <div class="sheet-foot"><a class="pill gold" href="#/enquire">Enquire</a><a class="pill line" href="#/enquire?at=lookup">Find my request</a></div>
+  </div>
+</dialog>
+
+<main id="main">
+
+<!-- ======================= HOME ======================= -->
+<div data-view="home">
+  <section class="hero on-photo" aria-roledescription="carousel" aria-label="Featured journeys">
+    <h1 class="sr">Halvane, private journeys composed after dark</h1>
+    <form class="composer" data-form="composer" novalidate aria-label="Start a journey">
+      <div class="cp-in wrap">
+        <div class="cp"><label class="cp-word" for="cp-from">From</label><select id="cp-from" name="from"><option value="port-arden">Port Arden</option><option value="velin">Velin</option><option value="northmere">Northmere</option><option value="kestrin">Kestrin Fjord</option><option value="coralune">Coralune Atoll</option><option value="mirra">Mirra Dunes</option><option value="tamsel">Tamsel Peaks</option></select></div>
+        <button class="cp-swap" type="button" data-swap="cp-from cp-to" aria-label="Swap from and to"><svg aria-hidden="true"><use href="#i-swap"/></svg></button>
+        <div class="cp"><label class="cp-word" for="cp-to">To</label><select id="cp-to" name="to" required aria-describedby="cp-to-err" data-value-missing="Choose where you would like to go."><option value="">Choose a place</option><option value="port-arden">Port Arden</option><option value="velin">Velin</option><option value="northmere">Northmere</option><option value="kestrin">Kestrin Fjord</option><option value="coralune">Coralune Atoll</option><option value="mirra">Mirra Dunes</option><option value="tamsel">Tamsel Peaks</option></select><span class="err" id="cp-to-err" aria-live="polite"></span></div>
+        <div class="cp-small"><label for="cp-month">When</label><select id="cp-month" name="month"><option value="any">Any month</option><option value="dec">December</option><option value="jan">January</option><option value="feb">February</option><option value="mar">March</option><option value="apr">April</option><option value="may">May</option></select></div>
+        <button class="pill gold" type="submit">Compose</button>
+      </div>
+    </form>
+    <div class="slides" id="slides" aria-live="off">
+      <article class="slide is-on" aria-roledescription="slide" aria-label="1 of 4" data-place="Kestrin Fjord">
+        <img src="images/fjord.webp" alt="A still fjord at blue hour between dark cliffs, one lodge lit warm at the water's edge" width="1600" height="1000" fetchpriority="high">
+        <div class="slide-copy wrap"><h2 class="display">Still water, long light</h2><p>Six nights between cliffs, on a boat with four suites and a cook who fishes before breakfast.</p><a class="link" href="#/journey?j=kestrin">See the journey<svg aria-hidden="true"><use href="#i-next"/></svg></a></div>
+      </article>
+      <article class="slide" aria-roledescription="slide" aria-label="2 of 4" data-place="Velin">
+        <img src="images/lanterns.webp" alt="A canal in an old town at night, lanterns on a stone bridge, lit windows reflected in the water" width="1600" height="1000">
+        <div class="slide-copy wrap"><h2 class="display">The city after the last tram</h2><p>Four nights in Velin, arriving by sleeper, with the canals to yourselves after ten.</p><a class="link" href="#/journey?j=velin">See the journey<svg aria-hidden="true"><use href="#i-next"/></svg></a></div>
+      </article>
+      <article class="slide" aria-roledescription="slide" aria-label="3 of 4" data-place="Coralune Atoll">
+        <img src="images/lagoon.webp" alt="A pale jetty running across a turquoise lagoon to a small house on stilts under soft clouds" width="1600" height="1000">
+        <div class="slide-copy wrap"><h2 class="display">Blue, as far as it goes</h2><p>Seven nights on an atoll reached by seaplane, with a reef you can swim to from the deck.</p><a class="link" href="#/journey?j=coralune">See the journey<svg aria-hidden="true"><use href="#i-next"/></svg></a></div>
+      </article>
+      <article class="slide" aria-roledescription="slide" aria-label="4 of 4" data-place="Mirra Dunes">
+        <img src="images/dunes.webp" alt="Sand dunes under a violet night sky full of stars, one tent glowing amber" width="1600" height="1000">
+        <div class="slide-copy wrap"><h2 class="display">A sky with nothing in it but stars</h2><p>Five nights in the dunes, the last two in a camp that moves with the moon.</p><a class="link" href="#/journey?j=mirra">See the journey<svg aria-hidden="true"><use href="#i-next"/></svg></a></div>
+      </article>
+    </div>
+    <div class="hero-ctl wrap"><p class="place" id="hero-place">Kestrin Fjord</p><div class="ctl"><button type="button" id="hero-pause" aria-label="Pause the slideshow"><svg aria-hidden="true"><use href="#i-pause"/></svg></button><span id="hero-count">1 / 4</span><button type="button" id="hero-next" aria-label="Next slide"><svg aria-hidden="true"><use href="#i-next"/></svg></button></div></div>
+  </section>
+
+  <nav class="quick" aria-label="Shortcuts">
+    <div class="quick-in wrap">
+      <a href="#/enquire?at=lookup"><span class="ring"><svg aria-hidden="true"><use href="#i-ticket"/></svg></span>Find my request</a>
+      <a href="#/enquire?topic=concierge"><span class="ring"><svg aria-hidden="true"><use href="#i-bell"/></svg></span>Speak to the concierge</a>
+      <a href="#/departures"><span class="ring"><svg aria-hidden="true"><use href="#i-clock"/></svg></span>Departure calendar</a>
+    </div>
+  </nav>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="h2 c head">Where we go</h2>
+      <div class="rail-wrap">
+        <ul class="rail" id="rail" aria-label="Places">
+          <li><a class="sq-card" href="#/journey?j=kestrin"><span class="ph sq"><img src="images/fjord.webp" alt="" width="1600" height="1000"></span><span>Kestrin Fjord</span></a></li>
+          <li><a class="sq-card" href="#/journey?j=velin"><span class="ph sq"><img src="images/lanterns.webp" alt="" width="1600" height="1000"></span><span>Velin</span></a></li>
+          <li><a class="sq-card" href="#/journey?j=coralune"><span class="ph sq"><img src="images/reef.webp" alt="" width="1600" height="1000"></span><span>Coralune Atoll</span></a></li>
+          <li><a class="sq-card" href="#/journey?j=mirra"><span class="ph sq"><img src="images/dunes.webp" alt="" width="1600" height="1000"></span><span>Mirra Dunes</span></a></li>
+          <li><a class="sq-card" href="#/journey?j=tamsel"><span class="ph sq"><img src="images/peaks.webp" alt="" width="1600" height="1000"></span><span>Tamsel Peaks</span></a></li>
+          <li><a class="sq-card" href="#/journey?j=northmere"><span class="ph sq"><img src="images/rail.webp" alt="" width="1600" height="1000"></span><span>Northmere</span></a></li>
+        </ul>
+        <button class="rail-btn prev" type="button" data-rail="-1" aria-label="Previous places" aria-controls="rail"><svg aria-hidden="true"><use href="#i-prev"/></svg></button>
+        <button class="rail-btn next" type="button" data-rail="1" aria-label="More places" aria-controls="rail"><svg aria-hidden="true"><use href="#i-next"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec band">
+    <div class="wrap">
+      <div class="head"><h2 class="h1">Every hour, considered</h2><p class="lead muted">One designer plans the whole journey, from the first call to the car that takes you home. These are the parts guests remember.</p></div>
+      <div class="cards">
+        <article class="card reveal"><div class="ph"><img src="images/suite.webp" alt="A dark bedroom with a tall window onto harbour lights, one lamp lit" width="1600" height="1000"></div><h3 class="h3">Rooms that face the right way</h3><hr class="rule"><p class="muted">We choose the room before the hotel: the one with the window on the water, the bed away from the lift.</p></article>
+        <article class="card reveal"><div class="ph"><img src="images/dining.webp" alt="A candlelit table for two with plates and glasses, lights blurred behind" width="1600" height="1000"></div><h3 class="h3">Tables that travel with you</h3><hr class="rule"><p class="muted">A cook on the boat, a booth held in the old town, a dinner in the dunes when the wind drops.</p></article>
+        <article class="card reveal"><div class="ph"><img src="images/salon.webp" alt="A lounge with conical lamps glowing over low leather chairs" width="1600" height="1000"></div><h3 class="h3">A salon before you leave</h3><hr class="rule"><p class="muted">Bags taken at the door, papers checked, a drink and a quiet chair until the car arrives.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="overlap" aria-label="The Circle">
+    <img src="images/glass.webp" alt="An amber drink on a dark bar, warm lights blurred behind" width="1600" height="1000">
+    <div class="wrap"><div class="note"><p class="label">The Circle</p><h2 class="h2">Travel more, plan less</h2><p>Members keep one designer, first choice of departures and a chair in every salon.</p><a class="pill line sm" href="#/circle">See the tiers</a></div></div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <p class="wide head">After dark, anywhere</p>
+      <div class="duo">
+        <a href="#/departures"><span class="ph"><img src="images/rail.webp" alt="A night train with lit windows crossing a stone viaduct under a full moon" width="1600" height="1000"></span><span><span class="h1">Departures</span><span class="muted sub">Fixed dates with a handful of suites each.</span></span></a>
+        <a href="#/salons"><span class="ph"><img src="images/wall.webp" alt="A curved timber wall with a line of warm light along its edge" width="1600" height="1000"></span><span><span class="h1">The salons</span><span class="muted sub">Three rooms to wait in, in three cities.</span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec band">
+    <div class="wrap">
+      <div class="head-row"><h2 class="h2">Night notes</h2><a class="link" href="#/journal">All notes<svg aria-hidden="true"><use href="#i-next"/></svg></a></div>
+      <div class="cards" data-clone="#notes" data-limit="3"><p class="muted"><a class="link" href="#/journal">Read the night notes<svg aria-hidden="true"><use href="#i-next"/></svg></a></p></div>
+    </div>
+  </section>
+
+  <section class="sec c">
+    <div class="wrap">
+      <h2 class="h2">Letters from the atelier</h2>
+      <p class="muted gap">New departures and one long read, every second month.</p>
+      <form class="newsletter" data-form="newsletter" novalidate>
+        <div class="field"><label class="sr" for="n-email">Email address</label><input id="n-email" name="email" type="email" autocomplete="email" placeholder="Email address" required aria-describedby="n-email-err"><span class="err" id="n-email-err" aria-live="polite"></span></div>
+        <button class="pill gold" type="submit">Subscribe</button>
+      </form>
+      <div class="success" data-success="newsletter" tabindex="-1" hidden><span class="ring mid"><svg aria-hidden="true"><use href="#i-check"/></svg></span><p class="c">The next letter goes to <span data-echo="email"></span>.</p><button class="link" type="button" data-again>Use another address</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= JOURNEYS ======================= -->
+<div data-view="journeys">
+  <section class="page-hero on-photo">
+    <img src="images/boat.webp" alt="A wooden boat on still teal water at dawn, hills in mist beyond" width="1600" height="1000">
+    <div class="wrap"><p class="label">Journeys</p><h1 class="h1">Six journeys, each one changed for you</h1><p>Start from a journey below, or tell us where you want to wake up and we will begin from nothing.</p><a class="pill" href="#/enquire">Compose your own</a></div>
+  </section>
+  <nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="#/">Home</a></li><li><span aria-current="page">Journeys</span></li></ol></nav>
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="toolbar">
+        <div class="tabs" data-filter="mode" role="group" aria-label="Filter by how you travel"><button type="button" data-value="all" aria-pressed="true">All</button><button type="button" data-value="rail" aria-pressed="false">Rail</button><button type="button" data-value="sea" aria-pressed="false">Sea</button><button type="button" data-value="air" aria-pressed="false">Air</button><button type="button" data-value="land" aria-pressed="false">Overland</button></div>
+        <div class="tool-end">
+          <label class="select-inline">Length<select id="f-length" data-filter-select="length"><option value="all">Any length</option><option value="short">Up to 4 nights</option><option value="week">5 to 7 nights</option></select></label>
+          <p class="count" data-count="journeys" data-one="journey" data-many="journeys" aria-live="polite">6 journeys</p>
+        </div>
+      </div>
+      <div class="cards" id="journey-list">
+        <article class="card" data-id="kestrin" data-place="Kestrin Fjord" data-mode="sea" data-length="week"><a class="ph" href="#/journey?j=kestrin"><img src="images/fjord.webp" alt="A still fjord at blue hour between dark cliffs" width="1600" height="1000"></a><p class="meta"><span>Sea</span><span>6 nights</span><span>September to March</span></p><h2 class="h3"><a href="#/journey?j=kestrin">The Kestrin night fjord</a></h2><hr class="rule"><p class="muted">A boat of four suites, two weeks of long dusk, and a lodge at the head of the water.</p><p class="price"><span>From <b>USD 7,200</b> a guest</span></p></article>
+        <article class="card" data-id="velin" data-place="Velin" data-mode="rail" data-length="short"><a class="ph" href="#/journey?j=velin"><img src="images/lanterns.webp" alt="A lantern-lit canal in an old town at night" width="1600" height="1000"></a><p class="meta"><span>Rail</span><span>4 nights</span><span>All year</span></p><h2 class="h3"><a href="#/journey?j=velin">Lantern hours in Velin</a></h2><hr class="rule"><p class="muted">Arrive by sleeper, stay on the quiet canal, and see the old town after the day visitors leave.</p><p class="price"><span>From <b>USD 3,900</b> a guest</span></p></article>
+        <article class="card" data-id="coralune" data-place="Coralune Atoll" data-mode="air" data-length="week"><a class="ph" href="#/journey?j=coralune"><img src="images/lagoon.webp" alt="A pale jetty across a turquoise lagoon" width="1600" height="1000"></a><p class="meta"><span>Air</span><span>7 nights</span><span>November to April</span></p><h2 class="h3"><a href="#/journey?j=coralune">Coralune by seaplane</a></h2><hr class="rule"><p class="muted">Twenty minutes over the reef, then a house on stilts and nothing to do until the tide turns.</p><p class="price"><span>From <b>USD 9,600</b> a guest</span></p></article>
+        <article class="card" data-id="mirra" data-place="Mirra Dunes" data-mode="land" data-length="week"><a class="ph" href="#/journey?j=mirra"><img src="images/dunes.webp" alt="Dunes under a starry violet sky with one glowing tent" width="1600" height="1000"></a><p class="meta"><span>Overland</span><span>5 nights</span><span>October to March</span></p><h2 class="h3"><a href="#/journey?j=mirra">Mirra dunes under stars</a></h2><hr class="rule"><p class="muted">Three nights in a desert house, two in a camp set up wherever the sky is clearest.</p><p class="price"><span>From <b>USD 5,400</b> a guest</span></p></article>
+        <article class="card" data-id="tamsel" data-place="Tamsel Peaks" data-mode="rail" data-length="week"><a class="ph" href="#/journey?j=tamsel"><img src="images/peaks.webp" alt="Snow peaks at dusk above a lodge with lit windows" width="1600" height="1000"></a><p class="meta"><span>Rail</span><span>6 nights</span><span>December to March</span></p><h2 class="h3"><a href="#/journey?j=tamsel">Tamsel peaks, slowly</a></h2><hr class="rule"><p class="muted">A mountain railway up, a lodge of nine rooms, and a guide who reads the weather before you wake.</p><p class="price"><span>From <b>USD 6,800</b> a guest</span></p></article>
+        <article class="card" data-id="northmere" data-place="Northmere" data-mode="rail" data-length="short"><a class="ph" href="#/journey?j=northmere"><img src="images/rail.webp" alt="A night train crossing a stone viaduct under a full moon" width="1600" height="1000"></a><p class="meta"><span>Rail</span><span>3 nights</span><span>All year</span></p><h2 class="h3"><a href="#/journey?j=northmere">The Northmere sleeper</a></h2><hr class="rule"><p class="muted">Two nights on the train and one by the lake, for when you have a long weekend and want it to feel longer.</p><p class="price"><span>From <b>USD 2,900</b> a guest</span></p></article>
+      </div>
+      <div class="empty" data-empty="journeys" hidden><p>No journeys match. Try another length, or ask us to build one.</p><button class="link" type="button" data-reset="journeys">Show all journeys</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= JOURNEY (filled from JOURNEYS) ======================= -->
+<div data-view="journey">
+  <section class="page-hero on-photo">
+    <img id="j-img" src="images/fjord.webp" alt="A still fjord at blue hour between dark cliffs" width="1600" height="1000">
+    <div class="wrap"><p class="label" data-j="kicker">Sea · 6 nights</p><h1 class="h1" data-j="name">The Kestrin night fjord</h1><p data-j="lead">Six nights between cliffs, on a boat with four suites and a cook who fishes before breakfast.</p><a class="pill" id="j-enquire" href="#/enquire?to=kestrin">Compose this journey</a></div>
+  </section>
+  <nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="#/">Home</a></li><li><a href="#/journeys">Journeys</a></li><li><span aria-current="page" data-j="name">The Kestrin night fjord</span></li></ol></nav>
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="head"><h2 class="h2">At a glance</h2><p class="lead muted">Sample dates and prices. Every journey is changed to your dates, your pace and the people you travel with.</p></div>
+      <div class="facts-table">
+        <table>
+          <caption class="sr">Journey facts</caption>
+          <thead><tr><th scope="col">From</th><th scope="col">To</th><th scope="col">Nights</th><th scope="col">Best months</th><th scope="col">Price</th></tr></thead>
+          <tbody><tr><td>Port Arden</td><td data-j="place">Kestrin Fjord</td><td data-j="nights">6</td><td data-j="season">September to March</td><td>From <b data-j="price">USD 7,200</b><br><span class="muted small">a guest, sharing</span></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <div class="rows-alt" id="j-days">
+    <section><div class="wrap split"><div class="ph"><img src="images/boat.webp" alt="A wooden boat on still water at dawn" width="1600" height="1000"></div><div><p class="label">Days 1 and 2</p><h2 class="h2">Arrival by water</h2><p class="muted">A launch meets the evening train and takes you down the fjord to the boat. Dinner is whatever came out of the water that afternoon.</p></div></div></section>
+    <section><div class="wrap split"><div class="ph"><img src="images/suite.webp" alt="A dark cabin with a tall window onto lights across the water" width="1600" height="1000"></div><div><p class="label">Days 3 and 4</p><h2 class="h2">The long dusk</h2><p class="muted">The light lasts until late. The boat moves only in the morning, so afternoons are for the deck, the sauna, or a walk to a waterfall.</p></div></div></section>
+    <section><div class="wrap split"><div class="ph"><img src="images/fjord.webp" alt="A lodge lit warm at the head of a fjord" width="1600" height="1000"></div><div><p class="label">Days 5 and 6</p><h2 class="h2">The lodge at the end</h2><p class="muted">Two nights ashore in a lodge of six rooms at the head of the water, then the morning train back to Port Arden.</p></div></div></section>
+  </div>
+  <section class="sec c">
+    <div class="wrap">
+      <h2 class="h1 head">Make it yours</h2>
+      <div class="actions c"><a class="pill gold" id="j-enquire-2" href="#/enquire?to=kestrin">Compose this journey</a><a class="pill line" href="#/journeys">All journeys</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= DEPARTURES ======================= -->
+<div data-view="departures">
+  <nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="#/">Home</a></li><li><span aria-current="page">Departures</span></li></ol></nav>
+  <section class="page-head wrap"><p class="label">Departures</p><h1 class="h1">Fixed dates, a few suites each</h1><p class="lead muted">For guests who would rather join a date than choose one. Salon evenings are open to anyone with a journey booked.</p></section>
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="toolbar">
+        <div class="tabs" data-filter="kind" role="group" aria-label="Filter by kind"><button type="button" data-value="all" aria-pressed="true">All</button><button type="button" data-value="departure" aria-pressed="false">Departures</button><button type="button" data-value="evening" aria-pressed="false">Salon evenings</button></div>
+        <p class="count" data-count="kind" data-one="date" data-many="dates" aria-live="polite">6 dates</p>
+      </div>
+      <ol class="dep">
+        <li data-kind="departure"><time class="date" datetime="2027-01-14"><b>14</b>Jan 2027</time><div><h2 class="h3">The Kestrin night fjord</h2><p class="muted small">6 nights from Port Arden · boat of four suites</p></div><span class="status open">2 suites left</span><a class="pill sm" href="#/enquire?to=kestrin&amp;month=jan">Reserve</a></li>
+        <li data-kind="evening"><time class="date" datetime="2027-01-28"><b>28</b>Jan 2027</time><div><h2 class="h3">Maps and wine: the northern fjords</h2><p class="muted small">Port Arden salon · 7 pm</p></div><span class="status">Open</span><a class="pill sm" href="#/enquire?topic=evening">Reply</a></li>
+        <li data-kind="departure"><time class="date" datetime="2027-02-09"><b>09</b>Feb 2027</time><div><h2 class="h3">Tamsel peaks, slowly</h2><p class="muted small">6 nights from Northmere · lodge of nine rooms</p></div><span class="status open">4 rooms left</span><a class="pill sm" href="#/enquire?to=tamsel&amp;month=feb">Reserve</a></li>
+        <li data-kind="departure"><time class="date" datetime="2027-03-03"><b>03</b>Mar 2027</time><div><h2 class="h3">Mirra dunes under stars</h2><p class="muted small">5 nights from Port Arden · new moon</p></div><span class="status">Waiting list</span><a class="pill sm" href="#/enquire?to=mirra&amp;month=mar">Join list</a></li>
+        <li data-kind="evening"><time class="date" datetime="2027-03-18"><b>18</b>Mar 2027</time><div><h2 class="h3">A tasting from the boat kitchen</h2><p class="muted small">Velin salon · 8 pm</p></div><span class="status">Open</span><a class="pill sm" href="#/enquire?topic=evening">Reply</a></li>
+        <li data-kind="departure"><time class="date" datetime="2027-04-22"><b>22</b>Apr 2027</time><div><h2 class="h3">Coralune by seaplane</h2><p class="muted small">7 nights from Port Arden · three houses</p></div><span class="status open">1 house left</span><a class="pill sm" href="#/enquire?to=coralune&amp;month=apr">Reserve</a></li>
+      </ol>
+      <div class="empty" data-empty="kind" hidden><p>Nothing on the calendar of that kind yet.</p><button class="link" type="button" data-reset="kind">Show everything</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= SALONS ======================= -->
+<div data-view="salons">
+  <section class="page-hero on-photo">
+    <img src="images/salon.webp" alt="A lounge with conical lamps glowing over low leather chairs and a curved timber wall" width="1600" height="1000">
+    <div class="wrap"><p class="label">Salons</p><h1 class="h1">A quiet room before every journey</h1><p>Three salons, each a few minutes from the station: a chair, a drink, your papers checked while you wait.</p><a class="pill" href="#/faq">Who can use them</a></div>
+  </section>
+  <nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="#/">Home</a></li><li><span aria-current="page">Salons</span></li></ol></nav>
+  <section class="sec tight">
+    <div class="wrap"><div class="tabs" role="tablist" aria-label="Salons" id="salon-tabs"><button type="button" role="tab" id="t-arden" aria-controls="p-arden" aria-selected="true">Port Arden</button><button type="button" role="tab" id="t-velin" aria-controls="p-velin" aria-selected="false" tabindex="-1">Velin</button><button type="button" role="tab" id="t-northmere" aria-controls="p-northmere" aria-selected="false" tabindex="-1">Northmere</button></div></div>
+    <div role="tabpanel" id="p-arden" aria-labelledby="t-arden" class="is-on">
+      <div class="wrap panel-title"><h2 class="h1">Port Arden, Harbour Station</h2><p class="muted">Level 2, above the north concourse · 6 am to 11 pm</p></div>
+      <div class="rows-alt">
+        <section><div class="wrap split"><div class="ph"><img src="images/wall.webp" alt="A curved timber wall with a line of warm light" width="1600" height="1000"></div><div><h3 class="h2">The room</h3><p class="muted">A long curved wall of oiled oak, lamps instead of ceiling lights, and chairs turned to the harbour rather than to each other.</p></div></div></section>
+        <section><div class="wrap split"><div class="ph"><img src="images/skyline.webp" alt="A harbour skyline at dusk, lights coming on" width="1600" height="1000"></div><div><h3 class="h2">The view</h3><p class="muted">Windows over the water and the old tower. Sleeper departures are called quietly, in person, fifteen minutes before boarding.</p></div></div></section>
+      </div>
+    </div>
+    <div role="tabpanel" id="p-velin" aria-labelledby="t-velin">
+      <div class="wrap panel-title"><h2 class="h1">Velin, Canal Station</h2><p class="muted">Ground floor, by the east platforms · 7 am to 10 pm</p></div>
+      <div class="rows-alt">
+        <section><div class="wrap split"><div class="ph"><img src="images/glass.webp" alt="An amber drink on a dark bar" width="1600" height="1000"></div><div><h3 class="h2">The bar</h3><p class="muted">Six stools and a short list from the valley: two wines, a cordial, and coffee roasted across the canal.</p></div></div></section>
+      </div>
+    </div>
+    <div role="tabpanel" id="p-northmere" aria-labelledby="t-northmere">
+      <div class="wrap panel-title"><h2 class="h1">Northmere, Lake Station</h2><p class="muted">Platform 1 · open for each sleeper departure</p></div>
+      <div class="rows-alt">
+        <section><div class="wrap split"><div class="ph"><img src="images/rail.webp" alt="A night train on a viaduct under a full moon" width="1600" height="1000"></div><div><h3 class="h2">On the platform</h3><p class="muted">A small room on the platform itself, warm when the train is late and quiet when it is on time.</p></div></div></section>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= THE CIRCLE (membership) ======================= -->
+<div data-view="circle">
+  <section class="page-hero on-photo">
+    <img src="images/skyline.webp" alt="A harbour skyline at dusk with one tall tower" width="1600" height="1000">
+    <div class="wrap"><p class="label">The Circle</p><h1 class="h1">For guests who travel more than once a year</h1><p>One designer who knows you, first choice of every departure, and a chair in every salon.</p><a class="pill" href="#/circle?at=join">Join</a></div>
+  </section>
+  <nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="#/">Home</a></li><li><span aria-current="page">The Circle</span></li></ol></nav>
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="head-row"><h2 class="h2">Three tiers</h2><div class="seg" role="group" aria-label="Billing"><button type="button" data-bill="year" aria-pressed="true">Yearly</button><button type="button" data-bill="month" aria-pressed="false">Monthly</button></div></div>
+      <div class="tiers">
+        <article class="tier"><p class="label">Dusk</p><h3 class="h3">For one journey a year</h3><p class="amount"><span data-year="USD 900" data-month="USD 85">USD 900</span><small data-per>a year</small></p><hr class="rule"><ul class="ticks"><li><svg aria-hidden="true"><use href="#i-check"/></svg>Your own journey designer</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Salon access on travel days</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Letters before anyone else</li></ul><a class="pill line" href="#/circle?tier=dusk&amp;at=join">Choose Dusk</a></article>
+        <article class="tier pick"><p class="label">Midnight</p><h3 class="h3">For two or three journeys</h3><p class="amount"><span data-year="USD 2,400" data-month="USD 220">USD 2,400</span><small data-per>a year</small></p><hr class="rule"><ul class="ticks"><li><svg aria-hidden="true"><use href="#i-check"/></svg>Everything in Dusk</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>First choice of departures</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Salon access any day, with a guest</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Transfers home included</li></ul><a class="pill gold" href="#/circle?tier=midnight&amp;at=join">Choose Midnight</a></article>
+        <article class="tier"><p class="label">Zenith</p><h3 class="h3">For a year of travel</h3><p class="amount"><span data-year="USD 6,000" data-month="USD 550">USD 6,000</span><small data-per>a year</small></p><hr class="rule"><ul class="ticks"><li><svg aria-hidden="true"><use href="#i-check"/></svg>Everything in Midnight</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>A suite held on every departure</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Changes at any time, without fees</li></ul><a class="pill line" href="#/circle?tier=zenith&amp;at=join">Choose Zenith</a></article>
+      </div>
+      <p class="muted small gap">Sample tiers and prices.</p>
+    </div>
+  </section>
+  <section class="sec band" id="join">
+    <div class="wrap form-grid">
+      <div><p class="label">Join</p><h2 class="h1">Join the Circle</h2><p class="muted">Tell us a little about how you travel. A designer will write within two working days to introduce themselves. Nothing is charged until you say yes.</p></div>
+      <div>
+        <form data-form="join" novalidate>
+          <div class="field full"><label for="m-tier">Tier</label><select id="m-tier" name="tier"><option value="dusk">Dusk</option><option value="midnight" selected>Midnight</option><option value="zenith">Zenith</option></select></div>
+          <div class="field"><label for="m-name">Full name</label><input id="m-name" name="name" autocomplete="name" required aria-describedby="m-name-err"><span class="err" id="m-name-err" aria-live="polite"></span></div>
+          <div class="field"><label for="m-email">Email</label><input id="m-email" name="email" type="email" autocomplete="email" required aria-describedby="m-email-err"><span class="err" id="m-email-err" aria-live="polite"></span></div>
+          <div class="field"><label for="m-city">Home city</label><select id="m-city" name="city"><option>Port Arden</option><option>Velin</option><option>Northmere</option><option>Somewhere else</option></select></div>
+          <div class="field"><label for="m-trips">Journeys a year</label><select id="m-trips" name="trips"><option>One</option><option selected>Two or three</option><option>Four or more</option></select></div>
+          <div class="field full"><label class="check"><input type="checkbox" name="consent" required aria-describedby="m-consent-err" data-value-missing="Please agree so we can write to you."><span>I agree to be contacted about membership. See the <a href="#/privacy">privacy notice</a>.</span></label><span class="err" id="m-consent-err" aria-live="polite"></span></div>
+          <button class="pill gold full" type="submit">Request membership</button>
+        </form>
+        <div class="success" data-success="join" tabindex="-1" hidden><span class="ring"><svg aria-hidden="true"><use href="#i-check"/></svg></span><h3 class="h2">Welcome, <span data-echo="name"></span></h3><p>Your request for <span data-echo="tier"></span> is with us. A designer will write to <span data-echo="email"></span> within two working days.</p><button class="link" type="button" data-again>Send another request</button></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= NIGHT NOTES (journal) ======================= -->
+<div data-view="journal">
+  <nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="#/">Home</a></li><li><span aria-current="page">Night notes</span></li></ol></nav>
+  <section class="page-head wrap"><p class="label">Night notes</p><h1 class="h1">Letters from the road</h1><p class="lead muted">Places, the people who keep them, and what we learned planning the journeys there.</p></section>
+  <section class="sec tight">
+    <div class="wrap">
+      <div class="toolbar">
+        <div class="tabs" data-filter="topic" role="group" aria-label="Filter by subject"><button type="button" data-value="all" aria-pressed="true">All</button><button type="button" data-value="places" aria-pressed="false">Places</button><button type="button" data-value="craft" aria-pressed="false">Craft</button><button type="button" data-value="news" aria-pressed="false">News</button></div>
+        <p class="count" data-count="topic" data-one="note" data-many="notes" aria-live="polite">6 notes</p>
+      </div>
+      <div class="cards" id="notes">
+        <article class="note-card" data-topic="places"><a class="ph" href="#/article"><img src="images/fjord.webp" alt="A still fjord at blue hour" width="1600" height="1000"></a><p class="note-title"><svg aria-hidden="true"><use href="#i-doc"/></svg><a href="#/article">Two weeks of dusk on the Kestrin fjord</a></p><time datetime="2026-11-02">2 November 2026</time></article>
+        <article class="note-card" data-topic="news"><a class="ph" href="#/article"><img src="images/rail.webp" alt="A night train on a viaduct" width="1600" height="1000"></a><p class="note-title"><svg aria-hidden="true"><use href="#i-doc"/></svg><a href="#/article">The Northmere sleeper now runs every night of the week</a></p><time datetime="2026-10-15">15 October 2026</time></article>
+        <article class="note-card" data-topic="craft"><a class="ph" href="#/article"><img src="images/dining.webp" alt="A candlelit table for two" width="1600" height="1000"></a><p class="note-title"><svg aria-hidden="true"><use href="#i-doc"/></svg><a href="#/article">What a boat kitchen can do with one burner</a></p><time datetime="2026-09-28">28 September 2026</time></article>
+        <article class="note-card" data-topic="places"><a class="ph" href="#/article"><img src="images/reef.webp" alt="An atoll seen from the air" width="1600" height="1000"></a><p class="note-title"><svg aria-hidden="true"><use href="#i-doc"/></svg><a href="#/article">Coralune from the air, and from the water</a></p><time datetime="2026-09-01">1 September 2026</time></article>
+        <article class="note-card" data-topic="craft"><a class="ph" href="#/article"><img src="images/wall.webp" alt="A curved timber wall with a line of light" width="1600" height="1000"></a><p class="note-title"><svg aria-hidden="true"><use href="#i-doc"/></svg><a href="#/article">Lamps, not ceilings: how the salons are lit</a></p><time datetime="2026-08-12">12 August 2026</time></article>
+        <article class="note-card" data-topic="news"><a class="ph" href="#/article"><img src="images/peaks.webp" alt="Snow peaks above a lit lodge" width="1600" height="1000"></a><p class="note-title"><svg aria-hidden="true"><use href="#i-doc"/></svg><a href="#/article">A winter date added for Tamsel</a></p><time datetime="2026-07-20">20 July 2026</time></article>
+      </div>
+      <div class="empty" data-empty="topic" hidden><p>No notes on that subject yet.</p><button class="link" type="button" data-reset="topic">Show all notes</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= ARTICLE ======================= -->
+<div data-view="article">
+  <article>
+    <header class="page-hero on-photo">
+      <img src="images/fjord.webp" alt="A still fjord at blue hour between dark cliffs" width="1600" height="1000">
+      <div class="wrap"><p class="label">Places · 2 November 2026 · 5 min read</p><h1 class="h1">Two weeks of dusk on the Kestrin fjord</h1></div>
+    </header>
+    <nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="#/">Home</a></li><li><a href="#/journal">Night notes</a></li><li><span aria-current="page">Two weeks of dusk</span></li></ol></nav>
+    <div class="wrap sec prose-wrap">
+      <div class="prose">
+        <p class="lead">In late September the sun sets behind the western cliffs and then seems to change its mind. For two weeks, dusk on the Kestrin fjord lasts most of the evening.</p>
+        <p>We first went to plan a single night at the lodge. We stayed for five, because every evening the water went from silver to slate to a deep, still blue, and nobody on the boat wanted to go inside.</p>
+        <h2 class="h3">A boat that hardly moves</h2>
+        <p>The boat has four suites and moves only in the morning. By lunch it is moored somewhere new, and the afternoon belongs to the deck, the small sauna at the stern and a cook who goes out in the tender at four.</p>
+        <blockquote>The best thing we do on that boat is nothing, for about three hours every evening.</blockquote>
+        <figure><div class="ph wide"><img src="images/boat.webp" alt="A wooden boat on still water at dawn" width="1600" height="1000"></div><figcaption>The tender, at anchor, before the morning run.</figcaption></figure>
+        <p>The journey ends with two nights at a lodge of six rooms at the head of the fjord, and a morning train back to Port Arden that leaves late enough for a last walk.</p>
+      </div>
+      <aside class="aside" aria-label="Journey facts">
+        <p class="label">The journey</p>
+        <dl><div><dt>Nights</dt><dd>6</dd></div><div><dt>Best months</dt><dd>September to March</dd></div><div><dt>Suites</dt><dd>4 on the boat</dd></div><div><dt>From</dt><dd>USD 7,200</dd></div></dl>
+        <a class="link" href="#/journey?j=kestrin">See the journey<svg aria-hidden="true"><use href="#i-next"/></svg></a>
+      </aside>
+    </div>
+  </article>
+</div>
+
+<!-- ======================= ENQUIRE (contact) ======================= -->
+<div data-view="enquire">
+  <nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="#/">Home</a></li><li><span aria-current="page">Enquire</span></li></ol></nav>
+  <section class="page-head wrap"><p class="label">Enquire</p><h1 class="h1">Tell us where you want to wake up</h1><p class="lead muted">A designer replies within one working day with questions, never a brochure. Nothing is booked or charged until you agree a plan.</p></section>
+  <section class="sec tight" id="enquiry">
+    <div class="wrap form-grid">
+      <div>
+        <ul class="contacts">
+          <li><span class="ring"><svg aria-hidden="true"><use href="#i-phone"/></svg></span><span>+1 555 0136<br><span class="muted small">Every day, 8 am to 10 pm</span></span></li>
+          <li><span class="ring"><svg aria-hidden="true"><use href="#i-mail"/></svg></span><span>concierge@halvane.example<br><span class="muted small">Replies within one working day</span></span></li>
+          <li><span class="ring"><svg aria-hidden="true"><use href="#i-pin"/></svg></span><span>Harbour Station, Level 2<br><span class="muted small">Port Arden</span></span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <form data-form="enquiry" novalidate>
+          <div class="full big-pair">
+            <div class="field"><label for="e-from">From</label><select id="e-from" name="from"><option value="port-arden">Port Arden</option><option value="velin">Velin</option><option value="northmere">Northmere</option><option value="kestrin">Kestrin Fjord</option><option value="coralune">Coralune Atoll</option><option value="mirra">Mirra Dunes</option><option value="tamsel">Tamsel Peaks</option></select></div>
+            <button class="cp-swap" type="button" data-swap="e-from e-to" aria-label="Swap from and to"><svg aria-hidden="true"><use href="#i-swap"/></svg></button>
+            <div class="field"><label for="e-to">To</label><select id="e-to" name="to" required aria-describedby="e-to-err" data-value-missing="Choose where you would like to go."><option value="">Choose a place</option><option value="port-arden">Port Arden</option><option value="velin">Velin</option><option value="northmere">Northmere</option><option value="kestrin">Kestrin Fjord</option><option value="coralune">Coralune Atoll</option><option value="mirra">Mirra Dunes</option><option value="tamsel">Tamsel Peaks</option></select><span class="err" id="e-to-err" aria-live="polite"></span></div>
+          </div>
+          <div class="field"><label for="e-month">Month</label><select id="e-month" name="month"><option value="any">Any month</option><option value="dec">December</option><option value="jan">January</option><option value="feb">February</option><option value="mar">March</option><option value="apr">April</option><option value="may">May</option></select></div>
+          <div class="field"><label for="e-guests">Guests</label><div class="stepper"><button type="button" data-step="-1" aria-label="One guest fewer">−</button><input id="e-guests" name="guests" type="number" inputmode="numeric" min="1" max="8" value="2" required aria-describedby="e-guests-err" data-range-overflow="Up to eight guests; for more, call us."><button type="button" data-step="1" aria-label="One guest more">+</button></div><span class="err" id="e-guests-err" aria-live="polite"></span></div>
+          <fieldset class="choice full field"><legend>Pace</legend><label><input type="radio" name="pace" value="Slow" checked><span>Slow</span></label><label><input type="radio" name="pace" value="Balanced"><span>Balanced</span></label><label><input type="radio" name="pace" value="Full"><span>Full days</span></label></fieldset>
+          <div class="field full"><label for="e-topic">About</label><select id="e-topic" name="topic"><option value="journey">A new journey</option><option value="concierge">Something on a journey I have booked</option><option value="evening">A salon evening</option><option value="other">Something else</option></select></div>
+          <div class="field"><label for="e-name">Full name</label><input id="e-name" name="name" autocomplete="name" required aria-describedby="e-name-err"><span class="err" id="e-name-err" aria-live="polite"></span></div>
+          <div class="field"><label for="e-email">Email</label><input id="e-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email-err"><span class="err" id="e-email-err" aria-live="polite"></span></div>
+          <div class="field full"><label for="e-note">Anything we should know (optional)</label><textarea id="e-note" name="note" rows="3"></textarea></div>
+          <div class="field full"><label class="check"><input type="checkbox" name="consent" required aria-describedby="e-consent-err" data-value-missing="Please agree so we can reply."><span>I agree to be contacted about this enquiry. See the <a href="#/privacy">privacy notice</a>.</span></label><span class="err" id="e-consent-err" aria-live="polite"></span></div>
+          <button class="pill gold full" type="submit">Send enquiry</button>
+        </form>
+        <div class="success" data-success="enquiry" tabindex="-1" hidden><span class="ring"><svg aria-hidden="true"><use href="#i-check"/></svg></span><h2 class="h2">Thank you, <span data-echo="name"></span></h2><p>A designer will write to <span data-echo="email"></span> about <span data-echo="guests"></span> guests going from <span data-echo="from"></span> to <span data-echo="to"></span> (<span data-echo="month"></span>, <span data-echo="pace"></span> pace). Nothing has been booked.</p><button class="link" type="button" data-again>Send another enquiry</button></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec band" id="lookup">
+    <div class="wrap form-grid">
+      <div><p class="label">Already travelling with us</p><h2 class="h2">Find my request</h2><p class="muted gap">Your reference is on every letter from your designer.</p></div>
+      <div>
+        <form data-form="lookup" novalidate>
+          <div class="field"><label for="l-ref">Reference</label><input id="l-ref" name="ref" placeholder="HV-0000" required pattern="[Hh][Vv]-?[0-9]{4}" aria-describedby="l-ref-err" data-pattern-mismatch="References look like HV-2048."><span class="err" id="l-ref-err" aria-live="polite"></span></div>
+          <div class="field"><label for="l-name">Last name</label><input id="l-name" name="last" autocomplete="family-name" required aria-describedby="l-name-err"><span class="err" id="l-name-err" aria-live="polite"></span></div>
+          <button class="pill full" type="submit">Find it</button>
+        </form>
+        <div class="success" data-success="lookup" tabindex="-1" hidden><span class="ring"><svg aria-hidden="true"><use href="#i-check"/></svg></span><h3 class="h2">Request <span data-echo="ref"></span></h3><p>We have sent the latest plan to the email on the request. Your designer can also call you today.</p><button class="link" type="button" data-again>Look up another</button></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= QUESTIONS (FAQ) ======================= -->
+<div data-view="faq">
+  <nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="#/">Home</a></li><li><span aria-current="page">Questions</span></li></ol></nav>
+  <section class="page-head wrap"><p class="label">Questions</p><h1 class="h1">Before you go</h1></section>
+  <section class="sec tight wrap">
+    <div class="faq-group"><h2 class="h3">Planning</h2><div>
+      <details><summary>How far ahead should we enquire?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>Placeholder: give your real lead times. Three months is a comfortable start for most journeys; departures fill earlier.</p></details>
+      <details><summary>Can you change a journey on this site?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>Always. The journeys here are where a conversation starts: dates, rooms, pace and length all change.</p></details>
+      <details><summary>Do you plan journeys you do not list?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>Yes, if we know a place well enough to plan it properly. If we do not, we will say so.</p></details>
+    </div></div>
+    <div class="faq-group"><h2 class="h3">Salons</h2><div>
+      <details><summary>Who can use the salons?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>Guests on a travel day, and Circle members on any day. Placeholder: state your real rules.</p></details>
+      <details><summary>Can I bring a guest?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>Members of Midnight and Zenith can. Guests travelling with you are always welcome.</p></details>
+    </div></div>
+    <div class="faq-group"><h2 class="h3">Payment</h2><div>
+      <details><summary>When do we pay?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>Placeholder: describe your deposit and balance terms. Nothing is charged before you agree a plan.</p></details>
+      <details><summary>What if we have to cancel?<svg aria-hidden="true"><use href="#i-down"/></svg></summary><p>Placeholder: state your cancellation terms and any insurance you recommend.</p></details>
+    </div></div>
+  </section>
+</div>
+
+<!-- ======================= LEGAL AND 404 ======================= -->
+<div data-view="privacy">
+  <section class="sec wrap legal"><p class="label">Legal</p><h1 class="h1">Privacy notice</h1>
+    <p class="muted gap">Sample text: replace it with your own notice, reviewed for your market.</p>
+    <h2>What we collect</h2><p>What you type into our forms: your name, email address, where and when you want to travel, how many guests, and any note.</p>
+    <h2>Why</h2><p>To answer your enquiry, plan your journey and, if you asked, send our letters. We do not sell your details.</p>
+    <h2>Your rights</h2><p>You can ask to see, correct or delete your details at any time by writing to privacy@halvane.example.</p>
+  </section>
+</div>
+<div data-view="terms">
+  <section class="sec wrap legal"><p class="label">Legal</p><h1 class="h1">Terms of use</h1>
+    <p class="muted gap">Sample text: replace it with your own terms, reviewed for your market.</p>
+    <h2>Prices and dates</h2><p>Prices on this site are examples for planning. A journey is confirmed only in writing, with its own price and terms.</p>
+    <h2>Pictures</h2><p>Pictures show the kind of place a journey visits, not a promise of weather or light on a given day.</p>
+  </section>
+</div>
+<div data-view="404">
+  <section class="wrap notfound"><div><p class="big" aria-hidden="true">404</p><h1 class="h2">This page has wandered off</h1><p class="muted gap head">It is not on any of our maps.</p><a class="pill gold" href="#/">Back to the start</a></div></section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-cols">
+      <div><h2>Journeys</h2><ul><li><a href="#/journeys?mode=rail">By rail</a></li><li><a href="#/journeys?mode=sea">By sea</a></li><li><a href="#/journeys?mode=air">By air</a></li><li><a href="#/departures">Departures</a></li></ul></div>
+      <div><h2>The house</h2><ul><li><a href="#/salons">Salons</a></li><li><a href="#/circle">The Circle</a></li><li><a href="#/journal">Night notes</a></li></ul></div>
+      <div><h2>Help</h2><ul><li><a href="#/enquire">Enquire</a></li><li><a href="#/enquire?at=lookup">Find my request</a></li><li><a href="#/faq">Questions</a></li></ul></div>
+      <div><h2>Legal</h2><ul><li><a href="#/privacy">Privacy</a></li><li><a href="#/terms">Terms</a></li></ul>
+        <div class="circles"><a href="#/enquire" aria-label="Write to us"><svg aria-hidden="true"><use href="#i-mail"/></svg></a><a href="#/enquire?topic=concierge" aria-label="Call the concierge"><svg aria-hidden="true"><use href="#i-phone"/></svg></a><a href="#/salons" aria-label="Find a salon"><svg aria-hidden="true"><use href="#i-pin"/></svg></a></div></div>
+    </div>
+    <div class="foot-base">
+      <a class="brand" href="#/"><svg aria-hidden="true"><use href="#i-mark"/></svg>Halvane</a>
+      <span>© 2026 Halvane. A sample site; journeys, places and prices are fictional.</span>
+      <a class="to-top" href="#main" aria-label="Back to top"><svg aria-hidden="true"><use href="#i-up"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: night teal by default (not the system setting); cream only after the toggle ---------- */
+  const themeButton = $("#theme-toggle");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", theme === "light" ? "Switch to dark colours" : "Switch to light colours");
+    $("use", themeButton).setAttribute("href", theme === "light" ? "#i-moon" : "#i-sun");
+  }
+  applyTheme(store.get("halvane-theme") === "light" ? "light" : "dark");
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "light" ? "dark" : "light";
+    applyTheme(next);
+    store.set("halvane-theme", next);
+  });
+
+  /* ---------- The journeys: name, facts, price and picture come from each card in #journey-list (data-id);
+     JOURNEYS adds the lead and the day rows (label, title, text, picture, alt) for the journey view ---------- */
+  const JOURNEYS = {
+    kestrin: null, /* read from the journey view as written in the HTML, below */
+    velin: {
+      lead: "Four nights in Velin, arriving by sleeper, with the canals to yourselves after ten.",
+      days: [
+        ["Night 1", "The sleeper in", "Supper in the Northmere salon, a compartment made up for two, and Velin at breakfast.", "images/rail.webp", "A night train on a viaduct under a full moon"],
+        ["Days 2 and 3", "The old town, late", "Mornings with a guide who grew up on the canal; evenings on foot once the day visitors have gone.", "images/lanterns.webp", "Lit windows reflected in a canal at night"],
+        ["Day 4", "A table by the water", "A last dinner in a room over the canal, held for you from the day you book.", "images/dining.webp", "A candlelit table for two"],
+      ],
+    },
+    coralune: {
+      lead: "Seven nights on an atoll reached by seaplane, with a reef you can swim to from the deck.",
+      days: [
+        ["Day 1", "Twenty minutes over the reef", "A seaplane from Port Arden lands in the lagoon; your bags go ahead by boat.", "images/reef.webp", "An atoll seen from the air, rings of reef in turquoise water"],
+        ["Days 2 to 5", "The house on stilts", "Three houses on the lagoon, each with steps into the water and a deck that faces the sunset.", "images/lagoon.webp", "A jetty across a turquoise lagoon"],
+        ["Days 6 and 7", "Supper on the sand", "A table on the sandbar at low tide, and a slow last morning before the flight back.", "images/dining.webp", "A candlelit table"],
+      ],
+    },
+    mirra: {
+      lead: "Three nights in a desert house, two in a camp set up wherever the sky is clearest.",
+      days: [
+        ["Days 1 to 3", "The desert house", "A courtyard house at the edge of the sand, with a roof for the sky and a pool for the afternoons.", "images/suite.webp", "A dark room with a tall window"],
+        ["Days 4 and 5", "The moving camp", "Two tents, a cook and a guide, set up each afternoon where the wind is lowest.", "images/dunes.webp", "A glowing tent in the dunes at night"],
+        ["Day 6", "Back by road", "A slow drive out at dawn, breakfast at an oasis, and the afternoon train home.", "images/boat.webp", "Still water at dawn"],
+      ],
+    },
+    tamsel: {
+      lead: "A mountain railway up, a lodge of nine rooms, and a guide who reads the weather before you wake.",
+      days: [
+        ["Day 1", "The mountain line", "Four hours of switchbacks in a carriage held for our guests, with lunch at your seats.", "images/rail.webp", "A train on a viaduct at night"],
+        ["Days 2 to 5", "The lodge", "Nine rooms, a fire that never goes out, and walks chosen each morning for the weather.", "images/peaks.webp", "A lodge with lit windows under snow peaks"],
+        ["Day 6", "Down again", "A late breakfast and the afternoon train, timed for the sleeper home.", "images/salon.webp", "A lounge with lamps"],
+      ],
+    },
+    northmere: {
+      lead: "Two nights on the train and one by the lake, for a long weekend that feels longer.",
+      days: [
+        ["Night 1", "Supper, then the sleeper", "A light supper in the platform salon, then a compartment made up with linen from home.", "images/salon.webp", "A lounge with lamps glowing"],
+        ["Day 2", "The lake", "A day and a night in a house on the lake, with a boat and a cook.", "images/boat.webp", "A boat on still water"],
+        ["Night 3", "Home by morning", "The return sleeper, and breakfast in Port Arden at seven.", "images/rail.webp", "A night train under the moon"],
+      ],
+    },
+  };
+  const firstRows = $$("#j-days > section");
+  JOURNEYS.kestrin = {
+    lead: $('#j-img ~ .wrap [data-j="lead"]').textContent,
+    days: firstRows.map((row) => [$(".label", row).textContent, $(".h2", row).textContent, $("p.muted", row).textContent, $("img", row).getAttribute("src"), $("img", row).alt]),
+  };
+  let journey = { name: "" };
+  function fillJourney(id) {
+    const key = Object.hasOwn(JOURNEYS, id ?? "") ? id : "kestrin";
+    const card = $(`#journey-list [data-id="${key}"]`);
+    const [mode, nights, season] = $$(".meta span", card).map((el) => el.textContent);
+    const pic = $("img", card);
+    journey = { name: $("h2", card).textContent, place: card.dataset.place, nights: nights.split(" ")[0], season, price: $(".price b", card).textContent, lead: JOURNEYS[key].lead, kicker: `${mode} · ${nights}` };
+    $$("[data-j]").forEach((el) => { el.textContent = journey[el.dataset.j]; });
+    const img = $("#j-img");
+    img.src = pic.getAttribute("src");
+    img.alt = pic.alt;
+    $("#j-enquire").href = $("#j-enquire-2").href = `#/enquire?to=${key}`;
+    const rows = $$("#j-days > section");
+    JOURNEYS[key].days.forEach(([label, title, body, src, alt], i) => {
+      const row = rows[i];
+      if (!row) return;
+      $(".label", row).textContent = label;
+      $(".h2", row).textContent = title;
+      $("p.muted", row).textContent = body;
+      const img = $("img", row);
+      img.src = src;
+      img.alt = alt;
+    });
+  }
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = {
+    home: "Halvane: private journeys, composed after dark",
+    journeys: "Journeys · Halvane",
+    departures: "Departures · Halvane",
+    salons: "Salons · Halvane",
+    circle: "The Circle · Halvane",
+    journal: "Night notes · Halvane",
+    article: "Two weeks of dusk on the Kestrin fjord · Halvane",
+    enquire: "Enquire · Halvane",
+    faq: "Questions · Halvane",
+    privacy: "Privacy · Halvane",
+    terms: "Terms · Halvane",
+    "404": "Page not found · Halvane",
+  };
+  /* Which header link stays marked for each child view */
+  const section = { journey: "journeys", article: "journal", faq: "", privacy: "", terms: "" };
+  let current = null;
+  function parse(hash) {
+    if (!hash || !hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function preselect(id, value) {
+    const select = document.getElementById(id);
+    if (value && select && select.querySelector(`option[value="${CSS.escape(value)}"]`)) select.value = value;
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    const p = route.params;
+    if (name === "journey") fillJourney(p.get("j"));
+    document.title = name === "journey" ? `${journey.name} · Halvane` : titles[name] || titles.home;
+    const active = name in section ? section[name] : name;
+    $$(".nav a, .sheet-links a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === active) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    if (name === "journeys") { $("#f-length").value = p.get("length") || "all"; applyFilter("mode", p.get("mode") || "all"); }
+    if (name === "departures") applyFilter("kind", p.get("kind") || "all");
+    if (name === "journal") applyFilter("topic", p.get("topic") || "all");
+    if (name === "enquire") { ["from", "to", "month", "topic"].forEach((k) => preselect(`e-${k}`, p.get(k))); }
+    if (name === "circle") preselect("m-tier", p.get("tier"));
+    hero.toggle(name === "home");
+    if (name === "home") railState();
+    const at = p.get("at");
+    const target = at && current.querySelector(`#${CSS.escape(at)}`);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      if (menu.open) menu.close();
+      go(href);
+    } else if (href.length > 1) {
+      const target = (current && current.querySelector(href)) || document.querySelector(href);
+      if (target) { event.preventDefault(); target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); }
+    }
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header: the links fold into the menu whenever they do not fit on one line ---------- */
+  const header = $(".site-header");
+  const nav = $(".nav", header);
+  const menu = $("#menu");
+  $("#menu-open").addEventListener("click", () => menu.showModal());
+  $("#menu-close").addEventListener("click", () => menu.close());
+  function fitNav() {
+    header.classList.remove("compact");
+    const links = $$("a", nav);
+    const needed = links.reduce((sum, a) => sum + a.offsetWidth, 0) + (links.length - 1) * 24;
+    if (needed > nav.clientWidth - 2 || innerWidth < 720) header.classList.add("compact");
+  }
+  window.addEventListener("resize", fitNav);
+  document.fonts.ready.then(fitNav);
+  fitNav();
+
+  /* ---------- Notice bar: two notices, stepped by hand ---------- */
+  const NOTICES = [
+    ["Winter departures to Kestrin Fjord are open: four suites on each sailing.", "#/departures?kind=departure"],
+    ["The Northmere sleeper now runs every night of the week.", "#/article"],
+  ];
+  let noticeAt = 0;
+  function stepNotice(by) {
+    noticeAt = (noticeAt + by + NOTICES.length) % NOTICES.length;
+    const link = $("#notice-link");
+    link.textContent = NOTICES[noticeAt][0];
+    link.setAttribute("href", NOTICES[noticeAt][1]);
+    $("#notice-count").textContent = `${noticeAt + 1} / ${NOTICES.length}`;
+  }
+  $("#notice-prev").addEventListener("click", () => stepNotice(-1));
+  $("#notice-next").addEventListener("click", () => stepNotice(1));
+
+  /* ---------- Hero slideshow: slow cross-fades, pausable, still under reduced motion ---------- */
+  const hero = (() => {
+    const slides = $$(".slide");
+    const box = $("#slides");
+    const pause = $("#hero-pause");
+    let at = 0, timer = null, paused = reduced, held = false, visible = true;
+    function showSlide(i) {
+      slides[at].classList.remove("is-on");
+      at = (i + slides.length) % slides.length;
+      slides[at].classList.add("is-on");
+      $("#hero-place").textContent = slides[at].dataset.place;
+      $("#hero-count").textContent = `${at + 1} / ${slides.length}`;
+    }
+    function schedule() {
+      clearInterval(timer);
+      timer = !paused && !held && visible ? setInterval(() => showSlide(at + 1), 7000) : null;
+      box.setAttribute("aria-live", timer ? "off" : "polite");
+    }
+    function setPaused(value) {
+      paused = value;
+      pause.setAttribute("aria-label", paused ? "Play the slideshow" : "Pause the slideshow");
+      $("use", pause).setAttribute("href", paused ? "#i-play" : "#i-pause");
+      schedule();
+    }
+    pause.addEventListener("click", () => setPaused(!paused));
+    $("#hero-next").addEventListener("click", () => { showSlide(at + 1); schedule(); });
+    const area = $(".hero");
+    area.addEventListener("pointerenter", () => { held = true; schedule(); });
+    area.addEventListener("pointerleave", () => { held = false; schedule(); });
+    area.addEventListener("focusin", () => { held = true; schedule(); });
+    area.addEventListener("focusout", () => { held = false; schedule(); });
+    document.addEventListener("visibilitychange", () => { visible = !document.hidden; schedule(); });
+    setPaused(paused);
+    return { toggle(on) { visible = on && !document.hidden; schedule(); } };
+  })();
+
+  /* ---------- The composer: From and To, swapped with one button; Compose opens the enquiry, prefilled ---------- */
+  $$("[data-swap]").forEach((button) => button.addEventListener("click", () => {
+    const [a, b] = button.dataset.swap.split(" ").map((id) => document.getElementById(id));
+    const [va, vb] = [a.value, b.value];
+    if (!vb) return;
+    a.value = vb;
+    b.value = va;
+    b.dispatchEvent(new Event("change"));
+  }));
+
+  /* ---------- Place rail: arrows page it sideways ---------- */
+  const rail = $("#rail");
+  const railButtons = $$("[data-rail]");
+  function railState() {
+    railButtons[0].disabled = rail.scrollLeft <= 2;
+    railButtons[1].disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2;
+  }
+  railButtons.forEach((b) => b.addEventListener("click", () => rail.scrollBy({ left: Number(b.dataset.rail) * rail.clientWidth * 0.8, behavior: reduced ? "auto" : "smooth" })));
+  rail.addEventListener("scroll", railState, { passive: true });
+  window.addEventListener("resize", railState);
+
+  /* ---------- Home notes: the first cards of the journal, copied (the journal view holds the source) ---------- */
+  $$("[data-clone]").forEach((slot) => {
+    const cards = $$(":scope > *", $(slot.dataset.clone)).slice(0, Number(slot.dataset.limit) || 3);
+    slot.replaceChildren(...cards.map((card) => { const copy = card.cloneNode(true); copy.classList.add("reveal"); return copy; }));
+  });
+
+  /* ---------- Reveal: things rise once as they come into view (visible without JS; timed fallback) ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    $$(".reveal:not(.in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("in")));
+  }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("in")), 2500);
+
+  /* ---------- Filters: journeys by mode and length, dates by kind, notes by subject ---------- */
+  const lists = { mode: "journeys", kind: "kind", topic: "topic" };
+  function applyFilter(group, value) {
+    const bar = $(`[data-filter="${group}"]`);
+    const chips = $$("[data-value]", bar);
+    const chosen = chips.some((chip) => chip.dataset.value === value) ? value : "all";
+    chips.forEach((chip) => chip.setAttribute("aria-pressed", String(chip.dataset.value === chosen)));
+    const length = group === "mode" ? $("#f-length").value : "all";
+    let shown = 0;
+    const scope = bar.closest("section");
+    $$(`[data-${group}]:not([data-filter])`, scope).forEach((item) => {
+      const match = (chosen === "all" || item.dataset[group] === chosen) && (length === "all" || item.dataset.length === length);
+      item.hidden = !match;
+      if (match) shown += 1;
+    });
+    const id = lists[group];
+    const count = $(`[data-count="${id}"]`);
+    count.textContent = `${shown} ${shown === 1 ? count.dataset.one : count.dataset.many}`;
+    $(`[data-empty="${id}"]`).hidden = shown > 0;
+  }
+  $$("[data-filter]").forEach((bar) => $$("[data-value]", bar).forEach((chip) => chip.addEventListener("click", () => applyFilter(bar.dataset.filter, chip.dataset.value))));
+  const pressed = (group) => $(`[data-filter="${group}"] [aria-pressed="true"]`)?.dataset.value || "all";
+  $("#f-length").addEventListener("change", () => applyFilter("mode", pressed("mode")));
+  $$("[data-reset]").forEach((button) => button.addEventListener("click", () => {
+    const group = Object.keys(lists).find((k) => lists[k] === button.dataset.reset);
+    if (group === "mode") $("#f-length").value = "all";
+    applyFilter(group, "all");
+  }));
+
+  /* ---------- Salon tabs: arrow keys move between them ---------- */
+  const tabs = $$('#salon-tabs [role="tab"]');
+  function selectTab(i, focus) {
+    tabs.forEach((tab, n) => {
+      const on = n === i;
+      tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+      document.getElementById(tab.getAttribute("aria-controls")).classList.toggle("is-on", on);
+      if (on && focus) tab.focus();
+    });
+  }
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => selectTab(i));
+    tab.addEventListener("keydown", (event) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (event.key === "Home" || event.key === "End") { event.preventDefault(); selectTab(event.key === "Home" ? 0 : tabs.length - 1, true); }
+      if (step) { event.preventDefault(); selectTab((i + step + tabs.length) % tabs.length, true); }
+    });
+  });
+
+  /* ---------- Circle billing: yearly or monthly prices ---------- */
+  $$("[data-bill]").forEach((button) => button.addEventListener("click", () => {
+    const yearly = button.dataset.bill === "year";
+    $$("[data-bill]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    $$("[data-year]").forEach((el) => { el.textContent = yearly ? el.dataset.year : el.dataset.month; });
+    $$("[data-per]").forEach((el) => { el.textContent = yearly ? "a year" : "a month"; });
+  }));
+
+  /* ---------- Guests stepper ---------- */
+  $$("[data-step]").forEach((button) => button.addEventListener("click", () => {
+    const input = $("input", button.parentElement);
+    input.value = Math.min(Number(input.max), Math.max(Number(input.min), (Number(input.value) || 1) + Number(button.dataset.step)));
+    checkField(input);
+  }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver.
+     The submit button's click is handled (and cancelled) instead of the submit event: a sandbox without allow-forms
+     blocks submission before the submit event fires, while the click still arrives, including the one Enter triggers. ---------- */
+  const messages = {
+    valueMissing: "Please fill this in.",
+    typeMismatch: "Please enter a valid email address.",
+    patternMismatch: "Please check this.",
+    rangeOverflow: "That is more than we can take.",
+    rangeUnderflow: "Please choose at least one.",
+  };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? field.dataset[problem] || messages[problem] : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  function readable(form, name) {
+    const field = form.elements[name];
+    if (!field) return "";
+    if (field.tagName === "SELECT") return field.selectedOptions[0]?.textContent ?? "";
+    if (field instanceof RadioNodeList) return field.value.toLowerCase();
+    return field.value;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("[aria-describedby]", form);
+    fields.forEach((field) => field.addEventListener(field.tagName === "SELECT" || field.type === "checkbox" ? "change" : "blur", () => checkField(field)));
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    form.addEventListener("submit", (event) => event.preventDefault());
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valid = fields.map(checkField).every(Boolean);
+      if (!valid) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      if (form.dataset.form === "composer") {
+        const q = new URLSearchParams({ from: form.elements.from.value, to: form.elements.to.value, month: form.elements.month.value });
+        go(`#/enquire?${q}&at=enquiry`);
+        return;
+      }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        $$("[data-echo]", success).forEach((el) => { el.textContent = readable(form, el.dataset.echo); });
+        form.hidden = true;
+        success.hidden = false;
+        success.focus();
+        button.disabled = false;
+        button.textContent = label;
+      }, 700);
+    });
+    $("[data-again]", success || form)?.addEventListener("click", () => {
+      form.reset();
+      fields.forEach((f) => { f.removeAttribute("aria-invalid"); const e = document.getElementById(f.getAttribute("aria-describedby")); if (e) e.textContent = ""; });
+      success.hidden = true;
+      form.hidden = false;
+      $("input, select", form).focus();
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

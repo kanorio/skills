@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+<rect width="1000" height="1000" fill="#5a3522"/>
+<g stroke="#4a2c1d" stroke-width="4"><path d="M0 180h1000M0 420h1000M0 660h1000M0 880h1000"/></g>
+<g stroke="#6b432c" stroke-width="3" fill="none"><path d="M40 90q200-20 400 0M520 300q200 20 420-10M60 540q260 10 380-20M600 780q160-20 380 10"/></g>
+<circle cx="508" cy="512" r="410" fill="#3a2418" opacity=".55"/>
+<circle cx="500" cy="500" r="410" fill="#efe9dc"/>
+<circle cx="500" cy="500" r="384" fill="none" stroke="#3a5f8a" stroke-width="6" stroke-dasharray="18 14"/>
+<circle cx="500" cy="500" r="340" fill="#d9772e"/>
+<g fill="#e9a13a"><circle cx="360" cy="330" r="16"/><circle cx="420" cy="300" r="9"/><circle cx="640" cy="360" r="14"/><circle cx="700" cy="560" r="10"/><circle cx="330" cy="620" r="12"/><circle cx="560" cy="720" r="16"/><circle cx="480" cy="250" r="7"/></g>
+<g fill="none" stroke="#f4e3b6" stroke-width="9" stroke-linecap="round">
+<path d="M280 470q60-60 120 0t120 0 120 0"/><path d="M300 520q60-50 110 0t110 0 120-10"/><path d="M330 570q50-40 100 0t110 0 110 0"/><path d="M360 430q50-40 100 0t100 0"/>
+</g>
+<g fill="#ee8a6c"><path d="M610 300a60 60 0 1 1-60 70l26-6a34 34 0 1 0 34-38z"/><path d="M330 390a56 56 0 1 1 30 90l-6-26a30 30 0 1 0-16-50z"/></g>
+<g stroke="#c9553f" stroke-width="5" fill="none"><path d="M650 320l-14 22M676 350l-22 14M680 392l-26 2"/><path d="M314 410l18 14M314 446l22 0"/></g>
+<g transform="rotate(20 640 620)"><ellipse cx="640" cy="620" rx="70" ry="50" fill="#fffdf6"/><circle cx="640" cy="620" r="30" fill="#f0a63a"/></g>
+<g transform="rotate(-30 430 680)"><ellipse cx="430" cy="680" rx="62" ry="44" fill="#fffdf6"/><circle cx="430" cy="680" r="26" fill="#f0a63a"/></g>
+<g fill="#c08a4a"><rect x="560" y="430" width="70" height="60" rx="10" transform="rotate(12 595 460)"/><rect x="250" y="560" width="62" height="54" rx="10" transform="rotate(-14 280 587)"/></g>
+<g fill="#4f7a3a"><path d="M520 380q30-40 70-20-30 40-70 20zM470 600q-30 40-70 20 30-40 70-20zM720 470q20-46 60-34-20 44-60 34z"/></g>
+<circle cx="540" cy="560" r="40" fill="#a8321f"/><circle cx="530" cy="550" r="12" fill="#c8553a"/>
+<g stroke="#f7f1e0" stroke-width="5" stroke-linecap="round"><path d="M700 420l40 20M710 640l30-30M270 360l40 10"/></g>
+<path d="M940 720l-260-220" stroke="#b8bcb6" stroke-width="22" stroke-linecap="round"/><ellipse cx="640" cy="468" rx="60" ry="38" transform="rotate(40 640 468)" fill="#c9cdc7"/>
+</svg>

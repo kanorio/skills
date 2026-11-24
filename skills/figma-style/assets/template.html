@@ -1,0 +1,1367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Openhour: the front desk for small studios</title>
+<meta name="description" content="Openhour puts timetables, bookings, class packs and payments for small studios in one place, on a booking page in your own colours.">
+<meta property="og:title" content="Openhour: the front desk for small studios">
+<meta property="og:description" content="Timetables, bookings, class packs and payments for small studios.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<style>
+@font-face { font-family: "Host Grotesk"; src: url("fonts/host-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 300 800; font-display: swap; }
+
+/* ---------- Tokens: light follows the system; each colour is light-dark(light, dark) ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(100% 0 0), oklch(14.5% 0 0));
+  --surface: light-dark(oklch(96.5% 0 0), oklch(20.5% 0 0));
+  --surface-2: light-dark(oklch(92.5% 0 0), oklch(27% 0 0));
+  --text: light-dark(oklch(0% 0 0), oklch(98% 0 0));
+  --text-muted: light-dark(oklch(50% 0 0), oklch(72% 0 0));
+  --border: light-dark(oklch(90% 0 0), oklch(28% 0 0));
+  --border-strong: light-dark(oklch(80% 0 0), oklch(42% 0 0));
+  --accent: light-dark(oklch(0% 0 0), oklch(98% 0 0));
+  --accent-hover: light-dark(oklch(30% 0 0), oklch(84% 0 0));
+  --accent-text: light-dark(oklch(100% 0 0), oklch(0% 0 0));
+  --foot: light-dark(oklch(0% 0 0), oklch(9% 0 0));
+  --foot-text: oklch(97% 0 0);
+  --foot-muted: oklch(70% 0 0);
+  /* Colour panels: pastel in light, deep and muted in dark */
+  --p-cyan: light-dark(oklch(92.5% 0.07 205), oklch(35% 0.06 215));
+  --p-lilac: light-dark(oklch(86% 0.08 305), oklch(33% 0.07 305));
+  --p-peach: light-dark(oklch(88% 0.07 50), oklch(35% 0.07 45));
+  --p-mint: light-dark(oklch(91% 0.08 160), oklch(34% 0.06 160));
+  --p-butter: light-dark(oklch(94% 0.1 100), oklch(36% 0.06 100));
+  --p-grey: light-dark(oklch(86% 0 0), oklch(27% 0 0));
+  --p-green: light-dark(oklch(60% 0.12 150), oklch(38% 0.08 150));
+  /* Saturated accents used inside pictures and small controls, the same in both themes */
+  --c-blue: oklch(52% 0.24 266);
+  --c-green: oklch(73% 0.18 152);
+  --notice: light-dark(oklch(78% 0.19 150), oklch(68% 0.17 150));
+  --ok: light-dark(oklch(58% 0.16 150), oklch(72% 0.17 150));
+  --error: light-dark(oklch(52% 0.2 27), oklch(73% 0.15 27));
+  --focus: light-dark(oklch(54% 0.22 262), oklch(72% 0.15 255));
+  --shadow-card: 0 1px 2px oklch(0% 0 0 / 0.06), 0 6px 18px -8px oklch(0% 0 0 / 0.18);
+  --shadow-overlay: 0 2px 6px oklch(0% 0 0 / 0.1), 0 22px 44px -16px oklch(0% 0 0 / 0.35);
+
+  --font: "Host Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-display: clamp(2.75rem, 1.5rem + 3.9vw, 5rem);
+  --fs-h1: clamp(2.25rem, 1.45rem + 2.5vw, 3.625rem);
+  --fs-h2: clamp(1.5rem, 1.15rem + 1.1vw, 2.25rem);
+  --fs-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.75rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+
+  --r-control: 8px;
+  --r-card: 16px;
+  --r-media: 0px;
+  --r-pill: 999px;
+  --r-block: 20px;
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 700ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --page: 1360px;
+  --gutter: clamp(16px, 2.8vw, 40px);
+  --sec: clamp(72px, 10vw, 160px);
+  --hh: 72px;
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--hh) + 16px); }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3 { margin: 0; font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; }
+p, li, dd { text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+::selection { background: color-mix(in oklch, var(--focus) 24%, transparent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 60; padding: 10px 14px; border-radius: var(--r-control); background: var(--accent); color: var(--accent-text); }
+.skip:focus { top: 12px; }
+.wrap { position: relative; width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.icon { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.muted { color: var(--text-muted); }
+
+/* ---------- Type: one family, regular weight; hierarchy from size and grey ---------- */
+/* Two-tone headline (signature): a black sentence, then a grey one, same size, one heading */
+.tt { font-size: var(--fs-h2); line-height: 1.14; letter-spacing: -0.022em; max-width: 25em; }
+.tt span { display: block; color: var(--text-muted); }
+.tt-xl { font-size: var(--fs-h1); line-height: 1.04; letter-spacing: -0.03em; max-width: 17em; }
+.tt-in { margin-left: clamp(0px, 13vw, 230px); }
+.label { font-size: var(--fs-small); color: var(--text-muted); }
+/* Underlined text link with an arrow (signature) */
+.arrow-link { display: inline-flex; align-items: center; gap: 6px; color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.arrow-link .icon { width: 17px; height: 17px; transition: transform var(--dur-base) var(--ease); }
+.arrow-link:hover .icon, a:hover > .arrow-link .icon { transform: translateX(3px); }
+
+/* ---------- Buttons: black rounded rectangles; the secondary large button is an outline pill ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-block-size: 44px; padding: 0 20px; border-radius: var(--r-control); border: 1px solid transparent; font-size: 1rem; line-height: 1; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.btn-solid { background: var(--accent); color: var(--accent-text); }
+.btn-solid:hover { background: var(--accent-hover); }
+.btn-line { background: var(--bg); color: var(--text); border-color: var(--border-strong); }
+.btn-line:hover { background: var(--surface); }
+.btn-pill { border-radius: var(--r-pill); }
+.btn-xl { min-block-size: clamp(60px, 5.6vw, 84px); padding: 0 clamp(26px, 2.6vw, 40px); font-size: clamp(1.25rem, 1rem + 0.9vw, 1.875rem); letter-spacing: -0.02em; border-radius: var(--r-card); }
+.btn-xl.btn-pill { border-radius: var(--r-pill); }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.icon-btn { inline-size: 44px; block-size: 44px; display: inline-grid; place-items: center; border-radius: var(--r-control); border: 0; background: transparent; cursor: pointer; }
+.icon-btn:hover { background: var(--surface); }
+.round { inline-size: 44px; block-size: 44px; display: inline-grid; place-items: center; border-radius: 50%; border: 1px solid var(--border); background: var(--bg); cursor: pointer; }
+.round:hover { background: var(--surface); }
+.round[disabled] { opacity: 0.4; cursor: default; }
+/* Full-width black slab (signature): the last call to action on a page */
+.slab { display: flex; align-items: center; justify-content: center; gap: 0.3em; min-block-size: clamp(96px, 9.4vw, 136px); padding: 0 24px; border-radius: var(--r-block); background: var(--accent); color: var(--accent-text); font-size: var(--fs-display); letter-spacing: -0.035em; line-height: 1; text-decoration: none; transition: background-color var(--dur-base) var(--ease); }
+.slab:hover { background: var(--accent-hover); }
+.badge { display: inline-flex; align-items: center; padding: 3px 7px; border-radius: 4px; background: var(--p-cyan); color: var(--text); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.3; }
+.badge.beta { background: var(--p-lilac); }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 40; background: var(--bg); border-bottom: 1px solid var(--border); }
+.head { display: flex; align-items: center; gap: 28px; min-block-size: var(--hh); }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-size: 1.3125rem; font-weight: 500; letter-spacing: -0.035em; text-decoration: none; white-space: nowrap; }
+.brand svg { width: 26px; height: 26px; }
+.nav { display: flex; gap: 2px; }
+.nav a { padding: 8px 10px; border-radius: var(--r-control); text-decoration: none; white-space: nowrap; }
+.nav a:hover { background: var(--surface); }
+.nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.head-end { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.menu-btn { display: none; }
+@media (max-width: 1100px) { .nav, .head .btn-line { display: none; } .menu-btn { display: inline-grid; } }
+@media (max-width: 520px) { .head { gap: 12px; } .head-end { gap: 2px; } .head .btn-solid { padding: 0 14px; } }
+@media (max-width: 370px) { .head .btn-solid { display: none; } }
+.sheet { border: 0; padding: 0; margin: 0; inline-size: 100%; max-inline-size: 100%; block-size: 100dvh; max-block-size: 100dvh; background: var(--bg); color: var(--text); overscroll-behavior: contain; }
+.sheet::backdrop { background: transparent; }
+.sheet-in { display: flex; flex-direction: column; min-block-size: 100%; width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; padding-bottom: 32px; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; min-block-size: var(--hh); }
+.sheet-links a { display: block; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 1.75rem; letter-spacing: -0.025em; text-decoration: none; }
+.sheet-links a[aria-current="page"] { color: var(--text-muted); }
+.sheet .btn { margin-top: 12px; inline-size: 100%; min-block-size: 56px; font-size: 1.125rem; }
+.sheet .btn:first-of-type { margin-top: 28px; }
+
+/* ---------- Views and sections ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+main { min-block-size: 70vh; }
+.sec { padding-block: var(--sec) 0; }
+.page-head { padding-block: clamp(48px, 7vw, 104px) clamp(28px, 3.5vw, 48px); }
+.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 16px 32px; flex-wrap: wrap; margin-bottom: clamp(28px, 3.4vw, 48px); }
+.sec-head .tt { flex: 1 1 520px; }
+
+/* ---------- Home hero: headline, a stacked collage in a hairline frame, one big button ---------- */
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(24px, 3vw, 48px); align-items: center; }
+.hero h1 { font-size: var(--fs-h1); line-height: 1.02; letter-spacing: -0.035em; }
+.hero-lead { margin: 20px 0 0; max-width: 21em; color: var(--text-muted); font-size: 1.0625rem; }
+.hero-cta { justify-self: end; display: grid; justify-items: end; gap: 14px; }
+.stage { border-inline: 1px solid var(--border); padding: clamp(40px, 6vw, 88px) clamp(12px, 2vw, 32px); }
+.stack { position: relative; width: min(100%, 560px); aspect-ratio: 1 / 1.08; margin-inline: auto; }
+.layer { position: absolute; margin: 0; }
+.l-sq1 { left: 19%; top: 3%; width: 13%; aspect-ratio: 1; background: var(--p-lilac); }
+.l-sq2 { left: 12%; top: 9%; width: 12%; aspect-ratio: 1; background: var(--p-grey); }
+.l-back { left: 4%; top: 26%; width: 40%; height: 50%; background: var(--p-peach); padding: 7% 6%; }
+.bubble { margin: 0; padding: 12px 14px; border-radius: 14px; background: oklch(100% 0 0 / 0.55); color: oklch(20% 0 0); font-size: clamp(0.75rem, 0.6rem + 0.4vw, 0.9375rem); line-height: 1.4; }
+.l-art { left: 30%; top: 0; width: 64%; height: 88%; object-fit: cover; }
+.l-strip { left: 13%; top: 80%; width: 60%; height: 12%; background: var(--c-blue); }
+.l-phone { left: 45%; top: 7%; width: 35%; height: auto; filter: drop-shadow(0 18px 30px oklch(0% 0 0 / 0.3)); }
+.l-chip { left: 0; top: 70%; }
+
+/* ---------- Colour panels (signature): flat colour fields that frame a picture ---------- */
+.panel { position: relative; display: flex; justify-content: center; align-items: flex-start; overflow: hidden; aspect-ratio: var(--ar, 16 / 10); padding: clamp(24px, 5%, 72px) clamp(16px, 5%, 72px) 0; background: var(--panel, var(--p-grey)); }
+.panel > img { width: var(--w, 86%); height: auto; }
+.panel.inset { align-items: center; padding-bottom: clamp(24px, 5%, 72px); }
+.panel.inset > img { aspect-ratio: var(--img-ar, auto); object-fit: cover; }
+.fsplit { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: clamp(24px, 3vw, 48px); margin-top: clamp(32px, 3.6vw, 48px); }
+.note .glyph, .duo .glyph { width: 18px; height: 18px; margin-bottom: 18px; fill: currentColor; }
+.note h3, .duo h3 { font-size: 1rem; letter-spacing: 0; line-height: 1.4; }
+.note p, .duo p { margin: 2px 0 18px; color: var(--text-muted); font-size: 0.9375rem; }
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 4vw, 64px); margin-top: clamp(32px, 3.6vw, 48px); padding-inline: clamp(0px, 8vw, 120px); }
+.under { margin-top: 20px; }
+
+/* ---------- Tile mosaic (signature): edge to edge, colour pictures, floating controls ---------- */
+.mosaic { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: clamp(180px, 21vw, 300px) clamp(230px, 30vw, 430px); gap: 16px; }
+.tile { position: relative; display: block; overflow: hidden; background: var(--surface); text-decoration: none; }
+.tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.tile:hover img { transform: scale(1.03); }
+.lbl { position: absolute; left: 12px; bottom: 12px; z-index: 2; padding: 6px 12px; border-radius: var(--r-pill); background: var(--bg); color: var(--text); font-size: var(--fs-small); white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease); }
+.tile:hover .lbl, .tile:focus-visible .lbl { opacity: 1; transform: none; }
+@media (hover: none) { .lbl { opacity: 1; transform: none; } }
+.float { position: absolute; z-index: 1; display: grid; gap: 7px; inline-size: min(78%, 236px); padding: 12px 14px; border-radius: 12px; background: var(--bg); color: var(--text); box-shadow: var(--shadow-overlay); font-size: 0.8125rem; line-height: 1.3; transition: transform var(--dur-base) var(--ease); }
+.float b { font-weight: 500; }
+.float .row-sp { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.tile:hover .float { transform: translateY(-4px); }
+.meter { display: block; block-size: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
+.meter i { display: block; block-size: 100%; inline-size: var(--v); background: var(--c-blue); }
+.slider { position: relative; display: block; block-size: 6px; margin: 4px 0; border-radius: 3px; background: var(--surface-2); }
+.slider::before { content: ""; position: absolute; inset: 0 auto 0 0; inline-size: var(--v); border-radius: inherit; background: var(--c-blue); }
+.slider::after { content: ""; position: absolute; top: 50%; left: var(--v); inline-size: 16px; block-size: 16px; border-radius: 50%; background: var(--bg); box-shadow: 0 0 0 2px var(--c-blue); transform: translate(-50%, -50%); }
+.switch { position: relative; flex: none; inline-size: 36px; block-size: 20px; border-radius: 10px; background: var(--c-green); }
+.switch::after { content: ""; position: absolute; top: 2px; right: 2px; inline-size: 16px; block-size: 16px; border-radius: 50%; background: oklch(100% 0 0); }
+.pointer { position: absolute; z-index: 1; width: 40px; height: 40px; transition: transform var(--dur-base) var(--ease); }
+.tile:hover .pointer { transform: translate(-6px, -5px); }
+@media (max-width: 760px) {
+  .mosaic { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; grid-auto-rows: clamp(150px, 46vw, 300px); gap: 8px; }
+  .mosaic .tile:nth-child(4n + 2), .mosaic .tile:nth-child(4n + 3) { grid-row: span 2; }
+  .float { font-size: 0.75rem; padding: 10px; }
+}
+
+/* ---------- Proof: quote on a hairline, a big number, a moving row of studio names ---------- */
+.proof { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); margin-top: clamp(28px, 3.4vw, 48px); }
+.quote { margin: 0; padding-left: clamp(18px, 2.4vw, 36px); border-left: 1px solid var(--border-strong); }
+.quote blockquote { margin: 0 0 28px; font-size: clamp(1.5rem, 1.1rem + 1.25vw, 2.375rem); line-height: 1.16; letter-spacing: -0.022em; text-indent: -0.42em; }
+.quote figcaption { display: flex; gap: 14px; align-items: center; font-size: var(--fs-small); line-height: 1.4; }
+.ava { display: grid; place-items: center; flex: none; inline-size: 48px; block-size: 48px; border-radius: 50%; background: var(--c, var(--p-peach)); font-size: 0.875rem; }
+.stat { padding-left: clamp(18px, 2.4vw, 36px); border-left: 1px solid var(--border-strong); }
+.stat-n { margin: 0 0 14px; font-size: clamp(3.5rem, 2rem + 4.4vw, 6rem); line-height: 1; letter-spacing: -0.045em; }
+.stat p:not(.stat-n) { margin: 0 0 10px; color: var(--text-muted); font-size: var(--fs-small); max-width: 18em; }
+.marquee { display: flex; align-items: center; gap: 16px; margin-top: clamp(40px, 5vw, 72px); }
+.marquee-view { flex: 1; min-width: 0; overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent); }
+.marquee-track { display: flex; gap: clamp(40px, 5vw, 80px); width: max-content; animation: marquee 48s linear infinite; }
+.marquee.is-paused .marquee-track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(calc(-50% - clamp(20px, 2.5vw, 40px))); } }
+.wm { display: inline-flex; align-items: center; gap: 8px; font-size: 1.625rem; letter-spacing: -0.03em; white-space: nowrap; }
+.wm svg { width: 22px; height: 22px; fill: currentColor; }
+
+/* ---------- Template rail: scroll-snap cards, a counter and round arrows ---------- */
+.rail-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; }
+.rail-ctl { display: flex; align-items: center; gap: 10px; font-size: var(--fs-small); }
+.rail { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: clamp(232px, 23vw, 330px); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-inline: max(var(--gutter), (100% - var(--page)) / 2); scroll-padding-inline: max(var(--gutter), (100% - var(--page)) / 2); scrollbar-width: none; }
+.rail::-webkit-scrollbar { display: none; }
+.rail li { scroll-snap-align: start; }
+.rail a { display: grid; gap: 14px; text-decoration: none; }
+.rail-img { display: block; aspect-ratio: 1; overflow: hidden; background: var(--panel); }
+.rail-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.rail a:hover img, .story-card:hover img, .post-card:hover .post-img img { transform: scale(1.03); }
+
+/* ---------- Filters ---------- */
+.filter-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: clamp(28px, 3vw, 40px); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-block-size: 44px; padding: 0 18px; border-radius: var(--r-pill); border: 1px solid var(--border-strong); background: var(--bg); cursor: pointer; transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.chip:hover { background: var(--surface); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.count { margin: 0; color: var(--text-muted); font-size: var(--fs-small); }
+.empty { padding: 48px 0; color: var(--text-muted); }
+.link-btn { padding: 0; border: 0; background: none; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+@keyframes pop { from { opacity: 0; transform: translateY(14px); } }
+.js .pop { animation: pop var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 60ms); }
+
+/* ---------- Stories ---------- */
+.story-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(40px, 4vw, 64px) 16px; margin-top: 32px; }
+.story-card { display: grid; gap: 6px; text-decoration: none; }
+.story-img { display: block; aspect-ratio: 4 / 3; overflow: hidden; margin-bottom: 12px; background: var(--surface); }
+.story-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.story-name { font-size: 1.25rem; letter-spacing: -0.015em; }
+.story-line { color: var(--text-muted); }
+.back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 28px; font-size: var(--fs-small); text-decoration: none; color: var(--text-muted); }
+.back:hover { color: var(--text); }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: clamp(28px, 3.4vw, 48px) 0 0; border-top: 1px solid var(--border); }
+.facts div { padding: 16px 16px 0 0; }
+.facts dt { font-size: var(--fs-small); color: var(--text-muted); }
+.facts dd { margin: 4px 0 0; font-size: 1.25rem; letter-spacing: -0.015em; }
+.cols2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 4vw, 64px); }
+.cols2 p { color: var(--text-muted); font-size: 1.0625rem; max-width: 34em; }
+.cols2 h2 { font-size: 1.25rem; margin-bottom: 12px; }
+
+/* ---------- Pricing ---------- */
+.announce { display: inline-flex; align-items: center; gap: 10px; padding: 6px 18px 6px 6px; border-radius: var(--r-pill); background: var(--p-mint); text-decoration: none; font-size: var(--fs-small); margin-bottom: clamp(20px, 2.4vw, 32px); }
+.announce .badge { background: var(--c-green); color: oklch(15% 0 0); }
+.price-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: clamp(24px, 3vw, 40px); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 10px 20px; border-radius: var(--r-card); background: var(--surface); font-size: var(--fs-small); }
+.tags span { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+.tags i { inline-size: 11px; block-size: 11px; border-radius: 3px; background: var(--c); }
+.seg { display: inline-flex; padding: 3px; border-radius: var(--r-pill); background: var(--surface); }
+.seg button { min-block-size: 36px; padding: 0 14px; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--text-muted); font-size: var(--fs-small); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--bg); color: var(--text); box-shadow: 0 1px 3px oklch(0% 0 0 / 0.16); }
+.notice { margin-top: clamp(24px, 3vw, 40px); background: var(--notice); color: oklch(12% 0 0); }
+.notice .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; min-block-size: 64px; padding-block: 10px; }
+.notice p { flex: 1 1 280px; margin: 0; }
+.notice .btn { background: oklch(0% 0 0); color: oklch(100% 0 0); }
+.notice .icon-btn:hover { background: oklch(0% 0 0 / 0.08); }
+.plans { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: clamp(28px, 3vw, 40px); border-top: 1px solid var(--border); }
+.plan { display: flex; flex-direction: column; gap: 14px; padding: 24px clamp(14px, 1.6vw, 26px) 8px; border-left: 1px solid var(--border); }
+.plan:first-child { border-left: 0; padding-left: 0; }
+.plan h2 { font-size: clamp(1.5rem, 1.2rem + 0.8vw, 2rem); }
+.plan-sub { min-block-size: 3em; margin: 0; color: var(--text-muted); font-size: var(--fs-small); }
+.price { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding-top: 12px; border-top: 1px solid var(--border); }
+.price b { font-weight: 400; }
+.price span { font-size: 1.25rem; letter-spacing: -0.02em; }
+.plan .btn { inline-size: 100%; margin-block: 8px 6px; }
+.plan h3 { font-size: var(--fs-small); font-weight: 500; letter-spacing: 0; }
+.dots li, .checks li { position: relative; padding-left: 20px; margin-bottom: 6px; font-size: var(--fs-small); color: var(--text-muted); }
+.dots li::before { content: ""; position: absolute; left: 4px; top: 0.6em; inline-size: 5px; block-size: 5px; border-radius: 50%; background: currentColor; }
+.checks li { padding-left: 28px; color: var(--text); }
+.ck { position: absolute; left: 0; top: 1px; display: inline-grid; place-items: center; inline-size: 20px; block-size: 20px; border-radius: 50%; background: var(--ok); color: var(--bg); }
+.ck::after { content: ""; inline-size: 9px; block-size: 5px; border: solid currentColor; border-width: 0 0 2px 2px; transform: translateY(-1px) rotate(-45deg); }
+.addons { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: clamp(24px, 4vw, 64px); }
+.addons h2 { font-size: var(--fs-h1); letter-spacing: -0.03em; }
+.addon { display: grid; gap: 8px; padding: clamp(20px, 2.4vw, 28px); border: 1px solid var(--border); border-radius: var(--r-card); box-shadow: var(--shadow-card); background: var(--bg); }
+.addon + .addon { margin-top: 12px; }
+.addon h3 { font-size: 1.375rem; }
+.addon p { margin: 0; color: var(--text-muted); }
+.addon .arrow-link { justify-self: end; font-size: var(--fs-small); }
+.compare-wrap { position: relative; overflow-x: auto; margin-top: 24px; }
+.compare { inline-size: 100%; min-inline-size: 620px; border-collapse: collapse; font-size: 0.9375rem; }
+.compare th, .compare td { padding: 13px 10px; border-bottom: 1px solid var(--border); text-align: center; font-weight: 400; }
+.compare th[scope="row"] { text-align: left; padding-left: 0; }
+.compare thead th { color: var(--text-muted); font-size: var(--fs-small); }
+.compare .grp th { padding-top: 28px; text-align: left; font-weight: 500; padding-left: 0; }
+.compare .ck { position: static; }
+.compare.key-only tbody tr:not([data-key]):not(.grp) { display: none; }
+.no { color: var(--text-muted); }
+.faq { max-width: 880px; margin-top: 24px; border-top: 1px solid var(--border); }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0; font-size: clamp(1.125rem, 1rem + 0.4vw, 1.375rem); letter-spacing: -0.015em; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(45deg); }
+.faq p { margin: 0; padding-bottom: 24px; max-width: 42em; color: var(--text-muted); }
+
+/* ---------- Feature rows (changelog): name and badge, a small panel, a line, links ---------- */
+.rows { margin-top: 32px; border-top: 1px solid var(--border); }
+.frow { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.5fr); gap: clamp(16px, 2.4vw, 36px); padding-block: 28px; border-bottom: 1px solid var(--border); align-items: start; }
+.frow-name { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.frow-name h2 { font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.875rem); letter-spacing: -0.022em; }
+.frow-name time { flex-basis: 100%; color: var(--text-muted); font-size: var(--fs-small); }
+.frow .panel { --ar: 4 / 3; }
+.frow-text { margin: 0; color: var(--text-muted); font-size: 0.9375rem; }
+.frow-links { display: grid; gap: 10px; justify-items: end; font-size: var(--fs-small); }
+.frow:not(:has(.panel)) .frow-text { grid-column: 3; }
+
+/* ---------- Journal and article ---------- */
+.post-card.featured { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(24px, 3.4vw, 56px); align-items: center; margin-block: clamp(28px, 3.4vw, 48px) clamp(56px, 6vw, 96px); text-decoration: none; }
+.featured .post-title { font-size: var(--fs-h2); line-height: 1.12; }
+.posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(40px, 4vw, 64px) 16px; margin-top: 32px; }
+.post-card { display: grid; gap: 8px; align-content: start; text-decoration: none; }
+.post-img { display: grid; place-items: center; aspect-ratio: 3 / 2; overflow: hidden; margin-bottom: 8px; background: var(--panel, var(--p-grey)); }
+.post-img img { width: 46%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; transition: transform 1.2s var(--ease); }
+.meta { color: var(--text-muted); font-size: var(--fs-small); }
+.post-title { font-size: 1.25rem; line-height: 1.25; letter-spacing: -0.015em; }
+.article { width: min(100% - 2 * var(--gutter), 760px); margin-inline: auto; padding-block: clamp(40px, 6vw, 88px) 0; }
+.article .post-img { margin-block: 32px 40px; }
+.byline { display: flex; gap: 12px; align-items: center; margin-top: 28px; font-size: var(--fs-small); line-height: 1.4; }
+.prose { font-size: 1.125rem; line-height: 1.65; }
+.prose h2 { font-size: 1.625rem; margin: 44px 0 12px; }
+.pull { margin: 40px 0; padding-left: 24px; border-left: 1px solid var(--border-strong); font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem); line-height: 1.25; letter-spacing: -0.02em; }
+
+/* ---------- About ---------- */
+.values { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 4vw, 56px); }
+.values .glyph { width: 18px; height: 18px; margin-bottom: 18px; fill: currentColor; }
+.values h3 { font-size: 1.25rem; margin-bottom: 8px; }
+.values p { color: var(--text-muted); }
+.team { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 32px 16px; }
+.team .sq { display: grid; place-items: center; aspect-ratio: 1; margin-bottom: 12px; background: var(--c); font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem); letter-spacing: -0.03em; }
+.team p { margin: 0; font-size: var(--fs-small); color: var(--text-muted); }
+.roles { border-top: 1px solid var(--border); }
+.roles a { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) auto; gap: 16px; align-items: center; padding-block: 22px; border-bottom: 1px solid var(--border); text-decoration: none; }
+.roles b { font-weight: 400; font-size: 1.25rem; letter-spacing: -0.015em; }
+.roles a:hover b { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+
+/* ---------- Forms ---------- */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.ticks { display: grid; gap: 10px; margin-top: 28px; }
+.ticks li { position: relative; padding-left: 28px; }
+.form-card { padding: clamp(20px, 3vw, 36px); border: 1px solid var(--border); border-radius: var(--r-card); background: var(--bg); box-shadow: var(--shadow-card); }
+.form { display: grid; gap: 4px; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
+.field { display: grid; gap: 6px; align-content: start; }
+.field > label { font-size: var(--fs-small); }
+.input, .select, .textarea { inline-size: 100%; min-block-size: 48px; padding: 10px 14px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--bg); color: var(--text); transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+.textarea { min-block-size: 132px; resize: vertical; }
+.input::placeholder, .textarea::placeholder { color: var(--text-muted); }
+.input:hover, .select:hover, .textarea:hover { border-color: var(--text-muted); }
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--text); box-shadow: 0 0 0 3px color-mix(in oklch, var(--focus) 30%, transparent); }
+[aria-invalid="true"] { border-color: var(--error); }
+/* Errors take a reserved line under each field, so the submit button never moves */
+.error { min-block-size: 1.45em; font-size: 0.8125rem; line-height: 1.45; color: var(--error); }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: var(--fs-small); }
+.check input { flex: none; inline-size: 20px; block-size: 20px; margin: 1px 0 0; accent-color: var(--accent); }
+.form > .btn { margin-top: 8px; min-block-size: 56px; font-size: 1.0625rem; }
+.success { display: flex; gap: 14px; align-items: flex-start; padding: clamp(20px, 3vw, 32px); border-radius: var(--r-card); background: var(--p-mint); }
+.success .icon { margin-top: 2px; }
+.success p { margin: 6px 0 0; }
+.inline-form { display: flex; gap: 8px; align-items: flex-start; }
+.inline-form .field { flex: 1; }
+
+/* ---------- Legal and 404 ---------- */
+.legal { width: min(100% - 2 * var(--gutter), 760px); margin-inline: auto; padding-block: clamp(48px, 7vw, 104px) 0; }
+.legal h2 { font-size: 1.25rem; margin: 36px 0 8px; }
+.legal p { color: var(--text-muted); }
+.notfound { padding-block: clamp(80px, 12vw, 176px) 0; }
+.notfound .tt { font-size: var(--fs-display); line-height: 1; letter-spacing: -0.04em; margin-bottom: 40px; }
+
+/* ---------- Footer: black, a big wordmark, tracked column labels ---------- */
+.site-footer { margin-top: var(--sec); padding-block: clamp(56px, 7vw, 112px) 32px; background: var(--foot); color: var(--foot-text); border-top: 1px solid var(--border); }
+.foot { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 3fr); gap: 48px 40px; }
+.foot-mark { display: inline-block; font-size: clamp(2.5rem, 2rem + 1.6vw, 3.5rem); letter-spacing: -0.045em; line-height: 1; text-decoration: none; }
+.socials { display: flex; gap: 10px; margin-top: 28px; }
+.socials a { display: grid; place-items: center; inline-size: 44px; block-size: 44px; border-radius: 50%; background: oklch(100% 0 0 / 0.14); }
+.socials a:hover { background: oklch(100% 0 0 / 0.24); }
+.foot-cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 24px; }
+.foot-cols h2 { margin-bottom: 18px; font-size: var(--fs-small); letter-spacing: 0.1em; text-transform: uppercase; color: var(--foot-muted); }
+.foot-cols a { display: inline-flex; align-items: center; gap: 8px; padding-block: 7px; text-decoration: none; }
+.foot-cols a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.foot .badge { background: oklch(100% 0 0 / 0.16); color: var(--foot-text); }
+.foot-news { margin-top: 40px; max-width: 420px; }
+.foot-news p { margin: 0 0 12px; color: var(--foot-muted); font-size: var(--fs-small); }
+.site-footer .input { background: oklch(100% 0 0 / 0.08); border-color: oklch(100% 0 0 / 0.24); color: var(--foot-text); }
+.site-footer .input::placeholder { color: var(--foot-muted); }
+.site-footer .btn-solid { background: oklch(100% 0 0); color: oklch(0% 0 0); }
+.site-footer .error { color: oklch(78% 0.13 27); }
+.site-footer .success { background: oklch(100% 0 0 / 0.1); padding: 14px 16px; }
+.foot-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 56px; padding-top: 24px; border-top: 1px solid oklch(100% 0 0 / 0.16); color: var(--foot-muted); font-size: var(--fs-small); }
+.foot-bottom a { color: inherit; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); }
+  .hero-cta { grid-column: 1; grid-row: 2; justify-self: start; justify-items: start; }
+  .stage { grid-row: 1 / span 2; grid-column: 2; }
+  .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .plan:nth-child(3) { border-left: 0; padding-left: 0; }
+  .plan:nth-child(n + 3) { border-top: 1px solid var(--border); margin-top: 24px; }
+  .team { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .foot { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 900px) {
+  .fsplit, .proof, .post-card.featured, .addons, .split { grid-template-columns: minmax(0, 1fr); }
+  .duo { padding-inline: 0; }
+  .story-grid, .posts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .frow { grid-template-columns: minmax(0, 1fr); }
+  .frow:not(:has(.panel)) .frow-text { grid-column: auto; }
+  .frow .panel { max-width: 420px; }
+  .frow-links { justify-items: start; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .foot-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero-cta, .stage { grid-column: 1; grid-row: auto; }
+  .stage { border-inline: 0; padding: 8px 0; }
+  .stack { width: min(100%, 420px); }
+  .tt-in { margin-left: 0; }
+  .duo, .values, .cols2 { grid-template-columns: minmax(0, 1fr); }
+  .plans { grid-template-columns: minmax(0, 1fr); }
+  .plan, .plan:nth-child(3) { border-left: 0; padding-inline: 0; }
+  .plan + .plan { border-top: 1px solid var(--border); margin-top: 24px; }
+  .roles a { grid-template-columns: minmax(0, 1fr) auto; }
+  .roles a span:not(:first-child):not(:last-child) { display: none; }
+  .rail-bar { flex-wrap: wrap; }
+}
+@media (max-width: 560px) {
+  .story-grid, .posts, .pair { grid-template-columns: minmax(0, 1fr); }
+  .team { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .slab { font-size: clamp(2rem, 9vw, 2.75rem); }
+  .inline-form { flex-direction: column; align-items: stretch; }
+}
+
+/* ---------- Motion: keyframes on entry, never transitions on a class added at load ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+@keyframes settle { from { opacity: 0; transform: translateY(28px) scale(0.97); } }
+.js .enter { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
+.js .stack .layer { animation: settle 900ms var(--ease) both; animation-delay: calc(160ms + var(--i, 0) * 110ms); }
+.js .reveal:not(.is-in) { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .marquee-track { animation: none !important; }
+  .marquee-view { overflow-x: auto; mask-image: none; }
+  .marquee-track [aria-hidden="true"], .marquee .round { display: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap head">
+    <a class="brand" href="#/" aria-label="Openhour home"><svg aria-hidden="true"><use href="#mark"/></svg>Openhour</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/stories">Stories</a>
+      <a href="#/pricing">Pricing</a>
+      <a href="#/changelog">What's new</a>
+      <a href="#/journal">Journal</a>
+      <a href="#/about">About</a>
+    </nav>
+    <div class="head-end">
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to dark theme"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="btn btn-line" href="#/contact">Talk to sales</a>
+      <a class="btn btn-solid" href="#/signup">Start free</a>
+      <button class="icon-btn menu-btn" type="button" id="menu-open" aria-label="Open menu" aria-controls="menu" aria-expanded="false"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-in">
+    <div class="sheet-top"><span class="brand"><svg aria-hidden="true"><use href="#mark"/></svg>Openhour</span><button class="icon-btn" type="button" id="menu-close" aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <nav class="sheet-links" aria-label="Menu links"><a href="#/">Home</a><a href="#/stories">Stories</a><a href="#/pricing">Pricing</a><a href="#/changelog">What's new</a><a href="#/journal">Journal</a><a href="#/about">About</a></nav>
+    <a class="btn btn-solid" href="#/signup">Start free</a>
+    <a class="btn btn-line btn-pill" href="#/contact">Talk to sales</a>
+  </div>
+</dialog>
+
+<main id="main" tabindex="-1">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="enter">
+        <h1>The front desk for small studios</h1>
+        <p class="hero-lead">Timetables, bookings, class packs and payments in one place, on a booking page in your own colours.</p>
+      </div>
+      <div class="stage" aria-hidden="true">
+        <div class="stack">
+          <span class="layer l-sq1" style="--i:0"></span>
+          <span class="layer l-sq2" style="--i:1"></span>
+          <div class="layer l-back" style="--i:1"><p class="bubble">Hi Ana! Saturday's wheel class moved to 11:00. Your spot is saved.</p></div>
+          <span class="layer l-strip" style="--i:2"></span>
+          <img class="layer l-art" style="--i:2" src="images/kiln.svg" alt="" width="800" height="1000">
+          <img class="layer l-phone" style="--i:3" src="images/ui-phone.svg" alt="" width="360" height="740">
+          <div class="layer l-chip float" style="--i:5"><span class="row-sp"><b>Booked</b><span class="switch"></span></span><span>Wheel throwing, Sat 11:00</span></div>
+        </div>
+      </div>
+      <div class="hero-cta enter" style="--i:2">
+        <a class="btn btn-solid btn-xl" href="#/signup">Start free</a>
+        <span class="label">Free for one teacher. No card needed.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="tt reveal">Run the studio, not the inbox. <span>Members book, swap and pay on their own, so the evening goes to teaching instead of answering messages.</span></h2>
+      <div class="fsplit">
+        <div class="panel reveal" style="--panel:var(--p-grey);--w:min(40%, 300px)"><img src="images/ui-phone.svg" alt="A booking page on a phone listing four classes, each with a Book button" width="360" height="740"></div>
+        <div class="note reveal">
+          <svg class="glyph" aria-hidden="true"><use href="#g-dot"/></svg>
+          <h3>Your front desk, open all night</h3>
+          <p>Bookings, cancellations and waitlists run themselves at 2am. You wake up to a full class and a short list of who is next.</p>
+          <a class="arrow-link" href="#/changelog?area=booking">See how waitlists work<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="tt tt-in reveal">One timetable for every room and every teacher. <span>Move a class once; the bookings, reminders and pay follow it.</span></h2>
+      <div class="panel reveal" style="--panel:var(--p-green);--ar:16 / 8;--w:min(78%, 980px);margin-top:clamp(28px, 3.4vw, 48px)"><img src="images/ui-week.svg" alt="A week timetable with colour-coded classes across seven days" width="1200" height="760"></div>
+      <div class="duo">
+        <div class="reveal"><svg class="glyph" aria-hidden="true"><use href="#g-dot"/></svg><h3>Plan the whole term</h3><p>Weekly classes, one-off workshops and private sessions on one grid.</p><a class="arrow-link" href="#/changelog?area=booking">Explore scheduling<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        <div class="reveal"><svg class="glyph" aria-hidden="true"><use href="#g-square"/></svg><h3>Get paid before class</h3><p>Class packs, memberships and drop-ins, with receipts sent for you.</p><a class="arrow-link" href="#/pricing">See plans<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap sec-head">
+      <h2 class="tt reveal">Every studio looks like itself. <span>Pick a colour, a typeface and a photo. The booking page follows.</span></h2>
+      <a class="arrow-link" href="#/stories">See customer stories<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="mosaic">
+      <a class="tile" href="#/stories/mudlark"><img src="images/kiln.svg" alt="" width="800" height="1000"><div class="float" aria-hidden="true" style="left:9%;top:14%"><span class="row-sp"><b>Wheel throwing</b><span>Sat 10:00</span></span><span class="meter" style="--v:62%"><i></i></span><span class="muted">3 of 8 spots left</span></div><svg class="pointer" aria-hidden="true" style="left:62%;top:58%"><use href="#i-pointer"/></svg><span class="lbl">Mudlark Pottery · Pottery</span></a>
+      <a class="tile" href="#/stories/hightide"><img src="images/hightide.svg" alt="" width="800" height="1000"><span class="lbl">Hightide Climbing · Bouldering</span></a>
+      <a class="tile" href="#/stories/little-easel"><img src="images/easel.svg" alt="" width="800" height="1000"><span class="lbl">Little Easel · Children's art</span></a>
+      <a class="tile" href="#/stories/northside"><img src="images/northside.svg" alt="" width="800" height="1000"><div class="float" aria-hidden="true" style="right:8%;bottom:16%"><span class="row-sp"><b>Waitlist</b><span class="switch"></span></span><span class="muted">Offer freed spots in order</span></div><span class="lbl">Northside Choir · Choir</span></a>
+      <a class="tile" href="#/stories/studio-pivot"><img src="images/pivot.svg" alt="" width="800" height="1000"><span class="lbl">Studio Pivot · Dance</span></a>
+      <a class="tile" href="#/stories/crumb-school"><img src="images/crumb.svg" alt="" width="800" height="1000"><div class="float" aria-hidden="true" style="left:10%;top:40%"><span class="row-sp"><b>Class size</b><span>12</span></span><span class="slider" style="--v:60%"></span></div><svg class="pointer" aria-hidden="true" style="left:44%;top:50%"><use href="#i-pointer"/></svg><span class="lbl">Crumb School · Baking</span></a>
+      <a class="tile" href="#/stories/spoke-club"><img src="images/spoke.svg" alt="" width="800" height="1000"><span class="lbl">Spoke Club · Bike workshop</span></a>
+      <a class="tile" href="#/stories/saltwater"><img src="images/saltwater.svg" alt="" width="800" height="1000"><span class="lbl">Saltwater Swim · Swim school</span></a>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="tt tt-in reveal">Check in a full class in seconds. <span>The front desk shows who has booked, who has paid and who is waiting, on any tablet by the door.</span></h2>
+      <div class="panel reveal" style="--panel:var(--p-cyan);--ar:16 / 8.4;--w:min(74%, 900px);margin-top:clamp(28px, 3.4vw, 48px)"><img src="images/ui-checkin.svg" alt="A tablet check-in list with members marked as arrived and a class summary" width="1000" height="680"></div>
+      <a class="arrow-link under" href="#/changelog?area=desk">Explore the front desk<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="tt reveal">The studios you walk past run on Openhour</h2>
+      <div class="proof">
+        <figure class="quote reveal">
+          <blockquote>“We stopped answering booking messages at midnight. The timetable fills itself, and I get to teach.”</blockquote>
+          <figcaption><span class="ava" style="--c:var(--p-peach)">MO</span><span>Mara Okafor<br><span class="muted">Founder, Mudlark Pottery</span></span></figcaption>
+        </figure>
+        <div class="stat reveal"><p class="stat-n">9 in 10</p><p>classes on Openhour fill before the doors open.</p><p>Based on bookings from September 2026.</p></div>
+      </div>
+      <div class="marquee" id="marquee">
+        <div class="marquee-view">
+          <ul class="marquee-track" aria-label="Studios using Openhour">
+            <li class="wm" style="font-weight:600"><svg aria-hidden="true"><use href="#g-dot"/></svg>Mudlark Pottery</li>
+            <li class="wm" style="font-weight:800;letter-spacing:0.06em">HIGHTIDE</li>
+            <li class="wm" style="font-weight:300">northside choir</li>
+            <li class="wm" style="font-weight:500"><svg aria-hidden="true"><use href="#g-diamond"/></svg>Studio Pivot</li>
+            <li class="wm" style="font-weight:700;letter-spacing:0.16em;font-size:1.125rem">CRUMB SCHOOL</li>
+            <li class="wm"><svg aria-hidden="true"><use href="#g-square"/></svg>Spoke Club</li>
+            <li class="wm" style="font-weight:600">Little Easel</li>
+            <li class="wm" style="font-weight:300;font-size:2rem">Saltwater</li>
+          </ul>
+        </div>
+        <button class="round" type="button" id="marquee-toggle" aria-pressed="false" aria-label="Pause the moving list"><svg class="icon" aria-hidden="true"><use href="#i-pause"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="tt reveal" style="text-align:center;margin:0 auto 32px">Your next class is one link away</h2>
+      <a class="slab reveal" href="#/signup">Start free</a>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap sec-head"><h2 class="tt reveal">See what studios publish. <span>Booking pages from potters, climbers, bakers and choirs.</span></h2></div>
+    <div class="wrap rail-bar">
+      <a class="arrow-link" href="#/stories">Browse all stories<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <div class="rail-ctl"><span id="rail-count" aria-live="polite">1 of 6</span><button class="round" type="button" data-rail="-1" aria-label="Previous" disabled><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg></button><button class="round" type="button" data-rail="1" aria-label="Next"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+    </div>
+    <ul class="rail" id="rail">
+      <li><a href="#/stories?kind=craft"><span class="rail-img"><img src="images/kiln.svg" alt="" width="800" height="1000"></span><span class="arrow-link">Pottery studios<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li><a href="#/stories?kind=movement"><span class="rail-img"><img src="images/hightide.svg" alt="" width="800" height="1000"></span><span class="arrow-link">Climbing gyms<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li><a href="#/stories?kind=food"><span class="rail-img"><img src="images/crumb.svg" alt="" width="800" height="1000"></span><span class="arrow-link">Cooking schools<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li><a href="#/stories?kind=music"><span class="rail-img"><img src="images/northside.svg" alt="" width="800" height="1000"></span><span class="arrow-link">Choirs and bands<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li><a href="#/stories?kind=kids"><span class="rail-img"><img src="images/easel.svg" alt="" width="800" height="1000"></span><span class="arrow-link">Kids' classes<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      <li><a href="#/stories?kind=movement"><span class="rail-img"><img src="images/pivot.svg" alt="" width="800" height="1000"></span><span class="arrow-link">Dance studios<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+    </ul>
+  </section>
+</div>
+
+<!-- ===================== STORIES ===================== -->
+<div data-view="stories">
+  <section class="page-head">
+    <div class="wrap">
+      <h1 class="tt tt-xl enter">Customer stories. <span>Studios of every size, in their own words.</span></h1>
+      <div class="filter-bar">
+        <div class="chips" role="group" aria-label="Filter stories">
+          <button class="chip" type="button" data-for="stories" data-filter="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" data-for="stories" data-filter="craft" aria-pressed="false">Clay and craft</button>
+          <button class="chip" type="button" data-for="stories" data-filter="movement" aria-pressed="false">Movement</button>
+          <button class="chip" type="button" data-for="stories" data-filter="music" aria-pressed="false">Music</button>
+          <button class="chip" type="button" data-for="stories" data-filter="food" aria-pressed="false">Food</button>
+          <button class="chip" type="button" data-for="stories" data-filter="kids" aria-pressed="false">Kids</button>
+        </div>
+        <p class="count" data-count="stories" aria-live="polite">8 stories</p>
+      </div>
+    </div>
+  </section>
+  <section class="wrap">
+    <ul class="story-grid" data-list="stories" id="story-grid">
+      <li data-kind="craft" data-slug="mudlark"><a class="story-card" href="#/stories/mudlark"><span class="story-img"><img src="images/kiln.svg" alt="A cream vase on a dark potter's wheel against orange" width="800" height="1000"></span><span class="story-name">Mudlark Pottery</span><span class="story-line">Forty wheel classes a week, booked without a phone call.</span></a></li>
+      <li data-kind="movement" data-slug="hightide"><a class="story-card" href="#/stories/hightide"><span class="story-img"><img src="images/hightide.svg" alt="Colourful climbing holds on a blue wall beside a rope" width="800" height="1000"></span><span class="story-name">Hightide Climbing</span><span class="story-line">Route-setting nights that sell out in an hour, with a waitlist that clears itself.</span></a></li>
+      <li data-kind="music" data-slug="northside"><a class="story-card" href="#/stories/northside"><span class="story-img"><img src="images/northside.svg" alt="A row of singers under rings of sound on lilac" width="800" height="1000"></span><span class="story-name">Northside Choir</span><span class="story-line">A ninety-voice choir that pays by term instead of by spreadsheet.</span></a></li>
+      <li data-kind="movement" data-slug="studio-pivot"><a class="story-card" href="#/stories/studio-pivot"><span class="story-img"><img src="images/pivot.svg" alt="Cream and plum ribbons sweeping under an orange sun on pink" width="800" height="1000"></span><span class="story-name">Studio Pivot</span><span class="story-line">Six rooms, twenty teachers and one timetable everyone can read.</span></a></li>
+      <li data-kind="food" data-slug="crumb-school"><a class="story-card" href="#/stories/crumb-school"><span class="story-img"><img src="images/crumb.svg" alt="Scored loaves of bread on a yellow table" width="800" height="1000"></span><span class="story-name">Crumb School</span><span class="story-line">Weekend bread classes, with gift vouchers that sell all year.</span></a></li>
+      <li data-kind="craft" data-slug="spoke-club"><a class="story-card" href="#/stories/spoke-club"><span class="story-img"><img src="images/spoke.svg" alt="A bicycle wheel with an orange hub on green" width="800" height="1000"></span><span class="story-name">Spoke Club</span><span class="story-line">Open-workshop evenings with a bench and a stand for every member.</span></a></li>
+      <li data-kind="kids" data-slug="little-easel"><a class="story-card" href="#/stories/little-easel"><span class="story-img"><img src="images/easel.svg" alt="Pink, yellow and blue brush strokes on cyan" width="800" height="1000"></span><span class="story-name">Little Easel</span><span class="story-line">After-school art classes that parents book from their phones in a minute.</span></a></li>
+      <li data-kind="kids movement" data-slug="saltwater"><a class="story-card" href="#/stories/saltwater"><span class="story-img"><img src="images/saltwater.svg" alt="Waves and a red and white lane rope in a teal pool" width="800" height="1000"></span><span class="story-name">Saltwater Swim</span><span class="story-line">Lessons for four hundred children, with levels that move up on their own.</span></a></li>
+    </ul>
+    <p class="empty" data-empty="stories" hidden>No stories in this group yet. <button class="link-btn" type="button" data-for="stories" data-filter="all">Show every story</button></p>
+  </section>
+</div>
+
+<!-- ===================== STORY (filled from the card and STORIES; shows the first story without JavaScript) ===================== -->
+<div data-view="story">
+  <article>
+    <section class="page-head">
+      <div class="wrap">
+        <a class="back" href="#/stories"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>All stories</a>
+        <h1 class="tt tt-xl"><span style="color:var(--text)" data-s="name">Mudlark Pottery</span> <span data-s="line">Forty wheel classes a week, booked without a phone call.</span></h1>
+        <dl class="facts">
+          <div><dt>Studio</dt><dd data-s="type">Pottery</dd></div>
+          <div><dt>City</dt><dd data-s="city">Lisbon</dd></div>
+          <div><dt>Classes a week</dt><dd data-s="classes">40</dd></div>
+          <div><dt>On Openhour since</dt><dd data-s="since">2024</dd></div>
+        </dl>
+      </div>
+    </section>
+    <div class="wrap"><div class="panel inset" data-s="panel" style="--panel:var(--p-peach);--ar:16 / 8;--w:72%;--img-ar:16 / 7"><img data-s="img" src="images/kiln.svg" alt="A cream vase on a dark potter's wheel against orange" width="800" height="1000"></div></div>
+    <section class="sec">
+      <div class="wrap cols2">
+        <div><h2>Before</h2><p data-s="before">Bookings came in by message, comment and phone. Every Sunday night went on a spreadsheet, and a cancelled class meant twenty texts.</p></div>
+        <div><h2>After</h2><p data-s="after">Members pick a wheel, pay for a pack of six and swap sessions themselves. Freed places go to the waitlist in order, and Sunday night is free again.</p></div>
+      </div>
+      <div class="wrap" style="margin-top:clamp(48px, 6vw, 96px)">
+        <figure class="quote"><blockquote data-s="quote">“The timetable fills itself, and I get to teach.”</blockquote><figcaption><span class="ava" data-s="ava" style="--c:var(--p-peach)">MO</span><span data-s="who">Mara Okafor, founder</span></figcaption></figure>
+      </div>
+    </section>
+    <section class="sec">
+      <div class="wrap sec-head">
+        <h2 class="tt">Next story. <span data-s="next-name">Hightide Climbing</span></h2>
+        <a class="arrow-link" data-s="next" href="#/stories/hightide">Read the next story<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="wrap"><a class="slab" href="#/signup">Start free</a></div>
+    </section>
+  </article>
+</div>
+
+<!-- ===================== PRICING ===================== -->
+<div data-view="pricing">
+  <section class="page-head" style="padding-bottom:0">
+    <div class="wrap">
+      <a class="announce enter" href="#/changelog?area=booking"><span class="badge">New</span>Waitlists are now on every paid plan</a>
+      <h1 class="tt tt-xl enter" style="--i:1;font-size:var(--fs-display);line-height:1">Pick a plan, keep every booking</h1>
+      <div class="price-top">
+        <div class="tags" aria-label="Included in every plan"><span><i style="--c:#ff7543"></i>Timetable</span><span><i style="--c:#2f4bff"></i>Booking page</span><span><i style="--c:#8f5bff"></i>Class packs</span><span><i style="--c:#2ec972"></i>Payments</span><span><i style="--c:#f2c200"></i>Reminders</span><span><i style="--c:#ff4fa3"></i>Front desk</span></div>
+        <div class="seg" role="group" aria-label="Billing period"><button type="button" data-billing="monthly" aria-pressed="false">Monthly</button><button type="button" data-billing="annual" aria-pressed="true">Annual</button></div>
+      </div>
+    </div>
+  </section>
+  <div class="notice" id="notice"><div class="wrap"><p>Moving from another booking system? We bring your members and passes over for free.</p><a class="btn" href="#/contact?topic=moving">Learn more</a><button class="icon-btn" type="button" id="notice-close" aria-label="Dismiss"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div></div>
+  <section class="wrap">
+    <p class="label" id="billing-note" aria-live="polite" style="margin:20px 0 0">Billed yearly. Two months free.</p>
+    <div class="plans">
+      <div class="plan">
+        <h2>Starter</h2><p class="plan-sub">For one teacher taking their first bookings.</p>
+        <p class="price"><b>Per studio</b><span>Free</span></p>
+        <p class="price"><b>Teachers</b><span>1</span></p>
+        <a class="btn btn-line" href="#/signup?plan=starter">Start free</a>
+        <h3>Choose Starter if you:</h3>
+        <ul class="dots"><li>teach on your own</li><li>run up to ten classes a week</li><li>want a booking page today</li></ul>
+      </div>
+      <div class="plan">
+        <h2>Studio</h2><p class="plan-sub">For one space with a few teachers.</p>
+        <p class="price"><b>Per studio</b><span data-monthly="$29/mo" data-annual="$24/mo">$24/mo</span></p>
+        <p class="price"><b>Extra teacher</b><span data-monthly="$6/mo" data-annual="$5/mo">$5/mo</span></p>
+        <a class="btn btn-solid" href="#/signup?plan=studio">Select plan</a>
+        <h3>Choose Studio if you:</h3>
+        <ul class="dots"><li>sell class packs and memberships</li><li>want waitlists and reminders</li><li>run one room or two</li></ul>
+        <h3>Key features</h3>
+        <ul class="checks"><li><span class="ck" aria-hidden="true"></span>Waitlists</li><li><span class="ck" aria-hidden="true"></span>Class packs and memberships</li><li><span class="ck" aria-hidden="true"></span>Email and text reminders</li></ul>
+      </div>
+      <div class="plan">
+        <h2>Collective</h2><p class="plan-sub">For shared spaces with many teachers and rooms.</p>
+        <p class="price"><b>Per studio</b><span data-monthly="$69/mo" data-annual="$58/mo">$58/mo</span></p>
+        <p class="price"><b>Extra teacher</b><span data-monthly="$5/mo" data-annual="$4/mo">$4/mo</span></p>
+        <a class="btn btn-solid" href="#/signup?plan=collective">Select plan</a>
+        <h3>Choose Collective if you:</h3>
+        <ul class="dots"><li>share a space with other teachers</li><li>book rooms and equipment</li><li>pay teachers by the class</li></ul>
+        <h3>Key features</h3>
+        <ul class="checks"><li><span class="ck" aria-hidden="true"></span>Rooms and equipment</li><li><span class="ck" aria-hidden="true"></span>Payroll export</li><li><span class="ck" aria-hidden="true"></span>Front desk on a tablet</li></ul>
+      </div>
+      <div class="plan">
+        <h2>Network</h2><p class="plan-sub">For several locations under one name.</p>
+        <p class="price"><b>Per location</b><span data-monthly="$149/mo" data-annual="$124/mo">$124/mo</span></p>
+        <p class="price"><b>Teachers</b><span>Unlimited</span></p>
+        <a class="btn btn-solid" href="#/contact?topic=locations">Talk to sales</a>
+        <h3>Choose Network if you:</h3>
+        <ul class="dots"><li>run studios in more than one place</li><li>need one view of every location</li><li>want help moving over</li></ul>
+        <h3>Key features</h3>
+        <ul class="checks"><li><span class="ck" aria-hidden="true"></span>Reports across locations</li><li><span class="ck" aria-hidden="true"></span>Shared memberships</li><li><span class="ck" aria-hidden="true"></span>A named onboarding lead</li></ul>
+      </div>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap addons">
+      <h2>Add-ons</h2>
+      <div>
+        <div class="addon"><h3>Text messages</h3><p>Reminders and waitlist offers by text, charged at cost on any paid plan.</p><a class="arrow-link" href="#/changelog?area=members">How reminders work<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        <div class="addon"><h3>Moving help</h3><p>We bring over members, passes and next term's timetable from your old system.</p><a class="arrow-link" href="#/contact?topic=moving">Ask about moving<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </div>
+  </section>
+  <section class="sec" id="compare">
+    <div class="wrap">
+      <div class="sec-head" style="margin-bottom:0"><h2 class="tt-xl tt">Compare all features</h2><div class="seg" role="group" aria-label="Rows to show"><button type="button" data-scope="all" aria-pressed="true">All features</button><button type="button" data-scope="key" aria-pressed="false">Key features</button></div></div>
+      <div class="compare-wrap">
+        <table class="compare" id="compare-table">
+          <thead><tr><th scope="col" style="text-align:left;padding-left:0">Feature</th><th scope="col">Starter</th><th scope="col">Studio</th><th scope="col">Collective</th><th scope="col">Network</th></tr></thead>
+          <tbody>
+            <tr class="grp"><th colspan="5" scope="colgroup">Booking</th></tr>
+            <tr data-key><th scope="row">Booking page in your colours</th><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td></tr>
+            <tr data-key><th scope="row">Waitlists</th><td class="no">No</td><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td></tr>
+            <tr><th scope="row">Rooms and equipment</th><td class="no">No</td><td>1 room</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr class="grp"><th colspan="5" scope="colgroup">Payments</th></tr>
+            <tr data-key><th scope="row">Card payments</th><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td></tr>
+            <tr data-key><th scope="row">Class packs and memberships</th><td class="no">No</td><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td></tr>
+            <tr><th scope="row">Gift vouchers</th><td class="no">No</td><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td></tr>
+            <tr><th scope="row">Payroll export</th><td class="no">No</td><td class="no">No</td><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td></tr>
+            <tr class="grp"><th colspan="5" scope="colgroup">Front desk</th></tr>
+            <tr data-key><th scope="row">Tablet check-in</th><td class="no">No</td><td class="no">No</td><td><span class="ck" role="img" aria-label="Included"></span></td><td><span class="ck" role="img" aria-label="Included"></span></td></tr>
+            <tr><th scope="row">Reports across locations</th><td class="no">No</td><td class="no">No</td><td class="no">No</td><td><span class="ck" role="img" aria-label="Included"></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <section class="sec" id="faq">
+    <div class="wrap">
+      <h2 class="tt-xl tt">Questions</h2>
+      <div class="faq">
+        <details><summary>Is there a fee on each booking?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. You pay the plan price and the card processor's fee on payments. Free classes cost nothing to book.</p></details>
+        <details><summary>Can I move from another booking system?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes. Export your members and passes as a spreadsheet and we import them, or ask us to do it for you on any paid plan.</p></details>
+        <details><summary>Do my members need an app?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>No. Your booking page works in any browser, and members sign in with a link sent to their email.</p></details>
+        <details><summary>Can I use my own domain?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes, on every paid plan. Starter pages live at your-studio.openhour.example.</p></details>
+        <details><summary>What happens to my members if I cancel?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Download everything as a spreadsheet first. Your page stays online until the end of the billing period.</p></details>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== WHAT'S NEW (changelog as feature rows) ===================== -->
+<div data-view="changelog">
+  <section class="page-head" style="padding-bottom:0">
+    <div class="wrap">
+      <h1 class="tt tt-xl enter">What's new. <span>Everything we shipped for studios, newest first.</span></h1>
+      <div class="filter-bar">
+        <div class="chips" role="group" aria-label="Filter updates">
+          <button class="chip" type="button" data-for="log" data-filter="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" data-for="log" data-filter="booking" aria-pressed="false">Booking</button>
+          <button class="chip" type="button" data-for="log" data-filter="payments" aria-pressed="false">Payments</button>
+          <button class="chip" type="button" data-for="log" data-filter="desk" aria-pressed="false">Front desk</button>
+          <button class="chip" type="button" data-for="log" data-filter="members" aria-pressed="false">Members</button>
+        </div>
+        <p class="count" data-count="log" aria-live="polite">8 updates</p>
+      </div>
+    </div>
+  </section>
+  <section class="wrap">
+    <ol class="rows" data-list="log">
+      <li class="frow" data-kind="booking">
+        <div class="frow-name"><h2>Waitlists</h2><span class="badge">New</span><time datetime="2026-11">November 2026</time></div>
+        <div class="panel" style="--panel:var(--p-lilac);--w:52%"><img src="images/northside.svg" alt="" width="800" height="1000"></div>
+        <p class="frow-text">When a class is full, members join a queue. A freed spot goes to the next person by email and text, and the offer moves on if they do not take it within the hour you set.</p>
+        <div class="frow-links"><a class="arrow-link" href="#/journal/waitlists">Read the guide<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="arrow-link" href="#/signup?plan=studio">Try it free<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </li>
+      <li class="frow" data-kind="payments">
+        <div class="frow-name"><h2>Class packs that roll over</h2><span class="badge">New</span><time datetime="2026-10">October 2026</time></div>
+        <div class="panel" style="--panel:var(--p-peach);--w:52%"><img src="images/crumb.svg" alt="" width="800" height="1000"></div>
+        <p class="frow-text">Let unused classes carry into the next pack, up to a limit you choose. Members see their balance on every booking.</p>
+        <div class="frow-links"><a class="arrow-link" href="#/journal/class-packs">Pricing packs<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </li>
+      <li class="frow" data-kind="desk">
+        <div class="frow-name"><h2>Front desk on any tablet</h2><span class="badge beta">Beta</span><time datetime="2026-10">October 2026</time></div>
+        <div class="panel" style="--panel:var(--p-cyan);--w:82%"><img src="images/ui-checkin.svg" alt="" width="1000" height="680"></div>
+        <p class="frow-text">Check members in with a tap, take a drop-in payment at the door and see who is still to arrive.</p>
+        <div class="frow-links"><a class="arrow-link" href="#/journal/front-desk">See it in use<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="arrow-link" href="#/contact?topic=demo">Book a demo<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </li>
+      <li class="frow" data-kind="booking">
+        <div class="frow-name"><h2>Booking page themes</h2><time datetime="2026-09">September 2026</time></div>
+        <div class="panel" style="--panel:var(--p-butter);--w:34%"><img src="images/ui-phone.svg" alt="" width="360" height="740"></div>
+        <p class="frow-text">Choose a colour, a typeface and a cover photo, and your booking page and emails follow.</p>
+        <div class="frow-links"><a class="arrow-link" href="#/stories">See studio pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </li>
+      <li class="frow" data-kind="members"><div class="frow-name"><h2>Text reminders</h2><time datetime="2026-08">August 2026</time></div><p class="frow-text">A reminder the evening before class, by email or text. Members can cancel from the message.</p><div class="frow-links"><a class="arrow-link" href="#/pricing">Text pricing<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></li>
+      <li class="frow" data-kind="payments"><div class="frow-name"><h2>Payroll export</h2><time datetime="2026-07">July 2026</time></div><p class="frow-text">Classes taught, headcounts and rates per teacher, ready for your accountant every month.</p><div class="frow-links"><a class="arrow-link" href="#/pricing">On Collective<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></li>
+      <li class="frow" data-kind="members"><div class="frow-name"><h2>Member notes</h2><time datetime="2026-06">June 2026</time></div><p class="frow-text">Injuries, preferences and the name of their dog, visible to teachers at check-in and never to other members.</p><div class="frow-links"><a class="arrow-link" href="#/signup">Start free<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></li>
+      <li class="frow" data-kind="booking"><div class="frow-name"><h2>Rooms and equipment</h2><time datetime="2026-05">May 2026</time></div><p class="frow-text">Book a room, a kiln or six wheels along with the class, so nothing is double-booked.</p><div class="frow-links"><a class="arrow-link" href="#/pricing">On Collective<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></li>
+    </ol>
+    <p class="empty" data-empty="log" hidden>No updates here yet. <button class="link-btn" type="button" data-for="log" data-filter="all">Show every update</button></p>
+  </section>
+</div>
+
+<!-- ===================== JOURNAL ===================== -->
+<div data-view="journal">
+  <section class="page-head" style="padding-bottom:0">
+    <div class="wrap"><h1 class="tt tt-xl enter">Journal. <span>Guides and notes for people who run small studios.</span></h1></div>
+  </section>
+  <section class="wrap">
+    <a class="featured post-card" href="#/journal/tuesday-morning" data-post="tuesday-morning">
+      <span class="post-img" style="--panel:var(--p-cyan)"><img src="images/easel.svg" alt="" width="800" height="1000"></span>
+      <span><span class="meta">Guides · 12 November 2026</span><span class="post-title" style="display:block;margin:12px 0 16px">How to fill a Tuesday-morning class</span><span class="muted" style="display:block;margin-bottom:20px">Four changes that moved quiet slots from half empty to waitlisted, from studios that tried them.</span><span class="arrow-link">Read the guide<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></span>
+    </a>
+    <div class="filter-bar">
+      <div class="chips" role="group" aria-label="Filter posts">
+        <button class="chip" type="button" data-for="posts" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-for="posts" data-filter="guides" aria-pressed="false">Guides</button>
+        <button class="chip" type="button" data-for="posts" data-filter="product" aria-pressed="false">Product</button>
+        <button class="chip" type="button" data-for="posts" data-filter="stories" aria-pressed="false">Studio stories</button>
+      </div>
+      <p class="count" data-count="posts" aria-live="polite">5 posts</p>
+    </div>
+    <ul class="posts" data-list="posts">
+      <li data-kind="product"><a class="post-card" href="#/journal/waitlists" data-post="waitlists"><span class="post-img" style="--panel:var(--p-lilac)"><img src="images/northside.svg" alt="" width="800" height="1000"></span><span class="meta">Product · 4 November 2026</span><span class="post-title">Waitlists that clear themselves</span></a></li>
+      <li data-kind="stories"><a class="post-card" href="#/journal/pottery-studios" data-post="pottery-studios"><span class="post-img" style="--panel:var(--p-peach)"><img src="images/kiln.svg" alt="" width="800" height="1000"></span><span class="meta">Studio stories · 28 October 2026</span><span class="post-title">What forty pottery studios taught us about booking</span></a></li>
+      <li data-kind="guides"><a class="post-card" href="#/journal/class-packs" data-post="class-packs"><span class="post-img" style="--panel:var(--p-butter)"><img src="images/crumb.svg" alt="" width="800" height="1000"></span><span class="meta">Guides · 15 October 2026</span><span class="post-title">Pricing class packs without the guesswork</span></a></li>
+      <li data-kind="product"><a class="post-card" href="#/journal/front-desk" data-post="front-desk"><span class="post-img" style="--panel:var(--p-mint)"><img src="images/spoke.svg" alt="" width="800" height="1000"></span><span class="meta">Product · 2 October 2026</span><span class="post-title">A front desk that fits on a tablet</span></a></li>
+      <li data-kind="stories"><a class="post-card" href="#/journal/swim-term" data-post="swim-term"><span class="post-img" style="--panel:var(--p-cyan)"><img src="images/saltwater.svg" alt="" width="800" height="1000"></span><span class="meta">Studio stories · 20 September 2026</span><span class="post-title">Running a swim term for four hundred children</span></a></li>
+    </ul>
+    <p class="empty" data-empty="posts" hidden>Nothing here yet. <button class="link-btn" type="button" data-for="posts" data-filter="all">Show every post</button></p>
+  </section>
+</div>
+
+<!-- ===================== POST (the first post is written here; others come from POSTS) ===================== -->
+<div data-view="post">
+  <article class="article">
+    <a class="back" href="#/journal"><svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>Journal</a>
+    <p class="meta" data-p="meta">Guides · 12 November 2026</p>
+    <h1 class="tt tt-xl" style="margin-top:12px" data-p="title">How to fill a Tuesday-morning class</h1>
+    <div class="byline"><span class="ava" style="--c:var(--p-lilac)" data-p="ava">ID</span><span><span data-p="author">Ines Duarte</span><br><span class="muted">Openhour</span></span></div>
+    <span class="post-img" data-p="panel" style="--panel:var(--p-cyan)"><img data-p="img" src="images/easel.svg" alt="" width="800" height="1000"></span>
+    <div class="prose" data-p="body">
+      <p>Every studio has one: the slot that never fills. We asked the studios with the fullest quiet hours what they changed, and four answers came up again and again.</p>
+      <h2>Name the class for who it is for</h2>
+      <p>"Beginners' wheel, slow pace" filled faster than "Tuesday 10:00". People book a promise, not a time.</p>
+      <p class="pull">The slot did not change. The sentence on the booking page did.</p>
+      <h2>Make the first visit cheaper, not every visit</h2>
+      <p>A single half-price first class brought more regulars than a permanent off-peak discount, and cost far less.</p>
+      <h2>Open the waitlist from the busy class</h2>
+      <p>When Thursday evening is full, offer the people on its waitlist a place on Tuesday morning. Many of them can come.</p>
+    </div>
+  </article>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<div data-view="about">
+  <section class="page-head">
+    <div class="wrap"><h1 class="tt tt-xl enter">We build the front desk for small studios. <span>Fourteen people in Lisbon and Taipei, most of whom have taught a class.</span></h1></div>
+  </section>
+  <div class="wrap"><div class="panel inset" style="--panel:var(--p-butter);--ar:16 / 7;--w:70%;--img-ar:16 / 6"><img src="images/pivot.svg" alt="Cream and plum ribbons sweeping under an orange sun" width="800" height="1000"></div></div>
+  <section class="sec">
+    <div class="wrap values">
+      <div><svg class="glyph" aria-hidden="true"><use href="#g-dot"/></svg><h3>Studios first</h3><p>We build for the person locking up at ten, not for a board meeting. Every feature starts in a real studio.</p></div>
+      <div><svg class="glyph" aria-hidden="true"><use href="#g-square"/></svg><h3>Plain prices</h3><p>One price per studio, written on the page. No fee on each booking and no surprise at renewal.</p></div>
+      <div><svg class="glyph" aria-hidden="true"><use href="#g-diamond"/></svg><h3>Calm software</h3><p>Fewer notifications, fewer settings, and one screen that tells you what today looks like.</p></div>
+    </div>
+  </section>
+  <section class="sec">
+    <div class="wrap">
+      <h2 class="tt" style="margin-bottom:clamp(28px, 3.4vw, 48px)">The team. <span>Fourteen people; here are six.</span></h2>
+      <ul class="team">
+        <li><span class="sq" style="--c:var(--p-peach)">ID</span>Ines Duarte<p>Co-founder, former pottery teacher</p></li>
+        <li><span class="sq" style="--c:var(--p-cyan)">WC</span>Wen-Li Chang<p>Co-founder, engineering</p></li>
+        <li><span class="sq" style="--c:var(--p-lilac)">TR</span>Tomás Reis<p>Design</p></li>
+        <li><span class="sq" style="--c:var(--p-mint)">PN</span>Priya Nair<p>Studio success</p></li>
+        <li><span class="sq" style="--c:var(--p-butter)">JT</span>Jun Takeda<p>Engineering</p></li>
+        <li><span class="sq" style="--c:var(--p-grey)">AM</span>Ada Mensah<p>Payments</p></li>
+      </ul>
+    </div>
+  </section>
+  <section class="sec" id="careers">
+    <div class="wrap">
+      <h2 class="tt" style="margin-bottom:clamp(28px, 3.4vw, 48px)">Open roles. <span>Write to us even if none of these fit.</span></h2>
+      <ul class="roles">
+        <li><a href="#/contact?topic=jobs"><b>Product designer</b><span class="muted">Lisbon or remote</span><span class="muted">Full time</span><span class="arrow-link">Apply<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+        <li><a href="#/contact?topic=jobs"><b>Support lead, Asia</b><span class="muted">Taipei</span><span class="muted">Full time</span><span class="arrow-link">Apply<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+        <li><a href="#/contact?topic=jobs"><b>Backend engineer, payments</b><span class="muted">Remote, Europe</span><span class="muted">Full time</span><span class="arrow-link">Apply<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div data-view="contact">
+  <section class="page-head">
+    <div class="wrap split">
+      <div>
+        <h1 class="tt tt-xl enter">Talk to sales. <span>Several locations, or moving from another system?</span></h1>
+        <ul class="ticks">
+          <li><span class="ck" aria-hidden="true"></span>A 30-minute call on your own timetable</li>
+          <li><span class="ck" aria-hidden="true"></span>A reply within one working day</li>
+          <li><span class="ck" aria-hidden="true"></span>Or write to hello@openhour.example</li>
+        </ul>
+      </div>
+      <div class="form-card">
+        <form class="form" data-form="contact" novalidate>
+          <div class="pair">
+            <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-error"><span class="error" id="c-name-error" aria-live="polite"></span></div>
+            <div class="field"><label for="c-email">Work email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="c-email-error"><span class="error" id="c-email-error" aria-live="polite"></span></div>
+          </div>
+          <div class="pair">
+            <div class="field"><label for="c-studio">Studio name</label><input class="input" id="c-studio" name="studio" autocomplete="organization" required aria-describedby="c-studio-error"><span class="error" id="c-studio-error" aria-live="polite"></span></div>
+            <div class="field"><label for="c-size">Locations</label><select class="select" id="c-size" name="locations"><option>1</option><option>2 to 5</option><option>6 to 20</option><option>More than 20</option></select><span class="error"></span></div>
+          </div>
+          <div class="field"><label for="c-topic">Topic</label><select class="select" id="c-topic" name="topic"><option value="demo">A demo on our timetable</option><option value="moving">Moving from another system</option><option value="locations">Several locations</option><option value="jobs">Working at Openhour</option><option value="other">Something else</option></select><span class="error"></span></div>
+          <div class="field"><label for="c-message">How can we help?</label><textarea class="textarea" id="c-message" name="message" required minlength="10" aria-describedby="c-message-error" placeholder="Your classes, your current system, what you need"></textarea><span class="error" id="c-message-error" aria-live="polite"></span></div>
+          <button class="btn btn-solid" type="submit">Send message</button>
+        </form>
+        <div class="success" data-success="contact" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Thanks, we have your message.</strong><p>We will reply to <span data-echo="email">you</span> within one working day.</p></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== SIGN UP ===================== -->
+<div data-view="signup">
+  <section class="page-head">
+    <div class="wrap split">
+      <div>
+        <h1 class="tt tt-xl enter">Start free. <span>Free for one teacher, for as long as you like.</span></h1>
+        <ul class="ticks">
+          <li><span class="ck" aria-hidden="true"></span>Your booking page is live in minutes</li>
+          <li><span class="ck" aria-hidden="true"></span>Import last term from a spreadsheet</li>
+          <li><span class="ck" aria-hidden="true"></span>Upgrade when you add a room or a teacher</li>
+        </ul>
+      </div>
+      <div class="form-card">
+        <form class="form" data-form="signup" novalidate>
+          <div class="field"><label for="s-email">Email</label><input class="input" id="s-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="s-email-error" placeholder="you@studio.com"><span class="error" id="s-email-error" aria-live="polite"></span></div>
+          <div class="field"><label for="s-password">Password</label><input class="input" id="s-password" name="password" type="password" autocomplete="new-password" required minlength="8" aria-describedby="s-password-error"><span class="error" id="s-password-error" aria-live="polite"></span></div>
+          <div class="pair">
+            <div class="field"><label for="s-studio">Studio name</label><input class="input" id="s-studio" name="studio" autocomplete="organization" required aria-describedby="s-studio-error"><span class="error" id="s-studio-error" aria-live="polite"></span></div>
+            <div class="field"><label for="s-plan">Plan</label><select class="select" id="s-plan" name="plan"><option value="starter">Starter (free)</option><option value="studio">Studio</option><option value="collective">Collective</option></select><span class="error"></span></div>
+          </div>
+          <label class="check"><input type="checkbox" id="s-terms" name="terms" required aria-describedby="s-terms-error"><span>I agree to the <a href="#/terms">terms</a> and the <a href="#/privacy">privacy policy</a>.</span></label>
+          <span class="error" id="s-terms-error" aria-live="polite"></span>
+          <button class="btn btn-solid" type="submit">Create my studio</button>
+        </form>
+        <div class="success" data-success="signup" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Check your inbox.</strong><p>We sent a link to <span data-echo="email">your email</span> to open your studio.</p></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="privacy"><section class="legal"><p class="label">Legal</p><h1 class="tt tt-xl">Privacy policy</h1><p style="margin-top:16px">How Openhour handles the details of studios and their members.</p><h2>What we collect</h2><p>Your studio's account details, and for your members their name, email, bookings and payments.</p><h2>How we use it</h2><p>Only to run bookings, payments and the reminders you switch on. We never sell data or show ads.</p><h2>Your members' data</h2><p>It belongs to your studio. Export it at any time; we delete it 30 days after you close your account.</p><h2>Contact</h2><p>Write to privacy@openhour.example with any question.</p></section></div>
+<div data-view="terms"><section class="legal"><p class="label">Legal</p><h1 class="tt tt-xl">Terms of service</h1><p style="margin-top:16px">The short version of our agreement.</p><h2>Your account</h2><p>You are responsible for the teachers you invite and the classes you publish.</p><h2>Payments</h2><p>Plans are billed in advance, monthly or yearly. Cancel any time; you keep access until the end of the period.</p><h2>Fair use</h2><p>Do not use Openhour to sell anything other than your own classes, passes and vouchers.</p></section></div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="notfound"><div class="wrap"><h1 class="tt">No class here today. <span>The link may be old or mistyped.</span></h1><div class="btn-row"><a class="btn btn-solid btn-xl" href="#/">Go home</a><a class="btn btn-line btn-xl btn-pill" href="#/stories">See stories</a></div></div></section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap foot">
+    <div>
+      <a class="foot-mark" href="#/">Openhour</a>
+      <div class="socials">
+        <a href="#news" aria-label="Newsletter"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg></a>
+        <a href="#/journal" aria-label="Journal"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></a>
+        <a href="#/contact" aria-label="Contact"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></a>
+      </div>
+      <div class="foot-news" id="news">
+        <p>One short email a month: new features and a studio worth visiting.</p>
+        <form class="inline-form" data-form="newsletter" novalidate>
+          <div class="field"><label class="sr-only" for="n-email">Email</label><input class="input" id="n-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="you@studio.com" aria-describedby="n-email-error"><span class="error" id="n-email-error" aria-live="polite"></span></div>
+          <button class="btn btn-solid" type="submit">Subscribe</button>
+        </form>
+        <div class="success" data-success="newsletter" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Subscribed.</strong></div></div>
+      </div>
+    </div>
+    <div class="foot-cols">
+      <div><h2>Product</h2><ul><li><a href="#/changelog?area=booking">Booking page</a></li><li><a href="#/changelog?area=booking">Waitlists <span class="badge">New</span></a></li><li><a href="#/changelog?area=payments">Class packs</a></li><li><a href="#/changelog?area=desk">Front desk <span class="badge">Beta</span></a></li><li><a href="#/pricing">Pricing</a></li></ul></div>
+      <div><h2>Studios</h2><ul><li><a href="#/stories?kind=craft">Clay and craft</a></li><li><a href="#/stories?kind=movement">Movement</a></li><li><a href="#/stories?kind=music">Music</a></li><li><a href="#/stories?kind=food">Food</a></li><li><a href="#/stories?kind=kids">Kids</a></li></ul></div>
+      <div><h2>Resources</h2><ul><li><a href="#/journal">Journal</a></li><li><a href="#/stories">Customer stories</a></li><li><a href="#/changelog">What's new</a></li><li><a href="#faq">Questions</a></li></ul></div>
+      <div><h2>Company</h2><ul><li><a href="#/about">About</a></li><li><a href="#careers">Careers</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/privacy">Privacy</a></li><li><a href="#/terms">Terms</a></li></ul></div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom"><span>© 2026 Openhour, Inc.</span><span>Made in Lisbon and Taipei</span></div>
+</footer>
+
+<!-- ===================== SVG SPRITE ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="mark" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9h-9z" fill="currentColor"/><circle cx="17.6" cy="6.4" r="3" fill="currentColor"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 6v12M15 6v12"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+    <symbol id="i-pointer" viewBox="0 0 40 40"><path d="M7 5l25 11.5-10.5 3.2L16.8 31z" fill="#000" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/></symbol>
+    <symbol id="g-dot" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8"/></symbol>
+    <symbol id="g-square" viewBox="0 0 18 18"><rect x="1" y="1" width="16" height="16" rx="4"/></symbol>
+    <symbol id="g-diamond" viewBox="0 0 18 18"><path d="M9 0.5l8.5 8.5L9 17.5 0.5 9z"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks one ---------- */
+  const THEME_KEY = "openhour-theme";
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get(THEME_KEY);
+  applyTheme(saved === "light" || saved === "dark" ? saved : systemDark.matches ? "dark" : "light");
+  systemDark.addEventListener("change", (event) => { if (!store.get(THEME_KEY)) applyTheme(event.matches ? "dark" : "light"); });
+  themeButton.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set(THEME_KEY, next);
+  });
+
+  /* ---------- Content: stories and posts (name, line, picture and date come from their cards) ---------- */
+  const STORIES = {
+    mudlark: { type: "Pottery", city: "Lisbon", classes: "40", since: "2024", panel: "peach", ava: "MO", who: "Mara Okafor, founder", quote: "“The timetable fills itself, and I get to teach.”", before: "Bookings came in by message, comment and phone. Every Sunday night went on a spreadsheet, and a cancelled class meant twenty texts.", after: "Members pick a wheel, pay for a pack of six and swap sessions themselves. Freed places go to the waitlist in order, and Sunday night is free again." },
+    hightide: { type: "Bouldering", city: "Porto", classes: "26", since: "2025", panel: "cyan", ava: "RS", who: "Rui Santos, head setter", quote: "“Setting night used to crash our old form. Now it sells out quietly.”", before: "Route-setting nights sold out in minutes and the overflow lived in a group chat nobody could follow.", after: "A waitlist offers each freed spot in turn, and members who miss out are first in line for the next night." },
+    northside: { type: "Community choir", city: "Manchester", classes: "3", since: "2023", panel: "lilac", ava: "HB", who: "Hannah Brook, choir manager", quote: "“Ninety singers, one link, and no more chasing subs.”", before: "Termly subs were tracked in a spreadsheet and chased by email, and new singers waited weeks for a place.", after: "Singers pay by term on the booking page, sections fill in order, and the choir knows who is coming to each rehearsal." },
+    "studio-pivot": { type: "Dance", city: "Taipei", classes: "120", since: "2024", panel: "peach", ava: "YL", who: "Yu-Ting Lin, studio director", quote: "“Twenty teachers finally read the same timetable.”", before: "Six rooms and twenty teachers worked from three calendars, and two classes in one room happened more than once.", after: "Rooms are booked with the class, teachers see only their own week, and payroll is one export at the end of the month." },
+    "crumb-school": { type: "Baking classes", city: "Melbourne", classes: "12", since: "2025", panel: "butter", ava: "GO", who: "Grace O'Neill, owner", quote: "“Vouchers now sell in March as well as December.”", before: "Gift vouchers were paper, sold only at Christmas, and checked by hand at the door.", after: "Vouchers sell all year on the booking page and are redeemed when the class is booked." },
+    "spoke-club": { type: "Bike workshop", city: "Copenhagen", classes: "18", since: "2024", panel: "mint", ava: "LN", who: "Lars Nielsen, mechanic", quote: "“Everyone gets a stand, and nobody brings the wrong tools.”", before: "Open evenings were first come, first served, and half the members waited for a stand.", after: "Members book a bench and a stand with the evening and note what they are fixing, so the right parts are ready." },
+    "little-easel": { type: "Children's art", city: "Singapore", classes: "30", since: "2025", panel: "cyan", ava: "SN", who: "Siew Ning Tan, founder", quote: "“Parents book in the school car park, in under a minute.”", before: "Parents booked by phone during working hours, and siblings meant separate forms.", after: "Parents book for every child at once from a phone and pay for the term in one go." },
+    saltwater: { type: "Swim school", city: "Brighton", classes: "90", since: "2023", panel: "cyan", ava: "DK", who: "Dan Kerr, head coach", quote: "“Levels move up on their own, and so do the children.”", before: "Moving a child up a level meant a phone call, a form and a new booking.", after: "Coaches mark a level as passed and the next term's class is offered to the parent automatically." },
+  };
+  const POSTS = {
+    waitlists: { author: "Wen-Li Chang", ava: "WC", panel: "lilac", body: ["Full classes are good news until somebody cancels and the spot sits empty.", "Waitlists now offer each freed spot to the next person by email and text. They have an hour to take it, then the offer moves on.", "Turn it on under each class, and choose how long an offer lasts."] },
+    "pottery-studios": { author: "Ines Duarte", ava: "ID", panel: "peach", body: ["We spent a month with forty pottery studios on three continents.", "The pattern was the same everywhere: wheels, not seats, are the scarce thing, and firing schedules shape the week.", "That is why rooms and equipment can now be booked with the class."] },
+    "class-packs": { author: "Ada Mensah", ava: "AM", panel: "butter", body: ["A pack should feel like a small reward for committing, not a puzzle.", "Studios that priced a pack of ten at the cost of eight singles sold the most packs and kept the most members.", "Letting a few unused classes roll over removed most of the complaints."] },
+    "front-desk": { author: "Tomás Reis", ava: "TR", panel: "mint", body: ["Most check-ins happen in the five minutes before class, with a queue at the door.", "The front desk view puts the next class first, with one tap per member and drop-in payments beside it.", "It runs on any tablet in a browser."] },
+    "swim-term": { author: "Priya Nair", ava: "PN", panel: "cyan", body: ["Four hundred children, eleven levels and three pools make for a busy September.", "Saltwater Swim now offers next term's class to each parent the moment a coach marks a level as passed.", "Most places are taken within a day."] },
+  };
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "Openhour: the front desk for small studios", stories: "Customer stories · Openhour", pricing: "Pricing · Openhour", changelog: "What's new · Openhour", journal: "Journal · Openhour", about: "About · Openhour", contact: "Talk to sales · Openhour", signup: "Start free · Openhour", privacy: "Privacy policy · Openhour", terms: "Terms of service · Openhour", "404": "Page not found · Openhour" };
+  const parent = { story: "stories", post: "journal" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", slug: "", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, query = ""] = hash.slice(2).split("?");
+    const [first = "", second = "", extra] = path.split("/");
+    let view = first || "home";
+    if (second && first === "stories") view = "story";
+    else if (second && first === "journal") view = "post";
+    else if (second || extra) view = "404";
+    return { view, slug: second, params: new URLSearchParams(query), anchor: "" };
+  }
+  const setText = (scope, attr, key, value) => { const el = $(`[${attr}="${key}"]`, scope); if (el) el.textContent = value; };
+
+  function renderStory(slug) {
+    const data = Object.hasOwn(STORIES, slug) && STORIES[slug];
+    const item = data && $(`#story-grid [data-slug="${slug}"]`);
+    if (!item) return false;
+    const view = views.get("story");
+    const name = $(".story-name", item).textContent;
+    setText(view, "data-s", "name", name);
+    setText(view, "data-s", "line", $(".story-line", item).textContent);
+    for (const key of ["type", "city", "classes", "since", "before", "after", "quote", "who", "ava"]) setText(view, "data-s", key, data[key]);
+    const picture = $("img", item);
+    const hero = $('[data-s="img"]', view);
+    hero.src = picture.src;
+    hero.alt = picture.alt;
+    $('[data-s="panel"]', view).style.setProperty("--panel", `var(--p-${data.panel})`);
+    $('[data-s="ava"]', view).style.setProperty("--c", `var(--p-${data.panel})`);
+    const items = $$("#story-grid > li");
+    const next = items[(items.indexOf(item) + 1) % items.length];
+    setText(view, "data-s", "next-name", $(".story-name", next).textContent);
+    $('[data-s="next"]', view).setAttribute("href", `#/stories/${next.dataset.slug}`);
+    document.title = `${name} · Customer stories · Openhour`;
+    return true;
+  }
+
+  const firstBody = $('[data-p="body"]').innerHTML;
+  function renderPost(slug) {
+    const card = $(`[data-post="${CSS.escape(slug)}"]`);
+    if (!card || (slug !== "tuesday-morning" && !Object.hasOwn(POSTS, slug))) return false;
+    const view = views.get("post");
+    const data = POSTS[slug] || { author: "Ines Duarte", ava: "ID", panel: "cyan" };
+    const title = $(".post-title", card).textContent;
+    setText(view, "data-p", "title", title);
+    setText(view, "data-p", "meta", $(".meta", card).textContent);
+    setText(view, "data-p", "author", data.author);
+    setText(view, "data-p", "ava", data.ava);
+    $('[data-p="img"]', view).src = $("img", card).src;
+    $('[data-p="panel"]', view).style.setProperty("--panel", `var(--p-${data.panel})`);
+    const body = $('[data-p="body"]', view);
+    if (data.body) {
+      body.replaceChildren(...data.body.map((text) => Object.assign(document.createElement("p"), { textContent: text })));
+    } else body.innerHTML = firstBody;
+    document.title = `${title} · Journal · Openhour`;
+    return true;
+  }
+
+  function show(route, { scroll = true } = {}) {
+    let name = views.has(route.view) ? route.view : "404";
+    if (name === "story" && !renderStory(route.slug)) name = "404";
+    if (name === "post" && !renderPost(route.slug)) name = "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    if (titles[name]) document.title = titles[name];
+    const section = parent[name] || name;
+    $$(".nav a, .sheet-links a").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === section) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "stories") filter("stories", p.get("kind") || "all");
+    if (name === "changelog") filter("log", p.get("area") || "all");
+    if (name === "journal") filter("posts", p.get("kind") || "all");
+    if (name === "pricing") setBilling(p.get("billing") === "monthly" ? "monthly" : "annual");
+    if (name === "signup" && p.get("plan")) setSelect("s-plan", p.get("plan"));
+    if (name === "contact" && p.get("topic")) setSelect("c-topic", p.get("topic"));
+    if (name === "home") syncRail();
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  function setSelect(id, value) {
+    const select = document.getElementById(id);
+    if ([...select.options].some((o) => o.value === value)) select.value = value;
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); if (menu.open) menu.close(); go(href); return; }
+    const target = href.length > 1 && document.getElementById(href.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    if (menu.open) menu.close();
+    /* a section ID on another view (the footer links to #faq): open that view first, then scroll */
+    const view = target.closest("[data-view]");
+    if (view && view !== current) go(view.dataset.view === "home" ? "#/" : `#/${view.dataset.view}`);
+    target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    if (target.id === "main") target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Menu sheet ---------- */
+  const menu = $("#menu");
+  const menuOpen = $("#menu-open");
+  menuOpen.addEventListener("click", () => { menu.showModal(); menuOpen.setAttribute("aria-expanded", "true"); });
+  $("#menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("close", () => menuOpen.setAttribute("aria-expanded", "false"));
+
+  /* ---------- Reveal: keyframes on entry; content stays visible without JS; timed fallback ---------- */
+  const io = "IntersectionObserver" in window && !reduced.matches ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) { $$(".reveal:not(.is-in)", scope).forEach((el) => (io ? io.observe(el) : el.classList.add("is-in"))); }
+  setTimeout(() => $$(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Filters: chips with aria-pressed, a live count, an empty state ---------- */
+  const nouns = { stories: ["story", "stories"], log: ["update", "updates"], posts: ["post", "posts"] };
+  function filter(group, kind) {
+    if (!$(`.chip[data-for="${group}"][data-filter="${CSS.escape(kind)}"]`)) kind = "all";
+    const items = $$(`[data-list="${group}"] > [data-kind]`);
+    let shown = 0;
+    items.forEach((item) => {
+      item.hidden = kind !== "all" && !item.dataset.kind.split(" ").includes(kind);
+      item.classList.remove("pop");
+      if (!item.hidden) { item.style.setProperty("--i", shown % 6); shown++; }
+    });
+    if (!reduced.matches) { void document.body.offsetWidth; items.forEach((item) => { if (!item.hidden) item.classList.add("pop"); }); }
+    $$(`.chip[data-for="${group}"]`).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === kind)));
+    $(`[data-count="${group}"]`).textContent = `${shown} ${nouns[group][shown === 1 ? 0 : 1]}`;
+    $(`[data-empty="${group}"]`).hidden = shown > 0;
+  }
+  document.addEventListener("click", (event) => { const b = event.target.closest("button[data-filter]"); if (b) filter(b.dataset.for, b.dataset.filter); });
+
+  /* ---------- Pricing: billing period, key rows, the notice ---------- */
+  function setBilling(period) {
+    $$("[data-billing]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.billing === period)));
+    $$("[data-annual]").forEach((el) => { el.textContent = el.dataset[period]; });
+    $("#billing-note").textContent = period === "annual" ? "Billed yearly. Two months free." : "Billed monthly. Cancel any time.";
+  }
+  $$("[data-billing]").forEach((b) => b.addEventListener("click", () => setBilling(b.dataset.billing)));
+  $$("[data-scope]").forEach((b) => b.addEventListener("click", () => {
+    $$("[data-scope]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    $("#compare-table").classList.toggle("key-only", b.dataset.scope === "key");
+  }));
+  const notice = $("#notice");
+  if (store.get("openhour-notice") === "closed") notice.hidden = true;
+  $("#notice-close").addEventListener("click", () => { notice.hidden = true; store.set("openhour-notice", "closed"); });
+
+  /* ---------- Rail: arrows scroll one card; the counter follows the scroll ---------- */
+  const rail = $("#rail");
+  const [prev, next] = $$("[data-rail]");
+  const step = () => rail.firstElementChild.getBoundingClientRect().width + 16;
+  $$("[data-rail]").forEach((b) => b.addEventListener("click", () => rail.scrollBy({ left: Number(b.dataset.rail) * step(), behavior: reduced.matches ? "auto" : "smooth" })));
+  const syncRail = () => {
+    const end = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4;
+    const index = end ? rail.children.length : Math.round(rail.scrollLeft / step()) + 1;
+    $("#rail-count").textContent = `${index} of ${rail.children.length}`;
+    prev.disabled = rail.scrollLeft <= 4;
+    next.disabled = end;
+  };
+  rail.addEventListener("scroll", syncRail, { passive: true });
+
+  /* ---------- Marquee: the names run twice for a seamless loop; a pause button; still with reduced motion ---------- */
+  const marquee = $("#marquee");
+  const track = $(".marquee-track", marquee);
+  track.append(...[...track.children].map((li) => { const copy = li.cloneNode(true); copy.setAttribute("aria-hidden", "true"); return copy; }));
+  const marqueeButton = $("#marquee-toggle");
+  marqueeButton.addEventListener("click", () => {
+    const paused = marquee.classList.toggle("is-paused");
+    marqueeButton.setAttribute("aria-pressed", String(paused));
+    marqueeButton.setAttribute("aria-label", paused ? "Play the moving list" : "Pause the moving list");
+    $("use", marqueeButton).setAttribute("href", paused ? "#i-play" : "#i-pause");
+  });
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please add a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    let text = problem ? messages[problem] : "";
+    if (problem === "tooShort" && field.type === "password") text = `Use at least ${field.minLength} characters.`;
+    if (problem === "valueMissing" && field.type === "checkbox") text = "Please tick this box to continue.";
+    error.textContent = text;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  $$("form[data-form]").forEach((form) => {
+    const fields = $$("input, textarea", form);
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value && field.type !== "checkbox") checkField(field); });
+      field.addEventListener(field.type === "checkbox" ? "change" : "input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before "submit" fires, so the button's click runs it too (Enter clicks it). */
+    const button = $("[type=submit]", form);
+    const label = button.textContent;
+    const send = () => {
+      if (button.disabled) return;
+      if (!fields.map(checkField).every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        const success = $(`[data-success="${form.dataset.form}"]`, form.parentElement);
+        const email = form.elements.email?.value;
+        $$("[data-echo='email']", success).forEach((el) => { if (email) el.textContent = email; });
+        form.hidden = true;
+        success.hidden = false;
+        button.disabled = false;
+        button.textContent = label;
+      }, 600);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+  });
+
+  /* ---------- Start ---------- */
+  const start = parse(location.hash);
+  show(start, { scroll: false });
+  if (start.anchor) document.getElementById(start.anchor.slice(1))?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

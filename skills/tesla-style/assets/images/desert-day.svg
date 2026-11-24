@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000">
+<rect y="0" width="1600" height="1000" fill="#e8ecf0"/>
+<rect y="380" width="1600" height="180" fill="#dfe5ea"/>
+<circle cx="1250" cy="250" r="52" fill="#f8f4ea"/>
+<path d="M0 640L110 628L140 520L430 512L460 630L700 646L760 560L990 552L1020 640L1200 652L1240 600L1400 596L1430 654L1600 660V700H0Z" fill="#c8a687"/>
+<path d="M140 520L430 512L436 540L146 548ZM760 560L990 552L994 576L765 584ZM1240 600L1400 596L1404 612L1243 616Z" fill="#dcc0a1"/>
+<path d="M430 512L460 630L404 628ZM990 552L1020 640L972 638Z" fill="#a9876a"/>
+<rect y="660" width="1600" height="110" fill="#e2cfb6"/>
+<rect y="770" width="1600" height="230" fill="#d2bea3"/><rect y="770" width="1600" height="10" fill="#c3ad91"/>
+<path d="M0 860H1600M0 930H1600" stroke="#bfa98d" stroke-width="10"/>
+</svg>

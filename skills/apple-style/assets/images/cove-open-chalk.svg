@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900"><defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter><filter id="tight" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="30"/></filter><radialGradient id="bud" cx=".34" cy=".28" r=".85"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#eeece8"/><stop offset="1" stop-color="#cfcbc4"/></radialGradient><linearGradient id="hookg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#eeece8"/><stop offset="1" stop-color="#cfcbc4"/></linearGradient></defs><g transform="translate(600 840) scale(1.42) translate(-600 -840)"><g transform="translate(470 520) scale(1 1)">
+<ellipse cx="10" cy="250" rx="120" ry="14" fill="#000" opacity=".2" filter="url(#tight)"/>
+<path d="M-20 160 C -150 120, -150 -170, 30 -190 C 120 -198, 150 -120, 120 -60" fill="none" stroke="#cfcbc4" stroke-width="40" stroke-linecap="round"/>
+<path d="M-20 160 C -150 120, -150 -170, 30 -190 C 120 -198, 150 -120, 120 -60" fill="none" stroke="url(#hookg)" stroke-width="30" stroke-linecap="round"/>
+<path d="M-60 100 C -130 60, -120 -140, 30 -168" fill="none" stroke="#ffffff" stroke-opacity=".55" stroke-width="6" stroke-linecap="round"/>
+<ellipse cx="30" cy="170" rx="96" ry="78" fill="#a9a49c"/>
+<ellipse cx="40" cy="164" rx="90" ry="72" fill="url(#bud)"/>
+<ellipse cx="70" cy="170" rx="30" ry="24" fill="#8a857d" opacity=".7"/>
+<ellipse cx="10" cy="126" rx="34" ry="18" fill="#fff" opacity=".38" filter="url(#tight)"/>
+</g><g transform="translate(760 540) scale(-1 1)">
+<ellipse cx="10" cy="250" rx="120" ry="14" fill="#000" opacity=".2" filter="url(#tight)"/>
+<path d="M-20 160 C -150 120, -150 -170, 30 -190 C 120 -198, 150 -120, 120 -60" fill="none" stroke="#cfcbc4" stroke-width="40" stroke-linecap="round"/>
+<path d="M-20 160 C -150 120, -150 -170, 30 -190 C 120 -198, 150 -120, 120 -60" fill="none" stroke="url(#hookg)" stroke-width="30" stroke-linecap="round"/>
+<path d="M-60 100 C -130 60, -120 -140, 30 -168" fill="none" stroke="#ffffff" stroke-opacity=".55" stroke-width="6" stroke-linecap="round"/>
+<ellipse cx="30" cy="170" rx="96" ry="78" fill="#a9a49c"/>
+<ellipse cx="40" cy="164" rx="90" ry="72" fill="url(#bud)"/>
+<ellipse cx="70" cy="170" rx="30" ry="24" fill="#8a857d" opacity=".7"/>
+<ellipse cx="10" cy="126" rx="34" ry="18" fill="#fff" opacity=".38" filter="url(#tight)"/>
+</g></g></svg>

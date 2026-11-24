@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000"><defs><filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter><filter id="tight" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="30"/></filter><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4efe8"/><stop offset="1" stop-color="#e2d9cc"/></linearGradient><radialGradient id="ring" cx=".42" cy=".3" r=".8"><stop offset="0" stop-color="#f3ece2"/><stop offset=".55" stop-color="#dccfbd"/><stop offset="1" stop-color="#8c7c66"/></radialGradient><pattern id="weave" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="#3a3530"/><circle cx="6" cy="6" r="2.2" fill="#4c463f"/></pattern></defs><rect width="1600" height="1000" fill="url(#bg)"/>
+<ellipse cx="820" cy="900" rx="560" ry="60" fill="#000" opacity=".18" filter="url(#soft)"/>
+<ellipse cx="800" cy="520" rx="560" ry="400" fill="url(#ring)"/>
+<ellipse cx="800" cy="520" rx="500" ry="350" fill="none" stroke="#f3ece2" stroke-opacity=".7" stroke-width="3" stroke-dasharray="14 10"/>
+<ellipse cx="812" cy="530" rx="320" ry="210" fill="#8c7c66"/>
+<ellipse cx="818" cy="536" rx="290" ry="186" fill="url(#weave)"/>
+<ellipse cx="640" cy="260" rx="260" ry="70" fill="#fff" opacity=".35" filter="url(#soft)"/></svg>

@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Plinth: know which tests to trust</title>
+<meta name="description" content="Plinth finds flaky tests in your CI, quarantines them before they block a merge and splits your suite across runners by real durations.">
+<meta property="og:title" content="Plinth: know which tests to trust">
+<meta property="og:description" content="Flaky test detection, quarantine and suite splitting for any CI.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/instrument-sans-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ---------- Fonts ---------- */
+@font-face { font-family: "Instrument Sans"; src: url("fonts/instrument-sans-latin-wght.woff2") format("woff2"); font-weight: 400 700; font-display: swap; }
+@font-face { font-family: "Fragment Mono"; src: url("fonts/fragment-mono-latin-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+
+/* ---------- Tokens: light by default, following the system; each color is light-dark(light, dark) ---------- */
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(oklch(100% 0 0), oklch(0% 0 0));
+  --bg-subtle: light-dark(oklch(98.3% 0 0), oklch(9.5% 0 0));
+  --surface: light-dark(oklch(100% 0 0), oklch(11.5% 0 0));
+  --surface-2: light-dark(oklch(96.8% 0 0), oklch(16.5% 0 0));
+  --surface-3: light-dark(oklch(93.5% 0 0), oklch(21.5% 0 0));
+  --text: light-dark(oklch(16% 0 0), oklch(96% 0 0));
+  --text-body: light-dark(oklch(33% 0 0), oklch(83% 0 0));
+  --text-muted: light-dark(oklch(46% 0 0), oklch(71% 0 0));
+  --text-faint: light-dark(oklch(53% 0 0), oklch(60% 0 0));
+  --border: light-dark(oklch(92.4% 0 0), oklch(23.5% 0 0));
+  --border-strong: light-dark(oklch(85.5% 0 0), oklch(32% 0 0));
+  --accent: light-dark(oklch(16% 0 0), oklch(97% 0 0));
+  --accent-hover: light-dark(oklch(31% 0 0), oklch(84% 0 0));
+  --accent-text: light-dark(oklch(100% 0 0), oklch(0% 0 0));
+  --link: light-dark(oklch(50% 0.2 260), oklch(72% 0.14 255));
+  --focus: light-dark(oklch(56% 0.21 260), oklch(68% 0.17 258));
+  --success: light-dark(oklch(56% 0.15 150), oklch(73% 0.17 150));
+  --warning: light-dark(oklch(66% 0.16 65), oklch(80% 0.15 75));
+  --danger: light-dark(oklch(56% 0.21 27), oklch(69% 0.2 25));
+  --pass: light-dark(oklch(16% 0 0 / 0.16), oklch(100% 0 0 / 0.2));
+  --syn-key: light-dark(oklch(50% 0.2 330), oklch(74% 0.16 330));
+  --syn-str: light-dark(oklch(50% 0.13 152), oklch(76% 0.14 152));
+  --syn-fn: light-dark(oklch(50% 0.19 260), oklch(74% 0.14 255));
+  --m1: light-dark(oklch(70% 0.16 252), oklch(52% 0.2 258));
+  --m2: light-dark(oklch(85% 0.11 200), oklch(64% 0.13 205));
+  --m3: light-dark(oklch(64% 0.2 298), oklch(48% 0.22 300));
+  --m4: light-dark(oklch(82% 0.12 45), oklch(66% 0.15 40));
+  --mesh-line: light-dark(oklch(100% 0 0 / 0.32), oklch(100% 0 0 / 0.14));
+  --shadow-card: 0 1px 2px light-dark(oklch(0% 0 0 / 0.04), transparent);
+  --shadow-overlay: 0 1px 2px light-dark(oklch(0% 0 0 / 0.04), transparent), 0 20px 48px -20px light-dark(oklch(0% 0 0 / 0.2), oklch(0% 0 0 / 0.9));
+
+  --font: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Fragment Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --fs-display: clamp(2.75rem, 1.1rem + 5.4vw, 5.25rem);
+  --fs-h1: clamp(2.25rem, 1.3rem + 3.2vw, 3.75rem);
+  --fs-h2: clamp(1.75rem, 1.25rem + 1.8vw, 2.75rem);
+  --fs-h3: 1.125rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+
+  --r-control: 6px;
+  --r-card: 8px;
+  --r-media: 10px;
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 520ms;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --page: 1200px;
+  --gutter: clamp(16px, 4vw, 32px);
+  --sec: clamp(64px, 9vw, 120px);
+  --hh: 64px;
+}
+/* The toggle (and the preview tool) pin one theme with data-theme on <html> */
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+/* hidden wins over component display rules (cells, panels and forms are flex or grid) */
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--hh) + 24px); }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: var(--fs-body); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+p { margin: 0 0 1em; }
+h1, h2, h3, h4 { margin: 0; line-height: 1.1; text-wrap: balance; }
+p, li { text-wrap: pretty; }
+::selection { background: color-mix(in oklch, var(--link) 22%, transparent); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.skip { position: absolute; left: 12px; top: -48px; padding: 8px 12px; background: var(--accent); color: var(--accent-text); border-radius: var(--r-control); z-index: 100; }
+.skip:focus { top: 12px; }
+.wrap { position: relative; width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.narrow { width: min(100% - 2 * var(--gutter), 720px); margin-inline: auto; }
+.icon { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.icon-sm { width: 15px; height: 15px; }
+.muted { color: var(--text-muted); }
+.mono, code, kbd, pre { font-family: var(--mono); }
+.mono { font-size: 0.8125rem; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Type ---------- */
+.display, .h1, .h2 { font-weight: 600; color: var(--text); }
+.display { font-size: var(--fs-display); letter-spacing: -0.05em; line-height: 0.98; }
+.h1 { font-size: var(--fs-h1); letter-spacing: -0.045em; line-height: 1.02; }
+.h2 { font-size: var(--fs-h2); letter-spacing: -0.038em; line-height: 1.06; }
+.h3 { font-size: var(--fs-h3); font-weight: 600; letter-spacing: -0.015em; line-height: 1.35; }
+.lead { font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem); color: var(--text-muted); line-height: 1.5; max-width: 34em; letter-spacing: -0.005em; }
+/* Monospace eyebrow: the label above every section and page head (signature) */
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 0.8125rem; color: var(--text-muted); }
+.eyebrow b { font-weight: 400; color: var(--text); }
+.text-link { color: var(--text); text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 3px; }
+.text-link:hover { text-decoration-color: currentColor; }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-block-size: 40px; padding: 0 16px; border-radius: var(--r-control); border: 1px solid transparent; font: inherit; font-size: 0.875rem; font-weight: 500; line-height: 1; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.btn-sm { min-block-size: 32px; padding: 0 12px; }
+.btn-lg { min-block-size: 48px; padding: 0 22px; font-size: 1rem; }
+.btn-primary { background: var(--accent); color: var(--accent-text); }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-secondary { background: var(--surface); color: var(--text); border-color: var(--border-strong); }
+.btn-secondary:hover { background: var(--surface-2); }
+.btn-ghost { background: transparent; color: var(--text-muted); }
+.btn-ghost:hover { color: var(--text); background: var(--surface-2); }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn .icon-sm { transition: transform var(--dur-base) var(--ease); }
+.btn:hover .go, a:hover > .go { transform: translateX(3px); }
+.kbd { display: inline-grid; place-items: center; min-inline-size: 22px; block-size: 22px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--border-strong); background: var(--bg-subtle); font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); }
+
+/* ---------- Header ---------- */
+.site-header { position: sticky; top: 0; z-index: 30; border-bottom: 1px solid transparent; background: color-mix(in oklch, var(--bg) 84%, transparent); backdrop-filter: saturate(1.4) blur(12px); transition: border-color var(--dur-base) var(--ease); }
+.site-header.is-scrolled { border-bottom-color: var(--border); }
+.header-inner { display: flex; align-items: center; gap: 20px; min-block-size: var(--hh); }
+.brand { display: inline-flex; align-items: center; gap: 9px; font-weight: 650; font-size: 1.0625rem; letter-spacing: -0.03em; text-decoration: none; }
+.brand svg { width: 22px; height: 22px; color: var(--text); }
+.nav { display: flex; gap: 2px; margin-right: auto; margin-left: 12px; }
+.nav a { padding: 6px 10px; border-radius: var(--r-control); text-decoration: none; font-size: 0.875rem; color: var(--text-muted); white-space: nowrap; transition: color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease); }
+.nav a:hover { color: var(--text); background: var(--surface-2); }
+.nav a[aria-current="page"] { color: var(--text); }
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.icon-btn { inline-size: 36px; block-size: 36px; display: inline-grid; place-items: center; border-radius: var(--r-control); border: 1px solid transparent; background: transparent; color: var(--text-muted); cursor: pointer; }
+.icon-btn:hover { color: var(--text); background: var(--surface-2); }
+.menu-btn { display: none; }
+@media (max-width: 860px) { .nav, .header-actions .hide-sm { display: none; } .menu-btn { display: inline-grid; } .header-inner { justify-content: space-between; } }
+@media (max-width: 340px) { .header-actions .btn-primary { display: none; } }
+.sheet { border: 0; padding: 0; margin: 0 0 0 auto; inline-size: min(360px, 100%); block-size: 100dvh; max-block-size: 100dvh; background: var(--bg); color: var(--text); border-left: 1px solid var(--border); overscroll-behavior: contain; }
+.sheet::backdrop { background: oklch(0% 0 0 / 0.4); }
+.sheet-inner { display: flex; flex-direction: column; padding: 14px 20px 32px; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.sheet a:not(.btn) { padding: 14px 2px; text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--border); }
+.sheet .btn { margin-top: 12px; }
+
+/* ---------- Views and sections ---------- */
+.js [data-view]:not(.is-active) { display: none; }
+main { min-block-size: 70vh; }
+.section { padding-block: var(--sec); }
+.line { border-top: 1px solid var(--border); }
+.section-head { max-width: 640px; margin-bottom: clamp(32px, 5vw, 56px); }
+.section-head .h2 { margin-top: 14px; }
+.section-head .lead { margin-top: 16px; margin-bottom: 0; }
+.head-row { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; max-width: none; }
+
+/* ---------- Joined hairline cells with crosshair corners (signature) ---------- */
+.cells { position: relative; display: grid; border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+.cells > * { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); min-inline-size: 0; }
+.c2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.c4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.c6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.cross::before, .cross::after { content: ""; position: absolute; z-index: 1; inline-size: 21px; block-size: 21px; pointer-events: none; background: linear-gradient(var(--text), var(--text)) center / 1px 100% no-repeat, linear-gradient(var(--text), var(--text)) center / 100% 1px no-repeat; }
+.cross::before { top: -11px; left: -11px; }
+.cross::after { bottom: -10px; right: -10px; }
+.cell { padding: clamp(20px, 2.6vw, 32px); background: var(--bg); }
+.cell > .icon + .h3 { margin-top: 16px; }
+.cell p { color: var(--text-muted); margin: 8px 0 0; font-size: 0.9375rem; }
+@media (max-width: 960px) { .c3, .c4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .c6 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .c2, .c3, .c4 { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Hero ---------- */
+.hero { padding-block: clamp(56px, 8vw, 104px) 0; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 32px 64px; align-items: end; }
+.hero .display { margin: 20px 0 0; max-width: 11.5ch; }
+.hero .lead { margin: 0 0 28px; }
+.pill { display: inline-flex; align-items: center; gap: 10px; padding: 4px 12px 4px 4px; border-radius: 999px; border: 1px solid var(--border); font-size: 0.8125rem; color: var(--text-muted); text-decoration: none; }
+.pill .badge { border-radius: 999px; }
+.pill:hover { color: var(--text); border-color: var(--border-strong); }
+.badge { display: inline-flex; align-items: center; padding: 1px 7px; border-radius: 4px; border: 1px solid var(--border-strong); font-family: var(--mono); font-size: 0.6875rem; line-height: 1.6; color: var(--text); background: var(--surface); white-space: nowrap; }
+.badge.solid { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+.install { display: flex; align-items: center; gap: 10px; margin-top: 20px; padding: 0 6px 0 14px; min-block-size: 44px; max-inline-size: 360px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--bg-subtle); font-family: var(--mono); font-size: 0.875rem; }
+.install code { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.install .prompt { color: var(--text-faint); }
+.cursor { display: inline-block; inline-size: 8px; block-size: 1.05em; margin-left: 2px; vertical-align: -3px; background: var(--text); animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@media (max-width: 900px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Product window: the interface is the illustration (signature) ---------- */
+.stage { margin-top: clamp(48px, 6vw, 72px); }
+.window { position: relative; border: 1px solid var(--border); border-radius: var(--r-media); background: var(--surface); box-shadow: var(--shadow-overlay); overflow: hidden; text-align: left; }
+.fade { -webkit-mask-image: linear-gradient(180deg, #000 58%, transparent 99%); mask-image: linear-gradient(180deg, #000 58%, transparent 99%); }
+.window-bar { display: flex; align-items: center; gap: 8px; min-block-size: 44px; padding: 0 14px; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: 0.75rem; color: var(--text-faint); white-space: nowrap; overflow: hidden; }
+.window-bar svg { width: 16px; height: 16px; color: var(--text); }
+.window-bar .sep { color: var(--border-strong); }
+.window-bar b { font-weight: 400; color: var(--text); }
+.window-bar .end { margin-left: auto; display: flex; gap: 6px; }
+.app { display: grid; grid-template-columns: 200px minmax(0, 1fr); font-size: 0.8125rem; }
+.app-side { display: grid; align-content: start; gap: 2px; padding: 12px 10px; border-right: 1px solid var(--border); background: var(--bg-subtle); }
+.app-side span { display: flex; align-items: center; gap: 9px; padding: 6px 8px; border-radius: var(--r-control); color: var(--text-muted); }
+.app-side span.on { background: var(--surface); color: var(--text); box-shadow: 0 0 0 1px var(--border); }
+.app-side em { margin-left: auto; font-style: normal; font-family: var(--mono); font-size: 0.6875rem; color: var(--text-faint); }
+.app-main { padding: 20px 22px 28px; min-inline-size: 0; }
+.app-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.app-title strong { font-size: 1rem; letter-spacing: -0.02em; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--border); border-radius: var(--r-card); }
+.kpi { padding: 12px 14px; }
+.kpi + .kpi { border-left: 1px solid var(--border); }
+.kpi span { display: block; font-family: var(--mono); font-size: 0.6875rem; color: var(--text-faint); }
+.kpi strong { display: block; margin-top: 4px; font-size: 1.375rem; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.kpi small { font-family: var(--mono); font-size: 0.6875rem; color: var(--success); }
+.table { margin-top: 14px; border: 1px solid var(--border); border-radius: var(--r-card); overflow: hidden; }
+.tr { display: grid; grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr) 72px minmax(0, 1.5fr) 112px; gap: 14px; align-items: center; padding: 10px 14px; border-top: 1px solid var(--border); }
+.tr:first-child { border-top: 0; }
+.r3 .tr { grid-template-columns: 64px minmax(0, 1fr) 84px; }
+.tr.th { background: var(--bg-subtle); font-family: var(--mono); font-size: 0.6875rem; color: var(--text-faint); padding-block: 8px; }
+.tr .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
+.tr .m { font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tr.on { background: color-mix(in oklch, var(--warning) 7%, transparent); }
+.strip { display: flex; gap: 2px; }
+.strip i { flex: 1; max-inline-size: 6px; block-size: 16px; border-radius: 1px; background: var(--pass); }
+.strip i.f { background: var(--danger); }
+.st { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border); font-family: var(--mono); font-size: 0.6875rem; color: var(--text-muted); white-space: nowrap; justify-self: start; }
+.dot { inline-size: 7px; block-size: 7px; border-radius: 50%; flex: none; background: var(--text-faint); }
+.dot.ok { background: var(--success); } .dot.warn { background: var(--warning); } .dot.bad { background: var(--danger); } .dot.off { background: transparent; box-shadow: inset 0 0 0 1.5px var(--text-faint); }
+@media (max-width: 1000px) { .app { grid-template-columns: minmax(0, 1fr); } .app-side { display: none; } }
+@media (max-width: 640px) { .window-bar .end, .feature { min-block-size: 0; } .window-bar .end { display: none; } }
+@media (max-width: 760px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi:nth-child(3) { border-left: 0; } .kpi:nth-child(n+3) { border-top: 1px solid var(--border); } .tr { grid-template-columns: minmax(0, 1fr) 96px; } .tr > :nth-child(2), .tr > :nth-child(3), .tr > :nth-child(4) { display: none; } }
+
+/* ---------- Logo row ---------- */
+.logos .cell { display: grid; place-items: center; min-block-size: 104px; padding: 20px 12px; color: var(--text-muted); font-size: 1.125rem; font-weight: 600; letter-spacing: -0.03em; white-space: nowrap; }
+.logos .cell:nth-child(2) { font-family: var(--mono); font-weight: 400; font-size: 1rem; letter-spacing: -0.02em; }
+.logos .cell:nth-child(3) { font-weight: 700; letter-spacing: 0.12em; font-size: 0.875rem; }
+.logos .cell:nth-child(5) { font-style: italic; font-weight: 500; }
+.logos .cell:nth-child(6) { font-weight: 400; letter-spacing: -0.01em; }
+
+/* ---------- Feature cells and vignettes ---------- */
+.feature { display: flex; flex-direction: column; min-block-size: 330px; }
+.feature > p { margin-bottom: 28px; }
+.feature .vig { margin-top: auto; }
+.feature .icon { color: var(--text); margin-bottom: 18px; }
+.mini { border: 1px solid var(--border); border-radius: var(--r-card); background: var(--surface); font-size: 0.8125rem; overflow: hidden; }
+.mini-row { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-top: 1px solid var(--border); }
+.mini-row:first-child { border-top: 0; }
+.rules { border: 0; border-radius: 0; }
+.rules .mini-row { padding: 16px 20px; }
+.mini-row .t { flex: 1; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mini-row .strip { inline-size: 42%; }
+.comment { padding: 12px 14px; }
+.comment p { margin: 6px 0 10px; color: var(--text-body); font-size: 0.8125rem; }
+.who { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--text-muted); }
+.who svg { width: 18px; height: 18px; }
+.bars { display: grid; gap: 8px; font-family: var(--mono); font-size: 0.6875rem; color: var(--text-faint); }
+.bars div { display: grid; grid-template-columns: 52px minmax(0, 1fr) 44px; gap: 10px; align-items: center; }
+.bars i { block-size: 10px; border-radius: 2px; background: var(--text); }
+.trace { margin: 0; padding: 12px 14px; font-size: 0.6875rem; line-height: 1.75; color: var(--text-muted); white-space: pre; overflow: hidden; }
+.trace .hl { display: block; margin-inline: -14px; padding-inline: 11px; border-left: 3px solid var(--danger); background: color-mix(in oklch, var(--danger) 9%, transparent); color: var(--text); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips span { padding: 4px 9px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface); font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); }
+
+/* ---------- Steps and code ---------- */
+.step .mono { color: var(--text-faint); }
+.step .h3 { margin-top: 14px; }
+.code { margin-top: 24px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--bg-subtle); overflow: hidden; }
+.code-bar { display: flex; align-items: center; gap: 2px; padding: 6px; border-bottom: 1px solid var(--border); }
+.code-bar [role="tablist"] { display: flex; gap: 2px; }
+.code-bar [role="tab"] { padding: 6px 10px; border: 0; border-radius: 4px; background: transparent; color: var(--text-muted); font-family: var(--mono); font-size: 0.75rem; cursor: pointer; }
+.code-bar [role="tab"][aria-selected="true"] { background: var(--surface); color: var(--text); box-shadow: 0 0 0 1px var(--border); }
+.code-bar .copy { margin-left: auto; inline-size: 32px; block-size: 32px; }
+.code-bar .file { padding: 6px 8px; font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); }
+.code pre { margin: 0; padding: 18px 20px; overflow-x: auto; font-size: 0.8125rem; line-height: 1.75; color: var(--text-body); tab-size: 2; }
+.k { color: var(--syn-key); } .s { color: var(--syn-str); } .f { color: var(--syn-fn); } .c { color: var(--text-faint); }
+
+/* ---------- Numbers, quote, teaser ---------- */
+.stat strong { display: block; font-size: clamp(2.5rem, 1.8rem + 2.2vw, 3.75rem); font-weight: 600; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat span { display: block; margin-top: 12px; color: var(--text-muted); font-size: 0.9375rem; max-width: 22em; }
+.quote { margin: 0; }
+.quote blockquote { margin: 0; max-width: 24em; font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem); font-weight: 500; letter-spacing: -0.035em; line-height: 1.2; }
+.quote figcaption { display: flex; align-items: center; gap: 12px; margin-top: 28px; font-size: 0.9375rem; }
+.avatar { inline-size: 40px; block-size: 40px; border-radius: 50%; display: grid; place-items: center; flex: none; background: var(--surface-2); border: 1px solid var(--border); font-size: 0.8125rem; font-weight: 600; }
+.list { border-top: 1px solid var(--border); }
+.list a { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: 20px; align-items: center; padding: 18px 2px; border-bottom: 1px solid var(--border); text-decoration: none; }
+.list a:hover .h3 { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.list time { font-family: var(--mono); font-size: 0.8125rem; color: var(--text-faint); }
+@media (max-width: 640px) { .list a { grid-template-columns: minmax(0, 1fr) auto; } .list time { grid-column: 1 / -1; } }
+
+/* ---------- Mesh pane: the one patch of color (signature) ---------- */
+.mesh { position: relative; overflow: hidden; min-block-size: 320px; background: radial-gradient(60% 75% at 12% 18%, var(--m1), transparent 72%), radial-gradient(55% 70% at 88% 10%, var(--m2), transparent 70%), radial-gradient(70% 80% at 72% 96%, var(--m3), transparent 72%), radial-gradient(55% 65% at 18% 100%, var(--m4), transparent 70%), var(--bg-subtle); }
+.mesh::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(var(--mesh-line) 1px, transparent 1px), linear-gradient(90deg, var(--mesh-line) 1px, transparent 1px); background-size: 40px 40px; background-position: -1px -1px; }
+.mesh > * { position: relative; z-index: 1; }
+.cta .cell:first-child { display: flex; flex-direction: column; justify-content: space-between; gap: 32px; padding-block: clamp(32px, 5vw, 56px); }
+.cta .mesh { display: grid; place-items: center; padding: 32px 20px; }
+.term { inline-size: min(100%, 340px); border-radius: var(--r-card); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow-overlay); font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); }
+.term div { display: flex; gap: 10px; align-items: center; padding: 9px 14px; border-top: 1px solid var(--border); white-space: nowrap; }
+.term div:first-child { border-top: 0; color: var(--text); }
+.term b { font-weight: 400; color: var(--text); margin-left: auto; }
+
+/* ---------- Page heads, tabs, filters ---------- */
+.page-head { padding-block: clamp(56px, 8vw, 96px) clamp(36px, 5vw, 56px); border-bottom: 1px solid var(--border); }
+.page-head .h1 { margin-top: 16px; max-width: 16ch; }
+.page-head .lead { margin: 18px 0 0; }
+.page-head .btn-row { margin-top: 28px; }
+.center { text-align: center; }
+.center .h1, .center .lead { margin-inline: auto; }
+.center .btn-row { justify-content: center; }
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+.tabs [role="tab"] { position: relative; padding: 14px 18px; border: 0; background: none; color: var(--text-muted); font: inherit; font-size: 0.9375rem; font-weight: 500; cursor: pointer; white-space: nowrap; }
+.tabs [role="tab"]::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: -1px; block-size: 2px; background: var(--text); transform: scaleX(0); transition: transform var(--dur-base) var(--ease); }
+.tabs [role="tab"][aria-selected="true"] { color: var(--text); }
+.tabs [role="tab"][aria-selected="true"]::after { transform: none; }
+.tour { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr); gap: clamp(24px, 4vw, 56px); align-items: start; padding-top: 40px; }
+.tour .ticks { margin-top: 20px; }
+@media (max-width: 860px) { .tour { grid-template-columns: minmax(0, 1fr); } }
+.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 28px; }
+.filters button { min-block-size: 32px; padding: 0 12px; border-radius: var(--r-control); border: 1px solid var(--border); background: var(--bg); color: var(--text-muted); font: inherit; font-size: 0.8125rem; cursor: pointer; }
+.filters button:hover { color: var(--text); border-color: var(--border-strong); }
+.filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.filters .count { margin-left: auto; font-family: var(--mono); font-size: 0.75rem; color: var(--text-faint); }
+.empty { padding: 48px 0; color: var(--text-muted); text-align: center; }
+
+/* ---------- Pricing ---------- */
+.billing { display: inline-flex; padding: 3px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-subtle); margin-bottom: 32px; }
+.billing button { min-block-size: 32px; padding: 0 14px; border-radius: 6px; border: 0; background: transparent; color: var(--text-muted); font: inherit; font-size: 0.8125rem; font-weight: 500; cursor: pointer; }
+.billing button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: 0 0 0 1px var(--border), var(--shadow-card); }
+.plan { display: flex; flex-direction: column; background: var(--bg-subtle); }
+.plan.featured { background: var(--surface); box-shadow: inset 0 2px 0 var(--text); }
+.plan-top { display: flex; align-items: center; gap: 10px; min-block-size: 24px; }
+.plan .amount { margin: 20px 0 0; color: var(--text); font-size: 3rem; font-weight: 600; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.plan .amount small { font-family: var(--mono); font-size: 0.8125rem; font-weight: 400; letter-spacing: 0; color: var(--text-muted); margin-left: 6px; }
+.plan .per { min-block-size: 3em; margin: 12px 0 0; color: var(--text-muted); font-size: 0.9375rem; }
+.plan ul, .ticks { list-style: none; margin: 24px 0 32px; padding: 24px 0 0; border-top: 1px solid var(--border); display: grid; gap: 12px; font-size: 0.9375rem; color: var(--text-body); }
+.plan li, .ticks li { display: flex; gap: 10px; align-items: flex-start; }
+.plan li::before, .ticks li::before, .yes::before { content: ""; flex: none; display: inline-block; inline-size: 11px; block-size: 6px; margin: 7px 1px 0; border-left: 1.5px solid var(--text); border-bottom: 1.5px solid var(--text); transform: rotate(-45deg); }
+.yes::before { margin: 0 0 3px; }
+.plan .btn { margin-top: auto; align-self: flex-start; }
+.ticks { margin: 28px 0 0; padding: 0; border: 0; }
+.calc .cell { display: grid; align-content: start; gap: 24px; }
+.range { display: grid; gap: 10px; }
+.range label { display: flex; justify-content: space-between; gap: 12px; font-size: 0.875rem; font-weight: 500; }
+.range output { font-family: var(--mono); font-size: 0.8125rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+input[type="range"] { inline-size: 100%; margin: 0; accent-color: var(--accent); }
+.calc .total { margin: 0; color: var(--text); font-size: clamp(2.5rem, 2rem + 1.6vw, 3.5rem); font-weight: 600; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.total small { margin-left: 8px; font-family: var(--mono); font-size: 0.875rem; font-weight: 400; letter-spacing: 0; color: var(--text-muted); }
+.breakdown { display: grid; gap: 0; border-top: 1px solid var(--border); font-size: 0.875rem; }
+.breakdown div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.breakdown b { font-weight: 500; color: var(--text); font-family: var(--mono); font-size: 0.8125rem; }
+.table-scroll { position: relative; overflow-x: auto; }
+.compare { inline-size: 100%; min-inline-size: 620px; border-collapse: collapse; font-size: 0.9375rem; text-align: left; }
+.compare th, .compare td { padding: 14px 12px; border-bottom: 1px solid var(--border); }
+.compare thead th { font-weight: 600; }
+.compare thead th + th { text-align: center; }
+.compare tbody th { font-weight: 400; color: var(--text-muted); }
+.compare td { text-align: center; font-family: var(--mono); font-size: 0.8125rem; color: var(--text-body); }
+.faq { border-top: 1px solid var(--border); }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 2px; cursor: pointer; font-weight: 500; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary .icon { color: var(--text-faint); transition: transform var(--dur-base) var(--ease); }
+.faq details[open] summary .icon { transform: rotate(45deg); }
+.faq details p { margin: 0; padding: 0 2px 22px; color: var(--text-muted); max-width: 62ch; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: clamp(24px, 5vw, 72px); }
+@media (max-width: 860px) { .two { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Docs ---------- */
+.docs { display: grid; grid-template-columns: 232px minmax(0, 1fr) 196px; gap: clamp(24px, 4vw, 56px); padding-block: 32px 96px; }
+.doc-side, .toc { position: sticky; top: calc(var(--hh) + 24px); align-self: start; }
+.doc-side summary { display: none; }
+.search { position: relative; margin-bottom: 20px; }
+.search .icon-sm { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-faint); pointer-events: none; }
+.search .input { padding-left: 32px; padding-right: 40px; min-block-size: 36px; font-size: 0.875rem; }
+.search .kbd { position: absolute; right: 7px; top: 50%; transform: translateY(-50%); }
+.doc-nav h2 { margin: 20px 0 6px; font-family: var(--mono); font-size: 0.75rem; font-weight: 400; color: var(--text-faint); }
+.doc-nav ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+.doc-nav a { display: block; padding: 5px 10px; border-radius: var(--r-control); font-size: 0.875rem; color: var(--text-muted); text-decoration: none; }
+.doc-nav a:hover { color: var(--text); background: var(--surface-2); }
+.doc-nav a[aria-current="true"] { color: var(--text); background: var(--surface-2); font-weight: 500; }
+.crumbs { display: flex; gap: 8px; font-family: var(--mono); font-size: 0.75rem; color: var(--text-faint); }
+.prose { color: var(--text-body); }
+.prose > .h1 { margin: 12px 0 14px; }
+.prose h2 { margin: 52px 0 12px; font-size: 1.5rem; font-weight: 600; letter-spacing: -0.03em; color: var(--text); scroll-margin-top: calc(var(--hh) + 24px); }
+.prose h3 { margin: 32px 0 8px; font-size: 1.125rem; letter-spacing: -0.015em; color: var(--text); }
+.prose p, .prose li { line-height: 1.7; }
+.prose :not(pre) > code { padding: 1px 5px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--border); font-size: 0.85em; color: var(--text); }
+.prose ul, .prose ol { padding-left: 1.2em; display: grid; gap: 6px; }
+.prose a { color: var(--link); text-underline-offset: 3px; }
+.prose .code { margin: 20px 0; }
+.note { display: flex; gap: 12px; margin: 24px 0; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--bg-subtle); font-size: 0.9375rem; }
+.note .icon { margin-top: 3px; color: var(--text); }
+.note p { margin: 0; }
+.ref { inline-size: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.ref th, .ref td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+.ref thead th { font-family: var(--mono); font-size: 0.75rem; font-weight: 400; color: var(--text-faint); }
+.ref td:first-child { white-space: nowrap; }
+.pager { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 56px; }
+.pager a { display: grid; gap: 4px; padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--r-card); text-decoration: none; color: var(--text); }
+.pager a:hover { border-color: var(--border-strong); }
+.pager a:last-child { text-align: right; }
+.pager span { font-family: var(--mono); font-size: 0.75rem; color: var(--text-faint); }
+.helpful { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--text-muted); }
+.toc h2 { margin: 0 0 10px; font-family: var(--mono); font-size: 0.75rem; font-weight: 400; color: var(--text-faint); }
+.toc ul { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 1px solid var(--border); display: grid; gap: 8px; font-size: 0.8125rem; }
+.toc a { color: var(--text-muted); text-decoration: none; }
+.toc a:hover { color: var(--text); }
+@media (max-width: 1100px) { .docs { grid-template-columns: 220px minmax(0, 1fr); } .toc { display: none; } }
+@media (max-width: 860px) {
+  .docs { grid-template-columns: minmax(0, 1fr); padding-top: 20px; }
+  .doc-side { position: static; border: 1px solid var(--border); border-radius: var(--r-card); padding: 0 14px; }
+  .doc-side summary { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; cursor: pointer; font-weight: 500; list-style: none; }
+  .doc-side summary::-webkit-details-marker { display: none; }
+  .doc-side[open] summary { border-bottom: 1px solid var(--border); margin-bottom: 14px; }
+  .doc-side .doc-nav { padding-bottom: 14px; }
+}
+
+/* ---------- Changelog ---------- */
+.log { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px; padding-block: 44px; border-top: 1px solid var(--border); }
+.log > div { min-inline-size: 0; }
+.log aside { position: sticky; top: calc(var(--hh) + 24px); align-self: start; display: grid; gap: 10px; justify-items: start; }
+.log time { font-family: var(--mono); font-size: 0.8125rem; color: var(--text-muted); }
+.log h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 12px; }
+.log p, .log li { color: var(--text-body); }
+.log ul { padding-left: 1.2em; margin: 0; display: grid; gap: 6px; }
+.log .code, .log .mini { margin: 20px 0; }
+@media (max-width: 760px) { .log { grid-template-columns: minmax(0, 1fr); gap: 12px; } .log aside { position: static; display: flex; align-items: center; } }
+
+/* ---------- Blog and post ---------- */
+.card { display: flex; flex-direction: column; text-decoration: none; background: var(--bg); transition: background-color var(--dur-fast) var(--ease); }
+.card:hover { background: var(--bg-subtle); }
+.cover { display: grid; place-items: center; aspect-ratio: 16 / 9; border-bottom: 1px solid var(--border); background-color: var(--bg-subtle); background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 24px 24px; background-position: center; font-family: var(--mono); font-size: clamp(1.25rem, 1rem + 1.2vw, 2rem); letter-spacing: -0.04em; color: var(--text); text-align: center; padding: 16px; }
+.cover small { display: block; margin-top: 6px; font-size: 0.75rem; letter-spacing: 0; color: var(--text-faint); }
+.card-body { display: grid; gap: 10px; padding: 20px 22px 26px; }
+.card-body p { margin: 0; color: var(--text-muted); font-size: 0.9375rem; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 12px; font-family: var(--mono); font-size: 0.75rem; color: var(--text-faint); }
+.card.featured-post { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+.featured-post .cover { aspect-ratio: auto; min-block-size: 300px; border-bottom: 0; border-right: 1px solid var(--border); font-size: clamp(2rem, 1.4rem + 2.4vw, 3.5rem); }
+.featured-post .card-body { align-content: center; padding: clamp(24px, 4vw, 48px); }
+.featured-post .card-body .h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); }
+@media (max-width: 760px) { .card.featured-post { grid-template-columns: minmax(0, 1fr); } .featured-post .cover { min-block-size: 200px; border-right: 0; border-bottom: 1px solid var(--border); } }
+.article { padding-block: clamp(40px, 6vw, 72px) 80px; }
+.article .h1 { margin: 16px 0 24px; font-size: clamp(2rem, 1.5rem + 2vw, 3rem); }
+.byline { display: flex; align-items: center; gap: 12px; padding-block: 20px; border-block: 1px solid var(--border); margin-bottom: 36px; font-size: 0.9375rem; }
+.figure { margin: 32px 0; border: 1px solid var(--border); border-radius: var(--r-card); overflow: hidden; }
+.figure svg { inline-size: 100%; block-size: auto; color: var(--text); font-family: var(--mono); }
+.figure figcaption { padding: 10px 14px; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 0.75rem; color: var(--text-faint); }
+.pull { margin: 32px 0; padding-left: 20px; border-left: 2px solid var(--text); font-size: 1.25rem; font-weight: 500; letter-spacing: -0.02em; color: var(--text); line-height: 1.4; }
+
+/* ---------- Forms ---------- */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 88px); align-items: start; }
+@media (max-width: 860px) { .split { grid-template-columns: minmax(0, 1fr); } }
+.form-card { padding: clamp(22px, 3.5vw, 32px); border: 1px solid var(--border); border-radius: var(--r-media); background: var(--surface); box-shadow: var(--shadow-overlay); }
+.form-grid { display: grid; gap: 6px; }
+.form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
+@media (max-width: 560px) { .form-row { grid-template-columns: minmax(0, 1fr); } }
+.field { display: grid; gap: 6px; align-content: start; }
+.field label { font-size: 0.8125rem; font-weight: 500; color: var(--text-body); }
+.input, .select, .textarea { inline-size: 100%; min-block-size: 40px; padding: 8px 12px; border-radius: var(--r-control); border: 1px solid var(--border-strong); background: var(--bg); color: var(--text); font: inherit; font-size: 0.9375rem; transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+.textarea { min-block-size: 120px; resize: vertical; }
+.input::placeholder, .textarea::placeholder { color: var(--text-faint); }
+.input:hover, .select:hover, .textarea:hover { border-color: var(--text-faint); }
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--text); box-shadow: 0 0 0 3px color-mix(in oklch, var(--focus) 26%, transparent); }
+.input[aria-invalid="true"], .textarea[aria-invalid="true"] { border-color: var(--danger); }
+/* Errors take a reserved line under each field, so the submit button never moves when one appears */
+.error { min-block-size: 1.35em; font-size: 0.8125rem; line-height: 1.35; color: var(--danger); }
+.form-grid > .btn { margin-top: 10px; }
+.fine { margin: 12px 0 0; font-size: 0.8125rem; color: var(--text-muted); }
+.success { display: flex; gap: 12px; align-items: flex-start; padding: 18px; border-radius: var(--r-card); border: 1px solid var(--border); background: var(--bg-subtle); }
+.success .icon { margin-top: 3px; color: var(--success); }
+.success p { margin: 4px 0 0; color: var(--text-muted); }
+.inline-form { display: flex; gap: 8px; align-items: flex-start; }
+.inline-form .field { flex: 1; }
+
+/* ---------- Legal, 404 ---------- */
+.legal { padding-block: clamp(56px, 8vw, 96px); }
+.legal h2 { font-size: 1.125rem; letter-spacing: -0.015em; margin: 36px 0 8px; }
+.legal p { color: var(--text-body); }
+.notfound { padding-block: clamp(80px, 12vw, 160px); }
+.notfound .code404 { font-family: var(--mono); font-size: 0.875rem; color: var(--text-muted); }
+
+/* ---------- Footer ---------- */
+.site-footer { border-top: 1px solid var(--border); padding-block: 56px 32px; font-size: 0.875rem; background: var(--bg); }
+.footer-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(4, minmax(0, 1fr)); gap: 32px; }
+.footer-grid h2 { font-size: 0.875rem; font-weight: 500; margin-bottom: 14px; }
+.footer-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.footer-grid a:not(.brand) { color: var(--text-muted); text-decoration: none; }
+.footer-grid a:not(.brand):hover { color: var(--text); }
+.footer-news { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 24px; align-items: start; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+.footer-news .success { padding: 12px 14px; }
+.footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 32px; color: var(--text-faint); font-family: var(--mono); font-size: 0.75rem; }
+.status { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); }
+@media (max-width: 860px) { .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .footer-grid > :first-child { grid-column: 1 / -1; } .footer-news { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Motion: keyframes on entry, never transitions on a class added at load ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+.js .enter { animation: rise var(--dur-slow) var(--ease) both; animation-delay: calc(var(--i, 0) * 70ms); }
+.js .reveal:not(.is-in) { opacity: 0; }
+.js .reveal.is-in { animation: rise var(--dur-slow) var(--ease) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .cursor { animation: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#/" aria-label="Plinth home"><svg aria-hidden="true"><use href="#mark"/></svg>Plinth</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/features">Features</a>
+      <a href="#/docs">Docs</a>
+      <a href="#/pricing">Pricing</a>
+      <a href="#/changelog">Changelog</a>
+      <a href="#/blog">Blog</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to dark theme"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="btn btn-secondary btn-sm hide-sm" href="#/contact">Book a demo</a>
+      <a class="btn btn-primary btn-sm" href="#/signup">Start free</a>
+      <button class="icon-btn menu-btn" type="button" id="menu-open" aria-label="Open menu" aria-controls="menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<dialog class="sheet" id="menu" aria-label="Menu">
+  <div class="sheet-inner">
+    <div class="sheet-top"><span class="brand"><svg aria-hidden="true"><use href="#mark"/></svg>Plinth</span><button class="icon-btn" type="button" id="menu-close" aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <a href="#/features">Features</a><a href="#/docs">Docs</a><a href="#/pricing">Pricing</a><a href="#/changelog">Changelog</a><a href="#/blog">Blog</a><a href="#/contact">Contact</a>
+    <a class="btn btn-primary btn-lg" href="#/signup">Start free</a>
+    <a class="btn btn-secondary btn-lg" href="#/contact">Book a demo</a>
+  </div>
+</dialog>
+
+<main id="main" tabindex="-1">
+
+<!-- ===================== HOME ===================== -->
+<div data-view="home">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <a class="pill enter" href="#/changelog" style="--i:0"><span class="badge solid">New</span>Test splitting for monorepos<svg class="icon icon-sm go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <h1 class="display enter" style="--i:1">Ship on green, not on retries.</h1>
+        </div>
+        <div class="enter" style="--i:2">
+          <p class="lead">Plinth watches every CI run, flags the tests that fail at random, quarantines them before they block a merge and splits your suite so it finishes in minutes.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary btn-lg" href="#/signup">Start free</a>
+            <a class="btn btn-secondary btn-lg" href="#/docs">Read the docs</a>
+          </div>
+          <div class="install"><code><span class="prompt">$ </span>npx plinth init<span class="cursor" aria-hidden="true"></span></code><button class="icon-btn" type="button" data-copy="npx plinth init" aria-label="Copy install command"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-copy"/></svg></button></div>
+        </div>
+      </div>
+
+      <div class="stage enter" style="--i:3">
+        <div class="window fade" role="img" aria-label="The Plinth dashboard for a repository: pass rate, flaky and quarantined test counts, median run time, and a list of flaky tests with their last 30 runs">
+          <div class="window-bar" aria-hidden="true"><svg><use href="#mark"/></svg><b>plinth</b><span class="sep">/</span>storefront<span class="sep">/</span><b>Flaky tests</b><span class="end"><span class="st"><svg class="icon icon-sm"><use href="#i-branch"/></svg>main</span><span class="st">Last 30 days</span></span></div>
+          <div class="app" aria-hidden="true">
+            <div class="app-side">
+              <span><svg class="icon icon-sm"><use href="#i-grid"/></svg>Overview</span>
+              <span><svg class="icon icon-sm"><use href="#i-play"/></svg>Runs<em>1,284</em></span>
+              <span class="on"><svg class="icon icon-sm"><use href="#i-flake"/></svg>Flaky tests<em>14</em></span>
+              <span><svg class="icon icon-sm"><use href="#i-shield"/></svg>Quarantine<em>3</em></span>
+              <span><svg class="icon icon-sm"><use href="#i-split"/></svg>Shards</span>
+              <span><svg class="icon icon-sm"><use href="#i-users"/></svg>Owners</span>
+              <span><svg class="icon icon-sm"><use href="#i-gear"/></svg>Settings</span>
+            </div>
+            <div class="app-main">
+              <div class="app-title"><strong>Flaky tests</strong><span class="btn btn-secondary btn-sm">Export</span></div>
+              <div class="kpis">
+                <div class="kpi"><span>Pass rate</span><strong>99.2%</strong><small>+1.8 pts</small></div>
+                <div class="kpi"><span>Flaky tests</span><strong>14</strong><small>−6 this week</small></div>
+                <div class="kpi"><span>Quarantined</span><strong>3</strong><small>41 merges unblocked</small></div>
+                <div class="kpi"><span>Median run</span><strong>6m 12s</strong><small>−38%</small></div>
+              </div>
+              <div class="table">
+                <div class="tr th"><span>Test</span><span>Suite</span><span>Flake rate</span><span>Last 30 runs</span><span>Status</span></div>
+                <div class="tr on"><span class="t">checkout › applies coupon at total</span><span class="m">e2e/checkout</span><span class="m">18.4%</span><span class="strip" data-strip="ppfpppppfpppfpppppppfppppfpppp"></span><span class="st"><span class="dot off"></span>Quarantined</span></div>
+                <div class="tr"><span class="t">auth › refreshes an expired session</span><span class="m">api/auth</span><span class="m">6.1%</span><span class="strip" data-strip="pppppppppfppppppppppppfppppppp"></span><span class="st"><span class="dot warn"></span>Flaky</span></div>
+                <div class="tr"><span class="t">upload › resumes after a dropped connection</span><span class="m">e2e/upload</span><span class="m">11.0%</span><span class="strip" data-strip="pppfppppppppfppppppfpppppppppf"></span><span class="st"><span class="dot bad"></span>Failing now</span></div>
+                <div class="tr"><span class="t">billing › prorates a mid-cycle upgrade</span><span class="m">unit/billing</span><span class="m">0.0%</span><span class="strip" data-strip="pppppppppppppppppppppppppppppp"></span><span class="st"><span class="dot ok"></span>Fixed</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Customers" style="padding-block:8px 0">
+    <div class="wrap">
+      <p class="eyebrow" style="margin:0 0 20px">Trusted by teams who merge fifty times a day</p>
+      <div class="cells c6 logos cross"><span class="cell">Wrenfield</span><span class="cell">tinmouth</span><span class="cell">PALLASYNC</span><span class="cell">Brackwater</span><span class="cell">Halden</span><span class="cell">Quorra</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">01 <b>Features</b></span>
+        <h2 class="h2">Every red build, sorted in seconds.</h2>
+        <p class="lead">Most failures you see in CI are not new bugs. Plinth tells the two apart, so your team fixes real breaks and stops rerunning the rest.</p>
+      </div>
+      <div class="cells c3 cross">
+        <div class="cell feature reveal">
+          <svg class="icon" aria-hidden="true"><use href="#i-flake"/></svg>
+          <h3 class="h3">Flake detection</h3>
+          <p>Every test gets a flake rate from its recent history, so a red build tells you whether to fix it or ignore it.</p>
+          <div class="vig mini" aria-hidden="true">
+            <div class="mini-row"><span class="t">checkout › applies coupon</span><span class="strip" data-strip="ppfppppfpppfpp"></span></div>
+            <div class="mini-row"><span class="t">auth › refreshes session</span><span class="strip" data-strip="ppppppfppppppp"></span></div>
+            <div class="mini-row"><span class="t">billing › prorates upgrade</span><span class="strip" data-strip="pppppppppppppp"></span></div>
+          </div>
+        </div>
+        <div class="cell feature reveal">
+          <svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>
+          <h3 class="h3">Quarantine, not retries</h3>
+          <p>Known-flaky tests keep running and reporting, but they stop blocking merges until someone fixes them.</p>
+          <div class="vig mini comment" aria-hidden="true">
+            <div class="who"><svg><use href="#mark"/></svg>plinth bot commented on #4821</div>
+            <p>2 failures are known flakes and were quarantined. 1 failure is new: <code class="mono">upload › resumes</code>.</p>
+            <span class="st"><span class="dot ok"></span>Merge unblocked</span>
+          </div>
+        </div>
+        <div class="cell feature reveal">
+          <svg class="icon" aria-hidden="true"><use href="#i-split"/></svg>
+          <h3 class="h3">Suite splitting</h3>
+          <p>Test files are balanced across runners by their real durations, so every shard finishes within seconds of the others.</p>
+          <div class="vig bars" aria-hidden="true">
+            <div><span>shard 1</span><i style="inline-size:96%"></i><span>6m 08s</span></div>
+            <div><span>shard 2</span><i style="inline-size:98%"></i><span>6m 12s</span></div>
+            <div><span>shard 3</span><i style="inline-size:95%"></i><span>6m 04s</span></div>
+            <div><span>shard 4</span><i style="inline-size:97%"></i><span>6m 10s</span></div>
+          </div>
+        </div>
+        <div class="cell feature reveal">
+          <svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg>
+          <h3 class="h3">Failure grouping</h3>
+          <p>Two hundred red tests from one broken fixture become one issue with one stack trace.</p>
+<pre class="vig mini trace" aria-hidden="true"><span class="hl">TimeoutError: inventory not ready</span>  at seedCart (fixtures/cart.ts:42)
+  at beforeEach (e2e/checkout.spec.ts:18)
+<span class="c">+ 211 tests with the same cause</span></pre>
+        </div>
+        <div class="cell feature reveal">
+          <svg class="icon" aria-hidden="true"><use href="#i-users"/></svg>
+          <h3 class="h3">Owners and alerts</h3>
+          <p>Map folders to teams. The right channel hears about a new flake, and nobody else does.</p>
+          <div class="vig mini" aria-hidden="true">
+            <div class="mini-row mono"><span class="t">e2e/checkout/**</span><span class="badge">payments</span></div>
+            <div class="mini-row mono"><span class="t">api/auth/**</span><span class="badge">identity</span></div>
+            <div class="mini-row mono"><span class="t">e2e/search/**</span><span class="badge">discovery</span></div>
+          </div>
+        </div>
+        <div class="cell feature reveal">
+          <svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>
+          <h3 class="h3">Any runner, any framework</h3>
+          <p>Plinth reads the report your tests already write. No plugin per framework, no agent on your machines.</p>
+          <div class="vig chips" aria-hidden="true"><span>JUnit XML</span><span>TAP</span><span>JSON</span><span>CTRF</span><span>xUnit</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section line" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">02 <b>Setup</b></span>
+        <h2 class="h2">One command, then one step in CI.</h2>
+      </div>
+      <div class="cells c3 cross">
+        <div class="cell step reveal"><span class="mono">01</span><h3 class="h3">Install the CLI</h3><p><code class="mono">plinth init</code> writes a config file and asks for a project token.</p></div>
+        <div class="cell step reveal"><span class="mono">02</span><h3 class="h3">Upload your reports</h3><p>Add one step after your tests. Plinth reads the report files and never your source code.</p></div>
+        <div class="cell step reveal"><span class="mono">03</span><h3 class="h3">Turn on quarantine</h3><p>Choose the branches and the flake rate that count. Everything else keeps blocking as before.</p></div>
+      </div>
+      <div class="code reveal" data-tabs>
+        <div class="code-bar">
+          <div role="tablist" aria-label="Setup example"><button type="button" role="tab" id="t-ci" aria-selected="true" aria-controls="p-ci">ci.yml</button><button type="button" role="tab" id="t-sh" aria-selected="false" aria-controls="p-sh" tabindex="-1">Shell</button><button type="button" role="tab" id="t-js" aria-selected="false" aria-controls="p-js" tabindex="-1">Node SDK</button></div>
+          <button class="icon-btn copy" type="button" data-copy aria-label="Copy code"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-copy"/></svg></button>
+        </div>
+<pre id="p-ci" role="tabpanel" aria-labelledby="t-ci" tabindex="0"><span class="c"># after your test step</span>
+<span class="k">- name:</span> Upload test reports
+  <span class="k">if:</span> always()
+  <span class="k">run:</span> npx plinth upload <span class="s">"reports/**/*.xml"</span> --shard <span class="s">${SHARD}</span>
+  <span class="k">env:</span>
+    <span class="k">PLINTH_TOKEN:</span> <span class="s">${{ secrets.PLINTH_TOKEN }}</span></pre>
+<pre id="p-sh" role="tabpanel" aria-labelledby="t-sh" tabindex="0" hidden><span class="c"># split the suite into 4 shards by recorded duration</span>
+<span class="f">npx</span> plinth split --shards 4 --index <span class="s">$SHARD</span> <span class="s">"tests/**/*.spec.ts"</span>
+<span class="c"># → tests/checkout.spec.ts tests/search.spec.ts …</span></pre>
+<pre id="p-js" role="tabpanel" aria-labelledby="t-js" tabindex="0" hidden><span class="k">import</span> { Plinth } <span class="k">from</span> <span class="s">"@plinth/sdk"</span>;
+
+<span class="k">const</span> plinth = <span class="k">new</span> <span class="f">Plinth</span>(process.env.PLINTH_TOKEN);
+<span class="k">const</span> flaky = <span class="k">await</span> plinth.tests.<span class="f">list</span>({ status: <span class="s">"flaky"</span>, branch: <span class="s">"main"</span> });</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="section line">
+    <div class="wrap">
+      <div class="cells c3 cross">
+        <div class="cell stat reveal"><strong>38%</strong><span>shorter CI runs after splitting, median across Team workspaces</span></div>
+        <div class="cell stat reveal"><strong>9 in 10</strong><span>red builds on main traced to a known flake, not a new bug</span></div>
+        <div class="cell stat reveal"><strong>4 min</strong><span>from <code class="mono">plinth init</code> to the first report</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section line">
+    <div class="wrap">
+      <figure class="quote reveal">
+        <blockquote>“We deleted our retry script the week we turned on quarantine. Main has been green for forty-one days, and when it goes red now, it means something.”</blockquote>
+        <figcaption><span class="avatar">ML</span><span><strong>Mara Lindqvist</strong><br><span class="muted">Staff Engineer, Wrenfield</span></span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section line">
+    <div class="wrap">
+      <div class="section-head head-row">
+        <div><span class="eyebrow">03 <b>Changelog</b></span><h2 class="h2">Shipped this month.</h2></div>
+        <a class="btn btn-secondary" href="#/changelog">All updates<svg class="icon icon-sm go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="list">
+        <a href="#monorepos"><time datetime="2026-11-18">Nov 18, 2026</time><span class="h3">Test splitting for monorepos</span><svg class="icon icon-sm go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a href="#infra-failures"><time datetime="2026-11-11">Nov 11, 2026</time><span class="h3">Flake rate ignores infrastructure failures</span><svg class="icon icon-sm go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a href="#owners-file"><time datetime="2026-11-04">Nov 4, 2026</time><span class="h3">Owners from a paths file</span><svg class="icon icon-sm go" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section line" id="start">
+    <div class="wrap">
+      <div class="cells c2 cta cross">
+        <div class="cell">
+          <div><h2 class="h2">Make main boring again.</h2><p class="lead" style="margin-top:16px">Free for one project and for open source. The Team trial runs on your real CI for fourteen days.</p></div>
+          <div class="btn-row"><a class="btn btn-primary btn-lg" href="#/signup">Start free</a><a class="btn btn-secondary btn-lg" href="#/contact">Talk to an engineer</a></div>
+        </div>
+        <div class="cell mesh" aria-hidden="true">
+          <div class="term">
+            <div><span>$ plinth upload reports/</span></div>
+            <div><span class="dot ok"></span>1,284 tests read<b>0.8s</b></div>
+            <div><span class="dot warn"></span>2 known flakes quarantined<b>#4821</b></div>
+            <div><span class="dot ok"></span>main is green<b>merge ready</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== FEATURES ===================== -->
+<div data-view="features">
+  <section class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Product</span>
+      <h1 class="h1">Know why the build is red before you open the log.</h1>
+      <p class="lead">Plinth reads every test report from every run, keeps the history and tells you which failures to fix and which to quarantine.</p>
+      <div class="btn-row"><a class="btn btn-primary" href="#/signup">Start free</a><a class="btn btn-secondary" href="#/docs">Quickstart</a></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:24px">
+    <div class="wrap" data-tabs>
+      <div class="tabs" role="tablist" aria-label="Product tour">
+        <button type="button" role="tab" id="tt-detect" aria-selected="true" aria-controls="tp-detect">Detect</button>
+        <button type="button" role="tab" id="tt-quarantine" aria-selected="false" aria-controls="tp-quarantine" tabindex="-1">Quarantine</button>
+      </div>
+      <div class="tour" role="tabpanel" id="tp-detect" aria-labelledby="tt-detect">
+        <div>
+          <h2 class="h2">A flake rate for every test.</h2>
+          <p class="lead" style="margin-top:14px">Plinth compares each result with the same test on the same commit. A test that passes and fails without a code change is flaky, and you see exactly when it started.</p>
+          <ul class="ticks"><li>Rates per branch, suite and runner</li><li>The commit where flaking began</li><li>Infrastructure failures left out</li></ul>
+        </div>
+        <div class="window" role="img" aria-label="Detail of one flaky test: flake rate 18.4 percent, first flaked on November 2, and its last runs">
+          <div class="window-bar" aria-hidden="true"><b>checkout › applies coupon at total</b><span class="end"><span class="st"><span class="dot warn"></span>Flaky</span></span></div>
+          <div class="app-main" aria-hidden="true">
+            <div class="kpis" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="kpi"><span>Flake rate</span><strong>18.4%</strong></div><div class="kpi"><span>First flaked</span><strong>Nov 2</strong></div><div class="kpi"><span>Runs</span><strong>412</strong></div></div>
+            <div class="table r3">
+              <div class="tr th"><span>Run</span><span>Message</span><span>Result</span></div>
+              <div class="tr"><span class="m">#4821</span><span class="t">Expected total 42.00, received 45.00</span><span class="st"><span class="dot bad"></span>failed</span></div>
+              <div class="tr"><span class="m">#4820</span><span class="t">Same commit, retried</span><span class="st"><span class="dot ok"></span>passed</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tour" role="tabpanel" id="tp-quarantine" aria-labelledby="tt-quarantine" hidden>
+        <div>
+          <h2 class="h2">Unblock the merge, keep the signal.</h2>
+          <p class="lead" style="margin-top:14px">Quarantined tests still run and still report. Their failures stop blocking pull requests, and the owner gets an issue instead.</p>
+          <ul class="ticks"><li>Rules by flake rate and branch</li><li>Folders that are never quarantined</li><li>Automatic release after 50 clean runs</li></ul>
+        </div>
+        <div class="window" role="img" aria-label="Quarantine rules: quarantine above a 5 percent flake rate on main, never quarantine payment tests, release after 50 clean runs">
+          <div class="window-bar" aria-hidden="true"><b>Quarantine rules</b><span class="end"><span class="st">3 active</span></span></div>
+          <div class="mini rules" aria-hidden="true">
+            <div class="mini-row"><span class="t">Quarantine when flake rate is above <b>5%</b> over 50 runs on <b>main</b></span><span class="st"><span class="dot ok"></span>On</span></div>
+            <div class="mini-row"><span class="t">Never quarantine tests in <code class="mono">payments/**</code></span><span class="st"><span class="dot ok"></span>On</span></div>
+            <div class="mini-row"><span class="t">Release a test after 50 clean runs in a row</span><span class="st"><span class="dot ok"></span>On</span></div>
+            <div class="mini-row"><span class="t">Open an issue for the folder owner</span><span class="st"><span class="dot off"></span>Off</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section line center">
+    <div class="wrap">
+      <h2 class="h2">Try it on last week's runs.</h2>
+      <p class="lead" style="margin:16px auto 0">Upload a few old reports and see your flake rates in minutes.</p>
+      <div class="btn-row" style="margin-top:28px"><a class="btn btn-primary btn-lg" href="#/signup">Start free</a><a class="btn btn-secondary btn-lg" href="#/pricing">See pricing</a></div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== PRICING ===================== -->
+<div data-view="pricing">
+  <section class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Pricing</span>
+      <h1 class="h1">Pay per seat. Runs are on us up to a point.</h1>
+      <p class="lead">Every plan includes flake detection and unlimited test results. Start free, upgrade when your team does.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:48px">
+    <div class="wrap">
+      <div class="billing" role="group" aria-label="Billing period"><button type="button" aria-pressed="false" data-billing="monthly">Monthly</button><button type="button" aria-pressed="true" data-billing="yearly">Yearly, save 2 months</button></div>
+      <div class="cells c3 cross">
+        <div class="cell plan" data-plan="hobby">
+          <div class="plan-top"><h2 class="h3">Hobby</h2></div>
+          <p class="amount">$0</p>
+          <p class="per">For side projects and open source. One project, one person.</p>
+          <ul><li>1,000 CI runs a month</li><li>Flake detection</li><li>14 days of history</li></ul>
+          <a class="btn btn-secondary" href="#/signup?plan=hobby">Start free</a>
+        </div>
+        <div class="cell plan featured" data-plan="team">
+          <div class="plan-top"><h2 class="h3">Team</h2><span class="badge">Popular</span></div>
+          <p class="amount"><span data-monthly="$24" data-yearly="$20">$20</span><small>/seat/mo</small></p>
+          <p class="per" data-monthly="Billed monthly. 25,000 CI runs included, then $2 per 1,000." data-yearly="Billed yearly. 25,000 CI runs included, then $2 per 1,000.">Billed yearly. 25,000 CI runs included, then $2 per 1,000.</p>
+          <ul><li>Unlimited projects</li><li>Quarantine and suite splitting</li><li>Owners and alerts</li><li>90 days of history</li></ul>
+          <a class="btn btn-primary" href="#/signup?plan=team">Start a 14-day trial</a>
+        </div>
+        <div class="cell plan" data-plan="enterprise">
+          <div class="plan-top"><h2 class="h3">Enterprise</h2></div>
+          <p class="amount">Custom</p>
+          <p class="per">For larger teams with security reviews and audit needs.</p>
+          <ul><li>Everything in Team</li><li>Single sign-on and audit log</li><li>One year of history</li><li>A named engineer to talk to</li></ul>
+          <a class="btn btn-secondary" href="#/contact?topic=enterprise">Talk to sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section line" id="estimate">
+    <div class="wrap">
+      <div class="section-head"><span class="eyebrow">Estimate</span><h2 class="h2">What Team would cost you.</h2></div>
+      <div class="cells c2 calc cross">
+        <div class="cell">
+          <div class="range"><label for="seats">Seats <output id="seats-out" for="seats">12</output></label><input type="range" id="seats" min="1" max="100" value="12"></div>
+          <div class="range"><label for="runs">CI runs a month <output id="runs-out" for="runs">40,000</output></label><input type="range" id="runs" min="1000" max="200000" step="1000" value="40000"></div>
+          <p class="muted" style="margin:0;font-size:0.875rem">A CI run is one pipeline that uploads at least one report, however many tests it contains.</p>
+        </div>
+        <div class="cell" aria-live="polite">
+          <span class="eyebrow" id="est-label">Team, billed yearly</span>
+          <p class="total"><span id="est-total">$270</span><small>/month</small></p>
+          <div class="breakdown"><div>Seats<b id="est-seats">12 × $20</b></div><div>Runs over 25,000<b id="est-runs">15 × $2</b></div><div>Hobby fits<b id="est-hobby">No</b></div></div>
+          <a class="btn btn-primary" href="#/signup?plan=team" style="justify-self:start">Start a 14-day trial</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section line">
+    <div class="wrap">
+      <div class="section-head"><h2 class="h2">Compare plans</h2></div>
+      <div class="table-scroll">
+        <table class="compare">
+          <caption class="sr-only">Features by plan</caption>
+          <thead><tr><th scope="col">Feature</th><th scope="col">Hobby</th><th scope="col">Team</th><th scope="col">Enterprise</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">CI runs included</th><td>1,000</td><td>25,000</td><td>Custom</td></tr>
+            <tr><th scope="row">History</th><td>14 days</td><td>90 days</td><td>1 year</td></tr>
+            <tr><th scope="row">Flake detection</th><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Quarantine</th><td>—</td><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Suite splitting</th><td>—</td><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Single sign-on</th><td>—</td><td>—</td><td class="yes"><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Support</th><td>Community</td><td>Email</td><td>Named engineer</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section line" id="faq">
+    <div class="wrap two">
+      <div><span class="eyebrow">FAQ</span><h2 class="h2" style="margin-top:14px">Questions</h2></div>
+      <div class="faq">
+        <details><summary>What counts as a seat?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Anyone who signs in to the dashboard. Bots, CI jobs and people who only read pull request comments are free.</p></details>
+        <details><summary>What happens if we go over the included runs?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Nothing stops. Extra runs are billed at $2 per 1,000 at the end of the month, and you can set a cap in settings.</p></details>
+        <details><summary>Is it free for open source?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Yes. Public repositories get the Team plan at no cost. Write to us with a link to the project.</p></details>
+        <details><summary>Can we keep our data in one region?<svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></summary><p>Enterprise workspaces choose a data region when they are created. Reports never leave it.</p></details>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== DOCS ===================== -->
+<div data-view="docs">
+  <div class="wrap docs">
+    <details class="doc-side" open>
+      <summary>Documentation menu<svg class="icon icon-sm" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+      <div class="search"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-search"/></svg><label class="sr-only" for="doc-q">Search the docs</label><input class="input" id="doc-q" type="search" placeholder="Search docs" autocomplete="off"><span class="kbd" aria-hidden="true">/</span></div>
+      <nav class="doc-nav" aria-label="Documentation">
+        <h2>Getting started</h2>
+        <ul><li><a href="#quickstart" aria-current="true" data-k="intro start overview">Quickstart</a></li><li><a href="#install" data-k="cli npm binary">Install the CLI</a></li><li><a href="#upload" data-k="reports junit xml ci pipeline">Upload reports</a></li></ul>
+        <h2>Concepts</h2>
+        <ul><li><a href="#flake-rate" data-k="flaky detection history">Flake rate</a></li><li><a href="#quarantine" data-k="rules block merge">Quarantine</a></li><li><a href="#split" data-k="shards parallel duration">Test splitting</a></li></ul>
+        <h2>Reference</h2>
+        <ul><li><a href="#cli" data-k="commands flags">CLI</a></li><li><a href="#config" data-k="yaml settings file">Config file</a></li><li><a href="#api" data-k="rest http token sdk">REST API</a></li></ul>
+        <p class="muted" id="doc-empty" style="font-size:0.875rem;margin:16px 10px 0" hidden>No pages match. Try “quarantine” or “cli”.</p>
+      </nav>
+    </details>
+
+    <article class="prose">
+      <div class="crumbs"><span>Docs</span><span>/</span><span>Getting started</span></div>
+      <h1 class="h1" id="quickstart" style="font-size:clamp(2rem,1.5rem + 1.8vw,2.75rem)">Quickstart</h1>
+      <p class="lead">Connect a repository, upload your first report and see flake rates in about five minutes.</p>
+
+      <h2 id="install">Install the CLI</h2>
+      <p>The CLI is a single binary. Run it with <code>npx</code>, or install it once on your runners.</p>
+      <div class="code" data-tabs>
+        <div class="code-bar">
+          <div role="tablist" aria-label="Install method"><button type="button" role="tab" id="d-npx" aria-selected="true" aria-controls="dp-npx">npx</button><button type="button" role="tab" id="d-bin" aria-selected="false" aria-controls="dp-bin" tabindex="-1">Binary</button></div>
+          <button class="icon-btn copy" type="button" data-copy aria-label="Copy code"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-copy"/></svg></button>
+        </div>
+<pre id="dp-npx" role="tabpanel" aria-labelledby="d-npx" tabindex="0"><span class="f">npx</span> plinth init</pre>
+<pre id="dp-bin" role="tabpanel" aria-labelledby="d-bin" tabindex="0" hidden><span class="f">curl</span> -fsSL https://get.plinth.example/install.sh | sh
+<span class="f">plinth</span> init</pre>
+      </div>
+      <p><code>plinth init</code> asks for a project token, writes <code>plinth.yml</code> and prints the step to add to your pipeline.</p>
+
+      <h2 id="upload">Upload reports</h2>
+      <p>Add one step after your tests. Run it even when tests fail, or Plinth only sees the green runs.</p>
+      <div class="code"><div class="code-bar"><span class="file">ci.yml</span><button class="icon-btn copy" type="button" data-copy aria-label="Copy code"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-copy"/></svg></button></div>
+<pre tabindex="0"><span class="k">- name:</span> Upload test reports
+  <span class="k">if:</span> always()
+  <span class="k">run:</span> npx plinth upload <span class="s">"reports/**/*.xml"</span></pre></div>
+      <div class="note"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg><p>Plinth stores test names, durations and failure messages. It never reads your source code, environment variables or build artifacts.</p></div>
+
+      <h2 id="flake-rate">Flake rate</h2>
+      <p>A test is flaky when it passes and fails on the same commit. Its flake rate is the share of its last 50 runs on a branch that failed and then passed without a code change.</p>
+      <ul><li>Runner failures, such as lost connections or out-of-memory kills, do not count.</li><li>Each branch has its own rate, so experiments on a feature branch never affect main.</li></ul>
+
+      <h2 id="quarantine">Quarantine</h2>
+      <p>A quarantined test still runs and still reports. Its failures are marked as known and no longer fail the pipeline. Quarantine is off until you turn it on for a branch.</p>
+
+      <h2 id="split">Test splitting</h2>
+      <p>Pass the shard count and index, and Plinth prints the files that shard should run, balanced by recorded duration.</p>
+
+      <h2 id="cli">CLI reference</h2>
+      <div class="table-scroll">
+        <table class="ref">
+          <thead><tr><th scope="col">Command</th><th scope="col">What it does</th></tr></thead>
+          <tbody>
+            <tr><td><code>plinth init</code></td><td>Creates <code>plinth.yml</code> and stores the project token.</td></tr>
+            <tr><td><code>plinth upload &lt;glob&gt;</code></td><td>Uploads report files. Add <code>--shard</code> when running in parallel.</td></tr>
+            <tr><td><code>plinth split</code></td><td>Prints the test files for one shard. Needs <code>--shards</code> and <code>--index</code>.</td></tr>
+            <tr><td><code>plinth quarantine ls</code></td><td>Lists quarantined tests on the current branch.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="config">Config file</h2>
+      <div class="code"><div class="code-bar"><span class="file">plinth.yml</span><button class="icon-btn copy" type="button" data-copy aria-label="Copy code"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-copy"/></svg></button></div>
+<pre tabindex="0"><span class="k">project:</span> storefront
+<span class="k">reports:</span> <span class="s">"reports/**/*.xml"</span>
+<span class="k">quarantine:</span>
+  <span class="k">branches:</span> [main]
+  <span class="k">threshold:</span> 0.05   <span class="c"># flake rate over the last 50 runs</span>
+  <span class="k">never:</span> [<span class="s">"payments/**"</span>]
+<span class="k">split:</span>
+  <span class="k">shards:</span> 4</pre></div>
+
+      <h2 id="api">REST API</h2>
+      <p>Every request uses a bearer token from <a href="#/signup">your workspace settings</a>. Responses are JSON and paginated with a cursor.</p>
+      <div class="code"><div class="code-bar"><span class="file">GET /v2/tests</span><button class="icon-btn copy" type="button" data-copy aria-label="Copy code"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-copy"/></svg></button></div>
+<pre tabindex="0"><span class="f">curl</span> https://api.plinth.example/v2/tests?status=flaky \
+  -H <span class="s">"Authorization: Bearer $PLINTH_TOKEN"</span></pre></div>
+
+      <div class="pager"><a href="#/changelog"><span>Previous</span>What's new</a><a href="#flake-rate"><span>Next</span>Flake rate</a></div>
+      <div class="helpful" id="helpful"><span>Was this page helpful?</span><button class="btn btn-secondary btn-sm" type="button" data-helpful>Yes</button><button class="btn btn-secondary btn-sm" type="button" data-helpful>No</button><span id="helpful-thanks" role="status" hidden>Thanks. We read every answer.</span></div>
+    </article>
+
+    <aside class="toc" aria-label="On this page">
+      <h2>On this page</h2>
+      <ul><li><a href="#install">Install the CLI</a></li><li><a href="#upload">Upload reports</a></li><li><a href="#flake-rate">Flake rate</a></li><li><a href="#quarantine">Quarantine</a></li><li><a href="#split">Test splitting</a></li><li><a href="#cli">CLI reference</a></li><li><a href="#config">Config file</a></li><li><a href="#api">REST API</a></li></ul>
+    </aside>
+  </div>
+</div>
+
+<!-- ===================== CHANGELOG ===================== -->
+<div data-view="changelog">
+  <section class="page-head">
+    <div class="wrap"><span class="eyebrow">Changelog</span><h1 class="h1">What's new in Plinth</h1><p class="lead">New features, improvements and fixes, shipped every week.</p></div>
+  </section>
+  <section style="padding-block:32px 96px">
+    <div class="wrap">
+      <div class="filters" role="group" aria-label="Filter updates">
+        <button type="button" aria-pressed="true" data-filter="all" data-for="log">All</button><button type="button" aria-pressed="false" data-filter="new" data-for="log">New</button><button type="button" aria-pressed="false" data-filter="improved" data-for="log">Improved</button><button type="button" aria-pressed="false" data-filter="fixed" data-for="log">Fixed</button>
+        <span class="count" data-count-for="log" aria-live="polite">5 updates</span>
+      </div>
+      <div data-list="log">
+        <article class="log" id="monorepos" data-kind="new">
+          <aside><time datetime="2026-11-18">Nov 18, 2026</time><span class="badge solid">New</span><span class="badge">v2.14</span></aside>
+          <div>
+            <h2>Test splitting for monorepos</h2>
+            <p>Plinth now splits each package's suite on its own and balances the shards across the whole pipeline, so a change to one package no longer reruns the slow tests of another.</p>
+            <div class="code"><div class="code-bar"><span class="file">plinth.yml</span></div>
+<pre tabindex="0"><span class="k">split:</span>
+  <span class="k">shards:</span> 6
+  <span class="k">packages:</span> <span class="s">"packages/*"</span>   <span class="c"># new</span></pre></div>
+          </div>
+        </article>
+        <article class="log" id="infra-failures" data-kind="improved">
+          <aside><time datetime="2026-11-11">Nov 11, 2026</time><span class="badge">Improved</span></aside>
+          <div><h2>Flake rate ignores infrastructure failures</h2><p>Runs that fail because a runner ran out of memory or lost its network no longer count against a test. Rates on busy repositories dropped by a third overnight.</p></div>
+        </article>
+        <article class="log" id="owners-file" data-kind="new">
+          <aside><time datetime="2026-11-04">Nov 4, 2026</time><span class="badge solid">New</span></aside>
+          <div>
+            <h2>Owners from a paths file</h2>
+            <p>Point Plinth at an existing owners file and new flakes go straight to the team that owns the folder.</p>
+            <div class="mini" aria-hidden="true"><div class="mini-row mono"><span class="t">e2e/checkout/**</span><span class="badge">payments</span></div><div class="mini-row mono"><span class="t">api/auth/**</span><span class="badge">identity</span></div></div>
+          </div>
+        </article>
+        <article class="log" id="retry-badge" data-kind="fixed">
+          <aside><time datetime="2026-10-28">Oct 28, 2026</time><span class="badge">Fixed</span></aside>
+          <div><h2>Quarantine badge on retried jobs</h2><p>A job retried by your CI provider kept its quarantine badge from the first attempt. The badge now follows the latest attempt.</p></div>
+        </article>
+        <article class="log" id="uploads" data-kind="improved">
+          <aside><time datetime="2026-10-21">Oct 21, 2026</time><span class="badge">Improved</span></aside>
+          <div><h2>Faster uploads for large reports</h2><ul><li>Reports over 50 MB upload in parallel chunks.</li><li>A 200 MB report now takes 9 seconds instead of 41.</li><li>Uploads resume after a dropped connection.</li></ul></div>
+        </article>
+      </div>
+      <p class="empty" data-empty-for="log" hidden>No updates of this kind yet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== BLOG ===================== -->
+<div data-view="blog">
+  <section class="page-head">
+    <div class="wrap"><span class="eyebrow">Blog</span><h1 class="h1">Notes from the pipeline</h1><p class="lead">What we learn from millions of CI runs, and how we build Plinth.</p></div>
+  </section>
+  <section style="padding-block:40px 96px">
+    <div class="wrap">
+      <a class="cells c2 card featured-post cross" href="#/post" style="margin-bottom:48px">
+        <span class="cover" aria-hidden="true"><span>40m → 7m<small>e2e suite, 4 shards</small></span></span>
+        <span class="card-body"><span class="meta"><span>Engineering</span><time datetime="2026-11-12">Nov 12, 2026</time><span>9 min read</span></span><span class="h2">How we cut a 40-minute suite to 7 without deleting a test</span><span class="muted">File counts lie. Durations don't. What changed when we split by the clock.</span></span>
+      </a>
+      <div class="filters" role="group" aria-label="Filter posts">
+        <button type="button" aria-pressed="true" data-filter="all" data-for="posts">All</button><button type="button" aria-pressed="false" data-filter="engineering" data-for="posts">Engineering</button><button type="button" aria-pressed="false" data-filter="product" data-for="posts">Product</button><button type="button" aria-pressed="false" data-filter="company" data-for="posts">Company</button>
+        <span class="count" data-count-for="posts" aria-live="polite">6 posts</span>
+      </div>
+      <div class="cells c3 cross" data-list="posts">
+        <a class="card" href="#/post" data-kind="product"><span class="cover" aria-hidden="true"><span>retries: 0</span></span><span class="card-body"><span class="meta"><span>Product</span><time datetime="2026-11-05">Nov 5</time></span><span class="h3">Retries hide bugs. Quarantine shows them.</span><p>Why an automatic rerun is the most expensive green build you will ever get.</p></span></a>
+        <a class="card" href="#/post" data-kind="engineering"><span class="cover" aria-hidden="true"><span>2,000,000<small>runs analyzed</small></span></span><span class="card-body"><span class="meta"><span>Engineering</span><time datetime="2026-10-29">Oct 29</time></span><span class="h3">What two million CI runs taught us about flaky tests</span><p>Timeouts, shared state and the clock: the three causes behind most flakes.</p></span></a>
+        <a class="card" href="#/post" data-kind="company"><span class="cover" aria-hidden="true"><span>$0<small>for open source</small></span></span><span class="card-body"><span class="meta"><span>Company</span><time datetime="2026-10-20">Oct 20</time></span><span class="h3">Plinth is free for open source</span><p>Public repositories now get every Team feature at no cost.</p></span></a>
+        <a class="card" href="#/post" data-kind="engineering"><span class="cover" aria-hidden="true"><span>p95 3.2s</span></span><span class="card-body"><span class="meta"><span>Engineering</span><time datetime="2026-10-09">Oct 9</time></span><span class="h3">Writing tests that survive a slow network</span><p>Wait for state, not for time. Six patterns we use in our own suite.</p></span></a>
+        <a class="card" href="#/post" data-kind="company"><span class="cover" aria-hidden="true"><span>SELECT 1;</span></span><span class="card-body"><span class="meta"><span>Company</span><time datetime="2026-09-30">Sep 30</time></span><span class="h3">Why we built Plinth on boring technology</span><p>One database, one queue and a lot of indexes.</p></span></a>
+        <a class="card" href="#/post" data-kind="product"><span class="cover" aria-hidden="true"><span>@payments<small>owns e2e/checkout</small></span></span><span class="card-body"><span class="meta"><span>Product</span><time datetime="2026-09-18">Sep 18</time></span><span class="h3">A new flake should reach one team, not everyone</span><p>How owners turn a noisy channel into a short list per team.</p></span></a>
+      </div>
+      <p class="empty" data-empty-for="posts" hidden>No posts in this category yet.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== POST ===================== -->
+<div data-view="post">
+  <article class="narrow article">
+    <a class="btn btn-ghost btn-sm" href="#/blog" style="margin-left:-12px"><svg class="icon icon-sm" aria-hidden="true" style="transform:scaleX(-1)"><use href="#i-arrow"/></svg>Blog</a>
+    <div class="meta" style="margin-top:28px"><span>Engineering</span><time datetime="2026-11-12">Nov 12, 2026</time><span>9 min read</span></div>
+    <h1 class="h1">How we cut a 40-minute suite to 7 without deleting a test</h1>
+    <div class="byline"><span class="avatar">TW</span><span><strong>Theo Ward</strong><br><span class="muted">Engineer, CI platform</span></span></div>
+    <div class="prose">
+      <p>Our end-to-end suite had grown to 1,284 tests. Split four ways by file count, it took 40 minutes on a bad day, because one shard always drew the checkout tests and ran for three times as long as the others.</p>
+      <h2 id="file-counts">File counts lie</h2>
+      <p>Splitting by file count assumes every file costs the same. Ours ranged from 2 seconds to 2 minutes 41 seconds. The pipeline waits for the slowest shard, so the other three sat idle for most of the run.</p>
+      <figure class="figure">
+        <svg viewBox="0 0 640 220" role="img" aria-label="Bar chart of four shards. By file count: 4, 14, 6 and 7 minutes. By duration: about 6 minutes each.">
+          <g font-size="11" fill="var(--text-faint)"><text x="16" y="40">by count</text><text x="16" y="150">by duration</text></g>
+          <g fill="var(--surface-3)"><rect x="110" y="24" width="120" height="10" rx="2"/><rect x="110" y="40" width="400" height="10" rx="2"/><rect x="110" y="56" width="166" height="10" rx="2"/><rect x="110" y="72" width="210" height="10" rx="2"/></g>
+          <g fill="currentColor"><rect x="110" y="134" width="176" height="10" rx="2"/><rect x="110" y="150" width="178" height="10" rx="2"/><rect x="110" y="166" width="174" height="10" rx="2"/><rect x="110" y="182" width="176" height="10" rx="2"/></g>
+          <g font-size="11" fill="var(--text-muted)"><text x="520" y="49">14m 02s</text><text x="300" y="159">6m 12s</text></g>
+        </svg>
+        <figcaption>Fig. 1: the same 1,284 tests on four shards, before and after</figcaption>
+      </figure>
+      <h2 id="split-by-clock">Split by the clock</h2>
+      <p>Plinth already had the duration of every test from the reports we upload. Splitting became a packing problem: put the longest files first, each into the shard with the least work so far.</p>
+      <div class="code"><div class="code-bar"><span class="file">split.ts</span></div>
+<pre tabindex="0"><span class="k">for</span> (<span class="k">const</span> file <span class="k">of</span> files.<span class="f">sort</span>(byDurationDesc)) {
+  <span class="k">const</span> shard = shards.<span class="f">reduce</span>(leastLoaded);
+  shard.files.<span class="f">push</span>(file);
+  shard.total += file.duration;
+}</pre></div>
+      <p class="pull">The fastest test is the one that never waits for another shard.</p>
+      <h2 id="results">What changed</h2>
+      <ul><li>Median pipeline time went from 26 minutes to 7.</li><li>The slowest and fastest shards now finish within 8 seconds of each other.</li><li>Nobody deleted, skipped or rewrote a test.</li></ul>
+      <p>If you want to try it on your own suite, the <a href="#split">splitting guide</a> takes about five minutes.</p>
+    </div>
+  </article>
+</div>
+
+<!-- ===================== CONTACT ===================== -->
+<div data-view="contact">
+  <section class="page-head" style="border-bottom:0">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h1 class="h1">Talk to an engineer.</h1>
+        <p class="lead">A demo on your own pipeline, a security review or a larger rollout. Someone who has run CI at scale replies within one working day.</p>
+        <ul class="ticks"><li>A 30-minute call, no slides</li><li>Security questionnaire on request</li><li>Or write to hello@plinth.example</li></ul>
+      </div>
+      <div class="form-card">
+        <form class="form-grid" data-form="contact" novalidate>
+          <div class="form-row">
+            <div class="field"><label for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required aria-describedby="c-name-error"><span class="error" id="c-name-error" aria-live="polite"></span></div>
+            <div class="field"><label for="c-email">Work email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="c-email-error"><span class="error" id="c-email-error" aria-live="polite"></span></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label for="c-company">Company</label><input class="input" id="c-company" name="company" autocomplete="organization" required aria-describedby="c-company-error"><span class="error" id="c-company-error" aria-live="polite"></span></div>
+            <div class="field"><label for="c-size">Engineers</label><select class="select" id="c-size" name="size"><option>1 to 10</option><option>11 to 50</option><option>51 to 200</option><option>More than 200</option></select><span class="error"></span></div>
+          </div>
+          <div class="field"><label for="c-topic">Topic</label><select class="select" id="c-topic" name="topic"><option value="demo">A demo on our pipeline</option><option value="enterprise">Enterprise plan</option><option value="security">Security review</option><option value="oss">Open source</option></select><span class="error"></span></div>
+          <div class="field"><label for="c-message">What should we know?</label><textarea class="textarea" id="c-message" name="message" required minlength="10" aria-describedby="c-message-error" placeholder="Test runner, CI provider, suite size, what hurts most"></textarea><span class="error" id="c-message-error" aria-live="polite"></span></div>
+          <button class="btn btn-primary btn-lg" type="submit">Send message</button>
+        </form>
+        <div class="success" data-success="contact" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Message received.</strong><p>An engineer will reply within one working day.</p></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== SIGN UP ===================== -->
+<div data-view="signup">
+  <section class="page-head" style="border-bottom:0">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow">Start free</span>
+        <h1 class="h1">Your first flake rate in five minutes.</h1>
+        <p class="lead">Free for one project. The Team trial lasts fourteen days and needs no card.</p>
+        <ul class="ticks"><li>Works with any test runner that writes a report</li><li>Upload last week's reports to see history at once</li><li>Invite the whole team, pay only for who signs in</li></ul>
+      </div>
+      <div class="form-card">
+        <form class="form-grid" data-form="signup" novalidate>
+          <div class="field"><label for="s-email">Work email</label><input class="input" id="s-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="s-email-error" placeholder="you@company.com"><span class="error" id="s-email-error" aria-live="polite"></span></div>
+          <div class="field"><label for="s-password">Password</label><input class="input" id="s-password" name="password" type="password" autocomplete="new-password" required minlength="8" aria-describedby="s-password-error"><span class="error" id="s-password-error" aria-live="polite"></span></div>
+          <div class="form-row">
+            <div class="field"><label for="s-workspace">Workspace name</label><input class="input" id="s-workspace" name="workspace" autocomplete="organization" required aria-describedby="s-workspace-error"><span class="error" id="s-workspace-error" aria-live="polite"></span></div>
+            <div class="field"><label for="s-plan">Plan</label><select class="select" id="s-plan" name="plan"><option value="hobby">Hobby (free)</option><option value="team" selected>Team (14-day trial)</option></select><span class="error"></span></div>
+          </div>
+          <button class="btn btn-primary btn-lg" type="submit">Create workspace</button>
+          <p class="fine">By continuing you agree to the <a class="text-link" href="#/terms">Terms</a> and the <a class="text-link" href="#/privacy">Privacy policy</a>.</p>
+        </form>
+        <div class="success" data-success="signup" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Check your inbox.</strong><p>We sent a link to confirm your email and open the workspace.</p></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================== LEGAL ===================== -->
+<div data-view="privacy"><section class="narrow legal"><span class="eyebrow">Legal</span><h1 class="h1" style="margin-top:14px">Privacy policy</h1><p class="lead" style="margin-top:16px">How Plinth handles the data your pipelines send.</p><h2>What we collect</h2><p>Test names, durations, results and failure messages from the reports you upload, plus the account details of the people in your workspace.</p><h2>What we never collect</h2><p>Source code, environment variables, secrets or build artifacts.</p><h2>Retention</h2><p>Reports are kept for the history length of your plan and deleted after it. Deleting a project deletes its reports within 24 hours.</p><h2>Contact</h2><p>Write to privacy@plinth.example with any question.</p></section></div>
+<div data-view="terms"><section class="narrow legal"><span class="eyebrow">Legal</span><h1 class="h1" style="margin-top:14px">Terms of service</h1><p class="lead" style="margin-top:16px">The short version of the agreement.</p><h2>Your account</h2><p>You are responsible for the people you invite and the tokens you create.</p><h2>Your data</h2><p>Your reports stay yours. Export them through the API at any time, and cancel whenever you like.</p><h2>Fair use</h2><p>Do not upload reports that contain secrets or personal data about your customers.</p></section></div>
+
+<!-- ===================== 404 ===================== -->
+<div data-view="404">
+  <section class="notfound center">
+    <div class="wrap"><p class="code404">404 · route not found</p><h1 class="h1" style="margin-top:12px">This page returned nothing.</h1><p class="lead" style="margin:18px auto 32px">The link may be old or mistyped.</p><div class="btn-row"><a class="btn btn-primary" href="#/">Go home</a><a class="btn btn-secondary" href="#/docs">Open the docs</a></div></div>
+  </section>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><a class="brand" href="#/"><svg aria-hidden="true"><use href="#mark"/></svg>Plinth</a><p class="muted" style="margin-top:14px;max-width:24em">Know which tests to trust.</p></div>
+      <div><h2>Product</h2><ul><li><a href="#/features">Features</a></li><li><a href="#/pricing">Pricing</a></li><li><a href="#/changelog">Changelog</a></li></ul></div>
+      <div><h2>Developers</h2><ul><li><a href="#/docs">Docs</a></li><li><a href="#cli">CLI</a></li><li><a href="#api">REST API</a></li></ul></div>
+      <div><h2>Company</h2><ul><li><a href="#/blog">Blog</a></li><li><a href="#/contact">Contact</a></li><li><a href="#/signup">Sign up</a></li></ul></div>
+      <div><h2>Legal</h2><ul><li><a href="#/privacy">Privacy</a></li><li><a href="#/terms">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-news">
+      <div><strong>The changelog, by email</strong><p class="muted" style="margin:4px 0 0">One short email when something ships. No other mail.</p></div>
+      <div>
+        <form class="inline-form" data-form="newsletter" novalidate>
+          <div class="field"><label class="sr-only" for="n-email">Email</label><input class="input" id="n-email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="you@company.com" aria-describedby="n-email-error"><span class="error" id="n-email-error" aria-live="polite"></span></div>
+          <button class="btn btn-primary" type="submit">Subscribe</button>
+        </form>
+        <div class="success" data-success="newsletter" role="status" hidden><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><strong>Subscribed.</strong></div></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Plinth Labs, Inc.</span><span class="status"><span class="dot ok"></span>All systems normal</span></div>
+  </div>
+</footer>
+
+<!-- ===================== SVG SPRITE ===================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="mark" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="5.5" fill="currentColor"/><rect x="3" y="16" width="18" height="5" rx="1" fill="currentColor"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h9"/></symbol>
+    <symbol id="i-branch" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="7" r="2"/><path d="M6 7v10M18 9c0 5-6 4-11 8"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l5.5-3.5z"/></symbol>
+    <symbol id="i-flake" viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-split" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.3-5.5 6.5-5.5s5.7 2 6.5 5.5M16 4.8a3.5 3.5 0 0 1 0 6.4M18 14.8c1.8.7 3 2.4 3.5 5.2"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 13h6M9 17h4"/></symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></symbol>
+    <symbol id="i-api" viewBox="0 0 24 24"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6M14 4l-4 16"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+
+  /* ---------- Storage (sandbox-safe) ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor picks one ---------- */
+  const themeButton = document.getElementById("theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    themeButton.querySelector("use").setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get("plinth-theme");
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("plinth-theme", next);
+  });
+
+  /* ---------- Decorative run history: "p" passed, "f" failed (keeps the markup short) ---------- */
+  document.querySelectorAll("[data-strip]").forEach((strip) => {
+    strip.innerHTML = [...strip.dataset.strip].map((r) => (r === "f" ? '<i class="f"></i>' : "<i></i>")).join("");
+  });
+
+  /* ---------- Router (hash routes; state first, so it works when the frame refuses URL changes) ---------- */
+  const views = new Map([...document.querySelectorAll("[data-view]")].map((el) => [el.dataset.view, el]));
+  const titles = { home: "Plinth: know which tests to trust", features: "Features · Plinth", pricing: "Pricing · Plinth", docs: "Quickstart · Plinth docs", changelog: "Changelog · Plinth", blog: "Blog · Plinth", post: "How we cut a 40-minute suite to 7 · Plinth", contact: "Talk to an engineer · Plinth", signup: "Start free · Plinth", privacy: "Privacy policy · Plinth", terms: "Terms of service · Plinth", "404": "Page not found · Plinth" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams(), anchor: hash.length > 1 ? hash : "" };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query), anchor: "" };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    document.title = titles[name] || titles.home;
+    document.querySelectorAll(".nav a, .sheet a:not(.btn)").forEach((a) => {
+      if (parse(a.getAttribute("href")).view === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const p = route.params;
+    if (name === "pricing") document.querySelectorAll("[data-plan]").forEach((card) => card.classList.toggle("featured", card.dataset.plan === (p.get("plan") || "team")));
+    if (name === "signup" && p.get("plan")) document.getElementById("s-plan").value = p.get("plan") === "hobby" ? "hobby" : "team";
+    if (name === "contact" && p.get("topic")) { const select = document.getElementById("c-topic"); if (select.querySelector(`option[value="${CSS.escape(p.get("topic"))}"]`)) select.value = p.get("topic"); }
+    if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    observeReveals(current);
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); if (menu.open) menu.close(); go(href); return; }
+    const target = href.length > 1 && document.getElementById(href.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    if (menu.open) menu.close();
+    /* a section ID on another view (footer links to #cli): open that view first, then scroll */
+    const view = target.closest("[data-view]");
+    if (view && view !== current) go(view.dataset.view === "home" ? "#/" : `#/${view.dataset.view}`);
+    target.scrollIntoView({ behavior: reduced.matches ? "auto" : "smooth", block: "start" });
+    if (target.id === "main") target.focus({ preventScroll: true });
+  });
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header and mobile menu ---------- */
+  const header = document.querySelector(".site-header");
+  const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  const menu = document.getElementById("menu");
+  document.getElementById("menu-open").addEventListener("click", () => menu.showModal());
+  document.getElementById("menu-close").addEventListener("click", () => menu.close());
+  menu.addEventListener("click", (event) => { if (event.target === menu) menu.close(); });
+
+  /* ---------- Reveal: keyframes on entry; content stays visible without JS; timed fallback ---------- */
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    for (const entry of entries) if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+  }, { rootMargin: "0px 0px -8% 0px" }) : null;
+  function observeReveals(scope) {
+    scope.querySelectorAll(".reveal:not(.is-in)").forEach((el) => (io ? io.observe(el) : el.classList.add("is-in")));
+  }
+  setTimeout(() => document.querySelectorAll(".reveal").forEach((el) => el.classList.add("is-in")), 2500);
+
+  /* ---------- Tabs (code samples and the product tour) ---------- */
+  document.querySelectorAll("[data-tabs]").forEach((box) => {
+    const tabs = [...box.querySelectorAll("[role=tab]")];
+    const select = (tab) => tabs.forEach((t) => { const on = t === tab; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; document.getElementById(t.getAttribute("aria-controls")).hidden = !on; });
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => select(tab));
+      tab.addEventListener("keydown", (event) => {
+        const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+        if (!step) return;
+        const next = tabs[(i + step + tabs.length) % tabs.length];
+        select(next); next.focus();
+      });
+    });
+  });
+
+  /* ---------- Copy: data-copy="text", or the visible code panel ---------- */
+  document.querySelectorAll("[data-copy]").forEach((button) => {
+    const label = button.getAttribute("aria-label");
+    button.addEventListener("click", async () => {
+      const text = button.dataset.copy || button.closest(".code").querySelector("pre:not([hidden])").textContent;
+      try { await navigator.clipboard.writeText(text); button.setAttribute("aria-label", "Copied"); }
+      catch { button.setAttribute("aria-label", "Copy is not allowed here"); }
+      setTimeout(() => button.setAttribute("aria-label", label), 1500);
+    });
+  });
+
+  /* ---------- Pricing: billing period and the Team estimate ---------- */
+  const rates = { monthly: 24, yearly: 20, included: 25000, per1000: 2, hobbyRuns: 1000 };
+  let period = "yearly";
+  const money = (n) => "$" + Math.round(n).toLocaleString("en-US");
+  function setBilling(next) {
+    period = next;
+    document.querySelectorAll("[data-billing]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.billing === period)));
+    document.querySelectorAll(`[data-${period}]`).forEach((el) => { el.textContent = el.dataset[period]; });
+    estimate();
+  }
+  function estimate() {
+    const seats = Number(document.getElementById("seats").value);
+    const runs = Number(document.getElementById("runs").value);
+    const extra = Math.max(0, Math.ceil((runs - rates.included) / 1000));
+    document.getElementById("seats-out").textContent = seats.toLocaleString("en-US");
+    document.getElementById("runs-out").textContent = runs.toLocaleString("en-US");
+    document.getElementById("est-label").textContent = `Team, billed ${period}`;
+    document.getElementById("est-seats").textContent = `${seats} × $${rates[period]}`;
+    document.getElementById("est-runs").textContent = `${extra} × $${rates.per1000}`;
+    document.getElementById("est-total").textContent = money(seats * rates[period] + extra * rates.per1000);
+    document.getElementById("est-hobby").textContent = seats === 1 && runs <= rates.hobbyRuns ? "Yes, free" : "No";
+  }
+  document.querySelectorAll("[data-billing]").forEach((b) => b.addEventListener("click", () => setBilling(b.dataset.billing)));
+  ["seats", "runs"].forEach((id) => document.getElementById(id).addEventListener("input", estimate));
+  estimate();
+
+  /* ---------- Filters (changelog and blog): chips with aria-pressed, a live count, an empty state ---------- */
+  const nouns = { log: ["update", "updates"], posts: ["post", "posts"] };
+  function applyFilter(group, kind) {
+    let shown = 0;
+    document.querySelectorAll(`[data-list="${group}"] [data-kind]`).forEach((item) => { item.hidden = kind !== "all" && item.dataset.kind !== kind; if (!item.hidden) shown++; });
+    document.querySelectorAll(`[data-for="${group}"]`).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === kind)));
+    document.querySelector(`[data-count-for="${group}"]`).textContent = `${shown} ${nouns[group][shown === 1 ? 0 : 1]}`;
+    document.querySelector(`[data-empty-for="${group}"]`).hidden = shown > 0;
+  }
+  document.querySelectorAll("[data-filter]").forEach((b) => b.addEventListener("click", () => applyFilter(b.dataset.for, b.dataset.filter)));
+
+  /* ---------- Docs: menu collapsed on phones, search filters the pages, "/" focuses it, feedback ---------- */
+  const docSide = document.querySelector(".doc-side");
+  const phone = matchMedia("(max-width: 860px)");
+  docSide.open = !phone.matches;
+  phone.addEventListener("change", () => { docSide.open = !phone.matches; });
+  const docQuery = document.getElementById("doc-q");
+  docQuery.addEventListener("input", () => {
+    const q = docQuery.value.trim().toLowerCase();
+    let shown = 0;
+    document.querySelectorAll(".doc-nav li").forEach((li) => { const a = li.firstElementChild; li.hidden = Boolean(q) && !(a.textContent + " " + a.dataset.k).toLowerCase().includes(q); if (!li.hidden) shown++; });
+    document.querySelectorAll(".doc-nav ul").forEach((ul) => { const h = ul.previousElementSibling; h.hidden = ![...ul.children].some((li) => !li.hidden); });
+    document.getElementById("doc-empty").hidden = shown > 0;
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "/" || current !== views.get("docs") || /input|textarea|select/i.test(document.activeElement.tagName)) return;
+    event.preventDefault();
+    docSide.open = true;
+    docQuery.focus();
+  });
+  document.querySelectorAll("[data-helpful]").forEach((b) => b.addEventListener("click", () => {
+    document.querySelectorAll("[data-helpful]").forEach((x) => { x.hidden = true; });
+    document.getElementById("helpful-thanks").hidden = false;
+  }));
+
+  /* ---------- Forms: inline validation, then a success state. Nothing is sent: connect a real endpoint to deliver. ---------- */
+  const messages = { valueMissing: "Please fill this in.", typeMismatch: "Please enter a valid email address.", tooShort: "Please add a little more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = Object.keys(messages).find((key) => field.validity[key]);
+    error.textContent = problem ? (problem === "tooShort" && field.type === "password" ? `Use at least ${field.minLength} characters.` : messages[problem]) : "";
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  document.querySelectorAll("form[data-form]").forEach((form) => {
+    const fields = [...form.querySelectorAll("input, textarea")];
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value) checkField(field); });
+      field.addEventListener("input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+    });
+    form.addEventListener("keydown", (event) => { if (event.key === "Enter" && event.isComposing) event.preventDefault(); });
+    /* Sandboxed frames block native submission before "submit" fires, so the button's click runs it too (Enter clicks it). */
+    const button = form.querySelector("[type=submit]");
+    const label = button.textContent;
+    const send = () => {
+      if (button.disabled) return;
+      if (!fields.map(checkField).every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        form.hidden = true;
+        form.parentElement.querySelector(`[data-success="${form.dataset.form}"]`).hidden = false;
+        button.disabled = false;
+        button.textContent = label;
+      }, 600);
+    };
+    form.addEventListener("submit", (event) => { event.preventDefault(); send(); });
+    button.addEventListener("click", (event) => { event.preventDefault(); send(); });
+  });
+
+  /* ---------- Start ---------- */
+  const start = parse(location.hash);
+  show(start, { scroll: false });
+  if (start.anchor) document.getElementById(start.anchor.slice(1))?.scrollIntoView();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1520 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Brindlewood Trading: wholesale tableware, linen and packaging from partner workshops</title>
+<meta name="description" content="Brindlewood Trading supplies cafés, hotels and shops with tableware, kitchen linen, glassware, wood, packaging and candles from six checked partner workshops. Prices by quantity, samples in five days, quotes within 24 hours.">
+<meta property="og:title" content="Brindlewood Trading: wholesale homeware from partner workshops">
+<meta property="og:description" content="Tableware, linen, glass, wood, packaging and candles at prices by quantity. Request a quote and get an answer within 24 hours.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/lexend-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: "Lexend"; src: url("fonts/lexend-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+
+/* ---------- Tokens: every colour is light-dark(light, dark); the page follows the system until the toggle sets data-theme ---------- */
+:root {
+  color-scheme: light dark;
+  --page: light-dark(oklch(99.2% 0.003 60), oklch(16.5% 0.008 50));
+  --surface: light-dark(oklch(100% 0 0), oklch(21% 0.01 50));
+  --tile: light-dark(oklch(96.6% 0.005 60), oklch(24.5% 0.011 50));
+  --tile-2: light-dark(oklch(93.6% 0.007 60), oklch(29% 0.012 50));
+  --text: light-dark(oklch(21% 0.012 50), oklch(95% 0.005 60));
+  --muted: light-dark(oklch(48% 0.012 50), oklch(74% 0.01 60));
+  --border: light-dark(oklch(90% 0.006 60), oklch(33% 0.012 50));
+  --border-strong: light-dark(oklch(68% 0.01 60), oklch(52% 0.014 50));
+  --accent: oklch(58% 0.19 45);
+  --accent-2: oklch(54% 0.2 34);
+  --accent-text: oklch(100% 0 0);
+  --accent-bright: light-dark(oklch(71% 0.19 52), oklch(72% 0.18 52));
+  --accent-ink: light-dark(oklch(54% 0.18 45), oklch(77% 0.15 55));
+  --accent-soft: light-dark(oklch(95.5% 0.03 55), oklch(27% 0.05 45));
+  --wash: light-dark(oklch(95.8% 0.032 50), oklch(22.5% 0.035 42));
+  --wash-2: light-dark(oklch(97.4% 0.018 15), oklch(19.5% 0.022 25));
+  --ember: light-dark(oklch(36% 0.11 30), oklch(27% 0.075 30));
+  --ok: light-dark(oklch(50% 0.13 150), oklch(76% 0.14 150));
+  --error: light-dark(oklch(52% 0.2 27), oklch(74% 0.15 27));
+  --shadow: light-dark(oklch(30% 0.03 50 / 0.16), oklch(0% 0 0 / 0.55));
+  --font: "Lexend", ui-sans-serif, system-ui, sans-serif;
+  --fs-display: clamp(1.25rem, 0.85rem + 1.6vw, 1.875rem);
+  --fs-h1: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
+  --fs-h2: clamp(1.1875rem, 1.1rem + 0.35vw, 1.375rem);
+  --fs-h3: 1.0625rem;
+  --fs-body: 0.9375rem;
+  --fs-small: 0.8125rem;
+  --r-control: 999px; --r-card: 12px; --r-media: 12px; --r-panel: 16px; --r-field: 10px;
+  --dur-fast: 120ms; --dur-base: 200ms; --dur-slow: 480ms; --ease: cubic-bezier(0.2, 0, 0, 1);
+  --wrap: 1360px; --gut: clamp(16px, 2.8vw, 40px);
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 130px; }
+body { margin: 0; background: var(--page); color: var(--text); font: 400 var(--fs-body)/1.55 var(--font); -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+h1, h2, h3, p, ul, ol, dl, dd, fieldset { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 60; padding: 10px 16px; border-radius: var(--r-control); background: var(--text); color: var(--page); }
+.skip:focus { top: 12px; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.ic { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.wrap { width: min(100% - 2 * var(--gut), var(--wrap)); margin-inline: auto; }
+.muted { color: var(--muted); }
+.h1 { font-size: var(--fs-h1); font-weight: 600; line-height: 1.2; letter-spacing: -0.012em; }
+.h2 { font-size: var(--fs-h2); font-weight: 600; line-height: 1.25; }
+.h3 { font-size: var(--fs-h3); font-weight: 600; line-height: 1.35; }
+.small { font-size: var(--fs-small); }
+.kicker { font-size: var(--fs-small); font-weight: 600; color: var(--accent-ink); }
+html:not(.js) [data-js], .js .nojs { display: none !important; }
+
+/* ---------- Buttons, chips, links, badges ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 22px; border: 1px solid transparent; border-radius: var(--r-control); font-weight: 600; text-decoration: none; white-space: nowrap; transition: border-color var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease); }
+.btn-solid { background: linear-gradient(100deg, var(--accent), var(--accent-2)); color: var(--accent-text); }
+.btn-solid:hover { filter: brightness(0.93); }
+.btn-line { border-color: var(--border-strong); background: var(--surface); }
+.btn-line:hover, .chip:hover { border-color: var(--text); }
+.btn-ink { background: var(--text); color: var(--page); }
+.btn-sm { min-height: 36px; padding: 0 16px; font-size: var(--fs-small); font-weight: 500; }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
+.link { display: inline-flex; align-items: center; gap: 4px; flex: none; color: var(--accent-ink); font-weight: 500; text-decoration: none; white-space: nowrap; }
+.link:hover { text-decoration: underline; }
+.link .ic, .link-btn .ic, .chip .ic { width: 16px; height: 16px; }
+.link-btn { display: inline-flex; align-items: center; gap: 6px; padding: 4px 0; border: 0; background: none; color: var(--muted); font-size: var(--fs-small); }
+.link-btn:hover { color: var(--text); text-decoration: underline; }
+.chip { flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 16px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--surface); font-size: 0.875rem; font-weight: 500; text-decoration: none; }
+.chip[aria-pressed="true"] { border-color: var(--accent-bright); background: var(--accent-soft); color: var(--accent-ink); }
+.vf { display: inline-flex; align-items: center; gap: 3px; font-weight: 600; color: var(--text); }
+.vf .ic { width: 15px; height: 15px; color: var(--accent-ink); stroke-width: 2; }
+.star { width: 15px; height: 15px; fill: var(--accent-bright); }
+.rfq-steps li::before, .aside li::before { display: grid; place-items: center; flex: none; width: 32px; height: 32px; border-radius: 50%; background: var(--surface); color: var(--accent-ink); font-size: 0.875rem; font-weight: 700; }
+
+/* ---------- Notice and header ---------- */
+.notice { background: var(--ember); color: oklch(98% 0.01 60); font-size: 0.875rem; }
+.notice-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 20px; min-height: 40px; padding-block: 6px; text-align: center; }
+.notice strong { color: oklch(85% 0.12 65); font-weight: 600; }
+.notice a { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; text-underline-offset: 3px; }
+.notice .ic { width: 16px; height: 16px; }
+.top { position: sticky; top: 0; z-index: 30; background: var(--surface); border-bottom: 1px solid var(--border); }
+html[data-route="home"] .top:not(.is-stuck) { background: var(--wash); border-bottom-color: transparent; }
+.top.is-stuck { box-shadow: 0 8px 24px -16px var(--shadow); }
+.top-row { display: flex; align-items: center; gap: 24px; min-height: 68px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; flex: none; font-size: 1.3125rem; font-weight: 650; letter-spacing: -0.02em; text-decoration: none; }
+.brand svg { width: 34px; height: 34px; }
+.brand-sub { align-self: flex-end; margin: 0 0 3px -4px; font-size: 0.75rem; font-weight: 500; color: var(--accent-ink); }
+.mini-search { flex: 1; display: flex; min-width: 0; align-items: center; max-width: 600px; height: 44px; padding: 3px 3px 3px 18px; border: 1px solid var(--border-strong); border-radius: var(--r-control); background: var(--surface); transition: opacity var(--dur-base) var(--ease); }
+.mini-search:focus-within { border-color: var(--accent-bright); }
+.mini-search input { flex: 1; min-width: 0; border: 0; background: none; outline: none; }
+.mini-search .btn { min-height: 36px; padding: 0 16px; font-size: 0.875rem; }
+html[data-route="home"] .top:not(.is-stuck) .mini-search { visibility: hidden; opacity: 0; }
+.utils { display: flex; align-items: center; gap: 18px; margin-left: auto; }
+.util { display: inline-flex; align-items: center; gap: 8px; padding: 4px 0; white-space: nowrap; border: 0; background: none; font-size: 0.875rem; text-align: left; text-decoration: none; }
+.util:hover span { text-decoration: underline; }
+.util-2 { display: grid; gap: 0; line-height: 1.25; }
+.util-2 small { font-size: 0.75rem; color: var(--muted); }
+.util-2 select { max-width: 120px; padding: 0; border: 0; background: none; font-weight: 600; cursor: pointer; }
+.icon-btn { position: relative; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: none; }
+.icon-btn:hover { background: var(--tile-2); }
+.icon-btn .ic { width: 22px; height: 22px; }
+.count { position: absolute; top: 2px; right: 0; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent); color: var(--accent-text); font-size: 0.6875rem; font-weight: 600; line-height: 18px; text-align: center; }
+.join { min-height: 40px; }
+.nav-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 44px; }
+.nav-row > div { display: flex; align-items: center; gap: 28px; }
+.nav-row a, .nav-all { flex: none; padding: 6px 0; border: 0; background: none; font-size: 0.875rem; text-decoration: none; }
+.nav-row a:hover, .nav-all:hover, .nav-all[aria-expanded="true"] { color: var(--accent-ink); }
+.nav-all { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; }
+.nav-all .ic { width: 18px; height: 18px; }
+.mega { position: absolute; left: 0; right: 0; top: 100%; border-top: 1px solid var(--border); background: var(--surface); box-shadow: 0 24px 40px -24px var(--shadow); animation: drop var(--dur-base) var(--ease) both; }
+.mega-inner { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 32px; max-height: min(70vh, 520px); padding-block: 20px 28px; overflow: auto; }
+.mega-cats button { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 0; border-radius: 10px; background: none; font-weight: 500; text-align: left; }
+.mega-cats button[aria-current="true"] { background: var(--tile); color: var(--accent-ink); }
+.mega-cats .ic:last-child, .cat .ic:last-child { margin-left: auto; width: 16px; height: 16px; }
+.mega-panel { display: grid; gap: 18px; align-content: start; }
+
+/* ---------- Home: the tabbed search hero and the trust strip ---------- */
+.hero { padding: 12px 0 44px; background: linear-gradient(180deg, var(--wash), var(--wash-2) 70%, var(--page)); }
+.hero-inner { display: grid; justify-items: center; gap: 18px; text-align: center; }
+.hero-h { max-width: 44ch; font-size: clamp(0.9375rem, 0.85rem + 0.35vw, 1.125rem); font-weight: 500; color: var(--muted); }
+.tabs { display: flex; align-items: center; gap: clamp(18px, 3vw, 44px); max-width: 100%; }
+.tab { position: relative; flex: none; padding: 4px 2px 12px; border: 0; background: none; font-size: var(--fs-display); font-weight: 600; letter-spacing: -0.015em; line-height: 1.2; }
+.tab::after { content: ""; position: absolute; left: 20%; right: 20%; bottom: 0; height: 4px; border-radius: 4px; background: var(--accent-bright); transform: scaleX(0); transition: transform var(--dur-base) var(--ease); }
+.tab:hover, .tab[aria-pressed="true"] { color: var(--accent-ink); }
+.tab[aria-pressed="true"]::after { transform: none; }
+.tab-rule { flex: none; width: 1px; height: 26px; background: var(--border-strong); }
+.tab-new { margin-left: 6px; padding: 2px 7px; border-radius: var(--r-control); background: var(--accent-soft); font-size: 0.6875rem; letter-spacing: 0; vertical-align: super; }
+.bigsearch { width: min(100%, 960px); padding: 2px; border-radius: 18px; background: linear-gradient(100deg, var(--accent-bright), var(--accent-2)); box-shadow: 0 18px 40px -26px var(--accent-2); }
+.bigsearch:focus-within { box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent-bright) 28%, transparent); }
+.bigsearch-in { display: grid; gap: 14px; padding: 16px 16px 14px 22px; border-radius: var(--r-panel); background: var(--surface); text-align: left; }
+.bigsearch input { width: 100%; padding: 6px 0; border: 0; background: none; outline: none; font-size: 1.125rem; }
+::placeholder { color: var(--muted); }
+.bigsearch-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.tool { display: inline-flex; align-items: center; gap: 8px; font-size: 0.875rem; font-weight: 500; text-decoration: none; }
+.tool:hover { color: var(--accent-ink); }
+.tool + .tool { padding-left: 16px; border-left: 1px solid var(--border-strong); }
+.go-lg { margin-left: auto; min-height: 48px; padding: 0 30px; font-size: 1rem; }
+.popular { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; font-size: var(--fs-small); color: var(--muted); }
+.popular a { padding: 4px 12px; border-radius: var(--r-control); background: color-mix(in oklch, var(--surface) 70%, transparent); color: var(--text); text-decoration: none; }
+.trust { background: color-mix(in oklch, var(--wash) 55%, var(--page)); }
+.trust-inner { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-block: 22px; }
+.trust-item { display: flex; gap: 16px; padding: 4px 28px; }
+.trust-item + .trust-item { border-left: 1px solid var(--border-strong); }
+.trust-ic { display: grid; place-items: center; flex: none; width: 48px; height: 48px; border-radius: 14px; background: var(--surface); color: var(--accent-ink); }
+.trust-ic .ic { width: 26px; height: 26px; }
+.trust-h { font-size: 1.125rem; font-weight: 600; line-height: 1.3; }
+.trust p { margin-top: 2px; font-size: 0.875rem; color: var(--muted); }
+
+/* ---------- Home: category list with fly-outs, most requested, new this season ---------- */
+.explore { --catw: 300px; position: relative; display: grid; grid-template-columns: var(--catw) repeat(3, minmax(0, 1fr)) minmax(280px, 1.75fr); gap: 12px; margin-top: 28px; }
+.catpanel { padding: 8px; border-radius: var(--r-panel); background: var(--tile); }
+.cat { display: flex; align-items: center; gap: 14px; padding: 11px 12px; border-radius: 10px; font-weight: 500; text-decoration: none; }
+.cat:hover, .cat-item:focus-within > .cat { background: var(--tile-2); }
+.cat .ic { width: 22px; height: 22px; }
+.fly { position: absolute; z-index: 5; inset: 0 0 0 var(--catw); display: none; padding: 24px 28px; border-left: 12px solid transparent; border-radius: var(--r-panel); background: var(--surface) padding-box; box-shadow: 0 24px 48px -28px var(--shadow); overflow: auto; }
+@media (min-width: 1024px) { .cat-item:hover > .fly, .cat-item:focus-within > .fly { display: grid; gap: 18px; align-content: start; animation: fade var(--dur-base) var(--ease) both; } }
+.fly-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.fly-subs { display: flex; flex-wrap: wrap; gap: 8px; }
+.fly-items { display: grid; grid-template-columns: repeat(3, minmax(0, 200px)); gap: 12px; }
+.mini-card { display: grid; gap: 8px; font-size: var(--fs-small); text-decoration: none; }
+.mini-card .tile { aspect-ratio: 4 / 3; }
+.tile { display: grid; place-items: center; border-radius: var(--r-media); background: var(--tile); overflow: hidden; }
+.art { transition: transform var(--dur-slow) var(--ease); }
+.tile .art { width: 72%; height: 72%; }
+a:hover > .tile .art, .pc:hover .art { transform: scale(1.04); }
+.most-tile { display: grid; grid-template-rows: auto auto 1fr; gap: 2px; padding: 16px; border-radius: var(--r-panel); background: var(--tile); text-decoration: none; }
+.most-k { font-size: 1.0625rem; font-weight: 600; }
+.most-t { font-size: 0.875rem; font-weight: 500; }
+.most-tile .tile { align-self: end; aspect-ratio: 1; margin-top: 14px; background: var(--surface); }
+.season { display: grid; grid-template-rows: auto 1fr auto; justify-items: center; gap: 8px; padding: 22px 20px 16px; border-radius: var(--r-panel); background: linear-gradient(165deg, var(--accent-soft), color-mix(in oklch, var(--accent-bright) 18%, var(--surface))); }
+.season-h { font-size: 1.625rem; font-weight: 700; letter-spacing: -0.02em; color: var(--accent-ink); }
+.season-slides { display: grid; width: 100%; }
+.season-slide { grid-area: 1 / 1; display: grid; justify-items: center; align-content: center; align-items: center; gap: 6px; font-size: 0.875rem; font-weight: 500; text-align: center; text-decoration: none; }
+.season-slide .art { width: min(190px, 70%); height: auto; aspect-ratio: 1; }
+.js .season-slide:not(.is-on) { visibility: hidden; }
+.js .season-slide.is-on { animation: fade var(--dur-slow) var(--ease) both; }
+html:not(.js) .season-slide + .season-slide { display: none; }
+.dots { display: flex; gap: 6px; }
+.dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 4px; background: color-mix(in oklch, var(--text) 25%, transparent); }
+.dots button[aria-current="true"] { width: 22px; background: var(--accent-ink); }
+.freight { display: flex; align-items: center; gap: 14px; margin-top: 24px; padding: 14px 28px; border-radius: var(--r-panel); background: linear-gradient(90deg, var(--accent-soft), var(--wash-2)); }
+.freight > .ic { width: 28px; height: 28px; color: var(--accent-ink); }
+.freight b { color: var(--accent-ink); font-weight: 600; }
+.freight .link { margin-left: auto; color: var(--text); }
+
+/* ---------- Blocks and product cards ---------- */
+.block { margin-top: 56px; }
+.block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 28px 16px; }
+.pc { display: flex; flex-direction: column; gap: 4px; }
+.pc-media { position: relative; display: grid; place-items: center; aspect-ratio: 1; margin-bottom: 8px; border-radius: var(--r-media); background: var(--tile); overflow: hidden; }
+.pc-media .art { width: 76%; height: 76%; }
+.flag { position: absolute; left: 10px; top: 10px; display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px 3px 7px; border-radius: var(--r-control); background: var(--surface); font-size: 0.75rem; font-weight: 600; }
+.flag .ic { width: 14px; height: 14px; color: var(--accent-ink); }
+.pc-title { display: -webkit-box; min-height: 2.8em; overflow: hidden; font-size: 0.875rem; line-height: 1.4; text-decoration: none; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.pc-title:hover { text-decoration: underline; }
+.pc-price { margin-top: 4px; font-size: 1.1875rem; font-weight: 700; letter-spacing: -0.01em; }
+.pc-moq { font-size: var(--fs-small); }
+.pc-ws a { font-size: var(--fs-small); color: var(--muted); text-underline-offset: 2px; }
+.pc-trust, .ws-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 10px; font-size: 0.75rem; color: var(--muted); }
+.pc-acts { display: flex; gap: 8px; margin-top: auto; padding-top: 10px; }
+.pc-acts .btn, .ws-acts .btn { flex: 1; padding: 0 10px; }
+
+/* ---------- Request for quotation band and workshops ---------- */
+.rfq { margin-top: 64px; background: linear-gradient(120deg, var(--wash), var(--wash-2)); }
+.rfq-inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-block: 56px; }
+.rfq-h { margin-top: 8px; font-size: clamp(1.5rem, 1.2rem + 1vw, 2.125rem); font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
+.rfq-steps { display: grid; gap: 12px; margin-top: 24px; counter-reset: step; }
+.rfq-steps li { display: flex; align-items: center; gap: 12px; counter-increment: step; }
+.rfq-steps li::before, .aside li::before { content: counter(step); }
+.card { padding: 28px; border-radius: var(--r-panel); background: var(--surface); box-shadow: 0 24px 48px -30px var(--shadow); }
+.ws-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 16px; }
+.ws { display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--border); border-radius: var(--r-panel); background: var(--surface); }
+.ws-head { display: flex; align-items: center; gap: 12px; }
+.ws-mono { display: grid; place-items: center; flex: none; width: 48px; height: 48px; border-radius: 12px; background: var(--accent-soft); color: var(--accent-ink); font-size: 1.25rem; font-weight: 700; }
+.ws-name { font-size: 1rem; font-weight: 600; }
+.ws-craft { font-size: 0.875rem; }
+.ws-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 12px; border-radius: 10px; background: var(--tile); font-size: 0.75rem; }
+.ws-stats dt { color: var(--muted); }
+.ws-stats dd { font-size: 0.9375rem; font-weight: 600; }
+.ws-thumbs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.ws-thumbs .tile { aspect-ratio: 4 / 3; }
+.ws-acts { display: flex; gap: 8px; margin-top: auto; }
+
+/* ---------- Results ---------- */
+.page-top { padding-top: 20px; }
+.rtabs { display: flex; gap: 36px; border-bottom: 1px solid var(--border); }
+.rtab { position: relative; padding: 8px 0 12px; font-size: 1.25rem; font-weight: 600; color: var(--muted); text-decoration: none; }
+.rtab:hover, .rtab[aria-current="page"] { color: var(--text); }
+.rtab[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; border-radius: 3px; background: var(--text); }
+.results-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin: 20px 0 14px; }
+.selectby { position: relative; display: flex; align-items: center; gap: 10px; padding-bottom: 4px; overflow-x: auto; scrollbar-width: none; }
+.selectby > span { flex: none; font-weight: 600; }
+.results { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 36px; margin-top: 20px; }
+.filters { display: grid; gap: 26px; align-content: start; }
+.filters h2 { margin-bottom: 8px; font-size: 0.9375rem; font-weight: 600; }
+.f-opt { display: flex; align-items: center; gap: 10px; padding: 5px 0; font-size: 0.875rem; cursor: pointer; }
+input[type="radio"], input[type="checkbox"] { flex: none; width: 17px; height: 17px; margin: 0; accent-color: var(--accent); }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 18px; }
+.sort { display: flex; align-items: center; gap: 8px; margin-left: auto; font-size: 0.875rem; }
+.sort .input { width: auto; min-height: 38px; }
+.filters-btn { display: none; }
+.table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.empty { display: grid; justify-items: center; gap: 10px; padding: 48px 20px; border: 1px dashed var(--border-strong); border-radius: var(--r-panel); text-align: center; }
+.empty > .ic { width: 36px; height: 36px; color: var(--accent-ink); }
+
+/* ---------- Product page: gallery, price ladder, lead times, order box, workshop card ---------- */
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 16px 0; font-size: var(--fs-small); color: var(--muted); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { color: var(--text); }
+.crumbs .ic { width: 14px; height: 14px; }
+.pdp { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 300px; gap: 36px; align-items: start; }
+.gallery { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; }
+.thumbs { display: grid; gap: 10px; align-content: start; }
+.thumbs button { display: grid; place-items: center; aspect-ratio: 1; padding: 6px; border: 2px solid transparent; border-radius: 10px; background: var(--tile); }
+.thumbs button[aria-pressed="true"], .swatches button[aria-pressed="true"] { border: 2px solid var(--accent-bright); }
+.stage { position: relative; display: grid; place-items: center; aspect-ratio: 1; border-radius: var(--r-panel); background: var(--tile); overflow: hidden; }
+.stage .art { width: 78%; height: 78%; }
+.stage[data-pic="1"] .art { transform: scale(1.75) translate(4%, 6%); }
+.stage-note { position: absolute; right: 12px; bottom: 12px; padding: 3px 10px; border-radius: var(--r-control); background: var(--surface); font-size: 0.75rem; color: var(--muted); }
+.pdp-title { font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.pdp-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-top: 10px; font-size: var(--fs-small); color: var(--muted); }
+.pdp-meta span { display: inline-flex; align-items: center; gap: 4px; }
+.tiers { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 6px; margin-top: 20px; padding: 6px; border-radius: var(--r-card); background: var(--tile); }
+.tier { padding: 10px 12px; border-radius: 9px; transition: background-color var(--dur-base) var(--ease); }
+.tier span { display: block; }
+.tier-q { font-size: 0.75rem; color: var(--muted); }
+.tier-p { font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem); font-weight: 700; letter-spacing: -0.015em; }
+.tier.is-on { background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--accent-bright); }
+.tier.is-on .tier-p { color: var(--accent-ink); }
+.facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 10px 20px; margin-top: 20px; font-size: 0.875rem; }
+.facts dt { color: var(--muted); }
+.opts { margin-top: 20px; padding: 0; border: 0; }
+.opts legend { margin-bottom: 10px; padding: 0; font-size: 0.875rem; font-weight: 600; }
+.opts legend span { font-weight: 400; color: var(--muted); }
+.swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+.swatches button { width: 36px; height: 36px; padding: 0; border: 1px solid var(--border-strong); border-radius: 50%; background: var(--sw); box-shadow: inset 0 0 0 3px var(--surface); }
+.lead { margin-top: 20px; }
+.lead caption { margin-bottom: 6px; font-size: 0.875rem; font-weight: 600; text-align: left; }
+.lead th, .lead td { padding: 8px 10px; border: 1px solid var(--border); font-size: var(--fs-small); text-align: center; }
+.lead th, .spec th { background: var(--tile); font-weight: 500; color: var(--muted); text-align: left; }
+.orderbox { display: grid; gap: 6px; margin-top: 24px; padding: 20px; border: 1px solid var(--border); border-radius: var(--r-panel); }
+.orderbox label { font-size: 0.875rem; font-weight: 600; }
+.qty { display: inline-flex; align-items: center; justify-self: start; height: 44px; border: 1px solid var(--border-strong); border-radius: var(--r-control); overflow: hidden; }
+.qty button { display: grid; place-items: center; width: 44px; height: 100%; border: 0; background: none; }
+.qty input { width: 96px; height: 100%; border: 0; background: none; font-weight: 600; text-align: center; -moz-appearance: textfield; }
+.qty input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.qty .ic { width: 18px; height: 18px; }
+.estimate { font-size: 0.875rem; }
+.err { min-height: 1.4em; font-size: var(--fs-small); line-height: 1.4; color: var(--error); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 6px; }
+.supplier { position: sticky; top: 132px; display: grid; gap: 14px; padding: 20px; border: 1px solid var(--border); border-radius: var(--r-panel); }
+.subnav { display: flex; gap: 8px; margin: 48px 0 8px; padding-bottom: 4px; overflow-x: auto; }
+.pdp-more { display: grid; gap: 40px; max-width: 920px; }
+.pdp-more h2 { margin-bottom: 14px; }
+.spec { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.spec th, .spec td { padding: 12px 16px; border: 1px solid var(--border); vertical-align: top; }
+.spec th { width: 32%; }
+
+/* ---------- Inquiry list ---------- */
+.list-layout { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 36px; align-items: start; margin-top: 24px; }
+.line { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--border); }
+.line:first-child { padding-top: 0; }
+.line-media { aspect-ratio: 1; }
+.line-media .art { width: 80%; height: 80%; }
+.line-body { display: grid; gap: 6px; align-content: start; }
+.line-name { font-weight: 500; text-decoration: none; }
+.line-sub { font-size: var(--fs-small); color: var(--muted); }
+.line-qty { display: flex; align-items: center; gap: 8px; font-size: var(--fs-small); }
+.line-qty .input { width: 110px; min-height: 38px; }
+.line-price { font-weight: 700; text-align: right; }
+.sum { display: grid; gap: 10px; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+.sum div { display: flex; justify-content: space-between; gap: 12px; }
+.sum .total { font-size: 1.0625rem; font-weight: 700; }
+
+/* ---------- Forms ---------- */
+.form { display: grid; gap: 16px; }
+.form fieldset { display: grid; gap: 14px; padding: 0; border: 0; }
+.form legend { margin-bottom: 10px; padding: 0; font-size: var(--fs-h3); font-weight: 600; }
+.field { display: grid; gap: 6px; align-content: start; }
+.field > label, .field > span { font-size: 0.875rem; font-weight: 500; }
+.opt { font-weight: 400; color: var(--muted); }
+.input { width: 100%; min-height: 46px; padding: 10px 14px; border: 1px solid var(--border-strong); border-radius: var(--r-field); background: var(--surface); }
+.input:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: -1px; border-color: transparent; }
+.input[aria-invalid="true"] { border-color: var(--error); }
+textarea.input { min-height: 120px; resize: vertical; }
+select.input { appearance: none; padding-right: 40px; background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23887d76' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center / 16px; }
+input[type="file"].input { padding: 8px; font-size: var(--fs-small); }
+.row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.row-qty { display: grid; grid-template-columns: minmax(0, 1fr) 130px; gap: 10px; }
+.checks { display: flex; flex-wrap: wrap; gap: 8px; }
+.check { display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 14px; border: 1px solid var(--border); border-radius: var(--r-control); font-size: 0.875rem; cursor: pointer; }
+.check:has(:checked) { border-color: var(--accent-bright); background: var(--accent-soft); }
+.note { font-size: var(--fs-small); color: var(--muted); }
+.note a { color: var(--accent-ink); }
+.success { display: grid; justify-items: start; gap: 12px; animation: rise var(--dur-slow) var(--ease) both; }
+.success-ic { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: color-mix(in oklch, var(--ok) 16%, var(--surface)); color: var(--ok); }
+.success-ic .ic { width: 28px; height: 28px; stroke-width: 2.2; }
+.ref { padding: 4px 10px; border-radius: 8px; background: var(--tile); font-weight: 600; }
+
+/* ---------- Quote, help, about, auth, 404 ---------- */
+.quote-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 40px; align-items: start; padding-top: 28px; }
+.aside { position: sticky; top: 132px; display: grid; gap: 18px; padding: 24px; border-radius: var(--r-panel); background: var(--tile); }
+.aside ol { display: grid; gap: 14px; counter-reset: step; }
+.aside li { display: grid; grid-template-columns: 32px 1fr; gap: 12px; font-size: 0.875rem; counter-increment: step; }
+.aside b { display: block; font-weight: 600; }
+.band { padding: 36px 0 32px; background: linear-gradient(180deg, var(--wash), var(--page)); }
+.band-center { display: grid; justify-items: center; gap: 4px; text-align: center; }
+.band .bigsearch { margin-top: 14px; }
+.help-layout { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 48px; align-items: start; margin-top: 12px; }
+.faq-group h2 { margin: 28px 0 4px; font-size: var(--fs-h3); font-weight: 600; }
+.qa { border-bottom: 1px solid var(--border); }
+.qa summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; font-weight: 500; cursor: pointer; list-style: none; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after { content: ""; flex: none; width: 8px; height: 8px; margin-right: 6px; border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-3px) rotate(45deg); transition: transform var(--dur-base) var(--ease); }
+.qa[open] summary::after { transform: translateY(2px) rotate(-135deg); }
+.qa p { padding: 0 32px 16px 0; color: var(--muted); }
+.profile { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 24px; align-items: center; }
+.profile-mark { width: 88px; height: 88px; }
+.profile-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 8px; font-size: 0.875rem; color: var(--muted); }
+.facts-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); margin-top: 20px; padding: 18px 20px; }
+.facts-grid dd { font-size: 1.375rem; }
+.prose { display: grid; gap: 12px; max-width: 70ch; }
+.prose h2 { margin-top: 20px; }
+.auth { padding: 48px 0 24px; background: linear-gradient(180deg, var(--wash), var(--page) 70%); }
+.auth .card { width: min(100%, 460px); margin-inline: auto; }
+.lost { display: grid; justify-items: center; gap: 14px; padding-block: 56px; text-align: center; }
+.lost .tile { width: 160px; height: 160px; }
+
+/* ---------- Footer, dialog, toast ---------- */
+.foot { margin-top: 80px; border-top: 1px solid var(--border); }
+.foot-cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(260px, 1.3fr); gap: 32px; padding-block: 44px 32px; }
+.foot h2 { margin-bottom: 14px; font-size: 0.9375rem; font-weight: 600; }
+.foot li + li { margin-top: 10px; }
+.foot li a { font-size: 0.875rem; color: var(--muted); text-decoration: none; }
+.foot li a:hover, .foot-bottom a:hover { color: var(--text); text-decoration: underline; }
+.news { display: flex; gap: 8px; margin-top: 12px; }
+.news .input { min-height: 42px; border-radius: var(--r-control); }
+.foot-mid { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-block: 20px; border-top: 1px solid var(--border); font-size: var(--fs-small); color: var(--muted); }
+.foot-mid > :last-child { margin-left: auto; }
+.pay { padding: 4px 12px; border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-weight: 500; }
+.foot-bottom { padding-block: 18px 22px; background: var(--tile); font-size: 0.75rem; color: var(--muted); text-align: center; }
+.foot-bottom nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; margin-bottom: 6px; }
+.foot-bottom a { text-decoration: none; }
+.toast { position: fixed; z-index: 40; top: 128px; right: max(16px, calc((100vw - var(--wrap)) / 2)); display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 12px; align-items: center; width: min(100% - 32px, 380px); padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--surface); box-shadow: 0 20px 40px -20px var(--shadow); font-size: 0.875rem; animation: drop var(--dur-base) var(--ease) both; }
+.toast .tile { height: 56px; }
+.toast b { display: block; font-weight: 600; }
+
+/* ---------- Views and motion ---------- */
+main { min-height: 60vh; }
+.js [data-view]:not(.is-active) { display: none; }
+.js [data-view].is-active { animation: rise var(--dur-slow) var(--ease) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+@keyframes fade { from { opacity: 0; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-8px); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1199px) {
+  .ship { display: none; }
+  .util-signin span { display: none; }
+  .explore { --catw: 260px; grid-template-columns: var(--catw) repeat(2, minmax(0, 1fr)) minmax(260px, 1.4fr); }
+  .explore .most-tile:nth-of-type(3) { display: none; }
+  .pdp { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .supplier { position: static; grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; }
+  .facts-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .foot-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .foot-news { grid-column: 1 / -1; max-width: 520px; }
+}
+@media (max-width: 1023px) {
+  .explore { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .catpanel, .season { grid-column: 1 / -1; }
+  .catpanel ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .explore .most-tile:nth-of-type(3) { display: grid; }
+  .season { grid-template: none / auto 1fr auto; align-items: center; justify-items: start; }
+  .season-slide { grid-template-columns: 120px auto; justify-items: start; text-align: left; }
+  .season-slide .art { width: 120px; }
+  .results, .list-layout, .quote-layout, .help-layout { grid-template-columns: minmax(0, 1fr); }
+  .filters { display: none; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 20px; border-radius: var(--r-panel); background: var(--tile); }
+  .filters.is-open { display: grid; }
+  .filters-btn { display: inline-flex; }
+  .aside { position: static; }
+  .rfq-inner { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+}
+@media (max-width: 899px) {
+  .nav-right { display: none !important; }
+  .top-row { flex-wrap: wrap; gap: 8px 12px; padding-block: 8px; }
+  .mini-search { order: 5; flex-basis: 100%; max-width: none; }
+  html[data-route="home"] .mini-search { display: none; }
+  .trust-inner { grid-template-columns: minmax(0, 1fr); gap: 14px; padding-block: 18px; }
+  .trust-item { padding: 0; }
+  .trust-item + .trust-item { border-left: 0; }
+  .profile { grid-template-columns: auto minmax(0, 1fr); }
+  .profile .btn { grid-column: 1 / -1; justify-self: start; }
+}
+@media (max-width: 767px) {
+  .top { position: relative; }
+  .top-row { min-height: 60px; }
+  .brand { font-size: 1.125rem; }
+  .brand svg { width: 30px; height: 30px; }
+  .utils { gap: 4px; }
+  .nav-row, .tabs { justify-content: flex-start; overflow-x: auto; scrollbar-width: none; }
+  .nav-row > div { gap: 22px; }
+  .nav-right { display: flex !important; }
+  .mega-inner { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .tabs { align-self: stretch; }
+  .bigsearch-in { padding: 12px 12px 12px 16px; }
+  .tool + .tool, .cat .ic:last-child, .pc-acts a { display: none; }
+  .go-lg { min-height: 44px; padding: 0 20px; }
+  .trust-ic { width: 40px; height: 40px; border-radius: 12px; }
+  .explore { gap: 8px; }
+  .catpanel ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cat { gap: 10px; padding: 9px 10px; font-size: 0.875rem; }
+  .most-tile { padding: 10px; }
+  .most-k { font-size: 0.8125rem; }
+  .most-t { font-size: 0.75rem; }
+  .most-tile .tile { margin-top: 8px; }
+  .season { grid-template-columns: minmax(0, 1fr); justify-items: stretch; }
+  .season-h { font-size: 1.375rem; text-align: center; }
+  .dots { justify-self: center; }
+  .freight { flex-wrap: wrap; padding: 14px 18px; }
+  .freight .link { margin-left: 0; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 12px; }
+  .pc-price { font-size: 1.0625rem; }
+  .pdp, .gallery, .supplier, .filters, .row2, .profile { grid-template-columns: minmax(0, 1fr); }
+  .pdp { gap: 24px; }
+  .thumbs { order: 2; grid-template-columns: repeat(3, 64px); }
+  .line { grid-template-columns: 72px minmax(0, 1fr); }
+  .line-price { grid-column: 2; text-align: left; }
+  .facts-grid, .foot-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .profile-mark { width: 64px; height: 64px; }
+  .card { padding: 22px; }
+  .toast { top: 16px; }
+}
+@media (max-width: 559px) { .join { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <!-- Mark: two stacked cartons that read as a B -->
+  <symbol id="mark" viewBox="0 0 32 32"><defs><linearGradient id="mk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f07a1a"/><stop offset="1" stop-color="#c63d12"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#mk)"/><path d="M10.5 7.5h7.2a4.4 4.4 0 0 1 0 8.8h-7.2zM10.5 16.3h8.6a4.6 4.6 0 0 1 0 9.2h-8.6z" fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round"/></symbol>
+  <!-- Icons: 24px grid, round caps, stroke from CSS -->
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3.5H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8.5z"/><path d="M14 3.5v5h5M8.5 13h7M8.5 16.5h5"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-4 4-5.8 7.5-5.8s6.3 1.8 7.5 5.8"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3h6v1.5M8.5 10h7M8.5 13.5h7M8.5 17h4"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M10 7V4.5h4V7M6.5 7l1 13h9l1-13"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.3 2.9 7.7 7 9.5 4.1-1.8 7-5.2 7-9.5V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 7.5 12 3.5l8.5 4v9l-8.5 4-8.5-4z"/><path d="M3.5 7.5 12 11.5l8.5-4M12 11.5v9"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3.5 12.5V4h8.5l8.5 8.5-8 8z"/><circle cx="8" cy="8.5" r="1.3"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.5v2.5h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></symbol>
+  <symbol id="c-tableware" viewBox="0 0 24 24"><path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 10.5h1.5a2.5 2.5 0 0 1 0 5H16M8.5 3.5c0 1.5 1 1.5 1 3M12.5 3.5c0 1.5 1 1.5 1 3"/></symbol>
+  <symbol id="c-linen" viewBox="0 0 24 24"><path d="M4 6h16v5H4zM5 11l1.5 8h11l1.5-8"/><path d="M9 14.5h6"/></symbol>
+  <symbol id="c-glass" viewBox="0 0 24 24"><path d="M6.5 4h11l-1.5 16h-8z"/><path d="M7.3 11h9.4"/></symbol>
+  <symbol id="c-wood" viewBox="0 0 24 24"><rect x="3.5" y="8" width="13" height="10" rx="2"/><path d="M16.5 11h3a1.5 1.5 0 0 1 0 3h-3M7 11.5c2-.6 4 .6 6 0"/></symbol>
+  <symbol id="c-candle" viewBox="0 0 24 24"><rect x="8" y="10" width="8" height="10" rx="1.5"/><path d="M12 10V8.5M12 3.5c1.6 1.6 1.6 3 0 4-1.6-1-1.6-2.4 0-4z"/></symbol>
+  <symbol id="sh" viewBox="0 0 200 200"><ellipse cx="100" cy="183" rx="66" ry="7" fill="#2a1a12" opacity=".13"/></symbol>
+  <symbol id="spk" viewBox="0 0 200 200"><g fill="#3b2a22" opacity=".35"><circle cx="70" cy="100" r="1.6"/><circle cx="96" cy="122" r="1.4"/><circle cx="118" cy="96" r="1.5"/><circle cx="82" cy="146" r="1.4"/><circle cx="114" cy="152" r="1.6"/><circle cx="64" cy="128" r="1.2"/><circle cx="128" cy="130" r="1.3"/></g></symbol>
+  <!-- Product art: one drawing per product, 200 x 200 on a transparent ground; --c1 is the chosen colour -->
+  <symbol id="art-mug" viewBox="0 0 200 200"><use href="#sh"/><path d="M136 88h9a21 21 0 0 1 0 42h-11" fill="none" stroke="var(--c1,#d8c9b0)" stroke-width="12"/><path d="M50 60h88v102a18 18 0 0 1-18 18H68a18 18 0 0 1-18-18z" fill="var(--c1,#d8c9b0)"/><path d="M50 158a18 18 0 0 0 18 22h52a18 18 0 0 0 18-22z" fill="#c9a98a"/><ellipse cx="94" cy="60" rx="44" ry="9" fill="#5b463a" opacity=".55"/><use href="#spk"/><path d="M62 78v70" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".3"/></symbol>
+  <symbol id="art-espresso" viewBox="0 0 200 200"><use href="#sh"/><ellipse cx="100" cy="162" rx="76" ry="18" fill="#2a1a12" opacity=".14"/><ellipse cx="100" cy="156" rx="76" ry="18" fill="var(--c1,#ece6dc)"/><ellipse cx="100" cy="153" rx="42" ry="9" fill="#2a1a12" opacity=".08"/><path d="M134 108h7a12 12 0 0 1 0 24h-9" fill="none" stroke="var(--c1,#ece6dc)" stroke-width="8"/><path d="M62 96h76l-7 48a14 14 0 0 1-14 12H83a14 14 0 0 1-14-12z" fill="var(--c1,#ece6dc)"/><path d="M118 96h20l-7 48a14 14 0 0 1-14 12z" fill="#2a1a12" opacity=".08"/><ellipse cx="100" cy="96" rx="38" ry="8" fill="#5a3a26"/><path d="M76 106l4 36" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".35"/></symbol>
+  <symbol id="art-napkin" viewBox="0 0 200 200"><use href="#sh"/><rect x="34" y="132" width="132" height="42" rx="6" fill="var(--c1,#c9b89a)"/><rect x="40" y="94" width="120" height="42" rx="6" fill="var(--c1,#c9b89a)"/><rect x="40" y="94" width="120" height="42" rx="6" fill="#fff" opacity=".16"/><rect x="46" y="56" width="108" height="42" rx="6" fill="var(--c1,#c9b89a)"/><path d="M52 90h96M46 128h108M40 166h120" stroke="#fff" stroke-width="2" stroke-dasharray="3 4" opacity=".7"/><rect x="88" y="52" width="24" height="124" fill="#efe6d6"/><rect x="104" y="52" width="8" height="124" fill="#2a1a12" opacity=".07"/></symbol>
+  <symbol id="art-apron" viewBox="0 0 200 200"><use href="#sh"/><path d="M80 44c0-20 40-20 40 0" fill="none" stroke="#8a5a36" stroke-width="6"/><path d="M54 94 28 106M146 94l26 12" stroke="#8a5a36" stroke-width="6" stroke-linecap="round"/><path d="M76 40h48v30l24 14v82a14 14 0 0 1-14 14H66a14 14 0 0 1-14-14V84l24-14z" fill="var(--c1,#3c3f44)"/><rect x="72" y="118" width="56" height="36" rx="4" fill="#000" opacity=".18"/><path d="M100 118v36" stroke="#000" stroke-width="2" opacity=".2"/><path d="M62 92v76" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".18"/></symbol>
+  <symbol id="art-tumbler" viewBox="0 0 200 200"><use href="#sh"/><path d="M112 70h52l-6 106h-40z" fill="var(--c1,#cfe3e6)" opacity=".85"/><path d="M36 84h52l-6 92H42z" fill="var(--c1,#cfe3e6)" opacity=".9"/><path d="M39 122h46l-3 54H42zM115 116h46l-3 60h-40z" fill="#5f9fb3" opacity=".3"/><path d="M44 92h6l2 76h-5zM120 78h6l2 90h-5z" fill="#fff" opacity=".55"/><path d="M36 84h52l-6 92H42zM112 70h52l-6 106h-40z" fill="none" stroke="#2a1a12" stroke-width="2" opacity=".14"/></symbol>
+  <symbol id="art-carafe" viewBox="0 0 200 200"><use href="#sh"/><path d="M84 36h32v32c0 6 30 18 30 56v42a14 14 0 0 1-14 14H68a14 14 0 0 1-14-14v-42c0-38 30-50 30-56z" fill="#cfe3e6" opacity=".9"/><path d="M55 120h90v46a14 14 0 0 1-14 14H69a14 14 0 0 1-14-14z" fill="#5f9fb3" opacity=".35"/><path d="M84 36h32v32c0 6 30 18 30 56v42a14 14 0 0 1-14 14H68a14 14 0 0 1-14-14v-42c0-38 30-50 30-56z" fill="none" stroke="#2a1a12" stroke-width="2" opacity=".14"/><path d="M80 16h40l-3 24H83z" fill="#e3eff1" stroke="#2a1a12" stroke-opacity=".14" stroke-width="2"/><path d="M70 104v58" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".6"/></symbol>
+  <symbol id="art-board" viewBox="0 0 200 200"><use href="#sh"/><rect x="18" y="84" width="132" height="84" rx="12" fill="#b7814f"/><path d="M146 108h30a10 10 0 0 1 0 20h-30z" fill="#b7814f"/><circle cx="174" cy="118" r="4" fill="var(--tile,#f4efe9)"/><path d="M30 104c30-6 60 6 106-2M28 128c34-6 66 8 108 0M32 150c28-4 60 4 100-2" fill="none" stroke="#8f5c33" stroke-width="2.5" stroke-linecap="round" opacity=".55"/><rect x="18" y="160" width="132" height="8" rx="4" fill="#8f5c33" opacity=".45"/></symbol>
+  <symbol id="art-mailer" viewBox="0 0 200 200"><use href="#sh"/><path d="M30 92 100 72l70 20v70l-70 20-70-20z" fill="#c49a6c"/><path d="M100 112v70l70-20V92z" fill="#a97c50"/><path d="M30 92l70 20 70-20" fill="none" stroke="#8c6037" stroke-width="2.5" stroke-linejoin="round"/><path d="M62 82l70 20" stroke="#e6d0ae" stroke-width="12"/><circle cx="66" cy="140" r="12" fill="none" stroke="#8c6037" stroke-width="3" opacity=".7"/><path d="M60 140h12" stroke="#8c6037" stroke-width="3" opacity=".7"/></symbol>
+  <symbol id="art-cup" viewBox="0 0 200 200"><use href="#sh"/><path d="M62 64h76l-10 114H72z" fill="var(--c1,#c49a6c)"/><path d="M66 104h68l-3 38H69z" fill="#2a1a12" opacity=".14"/><path d="M64 52a36 10 0 0 1 72 0z" fill="#ddd7cc"/><rect x="56" y="50" width="88" height="16" rx="6" fill="#efece6"/><circle cx="100" cy="123" r="11" fill="none" stroke="#fff" stroke-width="3" opacity=".8"/><path d="M74 74l6 94" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".25"/></symbol>
+  <symbol id="art-pillar" viewBox="0 0 200 200"><use href="#sh"/><rect x="44" y="70" width="56" height="110" rx="10" fill="var(--c1,#f1e8d6)"/><rect x="84" y="70" width="16" height="110" rx="8" fill="#2a1a12" opacity=".07"/><rect x="108" y="100" width="50" height="80" rx="10" fill="var(--c1,#f1e8d6)"/><rect x="142" y="100" width="16" height="80" rx="8" fill="#2a1a12" opacity=".07"/><path d="M72 70v-9M133 100v-9" stroke="#3b2a22" stroke-width="3" stroke-linecap="round"/><path d="M72 58c-7-8 0-18 0-25 0 7 7 17 0 25z" fill="#f2a33a"/><path d="M54 84v84" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".35"/></symbol>
+</svg>
+
+<!-- Real product photos: one img per product, data-photo set to the product id, src in images/, width, height and an empty alt. Cards, the product page and the list then use it instead of the drawn art, and inline.mjs embeds it. -->
+<div id="photos" hidden></div>
+
+<div class="notice"><div class="wrap notice-inner"><p>Trade accounts get their <strong>first three samples free</strong>.</p><a href="#/join">Open a trade account<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></div>
+
+<header class="top" id="top">
+  <div class="wrap top-row">
+    <a class="brand" href="#/" aria-label="Brindlewood Trading, home"><svg aria-hidden="true"><use href="#mark"/></svg>Brindlewood<span class="brand-sub">Trading</span></a>
+    <form class="mini-search" data-search="mini" role="search">
+      <label class="sr-only" for="q2">Search products</label>
+      <input id="q2" name="q" type="search" autocomplete="off" placeholder="Search the catalog">
+      <button class="btn btn-solid" type="submit"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>Search</button>
+    </form>
+    <div class="utils">
+      <label class="util util-2 ship"><small>Ship to</small><select data-countries data-ship aria-label="Ship to"><option>Singapore</option></select></label>
+      <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark theme"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="icon-btn" href="#/list" aria-label="Inquiry list" data-list-link><svg class="ic" aria-hidden="true"><use href="#i-list"/></svg><span class="count" data-list-count hidden>0</span></a>
+      <a class="util util-signin" href="#/signin"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><span>Sign in</span></a>
+      <a class="btn btn-solid join" href="#/join">Create account</a>
+    </div>
+  </div>
+  <nav class="wrap nav-row" aria-label="Main">
+    <div>
+      <button class="nav-all" type="button" aria-expanded="false" aria-controls="mega" data-mega><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg>All categories</button>
+      <a href="#/products?ready=1">Ready to ship</a>
+      <a href="#/products?logo=1">Custom orders</a>
+      <a href="#/products?tab=workshops">Workshops</a>
+    </div>
+    <div class="nav-right">
+      <a href="#/about">About us</a>
+      <a href="#/help">Help center</a>
+      <a href="#/quote">Request a quote</a>
+    </div>
+  </nav>
+  <div class="mega" id="mega" hidden data-js><div class="wrap mega-inner"><ul class="mega-cats" data-mega-cats></ul><div class="mega-panel" data-mega-panel></div></div></div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- ================= Home ================= -->
+<div data-view="home">
+  <section class="hero" aria-labelledby="home-h">
+    <div class="wrap hero-inner">
+      <h1 class="hero-h" id="home-h">Wholesale tableware, linen and packaging for cafés, hotels and shops, made by six partner workshops</h1>
+      <div class="tabs" role="group" aria-label="Search for">
+        <button class="tab" type="button" aria-pressed="true" data-mode="products">Products</button>
+        <button class="tab" type="button" aria-pressed="false" data-mode="workshops">Workshops</button>
+        <span class="tab-rule" aria-hidden="true"></span>
+        <button class="tab" type="button" aria-pressed="false" data-mode="quote">Request a quote<span class="tab-new">24 h</span></button>
+      </div>
+      <form class="bigsearch" id="bigsearch" data-search="big" role="search">
+        <div class="bigsearch-in">
+          <label class="sr-only" for="q" data-q-label>Search products</label>
+          <input id="q" name="q" type="search" autocomplete="off" placeholder="Stoneware mugs, linen napkins, kraft boxes…">
+          <div class="bigsearch-tools">
+            <a class="tool" href="#/quote?section=attach"><svg class="ic" aria-hidden="true"><use href="#i-file"/></svg>Send a spec sheet</a>
+            <a class="tool" href="#/products?ready=1"><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg>Ready to ship only</a>
+            <button class="btn btn-solid go-lg" type="submit"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><span data-go-label>Search</span></button>
+          </div>
+        </div>
+      </form>
+      <p class="popular"><span>Popular:</span><a href="#/products?q=mug">stoneware mug</a><a href="#/products?q=napkins">linen napkins</a><a href="#/products?q=mailer">mailer box</a><a href="#/products?q=candle">pillar candle</a></p>
+    </div>
+  </section>
+
+  <section class="trust" aria-label="Why buyers order here">
+    <div class="wrap trust-inner">
+      <div class="trust-item"><span class="trust-ic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span><div><h2 class="trust-h">Checked workshops</h2><p>We visit every partner once a year and test each production run before it ships.</p></div></div>
+      <div class="trust-item"><span class="trust-ic"><svg class="ic" aria-hidden="true"><use href="#i-box"/></svg></span><div><h2 class="trust-h">Samples before you commit</h2><p>Order one of anything. The sample price comes off your first order.</p></div></div>
+      <div class="trust-item"><span class="trust-ic"><svg class="ic" aria-hidden="true"><use href="#i-tag"/></svg></span><div><h2 class="trust-h">Prices by quantity</h2><p>Every product shows its price ladder up front: the more you order, the less each costs.</p></div></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="explore" aria-label="Browse the catalog">
+      <nav class="catpanel" aria-label="Categories">
+        <ul data-catpanel>
+          <li class="cat-item" data-cat="tableware"><a class="cat" href="#/products?cat=tableware"><svg class="ic" aria-hidden="true"><use href="#c-tableware"/></svg>Tableware<svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+          <li class="cat-item" data-cat="linen"><a class="cat" href="#/products?cat=linen"><svg class="ic" aria-hidden="true"><use href="#c-linen"/></svg>Kitchen linen<svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+          <li class="cat-item" data-cat="glass"><a class="cat" href="#/products?cat=glass"><svg class="ic" aria-hidden="true"><use href="#c-glass"/></svg>Glassware<svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+          <li class="cat-item" data-cat="wood"><a class="cat" href="#/products?cat=wood"><svg class="ic" aria-hidden="true"><use href="#c-wood"/></svg>Wood and bamboo<svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+          <li class="cat-item" data-cat="packaging"><a class="cat" href="#/products?cat=packaging"><svg class="ic" aria-hidden="true"><use href="#i-box"/></svg>Packaging<svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+          <li class="cat-item" data-cat="candles"><a class="cat" href="#/products?cat=candles"><svg class="ic" aria-hidden="true"><use href="#c-candle"/></svg>Candles and scent<svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+        </ul>
+      </nav>
+      <a class="most-tile" href="#/products?q=mug"><span class="most-k">Most requested</span><span class="most-t">Stoneware mugs</span><span class="tile"><svg class="art" viewBox="0 0 200 200" aria-hidden="true" style="--c1:#7e8f69"><use href="#art-mug"/></svg></span></a>
+      <a class="most-tile" href="#/products?q=napkins"><span class="most-k">Most requested</span><span class="most-t">Linen napkins</span><span class="tile"><svg class="art" viewBox="0 0 200 200" aria-hidden="true"><use href="#art-napkin"/></svg></span></a>
+      <a class="most-tile" href="#/products?q=mailer"><span class="most-k">Most requested</span><span class="most-t">Kraft mailer boxes</span><span class="tile"><svg class="art" viewBox="0 0 200 200" aria-hidden="true"><use href="#art-mailer"/></svg></span></a>
+      <section class="season" aria-labelledby="season-h">
+        <h2 class="season-h" id="season-h">New this season</h2>
+        <div class="season-slides">
+          <a class="season-slide is-on" href="#/product?id=carafe"><svg class="art" viewBox="0 0 200 200" aria-hidden="true"><use href="#art-carafe"/></svg><span>Water carafe with tumbler lid, from $9.50</span></a>
+          <a class="season-slide" href="#/product?id=cup"><svg class="art" viewBox="0 0 200 200" aria-hidden="true"><use href="#art-cup"/></svg><span>Double-wall takeaway cups with lids, from $0.12</span></a>
+          <a class="season-slide" href="#/product?id=apron"><svg class="art" viewBox="0 0 200 200" aria-hidden="true" style="--c1:#45607e"><use href="#art-apron"/></svg><span>Canvas aprons with leather straps, from $8.60</span></a>
+        </div>
+        <div class="dots" data-dots data-js></div>
+      </section>
+    </section>
+
+    <p class="freight"><svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg><span><b>Free sea freight</b> on orders over $3,000 to 40 countries</span><a class="link" href="#/help?section=shipping">How freight works<svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></a></p>
+
+    <section class="block" aria-labelledby="picks-h" data-js>
+      <div class="block-head"><h2 class="h2" id="picks-h">Picked for café, hotel and shop buyers</h2><a class="link" href="#/products">View all products<svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+      <ul class="grid" data-grid="picks"></ul>
+    </section>
+  </div>
+
+  <section class="rfq" aria-labelledby="rfq-h">
+    <div class="wrap rfq-inner">
+      <div>
+        <p class="kicker">Request for quotation</p>
+        <h2 class="rfq-h" id="rfq-h">Tell us what you need. Get prices from the right workshops within 24 hours.</h2>
+        <ol class="rfq-steps"><li>Describe the item, quantity and any custom work</li><li>We match it to up to three partner workshops</li><li>Compare the quotes, then order a sample</li></ol>
+      </div>
+      <form class="card form" data-form="quick" novalidate>
+        <div class="field"><label for="k-item">What do you need?</label><input class="input" id="k-item" name="item" required minlength="3" placeholder="For example: speckled mugs with our logo" aria-describedby="k-item-e" data-msg="Name the product you need."><p class="err" id="k-item-e"></p></div>
+        <div class="row-qty">
+          <div class="field"><label for="k-qty">Quantity</label><input class="input" id="k-qty" name="qty" type="number" inputmode="numeric" min="1" required aria-describedby="k-qty-e" data-msg="Enter a quantity."><p class="err" id="k-qty-e"></p></div>
+          <div class="field"><label for="k-unit">Unit</label><select class="input" id="k-unit" name="unit"><option>pieces</option><option>sets</option><option>packs</option><option>cartons</option></select></div>
+        </div>
+        <button class="btn btn-solid" type="submit">Continue to details<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </form>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="block" aria-labelledby="ws-h" data-js>
+      <div class="block-head"><h2 class="h2" id="ws-h">Partner workshops</h2><a class="link" href="#/products?tab=workshops">All six workshops<svg class="ic" aria-hidden="true"><use href="#i-right"/></svg></a></div>
+      <ul class="ws-grid" data-ws-list="3"></ul>
+    </section>
+
+  </div>
+</div>
+
+<!-- ================= Results: products and workshops ================= -->
+<div data-view="products">
+  <div class="wrap page-top">
+    <nav class="rtabs" aria-label="Search in">
+      <a class="rtab" href="#/products" data-rtab="products" aria-current="page">Products</a>
+      <a class="rtab" href="#/products?tab=workshops" data-rtab="workshops">Workshops</a>
+    </nav>
+    <div class="results-head"><h1 class="h1" data-results-h>All products</h1><p class="muted" data-results-sub>Ten products from six partner workshops</p></div>
+    <div data-results-body>
+      <div class="selectby" role="group" aria-label="Select by" data-js>
+        <span>Select by:</span>
+        <button class="chip" type="button" aria-pressed="false" data-chip="ready"><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg>Ready to ship</button>
+        <button class="chip" type="button" aria-pressed="false" data-chip="logo">Custom logo</button>
+        <button class="chip" type="button" aria-pressed="false" data-chip="moq">Min. order ≤ 100</button>
+        <button class="chip" type="button" aria-pressed="false" data-chip="fast">Ships in 7 days</button>
+        <button class="chip" type="button" aria-pressed="false" data-chip="eco">Recycled or natural</button>
+        <button class="link-btn" type="button" data-clear>Clear all</button>
+      </div>
+      <div class="results">
+        <aside class="filters" id="filters" aria-label="Filters" data-js>
+          <div><h2>Category</h2><div data-f-cats></div></div>
+          <div><h2>Workshop</h2><div data-f-ws></div></div>
+        </aside>
+        <section aria-label="Results">
+          <div class="toolbar" data-js>
+            <button class="btn btn-line btn-sm filters-btn" type="button" aria-expanded="false" aria-controls="filters" data-filters><svg class="ic" aria-hidden="true"><use href="#i-filter"/></svg>Filters</button>
+            <p class="small muted" data-count></p>
+            <label class="sort">Sort by <select class="input" id="sort"><option value="match">Best match</option><option value="price">Lowest unit price</option><option value="moq">Lowest minimum order</option><option value="lead">Fastest lead time</option></select></label>
+          </div>
+          <ul class="grid" data-grid="results" data-js></ul>
+          <p class="empty nojs">The catalog needs JavaScript. <a class="link" href="#/quote">Ask us for the price list</a></p>
+          <div class="empty" data-empty hidden><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><h2 class="h3">Nothing matches all of these filters</h2><p class="muted">Remove a filter, or ask us: we often source items that are not listed yet.</p><p><button class="btn btn-line btn-sm" type="button" data-clear>Clear filters</button> <a class="btn btn-solid btn-sm" href="#/quote">Request a quote</a></p></div>
+        </section>
+      </div>
+    </div>
+    <ul class="ws-grid" data-ws-results hidden></ul>
+    <div class="empty" data-ws-empty hidden><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><h2 class="h3">No workshop matches that search</h2><p class="muted">Try a material such as glass or linen, or a country.</p></div>
+  </div>
+</div>
+
+<!-- ================= Product (the static markup is the first product, for pages without JavaScript) ================= -->
+<div data-view="product">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a><svg class="ic" aria-hidden="true"><use href="#i-right"/></svg><a href="#/products?cat=tableware" data-p-cat>Tableware</a><svg class="ic" aria-hidden="true"><use href="#i-right"/></svg><span aria-current="page" data-p-short>Stoneware mug</span></nav>
+    <div class="pdp">
+      <div class="gallery">
+        <div class="thumbs" data-thumbs data-js></div>
+        <div class="stage" data-stage><svg class="art" viewBox="0 0 200 200" aria-hidden="true"><use href="#art-mug"/></svg></div>
+      </div>
+      <div>
+        <h1 class="pdp-title" data-p-name>Speckled stoneware mug, 350 ml, reactive glaze</h1>
+        <p class="pdp-meta"><span><svg class="star" aria-hidden="true"><use href="#i-star"/></svg><b data-p-rating>4.8</b>/5</span><span data-p-reviews>36 buyer reviews</span><span data-p-lead>Lead time from 7 days</span></p>
+        <div class="tiers" data-tiers aria-label="Unit price by quantity" role="group">
+          <div class="tier is-on"><span class="tier-q">50–199 pieces</span><span class="tier-p">$5.40</span></div>
+          <div class="tier"><span class="tier-q">200–999 pieces</span><span class="tier-p">$4.60</span></div>
+          <div class="tier"><span class="tier-q">≥ 1,000 pieces</span><span class="tier-p">$3.90</span></div>
+        </div>
+        <dl class="facts">
+          <dt>Sample</dt><dd data-p-sample>$8.00 for one piece, ships in 5 working days</dd>
+          <dt>Workshop</dt><dd><a class="link" href="#/products?ws=harrowmere" data-p-wslink>Harrowmere Kiln</a></dd>
+        </dl>
+        <fieldset class="opts" data-opts-box><legend>Colour: <span data-opt-name>Oat</span></legend><div class="swatches" data-opts></div></fieldset>
+        <table class="lead table" data-lead>
+          <caption>Lead time</caption>
+          <tr><th scope="row">Quantity (pieces)</th><td>50–199</td><td>200–999</td><td>≥ 1,000</td></tr>
+          <tr><th scope="row">Days</th><td>7</td><td>15</td><td>25</td></tr>
+        </table>
+        <form class="orderbox" data-form="order" novalidate data-js>
+          <label for="qty">Quantity (<span data-p-unit>pieces</span>)</label>
+          <div class="qty"><button type="button" data-step="-1" aria-label="Fewer"><svg class="ic" aria-hidden="true"><use href="#i-minus"/></svg></button><input id="qty" type="number" inputmode="numeric" min="50" value="50" aria-describedby="qty-e qty-note"><button type="button" data-step="1" aria-label="More"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+          <p class="err" id="qty-e"></p>
+          <p class="estimate" id="qty-note" data-estimate></p>
+          <div class="actions">
+            <button class="btn btn-solid" type="submit">Send inquiry</button>
+            <button class="btn btn-line" type="button" data-sample>Order a sample</button>
+            <button class="link-btn" type="button" data-to-list><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg>Add to inquiry list</button>
+          </div>
+        </form>
+      </div>
+      <aside class="supplier" aria-label="Workshop" data-supplier>
+        <div class="ws-head"><span class="ws-mono" aria-hidden="true">H</span><div><h2 class="ws-name">Harrowmere Kiln</h2><p class="ws-meta"><span class="vf"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>Verified</span><span>14 yrs</span><span>Portugal</span></p></div></div>
+        <dl class="ws-stats"><div><dt>Rating</dt><dd>4.8/5</dd></div><div><dt>Replies within</dt><dd>6 h</dd></div><div><dt>On time</dt><dd>97%</dd></div></dl>
+        <a class="btn btn-line btn-sm" href="#/products?ws=harrowmere">View all products</a>
+      </aside>
+    </div>
+    <nav class="subnav" aria-label="On this page"><a class="chip" href="#p-details">Product details</a><a class="chip" href="#p-custom">Customization</a><a class="chip" href="#p-packing">Packaging and delivery</a></nav>
+    <div class="pdp-more">
+      <section id="p-details" aria-labelledby="p-details-h"><h2 class="h2" id="p-details-h">Product details</h2><table class="spec"><tbody data-specs><tr><th scope="row">Material</th><td>Stoneware, lead-free glaze</td></tr><tr><th scope="row">Size</th><td>350 ml, 8.5 × 9.5 cm</td></tr><tr><th scope="row">Care</th><td>Dishwasher and microwave safe</td></tr></tbody></table></section>
+      <section id="p-custom" aria-labelledby="p-custom-h" data-js><h2 class="h2" id="p-custom-h">Customization</h2><table class="spec"><tbody data-customs></tbody></table></section>
+      <section id="p-packing" aria-labelledby="p-packing-h"><h2 class="h2" id="p-packing-h">Packaging and delivery</h2><table class="spec"><tbody><tr><th scope="row">Carton</th><td data-p-pack>36 per carton, 13 kg</td></tr><tr><th scope="row">Shipping</th><td>Sea or air from the workshop's nearest port, quoted with your order</td></tr><tr><th scope="row">Terms</th><td>FOB or delivered duty paid (DDP), your choice</td></tr></tbody></table></section>
+    </div>
+    <section class="block" aria-labelledby="also-h" data-js>
+      <div class="block-head"><h2 class="h2" id="also-h">Buyers also requested</h2></div>
+      <ul class="grid" data-grid="also"></ul>
+    </section>
+  </div>
+</div>
+
+<!-- ================= Inquiry list ================= -->
+<div data-view="list">
+  <div class="wrap page-top">
+    <h1 class="h1">Inquiry list</h1>
+    <p class="muted">One message covers every item. Prices are estimates by quantity; we confirm them with freight in our reply.</p>
+    <div class="list-layout">
+      <section aria-label="Items">
+        <ul data-lines></ul>
+        <div class="empty" data-list-empty><svg class="ic" aria-hidden="true"><use href="#i-list"/></svg><h2 class="h3">Your inquiry list is empty</h2><p class="muted">Add products from the catalog, or describe what you need in a quote request.</p><p><a class="btn btn-line btn-sm" href="#/products">Browse products</a> <a class="btn btn-solid btn-sm" href="#/quote">Request a quote</a></p></div>
+      </section>
+      <div class="card" data-summary hidden>
+        <div class="sum"><div><span>Items</span><span data-sum-items>0</span></div><div><span>Freight</span><span>Quoted in our reply</span></div><div class="total"><span>Estimated goods total</span><span data-sum-total>$0.00</span></div></div>
+        <form class="form" data-form="inquiry" novalidate>
+          <div data-fields class="form">
+            <div class="row2">
+              <div class="field"><label for="q-name">Your name</label><input class="input" id="q-name" name="first" autocomplete="name" required aria-describedby="q-name-e" data-msg="Enter your name."><p class="err" id="q-name-e"></p></div>
+              <div class="field"><label for="q-co">Business name</label><input class="input" id="q-co" name="company" autocomplete="organization" required aria-describedby="q-co-e" data-msg="Enter your business name."><p class="err" id="q-co-e"></p></div>
+            </div>
+            <div class="field"><label for="q-mail">Work email</label><input class="input" id="q-mail" name="email" type="email" autocomplete="email" required aria-describedby="q-mail-e" data-msg="Enter your email."><p class="err" id="q-mail-e"></p></div>
+            <div class="field"><label for="q-country">Deliver to</label><select class="input" id="q-country" name="country" data-countries></select></div>
+            <div class="field"><label for="q-msg">Message <span class="opt">(optional)</span></label><textarea class="input" id="q-msg" name="message" rows="3" placeholder="Colours, logo, packing, the date you need the goods"></textarea></div>
+            <button class="btn btn-solid" type="submit">Send inquiry</button>
+            <p class="note">We reply within 24 hours on working days. Nothing is charged until you approve a quote.</p>
+          </div>
+          <div class="success" data-success hidden><span class="success-ic"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><h2 class="h2">Inquiry sent<span data-name></span></h2><p>Your reference is <span class="ref" data-ref>BW-Q-24117</span>. A buyer's assistant will answer within 24 hours with prices, lead times and freight.</p><a class="btn btn-line btn-sm" href="#/products">Keep browsing</a></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= Request for quotation ================= -->
+<div data-view="quote">
+  <div class="wrap quote-layout">
+    <form class="card form" data-form="quote" novalidate>
+      <div><h1 class="h1">Request a quotation</h1><p class="muted">Describe what you need once. We ask the right workshops and send you prices by quantity.</p></div>
+      <div data-fields class="form">
+        <fieldset>
+          <legend>What you need</legend>
+          <div class="field"><label for="r-item">Product</label><input class="input" id="r-item" name="item" required minlength="3" placeholder="For example: stonewashed linen napkins" aria-describedby="r-item-e" data-msg="Name the product you need."><p class="err" id="r-item-e"></p></div>
+            <div class="row-qty">
+              <div class="field"><label for="r-qty">Quantity</label><input class="input" id="r-qty" name="qty" type="number" inputmode="numeric" min="1" required aria-describedby="r-qty-e" data-msg="Enter a quantity."><p class="err" id="r-qty-e"></p></div>
+              <div class="field"><label for="r-unit">Unit</label><select class="input" id="r-unit" name="unit"><option>pieces</option><option>sets</option><option>packs</option><option>cartons</option></select></div>
+            </div>
+          <div class="field"><span>Custom work <span class="opt">(optional)</span></span><div class="checks"><label class="check"><input type="checkbox" name="custom" value="logo">Logo print</label><label class="check"><input type="checkbox" name="custom" value="colour">Own colour</label><label class="check"><input type="checkbox" name="custom" value="packaging">Printed packaging</label><label class="check"><input type="checkbox" name="custom" value="size">Custom size</label></div></div>
+          <div class="field"><label for="r-detail">Details</label><textarea class="input" id="r-detail" name="message" required minlength="20" placeholder="Materials, sizes, colours, target price per unit, anything a workshop needs to know" aria-describedby="r-detail-e" data-msg="Add a few details for the workshops."></textarea><p class="err" id="r-detail-e"></p></div>
+          <div class="field" id="attach"><label for="r-file">Spec sheet or drawing <span class="opt">(optional, PDF or image)</span></label><input class="input" id="r-file" name="file" type="file" accept=".pdf,image/*"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Delivery</legend>
+          <div class="field"><label for="r-country">Deliver to</label><select class="input" id="r-country" name="country" data-countries></select></div>
+        </fieldset>
+        <fieldset>
+          <legend>Your details</legend>
+          <div class="row2">
+            <div class="field"><label for="r-name">Your name</label><input class="input" id="r-name" name="first" autocomplete="name" required aria-describedby="r-name-e" data-msg="Enter your name."><p class="err" id="r-name-e"></p></div>
+            <div class="field"><label for="r-mail">Work email</label><input class="input" id="r-mail" name="email" type="email" autocomplete="email" required aria-describedby="r-mail-e" data-msg="Enter your email."><p class="err" id="r-mail-e"></p></div>
+          </div>
+        </fieldset>
+        <div class="actions"><button class="btn btn-solid" type="submit">Submit request</button><p class="note">By sending this you agree to our <a href="#/legal?section=terms">terms of trade</a>.</p></div>
+      </div>
+      <div class="success" data-success hidden><span class="success-ic"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><h2 class="h2">Request received<span data-name></span></h2><p>Your reference is <span class="ref" data-ref>BW-Q-24117</span>. Expect up to three quotes by email within 24 hours.</p><p class="actions"><a class="btn btn-line btn-sm" href="#/products">Browse products</a><a class="btn btn-line btn-sm" href="#/help?section=samples">How samples work</a></p></div>
+    </form>
+    <aside class="aside" aria-labelledby="how-q">
+      <h2 class="h3" id="how-q">How quotes work</h2>
+      <ol><li><span><b>We read your request</b>A buyer's assistant checks it and asks if anything is unclear.</span></li><li><span><b>Workshops price it</b>Up to three partners quote by quantity tier, with lead times.</span></li><li><span><b>You compare and decide</b>Order a sample first, or go straight to production.</span></li></ol>
+      <p class="note">Average first reply: under 9 hours on working days.</p>
+    </aside>
+  </div>
+</div>
+
+<!-- ================= Help center ================= -->
+<div data-view="help">
+  <section class="band"><div class="wrap band-center"><h1 class="h1">Help center</h1><p class="muted">Ordering, samples, payment and freight, answered.</p>
+    <div class="bigsearch" role="search"><div class="bigsearch-in"><label class="sr-only" for="faq-q">Search the answers</label><input id="faq-q" type="search" placeholder="Search the answers, for example: deposit" data-faq-search></div></div></div></section>
+  <div class="wrap help-layout">
+    <div data-faq>
+      <section class="faq-group" id="ordering"><h2>Ordering and minimums</h2>
+        <details class="qa"><summary>What is a minimum order?</summary><p>The smallest quantity a workshop will make in one run. It is on every product, next to the price ladder.</p></details>
+      </section>
+      <section class="faq-group" id="samples"><h2>Samples</h2>
+        <details class="qa"><summary>How do samples work?</summary><p>Order one of any item from its product page. It ships in five working days, and the price comes off your first order of that item.</p></details>
+      </section>
+      <section class="faq-group" id="payment"><h2>Payment</h2>
+        <details class="qa"><summary>How do I pay?</summary><p>A 30% deposit by bank transfer or card starts production; the balance is due when we send photos of the finished goods.</p></details>
+        <details class="qa"><summary>Do you offer payment terms?</summary><p>After three completed orders, trade accounts can apply for 30-day terms.</p></details>
+      </section>
+      <section class="faq-group" id="shipping"><h2>Shipping and freight</h2>
+        <details class="qa"><summary>Which delivery terms do you quote?</summary><p>FOB from the workshop's port, or delivered duty paid (DDP) to your door. Sea freight is free on orders over $3,000 and takes three to six weeks.</p></details>
+      </section>
+      <section class="faq-group" id="quality"><h2>Quality and returns</h2>
+        <details class="qa"><summary>What if goods arrive damaged?</summary><p>Send photos within 14 days of delivery. We replace or refund damaged units in the next shipment.</p></details>
+      </section>
+      <div class="empty" data-faq-empty hidden><h2 class="h3">No answer matches that search</h2><p class="muted">Ask us with the form; we reply within a working day.</p></div>
+    </div>
+    <form class="card form" id="contact" data-form="contact" novalidate>
+      <h2 class="h2">Ask a question</h2>
+      <div data-fields class="form">
+        <div class="field"><label for="c-name">Your name</label><input class="input" id="c-name" name="first" autocomplete="name" required aria-describedby="c-name-e" data-msg="Enter your name."><p class="err" id="c-name-e"></p></div>
+        <div class="field"><label for="c-mail">Email</label><input class="input" id="c-mail" name="email" type="email" autocomplete="email" required aria-describedby="c-mail-e" data-msg="Enter your email."><p class="err" id="c-mail-e"></p></div>
+        <div class="field"><label for="c-topic">Topic</label><select class="input" id="c-topic" name="topic"><option>An order in progress</option><option>Samples</option><option>Payment and terms</option><option>Freight</option><option>Something else</option></select></div>
+        <div class="field"><label for="c-msg">Message</label><textarea class="input" id="c-msg" name="message" required minlength="20" aria-describedby="c-msg-e" data-msg="Write your question."></textarea><p class="err" id="c-msg-e"></p></div>
+        <button class="btn btn-solid" type="submit">Send question</button>
+      </div>
+      <div class="success" data-success hidden><span class="success-ic"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><h2 class="h2">Thanks<span data-name></span></h2><p>We have your question and will answer by email within one working day.</p></div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= About: the company profile ================= -->
+<div data-view="about">
+  <section class="band"><div class="wrap">
+    <div class="card profile">
+      <svg class="profile-mark" aria-hidden="true"><use href="#mark"/></svg>
+      <div><p class="kicker">Trading company, founded 2014</p><h1 class="h1">Brindlewood Trading</h1><p class="profile-meta"><span class="vf"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>Verified</span><span>Singapore</span><span>Ships to 40 countries</span><span>Replies within 24 h</span></p></div>
+      <a class="btn btn-solid" href="#/quote">Request a quote</a>
+    </div>
+    <dl class="ws-stats facts-grid"><div><dt>Founded</dt><dd>2014</dd></div><div><dt>Team</dt><dd>18</dd></div><div><dt>Warehouse</dt><dd>1,600 m²</dd></div><div><dt>Workshops</dt><dd>6</dd></div><div><dt>Buyers served</dt><dd>2,300+</dd></div><div><dt>Countries</dt><dd>40</dd></div></dl>
+  </div></section>
+  <div class="wrap">
+    <div class="prose">
+      <h2 class="h2">What we do</h2>
+      <p>We are a small trading company that sits between independent workshops and the cafés, hotels and shops that buy from them. We find the makers, agree fair prices by quantity, check every run and handle the paperwork and freight, so a buyer deals with one company and one invoice.</p>
+      <p>Every product in the catalog comes from one of six partner workshops we have visited in person. When you need something we do not list, we ask them first.</p>
+      <h2 class="h2" id="quality-checks">How we check quality</h2>
+      <p>We audit each workshop once a year, approve a golden sample before every new run, and inspect a share of every order before it leaves: finish, size, colour, packing and carton labels. You get the inspection photos with your balance invoice.</p>
+    </div>
+    <section class="block" id="workshops" aria-labelledby="ab-ws-h" data-js><div class="block-head"><h2 class="h2" id="ab-ws-h">Our partner workshops</h2></div><ul class="ws-grid" data-ws-list="6"></ul></section>
+  </div>
+</div>
+
+<!-- ================= Sign in and create account ================= -->
+<div data-view="signin">
+  <div class="auth"><div class="wrap">
+    <form class="card form" data-form="login" novalidate>
+      <div><h1 class="h1">Sign in</h1><p class="muted">Track inquiries, quotes and orders in one place.</p></div>
+      <div data-fields class="form">
+        <div class="field"><label for="l-mail">Email</label><input class="input" id="l-mail" name="email" type="email" autocomplete="email" required aria-describedby="l-mail-e" data-msg="Enter your email."><p class="err" id="l-mail-e"></p></div>
+        <div class="field"><label for="l-pass">Password</label><input class="input" id="l-pass" name="password" type="password" autocomplete="current-password" required minlength="8" aria-describedby="l-pass-e" data-msg="Enter your password."><p class="err" id="l-pass-e"></p></div>
+        <label class="f-opt"><input type="checkbox" name="remember">Keep me signed in on this device</label>
+        <button class="btn btn-solid" type="submit">Sign in</button>
+        <p class="note">New here? <a href="#/join">Create a trade account</a></p>
+      </div>
+      <div class="success" data-success hidden><span class="success-ic"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><h2 class="h2">Signed in</h2><p class="muted">This is a sample sign-in: connect a real account system before launch.</p><a class="btn btn-line btn-sm" href="#/list">Open your inquiry list</a></div>
+    </form>
+  </div></div>
+</div>
+
+<div data-view="join">
+  <div class="auth"><div class="wrap">
+    <form class="card form" data-form="signup" novalidate>
+      <div><h1 class="h1">Create a trade account</h1><p class="muted">Free samples, saved inquiries and trade terms after three orders.</p></div>
+      <div data-fields class="form">
+        <div class="row2">
+          <div class="field"><label for="j-name">Your name</label><input class="input" id="j-name" name="first" autocomplete="name" required aria-describedby="j-name-e" data-msg="Enter your name."><p class="err" id="j-name-e"></p></div>
+          <div class="field"><label for="j-co">Business name</label><input class="input" id="j-co" name="company" autocomplete="organization" required aria-describedby="j-co-e" data-msg="Enter your business name."><p class="err" id="j-co-e"></p></div>
+        </div>
+        <div class="field"><label for="j-mail">Work email</label><input class="input" id="j-mail" name="email" type="email" autocomplete="email" required aria-describedby="j-mail-e" data-msg="Enter your email."><p class="err" id="j-mail-e"></p></div>
+        <div class="field"><label for="j-pass">Password</label><input class="input" id="j-pass" name="password" type="password" autocomplete="new-password" required minlength="8" aria-describedby="j-pass-e" data-msg="Choose a password."><p class="err" id="j-pass-e"></p></div>
+        <label class="f-opt"><input type="checkbox" name="terms" required aria-describedby="j-terms-e" data-msg="Accept the terms to continue.">I accept the <a class="link" href="#/legal?section=terms">terms of trade</a></label><p class="err" id="j-terms-e"></p>
+        <button class="btn btn-solid" type="submit">Create account</button>
+        <p class="note">Already have an account? <a href="#/signin">Sign in</a></p>
+      </div>
+      <div class="success" data-success hidden><span class="success-ic"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span><h2 class="h2">Welcome<span data-name></span></h2><p class="muted">We check new trade accounts within a working day and email you when it is ready.</p><a class="btn btn-line btn-sm" href="#/products">Browse the catalog</a></div>
+    </form>
+  </div></div>
+</div>
+
+<!-- ================= Legal and 404 ================= -->
+<div data-view="legal">
+  <div class="wrap page-top prose">
+    <h1 class="h1">Privacy and terms of trade</h1>
+    <p class="muted">Sample text. Replace it with your own policies before you publish.</p>
+    <h2 class="h2" id="privacy">Privacy</h2>
+    <p>We use the details you send us to answer inquiries, prepare quotes and deliver orders. We share them with the workshop making your order and the freight company carrying it, and with no one else.</p>
+    <p>Ask us at any time for a copy of what we hold about you, or to delete it.</p>
+    <h2 class="h2" id="terms">Terms of trade</h2>
+    <p>Prices on this site are estimates by quantity tier and exclude freight and import duties. A quote is valid for 30 days. Production starts when we receive the deposit; the balance is due before shipping.</p>
+    <p>Report damage within 14 days of delivery with photos. Custom work, such as logos and own colours, cannot be returned unless it is faulty.</p>
+  </div>
+</div>
+
+<div data-view="404">
+  <div class="wrap lost">
+    <span class="tile"><svg class="art" viewBox="0 0 200 200" aria-hidden="true"><use href="#art-mailer"/></svg></span>
+    <h1 class="h1">This page is not in the catalog</h1>
+    <p class="muted">The link may be old. Search the products, or ask us for the item.</p>
+    <p class="actions" style="justify-content:center"><a class="btn btn-solid" href="#/products">Browse products</a><a class="btn btn-line" href="#/quote">Request a quote</a></p>
+  </div>
+</div>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-cols">
+    <section><h2>About us</h2><ul><li><a href="#/about">Who we are</a></li><li><a href="#/about?section=workshops">Partner workshops</a></li><li><a href="#/about?section=quality-checks">Quality checks</a></li></ul></section>
+    <section><h2>Buying</h2><ul><li><a href="#/products">All products</a></li><li><a href="#/products?ready=1">Ready to ship</a></li><li><a href="#/quote">Request a quote</a></li><li><a href="#/list">Inquiry list</a></li></ul></section>
+    <section><h2>Help center</h2><ul><li><a href="#/help?section=ordering">Minimum orders</a></li><li><a href="#/help?section=samples">Samples</a></li><li><a href="#/help?section=shipping">Shipping and freight</a></li><li><a href="#/help?section=contact">Contact us</a></li></ul></section>
+    <section><h2>Trade account</h2><ul><li><a href="#/signin">Sign in</a></li><li><a href="#/join">Create account</a></li><li><a href="#/legal?section=privacy">Privacy</a></li><li><a href="#/legal?section=terms">Terms of trade</a></li></ul></section>
+    <section class="foot-news"><h2>New products and price lists</h2><p class="small muted">Once a month, no more.</p>
+      <form data-form="newsletter" novalidate><div data-fields><div class="news"><label class="sr-only" for="n-mail">Email</label><input class="input" id="n-mail" name="email" type="email" autocomplete="email" placeholder="you@business.com" required aria-describedby="n-mail-e" data-msg="Enter your email."><button class="btn btn-ink btn-sm" type="submit">Subscribe</button></div><p class="err" id="n-mail-e"></p></div><p class="success small" data-success hidden><b>You are on the list.</b> The next price list arrives at the start of the month.</p></form>
+    </section>
+  </div>
+  <div class="wrap foot-mid"><span>Pay by</span><span class="pay">Bank transfer</span><span class="pay">Card</span><span class="pay">30-day trade terms</span><span>Sea and air freight to 40 countries</span></div>
+  <div class="foot-bottom"><div class="wrap"><nav aria-label="Legal"><a href="#/legal?section=privacy">Privacy</a><a href="#/legal?section=terms">Terms of trade</a><a href="#/help?section=contact">Contact</a></nav><p>© 2026 Brindlewood Trading Ltd. Sample site; all workshops and products are fictional.</p></div></div>
+</footer>
+
+<div class="toast" role="status" data-toast hidden></div>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const fmt = (n) => n.toLocaleString("en-US");
+  const money = (n) => "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+
+  /* ---------- Storage that still works inside a sandboxed frame ---------- */
+  const memory = new Map();
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch { return memory.get(key) ?? null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch { memory.set(key, value); } },
+  };
+
+  /* ---------- Theme: follows the system until the visitor chooses ---------- */
+  const themeButton = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(theme) {
+    root.dataset.theme = theme;
+    themeButton.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+    $("use", themeButton).setAttribute("href", theme === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const savedTheme = store.get("brindlewood-theme");
+  applyTheme(savedTheme === "light" || savedTheme === "dark" ? savedTheme : currentTheme());
+  systemDark.addEventListener("change", () => { if (!store.get("brindlewood-theme")) applyTheme(systemDark.matches ? "dark" : "light"); });
+  themeButton.addEventListener("click", () => {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    store.set("brindlewood-theme", next);
+  });
+
+  /* ---------- Catalog. Cards, filters, the product page, the price list and the inquiry list all read from here. ---------- */
+  const CATS = {
+    tableware: { name: "Tableware", icon: "c-tableware", subs: ["Mugs and cups", "Plates", "Bowls", "Serving pieces"] },
+    linen: { name: "Kitchen linen", icon: "c-linen", subs: ["Napkins", "Aprons", "Tea towels", "Table runners"] },
+    glass: { name: "Glassware", icon: "c-glass", subs: ["Tumblers", "Carafes", "Storage jars"] },
+    wood: { name: "Wood and bamboo", icon: "c-wood", subs: ["Boards", "Utensils", "Trays"] },
+    packaging: { name: "Packaging", icon: "i-box", subs: ["Mailer boxes", "Takeaway cups", "Gift bags", "Labels"] },
+    candles: { name: "Candles and scent", icon: "c-candle", subs: ["Pillar candles", "Tin candles", "Diffusers"] },
+  };
+  // Workshops (suppliers). years: in business; reply: typical first reply; ontime: share of orders shipped on time.
+  const WS = {
+    harrowmere: { name: "Harrowmere Kiln", where: "Portugal", years: 14, craft: "Stoneware and porcelain, glazed by hand", rating: 4.8, reply: "6 h", ontime: "97%" },
+    lindqvar: { name: "Lindqvar Weaving", where: "Lithuania", years: 9, craft: "Linen and heavy cotton, woven and stonewashed", rating: 4.7, reply: "12 h", ontime: "95%" },
+    clearholm: { name: "Clearholm Glass", where: "Czechia", years: 22, craft: "Pressed and mouth-blown glass, much of it recycled", rating: 4.9, reply: "8 h", ontime: "98%" },
+    tamarind: { name: "Tamarind Row Woodcraft", where: "Vietnam", years: 7, craft: "Acacia and bamboo, turned and oiled", rating: 4.6, reply: "4 h", ontime: "94%" },
+    foldsmith: { name: "Foldsmith Paper", where: "Malaysia", years: 11, craft: "Recycled board, cups and printed packaging", rating: 4.8, reply: "3 h", ontime: "99%" },
+    emberly: { name: "Emberly Candle Co.", where: "Indonesia", years: 6, craft: "Rapeseed and soy wax candles, poured by hand", rating: 4.7, reply: "10 h", ontime: "96%" },
+  };
+  // tiers: [from quantity, unit price]; lead: days per tier; sample: price of one sample; logo, ready, eco: 1 or 0; opts: "Label:#colour" pairs that recolor the art.
+  const products = [
+    { id: "mug", name: "Speckled stoneware mug, 350 ml, reactive glaze", short: "Stoneware mug", cat: "tableware", ws: "harrowmere", unit: "pieces", tiers: [[50, 5.4], [200, 4.6], [1000, 3.9]], lead: [7, 15, 25], sample: 8, logo: 1, ready: 0, eco: 0, rating: 4.8, reviews: 36, opts: ["Oat:#d8c9b0", "Moss:#7e8f69", "Slate:#5c6a78"], specs: [["Material", "Stoneware, lead-free glaze"], ["Size", "350 ml, 8.5 × 9.5 cm"], ["Care", "Dishwasher and microwave safe"]], pack: "36 per carton, 13 kg" },
+    { id: "espresso", name: "Espresso cup and saucer, 90 ml, set of 6", short: "Espresso set", cat: "tableware", ws: "harrowmere", unit: "sets", tiers: [[30, 14.5], [120, 12.8], [500, 11.2]], lead: [5, 12, 20], sample: 18, logo: 1, ready: 1, eco: 0, rating: 4.9, reviews: 21, opts: ["Chalk:#ece6dc", "Ink:#2f3540"], specs: [["Material", "Porcelain"], ["Size", "90 ml cup, 12 cm saucer"], ["Care", "Dishwasher safe"]], pack: "8 sets per carton, 9 kg" },
+    { id: "napkin", name: "Stonewashed linen napkins, 45 × 45 cm, pack of 4", short: "Linen napkins", cat: "linen", ws: "lindqvar", unit: "packs", tiers: [[40, 9.8], [200, 8.4], [800, 7.3]], lead: [6, 14, 21], sample: 12, logo: 1, ready: 1, eco: 1, rating: 4.8, reviews: 44, opts: ["Flax:#c9b89a", "Clay:#b9765a", "Sage:#8fa08a"], specs: [["Material", "100% linen, stonewashed"], ["Size", "45 × 45 cm, mitred corners"], ["Care", "Machine wash at 40 °C"]], pack: "50 packs per carton, 11 kg" },
+    { id: "apron", name: "Heavy cotton canvas apron with leather straps", short: "Canvas apron", cat: "linen", ws: "lindqvar", unit: "pieces", tiers: [[50, 11.5], [300, 9.9], [1000, 8.6]], lead: [8, 18, 28], sample: 15, logo: 1, ready: 0, eco: 0, rating: 4.6, reviews: 27, opts: ["Charcoal:#3c3f44", "Tobacco:#8a5a36", "Denim:#45607e"], specs: [["Material", "12 oz canvas, leather straps"], ["Size", "70 × 85 cm, two pockets"], ["Care", "Machine wash cold"]], pack: "40 per carton, 14 kg" },
+    { id: "tumbler", name: "Recycled glass tumblers, 300 ml, set of 4", short: "Glass tumblers", cat: "glass", ws: "clearholm", unit: "sets", tiers: [[40, 10.4], [200, 8.9], [1000, 7.6]], lead: [7, 16, 26], sample: 14, logo: 1, ready: 1, eco: 1, rating: 4.9, reviews: 32, opts: ["Clear:#cfe3e6", "Amber:#d9a45b"], specs: [["Material", "Recycled soda-lime glass"], ["Size", "300 ml, 8 × 10 cm"], ["Care", "Dishwasher safe"]], pack: "12 sets per carton, 12 kg" },
+    { id: "carafe", name: "Water carafe with glass tumbler lid, 1 l", short: "Glass carafe", cat: "glass", ws: "clearholm", unit: "pieces", tiers: [[30, 12.6], [150, 10.9], [600, 9.5]], lead: [10, 20, 32], sample: 16, logo: 0, ready: 0, eco: 0, rating: 4.8, reviews: 12, opts: [], specs: [["Material", "Borosilicate glass"], ["Size", "1 l, 24 cm tall"], ["Care", "Dishwasher safe"]], pack: "12 per carton, 9 kg" },
+    { id: "board", name: "Acacia serving board with handle, 40 × 20 cm", short: "Serving board", cat: "wood", ws: "tamarind", unit: "pieces", tiers: [[50, 7.8], [300, 6.4], [1500, 5.5]], lead: [9, 18, 28], sample: 10, logo: 1, ready: 0, eco: 1, rating: 4.6, reviews: 23, opts: [], specs: [["Material", "Solid acacia, food-safe oil"], ["Size", "40 × 20 × 1.8 cm"], ["Care", "Hand wash, oil monthly"]], pack: "30 per carton, 16 kg" },
+    { id: "mailer", name: "Recycled kraft mailer boxes, 30 × 22 × 10 cm", short: "Kraft mailer box", cat: "packaging", ws: "foldsmith", unit: "pieces", tiers: [[500, 0.62], [2000, 0.48], [10000, 0.39]], lead: [6, 12, 18], sample: 2, logo: 1, ready: 1, eco: 1, rating: 4.8, reviews: 58, opts: [], specs: [["Material", "Recycled E-flute board"], ["Print", "One or two colours"], ["Ships", "Flat, self-locking"]], pack: "200 per bundle, 22 kg" },
+    { id: "cup", name: "Double-wall paper takeaway cups, 12 oz, with lids", short: "Takeaway cups", cat: "packaging", ws: "foldsmith", unit: "cups", tiers: [[1000, 0.21], [5000, 0.16], [20000, 0.12]], lead: [7, 14, 21], sample: 3, logo: 1, ready: 0, eco: 1, rating: 4.7, reviews: 40, opts: ["Kraft:#c49a6c", "White:#efece6", "Black:#2c2e33"], specs: [["Material", "Paper, plant-based lining"], ["Size", "12 oz, lids included"], ["Print", "Up to four colours"]], pack: "500 per carton, 9 kg" },
+    { id: "pillar", name: "Unscented pillar candles, 7 × 15 cm, rapeseed wax", short: "Pillar candle", cat: "candles", ws: "emberly", unit: "pieces", tiers: [[100, 3.4], [500, 2.8], [2000, 2.3]], lead: [6, 14, 22], sample: 5, logo: 0, ready: 1, eco: 1, rating: 4.7, reviews: 30, opts: ["Ivory:#f1e8d6", "Terracotta:#c0714f", "Olive:#8a8a5c"], specs: [["Material", "Rapeseed wax, cotton wick"], ["Size", "7 × 15 cm"], ["Burn time", "About 60 hours"]], pack: "48 per carton, 19 kg" },
+  ];
+  const COUNTRIES = ["Singapore", "Malaysia", "Hong Kong", "Taiwan", "Japan", "South Korea", "Australia", "United Kingdom", "Germany", "United States", "Other"];
+  const byId = (id) => products.find((p) => p.id === id);
+
+  /* ---------- Small renderers ---------- */
+  const one = (unit) => unit.replace(/s$/, "");
+  const low = (p) => p.tiers[p.tiers.length - 1][1];
+  const range = (p) => `${money(low(p))}–${money(p.tiers[0][1])}`;
+  const tierFor = (p, q) => p.tiers.reduce((t, x) => (q >= x[0] ? x : t), p.tiers[0]);
+  const qtyLabel = (p, i) => (p.tiers[i + 1] ? `${fmt(p.tiers[i][0])}–${fmt(p.tiers[i + 1][0] - 1)}` : `≥ ${fmt(p.tiers[i][0])}`);
+  const optColor = (p, i = 0) => (p.opts[i] ? p.opts[i].split(":")[1] : "");
+  const vf = `<span class="vf"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>Verified</span>`;
+  const ic = (id) => `<svg class="ic" aria-hidden="true"><use href="#${id}"/></svg>`;
+  function art(p, opt = 0, cls = "art") {
+    const photo = $(`#photos [data-photo="${p.id}"]`);
+    if (photo) return `<img class="${cls}" src="${photo.getAttribute("src")}" alt="" width="${photo.getAttribute("width")}" height="${photo.getAttribute("height")}" style="object-fit:contain">`;
+    const c = optColor(p, opt);
+    return `<svg class="${cls}" viewBox="0 0 200 200" aria-hidden="true"${c ? ` style="--c1:${c}"` : ""}><use href="#art-${p.id}"/></svg>`;
+  }
+  function card(p) {
+    const w = WS[p.ws];
+    return `<li class="pc"><a class="pc-media" href="#/product?id=${p.id}" tabindex="-1" aria-hidden="true">${art(p)}${p.ready ? `<span class="flag">${ic("i-bolt")}Ready to ship</span>` : ""}</a>
+<a class="pc-title" href="#/product?id=${p.id}">${esc(p.name)}</a><p class="pc-price">${range(p)}</p><p class="pc-moq">Min. order: ${fmt(p.tiers[0][0])} ${p.unit}</p>
+<p class="pc-ws"><a href="#/products?ws=${p.ws}">${esc(w.name)}</a></p><p class="pc-trust">${vf}<span>${w.years} yrs</span><span>${w.where}</span><span>${p.rating}/5</span></p>
+<div class="pc-acts"><button class="btn btn-line btn-sm" type="button" data-add="${p.id}">Add to list</button><a class="btn btn-line btn-sm" href="#/product?id=${p.id}">Inquire</a></div></li>`;
+  }
+  const wsHead = (w, h = "h3") => `<div class="ws-head"><span class="ws-mono" aria-hidden="true">${w.name[0]}</span><div><${h} class="ws-name">${esc(w.name)}</${h}><p class="ws-meta">${vf}<span>${w.years} yrs</span><span>${w.where}</span></p></div></div>
+<p class="ws-craft">${esc(w.craft)}</p><dl class="ws-stats"><div><dt>Rating</dt><dd>${w.rating}/5</dd></div><div><dt>Replies within</dt><dd>${w.reply}</dd></div><div><dt>On time</dt><dd>${w.ontime}</dd></div></dl>`;
+  function wsCard(id) {
+    const items = products.filter((p) => p.ws === id);
+    return `<li class="ws">${wsHead(WS[id])}
+<ul class="ws-thumbs">${items.map((p) => `<li><a href="#/product?id=${p.id}" aria-label="${esc(p.short)}"><span class="tile">${art(p)}</span></a></li>`).join("")}</ul>
+<div class="ws-acts"><a class="btn btn-line btn-sm" href="#/products?ws=${id}">View products</a><a class="btn btn-line btn-sm" href="#/quote?ws=${id}">Request a quote</a></div></li>`;
+  }
+  const miniCard = (p) => `<a class="mini-card" href="#/product?id=${p.id}"><span class="tile">${art(p)}</span><span>${esc(p.short)}, ${range(p)}</span></a>`;
+  function catPanel(key) {
+    const c = CATS[key];
+    return `<div class="fly-head"><h3 class="h3">${c.name}</h3><a class="link" href="#/products?cat=${key}">See all${ic("i-right")}</a></div>
+<div class="fly-subs">${c.subs.map((s) => `<a class="chip" href="#/products?cat=${key}&amp;q=${encodeURIComponent(s.split(" ")[0].toLowerCase())}">${s}</a>`).join("")}</div>
+<div class="fly-items">${products.filter((p) => p.cat === key).slice(0, 3).map(miniCard).join("")}</div>`;
+  }
+
+  /* ---------- Fill the static shells ---------- */
+  $$("[data-countries]").forEach((select) => (select.innerHTML = COUNTRIES.map((c) => `<option>${c}</option>`).join("")));
+  $("[data-grid='picks']").innerHTML = products.map(card).join("");
+  $$("[data-ws-list]").forEach((ul) => (ul.innerHTML = Object.keys(WS).slice(0, Number(ul.dataset.wsList)).map(wsCard).join("")));
+  $$(".cat-item").forEach((li) => li.insertAdjacentHTML("beforeend", `<div class="fly">${catPanel(li.dataset.cat)}</div>`));
+
+  /* ---------- Mega menu: categories on the left, the chosen one on the right ---------- */
+  const mega = $("#mega");
+  const megaButton = $("[data-mega]");
+  $("[data-mega-cats]").innerHTML = Object.entries(CATS).map(([k, c], i) => `<li><button type="button" data-mcat="${k}" aria-current="${i === 0}">${ic(c.icon)}${c.name}${ic("i-right")}</button></li>`).join("");
+  const showMegaCat = (key) => {
+    $("[data-mega-panel]").innerHTML = catPanel(key);
+    $$("[data-mcat]").forEach((b) => b.setAttribute("aria-current", String(b.dataset.mcat === key)));
+  };
+  showMegaCat("tableware");
+  $$("[data-mcat]").forEach((b) => ["mouseenter", "focus", "click"].forEach((t) => b.addEventListener(t, () => showMegaCat(b.dataset.mcat))));
+  function setMega(open) { mega.hidden = !open; megaButton.setAttribute("aria-expanded", String(open)); }
+  megaButton.addEventListener("click", () => setMega(mega.hidden));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !mega.hidden) { setMega(false); megaButton.focus(); } });
+  document.addEventListener("click", (e) => { if (!mega.hidden && !e.target.closest("#mega, [data-mega]")) setMega(false); });
+
+  /* ---------- Router: hash routes, kept in state so it works when the frame refuses URL changes ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const titles = { home: "", products: "Products", product: "", list: "Inquiry list", quote: "Request a quote", help: "Help center", about: "About us", signin: "Sign in", join: "Create a trade account", legal: "Privacy and terms", "404": "Page not found" };
+  let current = null;
+  let viewing = products[0];
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    root.dataset.route = name;
+    setMega(false);
+    if (name === "products") productsRoute(route.params);
+    if (name === "product") renderProduct(route.params.get("id"));
+    if (name === "list") renderList();
+    if (name === "quote") prefillQuote(route.params);
+    document.title = name === "home" ? "Brindlewood Trading: wholesale tableware, linen and packaging from partner workshops" : `${name === "product" ? viewing.short : titles[name]} · Brindlewood Trading`;
+    const section = route.params.get("section");
+    const target = section && $(`#${CSS.escape(section)}`, current);
+    if (target) setTimeout(() => target.scrollIntoView({ block: "start" }), 30);
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+    stuck();
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+  document.addEventListener("click", (event) => {
+    const add = event.target.closest("[data-add]");
+    if (add) { addToList(add.dataset.add); return; }
+    const link = event.target.closest("a[href^='#']");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href.startsWith("#/")) { event.preventDefault(); go(href); return; }
+    const target = href.length > 1 && $(href);
+    if (target) { event.preventDefault(); target.scrollIntoView({ block: "start" }); if (href === "#main") target.focus({ preventScroll: true }); }
+  });
+
+  /* ---------- Header: solid once the page scrolls; the compact search appears when the big one has gone ---------- */
+  const top = $("#top");
+  const bigSearch = $("#bigsearch");
+  function stuck() {
+    const home = root.dataset.route === "home";
+    top.classList.toggle("is-stuck", home ? bigSearch.getBoundingClientRect().bottom < top.getBoundingClientRect().bottom : window.scrollY > 40);
+  }
+  window.addEventListener("scroll", stuck, { passive: true });
+
+  /* ---------- Sandboxed frames block native submission: forms run from the submit button (Enter clicks it) ---------- */
+  function onSubmit(form, handler) {
+    form.addEventListener("submit", (event) => { event.preventDefault(); handler(); });
+    form.addEventListener("click", (event) => { if (event.target.closest("[type=submit]")) { event.preventDefault(); handler(); } });
+  }
+
+  /* ---------- Home: tabs switch what the big search does ---------- */
+  const MODES = {
+    products: { label: "Search products", ph: "Stoneware mugs, linen napkins, kraft boxes…", go: "Search" },
+    workshops: { label: "Search workshops", ph: "A craft, a material or a country", go: "Find workshops" },
+    quote: { label: "Describe what you need", ph: "For example: 500 linen napkins with a printed logo", go: "Get quotes" },
+  };
+  let mode = "products";
+  const tabs = $$("[data-mode]");
+  function setMode(next, focus = true) {
+    mode = next;
+    tabs.forEach((t) => t.setAttribute("aria-pressed", String(t.dataset.mode === next)));
+    $("#q").placeholder = MODES[next].ph;
+    $("[data-q-label]").textContent = MODES[next].label;
+    $("[data-go-label]").textContent = MODES[next].go;
+    if (focus) $("#q").focus();
+  }
+  setMode("products", false);
+  tabs.forEach((tab) => tab.addEventListener("click", () => setMode(tab.dataset.mode)));
+  $$("[data-search]").forEach((form) => onSubmit(form, () => {
+    const q = $("input", form).value.trim();
+    const big = form.dataset.search === "big";
+    if (big && mode === "quote") go(`#/quote${q ? `?item=${encodeURIComponent(q)}` : ""}`);
+    else if (big && mode === "workshops") go(`#/products?tab=workshops${q ? `&q=${encodeURIComponent(q)}` : ""}`);
+    else go(`#/products${q ? `?q=${encodeURIComponent(q)}` : ""}`);
+  }));
+
+  /* ---------- New this season: rotates every 6 s, pauses on hover and focus, never with reduced motion ---------- */
+  const slides = $$(".season-slide");
+  const dots = $("[data-dots]");
+  let slide = 0;
+  dots.innerHTML = slides.map((_, i) => `<button type="button" aria-label="Show item ${i + 1}" aria-current="${i === 0}"></button>`).join("");
+  const showSlide = (i) => {
+    slide = (i + slides.length) % slides.length;
+    slides.forEach((s, n) => { s.classList.toggle("is-on", n === slide); s.tabIndex = n === slide ? 0 : -1; });
+    $$("button", dots).forEach((d, n) => d.setAttribute("aria-current", String(n === slide)));
+  };
+  showSlide(0);
+  $$("button", dots).forEach((d, n) => d.addEventListener("click", () => showSlide(n)));
+  const season = $(".season");
+  let paused = false;
+  ["mouseenter", "focusin"].forEach((t) => season.addEventListener(t, () => (paused = true)));
+  ["mouseleave", "focusout"].forEach((t) => season.addEventListener(t, () => (paused = false)));
+  setInterval(() => { if (!paused && !reduced.matches && !document.hidden && root.dataset.route === "home") showSlide(slide + 1); }, 6000);
+
+  /* ---------- Results: tabs, select-by chips, filters, sort and layout ---------- */
+  const F = {};
+  const gridEl = $("[data-grid='results']");
+  $("[data-f-cats]").innerHTML = [["", "All categories"], ...Object.entries(CATS).map(([k, c]) => [k, c.name])].map(([k, n]) => `<label class="f-opt"><input type="radio" name="f-cat" value="${k}">${n}</label>`).join("");
+  $("[data-f-ws]").innerHTML = [["", { name: "All workshops" }], ...Object.entries(WS)].map(([k, w]) => `<label class="f-opt"><input type="radio" name="f-ws" value="${k}">${esc(w.name)}</label>`).join("");
+  function productsRoute(params) {
+    Object.assign(F, {
+      q: params.get("q") || "", cat: CATS[params.get("cat")] ? params.get("cat") : "", ws: WS[params.get("ws")] ? params.get("ws") : "",
+      tab: params.get("tab") === "workshops" ? "workshops" : "products", ready: params.has("ready"), logo: params.has("logo"),
+      moq: params.has("moq"), fast: params.has("fast"), eco: params.has("eco"),
+      sort: F.sort || "match",
+    });
+    $("#q2").value = F.q;
+    applyProducts();
+  }
+  function matches(p) {
+    const hay = `${p.name} ${p.short} ${CATS[p.cat].name} ${CATS[p.cat].subs.join(" ")} ${WS[p.ws].name}`.toLowerCase();
+    const words = F.q.toLowerCase().split(/\s+/).filter(Boolean);
+    return words.every((w) => hay.includes(w) || hay.includes(w.replace(/e?s$/, "")))
+      && (!F.cat || p.cat === F.cat) && (!F.ws || p.ws === F.ws)
+      && (!F.ready || p.ready) && (!F.logo || p.logo) && (!F.eco || p.eco)
+      && (!F.moq || p.tiers[0][0] <= 100) && (!F.fast || p.lead[0] <= 7);
+  }
+  const SORTS = { match: () => 0, price: (a, b) => low(a) - low(b), moq: (a, b) => a.tiers[0][0] - b.tiers[0][0], lead: (a, b) => a.lead[0] - b.lead[0] };
+  function applyProducts() {
+    const isWs = F.tab === "workshops";
+    $$("[data-rtab]").forEach((a) => (a.dataset.rtab === F.tab ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current")));
+    $("[data-results-body]").hidden = isWs;
+    const wsOut = $("[data-ws-results]");
+    if (isWs) {
+      const q = F.q.toLowerCase();
+      const ids = Object.keys(WS).filter((id) => !q || `${WS[id].name} ${WS[id].craft} ${WS[id].where}`.toLowerCase().includes(q.replace(/e?s$/, "")));
+      wsOut.innerHTML = ids.map(wsCard).join("");
+      wsOut.hidden = !ids.length;
+      $("[data-ws-empty]").hidden = ids.length > 0;
+      $("[data-results-h]").textContent = q ? `Workshops for “${F.q}”` : "Partner workshops";
+      $("[data-results-sub]").textContent = `${ids.length} of 6 workshops, all visited and checked`;
+      return;
+    }
+    wsOut.hidden = true;
+    $("[data-ws-empty]").hidden = true;
+    $$("[data-chip]").forEach((c) => c.setAttribute("aria-pressed", String(Boolean(F[c.dataset.chip]))));
+    $$("input[name='f-cat']").forEach((r) => (r.checked = r.value === F.cat));
+    $$("input[name='f-ws']").forEach((r) => (r.checked = r.value === F.ws));
+    $("#sort").value = F.sort;
+    const list = products.filter(matches).sort(SORTS[F.sort]);
+    gridEl.innerHTML = list.map(card).join("");
+    gridEl.hidden = !list.length;
+    $("[data-empty]").hidden = list.length > 0;
+    $("[data-count]").textContent = `${list.length} ${list.length === 1 ? "product" : "products"}${F.q ? ` for “${F.q}”` : ""}`;
+    $("[data-results-h]").textContent = F.cat ? CATS[F.cat].name : F.ws ? WS[F.ws].name : F.q ? `Results for “${F.q}”` : "All products";
+    $("[data-results-sub]").textContent = F.ws ? WS[F.ws].craft : "Unit prices fall as quantities rise; every price is per unit before freight.";
+  }
+  $$("[data-chip]").forEach((c) => c.addEventListener("click", () => { F[c.dataset.chip] = !F[c.dataset.chip]; applyProducts(); }));
+  $$("[data-clear]").forEach((b) => b.addEventListener("click", () => { Object.assign(F, { q: "", cat: "", ws: "", ready: false, logo: false, moq: false, fast: false, eco: false }); applyProducts(); }));
+  $("#filters").addEventListener("change", (e) => {
+    if (e.target.name === "f-cat") F.cat = e.target.value;
+    if (e.target.name === "f-ws") F.ws = e.target.value;
+    applyProducts();
+  });
+  $("#sort").addEventListener("change", (e) => { F.sort = e.target.value; applyProducts(); });
+  $("[data-filters]").addEventListener("click", (e) => {
+    const open = !$("#filters").classList.contains("is-open");
+    $("#filters").classList.toggle("is-open", open);
+    e.currentTarget.setAttribute("aria-expanded", String(open));
+  });
+
+  /* ---------- Product page: built from the catalog row ---------- */
+  let opt = 0;
+  const qty = $("#qty");
+  const setText = (sel, text) => $$(sel).forEach((el) => (el.textContent = text));
+  function stage(pic) {
+    const p = viewing;
+    const box = $("[data-stage]");
+    box.dataset.pic = pic;
+    box.innerHTML = (pic === 2 ? `<svg class="art" viewBox="0 0 200 200" aria-hidden="true"><use href="#art-mailer"/></svg>` : art(p, opt)) + (pic ? `<span class="stage-note">${pic === 1 ? "Close-up of the finish" : `Packed: ${esc(p.pack)}`}</span>` : "");
+    $$("[data-thumbs] button").forEach((b, i) => b.setAttribute("aria-pressed", String(i === pic)));
+  }
+  function renderProduct(id) {
+    const p = (viewing = byId(id) || products[0]);
+    const w = WS[p.ws];
+    opt = 0;
+    setText("[data-p-name]", p.name);
+    setText("[data-p-short]", p.short);
+    const catLink = $("[data-p-cat]");
+    catLink.textContent = CATS[p.cat].name;
+    catLink.setAttribute("href", `#/products?cat=${p.cat}`);
+    setText("[data-p-rating]", p.rating);
+    setText("[data-p-reviews]", `${p.reviews} buyer reviews`);
+    setText("[data-p-lead]", `Lead time from ${p.lead[0]} days`);
+    setText("[data-p-unit]", p.unit);
+    setText("[data-p-sample]", `${money(p.sample)} for one ${one(p.unit)}, ships in 5 working days`);
+    setText("[data-p-pack]", p.pack);
+    const wsLink = $("[data-p-wslink]");
+    wsLink.textContent = w.name;
+    wsLink.setAttribute("href", `#/products?ws=${p.ws}`);
+    $("[data-tiers]").innerHTML = p.tiers.map((t, i) => `<div class="tier"><span class="tier-q">${qtyLabel(p, i)} ${p.unit}</span><span class="tier-p">${money(t[1])}</span></div>`).join("");
+    $("[data-lead]").innerHTML = `<caption>Lead time</caption><tr><th scope="row">Quantity (${p.unit})</th>${p.tiers.map((_, i) => `<td>${qtyLabel(p, i)}</td>`).join("")}</tr><tr><th scope="row">Days</th>${p.lead.map((d) => `<td>${d}</td>`).join("")}</tr>`;
+    $("[data-opts-box]").hidden = !p.opts.length;
+    $("[data-opts]").innerHTML = p.opts.map((o, i) => { const [label, color] = o.split(":"); return `<button type="button" style="--sw:${color}" aria-label="${label}" aria-pressed="${i === 0}" data-opt="${i}"></button>`; }).join("");
+    setText("[data-opt-name]", p.opts.length ? p.opts[0].split(":")[0] : "");
+    $("[data-thumbs]").innerHTML = ["Front view", "Close-up", "Packed"].map((label, i) => `<button type="button" aria-label="${label}" aria-pressed="${i === 0}" data-pic="${i}">${i === 2 ? `<svg class="art" viewBox="0 0 200 200" aria-hidden="true"><use href="#art-mailer"/></svg>` : art(p)}</button>`).join("");
+    stage(0);
+    $("[data-specs]").innerHTML = p.specs.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${esc(v)}</td></tr>`).join("");
+    $("[data-customs]").innerHTML = [["Logo", p.logo ? `Printed, stamped or engraved, from ${fmt(p.tiers[1][0])} ${p.unit}` : "Not offered on this item"], ["Colour", `Listed colours from ${fmt(p.tiers[0][0])} ${p.unit}; your own colour from ${fmt(p.tiers[2][0])} ${p.unit}`], ["Packaging", `Plain cartons as standard; printed boxes from ${fmt(p.tiers[1][0])} ${p.unit}`]].map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join("");
+    $("[data-supplier]").innerHTML = `${wsHead(w, "h2")}<a class="btn btn-line btn-sm" href="#/products?ws=${p.ws}">View all products</a>`;
+    const related = products.filter((x) => x.id !== p.id && x.cat === p.cat).concat(products.filter((x) => x.cat !== p.cat)).slice(0, 5);
+    $("[data-grid='also']").innerHTML = related.map(card).join("");
+    qty.min = p.tiers[0][0];
+    qty.value = p.tiers[0][0];
+    $("#qty-e").textContent = "";
+    qty.removeAttribute("aria-invalid");
+    estimate();
+  }
+  function estimate() {
+    const p = viewing;
+    const q = Math.floor(Number(qty.value)) || 0;
+    const t = tierFor(p, q);
+    $$(".tier", $("[data-tiers]")).forEach((el, i) => el.classList.toggle("is-on", q >= p.tiers[0][0] && p.tiers[i] === t));
+    $("[data-estimate]").innerHTML = q >= p.tiers[0][0] ? `Estimated <strong>${money(t[1] * q)}</strong> for ${fmt(q)} ${p.unit} at ${money(t[1])} each, before freight.` : `The minimum order is ${fmt(p.tiers[0][0])} ${p.unit}.`;
+  }
+  function qtyOk() {
+    const p = viewing;
+    const ok = Math.floor(Number(qty.value)) >= p.tiers[0][0];
+    $("#qty-e").textContent = ok ? "" : `Enter at least ${fmt(p.tiers[0][0])} ${p.unit}, the minimum order.`;
+    qty.setAttribute("aria-invalid", String(!ok));
+    return ok;
+  }
+  qty.addEventListener("input", () => { estimate(); if (qty.getAttribute("aria-invalid") === "true") qtyOk(); });
+  $$("[data-step]").forEach((b) => b.addEventListener("click", () => {
+    const p = viewing;
+    const step = p.tiers[0][0] >= 500 ? 100 : 10;
+    qty.value = Math.max(p.tiers[0][0], (Math.floor(Number(qty.value)) || 0) + Number(b.dataset.step) * step);
+    qtyOk();
+    estimate();
+  }));
+  $("[data-opts]").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-opt]");
+    if (!b) return;
+    opt = Number(b.dataset.opt);
+    $$("[data-opt]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    setText("[data-opt-name]", b.getAttribute("aria-label"));
+    stage(Number($("[data-stage]").dataset.pic) || 0);
+  });
+  $("[data-thumbs]").addEventListener("click", (e) => { const b = e.target.closest("[data-pic]"); if (b) stage(Number(b.dataset.pic)); });
+  onSubmit($("[data-form='order']"), () => { if (!qtyOk()) { qty.focus(); return; } addToList(viewing.id, Math.floor(Number(qty.value)), opt, false, false); go("#/list"); });
+  $("[data-to-list]").addEventListener("click", () => { if (qtyOk()) addToList(viewing.id, Math.floor(Number(qty.value)), opt); else qty.focus(); });
+  $("[data-sample]").addEventListener("click", () => { addToList(viewing.id, 1, opt, true, false); go("#/list"); });
+
+  /* ---------- Inquiry list: [{ id, opt, qty, sample }] ---------- */
+  let list = [];
+  try { list = JSON.parse(store.get("brindlewood-list") || "[]").filter((l) => byId(l.id)); } catch { list = []; }
+  const toast = $("[data-toast]");
+  let toastTimer = 0;
+  function saveList() {
+    store.set("brindlewood-list", JSON.stringify(list));
+    $$("[data-list-count]").forEach((el) => { el.textContent = list.length; el.hidden = !list.length; });
+    $("[data-list-link]").setAttribute("aria-label", `Inquiry list, ${list.length} ${list.length === 1 ? "item" : "items"}`);
+  }
+  function addToList(id, q, o = 0, sample = false, announce = true) {
+    const p = byId(id);
+    const amount = sample ? 1 : q || p.tiers[0][0];
+    const line = list.find((l) => l.id === id && l.opt === o && l.sample === sample);
+    if (line) line.qty = amount; else list.push({ id, opt: o, qty: amount, sample });
+    saveList();
+    if (!announce) return;
+    toast.innerHTML = `<span class="tile">${art(p, o)}</span><p><b>Added to your inquiry list</b>${fmt(amount)} ${p.unit}, ${esc(p.short)}</p><a class="btn btn-line btn-sm" href="#/list">View list</a>`;
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => (toast.hidden = true), 5000);
+  }
+  function lineTotal(l) { const p = byId(l.id); return (l.sample ? p.sample : tierFor(p, l.qty)[1]) * l.qty; }
+  function renderTotals() {
+    $("[data-sum-items]").textContent = list.length;
+    $("[data-sum-total]").textContent = money(list.reduce((s, l) => s + lineTotal(l), 0));
+    $("[data-summary]").hidden = !list.length;
+    $("[data-list-empty]").hidden = list.length > 0;
+  }
+  function renderList() {
+    $("[data-lines]").innerHTML = list.map((l, i) => {
+      const p = byId(l.id);
+      const colour = p.opts[l.opt] ? `${p.opts[l.opt].split(":")[0]} · ` : "";
+      const unitPrice = l.sample ? p.sample : tierFor(p, l.qty)[1];
+      return `<li class="line"><a class="line-media tile" href="#/product?id=${p.id}" tabindex="-1" aria-hidden="true">${art(p, l.opt)}</a><div class="line-body"><a class="line-name" href="#/product?id=${p.id}">${esc(p.name)}</a>
+<p class="line-sub" data-line-sub="${i}">${colour}${l.sample ? "Sample, ships in 5 working days" : `${money(unitPrice)} per ${one(p.unit)} at this quantity`}</p>
+${l.sample ? "" : `<div class="line-qty"><label for="lq${i}">Quantity</label><input class="input" id="lq${i}" type="number" inputmode="numeric" min="${p.tiers[0][0]}" value="${l.qty}" data-lq="${i}" aria-describedby="lq${i}-e"><span>${p.unit}</span></div><p class="err" id="lq${i}-e"></p>`}
+<button class="link-btn" type="button" data-remove="${i}">${ic("i-trash")}Remove</button></div><p class="line-price" data-line-price="${i}">${money(lineTotal(l))}</p></li>`;
+    }).join("");
+    renderTotals();
+  }
+  $("[data-lines]").addEventListener("change", (e) => {
+    const input = e.target.closest("[data-lq]");
+    if (!input) return;
+    const i = Number(input.dataset.lq);
+    const l = list[i];
+    const p = byId(l.id);
+    const q = Math.floor(Number(input.value));
+    const ok = q >= p.tiers[0][0];
+    $(`#lq${i}-e`).textContent = ok ? "" : `At least ${fmt(p.tiers[0][0])} ${p.unit}.`;
+    input.setAttribute("aria-invalid", String(!ok));
+    if (!ok) return;
+    l.qty = q;
+    saveList();
+    const colour = p.opts[l.opt] ? `${p.opts[l.opt].split(":")[0]} · ` : "";
+    $(`[data-line-sub="${i}"]`).textContent = `${colour}${money(tierFor(p, q)[1])} per ${one(p.unit)} at this quantity`;
+    $(`[data-line-price="${i}"]`).textContent = money(lineTotal(l));
+    renderTotals();
+  });
+  $("[data-lines]").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-remove]");
+    if (!b) return;
+    list.splice(Number(b.dataset.remove), 1);
+    saveList();
+    renderList();
+  });
+  saveList();
+
+  /* ---------- Ship to: remembered, and the default country in every form ---------- */
+  const setShip = (c) => $$("[data-countries]").forEach((sel) => (sel.value = c));
+  const savedShip = store.get("brindlewood-ship");
+  if (COUNTRIES.includes(savedShip)) setShip(savedShip);
+  $("[data-ship]").addEventListener("change", (e) => { store.set("brindlewood-ship", e.target.value); setShip(e.target.value); });
+
+  /* ---------- Quote request: fields filled from the route ---------- */
+  function prefillQuote(params) {
+    if (params.get("item")) $("#r-item").value = params.get("item");
+    if (params.get("qty")) $("#r-qty").value = params.get("qty");
+    if (params.get("unit")) $("#r-unit").value = params.get("unit");
+    if (params.get("ws") && WS[params.get("ws")]) $("#r-detail").placeholder = `Which of ${WS[params.get("ws")].name}'s products, sizes, colours, target price per unit`;
+  }
+
+  /* ---------- FAQ search ---------- */
+  $("[data-faq-search]").addEventListener("input", (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    let shown = 0;
+    $$(".faq-group").forEach((group) => {
+      let inGroup = 0;
+      $$(".qa", group).forEach((qa) => { const hit = !q || qa.textContent.toLowerCase().includes(q); qa.hidden = !hit; qa.open = Boolean(q) && hit; inGroup += hit; });
+      group.hidden = !inGroup;
+      shown += inGroup;
+    });
+    $("[data-faq-empty]").hidden = shown > 0;
+  });
+
+  /* ---------- Forms: errors in reserved space, a sending state, then a success state. Nothing is sent. ---------- */
+  const MESSAGES = { typeMismatch: "Enter a valid email address.", tooShort: "A little longer, please.", rangeUnderflow: "Enter 1 or more." };
+  function checkField(field) {
+    const error = document.getElementById(field.getAttribute("aria-describedby"));
+    if (!error) return true;
+    const problem = ["valueMissing", "typeMismatch", "tooShort", "rangeUnderflow"].find((key) => field.validity[key]);
+    let text = problem === "valueMissing" ? field.dataset.msg || "Required." : problem ? MESSAGES[problem] : "";
+    if (field.name === "password" && problem === "tooShort") text = "Use at least 8 characters.";
+    if (field.name === "message" && problem === "tooShort") text = "Tell us a little more (20 characters or more).";
+    error.textContent = text;
+    field.setAttribute("aria-invalid", String(Boolean(problem)));
+    return !problem;
+  }
+  const AFTER = {
+    quick(form) { go(`#/quote?item=${encodeURIComponent($("#k-item").value.trim())}&qty=${encodeURIComponent($("#k-qty").value)}&unit=${encodeURIComponent($("#k-unit").value)}`); form.reset(); return true; },
+  };
+  $$("form[data-form]:not([data-form='order'])").forEach((form) => {
+    const fields = $$("[aria-describedby]", form).filter((f) => f.matches("input, textarea"));
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => { if (field.value || field.getAttribute("aria-invalid")) checkField(field); });
+      field.addEventListener("input", () => { if (field.getAttribute("aria-invalid") === "true") checkField(field); });
+      field.addEventListener("change", () => { if (field.type === "checkbox") checkField(field); });
+    });
+    onSubmit(form, () => {
+      const button = $("[type=submit]", form);
+      if (button.disabled) return;
+      if (!fields.map(checkField).every(Boolean)) { fields.find((f) => f.getAttribute("aria-invalid") === "true")?.focus(); return; }
+      if (AFTER[form.dataset.form]?.(form)) return;
+      const label = button.innerHTML;
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setTimeout(() => {
+        const first = $("input[name=first]", form);
+        $$("[data-name]", form).forEach((el) => (el.textContent = first ? `, ${first.value.trim().split(" ")[0]}` : ""));
+        $$("[data-ref]", form).forEach((el) => (el.textContent = `BW-Q-${String(Date.now()).slice(-5)}`));
+        $("[data-fields]", form).hidden = true;
+        $("[data-success]", form).hidden = false;
+        button.disabled = false;
+        button.innerHTML = label;
+      }, 700);
+    });
+  });
+
+  /* ---------- Start ---------- */
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

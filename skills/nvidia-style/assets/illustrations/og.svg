@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<defs><radialGradient id="bg" cx="70%" cy="45%" r="60%"><stop offset="0" stop-color="#2a2a2a"/><stop offset=".55" stop-color="#0a0a0a"/><stop offset="1" stop-color="#000"/></radialGradient></defs>
+<rect width="1200" height="630" fill="url(#bg)"/>
+<rect x="72" y="72" width="64" height="64" rx="4" fill="#79bb00"/>
+<path d="M88 88h28v28H88z" fill="none" stroke="#111" stroke-width="8"/><path d="M108 108l14 14" stroke="#111" stroke-width="8"/>
+<rect x="72" y="400" width="420" height="28" fill="#f2f2f2"/><rect x="72" y="448" width="320" height="28" fill="#f2f2f2"/><rect x="72" y="520" width="150" height="40" fill="#79bb00"/>
+<path d="M760 120 860 140V520L760 532z" fill="#2c2c2c"/><path d="M860 140 1040 108V480L860 520z" fill="#141414"/><path d="M760 120 860 140 1040 108 940 92z" fill="#333"/>
+<path d="M764 132h5V526h-5z" fill="#79bb00"/>
+<path d="M880 260 1020 236v20L880 280zM880 300 1020 276v20L880 320zM880 340 1020 316v20L880 360z" fill="#1f1f1f"/>
+<path d="M882 280 1018 256M882 320 1018 296M882 360 1018 336" stroke="#8fd40f" stroke-width="3"/>
+</svg>

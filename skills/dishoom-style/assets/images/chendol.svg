@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+<defs><pattern id="ct" width="62" height="62" patternUnits="userSpaceOnUse"><rect width="62" height="62" fill="#e9dfc8"/><path d="M0 .5H62M.5 0V62" stroke="#d6cab0" stroke-width="2"/></pattern></defs>
+<rect width="1000" height="1000" fill="url(#ct)"/>
+<rect y="680" width="1000" height="320" fill="#ece6da"/>
+<rect y="672" width="1000" height="12" fill="#bdb3a2"/>
+<g fill="none" stroke="#d6cdbb" stroke-width="3"><path d="M0 800q260-40 520 10t480-20"/><path d="M120 1000q80-90 260-110"/></g>
+<ellipse cx="500" cy="860" rx="230" ry="34" fill="#d6cdbb"/>
+<path d="M330 860h340l-30-60H360z" fill="#cfdcd8" opacity=".8"/>
+<path d="M250 560h500q-20 240-250 260-230-20-250-260z" fill="#d8e6e2" opacity=".85"/>
+<path d="M270 600h460q-30 190-230 200-200-10-230-200z" fill="#f4efe2"/>
+<path d="M300 640q200 50 400 0-40 120-200 130-160-10-200-130z" fill="#7fb04f" opacity=".9"/>
+<g stroke="#5f8f37" stroke-width="10" stroke-linecap="round" fill="none"><path d="M330 660q30 30 60 10t60 20M470 690q40 20 70 0t70 10M380 720q30 20 60 0t60 10"/></g>
+<g fill="#7a2e24"><circle cx="420" cy="740" r="11"/><circle cx="460" cy="752" r="10"/><circle cx="560" cy="742" r="11"/><circle cx="600" cy="726" r="9"/><circle cx="510" cy="760" r="10"/></g>
+<path d="M300 560q20-170 200-180 180 10 200 180z" fill="#fbf9f4"/>
+<g fill="#ffffff"><circle cx="420" cy="460" r="30"/><circle cx="540" cy="430" r="36"/><circle cx="600" cy="500" r="28"/><circle cx="380" cy="520" r="24"/></g>
+<g stroke="#5a3018" stroke-width="12" fill="none" stroke-linecap="round"><path d="M380 470q60-40 120-10t110 10"/><path d="M420 430q40-30 90-10"/><path d="M500 460q16 50 0 100"/><path d="M430 486q8 36-10 64"/><path d="M590 470q10 34-6 60"/></g>
+<g fill="#7fb04f"><path d="M470 400q20-20 40 0-20 24-40 0z"/><path d="M560 480q16-18 34 0-16 22-34 0z"/></g>
+<g fill="#7a2e24"><circle cx="500" cy="380" r="10"/><circle cx="620" cy="530" r="9"/><circle cx="350" cy="540" r="9"/></g>
+<path d="M280 590q30 140 140 190" stroke="#ffffff" stroke-width="14" fill="none" opacity=".7" stroke-linecap="round"/>
+<path d="M760 880l100-300" stroke="#b8bcb6" stroke-width="14" stroke-linecap="round"/><ellipse cx="866" cy="560" rx="22" ry="34" transform="rotate(18 866 560)" fill="#c9cdc7"/>
+</svg>

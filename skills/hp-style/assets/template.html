@@ -1,0 +1,1505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Fernlow: laptops, printers and repairs</title>
+<meta name="description" content="Fernlow is an independent computer store: laptops, desktops, monitors, printers, ink and accessories, with monthly plans for businesses and a repair bench for most brands.">
+<meta property="og:title" content="Fernlow: laptops, printers and repairs">
+<meta property="og:description" content="Laptops, desktops, printers and ink, set up before they leave the store, with same-week repairs.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="illustrations/og.svg">
+<link rel="icon" href="illustrations/mark.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/funnel-sans-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: "Funnel Sans"; src: url("fonts/funnel-sans-latin-wght.woff2") format("woff2"); font-weight: 300 800; font-style: normal; font-display: swap; }
+
+/* ---------- Tokens: white page, light gray bands, rounded near-black promo banners, one blue for actions, yellow only for offers ---------- */
+:root {
+  color-scheme: light;
+  --page: oklch(100% 0 0); --band: oklch(96.4% 0 0); --surface: oklch(100% 0 0);
+  --tile-a: oklch(100% 0 0); --tile-b: oklch(93.5% 0.002 260);
+  --text: oklch(21% 0 0); --muted: oklch(46% 0 0); --border: oklch(88% 0 0); --rule: oklch(79% 0 0);
+  --accent: oklch(47% 0.215 264); --accent-hover: oklch(40% 0.2 264); --accent-ink: oklch(100% 0 0); --link: oklch(45% 0.2 264);
+  --promo: oklch(11% 0 0); --promo-2: oklch(24% 0.014 262); --promo-line: transparent;
+  --pale: oklch(91% 0 0); --pale-hover: oklch(100% 0 0); --pale-ink: oklch(18% 0 0);
+  --offer: oklch(95% 0.14 106); --offer-ink: oklch(25% 0.03 100);
+  --sale: oklch(48% 0.2 5); --ok: oklch(50% 0.13 155); --err: oklch(52% 0.2 27);
+  --foot: oklch(22% 0 0); --foot-ink: oklch(96% 0 0); --foot-muted: oklch(79% 0 0); --foot-rule: oklch(37% 0 0);
+  --tab: oklch(27% 0.008 262); --art-glow: none;
+  --overlay: 0 18px 50px oklch(0% 0 0 / 0.22);
+  --font: "Funnel Sans", ui-sans-serif, system-ui, sans-serif;
+  --fs-display: clamp(2.5rem, 1.45rem + 3.1vw, 4.25rem); --fs-h1: clamp(2rem, 1.55rem + 1.5vw, 3rem);
+  --fs-h2: clamp(1.625rem, 1.3rem + 1vw, 2.25rem); --fs-h3: 1.375rem; --fs-small: 0.8125rem;
+  --r-control: 4px; --r-card: 12px; --r-media: 16px; --r-block: 20px; --r-pill: 999px;
+  --dur-fast: 120ms; --dur-base: 220ms; --dur-slow: 480ms; --ease: cubic-bezier(0.2, 0, 0, 1);
+  --gut: clamp(16px, 3vw, 40px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: oklch(17% 0.004 260); --band: oklch(21% 0.004 260); --surface: oklch(24% 0.005 260);
+    --tile-a: oklch(31% 0.005 260); --tile-b: oklch(25% 0.005 260);
+    --text: oklch(95% 0 0); --muted: oklch(75% 0 0); --border: oklch(34% 0.005 260); --rule: oklch(44% 0.005 260);
+    --accent: oklch(72% 0.14 262); --accent-hover: oklch(79% 0.12 262); --accent-ink: oklch(16% 0.03 262); --link: oklch(79% 0.12 262);
+    --promo: oklch(8% 0 0); --promo-2: oklch(18% 0.014 262); --promo-line: oklch(100% 0 0 / 0.1);
+    --offer: oklch(88% 0.15 103); --sale: oklch(77% 0.14 5); --ok: oklch(77% 0.14 155); --err: oklch(73% 0.16 27);
+    --foot: oklch(12% 0.003 260); --foot-rule: oklch(30% 0 0); --tab: oklch(12% 0.004 262);
+    --art-glow: drop-shadow(0 0 0.6px oklch(100% 0 0 / 0.45)) drop-shadow(0 4px 22px oklch(100% 0 0 / 0.1));
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: oklch(17% 0.004 260); --band: oklch(21% 0.004 260); --surface: oklch(24% 0.005 260);
+  --tile-a: oklch(31% 0.005 260); --tile-b: oklch(25% 0.005 260);
+  --text: oklch(95% 0 0); --muted: oklch(75% 0 0); --border: oklch(34% 0.005 260); --rule: oklch(44% 0.005 260);
+  --accent: oklch(72% 0.14 262); --accent-hover: oklch(79% 0.12 262); --accent-ink: oklch(16% 0.03 262); --link: oklch(79% 0.12 262);
+  --promo: oklch(8% 0 0); --promo-2: oklch(18% 0.014 262); --promo-line: oklch(100% 0 0 / 0.1);
+  --offer: oklch(88% 0.15 103); --sale: oklch(77% 0.14 5); --ok: oklch(77% 0.14 155); --err: oklch(73% 0.16 27);
+  --foot: oklch(12% 0.003 260); --foot-rule: oklch(30% 0 0); --tab: oklch(12% 0.004 262);
+  --art-glow: drop-shadow(0 0 0.6px oklch(100% 0 0 / 0.45)) drop-shadow(0 4px 22px oklch(100% 0 0 / 0.1));
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--page); color: var(--text); font: 400 1rem/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+a { color: var(--link); }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+h1, h2, h3 { margin: 0; line-height: 1.15; letter-spacing: -0.02em; font-weight: 600; }
+p, dl, dd, figure { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 50; padding: 10px 16px; background: var(--accent); color: var(--accent-ink); border-radius: var(--r-control); }
+.skip:focus { top: 12px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.on-dark :focus-visible, .ft :focus-visible { outline-color: oklch(100% 0 0); }
+.wrap { width: min(100% - 2 * var(--gut), 1376px); margin-inline: auto; }
+.icon { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.muted { color: var(--muted); }
+.small { font-size: 0.875rem; }
+.art { width: 100%; height: auto; aspect-ratio: 4 / 3; filter: var(--art-glow); transition: transform var(--dur-slow) var(--ease); }
+html:not(.js) [data-js] { display: none !important; }
+.js [data-nojs] { display: none !important; }
+
+/* ---------- Buttons and links ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 28px; border: 1px solid transparent; border-radius: var(--r-control); background: var(--accent); color: var(--accent-ink); font-weight: 600; text-decoration: none; text-align: center; transition: background var(--dur-fast), color var(--dur-fast); }
+.btn:hover { background: var(--accent-hover); }
+.btn[disabled] { opacity: 0.55; cursor: default; }
+.btn-sm { min-height: 36px; padding: 0 34px; font-weight: 500; }
+.btn-caps { min-height: 50px; text-transform: uppercase; font-size: 0.875rem; font-weight: 700; letter-spacing: 0.02em; }
+.btn-line { background: transparent; color: var(--link); border-color: var(--accent); }
+.btn-line:hover { background: color-mix(in oklch, var(--accent) 9%, transparent); }
+.btn-pale { min-height: 48px; padding: 0 30px; border-radius: 6px; background: var(--pale); color: var(--pale-ink); font-weight: 500; font-size: 1.0625rem; }
+.btn-pale:hover { background: var(--pale-hover); }
+.link-arrow { display: inline-flex; align-items: center; gap: 10px; padding: 8px 0; color: var(--link); font-weight: 500; text-decoration: none; }
+.link-arrow .icon { width: 28px; transition: transform var(--dur-base) var(--ease); }
+.link-arrow:hover .icon { transform: translateX(4px); }
+.link { padding: 0; border: 0; background: none; color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Header ---------- */
+.hd { position: relative; z-index: 10; background: var(--page); border-bottom: 1px solid var(--border); }
+.hd-in { display: flex; align-items: center; gap: clamp(10px, 2vw, 28px); min-height: 64px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; flex: none; color: var(--text); font-size: 1.3125rem; font-weight: 700; letter-spacing: -0.03em; text-decoration: none; }
+.brand svg { width: 34px; height: 34px; }
+.nav { display: flex; align-items: center; gap: 2px; }
+.nav a { padding: 8px 11px; border-radius: var(--r-control); color: var(--text); font-size: 0.9375rem; text-decoration: none; white-space: nowrap; }
+.nav a:hover, .nav a[aria-current] { color: var(--link); }
+.nav .biz { margin-left: 10px; padding: 6px 15px; border: 1px solid var(--accent); border-radius: 6px; color: var(--link); font-size: 1rem; font-weight: 500; }
+.nav .biz:hover { background: color-mix(in oklch, var(--accent) 9%, transparent); }
+.tools { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+.ib { position: relative; display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: none; color: var(--text); text-decoration: none; }
+.ib:hover { background: var(--band); }
+.cart-n { position: absolute; top: 3px; right: 1px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent); color: var(--accent-ink); font-size: 11px; font-weight: 700; line-height: 18px; text-align: center; }
+.menu-btn { display: none; }
+.searchbar { padding: 14px 0; border-top: 1px solid var(--border); background: var(--page); }
+.searchbar form { display: flex; gap: 8px; }
+@media (max-width: 1240px) { .nav { display: none; } .menu-btn { display: inline-grid; } }
+@media (max-width: 520px) { .brand { font-size: 1.1875rem; } .brand svg { width: 30px; height: 30px; } }
+dialog { padding: 0; border: 0; background: var(--surface); color: var(--text); box-shadow: var(--overlay); }
+dialog::backdrop { background: oklch(0% 0 0 / 0.45); }
+.drawer { width: min(360px, 88vw); height: 100dvh; max-height: none; margin: 0 auto 0 0; animation: slide-in var(--dur-base) var(--ease) both; }
+.drawer-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 12px 12px 24px; border-bottom: 1px solid var(--border); }
+.drawer nav a { display: block; padding: 15px 24px; border-bottom: 1px solid var(--border); color: var(--text); font-size: 1.125rem; text-decoration: none; }
+.drawer nav a[aria-current] { color: var(--link); font-weight: 600; }
+
+/* ---------- Forms ---------- */
+.field { display: grid; gap: 6px; align-content: start; }
+.field > label, .lbl { font-size: 0.9375rem; font-weight: 600; }
+.input { width: 100%; min-height: 48px; padding: 10px 14px; border: 1px solid var(--rule); border-radius: var(--r-control); background: var(--surface); color: var(--text); }
+.input:focus { border-color: var(--accent); outline: 2px solid color-mix(in oklch, var(--accent) 35%, transparent); outline-offset: 0; }
+.input[aria-invalid="true"] { border-color: var(--err); }
+textarea.input { min-height: 120px; resize: vertical; }
+.err { min-height: 1.25rem; color: var(--err); font-size: var(--fs-small); line-height: 1.25rem; }
+.check { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9375rem; }
+.check input, .opt input, .cmp input { width: 20px; height: 20px; margin: 2px 0 0; flex: none; accent-color: var(--accent); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 20px; }
+.full { grid-column: 1 / -1; }
+.form-card { padding: clamp(20px, 3vw, 36px); border: 1px solid var(--border); border-radius: var(--r-card); background: var(--surface); }
+.form-card h2 { font-size: 1.5rem; margin-bottom: 8px; }
+.form-card > form > p, .form-card > p { margin-bottom: 20px; }
+.done { padding: 20px; border: 1px solid var(--ok); border-left-width: 4px; border-radius: var(--r-control); background: var(--surface); }
+.done h3 { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 1.25rem; }
+.done .icon { color: var(--ok); }
+.done .link { margin-top: 12px; }
+@media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Sections ---------- */
+.band { background: var(--band); }
+.sec { padding-block: clamp(40px, 5.5vw, 76px); }
+.pt0 { padding-top: 0; }
+.st { margin-bottom: clamp(24px, 3vw, 40px); font-size: var(--fs-h2); }
+.kicker { font-size: 1.0625rem; font-weight: 600; }
+.display { font-size: var(--fs-display); font-weight: 700; letter-spacing: -0.035em; line-height: 1.02; }
+.lead { font-size: clamp(1.125rem, 1rem + 0.45vw, 1.375rem); font-weight: 500; line-height: 1.3; }
+.page-head { padding: clamp(24px, 3vw, 36px) 0 clamp(18px, 2vw, 24px); }
+.page-head h1 { font-size: var(--fs-h1); }
+.page-head p { margin-top: 10px; }
+.crumbs { background: var(--band); font-size: 0.875rem; text-transform: uppercase; }
+.crumbs ol { display: flex; flex-wrap: wrap; align-items: center; gap: 0 10px; min-height: 44px; padding-block: 10px; }
+.crumbs li + li::before { content: "/"; margin-right: 10px; }
+.crumbs a { color: var(--text); text-decoration: none; }
+.crumbs a:hover { color: var(--link); }
+.crumbs [aria-current] { font-weight: 700; }
+.ruled { display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); row-gap: 24px; }
+.ruled > li + li { border-left: 1px solid var(--rule); }
+.c5 { --cols: 5; } .c6 { --cols: 6; }
+@media (max-width: 1000px) and (min-width: 641px) {
+  .c4 { --cols: 2; } .c5, .c6 { --cols: 3; }
+  .c4 > li:nth-child(odd), .c5 > li:nth-child(3n+1), .c6 > li:nth-child(3n+1) { border-left: 0; }
+}
+@media (max-width: 640px) { .ruled { --cols: 1; row-gap: 0; } .ruled > li + li { border-left: 0; border-top: 1px solid var(--rule); } }
+
+/* ---------- Hero: rounded near-black slides, one product lit from behind, a frosted pill control ---------- */
+.hero { position: relative; }
+.slide { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: center; gap: 24px; min-height: clamp(440px, 41vw, 600px); padding: 48px clamp(24px, 3vw, 40px) 96px; overflow: hidden; border-radius: var(--r-block); background: radial-gradient(55% 75% at 72% 48%, var(--glow), transparent 70%), linear-gradient(105deg, var(--promo) 35%, var(--promo-2)); box-shadow: inset 0 0 0 1px var(--promo-line); color: oklch(100% 0 0); }
+.slide + .slide { margin-top: 12px; }
+.js .slide + .slide { margin-top: 0; }
+.js .slide:not(.is-current) { display: none; }
+.js .slide.is-current { animation: fade var(--dur-slow) var(--ease) both; }
+.s1 { --glow: oklch(48% 0.19 264 / 0.6); } .s2 { --glow: oklch(55% 0.15 215 / 0.5); } .s3 { --glow: oklch(60% 0.15 50 / 0.45); }
+.slide-copy { display: grid; justify-items: start; gap: 18px; max-width: 36rem; }
+.slide-copy .lead { margin-bottom: 12px; }
+.slide-art svg { width: 100%; height: auto; max-height: 470px; filter: drop-shadow(0 30px 40px oklch(0% 0 0 / 0.5)); }
+.pill-ctl { position: absolute; left: 50%; bottom: 22px; z-index: 2; display: flex; align-items: center; gap: 2px; padding: 4px 8px; border-radius: var(--r-pill); background: oklch(100% 0 0 / 0.45); color: oklch(15% 0 0); transform: translateX(-50%); backdrop-filter: blur(10px); }
+.pill-ctl button { display: grid; place-items: center; min-width: 34px; height: 40px; padding: 0; border: 0; border-radius: var(--r-pill); background: none; color: inherit; }
+.pill-ctl .dot::before { content: ""; width: 7px; height: 7px; border-radius: 4px; background: currentColor; transition: width var(--dur-base) var(--ease); }
+.pill-ctl .dot[aria-current="true"]::before { width: 40px; }
+.pill-ctl .dot[aria-current="true"] { min-width: 52px; }
+@media (max-width: 820px) {
+  .slide { grid-template-columns: 1fr; align-items: start; min-height: 0; padding: 20px 20px 88px; }
+  .slide-art { order: -1; }
+  .slide-art svg { max-height: 250px; margin-inline: auto; }
+}
+
+/* ---------- Category strip: product cut-outs over labels, split by thin vertical rules ---------- */
+.cats a { display: flex; flex-direction: column; align-items: center; gap: 14px; height: 100%; padding: 4px 12px 20px; color: var(--text); font-size: 1.1875rem; font-weight: 500; line-height: 1.25; text-align: center; text-decoration: none; }
+.cats .art { width: min(100%, 176px); }
+.cats a:hover span { color: var(--link); }
+a:hover > .art, .tile-media:hover .art, a:hover > .tile-media .art { transform: scale(1.04); }
+@media (max-width: 640px) {
+  .cats a { flex-direction: row; gap: 24px; padding: 10px 0; text-align: left; }
+  .cats .art { width: 128px; flex: none; }
+}
+
+/* ---------- Tiles: rounded photo panels, a short title, one line and a small blue button ---------- */
+.tiles, .minis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.tile, .mini { display: flex; flex-direction: column; align-items: flex-start; }
+.tile-media { display: grid; place-items: center; width: 100%; aspect-ratio: 3 / 2; overflow: hidden; border-radius: var(--r-card); background: linear-gradient(180deg, var(--tile-a), var(--tile-b)); }
+.tile-media .art { width: 80%; }
+.tile h3 { margin: 22px 0 12px; font-size: var(--fs-h3); }
+.tile p { margin-bottom: 24px; font-size: 1.0625rem; }
+.tile .btn, .mini .btn { margin-top: auto; }
+.mini h3 { margin-top: 16px; font-size: 1.0625rem; font-weight: 500; letter-spacing: -0.01em; }
+.mini h3 a { color: var(--text); text-decoration: none; }
+.mini h3 a:hover { color: var(--link); }
+.mini .now { margin-bottom: 14px; font-size: 1.25rem; }
+@media (max-width: 1000px) { .tiles, .minis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .tiles { grid-template-columns: 1fr; } .minis { gap: 24px 14px; } .minis .btn { padding: 0 16px; } }
+
+/* ---------- Promo banner: full-width rounded dark panel with a pale button ---------- */
+.promo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 24px; min-height: 380px; padding: clamp(28px, 4vw, 56px); overflow: hidden; border-radius: var(--r-block); background: radial-gradient(60% 90% at 78% 50%, var(--glow, oklch(48% 0.16 250 / 0.5)), transparent 70%), linear-gradient(100deg, var(--promo) 40%, var(--promo-2)); box-shadow: inset 0 0 0 1px var(--promo-line); color: oklch(100% 0 0); }
+.promo .copy { display: grid; justify-items: start; gap: 18px; }
+.promo h1, .promo h2 { font-size: clamp(2rem, 1.3rem + 2.2vw, 3.25rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.04; }
+.promo p { max-width: 34rem; font-size: 1.1875rem; font-weight: 500; }
+.promo .btn-pale { margin-top: 10px; }
+.promo svg { width: 100%; height: auto; max-height: 360px; filter: drop-shadow(0 24px 34px oklch(0% 0 0 / 0.5)); }
+@media (max-width: 820px) { .promo { grid-template-columns: 1fr; } .promo > svg { order: -1; max-height: 220px; } }
+
+/* ---------- Features, guide cards, help band ---------- */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 64px); }
+.feature-media { display: grid; place-items: center; aspect-ratio: 16 / 9; border-radius: var(--r-media); background: linear-gradient(180deg, var(--tile-a), var(--tile-b)); }
+.feature-media svg { width: 70%; height: auto; }
+.feature h3 { margin: 28px 0 14px; font-size: var(--fs-h3); }
+.feature p { max-width: 38rem; }
+.links { display: flex; flex-wrap: wrap; gap: 4px 32px; margin-top: 18px; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 28px; }
+.card-media, .cover { display: grid; place-items: center; aspect-ratio: 16 / 10; overflow: hidden; border-radius: var(--r-media); background: radial-gradient(70% 90% at 68% 42%, var(--glow, oklch(48% 0.19 264 / 0.6)), transparent 72%), linear-gradient(120deg, var(--promo), var(--promo-2)); }
+.card-media .art { width: 62%; }
+.g1 { --glow: oklch(48% 0.19 264 / 0.6); } .g2 { --glow: oklch(55% 0.15 215 / 0.55); } .g3 { --glow: oklch(60% 0.15 50 / 0.5); } .g4 { --glow: oklch(52% 0.15 160 / 0.5); }
+.card .date { margin: 22px 0 10px; font-size: 0.9375rem; font-weight: 500; }
+.card h3 { font-size: var(--fs-h3); }
+.card h3 a { color: var(--text); text-decoration: none; }
+.card h3 a:hover { color: var(--link); }
+.card .ex { margin-top: 12px; }
+.card .link-arrow { margin-top: 10px; }
+.lead-card > li:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; gap: 0 40px; }
+.lead-card > li:first-child .card-media { grid-row: span 5; }
+.lead-card > li:first-child h3 { font-size: var(--fs-h2); }
+.helpband { padding-block: clamp(56px, 8vw, 112px); background: radial-gradient(40% 70% at 18% 30%, oklch(42% 0.13 255 / 0.65), transparent 70%), radial-gradient(40% 70% at 86% 72%, oklch(48% 0.13 45 / 0.45), transparent 70%), oklch(16% 0.01 262); color: oklch(100% 0 0); text-align: center; }
+.helpband h2 { font-size: var(--fs-display); letter-spacing: -0.035em; }
+.help-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px clamp(16px, 3vw, 44px); margin-top: clamp(32px, 5vw, 60px); }
+.help-row a { display: inline-flex; align-items: center; gap: 12px; padding: 8px 4px; color: oklch(100% 0 0); font-size: 1.1875rem; font-weight: 500; text-decoration: none; }
+.help-row .icon { width: 36px; height: 36px; stroke-width: 1.2; }
+.help-row a:hover span { text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 900px) { .cards { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .split, .cards, .lead-card > li:first-child { grid-template-columns: 1fr; } .help-row { display: grid; justify-content: start; text-align: left; } }
+
+/* ---------- Footer ---------- */
+.ft { padding: 28px 0 40px; background: var(--foot); color: var(--foot-ink); font-size: 0.875rem; }
+.ft a { color: var(--foot-ink); text-decoration: none; }
+.ft a:hover { text-decoration: underline; }
+.ft-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-bottom: 20px; border-bottom: 1px solid var(--foot-rule); }
+.ft-top span { display: inline-flex; align-items: center; gap: 8px; }
+.ft-top .icon { width: 18px; height: 18px; }
+.ft-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.5fr); gap: 32px; padding: 28px 0; }
+.ft h2 { margin-bottom: 14px; font-size: 1rem; letter-spacing: 0; }
+.ft-cols li + li { margin-top: 10px; }
+.ft .input { min-height: 44px; border-color: oklch(48% 0 0); background: oklch(29% 0 0); color: oklch(100% 0 0); }
+.ft .news { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 8px; }
+.ft .news .err { grid-column: 1 / -1; color: oklch(80% 0.12 27); }
+.ft .btn { background: var(--pale); color: var(--pale-ink); }
+.ft .btn:hover { background: var(--pale-hover); }
+.ft .done { border-color: oklch(77% 0.14 155); background: none; }
+.ft-legal { display: flex; flex-wrap: wrap; gap: 6px 0; padding-top: 4px; }
+.ft-legal li + li::before { content: "|"; margin: 0 12px; color: var(--foot-muted); }
+.ft small { display: block; margin-top: 16px; color: var(--foot-muted); font-size: var(--fs-small); }
+@media (max-width: 900px) { .ft-cols { grid-template-columns: 1fr 1fr; } .ft-news { grid-column: 1 / -1; } }
+
+/* ---------- Results: filter column, toolbar, list rows with offer flags and spec lines ---------- */
+.shop { display: grid; grid-template-columns: 272px minmax(0, 1fr); border-top: 1px solid var(--border); }
+.filters { padding-bottom: 32px; border-right: 1px solid var(--border); }
+.fg { border-bottom: 1px solid var(--border); }
+.pm { display: flex; align-items: center; gap: 12px; padding: 16px 16px 16px 0; font-weight: 500; text-transform: uppercase; list-style: none; cursor: pointer; }
+.pm::-webkit-details-marker { display: none; }
+.pm::after { content: ""; width: 12px; height: 12px; margin-left: auto; flex: none; background: linear-gradient(currentColor, currentColor) center / 12px 1.5px no-repeat, linear-gradient(currentColor, currentColor) center / 1.5px 12px no-repeat; }
+[open] > .pm::after { background: linear-gradient(currentColor, currentColor) center / 12px 1.5px no-repeat; }
+.opts { display: grid; gap: 2px; padding: 0 16px 14px 0; }
+.opt { display: flex; align-items: center; gap: 12px; padding: 6px 0 6px 6px; cursor: pointer; }
+.opt input { margin: 0; }
+.opt .n { margin-left: auto; color: var(--muted); font-size: 0.875rem; }
+.fcat a { display: block; padding: 7px 0 7px 6px; color: var(--text); text-decoration: none; }
+.fcat a:hover, .fcat a[aria-current] { color: var(--link); }
+.fcat a[aria-current] { font-weight: 700; }
+.side-promo { display: grid; gap: 12px; justify-items: start; margin: 24px 16px 0 0; padding: 22px; border-radius: var(--r-card); background: radial-gradient(90% 70% at 70% 80%, oklch(48% 0.19 264 / 0.6), transparent 70%), var(--promo); box-shadow: inset 0 0 0 1px var(--promo-line); color: oklch(100% 0 0); }
+.side-promo b { font-size: 1.75rem; line-height: 1.05; letter-spacing: -0.03em; }
+.side-promo .btn-pale { min-height: 40px; padding: 0 20px; font-size: 0.9375rem; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 14px 0 14px 24px; border-bottom: 1px solid var(--border); }
+.count { margin-right: auto; font-size: 1.0625rem; }
+.count b { font-weight: 600; }
+.f-toggle { display: none; }
+.sort { display: inline-flex; align-items: center; min-height: 44px; border: 1px solid var(--rule); border-radius: var(--r-control); }
+.sort span { padding: 0 12px; border-right: 1px solid var(--rule); font-size: var(--fs-small); font-weight: 700; text-transform: uppercase; }
+.sort select { min-height: 42px; padding: 0 10px; border: 0; background: transparent; }
+.cmp-msg { min-height: 1.5rem; padding: 4px 0 0 24px; color: var(--err); font-size: 0.875rem; }
+.row { display: grid; grid-template-columns: 220px minmax(0, 1fr) 280px; gap: 28px; padding: 24px 0 28px 24px; border-bottom: 1px solid var(--border); }
+.row-media { display: grid; justify-items: center; align-content: start; gap: 14px; }
+.row-media > a { display: block; width: 100%; }
+.cmp { display: inline-flex; align-items: center; gap: 10px; font-size: 0.875rem; text-transform: uppercase; cursor: pointer; }
+.cmp input { margin: 0; }
+.offer { display: inline-block; margin-bottom: 14px; padding: 6px 10px; background: var(--offer); color: var(--offer-ink); font-size: 0.9375rem; }
+.row-title { font-size: 1.375rem; font-weight: 400; letter-spacing: -0.01em; line-height: 1.3; }
+.row-title a { color: var(--text); text-decoration: none; }
+.row-title a:hover { color: var(--link); }
+.rating { display: flex; align-items: center; gap: 8px; margin: 10px 0 14px; font-size: 0.875rem; }
+.stars { position: relative; display: inline-flex; flex: none; color: var(--rule); }
+.stars > span { display: inline-flex; }
+.stars .on { position: absolute; inset: 0 auto 0 0; overflow: hidden; color: var(--accent); }
+.stars svg { width: 18px; height: 18px; flex: none; fill: currentColor; }
+.row-sum { margin-bottom: 12px; font-size: 0.9375rem; font-weight: 700; }
+.specline { display: flex; flex-wrap: wrap; font-size: 0.9375rem; }
+.specline li + li::before { content: ""; display: inline-block; width: 5px; height: 5px; margin: 0 9px 3px; background: currentColor; vertical-align: middle; }
+.sku { margin-top: 12px; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; }
+.row-buy { display: grid; align-content: start; justify-items: start; gap: 8px; }
+.stock { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; text-transform: uppercase; }
+.stock i { width: 15px; height: 15px; border: 2px solid var(--ok); border-radius: 50%; box-shadow: inset 0 0 0 2px var(--surface), inset 0 0 0 8px var(--ok); }
+.flag { padding: 2px 6px; background: var(--offer); color: var(--offer-ink); font-size: var(--fs-small); font-weight: 700; }
+.was { font-size: var(--fs-small); }
+.was s { margin-right: 6px; color: var(--muted); }
+.now { color: var(--sale); font-size: 1.5rem; font-weight: 600; line-height: 1.1; }
+.now small { margin-left: 6px; color: var(--muted); font-size: 0.75rem; font-weight: 400; }
+.see { justify-self: center; padding: 8px; color: var(--link); font-size: 0.9375rem; font-weight: 700; text-transform: uppercase; text-decoration: none; }
+.see:hover { text-decoration: underline; }
+.row-buy .btn { width: 100%; }
+.empty, .nojs { display: grid; justify-items: start; gap: 14px; padding: 40px 24px; }
+@media (max-width: 1180px) { .row { grid-template-columns: 180px minmax(0, 1fr); } .row-buy { grid-column: 2; } }
+@media (max-width: 900px) {
+  .shop { grid-template-columns: 1fr; }
+  .filters { display: none; border-right: 0; }
+  .shop.show-f .filters { display: block; }
+  .f-toggle { display: inline-flex; width: 100%; text-transform: uppercase; font-weight: 700; }
+  .toolbar, .row, .cmp-msg, .empty { padding-left: 0; }
+  .side-promo { display: none; }
+}
+@media (max-width: 640px) {
+  .row { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .row-media .art { max-width: 280px; }
+  .row-buy { grid-column: auto; justify-items: center; width: 100%; }
+  .row .specline, .row .rating { justify-content: center; }
+}
+
+/* ---------- Product page ---------- */
+.pdp { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); padding-block: 24px 56px; }
+.stage { display: grid; place-items: center; overflow: hidden; }
+.stage .art, .thumbs .art { --v: none; transform: var(--v); }
+.v1 .art { --v: scaleX(-1); } .v2 .art { --v: scale(1.7) translate(-7%, 9%); }
+.thumbs-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; }
+.thumbs { display: flex; gap: 10px; }
+.thumbs button { width: 84px; height: 62px; padding: 4px; overflow: hidden; border: 1px solid var(--border); border-radius: 2px; background: var(--surface); }
+.thumbs button[aria-pressed="true"] { border: 2px solid var(--text); }
+.offer-bar { display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: var(--offer); color: var(--offer-ink); font-size: 0.9375rem; }
+.p-title { margin: 14px 0 16px; font-size: clamp(1.5rem, 1.25rem + 0.9vw, 2rem); font-weight: 400; letter-spacing: -0.015em; line-height: 1.25; }
+.p-sum { margin-bottom: 18px; font-weight: 700; }
+.p-price { display: grid; justify-items: start; gap: 6px; }
+.p-price .now { font-size: 1.875rem; }
+.swatches { display: flex; gap: 10px; margin: 20px 0 0; padding: 0; border: 0; }
+.swatches legend { margin-bottom: 10px; font-weight: 600; }
+.swatch { width: 40px; height: 40px; border: 1px solid var(--rule); border-radius: 50%; background: var(--sw); box-shadow: inset 0 0 0 3px var(--page); }
+.swatch[aria-pressed="true"] { border: 2px solid var(--text); }
+.buy-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 22px 0 16px; }
+.note-line { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.9375rem; }
+.note-line .icon { color: var(--link); }
+.spec-rows { display: grid; gap: 7px; margin-top: 18px; padding: 16px 0; border-block: 1px solid var(--rule); }
+.spec-rows div { display: flex; flex-wrap: wrap; align-items: baseline; }
+.spec-rows dt { margin-right: 10px; padding-right: 10px; border-right: 1px solid currentColor; font-weight: 700; text-transform: uppercase; line-height: 1.15; }
+.spec-rows a { margin-top: 4px; font-weight: 500; }
+.perks { display: grid; gap: 14px; margin-top: 22px; font-size: 0.9375rem; }
+.perks li { display: flex; align-items: center; gap: 12px; }
+.tabbar { background: var(--tab); }
+.tabbar ul { display: flex; overflow-x: auto; }
+.tabbar a { display: block; padding: 18px 20px 16px; border-bottom: 2px solid transparent; color: oklch(100% 0 0); font-weight: 700; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+.tabbar a[aria-current="true"] { border-color: oklch(100% 0 0); }
+.ov-head { max-width: 62rem; padding-block: clamp(40px, 5vw, 64px) 32px; }
+.ov-head h2 { font-size: var(--fs-display); font-weight: 700; letter-spacing: -0.035em; }
+.ov-head .lead { margin: 12px 0 16px; }
+.ov-media { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: center; gap: 24px; padding: clamp(24px, 4vw, 56px); border-radius: var(--r-block); background: radial-gradient(55% 75% at 30% 50%, oklch(48% 0.19 264 / 0.55), transparent 70%), linear-gradient(100deg, var(--promo-2), var(--promo) 60%); box-shadow: inset 0 0 0 1px var(--promo-line); color: oklch(100% 0 0); }
+.ov-media .art { filter: drop-shadow(0 24px 30px oklch(0% 0 0 / 0.5)); }
+.stats { display: grid; gap: 22px; }
+.stats div + div { padding-top: 22px; border-top: 1px solid oklch(100% 0 0 / 0.3); }
+.stats b { display: block; font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+.spec-table div { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 16px; padding: 15px 0; border-bottom: 1px solid var(--border); }
+.spec-table dt { font-size: 0.9375rem; font-weight: 700; text-transform: uppercase; }
+.reviews { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 48px; }
+.avg { font-size: 3.5rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.rev { padding: 20px 0; border-bottom: 1px solid var(--border); }
+.rev h3 { margin: 6px 0 8px; font-size: 1.125rem; }
+.rev .link { margin-top: 10px; font-size: 0.875rem; }
+@media (max-width: 900px) { .pdp, .reviews, .ov-media { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .buy-row { grid-template-columns: 1fr; } .spec-table div { grid-template-columns: 1fr; gap: 4px; } .thumbs button { width: 66px; height: 50px; } }
+
+/* ---------- Cart ---------- */
+.cart-grid { display: grid; grid-template-columns: minmax(0, 1fr) 380px; align-items: start; gap: 40px; padding-bottom: 56px; }
+.line { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; align-items: start; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--border); }
+.line:first-child { padding-top: 0; }
+.line-art { display: grid; place-items: center; border-radius: var(--r-card); background: linear-gradient(180deg, var(--tile-a), var(--tile-b)); }
+.line h3 { margin-bottom: 8px; font-size: 1.125rem; font-weight: 500; letter-spacing: -0.01em; line-height: 1.3; }
+.line h3 a { color: var(--text); text-decoration: none; }
+.qty { display: inline-flex; align-items: center; margin-top: 14px; border: 1px solid var(--rule); border-radius: var(--r-control); }
+.qty button { display: grid; place-items: center; width: 40px; height: 40px; border: 0; background: none; }
+.qty output { min-width: 30px; font-weight: 600; text-align: center; }
+.line-price { font-size: 1.125rem; font-weight: 600; text-align: right; }
+.summary { display: grid; gap: 12px; padding: 24px; border-radius: var(--r-card); background: var(--band); }
+.summary h2 { font-size: 1.375rem; }
+.sum-row { display: flex; justify-content: space-between; gap: 16px; }
+.sum-total { padding-top: 14px; border-top: 1px solid var(--rule); font-size: 1.25rem; font-weight: 700; }
+.meter { height: 6px; overflow: hidden; border-radius: 3px; background: var(--border); }
+.meter i { display: block; width: var(--w, 0%); height: 100%; background: var(--accent); transition: width var(--dur-slow) var(--ease); }
+.empty-cart { display: grid; justify-items: start; gap: 14px; padding: 8px 0 48px; }
+@media (max-width: 900px) { .cart-grid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .line { grid-template-columns: 96px minmax(0, 1fr); gap: 16px; } .line-price { grid-column: 2; text-align: left; } }
+
+/* ---------- Business, support, guides, legal ---------- */
+.terms { display: inline-flex; flex-wrap: wrap; gap: 3px; padding: 3px; border: 1px solid var(--rule); border-radius: var(--r-control); background: var(--surface); }
+.terms label { position: relative; }
+.terms input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.terms span { display: block; padding: 9px 18px; border-radius: 2px; font-weight: 500; }
+.terms input:checked + span { background: var(--accent); color: var(--accent-ink); }
+.terms input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 28px; }
+.plan { display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--surface); }
+.plan.pick { border: 2px solid var(--accent); }
+.plan .flag { align-self: flex-start; }
+.plan h3 { font-size: 1.5rem; }
+.price-big { font-size: 2.75rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.price-big small { margin-left: 4px; color: var(--muted); font-size: 1rem; font-weight: 400; letter-spacing: 0; }
+.ticks { display: grid; gap: 10px; }
+.ticks li { display: flex; gap: 10px; }
+.ticks .icon { width: 22px; height: 22px; color: var(--link); }
+.plan .btn { margin-top: auto; }
+.steps li { padding: 4px 24px 8px; }
+.steps b { display: block; margin-bottom: 10px; color: var(--link); font-size: 2.25rem; font-weight: 300; line-height: 1; }
+.steps h3 { margin-bottom: 8px; font-size: 1.125rem; }
+.two { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: start; gap: clamp(24px, 4vw, 64px); }
+.two > div > p + p { margin-top: 14px; }
+.htiles a { display: grid; justify-items: center; gap: 12px; padding: 10px 8px; color: var(--text); font-weight: 500; text-align: center; text-decoration: none; }
+.htiles .icon { width: 40px; height: 40px; color: var(--link); stroke-width: 1.2; }
+.htiles a:hover span { color: var(--link); }
+.faq { max-width: 60rem; }
+.faq details { border-bottom: 1px solid var(--border); }
+.faq .pm { padding: 18px 0; font-size: 1.125rem; text-transform: none; }
+.faq details p { max-width: 48rem; padding-bottom: 18px; }
+.search-field { display: flex; gap: 8px; max-width: 40rem; margin-top: 20px; }
+.hours { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; margin-top: 14px; }
+.hours dt { font-weight: 600; }
+.cover { aspect-ratio: 21 / 9; margin: 28px 0 8px; }
+.cover .art { width: 40%; }
+.prose { max-width: 44rem; }
+.prose p { margin-top: 1.1em; font-size: 1.125rem; line-height: 1.65; }
+.prose h2 { margin-top: 1.6em; font-size: 1.5rem; }
+.legal { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; padding-bottom: 64px; }
+.legal nav a { display: block; padding: 8px 0; color: var(--text); text-decoration: none; }
+.legal nav a:hover { color: var(--link); }
+.legal section + section { margin-top: 40px; }
+.lost { display: grid; justify-items: center; gap: 18px; padding-block: clamp(64px, 10vw, 128px); text-align: center; }
+.lost .links { justify-content: center; }
+@media (max-width: 900px) { .plans, .two, .legal { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .steps li, .htiles a { padding: 14px 0; } .htiles a { grid-template-columns: 40px 1fr; justify-items: start; text-align: left; } }
+
+/* ---------- Floating: compare sheet and added-to-cart panel ---------- */
+.sheet { width: min(1000px, calc(100vw - 32px)); border-radius: var(--r-card); animation: drop var(--dur-base) var(--ease) both; }
+.sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 16px 8px 24px; }
+.sheet-body { position: relative; overflow-x: auto; padding: 0 24px 24px; }
+.cmp-table { width: 100%; border-collapse: collapse; }
+.cmp-table th, .cmp-table td { padding: 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+.cmp-table th[scope="row"] { width: 150px; font-size: var(--fs-small); font-weight: 700; text-transform: uppercase; }
+.cmp-table thead th { min-width: 180px; font-weight: 500; }
+.cmp-table .art { max-width: 160px; }
+.added { position: fixed; top: 16px; right: 16px; z-index: 40; display: grid; gap: 14px; width: min(380px, calc(100vw - 32px)); padding: 18px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--surface); box-shadow: var(--overlay); animation: drop var(--dur-base) var(--ease) both; }
+.added .ok-line { display: flex; align-items: center; gap: 8px; color: var(--ok); font-weight: 600; }
+.added-item { display: grid; grid-template-columns: 88px 1fr; align-items: center; gap: 14px; }
+.added-art { border-radius: 8px; background: linear-gradient(180deg, var(--tile-a), var(--tile-b)); }
+.added-actions { display: flex; gap: 8px; }
+.added-actions .btn { flex: 1; padding: 0 12px; }
+
+/* ---------- Motion ---------- */
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+@keyframes slide-in { from { transform: translateX(-100%); } to { transform: none; } }
+.js [data-view]:not(.is-active) { display: none; }
+.js [data-view].is-active { animation: fade var(--dur-base) var(--ease) both; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <!-- Mark: replace with the store's own -->
+  <symbol id="mark" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#1f50d6"/><path d="M12 25V12.6A4.6 4.6 0 0 1 16.6 8H21M12 16h7.5" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/></symbol>
+  <!-- Icons: 24px grid, 1.5px stroke, round caps -->
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M2.5 4h2.4l2.3 11h11l2.3-8H6"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3.5 6.5h17M3.5 12h17M3.5 17.5h17"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m14.5 5-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9.5 5 7 7-7 7"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 28 24"><path d="M2 12h23M18 5l7 7-7 7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M10 7V4.5h4V7M6.5 7l1 13h9l1-13"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.5v2.5h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3.5 12.5V4h8.5l8.5 8.5-8 8z"/><circle cx="8" cy="8.5" r="1.3"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.5 4.2a5 5 0 0 0-5.8 6.6l-5.3 5.3a2 2 0 0 0 2.8 2.8l5.3-5.3a5 5 0 0 0 6.6-5.8l-3 3-2.6-.6-.6-2.6z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9.5L5 19.5V16H4z"/><path d="M8 9.5h8M8 12.5h5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8 7.5 9.5 4.3-1.5 7.5-5 7.5-9.5V6z"/><path d="m8.8 12 2.3 2.3 4.3-4.6"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5c3-1.3 5.7-1.3 8 .5 2.3-1.8 5-1.8 8-.5v13c-3-1.3-5.7-1.3-8 .5-2.3-1.8-5-1.8-8-.5z"/><path d="M12 6v13"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 7.5 12 3.5l8.5 4v9l-8.5 4-8.5-4z"/><path d="M3.5 7.5 12 11.5l8.5-4M12 11.5v9"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></symbol>
+  <!-- Product art: 200 x 150, one ground shadow, chassis in --c1/--c2, the screen wallpaper in --w0 to --w3 -->
+  <symbol id="gs" viewBox="0 0 200 150"><ellipse cx="100" cy="140" rx="82" ry="5" fill="#000" opacity=".14"/></symbol>
+  <symbol id="wall" viewBox="0 0 120 75" preserveAspectRatio="none"><rect width="120" height="75" fill="var(--w0,#0c1633)"/><path d="M0 52C22 30 40 62 64 38s42-26 56-14v51H0z" fill="var(--w1,#3d6dff)"/><path d="M0 66c26-18 48 6 74-12s34-14 46-10v31H0z" fill="var(--w2,#ff7448)" opacity=".9"/><path d="M0 24c24 14 44-12 70 4s36 8 50-4" fill="none" stroke="var(--w3,#ffd7c7)" stroke-width="2.5" opacity=".7"/></symbol>
+  <symbol id="laptop" viewBox="0 0 200 150"><use href="#gs"/><rect x="36" y="12" width="128" height="88" rx="6" fill="var(--c2,#1b1d22)"/><use href="#wall" x="41" y="17" width="118" height="77"/><path d="M28 100h144l16 21c2 3 0 6-3 6H15c-3 0-5-3-3-6z" fill="var(--c1,#c6cad0)"/><path d="M28 100h144l4 5H24z" fill="#000" opacity=".18"/><path d="M42 107h116l6 9H36z" fill="#000" opacity=".09"/><rect x="84" y="118" width="32" height="5" rx="2" fill="#000" opacity=".08"/><path d="M14 124h172" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/></symbol>
+  <symbol id="tower" viewBox="0 0 200 150"><use href="#gs"/><rect x="68" y="6" width="68" height="134" rx="6" fill="var(--c1,#25272d)"/><rect x="128" y="8" width="8" height="130" rx="3" fill="#000" opacity=".28"/><path d="M80 26h38M80 34h38M80 42h38M80 50h38M80 58h38M80 66h38M80 74h38M80 82h38M80 90h38" stroke="#fff" stroke-opacity=".14" stroke-width="2.5" stroke-linecap="round"/><rect x="80" y="14" width="38" height="4" rx="2" fill="#fff" opacity=".22"/><circle cx="99" cy="122" r="3.5" fill="var(--w1,#3d6dff)"/></symbol>
+  <symbol id="monitor" viewBox="0 0 200 150"><use href="#gs"/><rect x="18" y="6" width="164" height="100" rx="5" fill="var(--c2,#17181c)"/><use href="#wall" x="23" y="11" width="154" height="89"/><path d="M90 106h20l7 28H83z" fill="var(--c1,#b8bdc4)"/><rect x="62" y="132" width="76" height="8" rx="4" fill="var(--c1,#b8bdc4)"/></symbol>
+  <symbol id="aio" viewBox="0 0 200 150"><use href="#gs"/><rect x="18" y="6" width="164" height="114" rx="6" fill="var(--c1,#d9dce0)"/><rect x="18" y="6" width="164" height="96" rx="6" fill="var(--c2,#17181c)"/><use href="#wall" x="23" y="11" width="154" height="86"/><path d="M86 120h28l8 14H78z" fill="var(--c1,#d9dce0)"/><rect x="60" y="132" width="80" height="8" rx="4" fill="var(--c1,#d9dce0)"/><path d="M18 120h164" stroke="#000" stroke-opacity=".1"/></symbol>
+  <symbol id="inkjet" viewBox="0 0 200 150"><use href="#gs"/><path d="M62 10h76v40H62z" fill="#fff" stroke="#d3d6da"/><rect x="24" y="40" width="152" height="70" rx="10" fill="var(--c1,#eef0f2)"/><path d="M24 50a10 10 0 0 1 10-10h132a10 10 0 0 1 10 10v8H24z" fill="var(--c2,#33363d)"/><rect x="38" y="66" width="36" height="20" rx="3" fill="var(--c2,#33363d)"/><rect x="42" y="70" width="18" height="12" rx="1.5" fill="var(--w1,#3d6dff)"/><rect x="56" y="92" width="88" height="8" rx="3" fill="#000" opacity=".22"/><rect x="24" y="106" width="152" height="24" rx="8" fill="var(--c1,#eef0f2)"/><path d="M24 118h152" stroke="#000" stroke-opacity=".08"/><path d="M62 98h76l10 32H52z" fill="#fff" stroke="#d3d6da"/><path d="M70 108h44M68 115h60M66 122h30" stroke="var(--w2,#ff7448)" stroke-width="2.5" stroke-linecap="round" opacity=".75"/></symbol>
+  <symbol id="laser" viewBox="0 0 200 150"><use href="#gs"/><rect x="34" y="20" width="132" height="118" rx="8" fill="var(--c1,#e4e6e9)"/><path d="M34 28a8 8 0 0 1 8-8h116a8 8 0 0 1 8 8v22H34z" fill="var(--c2,#2f3238)"/><rect x="58" y="28" width="84" height="7" rx="2" fill="#fff"/><path d="M58 40h84" stroke="#000" stroke-opacity=".4" stroke-width="4" stroke-linecap="round"/><rect x="134" y="58" width="22" height="14" rx="2" fill="var(--c2,#2f3238)"/><rect x="137" y="61" width="10" height="8" rx="1" fill="var(--w1,#3d6dff)"/><path d="M34 96h132M34 116h132" stroke="#000" stroke-opacity=".1" stroke-width="1.5"/><rect x="88" y="104" width="24" height="4" rx="2" fill="#000" opacity=".18"/><rect x="88" y="124" width="24" height="4" rx="2" fill="#000" opacity=".18"/></symbol>
+  <symbol id="ink" viewBox="0 0 200 150"><use href="#gs"/><rect x="48" y="30" width="48" height="106" rx="7" fill="#26282d"/><rect x="48" y="30" width="48" height="20" rx="7" fill="#121316"/><rect x="55" y="66" width="34" height="44" rx="3" fill="#f2f3f5"/><circle cx="72" cy="88" r="9" fill="#121316"/><rect x="104" y="30" width="48" height="106" rx="7" fill="#26282d"/><rect x="104" y="30" width="48" height="20" rx="7" fill="#121316"/><rect x="111" y="66" width="34" height="44" rx="3" fill="#f2f3f5"/><circle cx="121" cy="82" r="6" fill="#16a6d9"/><circle cx="135" cy="82" r="6" fill="#d6338a"/><circle cx="128" cy="95" r="6" fill="#f2c218"/></symbol>
+  <symbol id="paper" viewBox="0 0 200 150"><use href="#gs"/><path d="M40 52 70 34h96l-30 18z" fill="#fff" stroke="#d3d6da"/><path d="M136 52l30-18v86l-30 18z" fill="#e3e5e8"/><rect x="40" y="52" width="96" height="86" fill="#f6f7f9"/><rect x="40" y="76" width="96" height="34" fill="var(--w1,#3d6dff)"/><path d="M136 76l30-18v34l-30 18z" fill="var(--w1,#3d6dff)" opacity=".75"/><rect x="50" y="86" width="50" height="6" rx="3" fill="#fff" opacity=".9"/><rect x="50" y="96" width="30" height="5" rx="2.5" fill="#fff" opacity=".6"/></symbol>
+  <symbol id="dock" viewBox="0 0 200 150"><use href="#gs"/><path d="M58 112c-26 0-32-34-12-48" fill="none" stroke="#2b2e35" stroke-width="5" stroke-linecap="round"/><rect x="56" y="88" width="112" height="46" rx="10" fill="var(--c1,#2b2e35)"/><rect x="62" y="90" width="100" height="8" rx="4" fill="#fff" opacity=".12"/><g fill="#000" opacity=".55"><rect x="70" y="108" width="12" height="7" rx="2"/><rect x="88" y="108" width="12" height="7" rx="2"/><rect x="106" y="107" width="16" height="9" rx="2"/><rect x="128" y="108" width="10" height="7" rx="3"/></g><circle cx="154" cy="111" r="2.6" fill="var(--w1,#3d6dff)"/></symbol>
+  <symbol id="headset" viewBox="0 0 200 150"><use href="#gs"/><path d="M58 96V78a42 42 0 0 1 84 0v18" fill="none" stroke="var(--c1,#2b2e35)" stroke-width="9" stroke-linecap="round"/><rect x="44" y="84" width="30" height="48" rx="13" fill="var(--c1,#2b2e35)"/><rect x="126" y="84" width="30" height="48" rx="13" fill="var(--c1,#2b2e35)"/><rect x="49" y="91" width="7" height="34" rx="3.5" fill="#fff" opacity=".16"/><path d="M60 128c6 14 26 16 40 12" fill="none" stroke="var(--c1,#2b2e35)" stroke-width="5" stroke-linecap="round"/><circle cx="101" cy="139" r="5" fill="var(--w1,#3d6dff)"/></symbol>
+  <symbol id="tools" viewBox="0 0 200 150"><path d="M34 132 98 68" stroke="#c9ccd1" stroke-width="6" stroke-linecap="round"/><path d="M94 72l22-22" stroke="var(--w2,#ff7448)" stroke-width="15" stroke-linecap="round"/><path d="M166 26a20 20 0 0 0-27 24l-52 52a8 8 0 0 0 12 12l52-52a20 20 0 0 0 24-27l-12 12-11-3-3-11z" fill="#dfe2e6"/></symbol>
+</svg>
+
+<!-- Product photos: one img per product, with data-photo set to the product id, src in images/, width, height and an empty alt; it replaces the drawing everywhere -->
+<div id="photos" hidden></div>
+
+<header class="hd">
+  <div class="wrap hd-in">
+    <a class="brand" href="#/" aria-label="Fernlow home"><svg aria-hidden="true"><use href="#mark"/></svg><span>Fernlow</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/shop?cat=laptops">Laptops</a>
+      <a href="#/shop?cat=desktops">Desktops</a>
+      <a href="#/shop?cat=printers">Printers</a>
+      <a href="#/shop?cat=ink">Ink &amp; paper</a>
+      <a href="#/shop?cat=accessories">Accessories</a>
+      <a href="#/support">Support</a>
+      <a class="biz" href="#/business">For business</a>
+    </nav>
+    <div class="tools">
+      <button class="ib" type="button" data-search-open aria-expanded="false" aria-controls="searchbar" aria-label="Search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+      <button class="ib" id="theme-toggle" type="button" aria-label="Switch to dark theme"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <a class="ib" href="#/cart" data-cart aria-label="Cart, empty"><svg class="icon" aria-hidden="true"><use href="#i-cart"/></svg><span class="cart-n" data-cart-n hidden>0</span></a>
+      <button class="ib menu-btn" type="button" data-menu-open aria-controls="drawer" aria-label="Menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+  <div class="searchbar" id="searchbar" hidden>
+    <form class="wrap" data-form="search" role="search" novalidate>
+      <label class="sr-only" for="q">Search products</label>
+      <input class="input" id="q" name="q" type="search" placeholder="Search laptops, printers, ink" autocomplete="off">
+      <button class="btn" type="submit">Search</button>
+    </form>
+  </div>
+</header>
+
+<dialog class="drawer" id="drawer" aria-label="Menu">
+  <div class="drawer-head"><span class="brand"><svg aria-hidden="true"><use href="#mark"/></svg>Fernlow</span><button class="ib" type="button" data-menu-close aria-label="Close menu"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <nav aria-label="Menu">
+    <a href="#/shop?cat=laptops">Laptops</a><a href="#/shop?cat=desktops">Desktops</a><a href="#/shop?cat=monitors">Monitors</a><a href="#/shop?cat=printers">Printers</a><a href="#/shop?cat=ink">Ink &amp; paper</a><a href="#/shop?cat=accessories">Accessories</a><a href="#/business">For business</a><a href="#/support">Support and repairs</a><a href="#/guides">Guides</a><a href="#/support?section=contact">Visit the store</a>
+  </nav>
+</dialog>
+
+<dialog class="sheet" id="compare" aria-labelledby="cmp-title">
+  <div class="sheet-head"><h2 id="cmp-title">Compare products</h2><button class="ib" type="button" data-compare-close aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="sheet-body"><table class="cmp-table" data-compare-table></table></div>
+</dialog>
+
+<div class="added" data-added hidden role="status">
+  <p class="ok-line"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Added to your cart</p>
+  <div class="added-item"><span class="added-art" data-added-art></span><p data-added-name></p></div>
+  <div class="added-actions"><a class="btn btn-sm" href="#/cart">View cart</a><button class="btn btn-sm btn-line" type="button" data-added-close>Keep shopping</button></div>
+</div>
+
+<main id="main" tabindex="-1">
+
+<!-- ===== Home ===== -->
+<div data-view="home">
+  <section class="hero" aria-label="Offers">
+    <div class="slide s1 is-current">
+      <div class="slide-copy">
+        <p class="kicker">Year-end sale, through December 31</p>
+        <h1 class="display">Glide 14, now $649</h1>
+        <p class="lead">Our everyday 14-inch laptop with an all-day battery. Free setup and data transfer at the store.</p>
+        <a class="btn btn-pale" href="#/product?id=glide14">Shop</a>
+      </div>
+      <div class="slide-art"><svg viewBox="0 0 200 150" style="--c1:#c6cad0" aria-hidden="true"><use href="#laptop"/></svg></div>
+    </div>
+    <div class="slide s2">
+      <div class="slide-copy">
+        <p class="kicker">Ink on a schedule</p>
+        <h2 class="display">Never run out mid-print</h2>
+        <p class="lead">Choose your cartridges and how often they ship. Pause or cancel whenever you like.</p>
+        <a class="btn btn-pale" href="#/shop?cat=ink">Shop ink</a>
+      </div>
+      <div class="slide-art"><svg viewBox="0 0 330 180" aria-hidden="true"><use href="#inkjet" x="0" y="10" width="220" height="165"/><use href="#ink" x="190" y="58" width="150" height="112"/></svg></div>
+    </div>
+    <div class="slide s3">
+      <div class="slide-copy">
+        <p class="kicker">Repairs, any brand</p>
+        <h2 class="display">Most repairs back within a week</h2>
+        <p class="lead">Screens, batteries, keyboards and printers. Book a bench slot online and drop it off.</p>
+        <a class="btn btn-pale" href="#/support?section=book">Book a repair</a>
+      </div>
+      <div class="slide-art"><svg viewBox="0 0 220 165" style="--w0:#1e0d08;--w1:#ff6a3d;--w2:#ffc24b;--w3:#ffe9d6" aria-hidden="true"><use href="#laptop" x="0" y="10" width="200" height="150"/><use href="#tools" x="90" y="40" width="130" height="98"/></svg></div>
+    </div>
+    <div class="pill-ctl" data-js>
+      <button type="button" data-hero-step="-1" aria-label="Previous slide"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button>
+      <button class="dot" type="button" data-hero-go aria-label="Slide 1" aria-current="true"></button>
+      <button class="dot" type="button" data-hero-go aria-label="Slide 2" aria-current="false"></button>
+      <button class="dot" type="button" data-hero-go aria-label="Slide 3" aria-current="false"></button>
+      <button type="button" data-hero-step="1" aria-label="Next slide"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+    </div>
+  </section>
+
+  <div class="band">
+    <section class="sec wrap" aria-labelledby="h-products">
+      <h2 class="st" id="h-products">Our products</h2>
+      <ul class="cats ruled c6">
+        <li><a href="#/shop?cat=laptops"><svg class="art" viewBox="0 0 200 150" aria-hidden="true"><use href="#laptop"/></svg><span>Laptops</span></a></li>
+        <li><a href="#/shop?cat=desktops"><svg class="art" viewBox="0 0 200 150" aria-hidden="true"><use href="#tower"/></svg><span>Desktops</span></a></li>
+        <li><a href="#/shop?cat=monitors"><svg class="art" viewBox="0 0 200 150" style="--w0:#1a0f2e;--w1:#8b5cf6;--w2:#f472b6;--w3:#fde2f3" aria-hidden="true"><use href="#monitor"/></svg><span>Monitors</span></a></li>
+        <li><a href="#/shop?cat=printers"><svg class="art" viewBox="0 0 200 150" aria-hidden="true"><use href="#inkjet"/></svg><span>Printers</span></a></li>
+        <li><a href="#/shop?cat=ink"><svg class="art" viewBox="0 0 200 150" aria-hidden="true"><use href="#ink"/></svg><span>Ink &amp; paper</span></a></li>
+        <li><a href="#/shop?cat=accessories"><svg class="art" viewBox="0 0 200 150" aria-hidden="true"><use href="#headset"/></svg><span>Accessories</span></a></li>
+      </ul>
+    </section>
+
+    <section class="sec wrap pt0" aria-labelledby="h-must">
+      <h2 class="st" id="h-must">Shop these must-haves</h2>
+      <ul class="tiles">
+        <li class="tile"><div class="tile-media"><svg class="art" viewBox="0 0 200 150" aria-hidden="true"><use href="#laptop"/></svg></div><h3>Glide 14 laptop</h3><p>Light enough for every day, with a battery that lasts the working day.</p><a class="btn btn-sm" href="#/product?id=glide14">Shop</a></li>
+        <li class="tile"><div class="tile-media"><svg class="art" viewBox="0 0 200 150" aria-hidden="true"><use href="#tower"/></svg></div><h3>Plinth tower</h3><p>Quiet, upgradeable power for studios, offices and long renders.</p><a class="btn btn-sm" href="#/product?id=tower">Shop</a></li>
+        <li class="tile"><div class="tile-media"><svg class="art" viewBox="0 0 200 150" aria-hidden="true"><use href="#dock"/></svg></div><h3>Home office kits</h3><p>A monitor, dock and headset that work together from day one.</p><a class="btn btn-sm" href="#/shop?cat=accessories">Shop</a></li>
+        <li class="tile"><div class="tile-media"><svg class="art" viewBox="0 0 200 150" aria-hidden="true"><use href="#inkjet"/></svg></div><h3>Inkwell 300 printer</h3><p>Print, scan and copy over Wi-Fi, with ink that arrives before you run out.</p><a class="btn btn-sm" href="#/product?id=inkjet">Shop</a></li>
+      </ul>
+    </section>
+
+    <section class="sec wrap pt0" aria-label="For business">
+      <div class="promo on-dark">
+        <div class="copy">
+          <p class="kicker">Fernlow for Business</p>
+          <h2>Every device your team needs, one monthly plan</h2>
+          <p>Laptops, setup, repairs and replacements for a fixed price per person, from 3 to 300 seats.</p>
+          <a class="btn btn-pale" href="#/business">See business plans</a>
+        </div>
+        <svg viewBox="0 0 330 200" aria-hidden="true"><use href="#monitor" x="80" y="0" width="240" height="180" style="--w0:#0b2420;--w1:#18a578;--w2:#f5c84c;--w3:#e6f7ee"/><use href="#laptop" x="0" y="60" width="190" height="142" style="--c1:#9ea3ab"/></svg>
+      </div>
+    </section>
+  </div>
+
+  <section class="sec wrap" aria-labelledby="h-repairs">
+    <h2 class="st" id="h-repairs">Repairs and refills, handled</h2>
+    <div class="split">
+      <div class="feature">
+        <div class="feature-media"><svg viewBox="0 0 220 165" aria-hidden="true"><use href="#laptop" x="0" y="10" width="200" height="150"/><use href="#tools" x="90" y="40" width="130" height="98"/></svg></div>
+        <h3>Same-week repairs at our bench</h3>
+        <p>Screens, batteries, keyboards and data recovery for most laptops, desktops and printers, whichever brand they are. You get a fixed quote before we start.</p>
+        <div class="links"><a class="link-arrow" href="#/support?section=book">Book a repair<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="link-arrow" href="#/support?section=faq">Repair questions<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </div>
+      <div class="feature">
+        <div class="feature-media"><svg viewBox="0 0 260 160" aria-hidden="true"><use href="#ink" x="0" y="10" width="190" height="142"/><use href="#paper" x="100" y="10" width="190" height="142"/></svg></div>
+        <h3>Ink and paper on a schedule</h3>
+        <p>Pick your cartridges and how much you print. We send them before you run low, and you can pause or cancel from your account.</p>
+        <div class="links"><a class="link-arrow" href="#/shop?cat=ink">Shop ink and paper<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="link-arrow" href="#/guide?id=ink-schedule">How it works<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap pt0" aria-labelledby="h-latest">
+    <h2 class="st" id="h-latest">Latest from the workshop</h2>
+    <ul class="cards" data-guides="3"></ul>
+    <p data-nojs><a href="#/guides">Read the guides</a></p>
+  </section>
+
+  <section class="helpband on-dark" aria-labelledby="h-help">
+    <div class="wrap">
+      <h2 id="h-help">How can we help?</h2>
+      <ul class="help-row">
+        <li><a href="#/guides"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><span>Setup guides</span></a></li>
+        <li><a href="#/shop?cat=ink"><svg class="icon" aria-hidden="true"><use href="#i-box"/></svg><span>Ink and paper</span></a></li>
+        <li><a href="#/support?section=book"><svg class="icon" aria-hidden="true"><use href="#i-wrench"/></svg><span>Book a repair</span></a></li>
+        <li><a href="#/legal?section=returns"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>Warranty and returns</span></a></li>
+        <li><a href="#/support?section=contact"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><span>Contact the store</span></a></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Results ===== -->
+<div data-view="shop">
+  <nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="#/">Home</a></li><li aria-current="page" data-crumb>All products</li></ol></nav>
+  <div class="wrap">
+    <header class="page-head"><h1 data-shop-title>All products</h1><p class="muted">Every computer leaves the store set up, updated and ready to use.</p></header>
+    <div class="shop" data-shop>
+      <aside class="filters" aria-label="Filters">
+        <details class="fg" open><summary class="pm">Category</summary><ul class="fcat" data-cat-links></ul></details>
+        <details class="fg" open><summary class="pm">Usage</summary><div class="opts" data-f="use"></div></details>
+        <details class="fg" open><summary class="pm">Price</summary><div class="opts" data-f="price"></div></details>
+        <details class="fg"><summary class="pm">Memory</summary><div class="opts" data-f="mem"></div></details>
+        <details class="fg" open><summary class="pm">Offers</summary><div class="opts"><label class="opt"><input type="checkbox" name="deal" value="1">On sale<span class="n" data-n-deal></span></label></div></details>
+        <div class="side-promo on-dark"><span class="kicker">Year-end sale</span><b>Up to $150 off laptops</b><a class="btn btn-pale" href="#/shop?cat=laptops&amp;deal=1">See offers</a></div>
+      </aside>
+      <div>
+        <div class="toolbar">
+          <button class="btn btn-line f-toggle" type="button" data-filters aria-expanded="false">Sort &amp; filter</button>
+          <p class="count" data-count role="status">13 products</p>
+          <button class="btn btn-line btn-sm" type="button" data-compare-open disabled>Compare (0)</button>
+          <label class="sort"><span>Sort by</span><select id="sort" name="sort"><option value="featured">Featured</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option><option value="rating">Top rated</option></select></label>
+        </div>
+        <p class="cmp-msg" data-cmp-msg aria-live="polite"></p>
+        <ul class="rows" data-rows></ul>
+        <div class="empty" data-empty hidden><h2>No products match those filters</h2><p>Try fewer filters, or search for something else.</p><button class="btn" type="button" data-clear>Clear filters</button></div>
+        <div class="nojs" data-nojs><p>The product list needs JavaScript. Browse a category instead:</p><p><a href="#/shop?cat=laptops">Laptops</a>, <a href="#/shop?cat=desktops">desktops</a>, <a href="#/shop?cat=monitors">monitors</a>, <a href="#/shop?cat=printers">printers</a>, <a href="#/shop?cat=ink">ink and paper</a>, <a href="#/shop?cat=accessories">accessories</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Product ===== -->
+<div data-view="product">
+  <nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="#/">Home</a></li><li><a href="#/shop?cat=laptops" data-p-cat>Laptops</a></li><li aria-current="page" data-p-crumb>Glide 14</li></ol></nav>
+  <div class="wrap pdp">
+    <div class="gallery">
+      <div class="stage" data-stage><svg class="art" viewBox="0 0 200 150" aria-hidden="true"><use href="#laptop"/></svg></div>
+      <div class="thumbs-row" data-js>
+        <button class="ib" type="button" data-angle-step="-1" aria-label="Previous view"><svg class="icon" aria-hidden="true"><use href="#i-left"/></svg></button>
+        <div class="thumbs" data-thumbs></div>
+        <button class="ib" type="button" data-angle-step="1" aria-label="Next view"><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
+      </div>
+    </div>
+    <div class="p-info">
+      <p class="offer-bar" data-p-offer><svg class="icon" aria-hidden="true"><use href="#i-tag"/></svg><span>Free setup and data transfer at the store</span></p>
+      <div data-p-rating><p class="rating">4.6 out of 5 (212 reviews)</p></div>
+      <h1 class="p-title" data-p-title>Glide 14 Laptop, 8-core processor, 16 GB, 512 GB SSD, 14" FHD+</h1>
+      <p class="p-sum" data-p-sum>A light 14-inch laptop with a bright screen and a battery that lasts the working day.</p>
+      <div class="p-price">
+        <span class="flag" data-p-flag>Year-end price</span>
+        <p class="was" data-p-was><s>$799.00</s> <b>Save $150.00</b></p>
+        <p class="now"><span data-p-price>$649.00</span><small>excl. sales tax</small></p>
+      </div>
+      <fieldset class="swatches" data-p-opts data-js></fieldset>
+      <div class="buy-row">
+        <a class="btn btn-line btn-caps" href="#/business" data-p-monthly>Monthly plan from $30/mo</a>
+        <button class="btn btn-caps" type="button" data-buy>Add to cart</button>
+      </div>
+      <p class="note-line"><svg class="icon" aria-hidden="true"><use href="#i-tag"/></svg><span>Student or teacher? <a href="#/support?section=contact">Ask about education pricing</a></span></p>
+      <p class="stock"><i></i>In stock</p>
+      <dl class="spec-rows" data-p-specs>
+        <div><dt>Processor</dt><dd>8-core, up to 4.4 GHz</dd></div><div><dt>Memory</dt><dd>16 GB</dd></div><div><dt>Storage</dt><dd>512 GB SSD</dd></div><div><dt>Display</dt><dd>14" FHD+ (1920 × 1200), 400 nits</dd></div>
+      </dl>
+      <ul class="perks">
+        <li><svg class="icon" aria-hidden="true"><use href="#i-truck"/></svg>Free delivery on orders over $50</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg>30-day returns and a 12-month repair warranty</li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-wrench"/></svg>Set up at the store before it leaves</li>
+      </ul>
+    </div>
+  </div>
+  <nav class="tabbar on-dark" aria-label="Product sections"><ul class="wrap"><li><a href="#p-overview" aria-current="true">Overview</a></li><li><a href="#p-specs" aria-current="false">Specs</a></li><li><a href="#p-reviews" aria-current="false">Reviews</a></li><li><a href="#p-more" aria-current="false">More like this</a></li></ul></nav>
+  <section class="wrap" id="p-overview" aria-labelledby="ov-name">
+    <div class="ov-head"><h2 id="ov-name" data-p-name>Glide 14</h2><p class="lead" data-p-lead>A light 14-inch laptop with a bright screen and a battery that lasts the working day.</p><p>Every computer and printer from the store is set up before it leaves: updates installed, your files moved over and a recovery drive made. Bring it back to our bench any time in the first year.</p></div>
+    <div class="ov-media on-dark"><div data-p-art><svg class="art" viewBox="0 0 200 150" aria-hidden="true"><use href="#laptop"/></svg></div><dl class="stats" data-p-stats><div><dt><b>14 h</b></dt><dd>battery life</dd></div><div><dt><b>1.39 kg</b></dt><dd>carry weight</dd></div><div><dt><b>400 nits</b></dt><dd>bright display</dd></div></dl></div>
+  </section>
+  <section class="sec wrap" id="p-specs" aria-labelledby="h-specs">
+    <h2 class="st" id="h-specs">Specifications</h2>
+    <dl class="spec-table" data-p-table><div><dt>Processor</dt><dd>8-core, up to 4.4 GHz</dd></div><div><dt>Memory</dt><dd>16 GB</dd></div><div><dt>Storage</dt><dd>512 GB SSD</dd></div></dl>
+  </section>
+  <section class="sec wrap pt0" id="p-reviews" aria-labelledby="h-reviews">
+    <h2 class="st" id="h-reviews">Reviews</h2>
+    <div class="reviews">
+      <div><p class="avg" data-p-avg>4.6</p><div data-p-rating2></div><p class="muted" data-p-count>212 reviews</p></div>
+      <ul>
+        <li class="rev"><p class="small muted">Dana R., verified purchase</p><h3>Set up and ready when I got home</h3><p>The store moved my files over and installed updates while I waited. It started straight to my desktop the first time I opened it.</p><button class="link" type="button" data-helpful>Helpful</button></li>
+      </ul>
+    </div>
+  </section>
+  <section class="sec wrap pt0" id="p-more" aria-labelledby="h-more" data-js>
+    <h2 class="st" id="h-more">More like this</h2>
+    <ul class="minis" data-minis="also"></ul>
+  </section>
+</div>
+
+<!-- ===== Cart ===== -->
+<div data-view="cart">
+  <div class="wrap">
+    <header class="page-head"><h1>Your cart</h1></header>
+    <div class="cart-grid" data-cart-full hidden>
+      <ul data-lines></ul>
+      <aside class="summary" aria-labelledby="h-summary">
+        <h2 id="h-summary">Order summary</h2>
+        <p class="small" data-free-note></p>
+        <div class="meter"><i data-meter></i></div>
+        <div class="sum-row"><span>Subtotal</span><span data-sub>$0.00</span></div>
+        <div class="sum-row"><span>Delivery</span><span data-ship>Free</span></div>
+        <div class="sum-row sum-total"><span>Total</span><span data-total>$0.00</span></div>
+        <p class="small muted">Sales tax is added at checkout.</p>
+        <button class="btn btn-caps" type="button" data-checkout>Go to checkout</button>
+        <p class="small" data-checkout-note hidden role="status">Checkout is not connected yet. This sample cart stays in your browser.</p>
+      </aside>
+    </div>
+    <div class="empty-cart" data-cart-empty><p class="lead">Your cart is empty.</p><p>Laptops, printers and ink are a click away.</p><a class="btn" href="#/shop">Shop all products</a></div>
+    <section class="sec pt0" aria-labelledby="h-ess" data-js>
+      <h2 class="st" id="h-ess">Add the essentials</h2>
+      <ul class="minis" data-minis="essentials"></ul>
+    </section>
+  </div>
+</div>
+
+<!-- ===== For business ===== -->
+<div data-view="business">
+  <div class="band">
+    <div class="wrap sec">
+      <div class="promo on-dark">
+        <div class="copy">
+          <p class="kicker">Fernlow for Business</p>
+          <h1>Devices for your team, on one monthly plan</h1>
+          <p>We choose, set up, repair and replace the laptops. You pay a fixed price per person and add or remove seats as the team changes.</p>
+          <a class="btn btn-pale" href="#/business?section=quote">Request a quote</a>
+        </div>
+        <svg viewBox="0 0 330 200" aria-hidden="true"><use href="#monitor" x="80" y="0" width="240" height="180" style="--w0:#0b2420;--w1:#18a578;--w2:#f5c84c;--w3:#e6f7ee"/><use href="#laptop" x="0" y="60" width="190" height="142" style="--c1:#9ea3ab"/></svg>
+      </div>
+    </div>
+  </div>
+  <section class="sec wrap" id="plans" aria-labelledby="h-plans">
+    <h2 class="st" id="h-plans">Choose a plan</h2>
+    <div class="terms" role="radiogroup" aria-label="Plan term">
+      <label><input type="radio" name="term" value="12"><span>12 months</span></label>
+      <label><input type="radio" name="term" value="24" checked><span>24 months</span></label>
+      <label><input type="radio" name="term" value="36"><span>36 months</span></label>
+    </div>
+    <ul class="plans">
+      <li class="plan"><h3>Essentials</h3><p><span class="price-big"><span data-plan="39">$39</span><small>per person / month</small></span></p><p class="small muted" data-term-label>24-month term</p><ul class="ticks"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Glide 14 laptop, set up for your accounts</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Repairs at our bench, parts included</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Data moved from old machines</li></ul><a class="btn btn-line" href="#/business?section=quote" data-pick="Essentials">Get a quote</a></li>
+      <li class="plan pick"><span class="flag">Most chosen</span><h3>Standard</h3><p><span class="price-big"><span data-plan="54">$54</span><small>per person / month</small></span></p><p class="small muted" data-term-label>24-month term</p><ul class="ticks"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Everything in Essentials</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Pane 27 monitor and USB-C dock</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Next-business-day replacement</li></ul><a class="btn" href="#/business?section=quote" data-pick="Standard">Get a quote</a></li>
+      <li class="plan"><h3>Studio</h3><p><span class="price-big"><span data-plan="89">$89</span><small>per person / month</small></span></p><p class="small muted" data-term-label>24-month term</p><ul class="ticks"><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Forge 16 or Plinth tower for heavy work</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Calibrated monitor and dock</li><li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Same-day loan machine during repairs</li></ul><a class="btn btn-line" href="#/business?section=quote" data-pick="Studio">Get a quote</a></li>
+    </ul>
+  </section>
+  <section class="sec wrap pt0" aria-labelledby="h-steps">
+    <h2 class="st" id="h-steps">How it works</h2>
+    <ol class="steps ruled c4">
+      <li><b>01</b><h3>Tell us about the team</h3><p>How many people, what they run and where they work.</p></li>
+      <li><b>02</b><h3>Get a fixed quote</h3><p>One price per person per month, devices and service included.</p></li>
+      <li><b>03</b><h3>We set everything up</h3><p>Accounts, apps and files ready before the boxes arrive.</p></li>
+      <li><b>04</b><h3>Repairs without the wait</h3><p>Broken machines are repaired or replaced, not argued about.</p></li>
+    </ol>
+  </section>
+  <section class="band" id="quote" aria-labelledby="h-quote">
+    <div class="wrap sec two">
+      <div><h2 class="st" id="h-quote">Request a quote</h2><p>Send the basics and we reply within one working day with a fixed monthly price.</p><p class="muted">Plans start at three seats. Prices exclude sales tax.</p></div>
+      <div class="form-card" data-box>
+        <form data-form="quote" data-body novalidate>
+          <div class="form-grid">
+            <div class="field"><label for="qc">Company</label><input class="input" id="qc" name="company" autocomplete="organization" required><p class="err"></p></div>
+            <div class="field"><label for="qn">Your name</label><input class="input" id="qn" name="name" autocomplete="name" required><p class="err"></p></div>
+            <div class="field"><label for="qe">Work email</label><input class="input" id="qe" name="email" type="email" autocomplete="email" required><p class="err"></p></div>
+            <div class="field"><label for="qs">Number of people</label><input class="input" id="qs" name="seats" type="number" min="3" max="300" inputmode="numeric" required><p class="err"></p></div>
+            <div class="field full"><label for="qp">Plan</label><select class="input" id="qp" name="plan"><option>Not sure yet</option><option>Essentials</option><option>Standard</option><option>Studio</option></select><p class="err"></p></div>
+            <div class="field full"><label for="qm">Anything else? (optional)</label><textarea class="input" id="qm" name="message" rows="4"></textarea><p class="err"></p></div>
+          </div>
+          <button class="btn btn-caps" type="submit">Send request</button>
+        </form>
+        <div class="done" data-done hidden tabindex="-1" role="status"><h3><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Request sent</h3><p>Thanks. We reply within one working day with a fixed monthly price.</p><button class="link" type="button" data-again>Send another request</button></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Support ===== -->
+<div data-view="support">
+  <div class="band">
+    <div class="wrap sec">
+      <h1 class="display">How can we help?</h1>
+      <div class="search-field"><label class="sr-only" for="faq-q">Search help</label><input class="input" id="faq-q" type="search" placeholder="Search questions, for example battery or Wi-Fi" data-faq-search></div>
+    </div>
+  </div>
+  <section class="sec wrap" aria-label="Help topics">
+    <ul class="htiles ruled c5">
+      <li><a href="#/guides"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg><span>Setup guides</span></a></li>
+      <li><a href="#/shop?cat=ink"><svg class="icon" aria-hidden="true"><use href="#i-box"/></svg><span>Ink and paper</span></a></li>
+      <li><a href="#/support?section=book"><svg class="icon" aria-hidden="true"><use href="#i-wrench"/></svg><span>Book a repair</span></a></li>
+      <li><a href="#/support?section=faq"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><span>Common questions</span></a></li>
+      <li><a href="#/support?section=contact"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span>Visit or contact us</span></a></li>
+    </ul>
+  </section>
+  <div class="wrap two pt0 sec">
+    <div><h2 class="st">Book a repair</h2><p>Tell us what is wrong and pick a drop-off day. We diagnose it, send a fixed quote and only start when you agree.</p><p class="muted" style="margin-top:14px">Most repairs are ready within five working days.</p></div>
+    <section id="book" aria-label="Book a repair">
+      <div class="form-card" data-box>
+        <form data-form="repair" data-body novalidate>
+          <div class="form-grid">
+            <div class="field"><label for="rn">Name</label><input class="input" id="rn" name="name" autocomplete="name" required><p class="err"></p></div>
+            <div class="field"><label for="re">Email</label><input class="input" id="re" name="email" type="email" autocomplete="email" required><p class="err"></p></div>
+            <div class="field"><label for="rd">Device</label><select class="input" id="rd" name="device" required data-msg="Choose a device."><option value="">Choose</option><option>Laptop</option><option>Desktop or all-in-one</option><option>Printer</option><option>Monitor</option><option>Something else</option></select><p class="err"></p></div>
+            <div class="field"><label for="rt">Drop-off day</label><input class="input" id="rt" name="day" type="date" required data-msg="Pick a day."><p class="err"></p></div>
+            <div class="field full"><label for="ri">What's wrong?</label><textarea class="input" id="ri" name="issue" rows="4" minlength="10" required placeholder="For example: the screen flickers when the lid is half open"></textarea><p class="err"></p></div>
+          </div>
+          <button class="btn btn-caps" type="submit">Book the slot</button>
+        </form>
+        <div class="done" data-done hidden tabindex="-1" role="status"><h3><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Slot booked</h3><p>We sent the details to your email. Bring the device, its charger and any passwords we need.</p><button class="link" type="button" data-again>Book another repair</button></div>
+      </div>
+    </section>
+  </div>
+  <section class="sec wrap pt0" id="faq" aria-labelledby="h-faq">
+    <h2 class="st" id="h-faq">Common questions</h2>
+    <div class="faq" data-faq>
+      <details><summary class="pm">How long does a repair take?</summary><p>Most screen, battery and keyboard repairs are ready within five working days. If a part has to be ordered we tell you the date before we start.</p></details>
+      <details><summary class="pm">Do you repair other brands?</summary><p>Yes. We repair most laptops, desktops, monitors and printers, whoever made them. You get a fixed quote after diagnosis and nothing is charged until you agree.</p></details>
+      <details><summary class="pm">My printer will not connect to Wi-Fi</summary><p>Restart the router and the printer, then run the wireless setup from the printer's screen. Our guide walks through each step, and the store can help over the phone.</p></details>
+      <details><summary class="pm">Will you move my files to a new computer?</summary><p>Yes, for free with any computer bought here. Bring the old machine and we copy documents, photos and browser bookmarks across.</p></details>
+      <p class="muted" data-faq-empty hidden>No questions match. Try another word, or contact the store below.</p>
+    </div>
+  </section>
+  <section class="band" id="contact" aria-labelledby="h-contact">
+    <div class="wrap sec two">
+      <div>
+        <h2 class="st" id="h-contact">Visit or contact us</h2>
+        <p class="note-line"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>214 Harbor Street, Brookhaven</p>
+        <p class="note-line"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg>(555) 014-2290, hello@fernlow.example</p>
+        <dl class="hours"><dt>Mon to Fri</dt><dd>9:00 to 18:00</dd><dt>Saturday</dt><dd>10:00 to 16:00</dd><dt>Sunday</dt><dd>Closed</dd></dl>
+      </div>
+      <div class="form-card" data-box>
+        <form data-form="contact" data-body novalidate>
+          <div class="field"><label for="ce">Email</label><input class="input" id="ce" name="email" type="email" autocomplete="email" required><p class="err"></p></div>
+          <div class="field"><label for="cm">Message</label><textarea class="input" id="cm" name="message" rows="4" minlength="10" required></textarea><p class="err"></p></div>
+          <button class="btn" type="submit">Send message</button>
+        </form>
+        <div class="done" data-done hidden tabindex="-1" role="status"><h3><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Message sent</h3><p>We answer within one working day.</p><button class="link" type="button" data-again>Send another</button></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== Guides ===== -->
+<div data-view="guides">
+  <div class="wrap">
+    <header class="page-head"><h1>Guides</h1><p class="muted">Plain-language help from the people at our repair bench.</p></header>
+    <ul class="cards lead-card sec pt0" data-guides="9"></ul>
+    <p class="sec pt0" data-nojs>Read <a href="#/guide?id=choose-laptop">How to choose a laptop</a> or <a href="#/guide?id=ink-schedule">Ink on a schedule</a>.</p>
+  </div>
+</div>
+
+<!-- ===== Guide ===== -->
+<div data-view="guide">
+  <nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="#/">Home</a></li><li><a href="#/guides">Guides</a></li><li aria-current="page" data-g-crumb>Article</li></ol></nav>
+  <article class="wrap sec">
+    <h1 class="display" data-g-title>How to choose a laptop for school or work</h1>
+    <p class="muted" style="margin-top:14px" data-g-meta>December 2, 2026, 6 minute read</p>
+    <div class="cover g1" data-g-cover><svg class="art" viewBox="0 0 200 150" aria-hidden="true"><use href="#laptop"/></svg></div>
+    <div class="prose" data-g-body><p>Start with where the laptop will be used. If it travels every day, weight and battery matter more than raw speed.</p></div>
+    <section class="sec" aria-labelledby="h-rel" data-js><h2 class="st" id="h-rel">More guides</h2><ul class="cards" data-g-related></ul></section>
+  </article>
+</div>
+
+<!-- ===== Legal ===== -->
+<div data-view="legal">
+  <div class="wrap">
+    <header class="page-head"><h1>Terms, privacy and returns</h1><p class="muted">Sample text. Replace it with your own before launch.</p></header>
+    <div class="legal">
+      <nav aria-label="On this page"><a href="#/legal?section=terms">Terms of sale</a><a href="#/legal?section=privacy">Privacy notice</a><a href="#/legal?section=returns">Returns and warranty</a></nav>
+      <div class="prose">
+        <section id="terms"><h2>Terms of sale</h2><p>Prices are in US dollars and exclude sales tax, which is shown at checkout. An order is accepted when we send the confirmation email.</p></section>
+        <section id="privacy"><h2>Privacy notice</h2><p>We use your details to deliver orders, run repairs and answer questions. We do not sell them. Ask us at any time to see or delete what we hold.</p></section>
+        <section id="returns"><h2>Returns and warranty</h2><p>Return unused products within 30 days. Computers and printers carry a 12-month warranty at our bench, and every repair we make is covered for 12 months.</p></section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 404 ===== -->
+<div data-view="404">
+  <div class="wrap lost">
+    <p class="kicker muted">404</p>
+    <h1 class="display">This page is not on the shelf</h1>
+    <p class="lead">The link may be old, or the product may have moved.</p>
+    <div class="links"><a class="btn" href="#/">Go to the home page</a><a class="btn btn-line" href="#/shop">Shop all products</a></div>
+  </div>
+</div>
+
+</main>
+
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-top"><span><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Fernlow Computers, 214 Harbor Street, Brookhaven</span><span><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Mon to Sat, open from 9:00</span><span>(555) 014-2290</span></div>
+    <div class="ft-cols">
+      <nav aria-labelledby="f1"><h2 id="f1">Shop</h2><ul><li><a href="#/shop?cat=laptops">Laptops</a></li><li><a href="#/shop?cat=desktops">Desktops</a></li><li><a href="#/shop?cat=monitors">Monitors</a></li><li><a href="#/shop?cat=printers">Printers</a></li><li><a href="#/shop?cat=ink">Ink and paper</a></li><li><a href="#/shop?cat=accessories">Accessories</a></li></ul></nav>
+      <nav aria-labelledby="f3"><h2 id="f3">Support</h2><ul><li><a href="#/support?section=book">Book a repair</a></li><li><a href="#/guides">Setup guides</a></li><li><a href="#/support?section=faq">Common questions</a></li><li><a href="#/support?section=contact">Contact us</a></li></ul></nav>
+      <nav aria-labelledby="f4"><h2 id="f4">Fernlow</h2><ul><li><a href="#/business">For business</a></li><li><a href="#/support?section=contact">Visit the store</a></li><li><a href="#/cart">Cart</a></li></ul></nav>
+      <div class="ft-news" data-box>
+        <form data-form="newsletter" data-body novalidate>
+          <h2>Store newsletter</h2>
+          <p style="margin-bottom:12px">New arrivals, repair tips and offers, twice a month.</p>
+          <div class="field news"><label class="sr-only" for="ne">Email</label><input class="input" id="ne" name="email" type="email" autocomplete="email" placeholder="Email address" required><button class="btn" type="submit">Sign up</button><p class="err"></p></div>
+        </form>
+        <div class="done" data-done hidden tabindex="-1" role="status"><h3><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>You are signed up</h3><p>The next issue arrives in your inbox.</p></div>
+      </div>
+    </div>
+    <ul class="ft-legal"><li><a href="#/legal?section=terms">Terms of sale</a></li><li><a href="#/legal?section=privacy">Privacy</a></li><li><a href="#/legal?section=returns">Returns and warranty</a></li></ul>
+    <small>&copy; 2026 Fernlow Computers. Prices in US dollars, excluding sales tax.</small>
+  </div>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const root = document.documentElement;
+  root.classList.add("js");
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const calm = matchMedia("(prefers-reduced-motion: reduce)");
+
+  /* ---------- Storage (sandbox-safe): rename the prefix for a real store ---------- */
+  const KEY = "fernlow";
+  const memory = new Map();
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch { return memory.get(k) ?? null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch { memory.set(k, v); } },
+  };
+
+  /* ---------- Theme: light first, follows the system until the visitor chooses ---------- */
+  const themeBtn = $("#theme-toggle");
+  const systemDark = matchMedia("(prefers-color-scheme: dark)");
+  const currentTheme = () => root.dataset.theme || (systemDark.matches ? "dark" : "light");
+  function applyTheme(t) {
+    root.dataset.theme = t;
+    themeBtn.setAttribute("aria-label", `Switch to ${t === "dark" ? "light" : "dark"} theme`);
+    $("use", themeBtn).setAttribute("href", t === "dark" ? "#i-sun" : "#i-moon");
+  }
+  const saved = store.get(`${KEY}-theme`);
+  applyTheme(saved === "light" || saved === "dark" ? saved : currentTheme());
+  themeBtn.addEventListener("click", () => { const t = currentTheme() === "dark" ? "light" : "dark"; applyTheme(t); store.set(`${KEY}-theme`, t); });
+
+  /* ---------- Catalog: one row per product; rows, tiles, the product page, compare and the cart read from it ---------- */
+  const CATS = { laptops: "Laptops", desktops: "Desktops", monitors: "Monitors", printers: "Printers", ink: "Ink & paper", accessories: "Accessories" };
+  const USES = { home: "Home", business: "Business", creative: "Creative work" };
+  const PRICES = [["0-100", "Under $100"], ["100-500", "$100 to $500"], ["500-1000", "$500 to $1,000"], ["1000-99999", "$1,000 and over"]];
+  // Screen wallpapers for the drawings: background, two waves, one line
+  const WALLS = [["#0c1633", "#3d6dff", "#ff7448", "#ffd7c7"], ["#1a0f2e", "#8b5cf6", "#f472b6", "#fde2f3"], ["#0b2420", "#18a578", "#f5c84c", "#e6f7ee"], ["#1e0d08", "#ff6a3d", "#ffc24b", "#ffe9d6"]];
+  // art: a drawing in the sprite. c: chassis colour. w: wallpaper. list: the previous price (shows the sale flag). opts: colour name and chassis colour.
+  const products = [
+    { id: "glide14", cat: "laptops", name: "Glide 14", title: 'Glide 14 Laptop, 8-core, 16 GB, 512 GB SSD, 14" FHD+', use: ["home", "business"], price: 649, list: 799, mem: 16, rating: 4.6, reviews: 212, art: "laptop", c: "#c6cad0", flag: "Free setup and data transfer at the store", sum: "A light 14-inch laptop with a bright screen and a battery that lasts the working day.", specs: [["Processor", "8-core, up to 4.4 GHz"], ["Memory", "16 GB"], ["Storage", "512 GB SSD"], ["Display", '14" FHD+, 400 nits'], ["Battery", "Up to 14 hours"], ["Weight", "1.39 kg"]], feats: [["14 h", "battery life"], ["1.39 kg", "carry weight"], ["400 nits", "bright display"]], opts: [["Silver", "#c6cad0"], ["Sage", "#a7b6a3"], ["Graphite", "#4a4d54"]] },
+    { id: "flip14", cat: "laptops", name: "Glide Flip 14", title: "Glide Flip 14 2-in-1 Laptop, touch and pen, 16 GB, 512 GB SSD", use: ["home", "creative"], price: 1049, list: 1199, mem: 16, rating: 4.4, reviews: 87, art: "laptop", c: "#a7b6a3", w: 3, flag: "Pen and sleeve included", sum: "Folds back into a tablet for notes and sketches.", specs: [["Processor", "10-core, up to 4.5 GHz"], ["Memory", "16 GB"], ["Storage", "512 GB SSD"], ["Display", '14" 2K touch'], ["Weight", "1.45 kg"]], feats: [["360°", "fold-back hinge"], ["Pen", "in the box"], ["13 h", "battery life"]] },
+    { id: "forge16", cat: "laptops", name: "Forge 16", title: "Forge 16 Creator Laptop, 14-core, 32 GB, 1 TB SSD, 8 GB graphics", use: ["creative"], price: 1799, mem: 32, rating: 4.7, reviews: 64, art: "laptop", c: "#3c3f46", w: 1, sum: "Dedicated graphics and a colour-accurate screen for photo, video and 3D work.", specs: [["Processor", "14-core, up to 5.0 GHz"], ["Memory", "32 GB"], ["Storage", "1 TB SSD"], ["Display", '16" 2.5K, 100% DCI-P3'], ["Graphics", "Dedicated, 8 GB"]], feats: [["32 GB", "memory"], ["8 GB", "dedicated graphics"], ["100%", "DCI-P3 colour"]] },
+    { id: "ledger14", cat: "laptops", name: "Ledger 14", title: "Ledger 14 Business Laptop, 12-core, 32 GB, 1 TB SSD, privacy screen", use: ["business"], price: 1349, list: 1499, mem: 32, rating: 4.6, reviews: 120, art: "laptop", c: "#8e939b", w: 2, flag: "Three-year on-site warranty", sum: "A privacy screen, fingerprint sign-in and a spill-resistant keyboard.", specs: [["Processor", "12-core, up to 4.8 GHz"], ["Memory", "32 GB"], ["Storage", "1 TB SSD"], ["Display", '14" FHD+ with privacy filter'], ["Weight", "1.32 kg"]] },
+    { id: "tower", cat: "desktops", name: "Plinth Tower", title: "Plinth Tower Desktop, 12-core, 32 GB, 1 TB SSD", use: ["creative", "business"], price: 1099, mem: 32, rating: 4.7, reviews: 96, art: "tower", c: "#25272d", sum: "Quiet, upgradeable power with room for more memory, drives and graphics.", specs: [["Processor", "12-core, up to 5.0 GHz"], ["Memory", "32 GB, up to 128 GB"], ["Storage", "1 TB SSD, 2 free bays"], ["Ports", "8 × USB, 2 × DisplayPort, HDMI"]], feats: [["128 GB", "memory ceiling"], ["2", "free drive bays"], ["24 dB", "at idle"]] },
+    { id: "aio24", cat: "desktops", name: "Plinth 24", title: 'Plinth 24 All-in-One, 23.8" touch, 16 GB, 1 TB SSD', use: ["home"], price: 999, mem: 16, rating: 4.4, reviews: 58, art: "aio", c: "#d9dce0", w: 1, sum: "Screen, speakers and camera in one stand, with one cable to plug in.", specs: [["Processor", "10-core, up to 4.5 GHz"], ["Memory", "16 GB"], ["Storage", "1 TB SSD"], ["Display", '23.8" FHD touch'], ["Camera", "5 MP with shutter"]] },
+    { id: "pane27", cat: "monitors", name: "Pane 27", title: 'Pane 27 QHD Monitor, 27", USB-C 65 W', use: ["home", "business", "creative"], price: 329, list: 379, rating: 4.7, reviews: 201, art: "monitor", c: "#b8bdc4", w: 2, sum: "One USB-C cable carries picture, data and charging to your laptop.", specs: [["Size", '27", IPS'], ["Resolution", "2560 × 1440"], ["Refresh", "100 Hz"], ["Ports", "USB-C 65 W, HDMI, DisplayPort"]] },
+    { id: "inkjet", cat: "printers", name: "Inkwell 300", title: "Inkwell 300 All-in-One Printer, print, scan, copy, Wi-Fi", use: ["home"], price: 179, list: 229, rating: 4.3, reviews: 310, art: "inkjet", c: "#eef0f2", flag: "Three months of scheduled ink included", sum: "Prints, scans and copies from your phone.", specs: [["Functions", "Print, scan, copy"], ["Speed", "Up to 15 pages a minute"], ["Connectivity", "Wi-Fi, USB"], ["Ink", "Inkwell 30 cartridges"]] },
+    { id: "laser", cat: "printers", name: "Inkwell Laser 500", title: "Inkwell Laser 500 Mono Printer, 40 ppm, double-sided", use: ["business"], price: 299, rating: 4.6, reviews: 142, art: "laser", c: "#e4e6e9", sum: "Fast black-and-white printing, shared over the office network.", specs: [["Functions", "Print"], ["Speed", "Up to 40 pages a minute"], ["Connectivity", "Ethernet, Wi-Fi, USB"], ["Paper", "250-sheet tray"]] },
+    { id: "ink", cat: "ink", name: "Inkwell 30 ink combo", title: "Inkwell 30 Ink Combo, black and tri-colour", use: ["home"], price: 49.99, rating: 4.5, reviews: 420, art: "ink", sum: "One black and one tri-colour cartridge for the Inkwell 300.", specs: [["Fits", "Inkwell 300"], ["Contents", "1 black, 1 tri-colour"], ["Yield", "About 300 pages"]] },
+    { id: "paper", cat: "ink", name: "Everyday copy paper", title: "Everyday Copy Paper, Letter, 5 reams", use: ["home", "business"], price: 34.99, rating: 4.8, reviews: 96, art: "paper", sum: "Bright white paper that feeds cleanly in any printer.", specs: [["Size", "Letter, 8.5 × 11 in"], ["Weight", "20 lb"], ["Contents", "2,500 sheets"]] },
+    { id: "dock", cat: "accessories", name: "USB-C dock", title: "USB-C Dock, two displays, 100 W charging, Ethernet", use: ["business", "home"], price: 149, rating: 4.4, reviews: 88, art: "dock", c: "#2b2e35", sum: "One cable from the laptop to two screens, the network and every USB device.", specs: [["Displays", "Two, up to 4K"], ["Charging", "100 W"], ["Ports", "4 × USB, Ethernet, 2 × HDMI"]] },
+    { id: "headset", cat: "accessories", name: "Wireless headset", title: "Wireless Headset with Boom Mic, 30-hour battery", use: ["business", "home"], price: 89, list: 109, rating: 4.3, reviews: 132, art: "headset", c: "#2b2e35", sum: "A boom microphone that keeps your voice clear on calls.", specs: [["Connection", "Bluetooth, USB receiver"], ["Battery", "Up to 30 hours"], ["Microphone", "Boom, noise reducing"]] },
+  ];
+  const byId = new Map(products.map((p) => [p.id, p]));
+  const FREE_OVER = 50;
+  const DELIVERY = 9.99;
+  const SKU = "FL";
+
+  /* ---------- Pieces every product view shares ---------- */
+  const money = (n) => `$${n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const monthly = (p) => Math.ceil((p.price * 1.08) / 24);
+  function tint(p, c) {
+    const w = WALLS[p.w || 0];
+    return `--c1:${c || p.c || "#c6cad0"};--w0:${w[0]};--w1:${w[1]};--w2:${w[2]};--w3:${w[3]}`;
+  }
+  function art(p, c) {
+    const photo = $(`#photos [data-photo="${p.id}"]`);
+    if (photo) return `<img class="art" src="${photo.getAttribute("src")}" alt="" width="${photo.getAttribute("width")}" height="${photo.getAttribute("height")}">`;
+    return `<svg class="art" viewBox="0 0 200 150" style="${tint(p, c)}" aria-hidden="true"><use href="#${p.art}"/></svg>`;
+  }
+  const five = '<svg aria-hidden="true"><use href="#i-star"/></svg>'.repeat(5);
+  const stars = (p) => `<span class="stars" role="img" aria-label="${p.rating} out of 5 stars"><span>${five}</span><span class="on" style="width:${p.rating * 20}%">${five}</span></span>`;
+  const rating = (p) => `<p class="rating">${stars(p)}<span>${p.rating} (${p.reviews})</span></p>`;
+  const compare = new Set();
+  function row(p) {
+    const sale = p.list ? `<span class="flag">Year-end price</span><p class="was"><s>${money(p.list)}</s> <b>Save ${money(p.list - p.price)}</b></p>` : "";
+    return `<li class="row"><div class="row-media"><a href="#/product?id=${p.id}" tabindex="-1" aria-hidden="true">${art(p)}</a><label class="cmp"><input type="checkbox" data-compare="${p.id}"${compare.has(p.id) ? " checked" : ""}>Add to compare</label></div>`
+      + `<div>${p.flag ? `<p class="offer">${esc(p.flag)}</p>` : ""}<h2 class="row-title"><a href="#/product?id=${p.id}">${esc(p.title)}</a></h2>${rating(p)}<p class="row-sum">${esc(p.sum)}</p><ul class="specline">${p.specs.slice(0, 5).map((s) => `<li>${esc(s[1])}</li>`).join("")}</ul><p class="sku">${SKU}-${p.id.toUpperCase()}</p></div>`
+      + `<div class="row-buy"><p class="stock"><i></i>In stock</p>${sale}<p class="now">${money(p.price)}<small>excl. tax</small></p><a class="see" href="#/product?id=${p.id}">See product</a><button class="btn btn-caps" type="button" data-add="${p.id}">Add to cart</button></div></li>`;
+  }
+  const mini = (p) => `<li class="mini"><a class="tile-media" href="#/product?id=${p.id}">${art(p)}<span class="sr-only">${esc(p.name)}</span></a><h3><a href="#/product?id=${p.id}">${esc(p.name)}</a></h3>${rating(p)}<p class="now">${money(p.price)}</p><button class="btn btn-sm" type="button" data-add="${p.id}">Add to cart</button></li>`;
+  let viewing = products[0];
+  const MINIS = {
+    also: () => products.filter((p) => p.cat === viewing.cat && p !== viewing).concat(products.filter((p) => p.cat === "accessories")).filter((p) => p !== viewing).slice(0, 4),
+    essentials: () => products.filter((p) => ["accessories", "ink"].includes(p.cat) && !cart.some((l) => l.id === p.id)).slice(0, 4),
+  };
+  const fillMinis = (scope) => $$("[data-minis]", scope).forEach((el) => { el.innerHTML = MINIS[el.dataset.minis]().map(mini).join(""); });
+
+  /* ---------- Router: hash routes, state first so it works when the frame refuses URL changes ---------- */
+  const views = new Map($$("[data-view]").map((el) => [el.dataset.view, el]));
+  const TITLES = { cart: "Your cart", business: "For business", support: "Support and repairs", guides: "Guides", legal: "Terms, privacy and returns", 404: "Page not found" };
+  let current = null;
+  function parse(hash) {
+    if (!hash.startsWith("#/")) return { view: "home", params: new URLSearchParams() };
+    const [path, query = ""] = hash.slice(2).split("?");
+    return { view: path || "home", params: new URLSearchParams(query) };
+  }
+  function show(route, { scroll = true } = {}) {
+    const name = views.has(route.view) ? route.view : "404";
+    if (current) current.classList.remove("is-active");
+    current = views.get(name);
+    current.classList.add("is-active");
+    const here = `#/${route.view}${route.params.toString() ? `?${route.params}` : ""}`;
+    $$(".nav a, .drawer a, .fcat a").forEach((a) => (a.getAttribute("href") === here ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current")));
+    let title = TITLES[name];
+    if (name === "shop") title = shopRoute(route.params);
+    if (name === "product") title = renderProduct(route.params.get("id"));
+    if (name === "cart") renderCart();
+    if (name === "guide") title = renderPost(route.params.get("id"));
+    fillMinis(current);
+    document.title = name === "home" ? "Fernlow: laptops, printers and repairs" : `${title} | Fernlow`;
+    const section = route.params.get("section");
+    const target = section && $(`#${CSS.escape(section)}`, current);
+    if (target) setTimeout(() => target.scrollIntoView({ block: "start" }), 30);
+    else if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  function go(hash) {
+    show(parse(hash));
+    try { if (location.hash !== hash) history.pushState(null, "", hash); } catch { /* sandboxed frame: state only */ }
+  }
+  window.addEventListener("popstate", () => show(parse(location.hash)));
+
+  /* ---------- Header: search panel, menu drawer ---------- */
+  const searchBar = $("#searchbar");
+  const searchBtn = $("[data-search-open]");
+  searchBtn.addEventListener("click", () => {
+    searchBar.hidden = !searchBar.hidden;
+    searchBtn.setAttribute("aria-expanded", String(!searchBar.hidden));
+    if (!searchBar.hidden) $("#q").focus();
+  });
+  const drawer = $("#drawer");
+  $("[data-menu-open]").addEventListener("click", () => drawer.showModal());
+  $("[data-menu-close]").addEventListener("click", () => drawer.close());
+  $$("dialog").forEach((d) => d.addEventListener("click", (e) => { if (e.target === d) d.close(); }));
+
+  /* ---------- One click handler: add buttons, then in-page routes and anchors ---------- */
+  document.addEventListener("click", (event) => {
+    const add = event.target.closest("[data-add]");
+    if (add) { addToCart(add.dataset.add); return; }
+    const a = event.target.closest("a[href^='#']");
+    if (!a) return;
+    const href = a.getAttribute("href");
+    if (href.startsWith("#/")) {
+      event.preventDefault();
+      $$("dialog[open]").forEach((d) => d.close());
+      added.hidden = true;
+      searchBar.hidden = true;
+      go(href);
+    } else if (href.length > 1) {
+      const target = $(href);
+      if (!target) return;
+      event.preventDefault();
+      if (a.closest(".tabbar")) $$(".tabbar a").forEach((t) => t.setAttribute("aria-current", String(t === a)));
+      target.scrollIntoView({ block: "start" });
+      if (href === "#main") target.focus({ preventScroll: true });
+    }
+  });
+
+  /* ---------- Hero: rotates every 8 s on the home page, pauses on hover and focus, never with reduced motion ---------- */
+  const slides = $$(".slide");
+  const dots = $$("[data-hero-go]");
+  let slide = 0;
+  function showSlide(i) {
+    slide = (i + slides.length) % slides.length;
+    slides.forEach((s, n) => s.classList.toggle("is-current", n === slide));
+    dots.forEach((d, n) => d.setAttribute("aria-current", String(n === slide)));
+  }
+  $$("[data-hero-step]").forEach((b) => b.addEventListener("click", () => showSlide(slide + Number(b.dataset.heroStep))));
+  dots.forEach((d, n) => d.addEventListener("click", () => showSlide(n)));
+  const hero = $(".hero");
+  let paused = false;
+  ["mouseenter", "focusin"].forEach((t) => hero.addEventListener(t, () => (paused = true)));
+  ["mouseleave", "focusout"].forEach((t) => hero.addEventListener(t, () => (paused = false)));
+  if (!calm.matches) setInterval(() => { if (!paused && !document.hidden && current?.dataset.view === "home") showSlide(slide + 1); }, 8000);
+
+  /* ---------- Forms: sandboxed frames block native submission, so forms run from the submit button and the Enter key ---------- */
+  function onSubmit(form, handler) {
+    form.addEventListener("submit", (e) => { e.preventDefault(); handler(); });
+    form.addEventListener("click", (e) => { if (e.target.closest("[type=submit]")) { e.preventDefault(); handler(); } });
+    form.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" || !e.target.matches("input:not([type=checkbox]):not([type=radio])")) return;
+      e.preventDefault();
+      if (!e.isComposing) handler();
+    });
+  }
+  const errOf = (el) => $(".err", el.closest(".field") || el.form);
+  function setErr(el, msg) {
+    const err = errOf(el);
+    if (err) err.textContent = msg;
+    el.setAttribute("aria-invalid", msg ? "true" : "false");
+    return !msg;
+  }
+  function check(el) {
+    const v = el.type === "checkbox" ? el.checked : el.value.trim();
+    let msg = "";
+    if (el.required && !v) msg = el.dataset.msg || (el.type === "checkbox" ? "Tick this box to continue." : "Fill in this field.");
+    else if (v && el.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) msg = "Enter an email address like name@example.com.";
+    else if (v && el.minLength > 0 && v.length < el.minLength) msg = `Use at least ${el.minLength} characters.`;
+    else if (v && el.pattern && !new RegExp(`^(?:${el.pattern})$`, "i").test(v)) msg = el.dataset.msg || "Check the format.";
+    else if (v && el.type === "number" && (Number(v) < Number(el.min) || Number(v) > Number(el.max))) msg = `Enter a number from ${el.min} to ${el.max}.`;
+    return setErr(el, msg);
+  }
+  // done(form) runs after a short sending state; the default swaps the form for its success box
+  function wire(form, done = finish) {
+    const fields = $$("input, select, textarea", form).filter((el) => el.name);
+    fields.forEach((el, i) => {
+      const err = errOf(el);
+      if (err) { err.id ||= `${form.dataset.form}-e${i}`; el.setAttribute("aria-describedby", err.id); }
+      el.addEventListener(el.type === "checkbox" || el.tagName === "SELECT" ? "change" : "input", () => { if (el.getAttribute("aria-invalid") === "true") check(el); });
+    });
+    onSubmit(form, () => {
+      const bad = fields.filter((el) => !check(el));
+      if (bad.length) { bad[0].focus(); return; }
+      const btn = $("[type=submit]", form);
+      const label = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Sending...";
+      setTimeout(() => { btn.disabled = false; btn.textContent = label; done(form); }, 600);
+    });
+  }
+  function finish(form) {
+    const box = form.closest("[data-box]");
+    form.hidden = true;
+    const ok = $("[data-done]", box);
+    ok.hidden = false;
+    ok.focus();
+  }
+  $$("[data-again]").forEach((b) => b.addEventListener("click", () => {
+    const box = b.closest("[data-box]");
+    const form = $("form", box);
+    form.reset();
+    $$("[aria-invalid]", form).forEach((el) => setErr(el, ""));
+    $("[data-done]", box).hidden = true;
+    form.hidden = false;
+    $("input, select, textarea", form).focus();
+  }));
+  ["quote", "repair", "contact", "newsletter"].forEach((name) => wire($(`[data-form="${name}"]`)));
+  const day = $("#rt");
+  day.min = new Date().toISOString().slice(0, 10);
+
+  /* ---------- Search ---------- */
+  onSubmit($('[data-form="search"]'), () => {
+    const q = $("#q").value.trim();
+    go(q ? `#/shop?q=${encodeURIComponent(q)}` : "#/shop");
+  });
+
+  /* ---------- Results: category, words, usage, price, memory and offers, with sort, layout and compare ---------- */
+  const shopEl = $("[data-shop]");
+  const rowsEl = $("[data-rows]");
+  const shop = { cat: "", q: "", base: products };
+  $("[data-cat-links]").innerHTML = [["", "All products"], ...Object.entries(CATS)].map(([id, n]) => `<li><a href="#/shop${id ? `?cat=${id}` : ""}">${esc(n)}</a></li>`).join("");
+  const inRange = (p, r) => { const [a, b] = r.split("-").map(Number); return p.price >= a && p.price < b; };
+  const picked = (name) => $$(`input[name="${name}"]:checked`, shopEl).map((i) => i.value);
+  function shopRoute(params) {
+    shop.cat = CATS[params.get("cat")] ? params.get("cat") : "";
+    shop.q = (params.get("q") || "").trim();
+    const words = shop.q.toLowerCase();
+    shop.base = products.filter((p) => (!shop.cat || p.cat === shop.cat) && (!words || `${p.title} ${CATS[p.cat]} ${p.specs.flat().join(" ")}`.toLowerCase().includes(words)));
+    const count = (fn) => shop.base.filter(fn).length;
+    const group = (name, list) => list.map(([v, label, fn]) => [v, label, count(fn)]).filter((o) => o[2]).map(([v, label, n]) => `<label class="opt"><input type="checkbox" name="${name}" value="${v}">${label}<span class="n">${n}</span></label>`).join("");
+    $('[data-f="use"]').innerHTML = group("use", Object.entries(USES).map(([v, l]) => [v, l, (p) => p.use.includes(v)]));
+    $('[data-f="price"]').innerHTML = group("price", PRICES.map(([v, l]) => [v, l, (p) => inRange(p, v)]));
+    $('[data-f="mem"]').innerHTML = group("mem", [8, 16, 32].map((m) => [m, `${m} GB`, (p) => p.mem === m]));
+    $$("[data-f]").forEach((el) => { el.closest("details").hidden = !el.innerHTML; });
+    $("[data-n-deal]").textContent = count((p) => p.list);
+    $('input[name="deal"]', shopEl).checked = params.get("deal") === "1";
+    const sort = $("#sort");
+    sort.value = [...sort.options].some((o) => o.value === params.get("sort")) ? params.get("sort") : "featured";
+    const title = shop.q ? `Results for "${shop.q}"` : shop.cat ? CATS[shop.cat] : "All products";
+    $("[data-shop-title]").textContent = title;
+    $("[data-crumb]").textContent = shop.q ? "Search" : title;
+    $("#q").value = shop.q;
+    applyShop();
+    return title;
+  }
+  function applyShop() {
+    const uses = picked("use"), prices = picked("price"), mems = picked("mem").map(Number), deal = $('input[name="deal"]', shopEl).checked;
+    const list = shop.base.filter((p) => (!uses.length || uses.some((u) => p.use.includes(u))) && (!prices.length || prices.some((r) => inRange(p, r))) && (!mems.length || mems.includes(p.mem)) && (!deal || p.list));
+    const sorters = { "price-asc": (a, b) => a.price - b.price, "price-desc": (a, b) => b.price - a.price, rating: (a, b) => b.rating - a.rating };
+    const sorter = sorters[$("#sort").value];
+    if (sorter) list.sort(sorter);
+    rowsEl.innerHTML = list.map(row).join("");
+    $("[data-count]").innerHTML = `<b>${list.length}</b> of ${shop.base.length} products`;
+    $("[data-empty]").hidden = list.length > 0;
+  }
+  const cmpMsg = $("[data-cmp-msg]");
+  const cmpBtn = $("[data-compare-open]");
+  shopEl.addEventListener("change", (e) => {
+    const box = e.target.closest("[data-compare]");
+    if (!box) { applyShop(); return; }
+    if (box.checked && compare.size >= 3) { box.checked = false; cmpMsg.textContent = "You can compare up to three products. Remove one first."; return; }
+    if (box.checked) compare.add(box.dataset.compare); else compare.delete(box.dataset.compare);
+    cmpMsg.textContent = "";
+    cmpBtn.textContent = `Compare (${compare.size})`;
+    cmpBtn.disabled = compare.size < 2;
+  });
+  $("[data-clear]").addEventListener("click", () => go(shop.cat ? `#/shop?cat=${shop.cat}` : "#/shop"));
+  const filterBtn = $("[data-filters]");
+  filterBtn.addEventListener("click", () => {
+    const open = !shopEl.classList.contains("show-f");
+    shopEl.classList.toggle("show-f", open);
+    filterBtn.setAttribute("aria-expanded", String(open));
+  });
+  const cmpSheet = $("#compare");
+  cmpBtn.addEventListener("click", () => {
+    const list = [...compare].map((id) => byId.get(id));
+    const keys = [...new Set(list.flatMap((p) => p.specs.map((s) => s[0])))];
+    const cell = (p, k) => esc((p.specs.find((s) => s[0] === k) || ["", "Not listed"])[1]);
+    $("[data-compare-table]").innerHTML = `<thead><tr><td></td>${list.map((p) => `<th scope="col">${art(p)}<a href="#/product?id=${p.id}">${esc(p.name)}</a><p class="now">${money(p.price)}</p></th>`).join("")}</tr></thead>`
+      + `<tbody>${keys.map((k) => `<tr><th scope="row">${esc(k)}</th>${list.map((p) => `<td>${cell(p, k)}</td>`).join("")}</tr>`).join("")}<tr><td></td>${list.map((p) => `<td><button class="btn btn-sm" type="button" data-add="${p.id}">Add to cart</button></td>`).join("")}</tr></tbody>`;
+    cmpSheet.showModal();
+  });
+  $("[data-compare-close]").addEventListener("click", () => cmpSheet.close());
+
+  /* ---------- Product page: everything comes from the catalog row ---------- */
+  const pf = (k) => $(`[data-p-${k}]`);
+  const stage = $("[data-stage]");
+  const thumbs = $("[data-thumbs]");
+  const ANGLES = ["Front", "Reverse", "Close-up"];
+  let angle = 0;
+  let colour = "";
+  const specList = (list) => list.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+  function renderProduct(id) {
+    const p = byId.get(id) || products[0];
+    viewing = p;
+    pf("cat").textContent = CATS[p.cat];
+    pf("cat").setAttribute("href", `#/shop?cat=${p.cat}`);
+    pf("crumb").textContent = p.name;
+    pf("offer").hidden = !p.flag;
+    $("span", pf("offer")).textContent = p.flag || "";
+    pf("rating").innerHTML = rating(p);
+    pf("rating2").innerHTML = rating(p);
+    pf("title").textContent = p.title;
+    pf("sum").textContent = p.sum;
+    pf("lead").textContent = p.sum;
+    pf("name").textContent = p.name;
+    pf("flag").hidden = pf("was").hidden = !p.list;
+    if (p.list) pf("was").innerHTML = `<s>${money(p.list)}</s> <b>Save ${money(p.list - p.price)}</b>`;
+    pf("price").textContent = money(p.price);
+    pf("monthly").textContent = `Monthly plan from $${monthly(p)}/mo`;
+    pf("specs").innerHTML = `${specList(p.specs.slice(0, 5))}<div><a href="#p-specs">See all specs</a></div>`;
+    pf("table").innerHTML = specList(p.specs);
+    pf("stats").innerHTML = (p.feats || p.specs.slice(0, 3).map(([k, v]) => [v, k.toLowerCase()])).map(([big, small]) => `<div><dt><b>${esc(big)}</b></dt><dd>${esc(small)}</dd></div>`).join("");
+    pf("avg").textContent = p.rating;
+    pf("count").textContent = `${p.reviews} reviews`;
+    $$("[data-helpful]").forEach((b) => { b.disabled = false; b.textContent = "Helpful"; });
+    $$(".tabbar a").forEach((t, i) => t.setAttribute("aria-current", String(i === 0)));
+    const opts = p.opts || [];
+    pf("opts").hidden = !opts.length;
+    pf("opts").innerHTML = `<legend>Colour: <span data-colour-name></span></legend>${opts.map(([n, c], i) => `<button class="swatch" type="button" style="--sw:${c}" data-opt="${i}" aria-pressed="false" aria-label="${n}"></button>`).join("")}`;
+    pickColour(0);
+    setAngle(0);
+    return p.name;
+  }
+  function drawArt() {
+    const c = (viewing.opts || []).find((o) => o[0] === colour)?.[1];
+    stage.innerHTML = art(viewing, c);
+    pf("art").innerHTML = art(viewing, c);
+    thumbs.innerHTML = ANGLES.map((label, i) => `<button class="v${i}" type="button" data-angle="${i}" aria-pressed="${i === angle}" aria-label="${label} view">${art(viewing, c)}</button>`).join("");
+  }
+  function pickColour(i) {
+    const o = (viewing.opts || [])[i];
+    colour = o ? o[0] : "";
+    $$("[data-opt]").forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.opt) === i)));
+    if (o) $("[data-colour-name]").textContent = o[0];
+    drawArt();
+  }
+  function setAngle(i) {
+    angle = (i + ANGLES.length) % ANGLES.length;
+    stage.className = `stage v${angle}`;
+    $$("[data-angle]").forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.angle) === angle)));
+  }
+  pf("opts").addEventListener("click", (e) => { const b = e.target.closest("[data-opt]"); if (b) pickColour(Number(b.dataset.opt)); });
+  thumbs.addEventListener("click", (e) => { const b = e.target.closest("[data-angle]"); if (b) setAngle(Number(b.dataset.angle)); });
+  $$("[data-angle-step]").forEach((b) => b.addEventListener("click", () => setAngle(angle + Number(b.dataset.angleStep))));
+  $("[data-buy]").addEventListener("click", () => addToCart(viewing.id, colour));
+  $$("[data-helpful]").forEach((b) => b.addEventListener("click", () => { b.textContent = "Thanks for your feedback"; b.disabled = true; }));
+
+  /* ---------- Cart: [{ id, opt, qty }] in storage, with a free delivery meter ---------- */
+  const read = (k) => { try { return JSON.parse(store.get(k)) || []; } catch { return []; } };
+  let cart = read(`${KEY}-cart`);
+  const added = $("[data-added]");
+  let addedTimer = 0;
+  const subtotal = () => cart.reduce((t, l) => t + (byId.get(l.id)?.price || 0) * l.qty, 0);
+  function saveCart() {
+    store.set(`${KEY}-cart`, JSON.stringify(cart));
+    const n = cart.reduce((t, l) => t + l.qty, 0);
+    const badge = $("[data-cart-n]");
+    badge.textContent = String(n);
+    badge.hidden = !n;
+    $("[data-cart]").setAttribute("aria-label", n ? `Cart, ${n} item${n === 1 ? "" : "s"}` : "Cart, empty");
+  }
+  function addToCart(id, opt = "") {
+    const p = byId.get(id);
+    if (!p) return;
+    const line = cart.find((l) => l.id === id && l.opt === opt);
+    if (line) line.qty = Math.min(10, line.qty + 1); else cart.push({ id, opt, qty: 1 });
+    saveCart();
+    if (current?.dataset.view === "cart") { renderCart(); fillMinis(current); return; }
+    const c = (p.opts || []).find((o) => o[0] === opt)?.[1];
+    $("[data-added-art]").innerHTML = art(p, c);
+    $("[data-added-name]").textContent = `${p.name}${opt ? `, ${opt}` : ""}`;
+    added.hidden = false;
+    clearTimeout(addedTimer);
+    addedTimer = setTimeout(() => (added.hidden = true), 6000);
+  }
+  $("[data-added-close]").addEventListener("click", () => (added.hidden = true));
+  function renderCart() {
+    const has = cart.length > 0;
+    $("[data-cart-full]").hidden = !has;
+    $("[data-cart-empty]").hidden = has;
+    $("[data-lines]").innerHTML = cart.map((l, i) => {
+      const p = byId.get(l.id);
+      if (!p) return "";
+      const c = (p.opts || []).find((o) => o[0] === l.opt)?.[1];
+      return `<li class="line"><a class="line-art" href="#/product?id=${p.id}">${art(p, c)}<span class="sr-only">${esc(p.name)}</span></a><div><h3><a href="#/product?id=${p.id}">${esc(p.title)}</a></h3><p class="stock"><i></i>In stock</p>${l.opt ? `<p class="small">Colour: ${esc(l.opt)}</p>` : ""}`
+        + `<div class="qty"><button type="button" data-step="-1" data-i="${i}" aria-label="${l.qty === 1 ? "Remove" : "Decrease quantity"}"><svg class="icon" aria-hidden="true"><use href="#i-${l.qty === 1 ? "trash" : "minus"}"/></svg></button><output aria-live="polite">${l.qty}</output><button type="button" data-step="1" data-i="${i}" aria-label="Increase quantity"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg></button></div></div><p class="line-price">${money(p.price * l.qty)}</p></li>`;
+    }).join("");
+    const sub = subtotal();
+    const ship = sub >= FREE_OVER || !sub ? 0 : DELIVERY;
+    $("[data-sub]").textContent = money(sub);
+    $("[data-ship]").textContent = ship ? money(ship) : "Free";
+    $("[data-total]").textContent = money(sub + ship);
+    $("[data-free-note]").textContent = sub >= FREE_OVER ? "Your order ships free." : `Add ${money(FREE_OVER - sub)} more for free delivery.`;
+    $("[data-meter]").style.setProperty("--w", `${Math.min(100, (sub / FREE_OVER) * 100)}%`);
+  }
+  $("[data-lines]").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-step]");
+    if (!b) return;
+    const i = Number(b.dataset.i);
+    cart[i].qty = Math.min(10, cart[i].qty + Number(b.dataset.step));
+    if (cart[i].qty < 1) cart.splice(i, 1);
+    saveCart();
+    renderCart();
+    fillMinis(current);
+  });
+  $("[data-checkout]").addEventListener("click", () => { $("[data-checkout-note]").hidden = false; });
+
+  /* ---------- Business plans: the term changes every price ---------- */
+  function renderPlans() {
+    const t = Number($('input[name="term"]:checked').value);
+    const factor = t === 12 ? 1.15 : t === 36 ? 0.9 : 1;
+    $$("[data-plan]").forEach((el) => { el.textContent = `$${Math.round(Number(el.dataset.plan) * factor)}`; });
+    $$("[data-term-label]").forEach((el) => { el.textContent = `${t}-month term`; });
+  }
+  $$('input[name="term"]').forEach((r) => r.addEventListener("change", renderPlans));
+  $$("[data-pick]").forEach((a) => a.addEventListener("click", () => { $("#qp").value = a.dataset.pick; }));
+  renderPlans();
+
+  /* ---------- Support: help search ---------- */
+  $("[data-faq-search]").addEventListener("input", (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    let shown = 0;
+    $$("[data-faq] details").forEach((d) => { const hit = !q || d.textContent.toLowerCase().includes(q); d.hidden = !hit; d.open = Boolean(q) && hit; shown += hit; });
+    $("[data-faq-empty]").hidden = shown > 0;
+    if (q && current?.dataset.view === "support") $("#faq").scrollIntoView({ block: "nearest" });
+  });
+
+  /* ---------- Guides: the lists on home and the guides page, and the article view ---------- */
+  const POSTS = [
+    { id: "choose-laptop", cat: "laptops", date: "December 2, 2026", mins: 6, art: "laptop", g: "g1", title: "How to choose a laptop for school or work", ex: "Screen size, memory and battery in plain words, and what each budget buys.", body: ["Start with where the laptop will be used. If it travels every day, weight and battery matter more than raw speed.", "For writing, browsing and calls, 16 GB of memory keeps things smooth for years. Photo and video work wants 32 GB and dedicated graphics."] },
+    { id: "ink-schedule", cat: "printers", date: "November 18, 2026", mins: 4, art: "ink", g: "g2", title: "Ink on a schedule: how it works", ex: "How we work out when to send cartridges, and how to pause, skip or cancel.", body: ["Tell us your printer and roughly how much you print. We send the first cartridges and work out when the next ones are due.", "Skip, move, pause or cancel any shipment from your account. There is no minimum term."] },
+    { id: "home-office", cat: "business", date: "October 30, 2026", mins: 5, art: "dock", g: "g3", title: "Set up a home office desk in an afternoon", ex: "One cable to the laptop, two screens, a headset that sounds right on calls.", body: ["A USB-C dock is the heart of the desk: one cable carries power, both screens, the network and every USB device.", "A headset with a boom microphone makes the biggest difference on calls, more than any webcam upgrade."] },
+    { id: "move-files", cat: "setup", date: "October 12, 2026", mins: 4, art: "laptop", w: 2, g: "g4", title: "Moving your files to a new computer", ex: "What to copy, what to leave behind, and how to check nothing is missing.", body: ["Copy documents, photos, desktop files and bookmarks first. Programs are better installed fresh.", "Keep the old computer for a week before wiping it, in case something turns out to be missing."] },
+  ];
+  const postArt = (p) => art({ id: `post-${p.id}`, art: p.art, w: p.w });
+  const postCard = (p) => `<li class="card"><a class="card-media ${p.g}" href="#/guide?id=${p.id}" tabindex="-1" aria-hidden="true">${postArt(p)}</a><p class="date">${p.date}</p><h3><a href="#/guide?id=${p.id}">${esc(p.title)}</a></h3><p class="ex">${esc(p.ex)}</p><a class="link-arrow" href="#/guide?id=${p.id}" aria-label="Read: ${esc(p.title)}">Read<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>`;
+  $$("[data-guides]").forEach((el) => { el.innerHTML = POSTS.slice(0, Number(el.dataset.guides)).map(postCard).join(""); });
+  function renderPost(id) {
+    const p = POSTS.find((x) => x.id === id) || POSTS[0];
+    $("[data-g-crumb]").textContent = p.title;
+    $("[data-g-title]").textContent = p.title;
+    $("[data-g-meta]").textContent = `${p.date}, ${p.mins} minute read`;
+    const cover = $("[data-g-cover]");
+    cover.className = `cover ${p.g}`;
+    cover.innerHTML = postArt(p);
+    $("[data-g-body]").innerHTML = p.body.map((t) => `<p>${esc(t)}</p>`).join("");
+    $("[data-g-related]").innerHTML = POSTS.filter((x) => x !== p).sort((a, b) => (b.cat === p.cat) - (a.cat === p.cat)).slice(0, 3).map(postCard).join("");
+    return p.title;
+  }
+
+  /* ---------- Start ---------- */
+  saveCart();
+  show(parse(location.hash), { scroll: false });
+})();
+</script>
+</body>
+</html>

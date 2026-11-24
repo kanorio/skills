@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<rect width="1600" height="900" fill="#bfead9"/>
+<circle cx="300" cy="210" r="110" fill="#fff2b3"/>
+<g fill="#fff" transform="translate(1120 170) scale(1.2)"><circle cx="0" cy="0" r="46"/><circle cx="52" cy="-22" r="58"/><circle cx="112" cy="0" r="44"/><rect x="0" y="-6" width="112" height="50" rx="25"/></g><g fill="#fff" transform="translate(180 420) scale(0.8)"><circle cx="0" cy="0" r="46"/><circle cx="52" cy="-22" r="58"/><circle cx="112" cy="0" r="44"/><rect x="0" y="-6" width="112" height="50" rx="25"/></g>
+<path d="M0 700Q400 630 800 680T1600 650V900H0Z" fill="#7fcf9f"/>
+<path d="M0 780Q500 730 1000 770T1600 760V900H0Z" fill="#5bb882"/>
+<ellipse cx="800" cy="712" rx="230" ry="26" fill="#3f9a68" opacity=".45"/>
+<rect x="640" y="590" width="320" height="120" rx="26" fill="#ff5a4e"/><rect x="664" y="606" width="120" height="20" rx="10" fill="#ff8f86"/>
+<g transform="translate(800 660) scale(0.9)"><ellipse cx="-34" cy="0" rx="11" ry="15" fill="#7a1f19"/><ellipse cx="34" cy="0" rx="11" ry="15" fill="#7a1f19"/><circle cx="-62" cy="26" r="14" fill="#ffd23f" opacity=".7"/><circle cx="62" cy="26" r="14" fill="#ffd23f" opacity=".7"/><path d="M-16 26q16 16 32 0" fill="none" stroke="#7a1f19" stroke-width="8" stroke-linecap="round"/></g>
+<g transform="rotate(-4 800 540)"><rect x="690" y="482" width="220" height="104" rx="24" fill="#ffc93c"/><rect x="710" y="496" width="80" height="18" rx="9" fill="#ffe08a"/></g>
+<g transform="rotate(3 800 430)"><rect x="630" y="388" width="330" height="88" rx="24" fill="#3d8bff"/><rect x="652" y="400" width="120" height="18" rx="9" fill="#8bb9ff"/></g>
+<g transform="rotate(-5 790 330)"><rect x="720" y="280" width="140" height="104" rx="24" fill="#8e6cff"/><rect x="736" y="294" width="56" height="18" rx="9" fill="#bba8ff"/></g>
+<g transform="rotate(18 1010 180)"><rect x="930" y="130" width="160" height="96" rx="24" fill="#ff8a3d"/><rect x="948" y="144" width="60" height="18" rx="9" fill="#ffb47e"/></g>
+<g fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"><path d="M1120 120l50-30M1140 190l60-6M1110 250l48 30"/></g>
+</svg>
